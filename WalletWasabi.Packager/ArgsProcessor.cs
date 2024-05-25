@@ -42,23 +42,23 @@ public class ArgsProcessor
 		return false;
 	}
 
-	public (string AppleId, string Password) GetAppleIdAndPassword()
+	public (string AppleId, string TeamId) GetAppleAndTeamId()
 	{
 		string appleId = "";
-		string password = "";
+		string teamId = "";
 
 		try
 		{
 			var appleidArg = Args.First(a => a.Contains("appleid", StringComparison.InvariantCultureIgnoreCase));
 			var parameters = appleidArg.Split("=")[1];
-			var idAndPassword = parameters.Split(":");
-			appleId = idAndPassword[0];
-			password = idAndPassword[1];
+			var appleAndTeamId = parameters.Split(":");
+			appleId = appleAndTeamId[0];
+			teamId = appleAndTeamId[1];
 		}
 		catch (Exception)
 		{
 		}
 
-		return (appleId, password);
+		return (appleId, teamId);
 	}
 }

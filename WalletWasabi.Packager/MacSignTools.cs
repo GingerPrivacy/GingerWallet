@@ -29,7 +29,7 @@ public static class MacSignTools
 			throw new InvalidDataException($"{srcZipFileNamePattern} file missing or there are more! There must be exactly two!");
 		}
 
-		var (appleId, password) = argsProcessor.GetAppleIdAndPassword();
+		var (appleId, teamId) = argsProcessor.GetAppleAndTeamId();
 
 		while (string.IsNullOrWhiteSpace(appleId))
 		{
@@ -37,10 +37,10 @@ public static class MacSignTools
 			appleId = Console.ReadLine();
 		}
 
-		while (string.IsNullOrWhiteSpace(password))
+		while (string.IsNullOrWhiteSpace(teamId))
 		{
-			Console.WriteLine("Enter password:");
-			password = Console.ReadLine();
+			Console.WriteLine("Enter teamId:");
+			teamId = Console.ReadLine();
 		}
 
 		foreach (var zipPath in files)
@@ -66,7 +66,9 @@ public static class MacSignTools
 			var dmgContentsDir = Path.Combine(contentsPath, "Dmg");
 			var desktopDmgFilePath = Path.Combine(desktopPath, dmgFileName);
 
-			var signArguments = $"--sign \"L233B2JQ68\" --verbose --force --options runtime --timestamp";
+			// Save the app specific pw by using this command: xcrun notarytool store-credentials WasabiNotarize
+
+			var signArguments = $"--sign \"{teamId}\" --verbose --force --options runtime --timestamp";
 
 			Console.WriteLine("Phase: creating the working directory.");
 
@@ -169,7 +171,7 @@ public static class MacSignTools
 
 			Console.WriteLine("Phase: verifying the signature.");
 
-			Verify(appPath);
+			Verify(appPath, teamId);
 
 			Console.WriteLine("Phase: notarize the app.");
 
@@ -236,7 +238,7 @@ public static class MacSignTools
 					"create",
 					$"\"{dmgUnzippedFilePath}\"",
 					"-ov",
-					$"-volname \"Wasabi Wallet\"",
+					$"-volname \"Ginger Wallet\"",
 					"-fs HFS+",
 					$"-srcfolder \"{dmgPath}\""
 				});
@@ -277,7 +279,7 @@ public static class MacSignTools
 
 			Console.WriteLine("Phase: verifying the signature.");
 
-			Verify(dmgFilePath);
+			Verify(dmgFilePath, teamId);
 
 			Console.WriteLine("Phase: notarize dmg");
 			Notarize(appleId, dmgFilePath);
@@ -331,7 +333,6 @@ public static class MacSignTools
 	{
 		Console.WriteLine("Start notarizing, uploading file.");
 
-		// -p WasabiNotarize = Saved the credentials in the keychain profile which keeps the password safe on the local machine. Name of the profile is "WasabiNotarize".
 		using var process = Process.Start(new ProcessStartInfo
 		{
 			FileName = "xcrun",
@@ -393,7 +394,7 @@ public static class MacSignTools
 		Console.WriteLine(result.Trim());
 	}
 
-	private static void Verify(string path)
+	private static void Verify(string path, string teamId)
 	{
 		using var process = Process.Start(new ProcessStartInfo
 		{
@@ -403,7 +404,9 @@ public static class MacSignTools
 		});
 		var nonNullProcess = WaitProcessToFinish(process, "codesign");
 		string result = nonNullProcess.StandardError.ReadToEnd();
-		if (!result.Contains("Authority=Developer ID Application: zkSNACKs Ltd."))
+
+		// Contains the TEAM-ID.
+		if (!result.Contains(teamId))
 		{
 			throw new InvalidOperationException(result);
 		}

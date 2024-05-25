@@ -17,9 +17,9 @@
 	<key>CFBundleExecutable</key>
 	<string>wassabee</string>
 	<key>CFBundleName</key>
-	<string>Wasabi Wallet</string>
+	<string>Ginger Wallet</string>
 	<key>CFBundleIdentifier</key>
-	<string>zksnacks.wasabiwallet</string>
+	<string>gingerprivacy.gingerwallet</string>
 	<key>NSHighResolutionCapable</key>
 	<true/>
 	<key>NSAppleScriptEnabled</key>
