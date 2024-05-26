@@ -31,20 +31,8 @@
 
     <DataTemplate x:Key="WasabiLogo">
       <Viewbox Height="18" Width="18" IsHitTestVisible="False">
-        <ThemeImage Source="{DynamicResource wasabi_logo_dynamic}" />
+        <ThemeImage Source="{DynamicResource GingerWalletLogo}" />
       </Viewbox>
-    </DataTemplate>
-
-    <DataTemplate x:Key="Title">
-      <StackPanel IsHitTestVisible="False" x:Name="Title"
-                  VerticalAlignment="Center"
-                  TextElement.FontFamily="{StaticResource WasabiLogoTextFont}"
-                  Classes="h7"
-                  TextElement.FontWeight="Light" Orientation="Horizontal" ClipToBounds="False">
-        <TextBlock Text="WASABI" Foreground="{DynamicResource LogoFixedForegroundColor}" />
-        <TextBlock Text="." Foreground="{DynamicResource LogoFixedAccentColor}" />
-        <TextBlock Text="WALLET" Foreground="{DynamicResource LogoFixedForegroundColor}" />
-      </StackPanel>
     </DataTemplate>
 
     <DataTemplate x:Key="SearchBar">

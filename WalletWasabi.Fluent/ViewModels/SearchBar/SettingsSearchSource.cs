@@ -40,7 +40,7 @@ public class SettingsSearchSource : ReactiveObject, ISearchSource
 		yield return new ContentSearchItem(content: Setting(selector: x => x.AutoCopy), name: "Auto copy addresses", category: "Settings", keywords: new List<string>(), icon: "nav_settings_regular", isEnabled) { IsDefault = false, Priority = 2 };
 		yield return new ContentSearchItem(content: Setting(selector: x => x.AutoPaste), name: "Auto paste addresses", category: "Settings", keywords: new List<string>(), icon: "nav_settings_regular", isEnabled) { IsDefault = false, Priority = 3 };
 		yield return new ContentSearchItem(content: Setting(selector: x => x.HideOnClose), name: "Run in background when closed", category: "Settings", keywords: new List<string>() { "hide", "tray" }, icon: "nav_settings_regular", isEnabled) { IsDefault = false, Priority = 4 };
-		yield return new ContentSearchItem(content: Setting(selector: x => x.RunOnSystemStartup), name: "Run Wasabi when computer starts", category: "Settings", keywords: new List<string>() { "startup", "boot" }, icon: "nav_settings_regular", isEnabled) { IsDefault = false, Priority = 5 };
+		yield return new ContentSearchItem(content: Setting(selector: x => x.RunOnSystemStartup), name: "Run Ginger when computer starts", category: "Settings", keywords: new List<string>() { "startup", "boot" }, icon: "nav_settings_regular", isEnabled) { IsDefault = false, Priority = 5 };
 		yield return new ContentSearchItem(content: Setting(selector: x => x.EnableGpu), name: "Enable GPU", category: "Settings", keywords: new List<string>(), icon: "nav_settings_regular", isEnabled) { IsDefault = false, Priority = 6 };
 
 		yield return ContentSearchItemNode.Create(
@@ -57,7 +57,7 @@ public class SettingsSearchSource : ReactiveObject, ISearchSource
 				isDisplayed: mode => mode != TorMode.Disabled,
 				item: new ContentSearchItem(
 					content: Setting(selector: x => x.TerminateTorOnExit),
-					name: "Terminate Tor when Wasabi shuts down",
+					name: "Terminate Tor when Ginger shuts down",
 					category: "Settings",
 					keywords: new List<string>(),
 					icon: "nav_settings_regular",
