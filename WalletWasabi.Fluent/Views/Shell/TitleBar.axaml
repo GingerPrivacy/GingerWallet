@@ -35,18 +35,6 @@
       </Viewbox>
     </DataTemplate>
 
-    <DataTemplate x:Key="Title">
-      <StackPanel IsHitTestVisible="False" x:Name="Title"
-                  VerticalAlignment="Center"
-                  TextElement.FontFamily="{StaticResource WasabiLogoTextFont}"
-                  Classes="h7"
-                  TextElement.FontWeight="Light" Orientation="Horizontal" ClipToBounds="False">
-        <TextBlock Text="WASABI" Foreground="{DynamicResource LogoFixedForegroundColor}" />
-        <TextBlock Text="." Foreground="{DynamicResource LogoFixedAccentColor}" />
-        <TextBlock Text="WALLET" Foreground="{DynamicResource LogoFixedForegroundColor}" />
-      </StackPanel>
-    </DataTemplate>
-
     <DataTemplate x:Key="SearchBar">
       <searchBar:SearchBar DataContext="{Binding #UserControl.DataContext.SearchBar}" VerticalAlignment="Stretch"
                            HorizontalAlignment="Stretch"
