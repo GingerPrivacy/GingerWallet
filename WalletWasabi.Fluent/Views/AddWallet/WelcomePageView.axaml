@@ -114,7 +114,7 @@
         <!-- Get started -->
         <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center">
           <StackPanel DockPanel.Dock="Bottom" Spacing="10">
-            <TextBlock Text="Welcome to Wasabi Wallet" FontSize="30" HorizontalAlignment="Center" />
+            <TextBlock Text="Welcome to Ginger Wallet" FontSize="30" HorizontalAlignment="Center" />
 
             <TextBlock TextAlignment="Center" Text="An easy to use, privacy focused, open source bitcoin wallet." FontWeight="Light" />
           </StackPanel>
@@ -241,7 +241,7 @@
 
           <StackPanel Grid.Column="1" Grid.Row="2">
             <TextBlock Name="FriendsTextBlock" Text="Friends Don't Pay" Classes="title2" />
-            <TextBlock Text="You won't pay the coordination fee for coins received from other Wasabi coinjoins." Classes="text" />
+            <TextBlock Text="You won't pay the coordination fee for coins received from other Ginger coinjoins." Classes="text" />
           </StackPanel>
         </Grid>
       </Carousel>

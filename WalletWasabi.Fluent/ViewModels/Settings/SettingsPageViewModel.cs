@@ -55,7 +55,7 @@ public partial class SettingsPageViewModel : DialogViewModelBase<Unit>
 		// Show restart notification when needed only if this page is not active.
 		UiContext.ApplicationSettings.IsRestartNeeded
 				 .Where(x => x && !IsActive)
-				 .Do(_ => NotificationHelpers.Show(new RestartViewModel("To apply the new setting, Wasabi Wallet needs to be restarted")))
+				 .Do(_ => NotificationHelpers.Show(new RestartViewModel("To apply the new setting, Ginger Wallet needs to be restarted")))
 				 .Subscribe();
 	}
 
