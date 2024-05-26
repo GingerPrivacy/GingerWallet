@@ -17,7 +17,7 @@
     </DockPanel>
 
     <DockPanel>
-      <TextBlock Text="Run Wasabi when computer starts" />
+      <TextBlock Text="Run Ginger when computer starts" />
       <ToggleSwitch IsChecked="{Binding RunOnSystemStartup}" Command="{Binding StartupCommand}" />
     </DockPanel>
 
@@ -49,7 +49,7 @@
     </DockPanel>
 
     <DockPanel IsVisible="{Binding Settings.UseTor}">
-      <TextBlock Text="Terminate Tor when Wasabi shuts down" />
+      <TextBlock Text="Terminate Tor when Ginger shuts down" />
       <ToggleSwitch IsChecked="{Binding Settings.TerminateTorOnExit}" />
     </DockPanel>
 
