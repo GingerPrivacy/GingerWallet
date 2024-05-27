@@ -29,6 +29,11 @@ public class NetworkJsonConverterNg : JsonConverter<Network>
 
 		networkString = reader.GetString()!.Trim();
 
+		if (networkString == nameof(Network.TestNet))
+		{
+			networkString = nameof(Network.RegTest);
+		}
+
 		if ("regression".Equals(networkString, StringComparison.OrdinalIgnoreCase))
 		{
 			return Network.RegTest;

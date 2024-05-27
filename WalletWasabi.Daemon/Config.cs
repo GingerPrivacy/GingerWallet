@@ -289,6 +289,12 @@ public class Config
 	{
 		StringValue stringValue = GetStringValue(key, value, cliArgs);
 
+		// Disables TestNet
+		if (stringValue.EffectiveValue == nameof(Network.TestNet))
+		{
+			stringValue = new StringValue(value, value, ValueSource.Disk);
+		}
+
 		return new NetworkValue(
 			Value: Network.GetNetwork(stringValue.Value) ?? throw new ArgumentException("Network", $"Unknown network '{stringValue.Value}'"),
 			EffectiveValue: Network.GetNetwork(stringValue.EffectiveValue) ?? throw new ArgumentException("Network", $"Unknown network '{stringValue.EffectiveValue}'"),
