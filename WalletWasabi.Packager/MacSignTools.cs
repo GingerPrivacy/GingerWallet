@@ -22,7 +22,7 @@ public static class MacSignTools
 		string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 		string removableDriveFolder = Tools.GetSingleUsbDrive();
 
-		var srcZipFileNamePattern = "WasabiToNotarize-*";
+		var srcZipFileNamePattern = "GingerToNotarize-*";
 		var files = Directory.GetFiles(removableDriveFolder, srcZipFileNamePattern);
 		if (files.Length != 2)
 		{
@@ -47,7 +47,7 @@ public static class MacSignTools
 		{
 			var zipFile = Path.GetFileName(zipPath);
 			var versionPrefix = Path.GetFileNameWithoutExtension(zipPath).Split('-')[1]; // Example: "WasabiToNotarize-2.0.0.0-arm64.zip or WasabiToNotarize-2.0.0.0.zip ".
-			var workingDir = Path.Combine(desktopPath, "wasabiTemp");
+			var workingDir = Path.Combine(desktopPath, "gingerTemp");
 			var dmgPath = Path.Combine(workingDir, "dmg");
 			var unzippedPath = Path.Combine(workingDir, "unzipped");
 			var appName = $"{Constants.AppName}.app";
@@ -57,10 +57,10 @@ public static class MacSignTools
 			var appResPath = Path.Combine(appContentsPath, "Resources");
 			var appFrameworksPath = Path.Combine(appContentsPath, "Frameworks");
 			var infoFilePath = Path.Combine(appContentsPath, "Info.plist");
-			var dmgFileName = zipFile.Replace("WasabiToNotarize", "Wasabi").Replace("zip", "dmg");
+			var dmgFileName = zipFile.Replace("GingerToNotarize", "Ginger").Replace("zip", "dmg");
 			var dmgFilePath = Path.Combine(workingDir, dmgFileName);
-			var dmgUnzippedFilePath = Path.Combine(workingDir, $"Wasabi.tmp.dmg");
-			var appNotarizeFilePath = Path.Combine(workingDir, $"Wasabi-{versionPrefix}.zip");
+			var dmgUnzippedFilePath = Path.Combine(workingDir, $"Ginger.tmp.dmg");
+			var appNotarizeFilePath = Path.Combine(workingDir, $"Ginger-{versionPrefix}.zip");
 			var contentsPath = Path.GetFullPath(Path.Combine(Program.PackagerProjectDirectory.Replace("\\", "//"), "Content", "Osx"));
 			var entitlementsPath = Path.Combine(contentsPath, "entitlements.plist");
 			var dmgContentsDir = Path.Combine(contentsPath, "Dmg");
