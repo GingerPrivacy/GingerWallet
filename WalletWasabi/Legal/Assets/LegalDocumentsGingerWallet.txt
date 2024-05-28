@@ -1,7 +1,7 @@
 Last Updated: May 28, 2024
 
 
-Version Number: 1
+Version Number: 5
 
 
 =========================================
@@ -437,7 +437,7 @@ CHAPTER III. LEGAL STATEMENT OF GINGER WALLET
 =========================================
 
 
-    InvisibleBit LLC, the creator of Ginger Wallet and owner of the brand, only supports behaviour that is legally acceptable by Próspera, and international legal standards, and strictly rejects all kinds of illegal activities.
+    GingerPrivacy, the creator of Ginger Wallet and owner of the brand, only supports behaviour that is legally acceptable by Próspera, and international legal standards, and strictly rejects all kinds of illegal activities.
 
 
 INFORMATION PROVIDED
