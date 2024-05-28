@@ -44,7 +44,7 @@ public partial class BitcoinTabSettingsViewModel : RoutableViewModel
 
 	public Version BitcoinCoreVersion => Constants.BitcoinCoreVersion;
 
-	public IEnumerable<Network> Networks { get; } = new[] { Network.Main, Network.TestNet, Network.RegTest };
+	public IEnumerable<Network> Networks { get; } = new[] { Network.Main, Network.RegTest };
 
 	private void ValidateBitcoinP2PEndPoint(IValidationErrors errors)
 	{
