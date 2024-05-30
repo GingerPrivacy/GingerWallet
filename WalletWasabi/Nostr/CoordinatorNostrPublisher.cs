@@ -12,19 +12,11 @@ public class CoordinatorNostrPublisher : PeriodicRunner
 {
 	private readonly Uri[] _relayUris = [new("wss://relay.primal.net")];
 
-	public CoordinatorNostrPublisher(TimeSpan period, NostrCoordinator coordinator) : base(period)
+	public CoordinatorNostrPublisher(TimeSpan period, ECPrivKey key, NostrCoordinator coordinator) : base(period)
 	{
-		Client = NostrExtensions.Create(_relayUris, (EndPoint?)null);
 		Coordinator = coordinator;
-
-		// TODO: This key should be on the disk and we should just load it.
-		using var key = new Key();
-		if (!Context.Instance.TryCreateECPrivKey(key.ToBytes(), out var ecPrivKey))
-		{
-			throw new InvalidOperationException("Failed to create ECPrivKey");
-		}
-
-		Key = ecPrivKey;
+		Key = key;
+		Client = NostrExtensions.Create(_relayUris, (EndPoint?)null);
 	}
 
 	private INostrClient Client { get; }

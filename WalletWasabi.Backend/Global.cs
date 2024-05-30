@@ -34,12 +34,17 @@ public class Global : IDisposable
 		HostedServices = new();
 		CoinVerifierHttpClient = WasabiHttpClientFactory.CreateLongLivedHttpClient();
 		HttpClientFactory = httpClientFactory;
+		NostrKeyManager = new(DataDir);
 
 		CoordinatorParameters = new(DataDir);
 		CoinJoinIdStore = CoinJoinIdStore.Create(CoordinatorParameters.CoinJoinIdStoreFilePath);
 
 		// Add Nostr publisher
-		HostedServices.Register<CoordinatorNostrPublisher>(() => new CoordinatorNostrPublisher(TimeSpan.FromMinutes(15), new GingerTestNostrCoordinator()), "Coordinator Nostr Publisher");
+		// It is only supported on Mainnet.
+		if (Config.Network == Network.Main)
+		{
+			HostedServices.Register<CoordinatorNostrPublisher>(() => new CoordinatorNostrPublisher(TimeSpan.FromMinutes(15), NostrKeyManager.Key, new GingerNostrCoordinator()), "Coordinator Nostr Publisher");
+		}
 
 		// We have to find it, because it's cloned by the node and not perfectly cloned (event handlers cannot be cloned.)
 		P2pNode = new(config.Network, config.GetBitcoinP2pEndPoint(), new(), $"/WasabiCoordinator:{Constants.BackendMajorVersion}/");
@@ -71,6 +76,8 @@ public class Global : IDisposable
 	public CoinVerifier? CoinVerifier { get; private set; }
 
 	public Config Config { get; }
+
+	private NostrKeyManager NostrKeyManager { get; }
 
 	private CoordinatorParameters CoordinatorParameters { get; }
 
@@ -204,6 +211,7 @@ public class Global : IDisposable
 					P2pNode.OnTransactionArrived -= wabiSabiCoordinator.BanDoubleSpenders;
 				}
 
+				NostrKeyManager.Dispose();
 				CoinVerifierHttpClient.Dispose();
 				CoinJoinMempoolManager.Dispose();
 
