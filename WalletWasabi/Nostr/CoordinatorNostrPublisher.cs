@@ -11,14 +11,16 @@ namespace WalletWasabi.Nostr;
 public class CoordinatorNostrPublisher : PeriodicRunner
 {
 	private readonly Uri[] _relayUris = [new("wss://relay.primal.net")];
-	private readonly NostrCoordinator _gingerCoordinator = new("Test", "Test Coordinator", new Uri("https://api.testwallet.io/"), Network.TestNet);
 
-	public CoordinatorNostrPublisher(TimeSpan period) : base(period)
+	public CoordinatorNostrPublisher(TimeSpan period, Uri coordinatorUri, Network network) : base(period)
 	{
 		Client = NostrExtensions.Create(_relayUris, (EndPoint?)null);
+		Coordinator = new("Test", "Test Coordinator", coordinatorUri, network);
 	}
 
 	private INostrClient Client { get; }
+
+	private NostrCoordinator Coordinator { get; }
 
 	protected override async Task ActionAsync(CancellationToken cancel)
 	{
@@ -30,7 +32,7 @@ public class CoordinatorNostrPublisher : PeriodicRunner
 		}
 
 		// 2. Generate the discovery event
-		var discoveryEvent = await ecPrivKey.CreateCoordinatorDiscoveryEventAsync(_gingerCoordinator).ConfigureAwait(false);
+		var discoveryEvent = await ecPrivKey.CreateCoordinatorDiscoveryEventAsync(Coordinator).ConfigureAwait(false);
 
 		// 3. Send out the event
 		var cts = new CancellationTokenSource(TimeSpan.FromMinutes(3));
