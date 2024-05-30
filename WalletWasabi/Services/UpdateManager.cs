@@ -19,7 +19,7 @@ namespace WalletWasabi.Services;
 public class UpdateManager : IDisposable
 {
 	private const byte MaxTries = 2;
-	private const string ReleaseURL = "https://api.github.com/repos/zkSNACKs/WalletWasabi/releases/latest";
+	private const string ReleaseURL = "https://api.github.com/repos/GingerPrivacy/GingerWallet/releases/latest";
 
 	public UpdateManager(string dataDir, bool downloadNewVersion, IHttpClient httpClient, UpdateChecker updateChecker)
 	{
@@ -192,7 +192,7 @@ public class UpdateManager : IDisposable
 	private async Task<(Version LatestVersion, string InstallerDownloadUrl, string InstallerFileName, string Sha256SumsUrl, string WasabiSigUrl)> GetLatestReleaseFromGithubAsync(Version targetVersion, CancellationToken cancellationToken)
 	{
 		using HttpRequestMessage message = new(HttpMethod.Get, ReleaseURL);
-		message.Headers.UserAgent.Add(new("WalletWasabi", "2.0"));
+		message.Headers.UserAgent.Add(new("GingerWallet", "2.0"));
 		var response = await HttpClient.SendAsync(message, cancellationToken).ConfigureAwait(false);
 
 		JObject jsonResponse = JObject.Parse(await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false));
@@ -218,7 +218,7 @@ public class UpdateManager : IDisposable
 		}
 
 		string sha256SumsUrl = assetDownloadURLs.First(url => url.Contains("SHA256SUMS.asc"));
-		string wasabiSigUrl = assetDownloadURLs.First(url => url.Contains("SHA256SUMS.wasabisig"));
+		string wasabiSigUrl = assetDownloadURLs.First(url => url.Contains("SHA256SUMS.gingersig"));
 
 		(string url, string fileName) = GetAssetToDownload(assetDownloadURLs);
 
@@ -227,7 +227,7 @@ public class UpdateManager : IDisposable
 
 	private async Task DownloadAndValidateWasabiSignatureAsync(string sha256SumsFilePath, string sha256SumsUrl, string wasabiSigUrl, CancellationToken cancellationToken)
 	{
-		var wasabiSigFilePath = Path.Combine(InstallerDir, "SHA256SUMS.wasabisig");
+		var wasabiSigFilePath = Path.Combine(InstallerDir, "SHA256SUMS.gingersig");
 
 		try
 		{
@@ -252,7 +252,7 @@ public class UpdateManager : IDisposable
 			string message = "";
 			if (ex.StatusCode is HttpStatusCode.NotFound)
 			{
-				message = "Wasabi signature files were not found under the API.";
+				message = "Ginger signature files were not found under the API.";
 			}
 			else
 			{
