@@ -12,37 +12,39 @@ public class CoordinatorNostrPublisher : PeriodicRunner
 {
 	private readonly Uri[] _relayUris = [new("wss://relay.primal.net")];
 
-	public CoordinatorNostrPublisher(TimeSpan period, Uri coordinatorUri, Network network) : base(period)
+	public CoordinatorNostrPublisher(TimeSpan period, NostrCoordinator coordinator) : base(period)
 	{
 		Client = NostrExtensions.Create(_relayUris, (EndPoint?)null);
-		Coordinator = new("Test", "Test Coordinator", coordinatorUri, network);
+		Coordinator = coordinator;
+
+		// TODO: This key should be on the disk and we should just load it.
+		using var key = new Key();
+		if (!Context.Instance.TryCreateECPrivKey(key.ToBytes(), out var ecPrivKey))
+		{
+			throw new InvalidOperationException("Failed to create ECPrivKey");
+		}
+
+		Key = ecPrivKey;
 	}
 
 	private INostrClient Client { get; }
 
 	private NostrCoordinator Coordinator { get; }
 
+	private ECPrivKey Key { get; }
+
 	protected override async Task ActionAsync(CancellationToken cancel)
 	{
-		// 1. Generate a new private key
-		var key = new Key();
-		if (!Context.Instance.TryCreateECPrivKey(key.ToBytes(), out var ecPrivKey))
-		{
-			throw new InvalidOperationException("Failed to create ECPrivKey");
-		}
+		var discoveryEvent = await Key.CreateCoordinatorDiscoveryEventAsync(Coordinator).ConfigureAwait(false);
 
-		// 2. Generate the discovery event
-		var discoveryEvent = await ecPrivKey.CreateCoordinatorDiscoveryEventAsync(Coordinator).ConfigureAwait(false);
-
-		// 3. Send out the event
-		var cts = new CancellationTokenSource(TimeSpan.FromMinutes(3));
-		var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cts.Token, cancel);
+		using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(3));
+		using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cts.Token, cancel);
 		await Client.PublishAsync([discoveryEvent], linkedCts.Token).ConfigureAwait(false);
+	}
 
-		// 4. Clean up
-		key.Dispose();
-		ecPrivKey.Dispose();
-		cts.Dispose();
-		linkedCts.Dispose();
+	public override void Dispose()
+	{
+		Key.Dispose();
+		base.Dispose();
 	}
 }
