@@ -49,11 +49,11 @@ public class ConfigManagerNgTests
 			=> $$"""
 			{
 			  "Network": "Main",
-			  "MainNetBackendUri": "https://api.wasabiwallet.io/",
-			  "TestNetClearnetBackendUri": "https://api.wasabiwallet.co/",
+			  "MainNetBackendUri": "https://api.gingerwallet.io/",
+			  "TestNetClearnetBackendUri": "https://api.gingerwallet.co/",
 			  "RegTestBackendUri": "http://localhost:37127/",
-			  "MainNetCoordinatorUri": "https://api.wasabiwallet.io/",
-			  "TestNetCoordinatorUri": "https://api.wasabiwallet.co/",
+			  "MainNetCoordinatorUri": "https://api.gingerwallet.io/",
+			  "TestNetCoordinatorUri": "https://api.gingerwallet.co/",
 			  "RegTestCoordinatorUri": "http://localhost:37127/",
 			  "UseTor": "Enabled",
 			  "TerminateTorOnExit": false,

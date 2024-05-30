@@ -29,8 +29,8 @@ public static class Program
 	public const string DaemonExecutableName = Constants.DaemonExecutableName;
 	public const string ExecutableName = Constants.ExecutableName;
 
-	private const string WasabiPrivateKeyFilePath = @"C:\wasabi\Wasabi.privkey";
-	private const string WasabiPublicKeyFilePath = @"C:\wasabi\Wasabi.pubkey";
+	private const string WasabiPrivateKeyFilePath = @"C:\ginger\Ginger.privkey";
+	private const string WasabiPublicKeyFilePath = @"C:\ginger\Ginger.pubkey";
 
 	/// <remarks>Only 64-bit platforms are supported for now.</remarks>
 	/// <seealso href="https://docs.microsoft.com/en-us/dotnet/articles/core/rid-catalog"/>
@@ -128,7 +128,7 @@ public static class Program
 				string publishedFolder = Path.Combine(BinDistDirectory, target);
 
 				Console.WriteLine("Move created .msi");
-				var msiPath = Path.Combine(WixProjectDirectory, "bin", "Release", "Wasabi.msi");
+				var msiPath = Path.Combine(WixProjectDirectory, "bin", "Release", "Ginger.msi");
 				var msiFileName = Path.GetFileNameWithoutExtension(msiPath);
 				var newMsiPath = Path.Combine(BinDistDirectory, $"{msiFileName}-{VersionPrefix}.msi");
 
@@ -140,7 +140,7 @@ public static class Program
 
 				if (!File.Exists(msiPath))
 				{
-					throw new Exception(".msi does not exist. Expected path: Wasabi.msi.");
+					throw new Exception(".msi does not exist. Expected path: Ginger.msi.");
 				}
 
 				File.Move(msiPath, newMsiPath);
@@ -149,14 +149,14 @@ public static class Program
 				string pfxPassword = PasswordConsole.ReadPassword();
 
 				// Sign code with digicert.
-				StartProcessAndWaitForExit("cmd", BinDistDirectory, $"signtool sign /d \"Wasabi Wallet\" /f \"{PfxPath}\" /p {pfxPassword} /t http://timestamp.digicert.com /a \"{newMsiPath}\" && exit");
+				StartProcessAndWaitForExit("cmd", BinDistDirectory, $"signtool sign /d \"Ginger Wallet\" /f \"{PfxPath}\" /p {pfxPassword} /t http://timestamp.digicert.com /a \"{newMsiPath}\" && exit");
 
 				await IoHelpers.TryDeleteDirectoryAsync(publishedFolder).ConfigureAwait(false);
 				Console.WriteLine($"Deleted {publishedFolder}");
 			}
 			else if (target.StartsWith("osx", StringComparison.OrdinalIgnoreCase))
 			{
-				string dmgFileName = target.Contains("arm") ? $"Wasabi-{VersionPrefix}.dmg" : $"Wasabi-{VersionPrefix}-arm64.dmg";
+				string dmgFileName = target.Contains("arm") ? $"Ginger-{VersionPrefix}.dmg" : $"Ginger-{VersionPrefix}-arm64.dmg";
 				string destinationFilePath = Path.Combine(BinDistDirectory, dmgFileName);
 				if (File.Exists(destinationFilePath))
 				{
@@ -344,7 +344,7 @@ public static class Program
 
 			if (target.StartsWith("win"))
 			{
-				ZipFile.CreateFromDirectory(currentBinDistDirectory, Path.Combine(deliveryPath, $"Wasabi-{deterministicFileNameTag}-{GetPackageTargetPostfix(target)}.zip"));
+				ZipFile.CreateFromDirectory(currentBinDistDirectory, Path.Combine(deliveryPath, $"Ginger-{deterministicFileNameTag}-{GetPackageTargetPostfix(target)}.zip"));
 
 				if (IsContinuousDelivery)
 				{
@@ -353,7 +353,7 @@ public static class Program
 			}
 			else if (target.StartsWith("osx"))
 			{
-				ZipFile.CreateFromDirectory(currentBinDistDirectory, Path.Combine(deliveryPath, $"Wasabi-{deterministicFileNameTag}-{GetPackageTargetPostfix(target)}.zip"));
+				ZipFile.CreateFromDirectory(currentBinDistDirectory, Path.Combine(deliveryPath, $"Ginger-{deterministicFileNameTag}-{GetPackageTargetPostfix(target)}.zip"));
 
 				if (IsContinuousDelivery)
 				{
@@ -364,7 +364,7 @@ public static class Program
 				var postfix = target.Contains("arm64") ? "-arm64" : "";
 
 				// After notarization this will be the filename of the dmg file.
-				var zipFileName = $"WasabiToNotarize-{deterministicFileNameTag}{postfix}.zip";
+				var zipFileName = $"GingerToNotarize-{deterministicFileNameTag}{postfix}.zip";
 				var zipFilePath = Path.Combine(BinDistDirectory, zipFileName);
 
 				ZipFile.CreateFromDirectory(currentBinDistDirectory, zipFilePath);
@@ -387,7 +387,7 @@ public static class Program
 			}
 			else if (target.StartsWith("linux"))
 			{
-				ZipFile.CreateFromDirectory(currentBinDistDirectory, Path.Combine(deliveryPath, $"Wasabi-{deterministicFileNameTag}-{GetPackageTargetPostfix(target)}.zip"));
+				ZipFile.CreateFromDirectory(currentBinDistDirectory, Path.Combine(deliveryPath, $"Ginger-{deterministicFileNameTag}-{GetPackageTargetPostfix(target)}.zip"));
 
 				if (IsContinuousDelivery)
 				{
@@ -401,7 +401,7 @@ public static class Program
 					throw new Exception($"{publishedFolder} does not exist.");
 				}
 
-				var newFolderName = $"Wasabi-{VersionPrefix}";
+				var newFolderName = $"Ginger-{VersionPrefix}";
 				var newFolderPath = Path.Combine(BinDistDirectory, newFolderName);
 
 				Console.WriteLine($"# Move '{publishedFolder}' to '{newFolderPath}'.");
@@ -434,7 +434,7 @@ public static class Program
 				var debianFolderRelativePath = Path.Combine(debFolderRelativePath, "DEBIAN");
 				var debianFolderPath = Path.Combine(BinDistDirectory, debianFolderRelativePath);
 				Directory.CreateDirectory(debianFolderPath);
-				newFolderName = "wasabiwallet";
+				newFolderName = "gingerwallet";
 				var linuxWasabiWalletFolder = Tools.LinuxPathCombine(linuxUsrLocalBinFolder, newFolderName);
 				var newFolderRelativePath = Path.Combine(debUsrLocalBinFolderRelativePath, newFolderName);
 				newFolderPath = Path.Combine(BinDistDirectory, newFolderRelativePath);
@@ -460,11 +460,11 @@ public static class Program
 				var controlFileContent = $"Package: {ExecutableName}\n" +
 					$"Priority: optional\n" +
 					$"Section: utils\n" +
-					$"Maintainer: zkSNACKs Ltd <info@zksnacks.com>\n" +
+					$"Maintainer: GingerPrivacy info@gingerwallet.io\n" +
 					$"Version: {VersionPrefix}\n" +
-					$"Homepage: https://wasabiwallet.io\n" +
-					$"Vcs-Git: git://github.com/zkSNACKs/WalletWasabi.git\n" +
-					$"Vcs-Browser: https://github.com/zkSNACKs/WalletWasabi\n" +
+					$"Homepage: https://gingerwallet.io\n" +
+					$"Vcs-Git: git://github.com/GingerPrivacy/GingerWallet.git\n" +
+					$"Vcs-Browser: https://github.com/GingerPrivacy/GingerWallet\n" +
 					$"Architecture: amd64\n" +
 					$"License: Open Source (MIT)\n" +
 					$"Installed-Size: {installedSizeKb}\n" +
@@ -476,7 +476,7 @@ public static class Program
 
 				string postInstScriptContent = """
 											   #!/bin/sh
-											   /usr/local/bin/wasabiwallet/Microservices/Binaries/lin64/hwi installudevrules
+											   /usr/local/bin/gingerwallet/Microservices/Binaries/lin64/hwi installudevrules
 											   exit 0
 											   """.ReplaceLineEndings("\n");
 
@@ -486,8 +486,8 @@ public static class Program
 				var desktopFilePath = Path.Combine(debUsrAppFolderPath, $"{ExecutableName}.desktop");
 				var desktopFileContent = $"[Desktop Entry]\n" +
 					$"Type=Application\n" +
-					$"Name=Wasabi Wallet\n" +
-					$"StartupWMClass=Wasabi Wallet\n" +
+					$"Name=Ginger Wallet\n" +
+					$"StartupWMClass=Ginger Wallet\n" +
 					$"GenericName=Bitcoin Wallet\n" +
 					$"Comment=Privacy focused Bitcoin wallet.\n" +
 					$"Icon={ExecutableName}\n" +
@@ -525,7 +525,7 @@ public static class Program
 				await IoHelpers.TryDeleteDirectoryAsync(debFolderPath).ConfigureAwait(false);
 
 				string oldDeb = Path.Combine(BinDistDirectory, $"{ExecutableName}_{VersionPrefix}_amd64.deb");
-				string newDeb = Path.Combine(BinDistDirectory, $"Wasabi-{VersionPrefix}.deb");
+				string newDeb = Path.Combine(BinDistDirectory, $"Ginger-{VersionPrefix}.deb");
 				File.Move(oldDeb, newDeb);
 
 				await IoHelpers.TryDeleteDirectoryAsync(publishedFolder).ConfigureAwait(false);
