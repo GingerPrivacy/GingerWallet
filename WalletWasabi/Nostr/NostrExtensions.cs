@@ -9,14 +9,15 @@ using NNostr.Client;
 
 namespace WalletWasabi.Nostr;
 
-public record NostrCoordinator(string Description, string Name, Uri Uri, Network Network);
-
-public record GingerNostrCoordinator()
-	: NostrCoordinator(
+public record NostrCoordinator(string Description, string Name, Uri Uri, Network Network)
+{
+	public static NostrCoordinator Ginger = new(
 		Description: "Ginger Coordinator | FREE Remix, FREE under 0.01 BTC, FREE for Wasabi mixed coins | SAFE COINJOINS - Illicit actors are not allowed to participate!",
 		Name: "Ginger Coordinator",
 		Uri: new Uri("https://api.gingerwallet.io/"),
 		Network: Network.Main);
+
+};
 
 public static class NostrExtensions
 {

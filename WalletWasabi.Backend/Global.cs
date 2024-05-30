@@ -43,7 +43,7 @@ public class Global : IDisposable
 		// It is only supported on Mainnet.
 		if (Config.Network == Network.Main)
 		{
-			HostedServices.Register<CoordinatorNostrPublisher>(() => new CoordinatorNostrPublisher(TimeSpan.FromMinutes(15), NostrKeyManager.Key, new GingerNostrCoordinator()), "Coordinator Nostr Publisher");
+			HostedServices.Register<CoordinatorNostrPublisher>(() => new CoordinatorNostrPublisher(TimeSpan.FromMinutes(15), NostrKeyManager.Key, NostrCoordinator.Ginger), "Coordinator Nostr Publisher");
 		}
 
 		// We have to find it, because it's cloned by the node and not perfectly cloned (event handlers cannot be cloned.)
