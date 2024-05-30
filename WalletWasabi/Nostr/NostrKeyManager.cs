@@ -11,18 +11,12 @@ public class NostrKeyManager : IDisposable
 
 	public NostrKeyManager(string dataDir)
 	{
-		using var key = GetOrCreateKey(dataDir);
-		if (!Context.Instance.TryCreateECPrivKey(key.ToBytes(), out var ecPrivKey))
-		{
-			throw new InvalidOperationException("Failed to create ECPrivKey");
-		}
-
-		Key = ecPrivKey;
+		Key = GetOrCreateKey(dataDir);
 	}
 
 	public ECPrivKey Key { get; }
 
-	private Key GetOrCreateKey(string dataDir)
+	private ECPrivKey GetOrCreateKey(string dataDir)
 	{
 		var folderPath = Path.Combine(dataDir, _folderName);
 		var keyPath = Path.Combine(folderPath, _keyFileName);
@@ -35,13 +29,14 @@ public class NostrKeyManager : IDisposable
 		if (File.Exists(keyPath))
 		{
 			var keyBytes = File.ReadAllBytes(keyPath);
-			return new Key(keyBytes);
+			return ECPrivKey.Create(keyBytes);
 		}
 		else
 		{
-			var key = new Key();
-			File.WriteAllBytes(keyPath, key.ToBytes());
-			return key;
+			using var key = new Key();
+			var keyBytes = key.ToBytes();
+			File.WriteAllBytes(keyPath, keyBytes);
+			return ECPrivKey.Create(keyBytes);
 		}
 	}
 
