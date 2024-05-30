@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using NBitcoin;
+using ReactiveUI;
 using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Validation;
@@ -36,6 +37,9 @@ public partial class BitcoinTabSettingsViewModel : RoutableViewModel
 
 		_bitcoinP2PEndPoint = settings.BitcoinP2PEndPoint;
 		_dustThreshold = settings.DustThreshold;
+
+		this.WhenAnyValue(x => x.Settings.BitcoinP2PEndPoint)
+			.Subscribe(x => BitcoinP2PEndPoint = x);
 	}
 
 	public bool IsReadOnly => Settings.IsOverridden;
@@ -44,7 +48,7 @@ public partial class BitcoinTabSettingsViewModel : RoutableViewModel
 
 	public Version BitcoinCoreVersion => Constants.BitcoinCoreVersion;
 
-	public IEnumerable<Network> Networks { get; } = new[] { Network.Main, Network.TestNet, Network.RegTest };
+	public IEnumerable<Network> Networks { get; } = new[] { Network.Main, Network.RegTest };
 
 	private void ValidateBitcoinP2PEndPoint(IValidationErrors errors)
 	{
