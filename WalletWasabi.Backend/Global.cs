@@ -111,9 +111,14 @@ public class Global : IDisposable
 				CoinVerifierHttpClient.BaseAddress = url;
 				CoinVerifierHttpClient.Timeout = CoinVerifierApiClient.ApiRequestTimeout;
 
+				if (!Enum.TryParse(CoordinatorParameters.RuntimeCoordinatorConfig.CoinVerifierProvider, out CoinVerifierProvider provider))
+				{
+					throw new ArgumentException($"CoinVerifierProvider is invalid in {nameof(WabiSabiConfig)}.");
+				}
+
 				WhiteList = await Whitelist.CreateAndLoadFromFileAsync(CoordinatorParameters.WhitelistFilePath, wabiSabiConfig, cancel).ConfigureAwait(false);
-				CoinVerifierApiClient = new CoinVerifierApiClient(CoordinatorParameters.RuntimeCoordinatorConfig.CoinVerifierApiAuthToken, CoinVerifierHttpClient);
-				CoinVerifier = new(CoinJoinIdStore, CoinVerifierApiClient, WhiteList, CoordinatorParameters.RuntimeCoordinatorConfig, auditsDirectoryPath: Path.Combine(CoordinatorParameters.CoordinatorDataDir, "CoinVerifierAudits"));
+				CoinVerifierApiClient = new CoinVerifierApiClient(provider, wabiSabiConfig.CoinVerifierApiAuthToken, wabiSabiConfig.CoinVerifierApiSecret, CoinVerifierHttpClient);
+				CoinVerifier = new(CoinJoinIdStore, CoinVerifierApiClient, WhiteList, wabiSabiConfig, auditsDirectoryPath: Path.Combine(CoordinatorParameters.CoordinatorDataDir, "CoinVerifierAudits"));
 
 				Logger.LogInfo("CoinVerifier created successfully.");
 			}

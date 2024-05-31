@@ -30,7 +30,10 @@ public class CoinVerifier : IAsyncDisposable
 		Whitelist = whitelist ?? new(Enumerable.Empty<Innocent>(), string.Empty, wabiSabiConfig);
 		WabiSabiConfig = wabiSabiConfig;
 		VerifierAuditArchiver = auditArchiver ?? new("test/directory/path");
+		RiskConfig = new(wabiSabiConfig);
 	}
+
+	public CoinVerifierRiskConfig RiskConfig { get; set; }
 
 	public event EventHandler<Coin>? CoinBlacklisted;
 
@@ -136,31 +139,6 @@ public class CoinVerifier : IAsyncDisposable
 		}
 	}
 
-	private (bool ShouldBan, bool ShouldRemove) CheckVerifierResult(ApiResponseItem response, int blockchainHeightOfCoin)
-	{
-		if (WabiSabiConfig.RiskFlags is null)
-		{
-			return (false, false);
-		}
-
-		var flagIds = response.Cscore_section.Cscore_info.Select(cscores => cscores.Id);
-
-		if (flagIds.Except(WabiSabiConfig.RiskFlags).Any())
-		{
-			var unknownIds = flagIds.Except(WabiSabiConfig.RiskFlags).ToList();
-			unknownIds.ForEach(id => Logger.LogWarning($"Flag {id} is unknown for the backend!"));
-		}
-
-		bool shouldBan = flagIds.Any(id => WabiSabiConfig.RiskFlags.Contains(id));
-
-		// When to remove:
-		bool shouldRemove = shouldBan || // If we ban it.
-			!response.Report_info_section.Address_used || // If address_used is false (API provider doesn't know about it).
-			blockchainHeightOfCoin > response.Report_info_section.Report_block_height; // If the report_block_height is less than the block height of the coin. This means that the API provider didn't processed it, yet. On equal or if the report_height is bigger,then the API provider processed that block for sure.
-
-		return (shouldBan, shouldRemove);
-	}
-
 	public bool TryScheduleVerification(Coin coin, DateTimeOffset inputRegistrationEndTime, int confirmations, bool oneHop, int currentBlockHeight, CancellationToken cancellationToken)
 	{
 		var startTime = inputRegistrationEndTime - WabiSabiConfig.CoinVerifierStartBefore;
@@ -247,25 +225,25 @@ public class CoinVerifier : IAsyncDisposable
 					using CancellationTokenSource requestTimeoutCts = new(TotalApiRequestTimeout);
 					using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(verificationCancellationToken, item.Token, requestTimeoutCts.Token);
 
-					var apiResponseItem = await CoinVerifierApiClient.SendRequestAsync(coin.ScriptPubKey, linkedCts.Token).ConfigureAwait(false);
+					var apiResponseItem = await CoinVerifierApiClient.SendRequestAsync(coin, linkedCts.Token).ConfigureAwait(false);
 
 					// This calculates in which block the coin got into the blockchain.
 					// So we can compare it to the latest block height that the API provider has already processed.
 					int blockchainHeightOfCoin = currentBlockHeight - (confirmations - 1);
 
-					(bool shouldBan, bool shouldRemove) = CheckVerifierResult(apiResponseItem, blockchainHeightOfCoin);
+					apiResponseItem.Evaluate(blockchainHeightOfCoin, RiskConfig);
 
 					// We got a definitive answer.
-					if (shouldBan)
+					if (apiResponseItem.ShouldBan)
 					{
 						CoinBlacklisted?.SafeInvoke(this, coin);
 					}
-					else if (!shouldRemove)
+					else if (!apiResponseItem.ShouldRemove)
 					{
 						Whitelist.Add(coin.Outpoint);
 					}
 
-					var result = new CoinVerifyResult(coin, ShouldBan: shouldBan, ShouldRemove: shouldRemove);
+					var result = new CoinVerifyResult(coin, ShouldBan: apiResponseItem.ShouldBan, ShouldRemove: apiResponseItem.ShouldRemove);
 					item.SetResult(result);
 					VerifierAuditArchiver.LogVerificationResult(result, Reason.RemoteApiChecked, apiResponseItem);
 				}
@@ -273,7 +251,7 @@ public class CoinVerifier : IAsyncDisposable
 				{
 					var result = new CoinVerifyResult(coin, ShouldBan: false, ShouldRemove: true);
 					item.SetResult(result);
-					VerifierAuditArchiver.LogVerificationResult(result, Reason.Exception, apiResponseItem: null, exception: ex);
+					VerifierAuditArchiver.LogVerificationResult(result, Reason.Exception, apiResponse: null, exception: ex);
 
 					Logger.LogWarning($"Coin verification has failed for coin '{coin.Outpoint}' with '{ex}'.");
 

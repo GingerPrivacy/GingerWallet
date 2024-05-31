@@ -157,6 +157,15 @@ public class WabiSabiConfig : ConfigBase
 	[JsonConverter(typeof(IntegerArrayJsonConverter))]
 	public IEnumerable<int> RiskFlags { get; set; } = Enumerable.Empty<int>();
 
+	[DefaultValueIntegerArray("")]
+	[JsonProperty(PropertyName = "RiskScores", DefaultValueHandling = DefaultValueHandling.Populate)]
+	[JsonConverter(typeof(DoubleArrayJsonConverter))]
+	public IEnumerable<double> RiskScores { get; set; } = Enumerable.Empty<double>();
+
+	[DefaultValue("")]
+	[JsonProperty(PropertyName = "CoinVerifierProvider", DefaultValueHandling = DefaultValueHandling.Populate)]
+	public string CoinVerifierProvider { get; set; } = "";
+
 	[DefaultValue("")]
 	[JsonProperty(PropertyName = "CoinVerifierApiUrl", DefaultValueHandling = DefaultValueHandling.Populate)]
 	public string CoinVerifierApiUrl { get; set; } = "";
@@ -164,6 +173,10 @@ public class WabiSabiConfig : ConfigBase
 	[DefaultValue("")]
 	[JsonProperty(PropertyName = "CoinVerifierApiAuthToken", DefaultValueHandling = DefaultValueHandling.Populate)]
 	public string CoinVerifierApiAuthToken { get; set; } = "";
+
+	[DefaultValue("")]
+	[JsonProperty(PropertyName = "CoinVerifierApiSecret", DefaultValueHandling = DefaultValueHandling.Populate)]
+	public string CoinVerifierApiSecret { get; set; } = "";
 
 	[DefaultValueTimeSpan("0d 0h 2m 0s")]
 	[JsonProperty(PropertyName = "CoinVerifierStartBefore", DefaultValueHandling = DefaultValueHandling.Populate)]
@@ -264,10 +277,10 @@ public class WabiSabiConfig : ConfigBase
 			SeverityInBitcoinsPerHour: DoSSeverity.ToDecimal(MoneyUnit.BTC),
 			MinTimeForFailedToVerify: DoSMinTimeForFailedToVerify,
 			MinTimeForCheating: DoSMinTimeForCheating,
-			PenaltyFactorForDisruptingConfirmation: (decimal) DoSPenaltyFactorForDisruptingConfirmation,
-			PenaltyFactorForDisruptingSignalReadyToSign: (decimal) DoSPenaltyFactorForDisruptingSignalReadyToSign,
-			PenaltyFactorForDisruptingSigning: (decimal) DoSPenaltyFactorForDisruptingSigning,
-			PenaltyFactorForDisruptingByDoubleSpending: (decimal) DoSPenaltyFactorForDisruptingByDoubleSpending,
+			PenaltyFactorForDisruptingConfirmation: (decimal)DoSPenaltyFactorForDisruptingConfirmation,
+			PenaltyFactorForDisruptingSignalReadyToSign: (decimal)DoSPenaltyFactorForDisruptingSignalReadyToSign,
+			PenaltyFactorForDisruptingSigning: (decimal)DoSPenaltyFactorForDisruptingSigning,
+			PenaltyFactorForDisruptingByDoubleSpending: (decimal)DoSPenaltyFactorForDisruptingByDoubleSpending,
 			MinTimeInPrison: DoSMinTimeInPrison);
 
 	private static ImmutableSortedSet<ScriptType> GetScriptTypes(bool p2wpkh, bool p2tr, bool p2pkh, bool p2sh, bool p2wsh)
