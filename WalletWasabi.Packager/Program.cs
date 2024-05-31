@@ -144,12 +144,8 @@ public static class Program
 				}
 
 				File.Move(msiPath, newMsiPath);
-
-				Console.Write("Enter Code Signing Certificate Password: ");
-				string pfxPassword = PasswordConsole.ReadPassword();
-
-				// Sign code with digicert.
-				StartProcessAndWaitForExit("cmd", BinDistDirectory, $"signtool sign /d \"Ginger Wallet\" /f \"{PfxPath}\" /p {pfxPassword} /t http://timestamp.digicert.com /a \"{newMsiPath}\" && exit");
+				// You might need to: set PATH="C:\Program Files (x86)\Microsoft SDKs\ClickOnce\SignTool".
+				StartProcessAndWaitForExit("cmd", BinDistDirectory, $"signtool sign /sha1 \"1ea07c6629c5b0b23a4a108e542d77fea9ad3840\" /tr http://time.certum.pl /td sha256 /fd sha256 /v \"{newMsiPath}\" && exit");
 
 				await IoHelpers.TryDeleteDirectoryAsync(publishedFolder).ConfigureAwait(false);
 				Console.WriteLine($"Deleted {publishedFolder}");
