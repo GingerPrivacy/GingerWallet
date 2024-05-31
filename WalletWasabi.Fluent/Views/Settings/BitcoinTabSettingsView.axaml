@@ -40,7 +40,11 @@
                 ToolTip.Tip="Wasabi will download blocks from a full node you control.">
       <TextBlock Text="Bitcoin P2P Endpoint" />
       <PrivacyContentControl PrivacyReplacementMode="Text" UseOpacity="True">
-        <TextBox Text="{Binding BitcoinP2PEndPoint}" />
+        <TextBox Text="{Binding BitcoinP2PEndPoint}">
+          <Interaction.Behaviors>
+            <TextBoxAutoSelectTextBehavior />
+          </Interaction.Behaviors>
+        </TextBox>
       </PrivacyContentControl>
     </StackPanel>
 

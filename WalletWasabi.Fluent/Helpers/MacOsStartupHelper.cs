@@ -17,7 +17,7 @@ public static class MacOsStartupHelper
 		<plist version=\"1.0\">
 		<dict>
 		    <key>Label</key>
-		    <string>com.wasabiwallet.startup</string>
+		    <string>com.gingerwallet.startup</string>
 			<key>ProgramArguments</key>
 			<array>
 				<string>{EnvironmentHelpers.GetExecutablePath()}</string>

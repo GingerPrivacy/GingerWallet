@@ -17,7 +17,7 @@ public class WasabiSignerHelpers
 		ECDSASignature signature = wasabiPrivateKey.Sign(new uint256(computedHash));
 
 		string base64Signature = Convert.ToBase64String(signature.ToDER());
-		var wasabiSignatureFilePath = Path.ChangeExtension(sha256SumsAscFilePath, "wasabisig");
+		var wasabiSignatureFilePath = Path.ChangeExtension(sha256SumsAscFilePath, "gingersig");
 
 		await File.WriteAllTextAsync(wasabiSignatureFilePath, base64Signature).ConfigureAwait(false);
 	}
@@ -28,7 +28,7 @@ public class WasabiSignerHelpers
 		byte[] hash = await GetShaComputedBytesOfFileAsync(sha256SumsAscFilePath).ConfigureAwait(false);
 
 		// Read the signature file
-		var wasabiSignatureFilePath = Path.ChangeExtension(sha256SumsAscFilePath, "wasabisig");
+		var wasabiSignatureFilePath = Path.ChangeExtension(sha256SumsAscFilePath, "gingersig");
 		string signatureText = await File.ReadAllTextAsync(wasabiSignatureFilePath).ConfigureAwait(false);
 		byte[] signatureBytes = Convert.FromBase64String(signatureText);
 
@@ -43,7 +43,7 @@ public class WasabiSignerHelpers
 
 		if (!pubKey.Verify(new uint256(sha256Hash), wasabiSignature))
 		{
-			throw new InvalidOperationException("Invalid wasabi signature.");
+			throw new InvalidOperationException("Invalid ginger signature.");
 		}
 	}
 
@@ -71,7 +71,7 @@ public class WasabiSignerHelpers
 	public static async Task VerifyInstallerFileHashesAsync(string[] finalFiles, string sha256SumsFilePath)
 	{
 		string[] lines = await File.ReadAllLinesAsync(sha256SumsFilePath).ConfigureAwait(false);
-		var hashWithFileNameLines = lines.Where(line => line.Contains("Wasabi-"));
+		var hashWithFileNameLines = lines.Where(line => line.Contains("Ginger-"));
 
 		foreach (var installerFilePath in finalFiles)
 		{
