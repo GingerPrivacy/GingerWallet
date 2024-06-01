@@ -9,8 +9,7 @@ namespace WalletWasabi.Legal;
 
 public class LegalDocuments
 {
-	public static readonly string EmbeddedFilePathForWw1 = Path.Combine(EnvironmentHelpers.GetFullBaseDirectory(), "Legal", "Assets", "LegalDocumentsWw1.txt");
-	public static readonly string EmbeddedFilePathForWw2 = Path.Combine(EnvironmentHelpers.GetFullBaseDirectory(), "Legal", "Assets", "LegalDocumentsWw2.txt");
+	public static readonly string EmbeddedFilePathForGingerWallet = Path.Combine(EnvironmentHelpers.GetFullBaseDirectory(), "Legal", "Assets", "LegalDocumentsGingerWallet.txt");
 
 	public LegalDocuments(Version version, string content)
 	{
