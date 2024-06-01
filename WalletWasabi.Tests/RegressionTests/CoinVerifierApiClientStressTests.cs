@@ -29,6 +29,7 @@ public class CoinVerifierApiClientStressTests
 		using HttpResponseMessage response = new(System.Net.HttpStatusCode.OK);
 		response.Content = new StringContent(GenerateCleanJsonReport());
 
+		int maxParallelRequestCount = 1;
 		using MockHttpClient mockHttpClient = new();
 		mockHttpClient.BaseAddress = new Uri("https://verifier.local/");
 		mockHttpClient.OnSendAsync = async req =>
@@ -36,7 +37,7 @@ public class CoinVerifierApiClientStressTests
 			long count = Interlocked.Increment(ref concurrentlyRunningRequestsCount);
 
 			// Record failure.
-			if (count > CoinVerifierApiClient.MaxParallelRequestCount)
+			if (count > maxParallelRequestCount)
 			{
 				Interlocked.Increment(ref totalFailures);
 			}
@@ -48,13 +49,15 @@ public class CoinVerifierApiClientStressTests
 			return response;
 		};
 
-		await using CoinVerifierApiClient apiClient = new(apiToken: "token", mockHttpClient);
+		await using CoinVerifierApiClient apiClient = new(CoinVerifierProvider.CVP1, "token", "secret", mockHttpClient);
+		maxParallelRequestCount = apiClient.MaxParallelRequestCount;
+		Coin coin = new();
 
-		Task<ApiResponseItem>[] tasks = new Task<ApiResponseItem>[tasksToRun];
+		Task<ApiResponse>[] tasks = new Task<ApiResponse>[tasksToRun];
 
 		for (int i = 0; i < tasksToRun; i++)
 		{
-			tasks[i] = apiClient.SendRequestAsync(Script.Empty, testDeadlineCts.Token);
+			tasks[i] = apiClient.SendRequestAsync(coin, testDeadlineCts.Token);
 		}
 
 		await Task.WhenAll(tasks);

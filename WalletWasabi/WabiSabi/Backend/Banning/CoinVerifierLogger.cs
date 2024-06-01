@@ -49,31 +49,13 @@ public class CoinVerifierLogger : IAsyncDisposable
 		AddLogLineAndFormatCsv(DateTimeOffset.UtcNow, AuditEventType.Round, logAsArray);
 	}
 
-	public void LogVerificationResult(CoinVerifyResult coinVerifyResult, Reason reason, ApiResponseItem? apiResponseItem = null, Exception? exception = null)
+	public void LogVerificationResult(CoinVerifyResult coinVerifyResult, Reason reason, ApiResponse? apiResponse = null, Exception? exception = null)
 	{
 		string details = "No details";
 
-		if (apiResponseItem is not null)
+		if (apiResponse is not null)
 		{
-			var reportId = apiResponseItem?.Report_info_section.Report_id;
-			var reportHeight = apiResponseItem?.Report_info_section.Report_block_height.ToString();
-			var reportType = apiResponseItem?.Report_info_section.Report_type;
-			var ids = apiResponseItem?.Cscore_section.Cscore_info?.Select(x => x.Id) ?? Enumerable.Empty<int>();
-			var categories = apiResponseItem?.Cscore_section.Cscore_info.Select(x => x.Name) ?? Enumerable.Empty<string>();
-			var addressUsed = apiResponseItem?.Report_info_section.Address_used ?? false;
-
-			var detailsArray = new string[]
-			{
-					reportId ?? "ReportID None",
-					reportHeight ?? "ReportHeight None",
-					reportType ?? "ReportType None",
-					addressUsed ? "Address used" : "Address not used",
-					ids.Any() ? string.Join(' ', ids) : "FlagIds None",
-					categories.Any() ? string.Join(' ', categories) : "Risk categories None"
-			};
-
-			// Separate the different values of the ApiResponseItem with '|', so the details will be one value in the CSV file.
-			details = string.Join("|", detailsArray);
+			details = apiResponse.GetDetails();
 		}
 		else if (exception is not null)
 		{
