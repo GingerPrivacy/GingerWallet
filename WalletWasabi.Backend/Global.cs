@@ -11,7 +11,6 @@ using WalletWasabi.Blockchain.BlockFilters;
 using WalletWasabi.Blockchain.Blocks;
 using WalletWasabi.Helpers;
 using WalletWasabi.Logging;
-using WalletWasabi.Nostr;
 using WalletWasabi.Services;
 using WalletWasabi.WabiSabi;
 using WalletWasabi.WabiSabi.Backend;
@@ -34,16 +33,9 @@ public class Global : IDisposable
 		HostedServices = new();
 		CoinVerifierHttpClient = WasabiHttpClientFactory.CreateLongLivedHttpClient();
 		HttpClientFactory = httpClientFactory;
-		NostrKeyManager = new(DataDir);
 
 		CoordinatorParameters = new(DataDir);
 		CoinJoinIdStore = CoinJoinIdStore.Create(CoordinatorParameters.CoinJoinIdStoreFilePath);
-
-		// Add Nostr publisher if enabled
-		if (Config.EnableNostrCoordinatorPublisher)
-		{
-			HostedServices.Register<CoordinatorNostrPublisher>(() => new CoordinatorNostrPublisher(TimeSpan.FromMinutes(15), NostrKeyManager.Key, NostrCoordinator.GetCoordinator(Config.Network)), "Coordinator Nostr Publisher");
-		}
 
 		// We have to find it, because it's cloned by the node and not perfectly cloned (event handlers cannot be cloned.)
 		P2pNode = new(config.Network, config.GetBitcoinP2pEndPoint(), new(), $"/WasabiCoordinator:{Constants.BackendMajorVersion}/");
@@ -75,8 +67,6 @@ public class Global : IDisposable
 	public CoinVerifier? CoinVerifier { get; private set; }
 
 	public Config Config { get; }
-
-	private NostrKeyManager NostrKeyManager { get; }
 
 	private CoordinatorParameters CoordinatorParameters { get; }
 
@@ -215,7 +205,6 @@ public class Global : IDisposable
 					P2pNode.OnTransactionArrived -= wabiSabiCoordinator.BanDoubleSpenders;
 				}
 
-				NostrKeyManager.Dispose();
 				CoinVerifierHttpClient.Dispose();
 				CoinJoinMempoolManager.Dispose();
 
