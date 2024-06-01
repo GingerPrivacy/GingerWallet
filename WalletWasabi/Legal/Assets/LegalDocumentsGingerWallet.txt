@@ -145,7 +145,7 @@ Ginger Wallet does not store, send, or receive Bitcoins. Bitcoins exist only by 
 
     The UTXO is an unspent transaction output, the technical term for the amount of digital currency that remains after a cryptocurrency transaction.
 
-    The One Hop transaction is when there is one non-CoinJoin transaction spending only CoinJoin outputs.
+    The One Hop transaction is when there is one non-CoinJoin transaction spending only CoinJoin outputs of the InvisibleBit LLC’s coordinator.
 
 2.2 FEES
 
@@ -160,9 +160,13 @@ Ginger Wallet does not store, send, or receive Bitcoins. Bitcoins exist only by 
 
     The CoinJoin fee, charged by the Service Provider is 0.3% per new UTXO, except if:
 
+     -The UTXO comes directly from a Ginger Wallet CoinJoin transaction used InvisibleBit LLC’s coordinator.
+
      -The UTXO comes directly from a Wasabi Wallet 2.x CoinJoin transaction used zkSNACKs’ coordinator till Jun 1, 2024.
 
      -The UTXO comes from a One Hop transaction.
+
+     -The UTXO has a value of or less than 0.01 BTC.
 
 
     BY ACCEPTING THESE TERMS AND CONDITIONS, YOU EXPRESSLY ACKNOWLEDGE AND AGREE THAT OUR COORDINATOR AUTOMATICALLY DEDUCTS THE TRANSACTION FEES FROM THE TRANSACTION YOU SUBMITTED FOR THE SERVICES IN LINE WITH THE PROVISIONS OF SECTION 2.2. YOU EXPRESSLY ACKNOWLEDGE THAT WHILE COINJOINING, THE CLIENT SOFTWARE AUTOMATICALLY SELECTS THE COINS THAT WILL PARTICIPATE IN THE COINJOIN TRANSACTION.
