@@ -14,7 +14,7 @@ namespace WalletWasabi.Nostr;
 public record NostrCoordinator(string Description, string Name, Uri Uri, Network Network)
 {
 	private static NostrCoordinator Ginger = new(
-		Description: "Ginger Coordinator | FREE Remix, FREE under 0.01 BTC, FREE for Wasabi mixed coins | Secure Coinjoin - Illicit actors are not allowed to participate!",
+		Description: "Official Coordinator | FREE Remix, FREE under 0.01 BTC, FREE for Wasabi mixed coins | Secure Coinjoin - Illicit actors are not allowed to participate! | gingerwallet.io",
 		Name: "Ginger Coordinator",
 		Uri: new Uri(Constants.BackendUri),
 		Network: Network.Main);
