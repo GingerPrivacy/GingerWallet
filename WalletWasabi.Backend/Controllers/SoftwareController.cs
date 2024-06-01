@@ -16,8 +16,7 @@ public class SoftwareController : ControllerBase
 	{
 		ClientVersion = Constants.ClientVersion.ToString(3),
 		BackendMajorVersion = Constants.BackendMajorVersion,
-		Ww1LegalDocumentsVersion = Constants.Ww1LegalDocumentsVersion.ToString(),
-		Ww2LegalDocumentsVersion = Constants.Ww2LegalDocumentsVersion.ToString(),
+		GingerLegalDocumentsVersion = Constants.GingerLegalDocumentsVersion.ToString(),
 		CommitHash = GetCommitHash()
 	};
 

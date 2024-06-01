@@ -1,7 +1,7 @@
-Last Updated: May 01, 2024
+Last Updated: May 28, 2024
 
 
-Version Number: 3
+Version Number: 5
 
 
 =========================================
@@ -11,12 +11,6 @@ DISCLAIMER
 =========================================
 
 
-    As of June 1, 2024, zkSNACKs Ltd. reserves the right to terminate the provision of services offered through this platform. You are hereby notified that access to and use of the services provided by zkSNACKs Ltd. will cease as of the aforementioned date. zkSNACKs Ltd. shall not be liable for any inconvenience, loss of data, or damages incurred by You as a result of the termination of services. By continuing to access and use this platform, You acknowledge and agree to the cessation of services as outlined herein.
-
-
-   Wasabi Wallet will continue to function as a regular Bitcoin wallet, users will still be able to generate private keys to receive and send Bitcoin, even without CoinJoins.
-
-
 ================================================================
 
 PROHIBITION OF ACCESS FROM THE USA, ITS STATES, AND TERRITORIES
@@ -24,7 +18,7 @@ PROHIBITION OF ACCESS FROM THE USA, ITS STATES, AND TERRITORIES
 ================================================================
 
 
-  With immediate effect, users located in the United States of America, including its states and territories, are hereby prohibited from accessing this platform. zkSNACKs Ltd. does not provide services to individuals located in these regions and shall not be liable for any consequences resulting from unauthorized access. By accessing this platform, users outside of the United States confirm that they are not a national of or located within the United States or its territories and agree to abide by this restriction.
+  Users located in the United States of America, including its states and territories, are hereby prohibited from accessing this platform. InvisibleBit LLC does not provide services to individuals located in these regions and shall not be liable for any consequences resulting from unauthorized access. By accessing this platform, users outside of the United States confirm that they are not a national of or located within the United States or its territories and agree to abide by this restriction.
 
 
 =========================================
@@ -34,11 +28,11 @@ SUMMARY
 =========================================
 
 
-    The Wasabi team is committed to being fully transparent to its users, from its source code to the legal aspects of its services. The purpose of Wasabi Wallet is to provide privacy for its users’ Bitcoin transactions. This means that with the use of the wallet, we would like to enable the users to make Bitcoin payments in such a way that their spending history, wallet balances, etc. are not visible to the receiving party. This does not necessarily mean that the user stays anonymous since the receiving party might have to identify the sending party.
+    The GingerPrivacy team is committed to being fully transparent to its users, from its source code to the legal aspects of its services. The purpose of Ginger Wallet is to provide privacy for its users’ Bitcoin transactions. This means that with the use of the wallet, we would like to enable the users to make Bitcoin payments in such a way that their spending history, wallet balances, etc. are not visible to the receiving party. This does not necessarily mean that the user stays anonymous since the receiving party might have to identify the sending party.
 
-    Our goal is to minimize the unintentional leaking or disclosure of private financial information to third parties and the receiver of any transaction resulting from the use of the Wasabi Wallet. The protection of your privacy and your personal data is our highest priority, which also defines the essence of our services.
+    Our goal is to minimize the unintentional leaking or disclosure of private financial information to third parties and the receiver of any transaction resulting from the use of the Ginger Wallet. The protection of your privacy and your personal data is our highest priority, which also defines the essence of our services.
 
-    One instance of the Wasabi Wallet CoinJoin coordinating server is operated by a legal entity, zkSNACKs Ltd. Thus, to legally provide our services to our clients, we have defined the framework and the rules that both parties must follow to protect each other.
+    One instance of the WabiSabi CoinJoin coordinating server is operated by a legal entity, InvisibleBit LLC. Thus, to legally provide our services to our clients, we have defined the framework and the rules that both parties must follow to protect each other.
 
 
     The most important parts of the document below are summarized in the following points:
@@ -81,12 +75,12 @@ CHAPTER I. TERMS AND CONDITIONS
 
     These Terms and Conditions serve as a binding agreement (“Agreement”) between
 
-     - zkSNACKs Ltd. (“Service Provider” or “We” or “Our”, which includes Our subsidiaries, partners, affiliates, agents, employees, licensors, service providers or subcontractors (if any)) and
+     - InvisibleBit LLC. (“Service Provider” or “We” or “Our”, which includes Our subsidiaries, partners, affiliates, agents, employees, licensors, service providers or subcontractors (if any)) and
 
      - the person, persons, or entity (“You” or “Your”) using the Services (as defined below).
 
 
-    These Terms apply to the download of the Client Application (as defined below)., including any access and use of the Client Application, Our website at https://wasabiwallet.io (“Wasabi Wallet” or “Wasabi”) or its onion mirror at http://wasabiukrxmkdgve5kynjztuovbg43uxcbcxn6y2okcrsg7gb6jdmbad.onion (*), Our CoinJoin Coordinator Services (as defined below), and any of Our other Services related to or utilizing any of the foregoing, which We refer to in these Terms collectively, as Our “Services”.
+    These Terms apply to the download of the Client Application (as defined below), including any access and use of the Client Application, Our website at https://gingerwallet.io (“Ginger Wallet”), Our CoinJoin Coordinator Services (as defined below), and any of Our other Services related to or utilizing any of the foregoing, which We refer to in these Terms collectively, as Our “Services”.
 
 
 1.2 ELIGIBILITY AND AGREEMENT
@@ -95,12 +89,12 @@ CHAPTER I. TERMS AND CONDITIONS
 
     You can use Our Services only if You can lawfully enter into an agreement under these Terms under applicable law. You acknowledge that Your use of this Software is at Your own discretion and in compliance with all applicable laws and regulations.
 
-    Due to the nature of the Service, We cannot guarantee the full compliance of user transactions, therefore, it is Your own responsibility to ensure that the use of Wasabi Wallet complies with Your local laws and jurisdiction.
+    Due to the nature of the Service, We cannot guarantee the full compliance of user transactions, therefore, it is Your own responsibility to ensure that the use of Ginger Wallet complies with Your local laws and jurisdiction.
 
 
 1.3 RESPONSIBILITY FOR WALLET BACKUPS AND OTHER AUTHENTICATION MEANS
 
-    With Our Services, only You can access and transact through Your wallet. This is enabled by Your recovery words, passwords, and encrypted secret keys. If You use Our Services to create a wallet, the software will use an algorithm to generate random recovery words and optionally combine it with an additional word (called the passphrase as defined in BIP39). Wasabi may use Your chosen wallet password as the default passphrase. We call the combination of the recovery words and the passphrase a wallet backup or backup.
+    With Our Services, only You can access and transact through Your wallet. This is enabled by Your recovery words, passwords, and encrypted secret keys. If You use Our Services to create a wallet, the software will use an algorithm to generate random recovery words and optionally combine it with an additional word (called the passphrase as defined in BIP39). Ginger Wallet may use Your chosen wallet password as the default passphrase. We call the combination of the recovery words and the passphrase a wallet backup or backup.
 
 
     THE SERVICE PROVIDER EXPRESSLY DECLARES THAT IT DOES NOT STORE, HAVE ACCESS TO, OR HAVE ANY WAY OR MEANS OF RECOVERING YOUR BACKUP.
@@ -143,15 +137,15 @@ The Software and Our Services are therefore not a bank, a custodian, an exchange
     The client application (“Client Application”) is software, with the sole purpose of allowing You access to the Bitcoin network and our Services (as defined below), without the need or requirement to create or maintain a user account. The application itself is an ordinary Bitcoin desktop wallet with ordinary features.
 
 
-Wasabi Wallet does not store, send, or receive Bitcoins. Bitcoins exist only by the ownership record maintained in the Bitcoin network. Any transfer of title in Bitcoins occurs within the decentralized Bitcoin network and not in the Wasabi Wallet.
+Ginger Wallet does not store, send, or receive Bitcoins. Bitcoins exist only by the ownership record maintained in the Bitcoin network. Any transfer of title in Bitcoins occurs within the decentralized Bitcoin network and not in the Ginger Wallet.
 
 
 
-  The CoinJoin Coordinator Service is an online service that implements trustless CoinJoin to prevent third parties from spying on the Blockchain. Throughout the process, the Service does not initiate or process any standalone transactions towards third parties (i.e. non-users of the Service) and, therefore, does not store or transmit value belonging to others. For further information on how it works please visit Our GitHub page: https://github.com/zkSNACKs. You acknowledge that the CoinJoin Service runs in the background by default while using the Client Application. To avoid fees, You may turn automatic CoinJoin Services off in the settings of the Client Application.
+  The CoinJoin Coordinator Service is an online service that implements trustless CoinJoin to prevent third parties from spying on the Blockchain. Throughout the process, the Service does not initiate or process any standalone transactions towards third parties (i.e. non-users of the Service) and, therefore, does not store or transmit value belonging to others. For further information on how it works please visit Our GitHub page: https://github.com/GingerPrivacy. You acknowledge that the CoinJoin Service runs in the background by default while using the Client Application. To avoid fees, You may turn automatic CoinJoin Services off in the settings of the Client Application.
 
     The UTXO is an unspent transaction output, the technical term for the amount of digital currency that remains after a cryptocurrency transaction.
 
-    The One Hop transaction is when there is one non-CoinJoin transaction spending only CoinJoin outputs.
+    The One Hop transaction is when there is one non-CoinJoin transaction spending only CoinJoin outputs of the InvisibleBit LLC’s coordinator.
 
 2.2 FEES
 
@@ -166,9 +160,13 @@ Wasabi Wallet does not store, send, or receive Bitcoins. Bitcoins exist only by 
 
     The CoinJoin fee, charged by the Service Provider is 0.3% per new UTXO, except if:
 
-     -The UTXO comes directly from a previous Wasabi Wallet 1.x CoinJoin transaction.
+     -The UTXO comes directly from a Ginger Wallet CoinJoin transaction used InvisibleBit LLC’s coordinator.
+
+     -The UTXO comes directly from a Wasabi Wallet 2.x CoinJoin transaction used zkSNACKs’ coordinator till Jun 1, 2024.
 
      -The UTXO comes from a One Hop transaction.
+
+     -The UTXO has a value of or less than 0.01 BTC.
 
 
     BY ACCEPTING THESE TERMS AND CONDITIONS, YOU EXPRESSLY ACKNOWLEDGE AND AGREE THAT OUR COORDINATOR AUTOMATICALLY DEDUCTS THE TRANSACTION FEES FROM THE TRANSACTION YOU SUBMITTED FOR THE SERVICES IN LINE WITH THE PROVISIONS OF SECTION 2.2. YOU EXPRESSLY ACKNOWLEDGE THAT WHILE COINJOINING, THE CLIENT SOFTWARE AUTOMATICALLY SELECTS THE COINS THAT WILL PARTICIPATE IN THE COINJOIN TRANSACTION.
@@ -203,7 +201,7 @@ Furthermore, You agree that You will not use the Services on Bitcoin that is cre
      - engage in any activity that is abusive or interferes with or disrupts Our Services.
 
 
-    If You find any law violation during Your transaction (for example, in a transaction with a third party), please let Us know immediately by contacting Us at legal@zksnacks.com.
+    If You find any law violation during Your transaction (for example, in a transaction with a third party), please let Us know immediately by contacting Us at legal@gingerwallet.io.
 
 
     The Service Provider shall assist the investigation in any case, if instructed by an authorized body, a final court judgment, or a final regulatory decision.
@@ -267,7 +265,7 @@ Any feedback (or similar content, document, and/or feature suggestion) You submi
 ================
 
 
-    We will NEVER call, e-mail, or contact You in any form to offer any wallet recovery services. Please be safe and guard Your wallet information and funds. If You see any signs of abuse in this regard, please let Us know immediately by contacting us at legal@zksnacks.com, or for general queries via GitHub.
+    We will NEVER call, e-mail, or contact You in any form to offer any wallet recovery services. Please be safe and guard Your wallet information and funds. If You see any signs of abuse in this regard, please let Us know immediately by contacting us at legal@gingerwallet.io, or for general queries via GitHub.
 
 
 8 LIMITATION OF LIABILITY
@@ -296,20 +294,20 @@ Any feedback (or similar content, document, and/or feature suggestion) You submi
 
 9.2 ARBITRATION
 
-    You and the Service Provider agree to arbitrate any dispute arising under or in connection with these Terms or Your use of Our Services, except for disputes in which either party seeks equitable and other relief for any alleged infringement or unlawful use of trade names, logos, trade secrets, patents or other intellectual property rights. Arbitration prevents You from suing in court or from having a jury trial. You and the Service Provider agree to notify each other in writing of any dispute within thirty (30) days of when it arises. Notice to the Service Provider shall be sent to legal@zksnacks.com.
+    You and the Service Provider agree to arbitrate any dispute arising under or in connection with these Terms or Your use of Our Services, except for disputes in which either party seeks equitable and other relief for any alleged infringement or unlawful use of trade names, logos, trade secrets, patents or other intellectual property rights. Arbitration prevents You from suing in court or from having a jury trial. You and the Service Provider agree to notify each other in writing of any dispute within thirty (30) days of when it arises. Notice to the Service Provider shall be sent to legal@gingerwallet.io.
 
 
     You and the Service Provider further agree:
 
      - to attempt informal resolution before any demand for arbitration;
 
-     - that the seat or legal place of any arbitration will be the Republic of Seychelles;
+     - that the seat or legal place of any arbitration will be Próspera;
 
-     - that arbitration will be conducted confidentially by a single arbitrator appointed by law of the Republic of Seychelles;
+     - that arbitration will be conducted confidentially by a single arbitrator appointed by law of Próspera;
 
      - the arbitration shall be conducted under the rules of the International Chamber of Commerce; and
 
-     - that the arbitration in the Republic of Seychelles will have exclusive jurisdiction over any appeals of an arbitration award.
+     - that the arbitration in Próspera will have exclusive jurisdiction over any appeals of an arbitration award.
 
     Other than class procedures and remedies discussed below, the arbitrator bears the authority to grant any remedy that would otherwise be available in a court of law.
 
@@ -318,10 +316,10 @@ Any feedback (or similar content, document, and/or feature suggestion) You submi
 
 9.3 GOVERNING LAW AND JURISDICTION
 
-    These Terms and any dispute or claim between You and the Service Provider arising out of or in connection with these Terms or any terms incorporated into these Terms by reference or their subject matter or formation (including non-contractual disputes or claims) will be governed by and construed per the laws of the Republic of Seychelles, without giving effect to any conflict of law principles that may provide for the application of the law of another jurisdiction.
+    These Terms and any dispute or claim between You and the Service Provider arising out of or in connection with these Terms or any terms incorporated into these Terms by reference or their subject matter or formation (including non-contractual disputes or claims) will be governed by and construed per the laws of Próspera, without giving effect to any conflict of law principles that may provide for the application of the law of another jurisdiction.
 
 
-Subject to the “Arbitration” section above, the arbitration of the Republic of Seychelles shall have exclusive jurisdiction to settle any dispute or claim between You and the Service Provider arising out of or in connection with these Terms or any terms incorporated into these Terms by reference or their subject matter or formation (including non-contractual disputes or claims).
+Subject to the “Arbitration” section above, the arbitration of Próspera shall have exclusive jurisdiction to settle any dispute or claim between You and the Service Provider arising out of or in connection with these Terms or any terms incorporated into these Terms by reference or their subject matter or formation (including non-contractual disputes or claims).
 
 
 9.4 NO WAIVER
@@ -356,7 +354,7 @@ CHAPTER II. PRIVACY POLICY
 =========================================
 
 
-    This Privacy Policy (“Policy”) describes the ways zkSNACKs collects, stores, uses, and protects personal information. This Policy ensures that We comply with applicable European Union (“EU”) and other statutory data protection laws and regulations, and ensures that users are provided privacy protection.
+    This Privacy Policy (“Policy”) describes the ways InvisibleBit LLC and GingerPrivacy collects, stores, uses, and protects personal information. This Policy ensures that We comply with applicable European Union (“EU”) and other statutory data protection laws and regulations, and ensures that users are provided privacy protection.
 
 
     Data protection laws are generally relevant in case any processing of personal data is concerned. The terms used within the scope of this data protection declaration are defined in and by the EU’s General Data Protection Regulation (GDPR). As such, the definition of "processing" of personal data means data that is collected and translated into usable information.
@@ -396,9 +394,9 @@ All YOUR Information is Confidential.
 
     Because we cannot link Your wallet and Your personal information (such as Your name and IP address) provided under the Service, Your personal information is safe and cannot be accessed by Our employees or third parties.
 
-    zkSNACKs will protect processed data collected during the Customer Service process adequately against unauthorized access (of third parties) in accordance with the provisions of the legal framework of the Republic of Seychelles. We will only process data which is essential to provide Our Services. Data will not be used or stored by other means than set out in this Policy. Data is made accessible only to a restricted and necessary number of individuals. We do not transfer any personal data to third parties.
+    InvisibleBit LLC will protect processed data collected during the Customer Service process adequately against unauthorized access (of third parties) in accordance with the provisions of the legal framework of Próspera. We will only process data which is essential to provide Our Services. Data will not be used or stored by other means than set out in this Policy. Data is made accessible only to a restricted and necessary number of individuals. We do not transfer any personal data to third parties.
 
-    All employees of zkSNACKs have been informed about applicable data protection provisions as well as data security measures, and are bound to Our privacy practices. All employees are bound by confidentiality agreements.
+    All employees of InvisibleBit LLC have been informed about applicable data protection provisions as well as data security measures, and are bound to Our privacy practices. All employees are bound by confidentiality agreements.
 
 
 Use of Cookies
@@ -416,7 +414,7 @@ External links, Social media plugins
 ====================================
 
 
-    In so far as the Website contains external links, We hereby indicate that these third-party websites are not subject to the influence and control of zkSNACKs. We disclaim all liability for losses or obligations related to the use of these third-party websites. We are not responsible for the contents, availability, correctness, or accuracy of these websites, nor for their offerings, links, or advertisements.
+    In so far as the Website contains external links, We hereby indicate that these third-party websites are not subject to the influence and control of InvisibleBit LLC. We disclaim all liability for losses or obligations related to the use of these third-party websites. We are not responsible for the contents, availability, correctness, or accuracy of these websites, nor for their offerings, links, or advertisements.
 
     For the social media sites and/or third parties’ privacy policies, please visit their websites and research their corresponding policies.
 
@@ -434,16 +432,16 @@ Contact details regarding this declaration
 ==========================================
 
 
-    In case You have any questions concerning zkSNACKs’ Privacy Policy or if You would like to exercise Your right to information, rectification, or deletion, please send Us a written request outlining Your desire to: legal@zksnacks.com.
+    In case You have any questions concerning InvisibleBit’s Privacy Policy or if You would like to exercise Your right to information, rectification, or deletion, please send Us a written request outlining Your desire to: legal@gingerwallet.io.
 
 =========================================
 
-CHAPTER III. LEGAL STATEMENT OF WASABI WALLET
+CHAPTER III. LEGAL STATEMENT OF GINGER WALLET
 
 =========================================
 
 
-    zkSNACKs Ltd., the creator of Wasabi Wallet and owner of the brand, only supports behaviour that is legally acceptable by the Republic of Seychelles, and international legal standards, and strictly rejects all kinds of illegal activities.
+    GingerPrivacy, the creator of Ginger Wallet and owner of the brand, only supports behaviour that is legally acceptable by Próspera, and international legal standards, and strictly rejects all kinds of illegal activities.
 
 
 INFORMATION PROVIDED
@@ -451,7 +449,7 @@ INFORMATION PROVIDED
 ====================
 
 
-    The Service Provider provides information and material of a general nature. You are neither authorized to nor should You rely on the Service Provider for legal advice, investment advice, or advice of any kind. You act at Your own risk in any reliance on the contents provided. In no way are the directors, owners, and officers of, or contributors to, the Service responsible for the actions, decisions, or other behaviour taken or not taken by You in reliance upon the website or the use of Wasabi Wallet.
+    The Service Provider provides information and material of a general nature. You are neither authorized to nor should You rely on the Service Provider for legal advice, investment advice, or advice of any kind. You act at Your own risk in any reliance on the contents provided. In no way are the directors, owners, and officers of, or contributors to, the Service responsible for the actions, decisions, or other behaviour taken or not taken by You in reliance upon the website or the use of Ginger Wallet.
 
     Any exchange prices displayed are provided by third party services and are not indicative of the Bitcoin being backed by any commodity, other form of money, or having any other tangible value at all. The Service Provider makes no guarantees that Bitcoins can be exchanged or sold at the price displayed.
 
@@ -479,12 +477,12 @@ COUNTRY OF RESIDENCE
 =======================
 
 
-    In case You are a Republic of Seychelles resident and willing to use Wasabi Wallet please inform us in advance at the following e-mail address: legal@zksnacks.com.
+    In case You are a Próspera or Honduras resident and willing to use Ginger Wallet please inform us in advance at the following e-mail address: legal@gingerwallet.io.
 
 
-    zkSNACKs Ltd.
+    InvisibleBit LLC
 
-    www.zksnacks.com(*)
+    www.gingerwallet.io(*)
 
 
 (*) We recommend You to use Tor Browser over other browsers in order to protect Your privacy while visiting Our website.

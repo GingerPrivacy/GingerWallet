@@ -24,14 +24,19 @@ public class WasabiController : ControllerBase
 	{
 		string filePath;
 
+		// we give back the EmbeddedFilePathForGingerWallet for all cases
 		switch (id)
 		{
+			case "gingerwallet":
+				filePath = LegalDocuments.EmbeddedFilePathForGingerWallet;
+				break;
+
 			case "ww2":
-				filePath = LegalDocuments.EmbeddedFilePathForWw2;
+				filePath = LegalDocuments.EmbeddedFilePathForGingerWallet;
 				break;
 
 			case null:
-				filePath = LegalDocuments.EmbeddedFilePathForWw1; // If the document id is null, then the request comes from WW 1.0 client.
+				filePath = LegalDocuments.EmbeddedFilePathForGingerWallet; // If the document id is null, then the request comes from WW 1.0 client.
 				break;
 
 			default:

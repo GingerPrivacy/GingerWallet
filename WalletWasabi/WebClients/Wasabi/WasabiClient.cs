@@ -196,7 +196,7 @@ public class WasabiClient
 		using HttpContent content = response.Content;
 		var resp = await content.ReadAsJsonAsync<VersionsResponse>().ConfigureAwait(false);
 
-		return (Version.Parse(resp.ClientVersion), ushort.Parse(resp.BackendMajorVersion), Version.Parse(resp.Ww2LegalDocumentsVersion));
+		return (Version.Parse(resp.ClientVersion), ushort.Parse(resp.BackendMajorVersion), Version.Parse(resp.GingerLegalDocumentsVersion));
 	}
 
 	public async Task<UpdateStatus> CheckUpdatesAsync(CancellationToken cancel)
@@ -223,7 +223,7 @@ public class WasabiClient
 	{
 		using HttpResponseMessage response = await HttpClient.SendAsync(
 			HttpMethod.Get,
-			$"api/v{ApiVersion}/wasabi/legaldocuments?id=ww2",
+			$"api/v{ApiVersion}/wasabi/legaldocuments?id=gingerwallet",
 			cancellationToken: cancel).ConfigureAwait(false);
 
 		if (response.StatusCode != HttpStatusCode.OK)
