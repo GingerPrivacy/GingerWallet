@@ -157,7 +157,7 @@ public class WabiSabiConfig : ConfigBase
 	[JsonConverter(typeof(IntegerArrayJsonConverter))]
 	public IEnumerable<int> RiskFlags { get; set; } = Enumerable.Empty<int>();
 
-	[DefaultValueIntegerArray("")]
+	[DefaultValueDoubleArrayAttribute("")]
 	[JsonProperty(PropertyName = "RiskScores", DefaultValueHandling = DefaultValueHandling.Populate)]
 	[JsonConverter(typeof(DoubleArrayJsonConverter))]
 	public IEnumerable<double> RiskScores { get; set; } = Enumerable.Empty<double>();
