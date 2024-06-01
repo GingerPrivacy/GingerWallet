@@ -32,7 +32,7 @@ SUMMARY
 
     Our goal is to minimize the unintentional leaking or disclosure of private financial information to third parties and the receiver of any transaction resulting from the use of the Ginger Wallet. The protection of your privacy and your personal data is our highest priority, which also defines the essence of our services.
 
-    One instance of the Ginger Wallet CoinJoin coordinating server is operated by a legal entity, InvisibleBit LLC. Thus, to legally provide our services to our clients, we have defined the framework and the rules that both parties must follow to protect each other.
+    One instance of the WabiSabi CoinJoin coordinating server is operated by a legal entity, InvisibleBit LLC. Thus, to legally provide our services to our clients, we have defined the framework and the rules that both parties must follow to protect each other.
 
 
     The most important parts of the document below are summarized in the following points:
