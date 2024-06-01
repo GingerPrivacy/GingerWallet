@@ -41,10 +41,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="Legal\Assets\LegalDocumentsWw1.txt">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="Legal\Assets\LegalDocumentsWw2.txt">
+		<None Update="Legal\Assets\LegalDocumentsGingerWallet.txt">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="Microservices\Binaries\win64\Tor\**\*">
