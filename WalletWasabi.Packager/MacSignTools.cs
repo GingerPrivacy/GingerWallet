@@ -22,14 +22,14 @@ public static class MacSignTools
 		string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 		string removableDriveFolder = Tools.GetSingleUsbDrive();
 
-		var srcZipFileNamePattern = "WasabiToNotarize-*";
+		var srcZipFileNamePattern = "GingerToNotarize-*";
 		var files = Directory.GetFiles(removableDriveFolder, srcZipFileNamePattern);
 		if (files.Length != 2)
 		{
 			throw new InvalidDataException($"{srcZipFileNamePattern} file missing or there are more! There must be exactly two!");
 		}
 
-		var (appleId, password) = argsProcessor.GetAppleIdAndPassword();
+		var (appleId, teamId) = argsProcessor.GetAppleAndTeamId();
 
 		while (string.IsNullOrWhiteSpace(appleId))
 		{
@@ -37,17 +37,17 @@ public static class MacSignTools
 			appleId = Console.ReadLine();
 		}
 
-		while (string.IsNullOrWhiteSpace(password))
+		while (string.IsNullOrWhiteSpace(teamId))
 		{
-			Console.WriteLine("Enter password:");
-			password = Console.ReadLine();
+			Console.WriteLine("Enter teamId:");
+			teamId = Console.ReadLine();
 		}
 
 		foreach (var zipPath in files)
 		{
 			var zipFile = Path.GetFileName(zipPath);
 			var versionPrefix = Path.GetFileNameWithoutExtension(zipPath).Split('-')[1]; // Example: "WasabiToNotarize-2.0.0.0-arm64.zip or WasabiToNotarize-2.0.0.0.zip ".
-			var workingDir = Path.Combine(desktopPath, "wasabiTemp");
+			var workingDir = Path.Combine(desktopPath, "gingerTemp");
 			var dmgPath = Path.Combine(workingDir, "dmg");
 			var unzippedPath = Path.Combine(workingDir, "unzipped");
 			var appName = $"{Constants.AppName}.app";
@@ -57,16 +57,18 @@ public static class MacSignTools
 			var appResPath = Path.Combine(appContentsPath, "Resources");
 			var appFrameworksPath = Path.Combine(appContentsPath, "Frameworks");
 			var infoFilePath = Path.Combine(appContentsPath, "Info.plist");
-			var dmgFileName = zipFile.Replace("WasabiToNotarize", "Wasabi").Replace("zip", "dmg");
+			var dmgFileName = zipFile.Replace("GingerToNotarize", "Ginger").Replace("zip", "dmg");
 			var dmgFilePath = Path.Combine(workingDir, dmgFileName);
-			var dmgUnzippedFilePath = Path.Combine(workingDir, $"Wasabi.tmp.dmg");
-			var appNotarizeFilePath = Path.Combine(workingDir, $"Wasabi-{versionPrefix}.zip");
+			var dmgUnzippedFilePath = Path.Combine(workingDir, $"Ginger.tmp.dmg");
+			var appNotarizeFilePath = Path.Combine(workingDir, $"Ginger-{versionPrefix}.zip");
 			var contentsPath = Path.GetFullPath(Path.Combine(Program.PackagerProjectDirectory.Replace("\\", "//"), "Content", "Osx"));
 			var entitlementsPath = Path.Combine(contentsPath, "entitlements.plist");
 			var dmgContentsDir = Path.Combine(contentsPath, "Dmg");
 			var desktopDmgFilePath = Path.Combine(desktopPath, dmgFileName);
 
-			var signArguments = $"--sign \"L233B2JQ68\" --verbose --force --options runtime --timestamp";
+			// Save the app specific pw by using this command: xcrun notarytool store-credentials WasabiNotarize
+
+			var signArguments = $"--sign \"{teamId}\" --verbose --force --options runtime --timestamp";
 
 			Console.WriteLine("Phase: creating the working directory.");
 
@@ -169,7 +171,7 @@ public static class MacSignTools
 
 			Console.WriteLine("Phase: verifying the signature.");
 
-			Verify(appPath);
+			Verify(appPath, teamId);
 
 			Console.WriteLine("Phase: notarize the app.");
 
@@ -236,7 +238,7 @@ public static class MacSignTools
 					"create",
 					$"\"{dmgUnzippedFilePath}\"",
 					"-ov",
-					$"-volname \"Wasabi Wallet\"",
+					$"-volname \"Ginger Wallet\"",
 					"-fs HFS+",
 					$"-srcfolder \"{dmgPath}\""
 				});
@@ -277,7 +279,7 @@ public static class MacSignTools
 
 			Console.WriteLine("Phase: verifying the signature.");
 
-			Verify(dmgFilePath);
+			Verify(dmgFilePath, teamId);
 
 			Console.WriteLine("Phase: notarize dmg");
 			Notarize(appleId, dmgFilePath);
@@ -331,7 +333,6 @@ public static class MacSignTools
 	{
 		Console.WriteLine("Start notarizing, uploading file.");
 
-		// -p WasabiNotarize = Saved the credentials in the keychain profile which keeps the password safe on the local machine. Name of the profile is "WasabiNotarize".
 		using var process = Process.Start(new ProcessStartInfo
 		{
 			FileName = "xcrun",
@@ -393,7 +394,7 @@ public static class MacSignTools
 		Console.WriteLine(result.Trim());
 	}
 
-	private static void Verify(string path)
+	private static void Verify(string path, string teamId)
 	{
 		using var process = Process.Start(new ProcessStartInfo
 		{
@@ -403,7 +404,9 @@ public static class MacSignTools
 		});
 		var nonNullProcess = WaitProcessToFinish(process, "codesign");
 		string result = nonNullProcess.StandardError.ReadToEnd();
-		if (!result.Contains("Authority=Developer ID Application: zkSNACKs Ltd."))
+
+		// Contains the TEAM-ID.
+		if (!result.Contains(teamId))
 		{
 			throw new InvalidOperationException(result);
 		}

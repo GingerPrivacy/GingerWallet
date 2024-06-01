@@ -65,9 +65,9 @@ public class Startup
 				new OpenApiInfo
 				{
 					Version = $"v{Constants.BackendMajorVersion}",
-					Title = "Wasabi Wallet API",
+					Title = "Ginger Wallet API",
 					Description = "Privacy focused Bitcoin Web API.",
-					License = new OpenApiLicense { Name = "Use under MIT.", Url = new Uri("https://github.com/zkSNACKs/WalletWasabi/blob/master/LICENSE.md") }
+					License = new OpenApiLicense { Name = "Use under MIT.", Url = new Uri("https://github.com/GingerPrivacy/GingerWallet/blob/master/LICENSE.md") }
 				});
 
 			// Set the comments path for the Swagger JSON and UI.
@@ -144,7 +144,7 @@ public class Startup
 		app.UseSwagger();
 
 		// Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
-		app.UseSwaggerUI(c => c.SwaggerEndpoint($"/swagger/v{Constants.BackendMajorVersion}/swagger.json", $"Wasabi Wallet API V{Constants.BackendMajorVersion}"));
+		app.UseSwaggerUI(c => c.SwaggerEndpoint($"/swagger/v{Constants.BackendMajorVersion}/swagger.json", $"Ginger Wallet API V{Constants.BackendMajorVersion}"));
 
 		app.UseRouting();
 
