@@ -20,6 +20,7 @@ public class CoinVerifier : IAsyncDisposable
 		Whitelist = whitelist;
 		WabiSabiConfig = wabiSabiConfig;
 		VerifierAuditArchiver = new CoinVerifierLogger(auditsDirectoryPath);
+		RiskConfig = new(wabiSabiConfig);
 	}
 
 	// Constructor used for testing
