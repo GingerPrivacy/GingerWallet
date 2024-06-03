@@ -46,8 +46,8 @@
 [4]: https://dev.azure.com/zkSNACKs/Wasabi/_build?definitionId=1
 [5]: https://dev.azure.com/zkSNACKs/Wasabi/_apis/build/status/Wasabi.Osx?branchName=master
 [6]: https://dev.azure.com/zkSNACKs/Wasabi/_build?definitionId=2
-[7]: https://img.shields.io/github/license/zkSNACKs/WalletWasabi.svg
-[8]: https://github.com/zkSNACKs/WalletWasabi/blob/master/LICENSE.md
+[7]: https://img.shields.io/github/license/GingerPrivacy/GingerWallet.svg
+[8]: https://github.com/GingerPrivacy/GingerWallet/blob/master/LICENSE.md
 [9]: https://www.codefactor.io/repository/github/zksnacks/walletwasabi/badge
 [10]: https://www.codefactor.io/repository/github/zksnacks/walletwasabi
 [11]: https://dev.azure.com/zkSNACKs/Wasabi/_apis/build/status/Wasabi.ContinuousDelivery?branchName=master
@@ -58,7 +58,7 @@
 </h3>
 <br>
 
-# [Download Wasabi](https://github.com/GingerPrivacy/GingerWallet/releases)
+# [Download GingerWallet](https://github.com/GingerPrivacy/GingerWallet/releases)
 
 <br>
 
@@ -70,7 +70,7 @@
 2. Get .NET 8.0 SDK: https://dotnet.microsoft.com/download
 3. Optionally disable .NET's telemetry by executing in the terminal `export DOTNET_CLI_TELEMETRY_OPTOUT=1` on Linux and macOS or `setx DOTNET_CLI_TELEMETRY_OPTOUT 1` on Windows.
 
-### Get Wasabi
+### Get GingerWallet
 
 Clone & Restore & Build
 
@@ -80,11 +80,11 @@ cd WalletWasabi/WalletWasabi.Fluent.Desktop
 dotnet build
 ```
 
-### Run Wasabi
+### Run GingerWallet
 
-Run Wasabi with `dotnet run` from the `WalletWasabi.Fluent.Desktop` folder.
+Run GingerWallet with `dotnet run` from the `WalletWasabi.Fluent.Desktop` folder.
 
-### Update Wasabi
+### Update GingerWallet
 
 ```sh
 git pull
