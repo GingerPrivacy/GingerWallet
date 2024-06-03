@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://wasabiwallet.io">
-    <img src="https://github.com/zkSNACKs/WalletWasabi/blob/master/ui-ww.png">
+  <a href="https://gingerwallet.io">
+    <img src="https://github.com/GingerPrivacy/GingerWallet/blob/master/ui-ww.png">
   </a>
 </p>
 
@@ -9,19 +9,19 @@
 </h3>
 
 <h3 align="center">
-  <a href="https://wasabiwallet.io">
+  <a href="https://gingerwallet.io">
     Website
   </a>
   <span> | </span>
-  <a href="https://docs.wasabiwallet.io/">
+  <a href="https://docs.gingerwallet.io/">
     Documentation
   </a>
   <span> | </span>
-  <a href="https://wasabiwallet.io/swagger/index.html">
+  <a href="https://api.gingerwallet.io/swagger">
     API
   </a>
   <span> | </span>
-  <a href="https://github.com/zkSNACKs/WalletWasabi/discussions/5185">
+  <a href="https://github.com/GingerPrivacy/GingerWallet/discussions/5185">
     Support
   </a>
   <span> | </span>
@@ -29,7 +29,7 @@
     YouTube
   </a>
   <span> | </span>
-  <a href="https://github.com/zkSNACKs/WalletWasabi/blob/master/PGP.txt">
+  <a href="https://github.com/GingerPrivacy/GingerWallet/blob/master/PGP.txt">
     PGP
   </a>
 </h3>
@@ -58,7 +58,7 @@
 </h3>
 <br>
 
-# [Download Wasabi](https://github.com/zkSNACKs/WalletWasabi/releases)
+# [Download Wasabi](https://github.com/GingerPrivacy/GingerWallet/releases)
 
 <br>
 
@@ -75,7 +75,7 @@
 Clone & Restore & Build
 
 ```sh
-git clone --depth=1 --single-branch --branch=master https://github.com/zkSNACKs/WalletWasabi.git
+git clone --depth=1 --single-branch --branch=master https://github.com/GingerPrivacy/GingerWallet.git
 cd WalletWasabi/WalletWasabi.Fluent.Desktop
 dotnet build
 ```
