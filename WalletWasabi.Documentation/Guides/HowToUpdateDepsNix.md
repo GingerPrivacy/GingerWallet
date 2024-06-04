@@ -17,4 +17,4 @@
    ./result
    ```
 6. The last terminal message tells you where is the new nix file. (e.g. `Succesfully wrote lockfile to /tmp/WalletWasabi.Backend-deps-7dpBuk.nix`)
-7. Find the file, rename it to `deps.nix` and copy it to GingerWallet folder to override the previous one.
+7. Find the file under `\\wsl$\<DistroName>\tmp\`, rename it to `deps.nix` and copy it to GingerWallet folder to override the previous one.
