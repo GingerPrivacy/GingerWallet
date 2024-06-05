@@ -33,10 +33,4 @@ public class CoordinatorNostrPublisher : PeriodicRunner
 		using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cts.Token, cancel);
 		await Client.PublishAsync([discoveryEvent], linkedCts.Token).ConfigureAwait(false);
 	}
-
-	public override void Dispose()
-	{
-		Key.Dispose();
-		base.Dispose();
-	}
 }
