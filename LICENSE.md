@@ -1,5 +1,6 @@
 MIT License
 
+Copyright (c) 2024 The Wasabi Wallet Developers
 Copyright (c) 2024 GingerPrivacy
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
