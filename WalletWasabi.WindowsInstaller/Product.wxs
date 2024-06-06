@@ -8,7 +8,7 @@
     Language="!(loc.Language)"
     Version="$(var.BuildVersion)"
     Manufacturer="!(loc.Company)"
-    UpgradeCode="{D8E80773-D8CF-4031-B8B3-AA750AF0B413}">
+    UpgradeCode="{E9F81884-D8CF-4031-B8B3-AA750AF0B413}">
 
     <!-- Provide package details. -->
     <Package
