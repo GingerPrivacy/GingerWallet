@@ -33,13 +33,6 @@ public partial class AboutViewModel : RoutableViewModel
 			{
 				new LinkViewModel(UiContext)
 				{
-					Link = DocsLink,
-					Description = "Documentation",
-					IsClickable = true
-				},
-				new SeparatorViewModel(),
-				new LinkViewModel(UiContext)
-				{
 					Link = SourceCodeLink,
 					Description = "Source Code (GitHub)",
 					IsClickable = true
@@ -123,8 +116,6 @@ public partial class AboutViewModel : RoutableViewModel
 	public static string BugReportLink => "https://github.com/GingerPrivacy/GingerWallet/issues/new?template=bug-report.md";
 
 	public static string FAQLink => "https://gingerwallet.io/#help";
-
-	public static string DocsLink => "https://gingerwallet.io/#why";
 
 	public static string LicenseLink => "https://github.com/GingerPrivacy/GingerWallet/blob/master/LICENSE.md";
 }

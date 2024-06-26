@@ -4,20 +4,20 @@ using ReactiveUI;
 namespace WalletWasabi.Fluent.ViewModels.HelpAndSupport;
 
 [NavigationMetaData(
-	Title = "User Guide/Docs",
-	Caption = "Open Wasabi's documentation website",
+	Title = "User Guide/FAQ",
+	Caption = "Open Ginger Wallet's FAQ website",
 	Order = 2,
 	Category = "Help & Support",
-	Keywords = new[]
-	{
+	Keywords =
+	[
 		"User", "Support", "Website", "Docs", "Documentation", "Guide"
-	},
+	],
 	IconName = "book_question_mark_regular")]
 public partial class DocsLinkViewModel : TriggerCommandViewModel
 {
 	private DocsLinkViewModel()
 	{
-		TargetCommand = ReactiveCommand.CreateFromTask(async () => await UiContext.FileSystem.OpenBrowserAsync(AboutViewModel.DocsLink));
+		TargetCommand = ReactiveCommand.CreateFromTask(async () => await UiContext.FileSystem.OpenBrowserAsync(AboutViewModel.FAQLink));
 	}
 
 	public override ICommand TargetCommand { get; }
