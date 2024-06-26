@@ -8,14 +8,14 @@ using WalletWasabi.Helpers;
 namespace WalletWasabi.Fluent.ViewModels.HelpAndSupport;
 
 [NavigationMetaData(
-	Title = "About Wasabi",
-	Caption = "Display Wasabi's current info",
+	Title = "About Ginger Wallet",
+	Caption = "Display Ginger Wallet's current info",
 	IconName = "info_regular",
 	Order = 4,
 	Category = "Help & Support",
 	Keywords = new[]
 	{
-			"About", "Software", "Version", "Source", "Code", "Github", "Website", "Coordinator", "Status", "Stats", "Tor", "Onion",
+			"About", "Software", "Version", "Source", "Code", "Github", "Website", "Coordinator", "Stats", "Tor", "Onion",
 			"User", "Support", "Bug", "Report", "FAQ", "Questions,", "Docs", "Documentation", "License", "Advanced", "Information",
 			"Hardware", "Wallet"
 	},
@@ -51,20 +51,14 @@ public partial class AboutViewModel : RoutableViewModel
 					Description = "Website (Clearnet)",
 					IsClickable = true
 				},
-				new SeparatorViewModel(),
+				// Remove for now
+				/*new SeparatorViewModel(),
 				new LinkViewModel(UiContext)
 				{
 					Link = TorLink,
 					Description = "Website (Tor)",
 					IsClickable = false
-				},
-				new SeparatorViewModel(),
-				new LinkViewModel(UiContext)
-				{
-					Link = StatusPageLink,
-					Description = "Coordinator Status Page",
-					IsClickable = true
-				},
+				},*/
 				new SeparatorViewModel(),
 				new LinkViewModel(UiContext)
 				{
@@ -118,21 +112,19 @@ public partial class AboutViewModel : RoutableViewModel
 
 	public Version ClientVersion => Constants.ClientVersion;
 
-	public static string ClearnetLink => "https://wasabiwallet.io/";
+	public static string ClearnetLink => "https://gingerwallet.io/";
 
 	public static string TorLink => "http://wasabiukrxmkdgve5kynjztuovbg43uxcbcxn6y2okcrsg7gb6jdmbad.onion";
 
-	public static string SourceCodeLink => "https://github.com/zkSNACKs/WalletWasabi/";
+	public static string SourceCodeLink => "https://github.com/GingerPrivacy/GingerWallet";
 
-	public static string StatusPageLink => "https://stats.uptimerobot.com/YQqGyUL8A7";
+	public static string UserSupportLink => "https://github.com/GingerPrivacy/GingerWallet/discussions";
 
-	public static string UserSupportLink => "https://github.com/zkSNACKs/WalletWasabi/discussions/5185";
+	public static string BugReportLink => "https://github.com/GingerPrivacy/GingerWallet/issues/new?template=bug-report.md";
 
-	public static string BugReportLink => "https://github.com/zkSNACKs/WalletWasabi/issues/new?template=bug-report.md";
+	public static string FAQLink => "https://gingerwallet.io/#help";
 
-	public static string FAQLink => "https://docs.wasabiwallet.io/FAQ/";
+	public static string DocsLink => "https://gingerwallet.io/#why";
 
-	public static string DocsLink => "https://docs.wasabiwallet.io/";
-
-	public static string LicenseLink => "https://github.com/zkSNACKs/WalletWasabi/blob/master/LICENSE.md";
+	public static string LicenseLink => "https://github.com/GingerPrivacy/GingerWallet/blob/master/LICENSE.md";
 }
