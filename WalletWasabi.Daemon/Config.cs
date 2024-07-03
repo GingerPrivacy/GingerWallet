@@ -71,16 +71,16 @@ public class Config
 				"Tor is started with the set of specified bridges",
 				GetStringArrayValue("TorBridges", PersistentConfig.TorBridges, cliArgs)),
 			[nameof(TerminateTorOnExit)] = (
-				"Stop the Tor process when Wasabi is closed",
+				"Stop the Tor process when Ginger Wallet is closed",
 				GetBoolValue("TerminateTorOnExit", PersistentConfig.TerminateTorOnExit, cliArgs)),
 			[ nameof(DownloadNewVersion)] = (
-				"Automatically download any new released version of Wasabi",
+				"Automatically download any new released version of Ginger Wallet",
 				GetBoolValue("DownloadNewVersion", PersistentConfig.DownloadNewVersion, cliArgs)),
 			[ nameof(StartLocalBitcoinCoreOnStartup)] = (
-				"Start a local bitcoin node when Wasabi starts",
+				"Start a local bitcoin node when Ginger Wallet starts",
 				GetBoolValue("StartLocalBitcoinCoreOnStartup", PersistentConfig.StartLocalBitcoinCoreOnStartup, cliArgs)),
 			[ nameof(StopLocalBitcoinCoreOnShutdown)] = (
-				"Stop the local bitcoin node when Wasabi is closed",
+				"Stop the local bitcoin node when Ginger Wallet is closed",
 				GetBoolValue("StopLocalBitcoinCoreOnShutdown", PersistentConfig.StopLocalBitcoinCoreOnShutdown, cliArgs)),
 			[ nameof(LocalBitcoinCoreDataDir)] = (
 				"The path of the data directory to be used by the local bitcoin node",
@@ -113,7 +113,7 @@ public class Config
 				"The amount threshold under which coins received from others to already used addresses are considered a dust attack",
 				GetMoneyValue("DustThreshold", PersistentConfig.DustThreshold, cliArgs)),
 			[ nameof(BlockOnlyMode)] = (
-				"Wasabi listens only for blocks and not for transactions",
+				"Ginger Wallet listens only for blocks and not for transactions",
 				GetBoolValue("BlockOnly", value: false, cliArgs)),
 			[ nameof(LogLevel)] = (
 				"The level of detail in the logs: trace, debug, info, warning, error, or critical",

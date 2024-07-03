@@ -125,8 +125,8 @@ public class SpecificNodeBlockProvider : IBlockProvider, IAsyncDisposable
 						if (ex is OperationCanceledException)
 						{
 							string message = $"""
-							                  Wasabi could not complete the handshake with the node '{BitcoinCoreEndPoint}'. Probably Wasabi is not whitelisted by the node.
-							                  Use "whitebind" in the node configuration. Typically whitebind=127.0.0.1:8333 if Wasabi and the node are on the same machine and whitelist=1.2.3.4 if they are not.
+							                  Ginger Wallet could not complete the handshake with the node '{BitcoinCoreEndPoint}'. Probably Ginger Wallet is not whitelisted by the node.
+							                  Use "whitebind" in the node configuration. Typically whitebind=127.0.0.1:8333 if Ginger Wallet and the node are on the same machine and whitelist=1.2.3.4 if they are not.
 							                  """;
 
 							Logger.LogWarning(message);
@@ -199,7 +199,7 @@ public class SpecificNodeBlockProvider : IBlockProvider, IAsyncDisposable
 
 		if (!node.IsConnected)
 		{
-			throw new InvalidOperationException($"Wasabi could not complete the handshake with the node '{BitcoinCoreEndPoint}' and dropped the connection.{Environment.NewLine}" +
+			throw new InvalidOperationException($"Ginger Wallet could not complete the handshake with the node '{BitcoinCoreEndPoint}' and dropped the connection.{Environment.NewLine}" +
 				"Probably this is because the node does not support retrieving full blocks or segwit serialization.");
 		}
 

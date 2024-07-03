@@ -26,7 +26,7 @@ public static class FriendlyExceptionMessageExtensions
 		{
 			HwiException hwiEx => GetFriendlyHwiExceptionMessage(hwiEx),
 			HttpRequestException => "Something went wrong. Please try again.",
-			UnauthorizedAccessException => "Wasabi was unable to perform this action due to a lack of permission.",
+			UnauthorizedAccessException => "Ginger Wallet was unable to perform this action due to a lack of permission.",
 			_ => ex.Message
 		};
 	}

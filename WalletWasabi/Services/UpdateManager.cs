@@ -252,11 +252,11 @@ public class UpdateManager : IDisposable
 			string message = "";
 			if (ex.StatusCode is HttpStatusCode.NotFound)
 			{
-				message = "Ginger signature files were not found under the API.";
+				message = "Ginger Wallet signature files were not found under the API.";
 			}
 			else
 			{
-				message = "Something went wrong while getting Wasabi signature files.";
+				message = "Something went wrong while getting Ginger Wallet signature files.";
 			}
 			throw new InvalidOperationException(message, ex);
 		}

@@ -23,7 +23,7 @@ public abstract class OpenFileViewModel : TriggerCommandViewModel
 			}
 			catch (Exception ex)
 			{
-				await ShowErrorAsync("Open", ex.ToUserFriendlyString(), "Wasabi was unable to open the file");
+				await ShowErrorAsync("Open", ex.ToUserFriendlyString(), "Ginger Wallet was unable to open the file");
 			}
 		});
 }

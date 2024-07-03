@@ -19,7 +19,7 @@ public partial class StatusIconViewModel : ViewModelBase
 		UiContext = uiContext;
 		HealthMonitor = uiContext.HealthMonitor;
 
-		ManualUpdateCommand = ReactiveCommand.CreateFromTask(() => UiContext.FileSystem.OpenBrowserAsync("https://wasabiwallet.io/#download"));
+		ManualUpdateCommand = ReactiveCommand.CreateFromTask(() => UiContext.FileSystem.OpenBrowserAsync("https://gingerwallet.io/#download"));
 		UpdateCommand = ReactiveCommand.Create(
 			() =>
 			{

@@ -66,7 +66,7 @@ public partial class CancelTransactionDialogViewModel : RoutableViewModel
 		{
 			Logger.LogError(ex);
 			var msg = cancellingTransaction.TargetTransaction.IsConfirmed ? "The transaction is already confirmed." : ex.ToUserFriendlyString();
-			UiContext.Navigate().To().ShowErrorDialog(msg, "Cancellation Failed", "Wasabi was unable to cancel your transaction.", NavigationTarget.CompactDialogScreen);
+			UiContext.Navigate().To().ShowErrorDialog(msg, "Cancellation Failed", "Ginger Wallet was unable to cancel your transaction.", NavigationTarget.CompactDialogScreen);
 		}
 
 		IsBusy = false;
