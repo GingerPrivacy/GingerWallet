@@ -533,7 +533,7 @@ public class TorHttpPool : IAsyncDisposable
 	{
 		if (!TorControlAvailable)
 		{
-			throw new UnreachableException("This method can be called only if Wasabi was run with Tor Control support.");
+			throw new UnreachableException("This method can be called only if Ginger Wallet was run with Tor Control support.");
 		}
 
 		lock (ConnectionsLock)

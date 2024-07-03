@@ -219,7 +219,7 @@ public class CoreNode
 			desiredConfigLines.Add($"{configPrefix}.rpcthreads = {coreNodeParams.RpcThreads}");
 		}
 
-		var sectionComment = $"# The following configuration options were added or modified by Wasabi Wallet.";
+		var sectionComment = $"# The following configuration options were added or modified by Ginger Wallet.";
 
 		// If the comment is not already present.
 		// And there would be new config entries added.

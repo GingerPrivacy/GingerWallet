@@ -159,7 +159,7 @@ public partial class OrderViewModel : ViewModelBase, IDisposable
 
 	private async Task ShowErrorAsync(string message)
 	{
-		await UiContext.Navigate().To().ShowErrorDialog(message, "Send Failed", "Wasabi was unable to send your message", NavigationTarget.CompactDialogScreen).GetResultAsync();
+		await UiContext.Navigate().To().ShowErrorDialog(message, "Send Failed", "Ginger Wallet was unable to send your message", NavigationTarget.CompactDialogScreen).GetResultAsync();
 	}
 
 	private void ResetOrder()

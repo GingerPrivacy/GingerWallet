@@ -87,7 +87,7 @@ public partial class PayNowAssistantMessageViewModel : AssistantMessageViewModel
 		catch (Exception ex)
 		{
 			Logger.LogError(ex);
-			await UiContext.Navigate().CompactDialogScreen.ShowErrorAsync("Transaction", ex.ToUserFriendlyString(), "Wasabi was unable to send your transaction.");
+			await UiContext.Navigate().CompactDialogScreen.ShowErrorAsync("Transaction", ex.ToUserFriendlyString(), "Ginger Wallet was unable to send your transaction.");
 		}
 		finally
 		{

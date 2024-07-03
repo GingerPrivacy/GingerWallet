@@ -40,5 +40,5 @@ public class CrashReportWindowViewModel : ViewModelBase
 
 	public string Trace => SerializedException.ToString();
 
-	public string Title => "Wasabi has crashed";
+	public string Title => "Ginger Wallet has crashed";
 }

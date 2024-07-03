@@ -26,7 +26,7 @@ namespace WalletWasabi.Fluent.ViewModels;
 [AppLifetime]
 public partial class MainViewModel : ViewModelBase
 {
-	[AutoNotify] private string _title = "Wasabi Wallet";
+	[AutoNotify] private string _title = "Ginger Wallet";
 	[AutoNotify] private WindowState _windowState;
 	[AutoNotify] private bool _isOobeBackgroundVisible;
 	[AutoNotify] private bool _isCoinJoinActive;
