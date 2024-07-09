@@ -184,6 +184,13 @@ public class Config
 
 	public bool EnableGpu => GetEffectiveValue<BoolValue, bool>(nameof(EnableGpu));
 	public string CoordinatorIdentifier => GetEffectiveValue<StringValue, string>(nameof(CoordinatorIdentifier));
+	public decimal MaxCoordinationFeeRate => decimal.Min(
+		GetEffectiveValue<DecimalValue, decimal>(nameof(MaxCoordinationFeeRate)),
+		Constants.AbsoluteMaxCoordinationFeeRate);
+	public int AbsoluteMinInputCount => int.Max(
+		GetEffectiveValue<IntValue, int>(nameof(AbsoluteMinInputCount)),
+		Constants.AbsoluteMinInputCount);
+
 	public ServiceConfiguration ServiceConfiguration { get; }
 
 	public static string DataDir { get; } = GetStringValue(
