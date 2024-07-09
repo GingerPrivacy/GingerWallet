@@ -76,6 +76,11 @@ public class WabiSabiConfig : ConfigBase
 	[JsonConverter(typeof(MoneyBtcJsonConverter))]
 	public Money MaxRegistrableAmount { get; set; } = Money.Coins(43_000m);
 
+	[DefaultValueMoneyBtc("0.00001")]
+	[JsonProperty(PropertyName = "MinFeeAmount", DefaultValueHandling = DefaultValueHandling.Populate)]
+	[JsonConverter(typeof(MoneyBtcJsonConverter))]
+	public Money MinFeeAmount { get; set; } = Money.Coins(0.00001m);
+
 	[DefaultValue(true)]
 	[JsonProperty(PropertyName = "AllowNotedInputRegistration", DefaultValueHandling = DefaultValueHandling.Populate)]
 	public bool AllowNotedInputRegistration { get; set; } = true;

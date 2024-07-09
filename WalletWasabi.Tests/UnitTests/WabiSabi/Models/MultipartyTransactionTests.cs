@@ -5,6 +5,7 @@ using WalletWasabi.Crypto;
 using WalletWasabi.Extensions;
 using WalletWasabi.Helpers;
 using WalletWasabi.Tests.Helpers;
+using WalletWasabi.WabiSabi.Backend;
 using WalletWasabi.WabiSabi.Backend.Models;
 using WalletWasabi.WabiSabi.Backend.Rounds;
 using WalletWasabi.WabiSabi.Models;
@@ -180,6 +181,7 @@ public class MultipartyTransactionTests
 		// Witness can only be accepted once per input
 		ThrowsProtocolException(WabiSabiProtocolErrorCode.WitnessAlreadyProvided, () => alice1Sig.AddWitness(alice1SignedInput.Index, alice1SignedInput.Input.WitScript));
 	}
+
 	[Fact]
 	public void PublishWitnessesTest()
 	{
@@ -457,7 +459,10 @@ public class MultipartyTransactionTests
 		var round = WabiSabiFactory.CreateRound(parameters);
 
 		// Make sure the highest fee rate is low, so coordinator script will be added.
-		var coinjoinWithCoordinatorScript = Arena.AddCoordinationFee(round, coinjoin, coordinatorScript);
+		WabiSabiConfig cfg = new();
+		using Arena arena = ArenaBuilder.From(cfg).Create([round]);
+
+		var coinjoinWithCoordinatorScript = arena.AddCoordinationFee(round, coinjoin, coordinatorScript);
 		coinjoinWithCoordinatorScript.Finalize();
 		Assert.NotSame(coinjoinWithCoordinatorScript, coinjoin);
 	}
