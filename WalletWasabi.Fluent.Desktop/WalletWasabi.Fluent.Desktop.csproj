@@ -45,6 +45,7 @@
 	<ItemGroup>
 		<PackageReference Include="Avalonia.Desktop" />
 		<PackageReference Include="Avalonia.ReactiveUI" />
+		<PackageReference Include="System.Text.Json" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\WalletWasabi.Fluent\WalletWasabi.Fluent.csproj" />
