@@ -98,6 +98,26 @@ public record ConstructionState : MultipartyTransactionState
 		return this with { Events = Events.Add(new OutputAdded(output)) };
 	}
 
+	public ConstructionState AddFeeOutput(TxOut output)
+	{
+		if (output.IsDust())
+		{
+			throw new WabiSabiProtocolException(WabiSabiProtocolErrorCode.DustOutput);
+		}
+
+		if (!StandardScripts.IsStandardScriptPubKey(output.ScriptPubKey))
+		{
+			throw new WabiSabiProtocolException(WabiSabiProtocolErrorCode.NonStandardOutput);
+		}
+
+		if (!Parameters.AllowedOutputTypes.Any(x => output.ScriptPubKey.IsScriptType(x)))
+		{
+			throw new WabiSabiProtocolException(WabiSabiProtocolErrorCode.ScriptNotAllowed);
+		}
+
+		return this with { Events = Events.Add(new OutputAdded(output)) };
+	}
+
 	public SigningState Finalize()
 	{
 		if (EstimatedVsize > Parameters.MaxTransactionSize)

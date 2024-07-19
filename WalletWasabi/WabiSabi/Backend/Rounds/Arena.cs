@@ -664,7 +664,7 @@ public partial class Arena : PeriodicRunner
 		}
 	}
 
-	public static ConstructionState AddCoordinationFee(Round round, ConstructionState coinjoin, Script coordinatorScriptPubKey)
+	public ConstructionState AddCoordinationFee(Round round, ConstructionState coinjoin, Script coordinatorScriptPubKey)
 	{
 		var sizeToPayFor = coinjoin.EstimatedVsize + coordinatorScriptPubKey.EstimateOutputVsize();
 		var miningFee = round.Parameters.MiningFeeRate.GetFee(sizeToPayFor) + Money.Satoshis(1);
@@ -674,9 +674,9 @@ public partial class Arena : PeriodicRunner
 
 		round.LogInfo($"Expected coordination fee: {expectedCoordinationFee} - Available coordination: {availableCoordinationFee}.");
 
-		if (availableCoordinationFee > round.Parameters.AllowedOutputAmounts.Min)
+		if (availableCoordinationFee >= Config.MinFeeAmount)
 		{
-			coinjoin = coinjoin.AddOutput(new TxOut(availableCoordinationFee, coordinatorScriptPubKey))
+			coinjoin = coinjoin.AddFeeOutput(new TxOut(availableCoordinationFee, coordinatorScriptPubKey))
 				.AsPayingForSharedOverhead();
 		}
 		else
