@@ -22,7 +22,7 @@ public class OutputProvider
 		uint256 roundId,
 		RoundParameters roundParameters,
 		IEnumerable<Money> registeredCoinEffectiveValues,
-		IEnumerable<Money> theirCoinEffectiveValues,
+		IEnumerable<Money> allCoinEffectiveValues,
 		int availableVsize)
 	{
 		AmountDecomposer amountDecomposer = new(
@@ -33,7 +33,7 @@ public class OutputProvider
 			DestinationProvider.SupportedScriptTypes,
 			Random);
 
-		var outputValues = amountDecomposer.Decompose(registeredCoinEffectiveValues, theirCoinEffectiveValues).ToArray();
+		var outputValues = amountDecomposer.Decompose(registeredCoinEffectiveValues, allCoinEffectiveValues).ToArray();
 		return GetTxOuts(outputValues, DestinationProvider);
 	}
 
