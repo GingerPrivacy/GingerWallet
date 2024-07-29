@@ -403,6 +403,15 @@ public partial class Arena : IWabiSabiApiRequestHandler
 		return Task.FromResult(new RoundStateResponse(responseRoundStates, Array.Empty<CoinJoinFeeRateMedian>(), Affiliation.Models.AffiliateInformation.Empty));
 	}
 
+	public async Task<RoundRecommendationResponse> GetRecommendationAsync(RoundRecommendationRequest request, CancellationToken cancellationToken)
+	{
+		using (await AsyncLock.LockAsync(cancellationToken).ConfigureAwait(false))
+		{
+			var round = GetRound(request.RoundId);
+			return new RoundRecommendationResponse(round.Denomination);
+		}
+	}
+
 	public (uint256 RoundId, FeeRate MiningFeeRate)[] GetRoundsContainingOutpoints(IEnumerable<OutPoint> outPoints) =>
 		Rounds
 		.Where(r => r.Phase != Phase.Ended && r.Phase >= Phase.ConnectionConfirmation)

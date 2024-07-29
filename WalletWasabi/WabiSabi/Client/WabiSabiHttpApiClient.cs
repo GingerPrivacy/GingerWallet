@@ -30,7 +30,8 @@ public class WabiSabiHttpApiClient : IWabiSabiApiRequestHandler
 		ReissueCredential,
 		SignTransaction,
 		GetStatus,
-		ReadyToSign
+		ReadyToSign,
+		GetRecommendation,
 	}
 
 	public Task<InputRegistrationResponse> RegisterInputAsync(InputRegistrationRequest request, CancellationToken cancellationToken) =>
@@ -56,6 +57,9 @@ public class WabiSabiHttpApiClient : IWabiSabiApiRequestHandler
 
 	public Task ReadyToSignAsync(ReadyToSignRequestRequest request, CancellationToken cancellationToken) =>
 		SendAndReceiveAsync(RemoteAction.ReadyToSign, request, cancellationToken, retryTimeout: TimeSpan.FromSeconds(30));
+
+	public Task<RoundRecommendationResponse> GetRecommendationAsync(RoundRecommendationRequest request, CancellationToken cancellationToken) =>
+		SendAndReceiveAsync<RoundRecommendationRequest, RoundRecommendationResponse>(RemoteAction.GetRecommendation, request, cancellationToken, retryTimeout: TimeSpan.FromSeconds(30));
 
 	private async Task<HttpResponseMessage> SendWithRetriesAsync(RemoteAction action, string jsonString, CancellationToken cancellationToken, TimeSpan? retryTimeout = null)
 	{
@@ -167,6 +171,7 @@ public class WabiSabiHttpApiClient : IWabiSabiApiRequestHandler
 			RemoteAction.SignTransaction => "transaction-signature",
 			RemoteAction.GetStatus => "status",
 			RemoteAction.ReadyToSign => "ready-to-sign",
+			RemoteAction.GetRecommendation => "recommendation",
 			_ => throw new NotSupportedException($"Action '{action}' is unknown and has no endpoint associated.")
 		};
 }

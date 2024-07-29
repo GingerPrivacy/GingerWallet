@@ -227,4 +227,9 @@ public class ArenaClient
 				AffiliationConstants.DefaultAffiliationId),
 			cancellationToken).ConfigureAwait(false);
 	}
+
+	public async Task<RoundRecommendationResponse> GetRecommendationAsync(RoundRecommendationRequest request, CancellationToken cancellationToken)
+	{
+		return await RequestHandler.GetRecommendationAsync(request, cancellationToken).ConfigureAwait(false);
+	}
 }

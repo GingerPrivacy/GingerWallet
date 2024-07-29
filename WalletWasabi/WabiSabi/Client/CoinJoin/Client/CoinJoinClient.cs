@@ -21,6 +21,7 @@ using WalletWasabi.WabiSabi.Client.RoundStateAwaiters;
 using WalletWasabi.WabiSabi.Client.StatusChangedEvents;
 using WalletWasabi.WabiSabi.Models;
 using WalletWasabi.WabiSabi.Models.MultipartyTransaction;
+using WalletWasabi.WabiSabi.Recommendation;
 using WalletWasabi.WebClients.Wasabi;
 
 namespace WalletWasabi.WabiSabi.Client.CoinJoin.Client;
@@ -675,6 +676,70 @@ public class CoinJoinClient
 		await Task.WhenAll(tasks).ConfigureAwait(false);
 	}
 
+	private async Task<List<Money>> RecommendationAsync(uint256 roundId, DateTimeOffset recommendationEndTime, CancellationToken cancellationToken)
+	{
+		var scheduledDates = recommendationEndTime.GetScheduledDates(Random.Shared.Next(3, 5), DateTimeOffset.UtcNow, MaximumRequestDelay);
+
+		var arenaRequestHandler = new WabiSabiHttpApiClient(HttpClientFactory.NewHttpClientWithCircuitPerRequest());
+
+		var tasks = scheduledDates.Select(
+			async scheduledDate =>
+			{
+				var delay = scheduledDate - DateTimeOffset.UtcNow;
+				if (delay > TimeSpan.Zero)
+				{
+					await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
+				}
+
+				try
+				{
+					var result = await arenaRequestHandler.GetRecommendationAsync(new RoundRecommendationRequest(roundId), cancellationToken).ConfigureAwait(false);
+					return result.Denomination;
+				}
+				catch (Exception e)
+				{
+					// This cannot fail. Otherwise the whole conjoin process will be halted.
+					Logger.LogDebug(e.ToString());
+					Logger.LogInfo($"Failed to get recommendation with message {e.Message}. Ignoring...");
+				}
+				return null;
+			})
+			.ToList();
+
+		ImmutableSortedSet<Money>? storedRecommendedDenominations = null;
+
+		int valid = 0;
+		do
+		{
+			var finishedTask = await Task.WhenAny(tasks).ConfigureAwait(false);
+			tasks.Remove(finishedTask);
+			ImmutableSortedSet<Money>? recommendedDenominations = await finishedTask.ConfigureAwait(false);
+
+			if (recommendedDenominations is null)
+			{
+				continue;
+			}
+
+			valid++;
+			if (storedRecommendedDenominations is null)
+			{
+				storedRecommendedDenominations = recommendedDenominations;
+			}
+			else
+			{
+				if (!recommendedDenominations.SequenceEqual(storedRecommendedDenominations))
+				{
+					throw new InvalidOperationException("Coordinator is not consistent with recommended denomination levels.");
+				}
+			}
+		} while (tasks.Count != 0);
+
+		var result = (storedRecommendedDenominations is not null && valid > 1 ? storedRecommendedDenominations : []).ToList();
+		result.Sort((x, y) => y.CompareTo(x));
+
+		return result;
+	}
+
 	internal virtual ImmutableList<DateTimeOffset> GetScheduledDates(int howMany, DateTimeOffset startTime, DateTimeOffset endTime, TimeSpan maximumRequestDelay)
 	{
 		return endTime.GetScheduledDates(howMany, startTime, maximumRequestDelay);
@@ -741,13 +806,18 @@ public class CoinJoinClient
 
 		// Splitting the remaining time.
 		// Both operations are done under output registration phase, so we have to do the random timing taking that into account.
-		var outputRegistrationEndTime = now + (remainingTime * 0.8); // 80% of the time.
+		var recommendationEndTime = now + (remainingTime * 0.1); // 10% of the time
+		var outputRegistrationEndTime = recommendationEndTime + (remainingTime * 0.7); // 70% of the time.
 		var readyToSignEndTime = outputRegistrationEndTime + (remainingTime * 0.2); // 20% of the time.
 
 		CoinJoinClientProgress.SafeInvoke(this, new EnteringOutputRegistrationPhase(roundState, outputRegistrationPhaseEndTime));
 
 		using CancellationTokenSource phaseTimeoutCts = new(remainingTime + ExtraPhaseTimeoutMargin);
 		using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, phaseTimeoutCts.Token);
+		var combinedToken = linkedCts.Token;
+
+		var denoms = await RecommendationAsync(roundId, recommendationEndTime, combinedToken).ConfigureAwait(false);
+		roundState.LogInfo($"The recommended denomination levels are ({denoms.Count,2}): [{denoms.ListToString()}]");
 
 		var registeredCoins = registeredAliceClients.Select(x => x.SmartCoin.Coin);
 		var inputEffectiveValuesAndSizes = registeredAliceClients.Select(x => (x.EffectiveValue, x.SmartCoin.ScriptPubKey.EstimateInputVsize()));
@@ -756,15 +826,25 @@ public class CoinJoinClient
 		// Calculate outputs values
 		var constructionState = roundState.Assert<ConstructionState>();
 
-		var registeredCoinEffectiveValues = registeredAliceClients.Select(x => x.EffectiveValue);
-		var allCoinEffectiveValues = constructionState.Inputs.Select(x => x.EffectiveValue(roundParameters.MiningFeeRate, roundParameters.CoordinationFeeRate));
+		var registeredCoinEffectiveValues = registeredAliceClients.Select(x => x.EffectiveValue).ToList();
+		var allCoinEffectiveValues = constructionState.Inputs.Select(x => x.EffectiveValue(roundParameters.MiningFeeRate, roundParameters.CoordinationFeeRate)).ToList();
 
-		var outputTxOuts = OutputProvider.GetOutputs(roundId, roundParameters, registeredCoinEffectiveValues, allCoinEffectiveValues, (int)availableVsize).ToArray();
+		var denomFactory = new DenominationFactory(roundParameters.AllowedOutputAmounts.Min, roundParameters.AllowedOutputAmounts.Max);
+		var defaultDenoms = denomFactory.CreateDefaultDenominations(allCoinEffectiveValues, roundParameters.MiningFeeRate);
+		if (!denomFactory.IsValidDenomination(denoms, allCoinEffectiveValues, roundParameters.MiningFeeRate, defaultDenoms))
+		{
+			roundState.LogInfo($"The recommended denomination levels failed the validation!");
+			denoms = defaultDenoms;
+		}
+		roundState.LogInfo($"Denomination levels ({denoms.Count,2}): [{denoms.ListToString()}]");
+
+		var outputTxOuts = OutputProvider.GetOutputs(roundId, roundParameters, registeredCoinEffectiveValues, denoms, (int)availableVsize).ToArray();
+		roundState.LogInfo($"Registered coins' effective values ({registeredCoinEffectiveValues.Count,2}): [{registeredCoinEffectiveValues.ListToString()}]");
+		roundState.LogInfo($"Generated outputs ({outputTxOuts.Length,2}): [{outputTxOuts.Select(x => x.Value).ListToString()}]");
 
 		DependencyGraph dependencyGraph = DependencyGraph.ResolveCredentialDependencies(inputEffectiveValuesAndSizes, outputTxOuts, roundParameters.MiningFeeRate, roundParameters.MaxVsizeAllocationPerAlice);
 		DependencyGraphTaskScheduler scheduler = new(dependencyGraph);
 
-		var combinedToken = linkedCts.Token;
 		try
 		{
 			// Re-issuances.

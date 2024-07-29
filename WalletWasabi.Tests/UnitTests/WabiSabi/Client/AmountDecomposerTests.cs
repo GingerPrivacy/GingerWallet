@@ -8,6 +8,7 @@ using WalletWasabi.Tests.Helpers;
 using WalletWasabi.WabiSabi;
 using WalletWasabi.WabiSabi.Client.CoinJoin.Client.Decomposer;
 using WalletWasabi.WabiSabi.Models;
+using WalletWasabi.WabiSabi.Recommendation;
 using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests.WabiSabi.Client;
@@ -52,10 +53,14 @@ public class AmountDecomposerTests
 		var allowedOutputAmountRange = new MoneyRange(Money.Satoshis(minOutputAmount), Money.Satoshis(ProtocolConstants.MaxAmountPerAlice));
 		var allowedOutputTypes = isTaprootEnabled ? new List<ScriptType>() { ScriptType.Taproot, ScriptType.P2WPKH } : new List<ScriptType>() { ScriptType.P2WPKH };
 
-		var amountDecomposer = new AmountDecomposer(feeRate, allowedOutputAmountRange.Min, allowedOutputAmountRange.Max, availableVsize, allowedOutputTypes, InsecureRandom.Instance);
-		var outputValues = amountDecomposer.Decompose(registeredCoinEffectiveValues, registeredCoinEffectiveValues.Concat(theirCoinEffectiveValues));
-
 		var totalEffectiveValue = registeredCoinEffectiveValues.Sum(x => x);
+		var amountDecomposer = new AmountDecomposer(feeRate, allowedOutputAmountRange.Min, allowedOutputAmountRange.Max, availableVsize, allowedOutputTypes, InsecureRandom.Instance);
+
+		var denominations = new DenominationFactory(allowedOutputAmountRange.Min, allowedOutputAmountRange.Max);
+		var denoms = denominations.CreatePreferedDenominations(registeredCoinEffectiveValues.Concat(theirCoinEffectiveValues).ToList(), feeRate);
+
+		var outputValues = amountDecomposer.Decompose(totalEffectiveValue, denoms);
+
 		var totalEffectiveCost = outputValues.Sum(x => x.EffectiveCost);
 
 		if (!isTaprootEnabled)
@@ -105,8 +110,8 @@ public class AmountDecomposerTests
 		var denoms = stdDenoms.SkipWhile(x => x > target).ToArray();
 		var res = Decomposer.Decompose(target, tolerance, maxCount, denoms);
 
-		Assert.True(res.Count() == res.ToHashSet().Count);
-		Assert.True(expectedResultCount < 0 || res.Count() == expectedResultCount);
+		Assert.True(res.Count == res.ToHashSet().Count);
+		Assert.True(expectedResultCount < 0 || res.Count == expectedResultCount);
 		Assert.All(res, x => Assert.True(x.Sum == Decomposer.ToRealValuesArray(x.Decomposition, x.Count, denoms).Sum()));
 		Assert.All(res, x => Assert.True(target - x.Sum < tolerance));
 	}

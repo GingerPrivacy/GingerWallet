@@ -151,6 +151,22 @@ public static class NBitcoinExtensions
 		return toStringBuilder.ToString();
 	}
 
+	public static string ListToString(this IEnumerable<Money>? list, MoneyUnit unit = MoneyUnit.BTC, string format = "F8")
+	{
+		if (list is null || !list.Any())
+		{
+			return "";
+		}
+
+		StringBuilder builder = new();
+		foreach (var item in list)
+		{
+			builder.Append($"{item.ToUnit(unit).ToString(format)}, ");
+		}
+		builder.Remove(builder.Length - 2, 2);
+		return builder.ToString();
+	}
+
 	public static BitcoinWitPubKeyAddress TransformToNetwork(this BitcoinWitPubKeyAddress me, Network desiredNetwork)
 	{
 		Network originalNetwork = me.Network;

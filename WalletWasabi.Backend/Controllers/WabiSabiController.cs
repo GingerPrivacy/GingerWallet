@@ -101,6 +101,12 @@ public class WabiSabiController : ControllerBase, IWabiSabiApiRequestHandler
 		await Arena.ReadyToSignAsync(request, cancellableToken);
 	}
 
+	[HttpPost("recommendation")]
+	public async Task<RoundRecommendationResponse> GetRecommendationAsync(RoundRecommendationRequest request, CancellationToken cancellableToken)
+	{
+		return await Arena.GetRecommendationAsync(request, cancellableToken);
+	}
+
 	/// <summary>
 	/// Information about the current Rounds designed for the human eyes.
 	/// </summary>
