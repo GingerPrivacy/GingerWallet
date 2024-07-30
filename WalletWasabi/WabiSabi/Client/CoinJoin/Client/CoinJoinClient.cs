@@ -756,11 +756,10 @@ public class CoinJoinClient
 		// Calculate outputs values
 		var constructionState = roundState.Assert<ConstructionState>();
 
-		var theirCoins = constructionState.Inputs.Where(x => !registeredCoins.Any(y => x.Outpoint == y.Outpoint));
 		var registeredCoinEffectiveValues = registeredAliceClients.Select(x => x.EffectiveValue);
-		var theirCoinEffectiveValues = theirCoins.Select(x => x.EffectiveValue(roundParameters.MiningFeeRate, roundParameters.CoordinationFeeRate));
+		var allCoinEffectiveValues = constructionState.Inputs.Select(x => x.EffectiveValue(roundParameters.MiningFeeRate, roundParameters.CoordinationFeeRate));
 
-		var outputTxOuts = OutputProvider.GetOutputs(roundId, roundParameters, registeredCoinEffectiveValues, theirCoinEffectiveValues, (int)availableVsize).ToArray();
+		var outputTxOuts = OutputProvider.GetOutputs(roundId, roundParameters, registeredCoinEffectiveValues, allCoinEffectiveValues, (int)availableVsize).ToArray();
 
 		DependencyGraph dependencyGraph = DependencyGraph.ResolveCredentialDependencies(inputEffectiveValuesAndSizes, outputTxOuts, roundParameters.MiningFeeRate, roundParameters.MaxVsizeAllocationPerAlice);
 		DependencyGraphTaskScheduler scheduler = new(dependencyGraph);
@@ -806,6 +805,7 @@ public class CoinJoinClient
 					case DependencyGraphTaskScheduler.UnknownError s:
 						roundState.LogInfo($"Script ({s.ScriptPubKey}) registration failed by unknown reasons. Continuing...");
 						break;
+
 					case DependencyGraphTaskScheduler.AlreadyRegisteredScriptError s:
 						OutputProvider.DestinationProvider.TrySetScriptStates(KeyState.Used, [s.ScriptPubKey]);
 						roundState.LogInfo($"Script ({s.ScriptPubKey}) was already registered. Continuing...");
