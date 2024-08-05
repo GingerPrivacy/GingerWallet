@@ -14,12 +14,12 @@ public class CoinJoinTrackerFactory
 	public CoinJoinTrackerFactory(
 		IWasabiHttpClientFactory httpClientFactory,
 		RoundStateUpdater roundStatusUpdater,
-		string coordinatorIdentifier,
+		CoinJoinConfiguration coinJoinConfiguration,
 		CancellationToken cancellationToken)
 	{
 		HttpClientFactory = httpClientFactory;
 		RoundStatusUpdater = roundStatusUpdater;
-		CoordinatorIdentifier = coordinatorIdentifier;
+		CoinJoinConfiguration = coinJoinConfiguration;
 		CancellationToken = cancellationToken;
 		LiquidityClueProvider = new LiquidityClueProvider();
 	}
@@ -27,7 +27,7 @@ public class CoinJoinTrackerFactory
 	private IWasabiHttpClientFactory HttpClientFactory { get; }
 	private RoundStateUpdater RoundStatusUpdater { get; }
 	private CancellationToken CancellationToken { get; }
-	private string CoordinatorIdentifier { get; }
+	private CoinJoinConfiguration CoinJoinConfiguration { get; }
 	private LiquidityClueProvider LiquidityClueProvider { get; }
 
 	public async Task<CoinJoinTracker> CreateAndStartAsync(IWallet wallet, IWallet? outputWallet, Func<Task<IEnumerable<SmartCoin>>> coinCandidatesFunc, bool stopWhenAllMixed, bool overridePlebStop)
@@ -48,8 +48,8 @@ public class CoinJoinTrackerFactory
 			wallet.KeyChain,
 			outputWallet != null ? outputWallet.OutputProvider : wallet.OutputProvider,
 			RoundStatusUpdater,
-			CoordinatorIdentifier,
 			coinSelector,
+			CoinJoinConfiguration,
 			LiquidityClueProvider,
 			feeRateMedianTimeFrame: wallet.FeeRateMedianTimeFrame,
 			skipFactors: wallet.CoinjoinSkipFactors,

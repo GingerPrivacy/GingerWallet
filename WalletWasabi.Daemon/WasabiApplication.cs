@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -111,6 +111,8 @@ public class WasabiApplication
 			ConfigManagerNg.ToFile(ConfigFilePath, persistentConfig);
 		}
 
+		// Make sure all values visible in the config file, so it can be changed by the users.
+		ConfigManagerNg.ToFile(ConfigFilePath, persistentConfig);
 		return persistentConfig;
 	}
 
