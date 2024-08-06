@@ -89,6 +89,7 @@ public static class NostrExtensions
 
 		await client.ConnectAndWaitUntilConnected(cancellationToken).ConfigureAwait(false);
 		await client.SendEventsAndWaitUntilReceived(evts, cancellationToken).ConfigureAwait(false);
+		await client.Disconnect().ConfigureAwait(false);
 	}
 
 	public static async Task<NostrEvent> CreateCoordinatorDiscoveryEventAsync(
