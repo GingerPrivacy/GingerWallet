@@ -45,3 +45,10 @@ jobs:
 
       - name: Test
         run: dotnet test --no-restore --configuration Release --filter "UnitTests" --logger "console;verbosity=detailed"
+        continue-on-error: true
+
+      - name: Check test results
+        if: failure()
+        run: |
+          echo "Tests failed on ${{ matrix.os }}"
+          exit 1
