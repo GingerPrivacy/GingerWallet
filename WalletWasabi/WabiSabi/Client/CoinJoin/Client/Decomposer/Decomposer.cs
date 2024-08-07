@@ -1,76 +1,73 @@
 using System.Collections.Generic;
-using System.Linq;
-using WalletWasabi.Extensions;
+using System.Runtime.CompilerServices;
 
 namespace WalletWasabi.WabiSabi.Client.CoinJoin.Client.Decomposer;
 
-/// <summary>
-/// Notebook: https://github.com/lontivero/DecompositionsPlayground/blob/master/Notebook.ipynb
-/// </summary>
 public static class Decomposer
 {
-	public static IEnumerable<(long Sum, int Count, ulong Decomposition)> Decompose(long target, long tolerance, int maxCount, long[] stdDenoms)
+	public static List<(long Sum, int Count, UInt128 Decomposition)> Decompose(long target, long tolerance, int maxCount, long[] stdDenoms)
 	{
-		if (maxCount is <= 1 or > 8)
+		if (maxCount is <= 1 or > 16)
 		{
-			throw new ArgumentOutOfRangeException(nameof(maxCount), "The maximum decomposition length cannot be greater than 8 or smaller than 2.");
+			throw new ArgumentOutOfRangeException(nameof(maxCount), "The maximum decomposition length cannot be greater than 16 or smaller than 2.");
 		}
 		if (target <= 0)
 		{
 			throw new ArgumentException("Only positive numbers can be decomposed.", nameof(target));
 		}
 
-		var denoms = stdDenoms.SkipWhile(x => x > target).ToArray();
-
-		if (denoms.Length > 255)
+		if (stdDenoms.Length > 255)
 		{
 			throw new ArgumentException("Too many denominations. Maximum number is 255.", nameof(target));
 		}
-		return InternalCombinations(target, tolerance: tolerance, maxCount, denoms).Take(10_000).ToList();
+
+		List<(long Sum, int Count, UInt128 Decomposition)> results = new();
+		TakeNext(results, tolerance, stdDenoms, target, maxCount, 0, 0, 0, 0);
+
+		return results;
 	}
 
-	private static IEnumerable<(long Sum, int Count, ulong Decomposition)> InternalCombinations(long target, long tolerance, int maxLength, long[] denoms)
+	[MethodImpl(MethodImplOptions.AggressiveOptimization)]
+	private static void TakeNext(List<(long Sum, int Count, UInt128 Decomposition)> results, long tolerance, long[] denoms, long remainingTarget, int remainingCount, int checkIdx, long sum, int count, UInt128 decomposition)
 	{
-		IEnumerable<(long Sum, int Count, ulong Decomposition)> Combinations(
-			int currentDenominationIdx,
-			ulong accumulator,
-			long sum,
-			int k)
+		for (; checkIdx < denoms.Length && denoms[checkIdx] > remainingTarget; checkIdx++) { }
+		if (checkIdx >= denoms.Length)
 		{
-			accumulator = accumulator << 8 | (ulong)currentDenominationIdx & 0xff;
-			var currentDenomination = denoms[currentDenominationIdx];
-			sum += currentDenomination;
-			var remaining = target - sum;
-			if (k == 0 || remaining < tolerance)
-			{
-				return new[] { (sum, maxLength - k, accumulator) };
-			}
-
-			currentDenominationIdx = Search(remaining, denoms, currentDenominationIdx);
-
-			return Enumerable.Range(0, denoms.Length - currentDenominationIdx)
-				.TakeWhile(i => k * denoms[currentDenominationIdx + i] >= remaining - tolerance)
-				.SelectMany((_, i) =>
-					Combinations(currentDenominationIdx + i, accumulator, sum, k - 1)
-					.TakeUntil(x => x.Sum == target));
+			return;
 		}
 
-		return denoms.SelectMany((_, i) => Combinations(i, 0ul, 0, maxLength - 1)).Take(5_000).ToList();
+		var denom = denoms[checkIdx];
+		if (remainingCount * denom + tolerance < remainingTarget)
+		{
+			return;
+		}
+		TakeNext(results, tolerance, denoms, remainingTarget, remainingCount, checkIdx + 1, sum, count, decomposition);
+
+		decomposition = (decomposition << 8) | (ulong)checkIdx & 0xff;
+		sum += denom;
+		count++;
+		remainingTarget -= denom;
+		remainingCount--;
+
+		if (remainingTarget < tolerance)
+		{
+			results.Add((sum, count, decomposition));
+			return;
+		}
+		if (remainingCount > 0)
+		{
+			TakeNext(results, tolerance, denoms, remainingTarget, remainingCount, checkIdx, sum, count, decomposition);
+		}
 	}
 
-	private static int Search(long value, long[] denoms, int offset)
-	{
-		var startingIndex = Array.BinarySearch(denoms, offset, denoms.Length - offset, value, ReverseComparer.Default);
-		return startingIndex < 0 ? ~startingIndex : startingIndex;
-	}
-
-	public static IEnumerable<long> ToRealValuesArray(ulong decomposition, int count, long[] denoms)
+	public static IEnumerable<long> ToRealValuesArray(UInt128 decomposition, int count, long[] denoms)
 	{
 		var list = new long[count];
 		for (var i = 0; i < count; i++)
 		{
-			var index = (decomposition >> (i * 8)) & 0xff;
+			var index = (int)(decomposition & 0xff);
 			list[count - i - 1] = denoms[index];
+			decomposition >>= 8;
 		}
 		return list;
 	}

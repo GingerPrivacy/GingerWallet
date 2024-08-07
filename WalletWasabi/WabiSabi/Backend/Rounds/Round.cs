@@ -1,5 +1,6 @@
 using NBitcoin;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using WabiSabi.Crypto;
 using WabiSabi.Crypto.Randomness;
 using WalletWasabi.Crypto;
@@ -48,6 +49,8 @@ public class Round
 
 		Id = CalculateHash();
 		CoinJoinInputCommitmentData = new CoinJoinInputCommitmentData(Parameters.CoordinationIdentifier, Id);
+
+		Denomination = [];
 	}
 
 	public uint256 Id { get; }
@@ -76,6 +79,8 @@ public class Round
 	public Script CoordinatorScript { get; set; }
 
 	public CoinJoinInputCommitmentData CoinJoinInputCommitmentData { get; init; }
+
+	public ImmutableSortedSet<Money> Denomination { get; set; }
 
 	public TState Assert<TState>() where TState : MultipartyTransactionState =>
 		CoinjoinState switch

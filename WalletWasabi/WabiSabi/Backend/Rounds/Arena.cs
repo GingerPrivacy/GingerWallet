@@ -21,6 +21,7 @@ using WalletWasabi.Extensions;
 using WalletWasabi.Logging;
 using WalletWasabi.WabiSabi.Backend.DoSPrevention;
 using WalletWasabi.WabiSabi.Backend.Events;
+using WalletWasabi.WabiSabi.Recommendation;
 using WalletWasabi.Helpers;
 
 namespace WalletWasabi.WabiSabi.Backend.Rounds;
@@ -34,6 +35,7 @@ public partial class Arena : PeriodicRunner
 		Prison prison,
 		ICoinJoinIdStore coinJoinIdStore,
 		RoundParameterFactory roundParameterFactory,
+		DenominationFactory? denominationFactory = null,
 		CoinJoinTransactionArchiver? archiver = null,
 		CoinJoinScriptStore? coinJoinScriptStore = null,
 		CoinVerifier? coinVerifier = null) : base(period)
@@ -52,6 +54,8 @@ public partial class Arena : PeriodicRunner
 		{
 			CoinVerifier.CoinBlacklisted += CoinVerifier_CoinBlacklisted;
 		}
+
+		DenominationFactory = denominationFactory;
 	}
 
 	public event EventHandler<Transaction>? CoinJoinBroadcast;
@@ -80,9 +84,10 @@ public partial class Arena : PeriodicRunner
 	private RoundParameterFactory RoundParameterFactory { get; }
 	public MaxSuggestedAmountProvider MaxSuggestedAmountProvider { get; }
 
+	public DenominationFactory? DenominationFactory { get; }
+
 	protected override async Task ActionAsync(CancellationToken cancel)
 	{
-		var before = DateTimeOffset.UtcNow;
 		using (await AsyncLock.LockAsync(cancel).ConfigureAwait(false))
 		{
 			var beforeInside = DateTimeOffset.UtcNow;
@@ -186,6 +191,18 @@ public partial class Arena : PeriodicRunner
 		}
 	}
 
+	private void CreateRecommendations(Round round)
+	{
+		// We don't leak information about whether an input is exempt from fee or not
+		var inputs = round.Alices.Select(x => x.Coin.EffectiveValue(round.Parameters.MiningFeeRate, round.Parameters.CoordinationFeeRate)).ToList();
+		var defaultDenoms = DenominationFactory?.CreateDefaultDenominations(inputs, round.Parameters.MiningFeeRate) ?? [];
+		var denoms = DenominationFactory?.CreatePreferedDenominations(inputs, round.Parameters.MiningFeeRate) ?? [];
+		round.LogInfo($"Inputs for the recommended denominations: [{inputs.ListToString()}]");
+		round.LogInfo($"Default denomination levels ({defaultDenoms.Count,2}):     [{defaultDenoms.ListToString()}]");
+		round.LogInfo($"Recommended denomination levels ({denoms.Count,2}): [{denoms.ListToString()}]");
+		round.Denomination = denoms.ToImmutableSortedSet();
+	}
+
 	private async Task StepConnectionConfirmationPhaseAsync(CancellationToken cancel)
 	{
 		foreach (var round in Rounds.Where(x => x.Phase == Phase.ConnectionConfirmation).ToArray())
@@ -194,6 +211,7 @@ public partial class Arena : PeriodicRunner
 			{
 				if (round.Alices.All(x => x.ConfirmedConnection))
 				{
+					CreateRecommendations(round);
 					SetRoundPhase(round, Phase.OutputRegistration);
 				}
 				else if (round.ConnectionConfirmationTimeFrame.HasExpired)
@@ -257,6 +275,7 @@ public partial class Arena : PeriodicRunner
 					}
 					else
 					{
+						CreateRecommendations(round);
 						round.OutputRegistrationTimeFrame = TimeFrame.Create(Config.FailFastOutputRegistrationTimeout);
 						SetRoundPhase(round, Phase.OutputRegistration);
 					}

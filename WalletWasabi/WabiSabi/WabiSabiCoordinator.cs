@@ -18,12 +18,13 @@ using WalletWasabi.WabiSabi.Backend.Rounds;
 using WalletWasabi.WabiSabi.Backend.Rounds.CoinJoinStorage;
 using WalletWasabi.WabiSabi.Backend.Statistics;
 using WalletWasabi.WabiSabi.Models.MultipartyTransaction;
+using WalletWasabi.WabiSabi.Recommendation;
 
 namespace WalletWasabi.WabiSabi;
 
 public class WabiSabiCoordinator : BackgroundService
 {
-	public WabiSabiCoordinator(CoordinatorParameters parameters, IRPCClient rpc, ICoinJoinIdStore coinJoinIdStore, CoinJoinScriptStore coinJoinScriptStore, IHttpClientFactory httpClientFactory, CoinVerifier? coinVerifier = null)
+	public WabiSabiCoordinator(CoordinatorParameters parameters, IRPCClient rpc, ICoinJoinIdStore coinJoinIdStore, CoinJoinScriptStore coinJoinScriptStore, IHttpClientFactory httpClientFactory, DenominationFactory? denominationFactory = null, CoinVerifier? coinVerifier = null)
 	{
 		Parameters = parameters;
 		RpcClient = rpc;
@@ -47,6 +48,7 @@ public class WabiSabiCoordinator : BackgroundService
 			Warden.Prison,
 			coinJoinIdStore,
 			roundParameterFactory,
+			denominationFactory,
 			transactionArchiver,
 			coinJoinScriptStore,
 			coinVerifier);
@@ -176,7 +178,7 @@ public class WabiSabiCoordinator : BackgroundService
 		{
 			var batch = RpcClient.PrepareBatch();
 			var getTxOutRequests = spendingOutPoints
-				.Select(x => RpcClient.GetTxOutAsync(x.Hash, (int) x.N, includeMempool: true, cancellationToken))
+				.Select(x => RpcClient.GetTxOutAsync(x.Hash, (int)x.N, includeMempool: true, cancellationToken))
 				.ToList();
 			await batch.SendBatchAsync(cancellationToken).ConfigureAwait(false);
 			var txOutResponses = await Task.WhenAll(getTxOutRequests).ConfigureAwait(false);

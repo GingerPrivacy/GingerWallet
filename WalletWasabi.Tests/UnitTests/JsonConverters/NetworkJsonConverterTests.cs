@@ -38,8 +38,8 @@ public class NetworkJsonConverterTests
 			token = "Mainnet";
 			AssertBothDeserialize(ConvertToJsonString(token));
 
-			token = "TestNet";
-			AssertBothDeserialize(ConvertToJsonString(token));
+			//token = "TestNet"; reason - https://github.com/GingerPrivacy/GingerWallet/commit/00c504a5c046761044a80252f8a43037087be0db
+			//AssertBothDeserialize(ConvertToJsonString(token));
 
 			token = "RegTest";
 			AssertBothDeserialize(ConvertToJsonString(token));

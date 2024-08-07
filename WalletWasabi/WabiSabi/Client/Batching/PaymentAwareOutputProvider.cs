@@ -23,7 +23,7 @@ public class PaymentAwareOutputProvider : OutputProvider
 		uint256 roundId,
 		RoundParameters roundParameters,
 		IEnumerable<Money> registeredCoinEffectiveValues,
-		IEnumerable<Money> allCoinEffectiveValues,
+		List<Money> denoms,
 		int availableVsize)
 	{
 		// Get the best combination of payments that can be done with the current amount
@@ -60,7 +60,7 @@ public class PaymentAwareOutputProvider : OutputProvider
 		}
 
 		// Decompose the available values and return them.
-		var decomposedOutputs = base.GetOutputs(roundId, roundParameters, availableValues, allCoinEffectiveValues, availableVsize);
+		var decomposedOutputs = base.GetOutputs(roundId, roundParameters, availableValues, denoms, availableVsize);
 		foreach (var txOut in decomposedOutputs)
 		{
 			yield return txOut;
