@@ -19,26 +19,8 @@ jobs:
       - name: Set up .NET
         uses: actions/setup-dotnet@v3
 
-      - name: Cache NuGet packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-
       - name: Install dependencies
         run: dotnet restore --locked-mode
-
-      - name: Cache build output
-        uses: actions/cache@v3
-        with:
-          path: |
-            **/bin
-            **/obj
-          key: ${{ runner.os }}-build-${{ hashFiles('**/*.*proj') }}-${{ hashFiles('global.json') }}-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-
 
       - name: Build
         run: dotnet build --no-restore --configuration Release
