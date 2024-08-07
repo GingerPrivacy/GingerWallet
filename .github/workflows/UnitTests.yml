@@ -19,6 +19,14 @@ jobs:
       - name: Set up .NET
         uses: actions/setup-dotnet@v3
 
+      - name: Cache NuGet packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
       - name: Install dependencies
         run: dotnet restore --locked-mode
 
