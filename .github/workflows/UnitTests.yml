@@ -11,16 +11,13 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        dotnet-version: [8.0.100]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up .NET ${{ matrix.dotnet-version }}
+      - name: Set up .NET
         uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: ${{ matrix.dotnet-version }}
 
       - name: Cache NuGet packages
         uses: actions/cache@v3
