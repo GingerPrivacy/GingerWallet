@@ -64,6 +64,11 @@ public static class Constants
 	public const int DefaultRegTestBitcoinCoreRpcPort = 18443;
 
 	public const decimal DefaultDustThreshold = 0.00005m;
+	public const decimal DefaultMaxCoordinationFeeRate = 0.003m;
+	public const decimal DefaultMaxCoinJoinMiningFeeRate = 300.0m;
+	public const int DefaultAbsoluteMinInputCount = 6;
+	public const int AbsoluteMinInputCount = 6;
+	public const decimal AbsoluteMaxCoordinationFeeRate = 0.003m;
 
 	public const string AlphaNumericCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	public const string CapitalAlphaNumericCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

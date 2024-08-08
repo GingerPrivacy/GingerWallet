@@ -120,6 +120,16 @@ public record PersistentConfig : IConfigNg
 	[JsonPropertyName("CoordinatorIdentifier")]
 	public string CoordinatorIdentifier { get; init; } = "CoinJoinCoordinatorIdentifier";
 
+
+	[JsonPropertyName("MaxCoordinationFeeRate")]
+	public decimal MaxCoordinationFeeRate { get; init; } = Constants.DefaultMaxCoordinationFeeRate;
+
+	[JsonPropertyName("MaxCoinJoinMiningFeeRate")]
+	public decimal MaxCoinJoinMiningFeeRate { get; init; } = Constants.DefaultMaxCoinJoinMiningFeeRate;
+
+	[JsonPropertyName("AbsoluteMinInputCount")]
+	public int AbsoluteMinInputCount { get; init; } = Constants.DefaultAbsoluteMinInputCount;
+
 	public bool DeepEquals(PersistentConfig other)
 	{
 		bool useTorIsEqual = Config.ObjectToTorMode(UseTor) == Config.ObjectToTorMode(other.UseTor);
@@ -147,7 +157,10 @@ public record PersistentConfig : IConfigNg
 			JsonRpcServerPrefixes.SequenceEqual(other.JsonRpcServerPrefixes) &&
 			DustThreshold == other.DustThreshold &&
 			EnableGpu == other.EnableGpu &&
-			CoordinatorIdentifier == other.CoordinatorIdentifier;
+			CoordinatorIdentifier == other.CoordinatorIdentifier &&
+			MaxCoordinationFeeRate == other.MaxCoordinationFeeRate &&
+			MaxCoinJoinMiningFeeRate == other.MaxCoinJoinMiningFeeRate &&
+			AbsoluteMinInputCount == other.AbsoluteMinInputCount;
 	}
 
 	public EndPoint GetBitcoinP2pEndPoint()
