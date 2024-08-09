@@ -1,4 +1,4 @@
-Last Updated: May 28, 2024
+Last Updated: Aug 09, 2024
 
 
 Version Number: 5
@@ -159,6 +159,10 @@ Ginger Wallet does not store, send, or receive Bitcoins. Bitcoins exist only by 
 
 
     The CoinJoin fee, charged by the Service Provider is 0.3% per new UTXO, except if:
+
+     -The used client for the CoinJoin is a Wasabi Wallet with version 2.0.8.1 or lower OR a Ginger Wallet
+
+     AND ANY FROM BELOW:
 
      -The UTXO comes directly from a Ginger Wallet CoinJoin transaction used InvisibleBit LLC’s coordinator.
 

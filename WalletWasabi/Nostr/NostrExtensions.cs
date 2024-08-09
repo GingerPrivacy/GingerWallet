@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Net;
 using System.Net.WebSockets;
 using System.Threading;
@@ -14,7 +14,7 @@ namespace WalletWasabi.Nostr;
 public record NostrCoordinator(string Description, string Name, Uri Uri, Network Network)
 {
 	private static NostrCoordinator Ginger = new(
-		Description: "Official Coordinator | FREE Remix, FREE under 0.01 BTC, FREE for Wasabi mixed coins | Secure Coinjoin - Illicit actors are not allowed to participate! | gingerwallet.io",
+		Description: "Official Coordinator | FREE Remix, FREE under 0.01 BTC till Wasabi Wallet v2.0.8.1 and for Ginger Wallet | Secure Coinjoin - Illicit actors are not allowed to participate! | gingerwallet.io",
 		Name: "Ginger Coordinator",
 		Uri: new Uri(Constants.BackendUri),
 		Network: Network.Main);
@@ -28,12 +28,12 @@ public record NostrCoordinator(string Description, string Name, Uri Uri, Network
 
 		if (network == Network.TestNet)
 		{
-			return Ginger with {Uri = new Uri(Constants.TestnetBackendUri), Network = Network.TestNet};
+			return Ginger with { Uri = new Uri(Constants.TestnetBackendUri), Network = Network.TestNet };
 		}
 
 		if (network == Network.RegTest)
 		{
-			return Ginger with {Uri = new Uri("http://localhost:37127/"), Network = Network.RegTest};
+			return Ginger with { Uri = new Uri("http://localhost:37127/"), Network = Network.RegTest };
 		}
 
 		throw new NotSupportedNetworkException(network);
@@ -56,7 +56,6 @@ public static class NostrExtensions
 				? new WebProxy($"socks5://{endpoint2.Host}:{endpoint2.Port}")
 				: null;
 		return Create(relays, webProxy);
-
 	}
 
 	public static INostrClient Create(Uri[] relays, WebProxy? proxy = null)
