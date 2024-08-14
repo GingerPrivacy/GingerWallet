@@ -20,7 +20,7 @@ namespace WalletWasabi.Fluent.ViewModels.Settings;
 	Keywords = new[]
 	{
 			"Settings", "General", "Bitcoin", "Dark", "Mode", "Run", "Wasabi", "Computer", "System", "Start", "Background", "Close",
-			"Auto", "Copy", "Paste", "Addresses", "Custom", "Change", "Address", "Fee", "Display", "Format", "BTC", "sats"
+			"Auto", "Copy", "Paste", "Addresses", "Custom", "Change", "Address", "Fee", "Display", "Format", "BTC", "sats", "browser"
 	},
 	IconName = "settings_general_regular")]
 public partial class GeneralSettingsTabViewModel : RoutableViewModel
@@ -45,6 +45,22 @@ public partial class GeneralSettingsTabViewModel : RoutableViewModel
 				await ShowErrorAsync(Title, "Couldn't save your change, please see the logs for further information.", "Error occurred.");
 			}
 		});
+
+		var browserList = new List<BrowserTypeDropdownListEnum>
+		{
+			BrowserTypeDropdownListEnum.SystemDefault
+		};
+
+		foreach (var browserType in WebBrowserService.GetAvailableBrowsers())
+		{
+			if (Enum.TryParse<BrowserTypeDropdownListEnum>(browserType.ToString(), out var result))
+			{
+				browserList.Add(result);
+			}
+		}
+
+		browserList.Add(BrowserTypeDropdownListEnum.Custom);
+		BrowserList = browserList;
 	}
 
 	public bool IsReadOnly => Settings.IsOverridden;
@@ -58,4 +74,6 @@ public partial class GeneralSettingsTabViewModel : RoutableViewModel
 
 	public IEnumerable<TorMode> TorModes =>
 		Enum.GetValues(typeof(TorMode)).Cast<TorMode>();
+
+	public IEnumerable<BrowserTypeDropdownListEnum> BrowserList { get; }
 }

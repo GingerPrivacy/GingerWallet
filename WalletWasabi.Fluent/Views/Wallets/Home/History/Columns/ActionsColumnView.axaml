@@ -24,6 +24,14 @@
     </Classes.transparent>
     <InvalidatingStackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="15" Margin="15 0">
 
+      <!-- Open in browser button -->
+      <Button Classes="plain" ToolTip.Tip="Open in the browser"
+              Command="{Binding OpenInBrowserCommand}"
+              IsVisible="{Binding CanOpenInBrowser}">
+        <PathIcon Data="{StaticResource open}" Height="16">
+        </PathIcon>
+      </Button>
+
       <!-- SpeedUp button -->
       <Button Classes="plain" ToolTip.Tip="Speed Up Transaction"
               Command="{Binding SpeedUpTransactionCommand}"
@@ -54,7 +62,6 @@
               Command="{Binding ShowDetailsCommand}">
         <PathIcon Data="{StaticResource details_regular}" Height="16" />
       </Button>
-
     </InvalidatingStackPanel>
   </Border>
 </UserControl>

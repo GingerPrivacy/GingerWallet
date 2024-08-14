@@ -107,34 +107,6 @@ public static class IoHelpers
 		}
 	}
 
-	public static async Task OpenBrowserAsync(string url)
-	{
-		if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-		{
-			// If no associated application/json MimeType is found xdg-open opens return error
-			// but it tries to open it anyway using the console editor (nano, vim, other..)
-			await EnvironmentHelpers.ShellExecAsync($"xdg-open {url}", waitForExit: false).ConfigureAwait(false);
-		}
-		else
-		{
-			if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-			{
-				url = url.Replace(" ", "\\ ");
-
-				await EnvironmentHelpers.ShellExecAsync($"open {url}").ConfigureAwait(false);
-			}
-			else
-			{
-				using var process = Process.Start(new ProcessStartInfo
-				{
-					FileName = url,
-					CreateNoWindow = true,
-					UseShellExecute = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-				});
-			}
-		}
-	}
-
 	public static void CopyFilesRecursively(DirectoryInfo source, DirectoryInfo target)
 	{
 		foreach (DirectoryInfo dir in source.GetDirectories())

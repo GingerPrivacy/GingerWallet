@@ -75,5 +75,26 @@
         </ComboBox.ItemTemplate>
       </ComboBox>
     </StackPanel>
+
+    <StackPanel IsVisible="{Binding Settings.SelectedBrowser, Converter={x:Static conv:EnumToBoolConverter.Instance}, ConverterParameter={x:Static models:BrowserTypeDropdownListEnum.Custom}}"
+        ToolTip.Tip="Set the full path of the preferred browser">
+      <TextBlock Text="Custom browser path" />
+      <TextBox Text="{Binding Settings.BrowserPath}">
+        <Interaction.Behaviors>
+          <TextBoxAutoSelectTextBehavior />
+        </Interaction.Behaviors>
+      </TextBox>
+    </StackPanel>
+
+    <StackPanel>
+      <TextBlock Text="Open in browser" />
+      <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding BrowserList}" SelectedItem="{Binding Settings.SelectedBrowser}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate x:DataType="models:BrowserTypeDropdownListEnum">
+            <TextBlock Text="{Binding Converter={x:Static conv:EnumConverters.ToFriendlyName}}}}" />
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+    </StackPanel>
   </StackPanel>
 </UserControl>

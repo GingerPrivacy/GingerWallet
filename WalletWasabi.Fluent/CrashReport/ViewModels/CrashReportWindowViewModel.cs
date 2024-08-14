@@ -4,7 +4,6 @@ using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.ViewModels;
 using WalletWasabi.Fluent.ViewModels.HelpAndSupport;
 using WalletWasabi.Models;
-using WalletWasabi.Helpers;
 
 namespace WalletWasabi.Fluent.CrashReport.ViewModels;
 
@@ -16,7 +15,7 @@ public class CrashReportWindowViewModel : ViewModelBase
 		CancelCommand = ReactiveCommand.Create(() => AppLifetimeHelper.Shutdown(withShutdownPrevention: false, restart: true));
 		NextCommand = ReactiveCommand.Create(() => AppLifetimeHelper.Shutdown(withShutdownPrevention: false, restart: false));
 
-		OpenGitHubRepoCommand = ReactiveCommand.CreateFromTask(async () => await IoHelpers.OpenBrowserAsync(Link));
+		OpenGitHubRepoCommand = ReactiveCommand.CreateFromTask(async () => await WebBrowserService.Instance.OpenUrlInPreferredBrowserAsync(Link));
 
 		CopyTraceCommand = ReactiveCommand.CreateFromTask(async () =>
 		{

@@ -28,6 +28,7 @@ public class UiConfig : ConfigBase
 	private bool _sendAmountConversionReversed;
 	private double? _windowWidth;
 	private double? _windowHeight;
+	private string _selectedBrowser = "";
 
 	public UiConfig() : base()
 	{
@@ -54,7 +55,9 @@ public class UiConfig : ConfigBase
 			.ObserveOn(RxApp.MainThreadScheduler)
 			.Subscribe(_ => ToFile());
 
-		this.WhenAnyValue(x => x.SendAmountConversionReversed)
+		this.WhenAnyValue(
+			x => x.SendAmountConversionReversed,
+			x => x.SelectedBrowser)
 			.Throttle(TimeSpan.FromMilliseconds(500))
 			.Skip(1) // Won't save on UiConfig creation.
 			.ObserveOn(RxApp.MainThreadScheduler)
@@ -99,6 +102,14 @@ public class UiConfig : ConfigBase
 	{
 		get => _feeDisplayUnit;
 		set => RaiseAndSetIfChanged(ref _feeDisplayUnit, value);
+	}
+
+	[DefaultValue("")]
+	[JsonProperty(PropertyName = "SelectedBrowser", DefaultValueHandling = DefaultValueHandling.Populate)]
+	public string SelectedBrowser
+	{
+		get => _selectedBrowser;
+		set => RaiseAndSetIfChanged(ref _selectedBrowser, value);
 	}
 
 	[DefaultValue(true)]

@@ -18,6 +18,6 @@ public class FileSystemModel : IFileSystem
 
 	public Task OpenBrowserAsync(string url)
 	{
-		return IoHelpers.OpenBrowserAsync(url);
+		return WebBrowserService.Instance.OpenUrlInPreferredBrowserAsync(url);
 	}
 }

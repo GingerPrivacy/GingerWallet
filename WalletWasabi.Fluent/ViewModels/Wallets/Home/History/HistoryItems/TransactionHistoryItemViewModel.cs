@@ -19,8 +19,9 @@ public partial class TransactionHistoryItemViewModel : HistoryItemViewModelBase
 		SpeedUpTransactionCommand = ReactiveCommand.Create(() => OnSpeedUpTransaction(transaction), Observable.Return(CanBeSpedUp));
 		CancelTransactionCommand = ReactiveCommand.Create(() => OnCancelTransaction(transaction), Observable.Return(transaction.CanCancelTransaction));
 		HasBeenSpedUp = transaction.HasBeenSpedUp;
+		CanOpenInBrowser = true;
 	}
-	
+
 	public bool TransactionOperationsVisible => Transaction.CanCancelTransaction || CanBeSpedUp;
 
 	private void OnSpeedUpTransaction(TransactionModel transaction)

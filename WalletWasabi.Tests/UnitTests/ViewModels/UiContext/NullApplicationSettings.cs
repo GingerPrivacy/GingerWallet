@@ -35,6 +35,8 @@ public class NullApplicationSettings : IApplicationSettings
 	public bool ShowCoordinatorAnnouncement { get; set; }
 	public WindowState WindowState { get; set; }
 	public bool DoUpdateOnClose { get; set; }
+	public BrowserTypeDropdownListEnum SelectedBrowser { get; set; }
+	public string BrowserPath { get; set; } = "";
 
 	public bool CheckIfRestartIsNeeded(PersistentConfig config)
 	{
