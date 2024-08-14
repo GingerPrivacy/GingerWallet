@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using WalletWasabi.Bases;
+using WalletWasabi.Daemon.Helpers;
 using WalletWasabi.Extensions;
 using WalletWasabi.Logging;
 using WalletWasabi.Services;
@@ -113,6 +114,7 @@ public class WasabiApplication
 
 		// Make sure all values visible in the config file, so it can be changed by the users.
 		ConfigManagerNg.ToFile(ConfigFilePath, persistentConfig);
+
 		return persistentConfig;
 	}
 

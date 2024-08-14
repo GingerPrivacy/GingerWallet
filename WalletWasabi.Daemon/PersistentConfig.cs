@@ -120,7 +120,6 @@ public record PersistentConfig : IConfigNg
 	[JsonPropertyName("CoordinatorIdentifier")]
 	public string CoordinatorIdentifier { get; init; } = "CoinJoinCoordinatorIdentifier";
 
-
 	[JsonPropertyName("MaxCoordinationFeeRate")]
 	public decimal MaxCoordinationFeeRate { get; init; } = Constants.DefaultMaxCoordinationFeeRate;
 

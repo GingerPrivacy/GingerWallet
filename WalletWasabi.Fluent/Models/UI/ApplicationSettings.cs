@@ -7,6 +7,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using WalletWasabi.Bases;
 using WalletWasabi.Daemon;
+using WalletWasabi.Daemon.Helpers;
 using WalletWasabi.Exceptions;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
@@ -56,6 +57,9 @@ public partial class ApplicationSettings : ReactiveObject
 	[AutoNotify] private TorMode _useTor;
 	[AutoNotify] private bool _terminateTorOnExit;
 	[AutoNotify] private bool _downloadNewVersion;
+	[AutoNotify] private BrowserTypeDropdownListEnum _selectedBrowser;
+	[AutoNotify] private string _browserPath;
+	[AutoNotify] private string _selectedBrowserString;
 
 	// Privacy Mode
 	[AutoNotify] private bool _privacyMode;
@@ -94,6 +98,11 @@ public partial class ApplicationSettings : ReactiveObject
 		_selectedFeeDisplayUnit = Enum.IsDefined(typeof(FeeDisplayUnit), _uiConfig.FeeDisplayUnit)
 			? (FeeDisplayUnit)_uiConfig.FeeDisplayUnit
 			: FeeDisplayUnit.Satoshis;
+
+		_selectedBrowserString = _uiConfig.SelectedBrowser;
+		_browserPath = _uiConfig.SelectedBrowser;
+		_selectedBrowser = GetSelectedBrowser();
+
 		_runOnSystemStartup = _uiConfig.RunOnSystemStartup;
 		_hideOnClose = _uiConfig.HideOnClose;
 		_useTor = Config.ObjectToTorMode(_config.UseTor);
@@ -165,6 +174,63 @@ public partial class ApplicationSettings : ReactiveObject
 		this.WhenAnyValue(x => x.DoUpdateOnClose)
 			.Do(x => Services.UpdateManager.DoUpdateOnClose = x)
 			.Subscribe();
+
+		// Save browser settings
+		this.WhenAnyValue(
+			x => x.SelectedBrowser,
+			x => x.BrowserPath)
+			.Skip(1)
+			.Throttle(TimeSpan.FromMilliseconds(ThrottleTime))
+			.Do(_ =>
+			{
+				switch (SelectedBrowser)
+				{
+					case BrowserTypeDropdownListEnum.SystemDefault:
+						_uiConfig.SelectedBrowser = "";
+						BrowserPath = "";
+						break;
+
+					case BrowserTypeDropdownListEnum.Custom:
+						_uiConfig.SelectedBrowser = BrowserPath;
+						break;
+
+					default:
+						{
+							BrowserPath = "";
+							if (Enum.TryParse<BrowserType>(SelectedBrowser.ToString(), out var result))
+							{
+								_uiConfig.SelectedBrowser = result.ToString();
+							}
+							else
+							{
+								// Something went wrong, use default.
+								_uiConfig.SelectedBrowser = "";
+							}
+						}
+						break;
+				}
+
+				_selectedBrowserString = _uiConfig.SelectedBrowser;
+			})
+			.Subscribe();
+	}
+
+	private BrowserTypeDropdownListEnum GetSelectedBrowser()
+	{
+		if (string.IsNullOrWhiteSpace(_uiConfig.SelectedBrowser))
+		{
+			return BrowserTypeDropdownListEnum.SystemDefault;
+		}
+		else if (Enum.TryParse(_uiConfig.SelectedBrowser, out BrowserTypeDropdownListEnum browserType))
+		{
+			return browserType switch
+			{
+				BrowserTypeDropdownListEnum.SystemDefault or BrowserTypeDropdownListEnum.Custom => BrowserTypeDropdownListEnum.SystemDefault,
+				_ => browserType,
+			};
+		}
+
+		return BrowserTypeDropdownListEnum.Custom;
 	}
 
 	public bool IsOverridden => _config.IsOverridden;

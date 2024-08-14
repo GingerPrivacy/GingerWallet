@@ -1,5 +1,7 @@
+using System.IO;
 using System.Reactive.Linq;
 using ReactiveUI;
+using WalletWasabi.Daemon.Helpers;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Logging;
@@ -19,8 +21,9 @@ public partial class TransactionHistoryItemViewModel : HistoryItemViewModelBase
 		SpeedUpTransactionCommand = ReactiveCommand.Create(() => OnSpeedUpTransaction(transaction), Observable.Return(CanBeSpedUp));
 		CancelTransactionCommand = ReactiveCommand.Create(() => OnCancelTransaction(transaction), Observable.Return(transaction.CanCancelTransaction));
 		HasBeenSpedUp = transaction.HasBeenSpedUp;
+		CanOpenInBrowser = true;
 	}
-	
+
 	public bool TransactionOperationsVisible => Transaction.CanCancelTransaction || CanBeSpedUp;
 
 	private void OnSpeedUpTransaction(TransactionModel transaction)

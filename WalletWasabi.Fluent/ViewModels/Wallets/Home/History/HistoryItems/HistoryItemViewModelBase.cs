@@ -4,10 +4,12 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ReactiveUI;
+using WalletWasabi.Daemon.Helpers;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.TreeDataGrid;
+using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.ViewModels.Wallets.Home.History.HistoryItems;
 
@@ -25,6 +27,7 @@ public abstract partial class HistoryItemViewModelBase : ViewModelBase, ITreeDat
 		Transaction = transaction;
 		IsChild = transaction.IsChild;
 		ClipboardCopyCommand = ReactiveCommand.CreateFromTask<string>(text => UiContext.Clipboard.SetTextAsync(text));
+		OpenInBrowserCommand = ReactiveCommand.CreateFromTask(() => OnOpenInBrowserAsync(transaction));
 		HasBeenSpedUp = transaction.HasBeenSpedUp;
 
 		this.WhenAnyValue(x => x.IsFlashing)
@@ -90,12 +93,14 @@ public abstract partial class HistoryItemViewModelBase : ViewModelBase, ITreeDat
 	public ICommand? ClipboardCopyCommand { get; protected set; }
 
 	public ICommand? SpeedUpTransactionCommand { get; protected set; }
-	
+
 	public bool HasBeenSpedUp { get; set; }
 
 	public bool CanBeSpedUp { get; protected set; }
 
 	public ICommand? CancelTransactionCommand { get; protected set; }
+	public ICommand? OpenInBrowserCommand { get; protected set; }
+	public bool CanOpenInBrowser { get; init; }
 
 	public bool HasChildren() => Children.Count > 0;
 
@@ -145,5 +150,33 @@ public abstract partial class HistoryItemViewModelBase : ViewModelBase, ITreeDat
 
 			return result;
 		};
+	}
+
+	private async Task OnOpenInBrowserAsync(TransactionModel transaction)
+	{
+		string filePathOrEnumValue = UiContext.ApplicationSettings.SelectedBrowserString;
+		try
+		{
+			string urlToOpen = $"https://mempool.space/hu/tx/{transaction.Id}";
+
+			string? selectedBrowserPath = null;
+			BrowserType? browserType = null;
+
+			if (Enum.TryParse<BrowserType>(filePathOrEnumValue, true, out BrowserType preferredBrowserType))
+			{
+				browserType = preferredBrowserType;
+			}
+			else if (!string.IsNullOrWhiteSpace(filePathOrEnumValue))
+			{
+				selectedBrowserPath = filePathOrEnumValue;
+			}
+
+			await BrowserHelpers.OpenUrlInPreferredBrowserAsync(urlToOpen, selectedBrowserPath, browserType).ConfigureAwait(false);
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError($"Failed to open browser with settings string: '{filePathOrEnumValue}'", ex);
+			UiContext.Navigate().To().ShowErrorDialog(ex.ToUserFriendlyString(), "Open in browser failed", "Ginger Wallet could not open the browser, please check the logs for more details.");
+		}
 	}
 }
