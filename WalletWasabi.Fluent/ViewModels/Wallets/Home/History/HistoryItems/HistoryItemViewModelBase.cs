@@ -154,28 +154,15 @@ public abstract partial class HistoryItemViewModelBase : ViewModelBase, ITreeDat
 
 	private async Task OnOpenInBrowserAsync(TransactionModel transaction)
 	{
-		string filePathOrEnumValue = UiContext.ApplicationSettings.SelectedBrowserString;
 		try
 		{
 			string urlToOpen = $"https://mempool.space/hu/tx/{transaction.Id}";
 
-			string? selectedBrowserPath = null;
-			BrowserType? browserType = null;
-
-			if (Enum.TryParse<BrowserType>(filePathOrEnumValue, true, out BrowserType preferredBrowserType))
-			{
-				browserType = preferredBrowserType;
-			}
-			else if (!string.IsNullOrWhiteSpace(filePathOrEnumValue))
-			{
-				selectedBrowserPath = filePathOrEnumValue;
-			}
-
-			await BrowserHelpers.OpenUrlInPreferredBrowserAsync(urlToOpen, selectedBrowserPath, browserType).ConfigureAwait(false);
+			await BrowserHelpers.Instance.OpenUrlInPreferredBrowserAsync(urlToOpen).ConfigureAwait(false);
 		}
 		catch (Exception ex)
 		{
-			Logger.LogError($"Failed to open browser with settings string: '{filePathOrEnumValue}'", ex);
+			Logger.LogError($"Failed to open browser!", ex);
 			UiContext.Navigate().To().ShowErrorDialog(ex.ToUserFriendlyString(), "Open in browser failed", "Ginger Wallet could not open the browser, please check the logs for more details.");
 		}
 	}

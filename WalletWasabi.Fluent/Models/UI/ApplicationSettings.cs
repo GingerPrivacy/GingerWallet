@@ -59,7 +59,6 @@ public partial class ApplicationSettings : ReactiveObject
 	[AutoNotify] private bool _downloadNewVersion;
 	[AutoNotify] private BrowserTypeDropdownListEnum _selectedBrowser;
 	[AutoNotify] private string _browserPath;
-	[AutoNotify] private string _selectedBrowserString;
 
 	// Privacy Mode
 	[AutoNotify] private bool _privacyMode;
@@ -99,7 +98,6 @@ public partial class ApplicationSettings : ReactiveObject
 			? (FeeDisplayUnit)_uiConfig.FeeDisplayUnit
 			: FeeDisplayUnit.Satoshis;
 
-		_selectedBrowserString = _uiConfig.SelectedBrowser;
 		_browserPath = _uiConfig.SelectedBrowser;
 		_selectedBrowser = GetSelectedBrowser();
 
@@ -209,8 +207,6 @@ public partial class ApplicationSettings : ReactiveObject
 						}
 						break;
 				}
-
-				_selectedBrowserString = _uiConfig.SelectedBrowser;
 			})
 			.Subscribe();
 	}

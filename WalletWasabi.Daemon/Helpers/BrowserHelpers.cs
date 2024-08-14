@@ -1,3 +1,4 @@
+using NBitcoin.Secp256k1;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,13 +9,43 @@ using WalletWasabi.Helpers;
 
 namespace WalletWasabi.Daemon.Helpers;
 
-public class BrowserHelpers
+public sealed class BrowserHelpers
 {
 	private const string InternetExplorerDefaultPath = @"C:\Program Files\Internet Explorer\iexplore.exe";
+	private static Lazy<BrowserHelpers> LazyInstance { get; } = new Lazy<BrowserHelpers>(() => new BrowserHelpers());
 
-	public static async Task OpenUrlInPreferredBrowserAsync(string url, string? customBrowserPath = null, BrowserType? preferredBrowser = null)
+	private string? CustomBrowserPath { get; set; } = null;
+	private BrowserType? PreferredBrowserType { get; set; } = null;
+
+	private BrowserHelpers()
+	{ }
+
+	public static BrowserHelpers Instance
 	{
-		if (preferredBrowser is BrowserType.Tor || IsLikelyTorPath(customBrowserPath))
+		get
+		{
+			return LazyInstance.Value;
+		}
+	}
+
+	public void SetConfig(string filePathOrEnumValueThatIsInConfig)
+	{
+		CustomBrowserPath = null;
+		PreferredBrowserType = null;
+
+		if (Enum.TryParse<BrowserType>(filePathOrEnumValueThatIsInConfig, true, out BrowserType preferredBrowserType))
+		{
+			PreferredBrowserType = preferredBrowserType;
+		}
+		else if (!string.IsNullOrWhiteSpace(filePathOrEnumValueThatIsInConfig))
+		{
+			CustomBrowserPath = filePathOrEnumValueThatIsInConfig;
+		}
+	}
+
+	public async Task OpenUrlInPreferredBrowserAsync(string url)
+	{
+		if (PreferredBrowserType is BrowserType.Tor || IsLikelyTorPath(CustomBrowserPath))
 		{
 			if (url.Contains("mempool.space"))
 			{
@@ -23,22 +54,22 @@ public class BrowserHelpers
 		}
 
 		// First priority: Custom browser path
-		if (!string.IsNullOrWhiteSpace(customBrowserPath))
+		if (!string.IsNullOrWhiteSpace(CustomBrowserPath))
 		{
-			OpenInBrowser(url, customBrowserPath);
+			OpenInBrowser(url, CustomBrowserPath);
 			return;
 		}
 
 		// Second priority: Preferred browser if specified
-		if (preferredBrowser.HasValue)
+		if (PreferredBrowserType.HasValue)
 		{
-			if (TryOpenPreferredBrowser(url, preferredBrowser.Value))
+			if (TryOpenPreferredBrowser(url, PreferredBrowserType.Value))
 			{
 				return;
 			}
 			else
 			{
-				throw new InvalidOperationException($"Preferred browser set to: '{preferredBrowser}' but it fails with an error.");
+				throw new InvalidOperationException($"Preferred browser set to: '{PreferredBrowserType}' but it fails with an error.");
 			}
 		}
 
