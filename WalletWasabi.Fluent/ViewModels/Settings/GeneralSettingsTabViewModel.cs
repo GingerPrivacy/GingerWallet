@@ -8,7 +8,6 @@ using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.ViewModels.Navigation;
 using WalletWasabi.Models;
-using WalletWasabi.Daemon.Helpers;
 
 namespace WalletWasabi.Fluent.ViewModels.Settings;
 
@@ -52,7 +51,7 @@ public partial class GeneralSettingsTabViewModel : RoutableViewModel
 			BrowserTypeDropdownListEnum.SystemDefault
 		};
 
-		foreach (var browserType in BrowserHelpers.GetAvailableBrowsers())
+		foreach (var browserType in WebBrowserService.GetAvailableBrowsers())
 		{
 			if (Enum.TryParse<BrowserTypeDropdownListEnum>(browserType.ToString(), out var result))
 			{

@@ -4,7 +4,6 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ReactiveUI;
-using WalletWasabi.Daemon.Helpers;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
@@ -158,7 +157,7 @@ public abstract partial class HistoryItemViewModelBase : ViewModelBase, ITreeDat
 		{
 			string urlToOpen = $"https://mempool.space/hu/tx/{transaction.Id}";
 
-			await BrowserHelpers.Instance.OpenUrlInPreferredBrowserAsync(urlToOpen).ConfigureAwait(false);
+			await WebBrowserService.Instance.OpenUrlInPreferredBrowserAsync(urlToOpen).ConfigureAwait(false);
 		}
 		catch (Exception ex)
 		{

@@ -21,7 +21,6 @@ using System.Collections.ObjectModel;
 using WalletWasabi.Daemon;
 using LogLevel = WalletWasabi.Logging.LogLevel;
 using System.Threading;
-using WalletWasabi.Daemon.Helpers;
 using System.Reactive.Linq;
 
 namespace WalletWasabi.Fluent.Desktop;
@@ -170,7 +169,7 @@ public static class WasabiAppExtensions
 				UiConfig uiConfig = LoadOrCreateUiConfig(Config.DataDir);
 				uiConfig
 					.WhenAnyValue(x => x.SelectedBrowser)
-					.Do(x => BrowserHelpers.Instance.SetConfig(x))
+					.Do(x => WebBrowserService.Instance.SetConfig(x))
 					.Subscribe();
 
 				Services.Initialize(app.Global!, uiConfig, app.SingleInstanceChecker, app.TerminateService);

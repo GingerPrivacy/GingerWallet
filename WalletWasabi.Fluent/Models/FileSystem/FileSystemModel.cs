@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using WalletWasabi.Daemon.Helpers;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Helpers;
 
@@ -19,6 +18,6 @@ public class FileSystemModel : IFileSystem
 
 	public Task OpenBrowserAsync(string url)
 	{
-		return BrowserHelpers.Instance.OpenUrlInPreferredBrowserAsync(url);
+		return WebBrowserService.Instance.OpenUrlInPreferredBrowserAsync(url);
 	}
 }

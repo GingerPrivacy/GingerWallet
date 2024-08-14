@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ReactiveUI;
-using WalletWasabi.Daemon.Helpers;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Helpers;
 
@@ -13,7 +12,7 @@ internal class HyperlinkViewModel
 	{
 		Text = text;
 		Url = url;
-		OpenLinkCommand = ReactiveCommand.Create(() => BrowserHelpers.Instance.OpenUrlInPreferredBrowserAsync(url));
+		OpenLinkCommand = ReactiveCommand.Create(() => WebBrowserService.Instance.OpenUrlInPreferredBrowserAsync(url));
 		CopyCommand = ReactiveCommand.CreateFromTask(() => ApplicationHelper.SetTextAsync(Url) ?? Task.CompletedTask);
 	}
 

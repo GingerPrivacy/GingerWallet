@@ -1,5 +1,3 @@
-using NBitcoin.Secp256k1;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -7,20 +5,20 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using WalletWasabi.Helpers;
 
-namespace WalletWasabi.Daemon.Helpers;
+namespace WalletWasabi.Fluent;
 
-public sealed class BrowserHelpers
+public sealed class WebBrowserService
 {
 	private const string InternetExplorerDefaultPath = @"C:\Program Files\Internet Explorer\iexplore.exe";
-	private static Lazy<BrowserHelpers> LazyInstance { get; } = new Lazy<BrowserHelpers>(() => new BrowserHelpers());
+	private static Lazy<WebBrowserService> LazyInstance { get; } = new Lazy<WebBrowserService>(() => new WebBrowserService());
 
 	private string? CustomBrowserPath { get; set; } = null;
 	private BrowserType? PreferredBrowserType { get; set; } = null;
 
-	private BrowserHelpers()
+	private WebBrowserService()
 	{ }
 
-	public static BrowserHelpers Instance
+	public static WebBrowserService Instance
 	{
 		get
 		{
@@ -33,7 +31,7 @@ public sealed class BrowserHelpers
 		CustomBrowserPath = null;
 		PreferredBrowserType = null;
 
-		if (Enum.TryParse<BrowserType>(filePathOrEnumValueThatIsInConfig, true, out BrowserType preferredBrowserType))
+		if (Enum.TryParse(filePathOrEnumValueThatIsInConfig, true, out BrowserType preferredBrowserType))
 		{
 			PreferredBrowserType = preferredBrowserType;
 		}

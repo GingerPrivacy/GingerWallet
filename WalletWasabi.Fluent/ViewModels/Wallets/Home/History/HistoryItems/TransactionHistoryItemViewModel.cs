@@ -1,7 +1,5 @@
-using System.IO;
 using System.Reactive.Linq;
 using ReactiveUI;
-using WalletWasabi.Daemon.Helpers;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Logging;
