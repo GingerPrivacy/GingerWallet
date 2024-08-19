@@ -17,14 +17,8 @@ public static class EnvironmentHelpers
 	// appName, dataDir
 	private static ConcurrentDictionary<string, string> DataDirDict { get; } = new ConcurrentDictionary<string, string>();
 
-	// Do not change the output of this function. Backwards compatibility depends on it.
-	public static string GetDataDir(string appName)
+	public static string GetUncachedDataDir(string appName, bool log)
 	{
-		if (DataDirDict.TryGetValue(appName, out string? dataDir))
-		{
-			return dataDir;
-		}
-
 		string directory;
 
 		if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -33,7 +27,10 @@ public static class EnvironmentHelpers
 			if (!string.IsNullOrEmpty(home))
 			{
 				directory = Path.Combine(home, "." + appName.ToLowerInvariant());
-				Logger.LogInfo($"Using HOME environment variable for initializing application data at `{directory}`.");
+				if (log)
+				{
+					Logger.LogInfo($"Using HOME environment variable for initializing application data at `{directory}`.");
+				}
 			}
 			else
 			{
@@ -46,7 +43,10 @@ public static class EnvironmentHelpers
 			if (!string.IsNullOrEmpty(localAppData))
 			{
 				directory = Path.Combine(localAppData, appName);
-				Logger.LogInfo($"Using APPDATA environment variable for initializing application data at `{directory}`.");
+				if (log)
+				{
+					Logger.LogInfo($"Using APPDATA environment variable for initializing application data at `{directory}`.");
+				}
 			}
 			else
 			{
@@ -54,14 +54,24 @@ public static class EnvironmentHelpers
 			}
 		}
 
-		if (Directory.Exists(directory))
+		return directory;
+	}
+
+	// Do not change the output of this function. Backwards compatibility depends on it.
+	public static string GetDataDir(string appName)
+	{
+		if (DataDirDict.TryGetValue(appName, out string? directory))
 		{
-			DataDirDict.TryAdd(appName, directory);
 			return directory;
 		}
 
-		Logger.LogInfo($"Creating data directory at `{directory}`.");
-		Directory.CreateDirectory(directory);
+		directory = GetUncachedDataDir(appName, true);
+
+		if (!Directory.Exists(directory))
+		{
+			Logger.LogInfo($"Creating data directory at `{directory}`.");
+			Directory.CreateDirectory(directory);
+		}
 
 		DataDirDict.TryAdd(appName, directory);
 		return directory;

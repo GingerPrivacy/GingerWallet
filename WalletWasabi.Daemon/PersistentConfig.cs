@@ -199,19 +199,39 @@ public record PersistentConfig : IConfigNg
 		throw new NotSupportedNetworkException(Network);
 	}
 
-	public bool MigrateOldDefaultBackendUris([NotNullWhen(true)] out PersistentConfig? newConfig)
+	static public bool Migrate(bool readFromWasabi, [NotNullWhen(true)] ref PersistentConfig config)
 	{
 		bool hasChanged = false;
-		newConfig = null;
 
-		if (MainNetBackendUri == "https://wasabiwallet.io/" || TestNetBackendUri == "https://wasabiwallet.co/")
+		if (config.MainNetBackendUri != Constants.BackendUri || config.MainNetCoordinatorUri != Constants.BackendUri)
 		{
 			hasChanged = true;
-			newConfig = this with
+			config = config with
 			{
-				MainNetBackendUri = "https://api.wasabiwallet.io/",
-				TestNetBackendUri = "https://api.wasabiwallet.co/",
+				MainNetBackendUri = Constants.BackendUri,
+				MainNetCoordinatorUri = Constants.BackendUri
 			};
+		}
+
+		if (readFromWasabi)
+		{
+			var torMode = Config.ObjectToTorMode(config.UseTor);
+			if (torMode == Models.TorMode.Disabled)
+			{
+				hasChanged = true;
+				config = config with
+				{
+					UseTor = "Enabled",
+				};
+			}
+			if (config.MaxCoordinationFeeRate < 0.003m)
+			{
+				hasChanged = true;
+				config = config with
+				{
+					MaxCoordinationFeeRate = 0.003m
+				};
+			}
 		}
 
 		return hasChanged;
