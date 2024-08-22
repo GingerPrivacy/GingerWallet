@@ -125,11 +125,15 @@ public class WasabiApplication
 		if (Directory.Exists(wasabiDir))
 		{
 			// Copy only the important ones
+			DateTime start = DateTime.UtcNow;
 			Logger.LogInfo($"Copying data from {wasabiDir} to {Config.DataDir}");
+			CopyRecursive(wasabiDir, Config.DataDir, "BitcoinP2pNetwork");
 			CopyRecursive(wasabiDir, Config.DataDir, "BitcoinStore");
+			CopyRecursive(wasabiDir, Config.DataDir, "Legal2");
 			CopyRecursive(wasabiDir, Config.DataDir, "Wallets");
 			CopyRecursive(wasabiDir, Config.DataDir, "UiConfig.json");
 			CopyRecursive(wasabiDir, Config.DataDir, "Config.json");
+			Logger.LogInfo($"Copying the Wasabi working folder took {(DateTime.UtcNow - start).TotalSeconds:F2} seconds.");
 			return true;
 		}
 
@@ -144,12 +148,28 @@ public class WasabiApplication
 		{
 			if (File.Exists(src))
 			{
-				File.Copy(src, dest);
+				if (File.Exists(dest))
+				{
+					FileInfo srcInfo = new(src);
+					FileInfo dstInfo = new(dest);
+					if (srcInfo.Length != dstInfo.Length)
+					{
+						File.Delete(dest);
+						File.Copy(src, dest);
+					}
+				}
+				else
+				{
+					File.Copy(src, dest);
+				}
 			}
 			else if (Directory.Exists(src))
 			{
 				DirectoryInfo info = new(src);
-				Directory.CreateDirectory(dest);
+				if (!Directory.Exists(dest))
+				{
+					Directory.CreateDirectory(dest);
+				}
 				info.EnumerateDirectories().ForEach(x => CopyRecursive(src, dest, x.Name));
 				info.EnumerateFiles().ForEach(x => CopyRecursive(src, dest, x.Name));
 			}
