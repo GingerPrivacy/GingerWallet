@@ -81,6 +81,7 @@ public class Round
 	public CoinJoinInputCommitmentData CoinJoinInputCommitmentData { get; init; }
 
 	public ImmutableSortedSet<Money> Denomination { get; set; }
+	public ImmutableList<double> DenominationFrequencies { get; set; }
 
 	public TState Assert<TState>() where TState : MultipartyTransactionState =>
 		CoinjoinState switch

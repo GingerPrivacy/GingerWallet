@@ -711,7 +711,7 @@ public class CoinJoinClient
 		await Task.WhenAll(tasks).ConfigureAwait(false);
 	}
 
-	private async Task<List<Money>> RecommendationAsync(uint256 roundId, DateTimeOffset recommendationEndTime, CancellationToken cancellationToken)
+	private async Task<(List<Money> Denominations, List<double> Frequencies)> RecommendationAsync(uint256 roundId, DateTimeOffset recommendationEndTime, CancellationToken cancellationToken)
 	{
 		var scheduledDates = recommendationEndTime.GetScheduledDates(Random.Shared.Next(3, 5), DateTimeOffset.UtcNow, MaximumRequestDelay);
 
@@ -729,7 +729,7 @@ public class CoinJoinClient
 				try
 				{
 					var result = await arenaRequestHandler.GetRecommendationAsync(new RoundRecommendationRequest(roundId), cancellationToken).ConfigureAwait(false);
-					return result.Denomination;
+					return (result.Denomination, result.Frequencies ?? []);
 				}
 				catch (Exception e)
 				{
@@ -737,18 +737,19 @@ public class CoinJoinClient
 					Logger.LogDebug(e.ToString());
 					Logger.LogInfo($"Failed to get recommendation with message {e.Message}. Ignoring...");
 				}
-				return null;
+				return (null, []);
 			})
 			.ToList();
 
 		ImmutableSortedSet<Money>? storedRecommendedDenominations = null;
+		ImmutableList<double> storedFrequencies = [];
 
 		int valid = 0;
 		do
 		{
 			var finishedTask = await Task.WhenAny(tasks).ConfigureAwait(false);
 			tasks.Remove(finishedTask);
-			ImmutableSortedSet<Money>? recommendedDenominations = await finishedTask.ConfigureAwait(false);
+			var (recommendedDenominations, recommendedFrequencies) = await finishedTask.ConfigureAwait(false);
 
 			if (recommendedDenominations is null)
 			{
@@ -759,6 +760,7 @@ public class CoinJoinClient
 			if (storedRecommendedDenominations is null)
 			{
 				storedRecommendedDenominations = recommendedDenominations;
+				storedFrequencies = recommendedFrequencies;
 			}
 			else
 			{
@@ -766,13 +768,18 @@ public class CoinJoinClient
 				{
 					throw new InvalidOperationException("Coordinator is not consistent with recommended denomination levels.");
 				}
+				if (!recommendedFrequencies.SequenceEqual(storedFrequencies))
+				{
+					throw new InvalidOperationException("Coordinator is not consistent with recommended denomination frequency values.");
+				}
 			}
 		} while (tasks.Count != 0);
 
-		var result = (storedRecommendedDenominations is not null && valid > 1 ? storedRecommendedDenominations : []).ToList();
-		result.Sort((x, y) => y.CompareTo(x));
+		var resultDenoms = (storedRecommendedDenominations is not null && valid > 1 ? storedRecommendedDenominations : []).ToList();
+		resultDenoms.Sort((x, y) => y.CompareTo(x));
+		var resultFrequencies = storedFrequencies.Count == resultDenoms.Count ? storedFrequencies.ToList() : [];
 
-		return result;
+		return (resultDenoms, resultFrequencies);
 	}
 
 	internal virtual ImmutableList<DateTimeOffset> GetScheduledDates(int howMany, DateTimeOffset startTime, DateTimeOffset endTime, TimeSpan maximumRequestDelay)
@@ -851,8 +858,9 @@ public class CoinJoinClient
 		using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, phaseTimeoutCts.Token);
 		var combinedToken = linkedCts.Token;
 
-		var denoms = await RecommendationAsync(roundId, recommendationEndTime, combinedToken).ConfigureAwait(false);
+		var (denoms, freqs) = await RecommendationAsync(roundId, recommendationEndTime, combinedToken).ConfigureAwait(false);
 		roundState.LogInfo($"The recommended denomination levels are ({denoms.Count,2}): [{denoms.ListToString()}]");
+		roundState.LogInfo($"The recommended denomination level frequencies are: [{freqs.ListToString("F2")}]");
 
 		var registeredCoins = registeredAliceClients.Select(x => x.SmartCoin.Coin);
 		var inputEffectiveValuesAndSizes = registeredAliceClients.Select(x => (x.EffectiveValue, x.SmartCoin.ScriptPubKey.EstimateInputVsize()));
@@ -873,7 +881,7 @@ public class CoinJoinClient
 		}
 		roundState.LogInfo($"Denomination levels ({denoms.Count,2}): [{denoms.ListToString()}]");
 
-		var outputTxOuts = OutputProvider.GetOutputs(roundId, roundParameters, registeredCoinEffectiveValues, denoms, (int)availableVsize).ToArray();
+		var outputTxOuts = OutputProvider.GetOutputs(roundId, roundParameters, registeredCoinEffectiveValues, denoms, freqs, (int)availableVsize).ToArray();
 		roundState.LogInfo($"Registered coins' effective values ({registeredCoinEffectiveValues.Count,2}): [{registeredCoinEffectiveValues.ListToString()}]");
 		roundState.LogInfo($"Generated outputs ({outputTxOuts.Length,2}): [{outputTxOuts.Select(x => x.Value).ListToString()}]");
 

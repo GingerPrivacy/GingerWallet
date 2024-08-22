@@ -194,13 +194,18 @@ public partial class Arena : PeriodicRunner
 	private void CreateRecommendations(Round round)
 	{
 		// We don't leak information about whether an input is exempt from fee or not
+		DateTime time = DateTime.UtcNow;
 		var inputs = round.Alices.Select(x => x.Coin.EffectiveValue(round.Parameters.MiningFeeRate, round.Parameters.CoordinationFeeRate)).ToList();
 		var defaultDenoms = DenominationFactory?.CreateDefaultDenominations(inputs, round.Parameters.MiningFeeRate) ?? [];
 		var denoms = DenominationFactory?.CreatePreferedDenominations(inputs, round.Parameters.MiningFeeRate) ?? [];
 		round.LogInfo($"Inputs for the recommended denominations: [{inputs.ListToString()}]");
 		round.LogInfo($"Default denomination levels ({defaultDenoms.Count,2}):     [{defaultDenoms.ListToString()}]");
 		round.LogInfo($"Recommended denomination levels ({denoms.Count,2}): [{denoms.ListToString()}]");
+		var freqs = DenominationFactory?.CreateDenominationFrequencies(inputs, round.Parameters.MiningFeeRate, denoms) ?? [];
+		round.LogInfo($"Estimated frequencies for the denomination levels: [{freqs.ListToString("F2")}]");
 		round.Denomination = denoms.ToImmutableSortedSet();
+		round.DenominationFrequencies = freqs.ToImmutableList();
+		round.LogInfo($"Recommandations were created in {(DateTime.UtcNow - time).TotalSeconds:F3} secs.");
 	}
 
 	private async Task StepConnectionConfirmationPhaseAsync(CancellationToken cancel)

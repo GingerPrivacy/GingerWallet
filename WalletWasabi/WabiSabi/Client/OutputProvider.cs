@@ -23,6 +23,7 @@ public class OutputProvider
 		RoundParameters roundParameters,
 		IEnumerable<Money> registeredCoinEffectiveValues,
 		List<Money> denoms,
+		List<double> freqs,
 		int availableVsize)
 	{
 		AmountDecomposer amountDecomposer = new(
@@ -30,10 +31,10 @@ public class OutputProvider
 			roundParameters.CalculateMinReasonableOutputAmount(DestinationProvider.SupportedScriptTypes),
 			roundParameters.AllowedOutputAmounts.Max,
 			availableVsize,
-			DestinationProvider.SupportedScriptTypes,
+			DestinationProvider.SupportedScriptTypes.ToList(),
 			Random);
 
-		var outputValues = amountDecomposer.Decompose(registeredCoinEffectiveValues.Sum(), denoms).ToArray();
+		var outputValues = amountDecomposer.Decompose(registeredCoinEffectiveValues.Sum(), denoms, freqs).ToArray();
 		return GetTxOuts(outputValues, DestinationProvider);
 	}
 

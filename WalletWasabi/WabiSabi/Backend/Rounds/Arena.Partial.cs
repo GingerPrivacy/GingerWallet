@@ -408,7 +408,7 @@ public partial class Arena : IWabiSabiApiRequestHandler
 		using (await AsyncLock.LockAsync(cancellationToken).ConfigureAwait(false))
 		{
 			var round = GetRound(request.RoundId);
-			return new RoundRecommendationResponse(round.Denomination);
+			return new RoundRecommendationResponse(round.Denomination, round.DenominationFrequencies);
 		}
 	}
 

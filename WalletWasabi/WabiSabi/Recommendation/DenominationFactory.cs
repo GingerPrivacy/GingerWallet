@@ -21,6 +21,12 @@ public class DenominationFactory
 
 	public List<Money> StandardDenominations { get; }
 
+	public virtual List<double> CreateDenominationFrequencies(IList<Money> inputEffectiveValues, FeeRate miningFee, List<Money> denoms)
+	{
+		double freq = 1.0 * inputEffectiveValues.Sum().Satoshi / (denoms.Sum().Satoshi + denoms.Count * miningFee.GetFee(ScriptType.P2WPKH.EstimateOutputVsize()).Satoshi);
+		return denoms.Select(x => freq).ToList();
+	}
+
 	public virtual List<Money> CreatePreferedDenominations(IList<Money> inputEffectiveValues, FeeRate miningFee)
 	{
 		return CreateDefaultDenominations(inputEffectiveValues, miningFee);

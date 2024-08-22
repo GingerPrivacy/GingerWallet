@@ -1,8 +1,10 @@
 using NBitcoin;
+using System.Collections.Generic;
 using System.Linq;
 using WalletWasabi.Tests.Helpers;
 using WalletWasabi.WabiSabi.Backend;
 using WalletWasabi.WabiSabi.Client.Batching;
+using WalletWasabi.WabiSabi.Recommendation;
 using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests.WabiSabi.Client;
@@ -23,12 +25,11 @@ public class PaymentAwareOutputProviderTests
 			key.PubKey.GetAddress(ScriptPubKeyType.Segwit, rpc.Network),
 			Money.Coins(0.00005432m));
 
-		var outputs = outputProvider.GetOutputs(
-			roundId: uint256.Zero,
-			roundParameters,
-			[Money.Coins(0.00484323m), Money.Coins(0.003m), Money.Coins(0.00004323m)],
-			[Money.Coins(0.00484323m), Money.Coins(0.003m), Money.Coins(0.00004323m), Money.Coins(0.2m), Money.Coins(0.1m), Money.Coins(0.05m), Money.Coins(0.0025m), Money.Coins(0.0001m)],
-			int.MaxValue).ToArray();
+		DenominationFactory denomFactory = new(5000L, 100_0000_0000);
+		List<Money> myInputs = [Money.Coins(0.00484323m), Money.Coins(0.003m), Money.Coins(0.00004323m)];
+		List<Money> allInputs = [Money.Coins(0.00484323m), Money.Coins(0.003m), Money.Coins(0.00004323m), Money.Coins(0.2m), Money.Coins(0.1m), Money.Coins(0.05m), Money.Coins(0.0025m), Money.Coins(0.0001m)];
+		var denoms = denomFactory.CreateDefaultDenominations(allInputs, FeeRate.Zero);
+		var outputs = outputProvider.GetOutputs(roundId: uint256.Zero, roundParameters, myInputs, denoms, [], int.MaxValue).ToArray();
 
 		Assert.Equal(outputs[0].ScriptPubKey, key.PubKey.GetScriptPubKey(ScriptPubKeyType.Segwit));
 		Assert.Equal(outputs[0].Value, Money.Coins(0.00005432m));
