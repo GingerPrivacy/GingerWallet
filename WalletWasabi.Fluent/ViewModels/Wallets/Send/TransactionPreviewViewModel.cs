@@ -64,7 +64,7 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 		];
 
 		DisplayedTransactionSummary = CurrentTransactionSummary;
-		
+
 		SetupCancel(enableCancel: true, enableCancelOnEscape: true, enableCancelOnPressed: false);
 		EnableBack = true;
 
@@ -255,7 +255,7 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 			await ShowErrorAsync(
 				"Transaction Building",
 				"The transaction cannot be sent because its fee is more than the payment amount.",
-				"Wasabi was unable to create your transaction.");
+				"Ginger Wallet was unable to create your transaction.");
 
 			return null;
 		}
@@ -282,7 +282,7 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 			await ShowErrorAsync(
 				"Transaction Building",
 				"There are not enough funds to cover the transaction fee.",
-				"Wasabi was unable to create your transaction.");
+				"Ginger Wallet was unable to create your transaction.");
 
 			return null;
 		}
@@ -293,7 +293,7 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 			await ShowErrorAsync(
 				"Transaction Building",
 				ex.ToUserFriendlyString(),
-				"Wasabi was unable to create your transaction.");
+				"Ginger Wallet was unable to create your transaction.");
 
 			return null;
 		}
@@ -413,7 +413,7 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 			await ShowErrorAsync(
 				"Transaction",
 				ex.ToUserFriendlyString(),
-				"Wasabi was unable to send your transaction.");
+				"Ginger Wallet was unable to send your transaction.");
 		}
 		finally
 		{

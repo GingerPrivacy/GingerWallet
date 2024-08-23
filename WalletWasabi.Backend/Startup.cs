@@ -164,6 +164,6 @@ public class Startup
 	private void OnShutdown(Global global)
 	{
 		global.Dispose();
-		Logger.LogSoftwareStopped("Wasabi Backend");
+		Logger.LogSoftwareStopped("Ginger Backend");
 	}
 }

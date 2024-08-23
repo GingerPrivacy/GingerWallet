@@ -629,14 +629,14 @@ public class BuyAnythingManager : PeriodicRunner
 			{
 				// Something happened with the file.
 				var bakFilePath = $"{FilePath}.bak";
-				Logger.LogError($"Wasabi was not able to load conversations file. Resetting the conversations and backup the corrupted file to: '{bakFilePath}'. Reason: '{ex}'.");
+				Logger.LogError($"The client was not able to load conversations file. Resetting the conversations and backup the corrupted file to: '{bakFilePath}'. Reason: '{ex}'.");
 				File.Move(FilePath, bakFilePath, true);
 				ConversationTracking.Load(new ConversationTracking());
 				await SaveAsync(cancellationToken).ConfigureAwait(false);
 			}
 			catch (Exception ex)
 			{
-				Logger.LogError($"Wasabi was not able to load conversations file. Reason: '{ex}'.");
+				Logger.LogError($"The client was not able to load conversations file. Reason: '{ex}'.");
 			}
 		}
 

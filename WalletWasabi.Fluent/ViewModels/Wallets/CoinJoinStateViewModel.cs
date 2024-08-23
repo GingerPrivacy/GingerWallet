@@ -43,6 +43,9 @@ public partial class CoinJoinStateViewModel : ViewModelBase
 	private const string CoinsRejectedMessage = "Some funds are rejected from coinjoining";
 	private const string OnlyImmatureCoinsAvailableMessage = "Only immature funds are available";
 	private const string OnlyExcludedCoinsAvailableMessage = "Only excluded funds are available";
+	private const string MiningFeeRateTooHighMessage = "Mining fee rate was too high";
+	private const string CoordinationFeeRateTooHighMessage = "Coordination fee rate was too high";
+	private const string MinInputCountTooLowMessage = "Min input count was too low";
 
 	private readonly IWalletModel _wallet;
 	private readonly StateMachine<State, Trigger> _stateMachine;
@@ -373,6 +376,9 @@ public partial class CoinJoinStateViewModel : ViewModelBase
 					CoinjoinError.OnlyExcludedCoinsAvailable => OnlyExcludedCoinsAvailableMessage,
 					CoinjoinError.UneconomicalRound => UneconomicalRoundMessage,
 					CoinjoinError.RandomlySkippedRound => RandomlySkippedRoundMessage,
+					CoinjoinError.MiningFeeRateTooHigh => MiningFeeRateTooHighMessage,
+					CoinjoinError.CoordinationFeeRateTooHigh => CoordinationFeeRateTooHighMessage,
+					CoinjoinError.MinInputCountTooLow => MinInputCountTooLowMessage,
 					_ => GeneralErrorMessage
 				};
 

@@ -34,7 +34,7 @@ public class WasabiApplication
 		Config = new Config(LoadOrCreateConfigs(migrated), wasabiAppBuilder.Arguments);
 
 		SetupLogger();
-		Logger.LogDebug($"Wasabi was started with these argument(s): {string.Join(" ", AppConfig.Arguments.DefaultIfEmpty("none"))}.");
+		Logger.LogDebug($"Ginger Wallet was started with these argument(s): {string.Join(" ", AppConfig.Arguments.DefaultIfEmpty("none"))}.");
 		SingleInstanceChecker = new(Config.Network);
 		TerminateService = new(TerminateApplicationAsync, AppConfig.Terminate);
 	}
@@ -57,12 +57,12 @@ public class WasabiApplication
 			var instanceResult = await SingleInstanceChecker.CheckSingleInstanceAsync();
 			if (instanceResult == WasabiInstanceStatus.AnotherInstanceIsRunning)
 			{
-				Logger.LogDebug("Wasabi is already running, signaled the first instance.");
+				Logger.LogDebug("Ginger Wallet is already running, signaled the first instance.");
 				return ExitCode.FailedAlreadyRunningSignaled;
 			}
 			if (instanceResult == WasabiInstanceStatus.Error)
 			{
-				Logger.LogCritical($"Wasabi is already running, but cannot be signaled");
+				Logger.LogCritical($"Ginger Wallet is already running, but cannot be signaled");
 				return ExitCode.FailedAlreadyRunningError;
 			}
 		}
