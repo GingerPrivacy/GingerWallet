@@ -34,37 +34,37 @@ public class Config
 
 		Data = new()
 		{
-			[ nameof(Network)] = (
+			[nameof(Network)] = (
 				"The Bitcoin network to use: main, testnet, or regtest",
 				GetNetworkValue("Network", PersistentConfig.Network.ToString(), cliArgs)),
-			[ nameof(MainNetBackendUri)] = (
+			[nameof(MainNetBackendUri)] = (
 				"The backend server's URL to connect to when the Bitcoin network is main",
 				GetStringValue("MainNetBackendUri", PersistentConfig.MainNetBackendUri, cliArgs)),
-			[ nameof(TestNetBackendUri)] = (
+			[nameof(TestNetBackendUri)] = (
 				"The backend server's URL to connect to when the Bitcoin network is testnet",
 				GetStringValue("TestNetBackendUri", PersistentConfig.TestNetBackendUri, cliArgs)),
-			[ nameof(RegTestBackendUri)] = (
+			[nameof(RegTestBackendUri)] = (
 				"The backend server's URL to connect to when the Bitcoin network is regtest",
 				GetStringValue("RegTestBackendUri", PersistentConfig.RegTestBackendUri, cliArgs)),
-			[ nameof(MainNetCoordinatorUri)] = (
+			[nameof(MainNetCoordinatorUri)] = (
 				"The coordinator server's URL to connect to when the Bitcoin network is main",
 				GetStringValue("MainNetCoordinatorUri", PersistentConfig.MainNetCoordinatorUri, cliArgs)),
-			[ nameof(TestNetCoordinatorUri)] = (
+			[nameof(TestNetCoordinatorUri)] = (
 				"The coordinator server's URL to connect to when the Bitcoin network is testnet",
 				GetStringValue("TestNetCoordinatorUri", PersistentConfig.TestNetCoordinatorUri, cliArgs)),
-			[ nameof(RegTestCoordinatorUri)] = (
+			[nameof(RegTestCoordinatorUri)] = (
 				"The coordinator server's URL to connect to when the Bitcoin network is regtest",
 				GetStringValue("RegTestCoordinatorUri", PersistentConfig.RegTestCoordinatorUri, cliArgs)),
-			[ nameof(UseTor)] = (
+			[nameof(UseTor)] = (
 				"All the communications go through the Tor network",
 				GetTorModeValue("UseTor", PersistentConfig.UseTor, cliArgs)),
-			[ nameof(TorFolder)] = (
+			[nameof(TorFolder)] = (
 				"Folder where Tor binary is located",
 				GetNullableStringValue("TorFolder", null, cliArgs)),
-			[ nameof(TorSocksPort)] = (
+			[nameof(TorSocksPort)] = (
 				"Tor is started to listen with the specified SOCKS5 port",
 				GetLongValue("TorSocksPort", TorSettings.DefaultSocksPort, cliArgs)),
-			[ nameof(TorControlPort)] = (
+			[nameof(TorControlPort)] = (
 				"Tor is started to listen with the specified control port",
 				GetLongValue("TorControlPort", TorSettings.DefaultControlPort, cliArgs)),
 			[nameof(TorBridges)] = (
@@ -73,55 +73,55 @@ public class Config
 			[nameof(TerminateTorOnExit)] = (
 				"Stop the Tor process when Ginger Wallet is closed",
 				GetBoolValue("TerminateTorOnExit", PersistentConfig.TerminateTorOnExit, cliArgs)),
-			[ nameof(DownloadNewVersion)] = (
+			[nameof(DownloadNewVersion)] = (
 				"Automatically download any new released version of Ginger Wallet",
 				GetBoolValue("DownloadNewVersion", PersistentConfig.DownloadNewVersion, cliArgs)),
-			[ nameof(StartLocalBitcoinCoreOnStartup)] = (
+			[nameof(StartLocalBitcoinCoreOnStartup)] = (
 				"Start a local bitcoin node when Ginger Wallet starts",
 				GetBoolValue("StartLocalBitcoinCoreOnStartup", PersistentConfig.StartLocalBitcoinCoreOnStartup, cliArgs)),
-			[ nameof(StopLocalBitcoinCoreOnShutdown)] = (
+			[nameof(StopLocalBitcoinCoreOnShutdown)] = (
 				"Stop the local bitcoin node when Ginger Wallet is closed",
 				GetBoolValue("StopLocalBitcoinCoreOnShutdown", PersistentConfig.StopLocalBitcoinCoreOnShutdown, cliArgs)),
-			[ nameof(LocalBitcoinCoreDataDir)] = (
+			[nameof(LocalBitcoinCoreDataDir)] = (
 				"The path of the data directory to be used by the local bitcoin node",
 				GetStringValue("LocalBitcoinCoreDataDir", PersistentConfig.LocalBitcoinCoreDataDir, cliArgs)),
-			[ nameof(MainNetBitcoinP2pEndPoint)] = (
+			[nameof(MainNetBitcoinP2pEndPoint)] = (
 				"-",
 				GetEndPointValue("MainNetBitcoinP2pEndPoint", PersistentConfig.MainNetBitcoinP2pEndPoint, cliArgs)),
-			[ nameof(TestNetBitcoinP2pEndPoint)] = (
+			[nameof(TestNetBitcoinP2pEndPoint)] = (
 				"-",
 				GetEndPointValue("TestNetBitcoinP2pEndPoint", PersistentConfig.TestNetBitcoinP2pEndPoint, cliArgs)),
-			[ nameof(RegTestBitcoinP2pEndPoint)] = (
+			[nameof(RegTestBitcoinP2pEndPoint)] = (
 				"-",
 				GetEndPointValue("RegTestBitcoinP2pEndPoint", PersistentConfig.RegTestBitcoinP2pEndPoint, cliArgs)),
-			[ nameof(JsonRpcServerEnabled)] = (
+			[nameof(JsonRpcServerEnabled)] = (
 				"Start the Json RPC Server and accept requests",
 				GetBoolValue("JsonRpcServerEnabled", PersistentConfig.JsonRpcServerEnabled, cliArgs)),
-			[ nameof(JsonRpcUser)] = (
+			[nameof(JsonRpcUser)] = (
 				"The user name that is authorized to make requests to the Json RPC server",
 				GetStringValue("JsonRpcUser", PersistentConfig.JsonRpcUser, cliArgs)),
-			[ nameof(JsonRpcPassword)] = (
+			[nameof(JsonRpcPassword)] = (
 				"The user password that is authorized to make requests to the Json RPC server",
 				GetStringValue("JsonRpcPassword", PersistentConfig.JsonRpcPassword, cliArgs)),
-			[ nameof(JsonRpcServerPrefixes)] = (
+			[nameof(JsonRpcServerPrefixes)] = (
 				"The Json RPC server prefixes",
 				GetStringArrayValue("JsonRpcServerPrefixes", PersistentConfig.JsonRpcServerPrefixes, cliArgs)),
-			[ nameof(RpcOnionEnabled)] = (
+			[nameof(RpcOnionEnabled)] = (
 				"Publish the Json RPC Server as a Tor Onion service",
 				GetBoolValue("RpcOnionEnabled", value: false, cliArgs)),
-			[ nameof(DustThreshold)] = (
+			[nameof(DustThreshold)] = (
 				"The amount threshold under which coins received from others to already used addresses are considered a dust attack",
 				GetMoneyValue("DustThreshold", PersistentConfig.DustThreshold, cliArgs)),
-			[ nameof(BlockOnlyMode)] = (
+			[nameof(BlockOnlyMode)] = (
 				"Ginger Wallet listens only for blocks and not for transactions",
 				GetBoolValue("BlockOnly", value: false, cliArgs)),
-			[ nameof(LogLevel)] = (
+			[nameof(LogLevel)] = (
 				"The level of detail in the logs: trace, debug, info, warning, error, or critical",
 				GetStringValue("LogLevel", value: "", cliArgs)),
-			[ nameof(LogModes)] = (
+			[nameof(LogModes)] = (
 				"The logging modes: console, and file (for multiple values use comma as a separator)",
 				GetLogModeArrayValue("LogModes", arrayValues: defaultLogModes, cliArgs)),
-			[ nameof(EnableGpu)] = (
+			[nameof(EnableGpu)] = (
 				"Use a GPU to render the user interface",
 				GetBoolValue("EnableGpu", PersistentConfig.EnableGpu, cliArgs)),
 			[nameof(CoordinatorIdentifier)] = (
@@ -193,10 +193,13 @@ public class Config
 
 	public bool EnableGpu => GetEffectiveValue<BoolValue, bool>(nameof(EnableGpu));
 	public string CoordinatorIdentifier => GetEffectiveValue<StringValue, string>(nameof(CoordinatorIdentifier));
+
 	public decimal MaxCoordinationFeeRate => decimal.Min(
 		GetEffectiveValue<DecimalValue, decimal>(nameof(MaxCoordinationFeeRate)),
 		Constants.AbsoluteMaxCoordinationFeeRate);
+
 	public decimal MaxCoinjoinMiningFeeRate => GetEffectiveValue<DecimalValue, decimal>(nameof(MaxCoinjoinMiningFeeRate));
+
 	public int AbsoluteMinInputCount => int.Max(
 		GetEffectiveValue<IntValue, int>(nameof(AbsoluteMinInputCount)),
 		Constants.AbsoluteMinInputCount);
@@ -205,7 +208,7 @@ public class Config
 
 	public static string DataDir { get; } = GetStringValue(
 		"datadir",
-		EnvironmentHelpers.GetDataDir(Path.Combine("WalletWasabi", "Client")),
+		EnvironmentHelpers.GetDataDir(Path.Combine("GingerWallet", "Client")),
 		Environment.GetCommandLineArgs()).EffectiveValue;
 
 	/// <summary>Whether a config option was overridden by a command line argument or an environment variable.</summary>
