@@ -10,6 +10,7 @@ public partial class ManualCoinJoinSettingsViewModel : ViewModelBase
 	[AutoNotify] private bool _redCoinIsolation;
 	[AutoNotify] private CoinjoinSkipFactors _skipFactors;
 	[AutoNotify] private int _anonScoreTarget;
+	[AutoNotify] private int _safeMiningFeeRate;
 	[AutoNotify] private TimeFrameItem[] _timeFrames;
 	[AutoNotify] private TimeFrameItem _selectedTimeFrame;
 
@@ -19,6 +20,8 @@ public partial class ManualCoinJoinSettingsViewModel : ViewModelBase
 		_skipFactors = current.SkipFactors;
 
 		_anonScoreTarget = current.AnonScoreTarget;
+
+		_safeMiningFeeRate = current.SafeMiningFeeRate;
 
 		_timeFrames = new[]
 		{

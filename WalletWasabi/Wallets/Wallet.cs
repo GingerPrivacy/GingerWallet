@@ -130,6 +130,8 @@ public class Wallet : BackgroundService, IWallet
 		&& !KeyManager.IsWatchOnly // that are not watch-only wallets
 		&& Kitchen.HasIngredients;
 
+	public int SafeMiningFeeRate => KeyManager.SafeMiningFeeRate;
+
 	public TimeSpan FeeRateMedianTimeFrame => TimeSpan.FromHours(KeyManager.FeeRateMedianTimeFrameHours);
 
 	public bool IsUnderPlebStop => Coins.TotalAmount() <= KeyManager.PlebStopThreshold;

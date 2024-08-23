@@ -25,6 +25,9 @@ internal class PrivateCoinJoinProfileViewModel : CoinJoinProfileViewModelBase
 	public override string Description => "Choice of the paranoid. Optimizes for privacy at all costs.";
 
 	public override int AnonScoreTarget { get; }
+
+	public override int SafeMiningFeeRate => 30;
+
 	public override bool RedCoinIsolation { get; } = true;
 
 	public override CoinjoinSkipFactors SkipFactors { get; } = CoinjoinSkipFactors.PrivacyMaximizing;
@@ -50,6 +53,7 @@ internal class PrivateCoinJoinProfileViewModel : CoinJoinProfileViewModelBase
 
 		return profile.AnonScoreTarget < MaxAnonScore
 			&& profile.AnonScoreTarget >= MinAnonScore
+			&& profile.SafeMiningFeeRate == SafeMiningFeeRate
 			&& profile.FeeRateMedianTimeFrameHours == FeeRateMedianTimeFrameHours
 			&& profile.RedCoinIsolation == RedCoinIsolation
 			&& profile.SkipFactors == SkipFactors;
@@ -57,6 +61,6 @@ internal class PrivateCoinJoinProfileViewModel : CoinJoinProfileViewModelBase
 
 	public override int GetHashCode()
 	{
-		return HashCode.Combine(AnonScoreTarget, FeeRateMedianTimeFrameHours, RedCoinIsolation, SkipFactors);
+		return HashCode.Combine(AnonScoreTarget, SafeMiningFeeRate, FeeRateMedianTimeFrameHours, RedCoinIsolation, SkipFactors);
 	}
 }

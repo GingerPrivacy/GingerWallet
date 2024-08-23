@@ -25,6 +25,7 @@ public class KeyManager
 	public const int DefaultAnonScoreTarget = 5;
 	public const bool DefaultAutoCoinjoin = false;
 	public const bool DefaultRedCoinIsolation = false;
+	public const int DefaultSafeMiningFeeRate = 10;
 	public const int DefaultFeeRateMedianTimeFrameHours = 0;
 
 	public const int AbsoluteMinGapLimit = 21;
@@ -190,6 +191,9 @@ public class KeyManager
 
 	[JsonProperty(PropertyName = "AnonScoreTarget")]
 	public int AnonScoreTarget { get; set; } = DefaultAnonScoreTarget;
+
+	[JsonProperty(PropertyName = "SafeMiningFeeRate")]
+	public int SafeMiningFeeRate { get; set; } = DefaultSafeMiningFeeRate;
 
 	[JsonProperty(PropertyName = "FeeRateMedianTimeFrameHours")]
 	public int FeeRateMedianTimeFrameHours { get; private set; } = DefaultFeeRateMedianTimeFrameHours;

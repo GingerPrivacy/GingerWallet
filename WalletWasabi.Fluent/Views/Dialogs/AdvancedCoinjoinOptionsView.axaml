@@ -22,13 +22,19 @@
       </DockPanel>
     </StackPanel>
 
+    <StackPanel ToolTip.Tip="Always coinjoin when the fee rate is below this value (has precedence over Coinjoin time preference).">
+      <TextBlock Text="Safe fee rate" />
+      <DockPanel>
+        <TextBlock MinWidth="24" DockPanel.Dock="Right" Text="{Binding SafeMiningFeeRate}" VerticalAlignment="Center" Margin="5" />
+        <Slider Minimum="2" Maximum="150" Value="{Binding SafeMiningFeeRate}" />
+      </DockPanel>
+    </StackPanel>
+
     <DockPanel ToolTip.Tip="Only coinjoin when the fee rate is below the median of this time period.">
       <TextBlock Text="Coinjoin time preference" />
       <ComboBox HorizontalAlignment="Stretch"
                 ItemsSource="{Binding TimeFrames}"
                 SelectedItem="{Binding SelectedTimeFrame}" />
     </DockPanel>
-
   </StackPanel>
-
 </UserControl>

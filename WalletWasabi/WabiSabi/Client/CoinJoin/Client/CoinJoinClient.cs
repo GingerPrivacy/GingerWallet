@@ -45,6 +45,7 @@ public class CoinJoinClient
 		CoinJoinCoinSelector coinJoinCoinSelector,
 		CoinJoinConfiguration coinJoinConfiguration,
 		LiquidityClueProvider liquidityClueProvider,
+		int safeMiningFeeRate = default,
 		TimeSpan feeRateMedianTimeFrame = default,
 		TimeSpan doNotRegisterInLastMinuteTimeLimit = default,
 		CoinjoinSkipFactors? skipFactors = null)
@@ -56,6 +57,7 @@ public class CoinJoinClient
 		LiquidityClueProvider = liquidityClueProvider;
 		CoinJoinConfiguration = coinJoinConfiguration;
 		CoinJoinCoinSelector = coinJoinCoinSelector;
+		SafeMiningFeeRate = safeMiningFeeRate;
 		FeeRateMedianTimeFrame = feeRateMedianTimeFrame;
 		SkipFactors = skipFactors ?? CoinjoinSkipFactors.NoSkip;
 		SecureRandom = new SecureRandom();
@@ -75,6 +77,7 @@ public class CoinJoinClient
 	private CoinJoinConfiguration CoinJoinConfiguration { get; }
 	private CoinJoinCoinSelector CoinJoinCoinSelector { get; }
 	private TimeSpan DoNotRegisterInLastMinuteTimeLimit { get; }
+	private int SafeMiningFeeRate { get; }
 	private TimeSpan FeeRateMedianTimeFrame { get; }
 	private CoinjoinSkipFactors SkipFactors { get; }
 	private TimeSpan MaxWaitingTimeForRound { get; } = TimeSpan.FromMinutes(10);
@@ -127,7 +130,7 @@ public class CoinJoinClient
 			throw new InvalidOperationException($"Blame Round ({roundState.Id}): Abandoning: the minimum input count was too low.");
 		}
 
-		if (!roundState.IsBlame && !IsRoundEconomic(roundState.CoinjoinState.Parameters.MiningFeeRate, RoundStatusUpdater.CoinJoinFeeRateMedians, FeeRateMedianTimeFrame))
+		if (!roundState.IsBlame && !IsRoundEconomic(roundState.CoinjoinState.Parameters.MiningFeeRate, RoundStatusUpdater.CoinJoinFeeRateMedians, SafeMiningFeeRate, FeeRateMedianTimeFrame))
 		{
 			throw new InvalidOperationException($"Blame Round ({roundState.Id}): Abandoning: the round is not economic.");
 		}
@@ -164,7 +167,7 @@ public class CoinJoinClient
 
 			if (!currentRoundState.IsBlame)
 			{
-				if (!IsRoundEconomic(roundParameters.MiningFeeRate, RoundStatusUpdater.CoinJoinFeeRateMedians, FeeRateMedianTimeFrame))
+				if (!IsRoundEconomic(roundParameters.MiningFeeRate, RoundStatusUpdater.CoinJoinFeeRateMedians, SafeMiningFeeRate, FeeRateMedianTimeFrame))
 				{
 					string roundSkippedMessage = "Uneconomical round skipped.";
 					currentRoundState.LogInfo(roundSkippedMessage);
@@ -818,9 +821,14 @@ public class CoinJoinClient
 		roundState.LogDebug(string.Join(Environment.NewLine, summary));
 	}
 
-	internal static bool IsRoundEconomic(FeeRate roundFeeRate, Dictionary<TimeSpan, FeeRate> coinJoinFeeRateMedians, TimeSpan feeRateMedianTimeFrame)
+	internal static bool IsRoundEconomic(FeeRate roundFeeRate, Dictionary<TimeSpan, FeeRate> coinJoinFeeRateMedians, int safeMiningFeeRate, TimeSpan feeRateMedianTimeFrame)
 	{
 		if (feeRateMedianTimeFrame == default)
+		{
+			return true;
+		}
+
+		if (safeMiningFeeRate > 1 && roundFeeRate.SatoshiPerByte < safeMiningFeeRate)
 		{
 			return true;
 		}
