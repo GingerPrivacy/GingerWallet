@@ -97,6 +97,7 @@ public partial class CoinJoinProfilesViewModel : DialogViewModelBase<bool>
 		walletSettings.RedCoinIsolation = selected.RedCoinIsolation;
 		walletSettings.CoinjoinSkipFactors = selected.SkipFactors;
 		walletSettings.AnonScoreTarget = selected.AnonScoreTarget;
+		walletSettings.SafeMiningFeeRate = selected.SafeMiningFeeRate;
 		walletSettings.FeeRateMedianTimeFrameHours = selected.FeeRateMedianTimeFrameHours;
 		walletSettings.IsCoinjoinProfileSelected = true;
 

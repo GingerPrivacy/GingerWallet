@@ -23,6 +23,7 @@ public partial class WalletSettingsModel : ReactiveObject
 	[AutoNotify] private bool _preferPsbtWorkflow;
 	[AutoNotify] private Money _plebStopThreshold;
 	[AutoNotify] private int _anonScoreTarget;
+	[AutoNotify] private int _safeMiningFeeRate;
 	[AutoNotify] private bool _redCoinIsolation;
 	[AutoNotify] private CoinjoinSkipFactors _coinjoinSkipFactors;
 	[AutoNotify] private int _feeRateMedianTimeFrameHours;
@@ -43,6 +44,7 @@ public partial class WalletSettingsModel : ReactiveObject
 		_anonScoreTarget = _keyManager.AnonScoreTarget;
 		_redCoinIsolation = _keyManager.RedCoinIsolation;
 		_coinjoinSkipFactors = _keyManager.CoinjoinSkipFactors;
+		_safeMiningFeeRate = _keyManager.SafeMiningFeeRate;
 		_feeRateMedianTimeFrameHours = _keyManager.FeeRateMedianTimeFrameHours;
 
 		if (!isNewWallet)

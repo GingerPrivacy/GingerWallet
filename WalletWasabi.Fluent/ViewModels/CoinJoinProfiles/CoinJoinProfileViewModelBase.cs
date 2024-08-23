@@ -10,6 +10,8 @@ public abstract class CoinJoinProfileViewModelBase : ViewModelBase
 
 	public virtual int AnonScoreTarget { get; } = 5;
 
+	public virtual int SafeMiningFeeRate { get; } = 10;
+
 	public virtual bool RedCoinIsolation { get; } = false;
 
 	public virtual CoinjoinSkipFactors SkipFactors { get; } = CoinjoinSkipFactors.SpeedMaximizing;
@@ -46,6 +48,7 @@ public abstract class CoinJoinProfileViewModelBase : ViewModelBase
 		}
 
 		return profile.AnonScoreTarget == AnonScoreTarget
+			&& profile.SafeMiningFeeRate == SafeMiningFeeRate
 			&& profile.FeeRateMedianTimeFrameHours == FeeRateMedianTimeFrameHours
 			&& profile.RedCoinIsolation == RedCoinIsolation
 			&& profile.SkipFactors == SkipFactors;
@@ -53,6 +56,6 @@ public abstract class CoinJoinProfileViewModelBase : ViewModelBase
 
 	public override int GetHashCode()
 	{
-		return HashCode.Combine(AnonScoreTarget, FeeRateMedianTimeFrameHours, SkipFactors);
+		return HashCode.Combine(AnonScoreTarget, SafeMiningFeeRate, FeeRateMedianTimeFrameHours, SkipFactors);
 	}
 }

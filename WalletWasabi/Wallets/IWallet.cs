@@ -26,6 +26,7 @@ public interface IWallet
 
 	int AnonScoreTarget { get; }
 	bool ConsolidationMode { get; set; }
+	int SafeMiningFeeRate { get; }
 	TimeSpan FeeRateMedianTimeFrame { get; }
 	bool RedCoinIsolation { get; }
 	CoinjoinSkipFactors CoinjoinSkipFactors { get; }
