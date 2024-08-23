@@ -76,7 +76,7 @@ public class TorSettings
 
 		if (torMode == TorMode.EnabledOnlyRunning && terminateOnExit)
 		{
-			Logger.LogWarning("Wasabi is instructed to use a running Tor process. Terminate on exit was disabled.");
+			Logger.LogWarning("The client is instructed to use a running Tor process. Terminate on exit was disabled.");
 		}
 
 		TorMode = torMode;
@@ -134,6 +134,7 @@ public class TorSettings
 
 	/// <summary>Tor control endpoint.</summary>
 	public EndPoint ControlEndpoint { get; }
+
 	public int RpcVirtualPort => 80;
 	public int RpcOnionPort => 37129;
 

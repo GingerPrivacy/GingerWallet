@@ -25,10 +25,6 @@
     Support
   </a>
   <span> | </span>
-  <a href="https://www.youtube.com/c/WasabiWallet">
-    YouTube
-  </a>
-  <span> | </span>
   <a href="https://github.com/GingerPrivacy/GingerWallet/blob/master/PGP.txt">
     PGP
   </a>

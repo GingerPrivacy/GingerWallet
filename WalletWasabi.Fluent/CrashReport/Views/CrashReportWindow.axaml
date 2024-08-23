@@ -15,7 +15,7 @@
     <ContentArea EnableNext="True"
                           EnableCancel="True"
                           NextContent="Exit"
-                          CancelContent="Restart Wasabi"
+                          CancelContent="Restart Ginger Wallet"
                           FocusNext="True"
                           Title="{Binding Title}"
                           Caption="{Binding Caption}"
