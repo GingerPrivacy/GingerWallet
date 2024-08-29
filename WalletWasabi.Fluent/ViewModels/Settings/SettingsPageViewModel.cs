@@ -9,6 +9,7 @@ using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
 using WalletWasabi.Fluent.ViewModels.SearchBar.Settings;
+using WalletWasabi.Services;
 
 namespace WalletWasabi.Fluent.ViewModels.Settings;
 
@@ -40,6 +41,7 @@ public partial class SettingsPageViewModel : DialogViewModelBase<Unit>
 		GeneralSettingsTab = new GeneralSettingsTabViewModel(UiContext.ApplicationSettings);
 		BitcoinTabSettings = new BitcoinTabSettingsViewModel(UiContext.ApplicationSettings);
 		AdvancedSettingsTab = new AdvancedSettingsTabViewModel(UiContext.ApplicationSettings);
+		SecuritySettingsTab = new SecuritySettingsTabViewModel(UiContext, UiContext.ApplicationSettings);
 
 		RestartCommand = ReactiveCommand.Create(() => AppLifetimeHelper.Shutdown(withShutdownPrevention: true, restart: true));
 		NextCommand = CancelCommand;
@@ -66,6 +68,8 @@ public partial class SettingsPageViewModel : DialogViewModelBase<Unit>
 	public GeneralSettingsTabViewModel GeneralSettingsTab { get; }
 	public BitcoinTabSettingsViewModel BitcoinTabSettings { get; }
 	public AdvancedSettingsTabViewModel AdvancedSettingsTab { get; }
+
+	public SecuritySettingsTabViewModel SecuritySettingsTab { get; }
 
 	public async Task Activate()
 	{

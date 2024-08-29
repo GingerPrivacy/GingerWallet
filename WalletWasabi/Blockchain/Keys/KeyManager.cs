@@ -291,7 +291,7 @@ public class KeyManager
 		return km;
 	}
 
-	public static KeyManager FromFile(string filePath)
+	public static KeyManager FromFile(string filePath, string? secret = null)
 	{
 		filePath = Guard.NotNullOrEmptyOrWhitespace(nameof(filePath), filePath);
 
@@ -302,6 +302,11 @@ public class KeyManager
 
 		SafeIoManager safeIoManager = new(filePath);
 		string jsonString = safeIoManager.ReadAllText(Encoding.UTF8);
+
+		if (!string.IsNullOrWhiteSpace(secret))
+		{
+			jsonString = TwoFactorAuthenticationHelpers.DecryptString(jsonString, secret);
+		}
 
 		KeyManager km = JsonConvert.DeserializeObject<KeyManager>(jsonString, JsonConverters)
 			?? throw new JsonSerializationException($"Wallet file at: `{filePath}` is not a valid wallet file or it is corrupted.");
@@ -613,7 +618,7 @@ public class KeyManager
 		}
 	}
 
-	public void ToFile(string filePath)
+	public void ToFile(string filePath, string? secret = null)
 	{
 		string jsonString = string.Empty;
 
@@ -625,6 +630,12 @@ public class KeyManager
 		IoHelpers.EnsureContainingDirectoryExists(filePath);
 
 		SafeIoManager safeIoManager = new(filePath);
+
+		if (!string.IsNullOrWhiteSpace(secret))
+		{
+			jsonString = TwoFactorAuthenticationHelpers.EncryptString(jsonString, secret);
+		}
+
 		safeIoManager.WriteAllText(jsonString, Encoding.UTF8);
 	}
 

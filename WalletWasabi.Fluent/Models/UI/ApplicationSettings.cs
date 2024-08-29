@@ -1,10 +1,14 @@
 using Avalonia.Controls;
 using NBitcoin;
 using ReactiveUI;
+using System.IO;
 using System.Net;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Threading.Tasks;
+using WalletWasabi.Backend.Models;
+using WalletWasabi.Backend.Models.Responses;
 using WalletWasabi.Bases;
 using WalletWasabi.Daemon;
 using WalletWasabi.Exceptions;
@@ -14,6 +18,7 @@ using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Helpers;
 using WalletWasabi.Logging;
 using WalletWasabi.Models;
+using WalletWasabi.Services;
 using WalletWasabi.Userfacing;
 using Unit = System.Reactive.Unit;
 
@@ -46,6 +51,8 @@ public partial class ApplicationSettings : ReactiveObject
 
 	// General
 	[AutoNotify] private bool _darkModeEnabled;
+
+	[AutoNotify] private bool _twoFactorEnabled;
 
 	[AutoNotify] private bool _autoCopy;
 	[AutoNotify] private bool _autoPaste;
@@ -90,6 +97,7 @@ public partial class ApplicationSettings : ReactiveObject
 
 		// General
 		_darkModeEnabled = _uiConfig.DarkModeEnabled;
+		_twoFactorEnabled = _startupConfig.TwoFactorEnabled;
 		_autoCopy = _uiConfig.Autocopy;
 		_autoPaste = _uiConfig.AutoPaste;
 		_customChangeAddress = _uiConfig.IsCustomChangeAddress;
@@ -126,7 +134,8 @@ public partial class ApplicationSettings : ReactiveObject
 			x => x.UseTor,
 			x => x.TerminateTorOnExit,
 			x => x.DownloadNewVersion,
-			(_, _, _, _, _, _, _, _, _, _, _) => Unit.Default)
+			x => x.TwoFactorEnabled,
+			(_, _, _, _, _, _, _, _, _, _, _, _) => Unit.Default)
 			.Skip(1)
 			.ObserveOn(RxApp.MainThreadScheduler)
 			.Throttle(TimeSpan.FromMilliseconds(ThrottleTime))
@@ -143,7 +152,8 @@ public partial class ApplicationSettings : ReactiveObject
 			x => x.RunOnSystemStartup,
 			x => x.HideOnClose,
 			x => x.Oobe,
-			x => x.WindowState)
+			x => x.WindowState,
+			x => x.TwoFactorEnabled)
 			.Skip(1)
 			.Throttle(TimeSpan.FromMilliseconds(ThrottleTime))
 			.Do(_ => ApplyUiConfigChanges())
@@ -331,6 +341,7 @@ public partial class ApplicationSettings : ReactiveObject
 			UseTor = UseTor.ToString(),
 			TerminateTorOnExit = TerminateTorOnExit,
 			DownloadNewVersion = DownloadNewVersion,
+			TwoFactorEnabled = TwoFactorEnabled
 		};
 
 		return result;

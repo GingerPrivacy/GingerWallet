@@ -55,6 +55,11 @@
           </ScrollViewer>
         </TabItem>
 
+        <TabItem Header="Security">
+          <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <v:SecuritySettingsTabView DataContext="{Binding SecuritySettingsTab}" IsEnabled="{Binding !IsReadOnly}" />
+          </ScrollViewer>
+        </TabItem>
       </TabControl>
     </DockPanel>
   </ContentArea>

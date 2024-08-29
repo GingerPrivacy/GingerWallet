@@ -151,6 +151,7 @@ public class App : Application
 			new EditableSearchSourceSource(),
 			torStatusChecker,
 			new LegalDocumentsProvider(),
-			new HealthMonitor(applicationSettings, torStatusChecker));
+			new HealthMonitor(applicationSettings, torStatusChecker),
+			new TwoFactorAuthenticationModel());
 	}
 }

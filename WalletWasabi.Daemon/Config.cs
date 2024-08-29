@@ -136,6 +136,9 @@ public class Config
 			[nameof(AbsoluteMinInputCount)] = (
 				"Minimum number of inputs the client is willing to accept to participate into a round",
 				GetLongValue("AbsoluteMinInputCount", PersistentConfig.AbsoluteMinInputCount, cliArgs)),
+			[nameof(TwoFactorEnabled)] = (
+				"Enable two factor authentication",
+				GetBoolValue("TwoFactorEnabled", value: PersistentConfig.TwoFactorEnabled, cliArgs))
 		};
 
 		// Check if any config value is overridden (either by an environment value, or by a CLI argument).
@@ -188,6 +191,7 @@ public class Config
 	public bool RpcOnionEnabled => GetEffectiveValue<BoolValue, bool>(nameof(RpcOnionEnabled));
 	public Money DustThreshold => GetEffectiveValue<MoneyValue, Money>(nameof(DustThreshold));
 	public bool BlockOnlyMode => GetEffectiveValue<BoolValue, bool>(nameof(BlockOnlyMode));
+	public bool TwoFactorEnabled => GetEffectiveValue<BoolValue, bool>(nameof(TwoFactorEnabled));
 	public string LogLevel => GetEffectiveValue<StringValue, string>(nameof(LogLevel));
 	public LogMode[] LogModes => GetEffectiveValue<LogModeArrayValue, LogMode[]>(nameof(LogModes));
 

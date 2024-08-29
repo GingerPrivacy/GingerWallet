@@ -32,7 +32,8 @@ public static class MockUtils
 			new EditableSearchSourceSource(),
 			Mock.Of<ITorStatusCheckerModel>(),
 			Mock.Of<ILegalDocumentsProvider>(),
-			Mock.Of<IHealthMonitor>());
+			Mock.Of<IHealthMonitor>(),
+			Mock.Of<ITwoFactorAuthenticationModel>());
 	}
 
 	public static UiContext ContextWith(INavigationStack<RoutableViewModel> navigationStack)
@@ -52,7 +53,8 @@ public static class MockUtils
 			new EditableSearchSourceSource(),
 			Mock.Of<ITorStatusCheckerModel>(),
 			Mock.Of<ILegalDocumentsProvider>(),
-			Mock.Of<IHealthMonitor>());
+			Mock.Of<IHealthMonitor>(),
+			Mock.Of<ITwoFactorAuthenticationModel>());
 
 		uiContext.RegisterNavigation(new TestNavigation(navigationStack));
 		return uiContext;

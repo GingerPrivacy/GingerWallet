@@ -1,12 +1,15 @@
 using NBitcoin;
 using NBitcoin.RPC;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using WalletWasabi.Backend.Models;
 using WalletWasabi.Backend.Models.Responses;
 using WalletWasabi.Blockchain.Transactions;
 using WalletWasabi.Extensions;
@@ -238,4 +241,83 @@ public class WasabiClient
 	}
 
 	#endregion wasabi
+
+	#region two factor authentication
+
+	public async Task<TwoFactorSetupResponse> SetupTwoFactorAuthenticationAsync(CancellationToken cancel = default)
+	{
+		string baseUrl = "http://localhost:37127";
+		string requestUri = $"{baseUrl}/api/2fa/setup";
+#pragma warning disable RS0030 // Do not use banned APIs
+		using var httpClient = new System.Net.Http.HttpClient();
+#pragma warning restore RS0030 // Do not use banned APIs
+		try
+		{
+			using var response = await httpClient.PostAsync(requestUri, null, cancel);
+			response.EnsureSuccessStatusCode();
+			string responseBody = await response.Content.ReadAsStringAsync();
+			var result = JsonConvert.DeserializeObject<TwoFactorSetupResponse>(responseBody);
+			return result;
+		}
+		catch (HttpRequestException e)
+		{
+			throw new Exception($"HTTP request error: {e.Message}", e);
+		}
+		catch (TaskCanceledException)
+		{
+			throw new OperationCanceledException("The request was cancelled.");
+		}
+		catch (JsonException e)
+		{
+			throw new Exception($"JSON deserialization error: {e.Message}", e);
+		}
+	}
+
+	public async Task<TwoFactorVerifyResponse?> VerifyTwoFactorAuthenticationAsync(VerifyTwoFactorModel verifyTwoFactorModel, CancellationToken cancel = default)
+	{
+		var requestContent = new StringContent(
+			JsonConvert.SerializeObject(verifyTwoFactorModel),
+			Encoding.UTF8,
+			"application/json");
+
+		string baseUrl = "http://localhost:37127";
+		string requestUri = $"{baseUrl}/api/2fa/verify";
+#pragma warning disable RS0030 // Do not use banned APIs
+		using var httpClient = new HttpClient();
+#pragma warning restore RS0030 // Do not use banned APIs
+		try
+		{
+			using var response = await httpClient.PostAsync(requestUri, requestContent, cancel);
+			if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+			{
+				throw new SecurityException("Invalid 2FA token.");
+			}
+			response.EnsureSuccessStatusCode();
+			string responseBody = await response.Content.ReadAsStringAsync();
+			var result = JsonConvert.DeserializeObject<TwoFactorVerifyResponse>(responseBody);
+			return result;
+		}
+		catch (HttpRequestException e)
+		{
+			throw new Exception($"HTTP request error: {e.Message}", e);
+		}
+		catch (TaskCanceledException)
+		{
+			throw new OperationCanceledException("The request was cancelled.");
+		}
+		catch (JsonException e)
+		{
+			throw new Exception($"JSON deserialization error: {e.Message}", e);
+		}
+		catch (SecurityException)
+		{
+			throw;
+		}
+		catch (Exception e)
+		{
+			throw new Exception($"Error during 2FA verification: {e.Message}", e);
+		}
+	}
+
+	#endregion two factor authentication
 }

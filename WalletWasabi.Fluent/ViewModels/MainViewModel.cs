@@ -81,6 +81,15 @@ public partial class MainViewModel : ViewModelBase
 
 		RxApp.MainThreadScheduler.Schedule(async () =>
 		{
+			if (UiContext.ApplicationSettings.TwoFactorEnabled)
+			{
+				IsOobeBackgroundVisible = true;
+
+				await UiContext.Navigate().To().VerifyTwoFactoryAuthenticationDialog().GetResultAsync();
+
+				IsOobeBackgroundVisible = false;
+			}
+
 			if (!UiContext.WalletRepository.HasWallet || UiContext.ApplicationSettings.Oobe)
 			{
 				IsOobeBackgroundVisible = true;

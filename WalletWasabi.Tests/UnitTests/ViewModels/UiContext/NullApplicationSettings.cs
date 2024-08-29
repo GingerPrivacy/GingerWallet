@@ -1,6 +1,8 @@
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using NBitcoin;
+using WalletWasabi.Backend.Models.Responses;
 using WalletWasabi.Daemon;
 using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.Models.UI;
@@ -21,6 +23,7 @@ public class NullApplicationSettings : IApplicationSettings
 	public string CoordinatorUri { get; set; } = "";
 	public string DustThreshold { get; set; } = "";
 	public bool DarkModeEnabled { get; set; }
+	public bool TwoFactorEnabled { get; set; }
 	public bool AutoCopy { get; set; }
 	public bool AutoPaste { get; set; }
 	public bool CustomChangeAddress { get; set; }
@@ -41,5 +44,25 @@ public class NullApplicationSettings : IApplicationSettings
 	public bool CheckIfRestartIsNeeded(PersistentConfig config)
 	{
 		return false;
+	}
+
+	public Task<TwoFactorSetupResponse> GenerateTwoFactor()
+	{
+		throw new NotImplementedException();
+	}
+
+	public Task<TwoFactorVerifyResponse?> VerifyTwoFactor(string token, string? clientId, string? serverSecret)
+	{
+		throw new NotImplementedException();
+	}
+
+	public Task EncryptTwoFactorAsync(TwoFactorVerifyResponse verifyResponse)
+	{
+		throw new NotImplementedException();
+	}
+
+	public Task DecryptTwoFactorAsync()
+	{
+		throw new NotImplementedException();
 	}
 }

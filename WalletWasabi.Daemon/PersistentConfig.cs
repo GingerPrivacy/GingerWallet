@@ -129,6 +129,9 @@ public record PersistentConfig : IConfigNg
 	[JsonPropertyName("AbsoluteMinInputCount")]
 	public int AbsoluteMinInputCount { get; init; } = Constants.DefaultAbsoluteMinInputCount;
 
+	[JsonPropertyName("TwoFactorEnabled")]
+	public bool TwoFactorEnabled { get; init; } = false;
+
 	public bool DeepEquals(PersistentConfig other)
 	{
 		bool useTorIsEqual = Config.ObjectToTorMode(UseTor) == Config.ObjectToTorMode(other.UseTor);
@@ -159,7 +162,8 @@ public record PersistentConfig : IConfigNg
 			CoordinatorIdentifier == other.CoordinatorIdentifier &&
 			MaxCoordinationFeeRate == other.MaxCoordinationFeeRate &&
 			MaxCoinJoinMiningFeeRate == other.MaxCoinJoinMiningFeeRate &&
-			AbsoluteMinInputCount == other.AbsoluteMinInputCount;
+			AbsoluteMinInputCount == other.AbsoluteMinInputCount &&
+			TwoFactorEnabled == other.TwoFactorEnabled;
 	}
 
 	public EndPoint GetBitcoinP2pEndPoint()
