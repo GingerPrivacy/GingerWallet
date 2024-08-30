@@ -228,6 +228,8 @@ public class KeyManager
 	// keys (stored in the `HdPubKeyCache`), minGapLimit, secrets, height, network.
 	private object CriticalStateLock { get; } = new();
 
+	public string? EncryptionKey { get; set; }
+
 	#endregion Properties
 
 	private HdPubKeyGenerator SegwitExternalKeyGenerator { get; set; }
@@ -312,6 +314,7 @@ public class KeyManager
 			?? throw new JsonSerializationException($"Wallet file at: `{filePath}` is not a valid wallet file or it is corrupted.");
 
 		km.SetFilePath(filePath);
+		km.EncryptionKey = secret;
 
 		return km;
 	}
@@ -618,7 +621,7 @@ public class KeyManager
 		}
 	}
 
-	public void ToFile(string filePath, string? secret = null)
+	public void ToFile(string filePath)
 	{
 		string jsonString = string.Empty;
 
@@ -631,9 +634,9 @@ public class KeyManager
 
 		SafeIoManager safeIoManager = new(filePath);
 
-		if (!string.IsNullOrWhiteSpace(secret))
+		if (!string.IsNullOrWhiteSpace(EncryptionKey))
 		{
-			jsonString = TwoFactorAuthenticationHelpers.EncryptString(jsonString, secret);
+			jsonString = TwoFactorAuthenticationHelpers.EncryptString(jsonString, EncryptionKey);
 		}
 
 		safeIoManager.WriteAllText(jsonString, Encoding.UTF8);

@@ -1,15 +1,10 @@
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WalletWasabi.Backend.Models;
 using WalletWasabi.Backend.Models.Responses;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Helpers;
-using WalletWasabi.Interfaces;
 using WalletWasabi.Logging;
 using WalletWasabi.Wallets;
 using WalletWasabi.WebClients.Wasabi;
@@ -31,8 +26,7 @@ public class TwoFactorAuthenticationService
 		{
 			string jsonContent = File.ReadAllText(SecretFilePath);
 			var secret = JsonConvert.DeserializeObject<WalletEncryption>(jsonContent);
-			ClientId = secret?.ClientId;
-			SecretServer = secret?.SecretServer;
+			ClientServerId = secret?.ClientServerId;
 		}
 	}
 
@@ -40,8 +34,7 @@ public class TwoFactorAuthenticationService
 	public WasabiClient WasabiClient { get; }
 	public bool IsTwoFactorAuthEnabled { get; }
 
-	public string? ClientId { get; }
-	public string? SecretServer { get; }
+	public string? ClientServerId { get; }
 
 	/// <summary>
 	/// The wallet file encryption key.
@@ -52,7 +45,7 @@ public class TwoFactorAuthenticationService
 	{
 		foreach (var walletFileInfo in WalletDirectories.EnumerateWalletFiles())
 		{
-			KeyManager? keyManager = null;
+			KeyManager? keyManager;
 			try
 			{
 				keyManager = KeyManager.FromFile(walletFileInfo.FullName, secret);
@@ -67,23 +60,19 @@ public class TwoFactorAuthenticationService
 			keyManager = KeyManager.FromFile(walletFileInfo.FullName, null);
 
 			var (walletFilePath, walletBackupFilePath) = WalletDirectories.GetWalletFilePaths(keyManager.WalletName);
+			keyManager.EncryptionKey = secret;
 
 			Logger.LogInfo($"Wallet file was not encrypted '{walletFileInfo.Name}', encrypting... ");
-			keyManager.ToFile(walletFilePath, secret);
-			keyManager.ToFile(walletBackupFilePath, secret);
+			keyManager.ToFile(walletFilePath);
+			keyManager.ToFile(walletBackupFilePath);
 		}
 	}
 
 	public async Task LoginVerifyAsync(string token)
 	{
-		if (ClientId is not { } clientId)
+		if (ClientServerId is not { } clientServerId)
 		{
-			throw new ArgumentNullException(nameof(ClientId));
-		}
-
-		if (SecretServer is not { } secretServer)
-		{
-			throw new ArgumentNullException(nameof(SecretServer));
+			throw new ArgumentNullException(nameof(ClientServerId));
 		}
 
 		TwoFactorVerifyResponse? response = await WasabiClient
@@ -91,8 +80,7 @@ public class TwoFactorAuthenticationService
 			new VerifyTwoFactorModel()
 			{
 				Token = token,
-				ClientId = clientId,
-				ServerSecret = secretServer
+				ClientServerId = clientServerId,
 			})
 			.ConfigureAwait(false);
 
@@ -107,15 +95,14 @@ public class TwoFactorAuthenticationService
 		MakeSureWalletFilesAreEncrypted(SecretWallet);
 	}
 
-	public async Task VerifyAndSaveClientFileAsync(string token, string clientId, string secretServer)
+	public async Task VerifyAndSaveClientFileAsync(string token, string clientServerId)
 	{
 		TwoFactorVerifyResponse? response = await WasabiClient
 			.VerifyTwoFactorAuthenticationAsync(
 			new VerifyTwoFactorModel()
 			{
 				Token = token,
-				ClientId = clientId,
-				ServerSecret = secretServer
+				ClientServerId = clientServerId,
 			})
 			.ConfigureAwait(false);
 
@@ -124,27 +111,27 @@ public class TwoFactorAuthenticationService
 			throw new InvalidOperationException($"{nameof(TwoFactorVerifyResponse)} is null.");
 		}
 
-		WalletEncryption twoFactorInfo = new WalletEncryption
+		WalletEncryption twoFactorInfo = new()
 		{
-			ClientId = response.ClientId,
-			SecretServer = response.ServerSecret
+			ClientServerId = response.ClientServerId,
 		};
 
 		string twoFactorInfoJson = JsonConvert.SerializeObject(twoFactorInfo);
 		await File.WriteAllTextAsync(SecretFilePath, twoFactorInfoJson).ConfigureAwait(false);
 	}
 
-	public void RemoveTwoFactorAuthentication()
+	public void RemoveTwoFactorAuthentication(WalletManager walletManager)
 	{
-		foreach (var walletFileInfo in WalletDirectories.EnumerateWalletFiles())
+		foreach (var wallet in walletManager.GetWallets())
 		{
-			var keyManager = KeyManager.FromFile(walletFileInfo.FullName, SecretWallet);
+			var keyManager = wallet.KeyManager;
+			keyManager.EncryptionKey = null;
 
-			var (walletFilePath, walletBackupFilePath) = WalletDirectories.GetWalletFilePaths(keyManager.WalletName);
+			var (walletFilePath, walletBackupFilePath) = WalletDirectories.GetWalletFilePaths(wallet.WalletName);
+			keyManager.ToFile();
+			keyManager.ToFile(walletBackupFilePath);
 
-			Logger.LogInfo($"Wallet file was not encrypted '{walletFileInfo.Name}', encrypting... ");
-			keyManager.ToFile(walletFilePath, null);
-			keyManager.ToFile(walletBackupFilePath, null);
+			Logger.LogInfo($"Wallet file was encrypted '{wallet.WalletName}', decrypting... ");
 		}
 
 		if (File.Exists(SecretFilePath))

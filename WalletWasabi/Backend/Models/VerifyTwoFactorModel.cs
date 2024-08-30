@@ -2,7 +2,6 @@ namespace WalletWasabi.Backend.Models;
 
 public class VerifyTwoFactorModel
 {
-	public string ClientId { get; set; }
-	public string ServerSecret { get; set; }
-	public string Token { get; set; }
+	public required string ClientServerId { get; set; }
+	public required string Token { get; set; }
 }

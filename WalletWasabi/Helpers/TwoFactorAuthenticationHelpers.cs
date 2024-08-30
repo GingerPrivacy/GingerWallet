@@ -1,18 +1,13 @@
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using WalletWasabi.Backend.Models.Responses;
 
 namespace WalletWasabi.Helpers;
 
 public class WalletEncryption
 {
-	public string ClientId { get; set; }
-
-	public string SecretServer { get; set; }
+	public required string ClientServerId { get; set; }
 }
 
 public static class TwoFactorAuthenticationHelpers
@@ -21,9 +16,9 @@ public static class TwoFactorAuthenticationHelpers
 	{
 		foreach (string filePath in Directory.GetFiles(walletDirectory, "*.json"))
 		{
-			string content = await File.ReadAllTextAsync(filePath);
+			string content = await File.ReadAllTextAsync(filePath).ConfigureAwait(false);
 			string encryptedContent = EncryptString(content, secret);
-			await File.WriteAllTextAsync(filePath, encryptedContent);
+			await File.WriteAllTextAsync(filePath, encryptedContent).ConfigureAwait(false);
 		}
 	}
 
@@ -33,9 +28,9 @@ public static class TwoFactorAuthenticationHelpers
 		{
 			if (Path.GetFileName(filePath) != "2fa_info.gws")
 			{
-				string content = await File.ReadAllTextAsync(filePath);
+				string content = await File.ReadAllTextAsync(filePath).ConfigureAwait(false);
 				string decryptedContent = DecryptString(content, secret);
-				await File.WriteAllTextAsync(filePath, decryptedContent);
+				await File.WriteAllTextAsync(filePath, decryptedContent).ConfigureAwait(false);
 			}
 		}
 

@@ -1,13 +1,9 @@
-using System.IO;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Windows.Input;
 using ReactiveUI;
-using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
-using WalletWasabi.Helpers;
 using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.ViewModels.Dialogs;
@@ -16,8 +12,7 @@ namespace WalletWasabi.Fluent.ViewModels.Dialogs;
 public partial class TwoFactoryAuthenticationDialogViewModel : DialogViewModelBase<bool>
 {
 	[AutoNotify] private string? _twoFactorToken;
-	private string? _clientId;
-	private string? _serverSecret;
+	private string? _clientServerId;
 
 	private TwoFactoryAuthenticationDialogViewModel()
 	{
@@ -26,7 +21,7 @@ public partial class TwoFactoryAuthenticationDialogViewModel : DialogViewModelBa
 			try
 			{
 				IsBusy = true;
-				await UiContext.TwoFactorAuthenticationModel.VerifyAndSaveClientFileAsync(TwoFactorToken, _clientId!, _serverSecret!);
+				await UiContext.TwoFactorAuthenticationModel.VerifyAndSaveClientFileAsync(TwoFactorToken!, _clientServerId!);
 				Close(result: true);
 			}
 			catch (Exception ex)
@@ -54,8 +49,7 @@ public partial class TwoFactoryAuthenticationDialogViewModel : DialogViewModelBa
 			{
 				IsBusy = true;
 				var result = await UiContext.TwoFactorAuthenticationModel.SetupTwoFactorAuthentication();
-				_clientId = result.ClientId;
-				_serverSecret = result.SecretServer;
+				_clientServerId = result.ClientServerId;
 				QrCodeItem = UiContext.QrCodeGenerator.Generate(result.QrCodeUri);
 				this.RaisePropertyChanged(nameof(QrCodeItem));
 			}
