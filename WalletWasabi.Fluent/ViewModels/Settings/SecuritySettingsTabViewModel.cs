@@ -10,6 +10,8 @@ using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.ViewModels.Navigation;
 using WalletWasabi.Models;
+using System.Reactive.Disposables;
+using WalletWasabi.Services;
 
 namespace WalletWasabi.Fluent.ViewModels.Settings;
 
@@ -26,21 +28,27 @@ namespace WalletWasabi.Fluent.ViewModels.Settings;
 	IconName = "settings_general_regular")]
 public partial class SecuritySettingsTabViewModel : RoutableViewModel
 {
+	[AutoNotify] private bool _twoFactorEnabled;
+
 	private SecuritySettingsTabViewModel(IApplicationSettings settings)
 	{
 		Settings = settings;
 
+		_twoFactorEnabled = TwoFactorAuthenticationService.TwoFactorEnabled;
+		// TODO: The value should get from TwoFactorAuthenticationModel.
+
 		GenerateTwoFactorCommand = ReactiveCommand.CreateFromTask(async () =>
 		{
-			if (!Settings.TwoFactorEnabled)
+			if (!_twoFactorEnabled)
 			{
 				var result = await UiContext.Navigate().To().TwoFactoryAuthenticationDialog().GetResultAsync();
-				Settings.TwoFactorEnabled = result;
+				UiContext.ApplicationSettings.ForceRestartNeeded = result;
+				_twoFactorEnabled = result;
 			}
 			else
 			{
 				UiContext.TwoFactorAuthenticationModel.RemoveTwoFactorAuthentication();
-				Settings.TwoFactorEnabled = false;
+				_twoFactorEnabled = false;
 			}
 		});
 	}

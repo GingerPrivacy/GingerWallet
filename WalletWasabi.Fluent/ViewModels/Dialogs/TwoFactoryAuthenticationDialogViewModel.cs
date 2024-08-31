@@ -27,7 +27,7 @@ public partial class TwoFactoryAuthenticationDialogViewModel : DialogViewModelBa
 			catch (Exception ex)
 			{
 				Logger.LogError(ex);
-				await ShowErrorAsync(Title, "Couldn't verify the token, please see the logs for further information.", "Error occurred.");
+				await ShowErrorAsync(Title, "Couldn't verify the token, please see the logs for further information.", $"{ex.Message}");
 			}
 			finally
 			{
@@ -43,6 +43,11 @@ public partial class TwoFactoryAuthenticationDialogViewModel : DialogViewModelBa
 
 	protected override void OnNavigatedTo(bool isInHistory, CompositeDisposable disposables)
 	{
+		if (isInHistory)
+		{
+			return;
+		}
+
 		RxApp.MainThreadScheduler.Schedule(async () =>
 		{
 			try

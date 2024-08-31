@@ -307,6 +307,7 @@ public class KeyManager
 
 		if (!string.IsNullOrWhiteSpace(secret))
 		{
+			// For the first time after 2FA was enabled the file won't be encrypted, so this will throw.
 			jsonString = TwoFactorAuthenticationHelpers.DecryptString(jsonString, secret);
 		}
 

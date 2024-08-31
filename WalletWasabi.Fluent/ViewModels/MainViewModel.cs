@@ -81,7 +81,7 @@ public partial class MainViewModel : ViewModelBase
 
 		RxApp.MainThreadScheduler.Schedule(async () =>
 		{
-			if (UiContext.ApplicationSettings.TwoFactorEnabled)
+			if (UiContext.TwoFactorAuthenticationModel.TwoFactorEnabled)
 			{
 				IsOobeBackgroundVisible = true;
 

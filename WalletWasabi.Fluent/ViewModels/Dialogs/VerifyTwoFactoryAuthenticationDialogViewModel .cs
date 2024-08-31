@@ -27,7 +27,7 @@ public partial class VerifyTwoFactoryAuthenticationDialogViewModel : DialogViewM
 			catch (Exception ex)
 			{
 				Logger.LogError(ex);
-				await ShowErrorAsync(Title, "Couldn't verify the token, please see the logs for further information.", "Error occurred.");
+				await ShowErrorAsync(Title, "Couldn't verify the token, please see the logs for further information.", $"{ex.Message}");
 			}
 			finally
 			{

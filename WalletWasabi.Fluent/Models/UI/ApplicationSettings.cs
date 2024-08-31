@@ -52,8 +52,6 @@ public partial class ApplicationSettings : ReactiveObject
 	// General
 	[AutoNotify] private bool _darkModeEnabled;
 
-	[AutoNotify] private bool _twoFactorEnabled;
-
 	[AutoNotify] private bool _autoCopy;
 	[AutoNotify] private bool _autoPaste;
 	[AutoNotify] private bool _customChangeAddress;
@@ -71,6 +69,9 @@ public partial class ApplicationSettings : ReactiveObject
 
 	[AutoNotify] private bool _oobe;
 	[AutoNotify] private WindowState _windowState;
+
+	// Security
+	[AutoNotify] private bool _forceRestartNeeded;
 
 	// Non-persistent
 	[AutoNotify] private bool _doUpdateOnClose;
@@ -97,7 +98,6 @@ public partial class ApplicationSettings : ReactiveObject
 
 		// General
 		_darkModeEnabled = _uiConfig.DarkModeEnabled;
-		_twoFactorEnabled = _startupConfig.TwoFactorEnabled;
 		_autoCopy = _uiConfig.Autocopy;
 		_autoPaste = _uiConfig.AutoPaste;
 		_customChangeAddress = _uiConfig.IsCustomChangeAddress;
@@ -134,8 +134,7 @@ public partial class ApplicationSettings : ReactiveObject
 			x => x.UseTor,
 			x => x.TerminateTorOnExit,
 			x => x.DownloadNewVersion,
-			x => x.TwoFactorEnabled,
-			(_, _, _, _, _, _, _, _, _, _, _, _) => Unit.Default)
+			(_, _, _, _, _, _, _, _, _, _, _) => Unit.Default)
 			.Skip(1)
 			.ObserveOn(RxApp.MainThreadScheduler)
 			.Throttle(TimeSpan.FromMilliseconds(ThrottleTime))
@@ -152,8 +151,7 @@ public partial class ApplicationSettings : ReactiveObject
 			x => x.RunOnSystemStartup,
 			x => x.HideOnClose,
 			x => x.Oobe,
-			x => x.WindowState,
-			x => x.TwoFactorEnabled)
+			x => x.WindowState)
 			.Skip(1)
 			.Throttle(TimeSpan.FromMilliseconds(ThrottleTime))
 			.Do(_ => ApplyUiConfigChanges())
@@ -180,6 +178,12 @@ public partial class ApplicationSettings : ReactiveObject
 		// Apply DoUpdateOnClose
 		this.WhenAnyValue(x => x.DoUpdateOnClose)
 			.Do(x => Services.UpdateManager.DoUpdateOnClose = x)
+			.Subscribe();
+
+		// Apply DoUpdateOnClose
+		this.WhenAnyValue(x => x.ForceRestartNeeded)
+			.Where(x => x)
+			.Do(x => _isRestartNeeded.OnNext(ForceRestartNeeded))
 			.Subscribe();
 
 		// Save browser settings
@@ -258,7 +262,7 @@ public partial class ApplicationSettings : ReactiveObject
 					PersistentConfig newConfig = ApplyChanges(currentConfig);
 					ConfigManagerNg.ToFile(_persistentConfigFilePath, newConfig);
 
-					_isRestartNeeded.OnNext(CheckIfRestartIsNeeded(newConfig));
+					_isRestartNeeded.OnNext(ForceRestartNeeded || CheckIfRestartIsNeeded(newConfig));
 				}
 				catch (Exception ex)
 				{
@@ -340,8 +344,7 @@ public partial class ApplicationSettings : ReactiveObject
 		{
 			UseTor = UseTor.ToString(),
 			TerminateTorOnExit = TerminateTorOnExit,
-			DownloadNewVersion = DownloadNewVersion,
-			TwoFactorEnabled = TwoFactorEnabled
+			DownloadNewVersion = DownloadNewVersion
 		};
 
 		return result;

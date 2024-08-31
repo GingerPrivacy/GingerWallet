@@ -91,7 +91,7 @@ public class SettingsSearchSource : ReactiveObject, ISearchSource
 					Priority = 8
 				}));
 
-		yield return new ContentSearchItem(content: Setting(selector: x => x.TwoFactorEnabled), name: "Two-factor authentication", category: "Settings", keywords: new List<string> { "Security", "Settings", "2FA" }, icon: "nav_settings_regular", isEnabled) { IsDefault = false, Priority = 9 };
+		//yield return new ContentSearchItem(content: Setting(selector: x => x.TwoFactorEnabled), name: "Two-factor authentication", category: "Settings", keywords: new List<string> { "Security", "Settings", "2FA" }, icon: "nav_settings_regular", isEnabled) { IsDefault = false, Priority = 9 };
 	}
 
 	private Setting<ApplicationSettings, TProperty> Setting<TProperty>(Expression<Func<ApplicationSettings, TProperty>> selector)

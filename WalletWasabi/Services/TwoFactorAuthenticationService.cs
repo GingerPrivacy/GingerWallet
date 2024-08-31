@@ -14,11 +14,12 @@ namespace WalletWasabi.Services;
 public class TwoFactorAuthenticationService
 {
 	private string SecretFileName => "2fa_info.gws";
-	private string SecretFilePath => Path.Combine(WalletDirectories.WalletsDir, SecretFileName);
+	private static string SecretFilePath { get; set; }
 
 	public TwoFactorAuthenticationService(WalletDirectories walletDirectories, WasabiClient wasabiClient)
 	{
 		WalletDirectories = walletDirectories;
+		SecretFilePath = Path.Combine(WalletDirectories.WalletsDir, SecretFileName);
 		WasabiClient = wasabiClient;
 		IsTwoFactorAuthEnabled = File.Exists(SecretFilePath);
 
@@ -41,6 +42,8 @@ public class TwoFactorAuthenticationService
 	/// </summary>
 	public string? SecretWallet { get; private set; }
 
+	public static bool TwoFactorEnabled => File.Exists(SecretFilePath);
+
 	public void MakeSureWalletFilesAreEncrypted(string secret)
 	{
 		foreach (var walletFileInfo in WalletDirectories.EnumerateWalletFiles())
@@ -51,7 +54,11 @@ public class TwoFactorAuthenticationService
 				keyManager = KeyManager.FromFile(walletFileInfo.FullName, secret);
 				continue;
 			}
-			catch (JsonSerializationException)
+			catch (IOException)
+			{
+				throw;
+			}
+			catch (Exception)
 			{
 				// Invalid JSON, likely the wallet file was not encrpyted.
 			}

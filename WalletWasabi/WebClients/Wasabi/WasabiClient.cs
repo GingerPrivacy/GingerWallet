@@ -246,22 +246,27 @@ public class WasabiClient
 
 	public async Task<TwoFactorSetupResponse> SetupTwoFactorAuthenticationAsync(CancellationToken cancel = default)
 	{
-		string baseUrl = "http://localhost:37127";
-		string requestUri = $"{baseUrl}/api/2fa/setup";
-#pragma warning disable RS0030 // Do not use banned APIs
-		using var httpClient = new System.Net.Http.HttpClient();
-#pragma warning restore RS0030 // Do not use banned APIs
 		try
 		{
-			using var response = await httpClient.PostAsync(requestUri, null, cancel);
-			response.EnsureSuccessStatusCode();
-			string responseBody = await response.Content.ReadAsStringAsync();
+			using HttpResponseMessage response = await HttpClient.SendAsync(
+				HttpMethod.Get,
+				$"api/v{ApiVersion}/2fa/setup",
+				cancellationToken: cancel).ConfigureAwait(false);
+
+			if (response.StatusCode != HttpStatusCode.OK)
+			{
+				await response.ThrowRequestExceptionFromContentAsync(cancel).ConfigureAwait(false);
+			}
+
+			using HttpContent content = response.Content;
+			string responseBody = await content.ReadAsStringAsync(cancel).ConfigureAwait(false);
 			var result = JsonConvert.DeserializeObject<TwoFactorSetupResponse>(responseBody);
-			return result;
+			return result is null
+				? throw new InvalidOperationException($"Cannot deserialize the response: '{responseBody}'.") : result;
 		}
 		catch (HttpRequestException e)
 		{
-			throw new Exception($"HTTP request error: {e.Message}", e);
+			throw new InvalidOperationException($"HTTP request error: {e.Message}", e);
 		}
 		catch (TaskCanceledException)
 		{
@@ -269,37 +274,35 @@ public class WasabiClient
 		}
 		catch (JsonException e)
 		{
-			throw new Exception($"JSON deserialization error: {e.Message}", e);
+			throw new InvalidOperationException($"JSON deserialization error: {e.Message}", e);
 		}
 	}
 
 	public async Task<TwoFactorVerifyResponse?> VerifyTwoFactorAuthenticationAsync(VerifyTwoFactorModel verifyTwoFactorModel, CancellationToken cancel = default)
 	{
-		var requestContent = new StringContent(
-			JsonConvert.SerializeObject(verifyTwoFactorModel),
-			Encoding.UTF8,
-			"application/json");
-
-		string baseUrl = "http://localhost:37127";
-		string requestUri = $"{baseUrl}/api/2fa/verify";
-#pragma warning disable RS0030 // Do not use banned APIs
-		using var httpClient = new HttpClient();
-#pragma warning restore RS0030 // Do not use banned APIs
 		try
 		{
-			using var response = await httpClient.PostAsync(requestUri, requestContent, cancel);
-			if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+			using var requestContent = new StringContent(
+				JsonConvert.SerializeObject(verifyTwoFactorModel),
+				Encoding.UTF8,
+				"application/json");
+
+			using HttpResponseMessage response = await HttpClient.SendAsync(HttpMethod.Post, $"api/v{ApiVersion}/2fa/verify", requestContent, cancel).ConfigureAwait(false);
+
+			if (response.StatusCode != HttpStatusCode.OK)
 			{
-				throw new SecurityException("Invalid 2FA token.");
+				await response.ThrowRequestExceptionFromContentAsync(cancel).ConfigureAwait(false);
 			}
-			response.EnsureSuccessStatusCode();
-			string responseBody = await response.Content.ReadAsStringAsync();
+
+			using HttpContent content = response.Content;
+			string responseBody = await content.ReadAsStringAsync(cancel).ConfigureAwait(false);
 			var result = JsonConvert.DeserializeObject<TwoFactorVerifyResponse>(responseBody);
-			return result;
+			return result is null
+				? throw new InvalidOperationException($"Cannot deserialize the response: '{responseBody}'.") : result;
 		}
 		catch (HttpRequestException e)
 		{
-			throw new Exception($"HTTP request error: {e.Message}", e);
+			throw new InvalidOperationException($"HTTP request error: {e.Message}", e);
 		}
 		catch (TaskCanceledException)
 		{
@@ -307,7 +310,7 @@ public class WasabiClient
 		}
 		catch (JsonException e)
 		{
-			throw new Exception($"JSON deserialization error: {e.Message}", e);
+			throw new InvalidOperationException($"JSON deserialization error: {e.Message}", e);
 		}
 		catch (SecurityException)
 		{
@@ -315,7 +318,7 @@ public class WasabiClient
 		}
 		catch (Exception e)
 		{
-			throw new Exception($"Error during 2FA verification: {e.Message}", e);
+			throw new InvalidOperationException($"Error during 2FA verification: {e.Message}", e);
 		}
 	}
 

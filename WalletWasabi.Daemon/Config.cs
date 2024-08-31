@@ -135,10 +135,7 @@ public class Config
 				GetDecimalValue("MaxCoinjoinMiningFeeRate", PersistentConfig.MaxCoinJoinMiningFeeRate, cliArgs)),
 			[nameof(AbsoluteMinInputCount)] = (
 				"Minimum number of inputs the client is willing to accept to participate into a round",
-				GetLongValue("AbsoluteMinInputCount", PersistentConfig.AbsoluteMinInputCount, cliArgs)),
-			[nameof(TwoFactorEnabled)] = (
-				"Enable two factor authentication",
-				GetBoolValue("TwoFactorEnabled", value: PersistentConfig.TwoFactorEnabled, cliArgs))
+				GetLongValue("AbsoluteMinInputCount", PersistentConfig.AbsoluteMinInputCount, cliArgs))
 		};
 
 		// Check if any config value is overridden (either by an environment value, or by a CLI argument).

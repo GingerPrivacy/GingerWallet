@@ -12,36 +12,6 @@ public class WalletEncryption
 
 public static class TwoFactorAuthenticationHelpers
 {
-	public static async Task EncryptWalletFilesAsync(string walletDirectory, string secret)
-	{
-		foreach (string filePath in Directory.GetFiles(walletDirectory, "*.json"))
-		{
-			string content = await File.ReadAllTextAsync(filePath).ConfigureAwait(false);
-			string encryptedContent = EncryptString(content, secret);
-			await File.WriteAllTextAsync(filePath, encryptedContent).ConfigureAwait(false);
-		}
-	}
-
-	public static async Task DecryptWalletFilesAsync(string walletDirectory, string secret)
-	{
-		foreach (string filePath in Directory.GetFiles(walletDirectory, "*.json"))
-		{
-			if (Path.GetFileName(filePath) != "2fa_info.gws")
-			{
-				string content = await File.ReadAllTextAsync(filePath).ConfigureAwait(false);
-				string decryptedContent = DecryptString(content, secret);
-				await File.WriteAllTextAsync(filePath, decryptedContent).ConfigureAwait(false);
-			}
-		}
-
-		// Delete the 2fa_info.json file
-		string twoFactorInfoPath = Path.Combine(walletDirectory, "2fa_info.gws");
-		if (File.Exists(twoFactorInfoPath))
-		{
-			File.Delete(twoFactorInfoPath);
-		}
-	}
-
 	public static string EncryptString(string plainText, string secret)
 	{
 		using Aes aes = Aes.Create();
