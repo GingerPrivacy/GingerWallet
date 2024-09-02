@@ -7,13 +7,18 @@
              x:DataType="dialog:VerifyTwoFactoryAuthenticationDialogViewModel"
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.Views.Dialogs.VerifyTwoFactoryAuthenticationDialogView">
-  <ContentArea Title="{Binding Title}" IsBusy="{Binding IsBusy}"
-                 ScrollViewer.VerticalScrollBarVisibility="Disabled" EnableNext="True" NextContent="Verify" EnableCancel="{Binding EnableCancel}"
-                 EnableBack="False">
+  <ContentArea Title="{Binding Title}"
+               IsBusy="{Binding IsBusy}"
+               ScrollViewer.VerticalScrollBarVisibility="Disabled"
+               EnableNext="True"
+               NextContent="Verify">
     <DockPanel>
-
-      <TextBox DockPanel.Dock="Bottom" Text="{Binding TwoFactorToken}" />
-      <Label DockPanel.Dock="Bottom">2FA authentication token</Label>
+      <TwoFactorEntryBox HorizontalAlignment="Center" DockPanel.Dock="Bottom"
+                         Text="{Binding TwoFactorToken, Mode=OneWayToSource}" />
+      <Label HorizontalAlignment="Center" DockPanel.Dock="Bottom">Verification code:</Label>
+      <Viewbox MaxHeight="150" Margin="40">
+        <PathIcon Data="{StaticResource shield_lock}" Opacity="0.6" />
+      </Viewbox>
     </DockPanel>
   </ContentArea>
 </UserControl>

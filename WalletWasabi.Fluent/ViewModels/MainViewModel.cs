@@ -45,7 +45,7 @@ public partial class MainViewModel : ViewModelBase
 		MainScreen = new TargettedNavigationStack(NavigationTarget.HomeScreen);
 		UiContext.RegisterNavigation(new NavigationState(UiContext, MainScreen, DialogScreen, FullScreen, CompactDialogScreen, NavBar));
 
-		NavBar.Activate();
+
 
 		StatusIcon = new StatusIconViewModel(UiContext);
 
@@ -89,7 +89,7 @@ public partial class MainViewModel : ViewModelBase
 
 				IsOobeBackgroundVisible = false;
 			}
-
+			NavBar.Activate();
 			if (!UiContext.WalletRepository.HasWallet || UiContext.ApplicationSettings.Oobe)
 			{
 				IsOobeBackgroundVisible = true;

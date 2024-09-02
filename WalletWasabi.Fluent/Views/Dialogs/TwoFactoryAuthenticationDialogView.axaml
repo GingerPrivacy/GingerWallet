@@ -7,13 +7,16 @@
              x:DataType="dialog:TwoFactoryAuthenticationDialogViewModel"
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.Views.Dialogs.TwoFactoryAuthenticationDialogView">
-  <ContentArea Title="{Binding Title}" IsBusy="{Binding IsBusy}"
-                 ScrollViewer.VerticalScrollBarVisibility="Disabled" EnableNext="True" NextContent="Verify" EnableCancel="{Binding EnableCancel}"
-                 EnableBack="False">
-    <DockPanel>
+  <ContentArea Title="{Binding Title}"
+               Caption="Scan the QR code below using your preferred authenticator app, then enter the verification code."
+               IsBusy="{Binding IsBusy}"
+               EnableNext="True" NextContent="Verify"
+               ScrollViewer.VerticalScrollBarVisibility="Disabled">
+    <DockPanel Margin="20 0">
 
-      <TextBox DockPanel.Dock="Bottom" Text="{Binding TwoFactorToken}" />
-      <Label DockPanel.Dock="Bottom">2FA authentication token</Label>
+      <!-- <TextBox DockPanel.Dock="Bottom" Text="{Binding TwoFactorToken}" /> -->
+      <TwoFactorEntryBox HorizontalAlignment="Center" DockPanel.Dock="Bottom" Text="{Binding TwoFactorToken, Mode=OneWayToSource}" />
+      <Label HorizontalAlignment="Center" DockPanel.Dock="Bottom">Verification code:</Label>
 
       <Viewbox Margin="20" MaxHeight="270" MinHeight="100" DockPanel.Dock="Top">
         <PrivacyContentControl Height="264" PrivacyReplacementMode="Icon">

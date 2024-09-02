@@ -14,7 +14,7 @@
 
     <DockPanel>
       <TextBlock Text="Two-factor authentication" />
-      <ToggleSwitch IsChecked="{Binding TwoFactorEnabled, Mode=OneWay}" Command="{Binding GenerateTwoFactorCommand}" />
+      <ToggleSwitch IsChecked="{Binding TwoFactorEnabled, Mode=TwoWay}" Command="{Binding GenerateTwoFactorCommand}" />
     </DockPanel>
   </StackPanel>
 </UserControl>

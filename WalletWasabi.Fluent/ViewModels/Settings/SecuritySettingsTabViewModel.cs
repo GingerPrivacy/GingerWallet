@@ -30,25 +30,24 @@ public partial class SecuritySettingsTabViewModel : RoutableViewModel
 {
 	[AutoNotify] private bool _twoFactorEnabled;
 
-	private SecuritySettingsTabViewModel(IApplicationSettings settings)
+	public SecuritySettingsTabViewModel(UiContext uiContext, IApplicationSettings settings)
 	{
 		Settings = settings;
 
-		_twoFactorEnabled = TwoFactorAuthenticationService.TwoFactorEnabled;
-		// TODO: The value should get from TwoFactorAuthenticationModel.
+		TwoFactorEnabled = uiContext.TwoFactorAuthenticationModel.TwoFactorEnabled;
 
 		GenerateTwoFactorCommand = ReactiveCommand.CreateFromTask(async () =>
 		{
-			if (!_twoFactorEnabled)
+			if (TwoFactorEnabled)
 			{
 				var result = await UiContext.Navigate().To().TwoFactoryAuthenticationDialog().GetResultAsync();
 				UiContext.ApplicationSettings.ForceRestartNeeded = result;
-				_twoFactorEnabled = result;
+				TwoFactorEnabled = result;
 			}
 			else
 			{
 				UiContext.TwoFactorAuthenticationModel.RemoveTwoFactorAuthentication();
-				_twoFactorEnabled = false;
+				TwoFactorEnabled = false;
 			}
 		});
 	}
