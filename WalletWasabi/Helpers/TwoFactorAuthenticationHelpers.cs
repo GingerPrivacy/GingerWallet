@@ -1,7 +1,6 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace WalletWasabi.Helpers;
 
@@ -16,14 +15,15 @@ public static class TwoFactorAuthenticationHelpers
 	{
 		using Aes aes = Aes.Create();
 		aes.Key = GetEncryptionKey(secret);
-		aes.IV = new byte[16];
 
 		using MemoryStream memoryStream = new();
+		memoryStream.Write(aes.IV, 0, 16);
 		using (ICryptoTransform encryptor = aes.CreateEncryptor())
 		using (CryptoStream cryptoStream = new(memoryStream, encryptor, CryptoStreamMode.Write))
 		{
 			byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
 			cryptoStream.Write(plainBytes, 0, plainBytes.Length);
+			cryptoStream.FlushFinalBlock();
 		}
 
 		return Convert.ToBase64String(memoryStream.ToArray());
@@ -33,9 +33,14 @@ public static class TwoFactorAuthenticationHelpers
 	{
 		using Aes aes = Aes.Create();
 		aes.Key = GetEncryptionKey(secret);
-		aes.IV = new byte[16];
 
-		using MemoryStream memoryStream = new(Convert.FromBase64String(cipherText));
+		var bytes = Convert.FromBase64String(cipherText);
+		using MemoryStream memoryStream = new(bytes);
+
+		byte[] iv = new byte[16];
+		memoryStream.Read(iv, 0, iv.Length);
+		aes.IV = iv;
+
 		using ICryptoTransform decryptor = aes.CreateDecryptor();
 		using CryptoStream cryptoStream = new(memoryStream, decryptor, CryptoStreamMode.Read);
 		using StreamReader streamReader = new(cryptoStream);
