@@ -37,6 +37,7 @@ public class NullApplicationSettings : IApplicationSettings
 	public bool Oobe { get; set; }
 	public bool ShowCoordinatorAnnouncement { get; set; }
 	public WindowState WindowState { get; set; }
+	public bool ForceRestartNeeded { get; set; }
 	public bool DoUpdateOnClose { get; set; }
 	public BrowserTypeDropdownListEnum SelectedBrowser { get; set; }
 	public string BrowserPath { get; set; } = "";
@@ -44,6 +45,11 @@ public class NullApplicationSettings : IApplicationSettings
 	public bool CheckIfRestartIsNeeded(PersistentConfig config)
 	{
 		return false;
+	}
+
+	public TorMode GetTorStartupMode()
+	{
+		throw new NotImplementedException();
 	}
 
 	public Task<TwoFactorSetupResponse> GenerateTwoFactor()

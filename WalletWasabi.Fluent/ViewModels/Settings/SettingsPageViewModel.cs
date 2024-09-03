@@ -38,7 +38,7 @@ public partial class SettingsPageViewModel : DialogViewModelBase<Unit>
 
 		SetupCancel(enableCancel: false, enableCancelOnEscape: true, enableCancelOnPressed: true);
 
-		GeneralSettingsTab = new GeneralSettingsTabViewModel(UiContext.ApplicationSettings);
+		GeneralSettingsTab = new GeneralSettingsTabViewModel(UiContext, UiContext.ApplicationSettings);
 		BitcoinTabSettings = new BitcoinTabSettingsViewModel(UiContext.ApplicationSettings);
 		AdvancedSettingsTab = new AdvancedSettingsTabViewModel(UiContext.ApplicationSettings);
 		SecuritySettingsTab = new SecuritySettingsTabViewModel(UiContext, UiContext.ApplicationSettings);

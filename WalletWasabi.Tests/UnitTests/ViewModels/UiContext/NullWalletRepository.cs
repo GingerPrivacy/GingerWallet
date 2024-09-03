@@ -27,6 +27,11 @@ public class NullWalletRepository : IWalletRepository
 		throw new NotImplementedException();
 	}
 
+	public void LoadWalletListFromFileSystem()
+	{
+		throw new NotImplementedException();
+	}
+
 	public IWalletModel GetExistingWallet(HwiEnumerateEntry device)
 	{
 		throw new NotSupportedException();

@@ -251,6 +251,11 @@ public partial class ApplicationSettings : ReactiveObject
 		return !_startupConfig.DeepEquals(config);
 	}
 
+	public TorMode GetTorStartupMode()
+	{
+		return Config.ObjectToTorMode(_startupConfig.UseTor);
+	}
+
 	private void Save()
 	{
 		RxApp.MainThreadScheduler.Schedule(

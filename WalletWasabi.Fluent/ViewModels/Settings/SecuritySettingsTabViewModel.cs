@@ -29,12 +29,17 @@ namespace WalletWasabi.Fluent.ViewModels.Settings;
 public partial class SecuritySettingsTabViewModel : RoutableViewModel
 {
 	[AutoNotify] private bool _twoFactorEnabled;
+	[AutoNotify] private bool _isTorEnabled;
 
 	public SecuritySettingsTabViewModel(UiContext uiContext, IApplicationSettings settings)
 	{
+		UiContext = uiContext;
+
 		Settings = settings;
 
 		TwoFactorEnabled = uiContext.TwoFactorAuthenticationModel.TwoFactorEnabled;
+
+		IsTorEnabled = settings.GetTorStartupMode() != TorMode.Disabled;
 
 		GenerateTwoFactorCommand = ReactiveCommand.CreateFromTask(async () =>
 		{
@@ -50,6 +55,12 @@ public partial class SecuritySettingsTabViewModel : RoutableViewModel
 				TwoFactorEnabled = false;
 			}
 		});
+
+		this.WhenAnyValue(x => x.Settings.UseTor)
+			.Subscribe(async x =>
+			{
+				IsTorEnabled = (x != TorMode.Disabled) && (Settings.GetTorStartupMode() != TorMode.Disabled);
+			});
 	}
 
 	public bool IsReadOnly => Settings.IsOverridden;

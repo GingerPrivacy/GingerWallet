@@ -8,6 +8,8 @@ namespace WalletWasabi.Fluent.Models.Wallets;
 [AutoInterface]
 public partial class TwoFactorAuthenticationModel : ReactiveObject
 {
+	[AutoNotify] private bool _twoFactorEnabled;
+
 	public TwoFactorAuthenticationModel()
 	{
 		TwoFactorEnabled = TwoFactorAuthenticationService.TwoFactorEnabled;
@@ -36,7 +38,4 @@ public partial class TwoFactorAuthenticationModel : ReactiveObject
 		Service.RemoveTwoFactorAuthentication(Services.WalletManager);
 		this.RaisePropertyChanged(nameof(TwoFactorEnabled));
 	}
-
-	[AutoNotify]
-	private bool _twoFactorEnabled;
 }
