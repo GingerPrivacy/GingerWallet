@@ -2,6 +2,7 @@ using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ReactiveUI;
+using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
 using WalletWasabi.Logging;
@@ -35,6 +36,12 @@ public partial class TwoFactoryAuthenticationDialogViewModel : DialogViewModelBa
 			}
 		}, this.WhenAnyValue(x => x.TwoFactorToken).Select(x => !string.IsNullOrEmpty(x) && x.Length == 8));
 		CancelCommand = ReactiveCommand.Create(() => Close(DialogResultKind.Cancel));
+
+		this.WhenAnyValue(x => x.TwoFactorToken)
+			.Where(x => !string.IsNullOrEmpty(x) && x.Length == 8)
+			.Take(1)
+			.Do(_ => NextCommand.ExecuteIfCan())
+			.Subscribe();
 
 		SetupCancel(enableCancel: false, enableCancelOnEscape: true, enableCancelOnPressed: true);
 	}

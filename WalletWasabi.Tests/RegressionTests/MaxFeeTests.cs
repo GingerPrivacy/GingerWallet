@@ -79,9 +79,10 @@ public class MaxFeeTests : IClassFixture<RegTestFixture>
 			bitcoinStore.BlockRepository,
 			[specificNodeBlockProvider],
 			new P2PBlockProvider(network, nodes, httpClientFactory.IsTorEnabled));
-
+		WalletDirectories walletDirectories = new(network, workDir);
+		TwoFactorAuthenticationService twoFactorAuthenticationService = new TwoFactorAuthenticationService(walletDirectories, httpClientFactory.SharedWasabiClient);
 		WalletFactory walletFactory = new(workDir, network, bitcoinStore, synchronizer, serviceConfiguration, feeProvider, blockDownloadService, unconfirmedChainProvider);
-		WalletManager walletManager = new(network, workDir, new WalletDirectories(network, workDir), walletFactory);
+		WalletManager walletManager = new(network, workDir, new WalletDirectories(network, workDir), walletFactory, twoFactorAuthenticationService);
 		walletManager.Initialize();
 
 		// Get some money, make it confirm.
