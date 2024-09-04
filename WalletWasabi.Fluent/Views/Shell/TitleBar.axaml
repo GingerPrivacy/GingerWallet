@@ -24,7 +24,6 @@
       <Setter Property="Opacity" Value="0" />
       <Setter Property="RenderTransform" Value="translateX(-20px)" />
     </Style>
-
   </UserControl.Styles>
 
   <UserControl.Resources>
@@ -39,6 +38,32 @@
       <searchBar:SearchBar DataContext="{Binding #UserControl.DataContext.SearchBar}" VerticalAlignment="Stretch"
                            HorizontalAlignment="Stretch"
                            Margin="5" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="TwoFactorBadge">
+      <Panel IsVisible="{Binding !#UserControl.DataContext.SettingsPage.SecuritySettingsTab.TwoFactorEnabled}">
+        <Interaction.Behaviors>
+          <ShowFlyoutOnPointerOverBehavior />
+        </Interaction.Behaviors>
+        <FlyoutBase.AttachedFlyout>
+          <Flyout Placement="Bottom" ShowMode="TransientWithDismissOnPointerMoveAway">
+
+            <DockPanel Margin="10" MaxWidth="250">
+              <Viewbox DockPanel.Dock="Top" Height="40" HorizontalAlignment="Center">
+                <PathIcon Data="{StaticResource warning_regular}" />
+              </Viewbox>
+              <TextBlock Margin="0 10 0 20" DockPanel.Dock="Top" Classes="h8" TextWrapping="Wrap" TextAlignment="Center" Text="Two-Factor authentication is disabled. Enable it in the Setting for greater protection." />
+              <Button DockPanel.Dock="Bottom" Focusable="False" Content="Open Settings"
+                      Classes="h8 plain activeHyperLink" Cursor="Hand"
+                      HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                      Command="{Binding #UserControl.DataContext.SettingsPage.OpenSecurityTabCommand}">
+              </Button>
+            </DockPanel>
+          </Flyout>
+        </FlyoutBase.AttachedFlyout>
+
+        <PathIcon Height="20" VerticalAlignment="Center" Data="{StaticResource shield_lock}" Foreground="{DynamicResource WarningMessageForeground}" />
+      </Panel>
     </DataTemplate>
 
     <DataTemplate x:Key="WindowsLayout">
@@ -57,8 +82,10 @@
 
         <ContentControl Grid.Column="3" ContentTemplate="{StaticResource SearchBar}" />
 
-        <shell:NetworkBadge VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 8 0" Grid.Column="4" />
-
+        <StackPanel Spacing="20" Orientation="Horizontal" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 8 0">
+          <shell:NetworkBadge />
+          <ContentControl ContentTemplate="{StaticResource TwoFactorBadge}" />
+        </StackPanel>
       </Grid>
     </DataTemplate>
 
@@ -76,8 +103,10 @@
 
         <ContentControl Grid.Column="2" ContentTemplate="{StaticResource SearchBar}" />
 
-        <shell:NetworkBadge VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 8 0" Grid.Column="3" />
-
+        <StackPanel Spacing="20" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 8 0" Grid.Column="3">
+          <shell:NetworkBadge />
+          <ContentControl ContentTemplate="{StaticResource TwoFactorBadge}" />
+        </StackPanel>
       </Grid>
     </DataTemplate>
 
@@ -93,7 +122,11 @@
 
         <ContentControl Grid.Column="1" HorizontalAlignment="Left" ContentTemplate="{StaticResource WasabiLogo}" />
         <ContentControl Grid.Column="2" ContentTemplate="{StaticResource SearchBar}" />
-        <shell:NetworkBadge Margin="10,0,10,0" Grid.Column="3" />
+
+        <StackPanel Spacing="20" Orientation="Horizontal" Margin="10,0,10,0" Grid.Column="3">
+          <shell:NetworkBadge />
+          <ContentControl ContentTemplate="{StaticResource TwoFactorBadge}" />
+        </StackPanel>
       </Grid>
     </DataTemplate>
   </UserControl.Resources>

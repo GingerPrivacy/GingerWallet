@@ -59,9 +59,17 @@ public partial class SettingsPageViewModel : DialogViewModelBase<Unit>
 				 .Where(x => x && !IsActive)
 				 .Do(_ => NotificationHelpers.Show(new RestartViewModel("To apply the new setting, Ginger Wallet needs to be restarted")))
 				 .Subscribe();
+
+		OpenSecurityTabCommand = ReactiveCommand.CreateFromTask(async () =>
+		{
+			SelectedTab = 3;
+			await Activate();
+		});
 	}
 
 	public bool IsReadOnly => UiContext.ApplicationSettings.IsOverridden;
+
+	public ICommand OpenSecurityTabCommand { get; }
 
 	public ICommand RestartCommand { get; }
 
