@@ -32,7 +32,8 @@ public class UiContext
 		IEditableSearchSource editableSearchSource,
 		ITorStatusCheckerModel torStatusChecker,
 		ILegalDocumentsProvider legalDocumentsProvider,
-		IHealthMonitor healthMonitor)
+		IHealthMonitor healthMonitor,
+		ITwoFactorAuthentication twoFactorAuthentication)
 	{
 		QrCodeGenerator = qrCodeGenerator ?? throw new ArgumentNullException(nameof(qrCodeGenerator));
 		QrCodeReader = qrCodeReader ?? throw new ArgumentNullException(nameof(qrCodeReader));
@@ -49,6 +50,7 @@ public class UiContext
 		TorStatusChecker = torStatusChecker ?? throw new ArgumentNullException(nameof(torStatusChecker));
 		LegalDocumentsProvider = legalDocumentsProvider ?? throw new ArgumentNullException(nameof(legalDocumentsProvider));
 		HealthMonitor = healthMonitor ?? throw new ArgumentNullException(nameof(healthMonitor));
+		TwoFactorAuthentication = twoFactorAuthentication ?? throw new ArgumentNullException(nameof(twoFactorAuthentication));
 	}
 
 	public IUiClipboard Clipboard { get; }
@@ -66,6 +68,7 @@ public class UiContext
 	public ITorStatusCheckerModel TorStatusChecker { get; }
 	public ILegalDocumentsProvider LegalDocumentsProvider { get; }
 	public IHealthMonitor HealthMonitor { get; }
+	public ITwoFactorAuthentication TwoFactorAuthentication { get; }
 	public MainViewModel? MainViewModel { get; private set; }
 
 	public void RegisterNavigation(INavigate navigate)

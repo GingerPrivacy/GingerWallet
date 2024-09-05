@@ -88,6 +88,11 @@ public partial class WalletRepository : ReactiveObject
 		return Services.WalletManager.ValidateWalletName(walletName);
 	}
 
+	public void LoadWalletListFromFileSystem()
+	{
+		Services.WalletManager.LoadWalletListFromFileSystem();
+	}
+
 	public IWalletModel? GetExistingWallet(HwiEnumerateEntry device)
 	{
 		var existingWallet = Services.WalletManager.GetWallets().FirstOrDefault(x => x.KeyManager.MasterFingerprint == device.Fingerprint);

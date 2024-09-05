@@ -11,6 +11,7 @@ using WalletWasabi.Exceptions;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Infrastructure;
+using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Helpers;
 using WalletWasabi.Logging;
 using WalletWasabi.Models;
@@ -30,6 +31,7 @@ public partial class ApplicationSettings : ReactiveObject
 	private readonly PersistentConfig _startupConfig;
 	private readonly Config _config;
 	private readonly UiConfig _uiConfig;
+	private readonly ITwoFactorAuthentication _twoFactorAuthentication;
 
 	// Advanced
 	[AutoNotify] private bool _enableGpu;
@@ -68,13 +70,14 @@ public partial class ApplicationSettings : ReactiveObject
 	// Non-persistent
 	[AutoNotify] private bool _doUpdateOnClose;
 
-	public ApplicationSettings(string persistentConfigFilePath, PersistentConfig persistentConfig, Config config, UiConfig uiConfig)
+	public ApplicationSettings(string persistentConfigFilePath, PersistentConfig persistentConfig, Config config, UiConfig uiConfig, ITwoFactorAuthentication twoFactorAuthentication)
 	{
 		_persistentConfigFilePath = persistentConfigFilePath;
 		_startupConfig = persistentConfig;
 
 		_config = config;
 		_uiConfig = uiConfig;
+		_twoFactorAuthentication = twoFactorAuthentication;
 
 		// Advanced
 		_enableGpu = _startupConfig.EnableGpu;
@@ -148,6 +151,10 @@ public partial class ApplicationSettings : ReactiveObject
 			.Throttle(TimeSpan.FromMilliseconds(ThrottleTime))
 			.Do(_ => ApplyUiConfigChanges())
 			.Subscribe();
+
+		// Saving is not necessary; this call is only for evaluating if a restart is needed.
+		this.WhenAnyValue(x => x._twoFactorAuthentication.TwoFactorEnabled)
+			.Subscribe(_ => Save());
 
 		// Save UiConfig on change without throttling
 		this.WhenAnyValue(
@@ -234,7 +241,12 @@ public partial class ApplicationSettings : ReactiveObject
 
 	public bool CheckIfRestartIsNeeded(PersistentConfig config)
 	{
-		return !_startupConfig.DeepEquals(config);
+		return !_startupConfig.DeepEquals(config) || _twoFactorAuthentication.StartupValue != _twoFactorAuthentication.TwoFactorEnabled;
+	}
+
+	public TorMode GetTorStartupMode()
+	{
+		return Config.ObjectToTorMode(_startupConfig.UseTor);
 	}
 
 	private void Save()
@@ -330,7 +342,7 @@ public partial class ApplicationSettings : ReactiveObject
 		{
 			UseTor = UseTor.ToString(),
 			TerminateTorOnExit = TerminateTorOnExit,
-			DownloadNewVersion = DownloadNewVersion,
+			DownloadNewVersion = DownloadNewVersion
 		};
 
 		return result;

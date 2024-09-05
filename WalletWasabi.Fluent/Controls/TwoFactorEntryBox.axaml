@@ -1,0 +1,49 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:WalletWasabi.Fluent.Converters"
+                    xmlns:twoFactor="clr-namespace:WalletWasabi.Fluent.ViewModels.TwoFactor">
+
+  <ControlTheme x:Key="{x:Type TwoFactorEntryBox}" TargetType="TwoFactorEntryBox">
+
+    <Setter Property="Template">
+      <ControlTemplate>
+        <ItemsControl Name="PART_NumberControls" ItemsSource="{TemplateBinding Items}">
+         <ItemsControl.ItemsPanel>
+           <ItemsPanelTemplate>
+             <StackPanel Orientation="Horizontal" Spacing="8"/>
+           </ItemsPanelTemplate>
+         </ItemsControl.ItemsPanel>
+         <ItemsControl.ItemTemplate>
+           <DataTemplate>
+             <TextBox FontSize="35"
+                      MinWidth="45" MaxWidth="45" Width="45"
+                      TextAlignment="Center"
+                      MaxLength="1"
+                      x:DataType="twoFactor:TwoFactorNumberViewModel" Text="{Binding Number}">
+               <TextBox.Styles>
+                 <Style Selector="TextBox /template/ Border#PART_BorderElement">
+                   <Setter Property="CornerRadius" Value="10" />
+                 </Style>
+               </TextBox.Styles>
+               <TextBox.Resources>
+                 <Thickness x:Key="TextControlBorderThemeThickness">1</Thickness>
+                 <Thickness x:Key="TextControlBorderThemeThicknessFocused">2</Thickness>
+                 <Thickness x:Key="TextControlThemePadding">10,15</Thickness>
+               </TextBox.Resources>
+               <Interaction.Behaviors>
+                 <TwoFactorTextBoxBehavior />
+               </Interaction.Behaviors>
+             </TextBox>
+           </DataTemplate>
+         </ItemsControl.ItemTemplate>
+       </ItemsControl>
+      </ControlTemplate>
+    </Setter>
+
+    <Style Selector="^/template/ DataValidationErrors">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+
+  </ControlTheme>
+
+</ResourceDictionary>

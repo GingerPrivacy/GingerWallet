@@ -45,8 +45,6 @@ public partial class MainViewModel : ViewModelBase
 		MainScreen = new TargettedNavigationStack(NavigationTarget.HomeScreen);
 		UiContext.RegisterNavigation(new NavigationState(UiContext, MainScreen, DialogScreen, FullScreen, CompactDialogScreen, NavBar));
 
-		NavBar.Activate();
-
 		StatusIcon = new StatusIconViewModel(UiContext);
 
 		SettingsPage = new SettingsPageViewModel(UiContext);
@@ -81,6 +79,13 @@ public partial class MainViewModel : ViewModelBase
 
 		RxApp.MainThreadScheduler.Schedule(async () =>
 		{
+			if (UiContext.TwoFactorAuthentication.TwoFactorEnabled)
+			{
+				IsOobeBackgroundVisible = true;
+				await UiContext.Navigate().To().VerifyTwoFactoryAuthenticationDialog().GetResultAsync();
+				IsOobeBackgroundVisible = false;
+			}
+			NavBar.Activate();
 			if (!UiContext.WalletRepository.HasWallet || UiContext.ApplicationSettings.Oobe)
 			{
 				IsOobeBackgroundVisible = true;

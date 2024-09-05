@@ -44,9 +44,10 @@
     </DockPanel>
     -->
 
-    <StackPanel>
+    <StackPanel IsEnabled="{Binding ModifyTorEnabled}">
       <TextBlock Text="Network anonymization (Tor)" />
-      <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding TorModes}" SelectedItem="{Binding Settings.UseTor}">
+      <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding TorModes}" SelectedItem="{Binding Settings.UseTor}"
+                ToolTip.Tip="Cannot be modified when Two-Factor authentication is enabled.">
         <ComboBox.ItemTemplate>
           <DataTemplate x:DataType="basemodels:TorMode">
             <TextBlock Text="{Binding Converter={x:Static conv:EnumConverters.ToFriendlyName}}" />

@@ -228,6 +228,8 @@ public class KeyManager
 	// keys (stored in the `HdPubKeyCache`), minGapLimit, secrets, height, network.
 	private object CriticalStateLock { get; } = new();
 
+	public string? EncryptionKey { get; set; }
+
 	#endregion Properties
 
 	private HdPubKeyGenerator SegwitExternalKeyGenerator { get; set; }
@@ -291,7 +293,7 @@ public class KeyManager
 		return km;
 	}
 
-	public static KeyManager FromFile(string filePath)
+	public static KeyManager FromFile(string filePath, string? secret = null)
 	{
 		filePath = Guard.NotNullOrEmptyOrWhitespace(nameof(filePath), filePath);
 
@@ -303,10 +305,17 @@ public class KeyManager
 		SafeIoManager safeIoManager = new(filePath);
 		string jsonString = safeIoManager.ReadAllText(Encoding.UTF8);
 
+		if (!string.IsNullOrWhiteSpace(secret))
+		{
+			// For the first time after 2FA was enabled the file won't be encrypted, so this will throw.
+			jsonString = TwoFactorAuthenticationHelpers.DecryptString(jsonString, secret);
+		}
+
 		KeyManager km = JsonConvert.DeserializeObject<KeyManager>(jsonString, JsonConverters)
 			?? throw new JsonSerializationException($"Wallet file at: `{filePath}` is not a valid wallet file or it is corrupted.");
 
 		km.SetFilePath(filePath);
+		km.EncryptionKey = secret;
 
 		return km;
 	}
@@ -625,6 +634,12 @@ public class KeyManager
 		IoHelpers.EnsureContainingDirectoryExists(filePath);
 
 		SafeIoManager safeIoManager = new(filePath);
+
+		if (!string.IsNullOrWhiteSpace(EncryptionKey))
+		{
+			jsonString = TwoFactorAuthenticationHelpers.EncryptString(jsonString, EncryptionKey);
+		}
+
 		safeIoManager.WriteAllText(jsonString, Encoding.UTF8);
 	}
 

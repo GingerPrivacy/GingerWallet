@@ -3,6 +3,7 @@ using Nito.AsyncEx;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using WalletWasabi.Blockchain.Keys;
@@ -12,6 +13,7 @@ using WalletWasabi.Extensions;
 using WalletWasabi.Helpers;
 using WalletWasabi.Logging;
 using WalletWasabi.Models;
+using WalletWasabi.Services;
 using WalletWasabi.WabiSabi.Client;
 
 namespace WalletWasabi.Wallets;
@@ -25,16 +27,21 @@ public class WalletManager : IWalletProvider
 		Network network,
 		string workDir,
 		WalletDirectories walletDirectories,
-		WalletFactory walletFactory)
+		WalletFactory walletFactory,
+		TwoFactorAuthenticationService twoFactorAuthenticationService)
 	{
 		Network = network;
 		WorkDir = Guard.NotNullOrEmptyOrWhitespace(nameof(workDir), workDir, true);
 		Directory.CreateDirectory(WorkDir);
 		WalletDirectories = walletDirectories;
 		WalletFactory = walletFactory;
+		TwoFactorAuthenticationService = twoFactorAuthenticationService;
 		CancelAllTasksToken = CancelAllTasks.Token;
 
-		LoadWalletListFromFileSystem();
+		if (!twoFactorAuthenticationService.IsTwoFactorAuthEnabled)
+		{
+			LoadWalletListFromFileSystem();
+		}
 	}
 
 	/// <summary>
@@ -63,11 +70,12 @@ public class WalletManager : IWalletProvider
 	private bool IsInitialized { get; set; }
 
 	private WalletFactory WalletFactory { get; }
+	public TwoFactorAuthenticationService TwoFactorAuthenticationService { get; }
 	public Network Network { get; }
 	public WalletDirectories WalletDirectories { get; }
 	private string WorkDir { get; }
 
-	private void LoadWalletListFromFileSystem()
+	public void LoadWalletListFromFileSystem()
 	{
 		var walletFileNames = WalletDirectories.EnumerateWalletFiles().Select(fi => Path.GetFileNameWithoutExtension(fi.FullName));
 
@@ -82,7 +90,7 @@ public class WalletManager : IWalletProvider
 			return;
 		}
 
-		List<Task<Wallet>> walletLoadTasks = walletNamesToLoad.Select(walletName => Task.Run(() => LoadWalletByNameFromDisk(walletName), CancelAllTasksToken)).ToList();
+		List<Task<Wallet>> walletLoadTasks = walletNamesToLoad.Select(walletName => Task.Run(() => LoadWalletByNameFromDisk(walletName, TwoFactorAuthenticationService.SecretWallet), CancelAllTasksToken)).ToList();
 
 		while (walletLoadTasks.Count > 0)
 		{
@@ -241,13 +249,13 @@ public class WalletManager : IWalletProvider
 		return wallet;
 	}
 
-	private Wallet LoadWalletByNameFromDisk(string walletName)
+	private Wallet LoadWalletByNameFromDisk(string walletName, string? secret)
 	{
 		(string walletFullPath, string walletBackupFullPath) = WalletDirectories.GetWalletFilePaths(walletName);
 		Wallet wallet;
 		try
 		{
-			wallet = WalletFactory.Create(KeyManager.FromFile(walletFullPath));
+			wallet = WalletFactory.Create(KeyManager.FromFile(walletFullPath, secret));
 		}
 		catch (Exception ex)
 		{
@@ -274,7 +282,7 @@ public class WalletManager : IWalletProvider
 			}
 			File.Copy(walletBackupFullPath, walletFullPath);
 
-			wallet = WalletFactory.Create(KeyManager.FromFile(walletFullPath));
+			wallet = WalletFactory.Create(KeyManager.FromFile(walletFullPath, secret));
 		}
 
 		return wallet;

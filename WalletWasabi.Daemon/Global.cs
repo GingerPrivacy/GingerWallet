@@ -133,7 +133,10 @@ public class Global
 
 		HostedServices.Register<UnconfirmedTransactionChainProvider>(() => new UnconfirmedTransactionChainProvider(HttpClientFactory), friendlyName: "Unconfirmed Transaction Chain Provider");
 		WalletFactory walletFactory = new(DataDir, config.Network, BitcoinStore, wasabiSynchronizer, config.ServiceConfiguration, HostedServices.Get<HybridFeeProvider>(), BlockDownloadService, HostedServices.Get<UnconfirmedTransactionChainProvider>());
-		WalletManager = new WalletManager(config.Network, DataDir, new WalletDirectories(Config.Network, DataDir), walletFactory);
+
+		WalletDirectories walletDirectories = new(Config.Network, DataDir);
+		TwoFactorAuthenticationService = new TwoFactorAuthenticationService(walletDirectories, HttpClientFactory.SharedWasabiClient);
+		WalletManager = new WalletManager(config.Network, DataDir, walletDirectories, walletFactory, TwoFactorAuthenticationService);
 		TransactionBroadcaster = new TransactionBroadcaster(Network, BitcoinStore, HttpClientFactory, WalletManager);
 
 		CoinPrison = CoinPrison.CreateOrLoadFromFile(DataDir);
@@ -184,6 +187,8 @@ public class Global
 	private PersonCircuit RoundStateUpdaterCircuit { get; }
 	private AllTransactionStore AllTransactionStore { get; }
 	private IndexStore IndexStore { get; }
+
+	public TwoFactorAuthenticationService TwoFactorAuthenticationService { get; }
 
 	private WasabiHttpClientFactory BuildHttpClientFactory(Func<Uri> backendUriGetter) =>
 		new(

@@ -53,7 +53,8 @@ public class UiContextBuilder
 			new EditableSearchSourceSource(),
 			Mock.Of<ITorStatusCheckerModel>(),
 			Mock.Of<ILegalDocumentsProvider>(),
-			Mock.Of<IHealthMonitor>());
+			Mock.Of<IHealthMonitor>(),
+			Mock.Of<ITwoFactorAuthentication>());
 
 		uiContext.RegisterNavigation(Navigate);
 		return uiContext;

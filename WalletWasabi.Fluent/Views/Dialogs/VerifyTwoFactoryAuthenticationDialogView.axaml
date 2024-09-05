@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:dialog="using:WalletWasabi.Fluent.ViewModels.Dialogs"
+             mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371"
+             x:DataType="dialog:VerifyTwoFactoryAuthenticationDialogViewModel"
+             x:CompileBindings="True"
+             x:Class="WalletWasabi.Fluent.Views.Dialogs.VerifyTwoFactoryAuthenticationDialogView">
+  <ContentArea Title="{Binding Title}"
+               IsBusy="{Binding IsBusy}"
+               ScrollViewer.VerticalScrollBarVisibility="Disabled"
+               EnableNext="True"
+               NextContent="Verify">
+    <DockPanel>
+      <TwoFactorEntryBox HorizontalAlignment="Center" DockPanel.Dock="Bottom"
+                         Text="{Binding TwoFactorToken, Mode=OneWayToSource}" />
+      <Label HorizontalAlignment="Center" DockPanel.Dock="Bottom">Verification code:</Label>
+      <Viewbox MaxHeight="150" Margin="40">
+        <PathIcon Data="{StaticResource shield_lock}" Opacity="0.6" />
+      </Viewbox>
+    </DockPanel>
+  </ContentArea>
+</UserControl>

@@ -26,9 +26,11 @@ namespace WalletWasabi.Fluent.ViewModels.Settings;
 public partial class GeneralSettingsTabViewModel : RoutableViewModel
 {
 	[AutoNotify] private bool _runOnSystemStartup;
+	[AutoNotify] private bool _modifyTorEnabled;
 
-	public GeneralSettingsTabViewModel(IApplicationSettings settings)
+	public GeneralSettingsTabViewModel(UiContext uiContext, IApplicationSettings settings)
 	{
+		UiContext = uiContext;
 		Settings = settings;
 		_runOnSystemStartup = settings.RunOnSystemStartup;
 
@@ -58,6 +60,9 @@ public partial class GeneralSettingsTabViewModel : RoutableViewModel
 				browserList.Add(result);
 			}
 		}
+
+		this.WhenAnyValue(x => x.UiContext.TwoFactorAuthentication.TwoFactorEnabled)
+			.Subscribe(x => ModifyTorEnabled = !x);
 
 		browserList.Add(BrowserTypeDropdownListEnum.Custom);
 		BrowserList = browserList;

@@ -162,8 +162,9 @@ public class BackendTests : IClassFixture<RegTestFixture>
 			new P2PBlockProvider(network, nodes, httpClientFactory.IsTorEnabled));
 
 		using UnconfirmedTransactionChainProvider unconfirmedChainProvider = new(httpClientFactory);
-
-		WalletManager walletManager = new(network, workDir, new WalletDirectories(network, workDir), new WalletFactory(workDir, network, bitcoinStore, synchronizer, serviceConfiguration, feeProvider, blockDownloadService, unconfirmedChainProvider));
+		WalletDirectories walletDirectories = new(network, workDir);
+		TwoFactorAuthenticationService twoFactorAuthenticationService = new TwoFactorAuthenticationService(walletDirectories, httpClientFactory.SharedWasabiClient);
+		WalletManager walletManager = new(network, workDir, new WalletDirectories(network, workDir), new WalletFactory(workDir, network, bitcoinStore, synchronizer, serviceConfiguration, feeProvider, blockDownloadService, unconfirmedChainProvider), twoFactorAuthenticationService);
 		walletManager.Initialize();
 
 		nodes.Connect(); // Start connection service.

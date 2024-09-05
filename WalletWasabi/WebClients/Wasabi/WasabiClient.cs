@@ -1,12 +1,15 @@
 using NBitcoin;
 using NBitcoin.RPC;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using WalletWasabi.Backend.Models;
 using WalletWasabi.Backend.Models.Responses;
 using WalletWasabi.Blockchain.Transactions;
 using WalletWasabi.Extensions;
@@ -238,4 +241,86 @@ public class WasabiClient
 	}
 
 	#endregion wasabi
+
+	#region two factor authentication
+
+	public async Task<TwoFactorSetupResponse> SetupTwoFactorAuthenticationAsync(CancellationToken cancel = default)
+	{
+		try
+		{
+			using HttpResponseMessage response = await HttpClient.SendAsync(
+				HttpMethod.Get,
+				$"api/v{ApiVersion}/2fa/setup",
+				cancellationToken: cancel).ConfigureAwait(false);
+
+			if (response.StatusCode != HttpStatusCode.OK)
+			{
+				await response.ThrowRequestExceptionFromContentAsync(cancel).ConfigureAwait(false);
+			}
+
+			using HttpContent content = response.Content;
+			string responseBody = await content.ReadAsStringAsync(cancel).ConfigureAwait(false);
+			var result = JsonConvert.DeserializeObject<TwoFactorSetupResponse>(responseBody);
+			return result is null
+				? throw new InvalidOperationException($"Cannot deserialize the response: '{responseBody}'.") : result;
+		}
+		catch (HttpRequestException e)
+		{
+			throw new InvalidOperationException($"HTTP request error: {e.Message}", e);
+		}
+		catch (TaskCanceledException)
+		{
+			throw new OperationCanceledException("The request was cancelled.");
+		}
+		catch (JsonException e)
+		{
+			throw new InvalidOperationException($"JSON deserialization error: {e.Message}", e);
+		}
+	}
+
+	public async Task<TwoFactorVerifyResponse?> VerifyTwoFactorAuthenticationAsync(VerifyTwoFactorModel verifyTwoFactorModel, CancellationToken cancel = default)
+	{
+		try
+		{
+			using var requestContent = new StringContent(
+				JsonConvert.SerializeObject(verifyTwoFactorModel),
+				Encoding.UTF8,
+				"application/json");
+
+			using HttpResponseMessage response = await HttpClient.SendAsync(HttpMethod.Post, $"api/v{ApiVersion}/2fa/verify", requestContent, cancel).ConfigureAwait(false);
+
+			if (response.StatusCode != HttpStatusCode.OK)
+			{
+				await response.ThrowRequestExceptionFromContentAsync(cancel).ConfigureAwait(false);
+			}
+
+			using HttpContent content = response.Content;
+			string responseBody = await content.ReadAsStringAsync(cancel).ConfigureAwait(false);
+			var result = JsonConvert.DeserializeObject<TwoFactorVerifyResponse>(responseBody);
+			return result is null
+				? throw new InvalidOperationException($"Cannot deserialize the response: '{responseBody}'.") : result;
+		}
+		catch (HttpRequestException e)
+		{
+			throw new InvalidOperationException($"HTTP request error: {e.Message}", e);
+		}
+		catch (TaskCanceledException)
+		{
+			throw new OperationCanceledException("The request was cancelled.");
+		}
+		catch (JsonException e)
+		{
+			throw new InvalidOperationException($"JSON deserialization error: {e.Message}", e);
+		}
+		catch (SecurityException)
+		{
+			throw;
+		}
+		catch (Exception e)
+		{
+			throw new InvalidOperationException($"Error during 2FA verification: {e.Message}", e);
+		}
+	}
+
+	#endregion two factor authentication
 }

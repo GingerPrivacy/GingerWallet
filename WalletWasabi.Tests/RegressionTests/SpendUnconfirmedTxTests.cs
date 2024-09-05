@@ -80,7 +80,9 @@ public class SpendUnconfirmedTxTests : IClassFixture<RegTestFixture>
 			new P2PBlockProvider(network, nodes, httpClientFactory.IsTorEnabled));
 
 		WalletFactory walletFactory = new(workDir, network, bitcoinStore, synchronizer, serviceConfiguration, feeProvider, blockDownloadService, unconfirmedChainProvider);
-		WalletManager walletManager = new(network, workDir, new WalletDirectories(network, workDir), walletFactory);
+		WalletDirectories walletDirectories = new(network, workDir);
+		TwoFactorAuthenticationService twoFactorAuthenticationService = new TwoFactorAuthenticationService(walletDirectories, httpClientFactory.SharedWasabiClient);
+		WalletManager walletManager = new(network, workDir, new WalletDirectories(network, workDir), walletFactory, twoFactorAuthenticationService);
 		walletManager.Initialize();
 
 		// Get some money, make it confirm.

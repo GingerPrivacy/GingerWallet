@@ -47,6 +47,8 @@ public static class Services
 
 	public static UpdateManager UpdateManager { get; private set; } = null!;
 
+	public static TwoFactorAuthenticationService TwoFactorAuthenticationService { get; private set; } = null!;
+
 	public static bool IsInitialized { get; private set; }
 
 	/// <summary>
@@ -67,6 +69,7 @@ public static class Services
 		Guard.NotNull(nameof(global.UpdateManager), global.UpdateManager);
 		Guard.NotNull(nameof(uiConfig), uiConfig);
 		Guard.NotNull(nameof(terminateService), terminateService);
+		Guard.NotNull(nameof(global.TwoFactorAuthenticationService), global.TwoFactorAuthenticationService);
 
 		DataDir = global.DataDir;
 		TorSettings = global.TorSettings;
@@ -84,7 +87,7 @@ public static class Services
 		UpdateManager = global.UpdateManager;
 		Config = global.Config;
 		TerminateService = terminateService;
-
+		TwoFactorAuthenticationService = global.TwoFactorAuthenticationService;
 		IsInitialized = true;
 	}
 }
