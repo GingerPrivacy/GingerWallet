@@ -23,44 +23,36 @@ namespace WalletWasabi.Fluent.ViewModels.Settings;
 	Category = "Settings",
 	Keywords = new[]
 	{
-			"Security", "Settings", "2FA"
+			"Security", "Settings", "2FA", "Two-Factor", "Authentication", "Two", "Factor"
 	},
 	IconName = "settings_general_regular")]
 public partial class SecuritySettingsTabViewModel : RoutableViewModel
 {
 	[AutoNotify] private bool _twoFactorEnabled;
-	[AutoNotify] private bool _isTorEnabled;
+	[AutoNotify] private bool _modifyTwoFactorEnabled;
 
 	public SecuritySettingsTabViewModel(UiContext uiContext, IApplicationSettings settings)
 	{
 		UiContext = uiContext;
-
 		Settings = settings;
-
-		TwoFactorEnabled = uiContext.TwoFactorAuthenticationModel.TwoFactorEnabled;
-
-		IsTorEnabled = settings.GetTorStartupMode() != TorMode.Disabled;
+		TwoFactorEnabled = uiContext.TwoFactorAuthentication.TwoFactorEnabled;
 
 		GenerateTwoFactorCommand = ReactiveCommand.CreateFromTask(async () =>
 		{
 			if (TwoFactorEnabled)
 			{
 				var result = await UiContext.Navigate().To().TwoFactoryAuthenticationDialog().GetResultAsync();
-				UiContext.ApplicationSettings.ForceRestartNeeded = result;
 				TwoFactorEnabled = result;
 			}
 			else
 			{
-				UiContext.TwoFactorAuthenticationModel.RemoveTwoFactorAuthentication();
+				UiContext.TwoFactorAuthentication.RemoveTwoFactorAuthentication();
 				TwoFactorEnabled = false;
 			}
 		});
 
 		this.WhenAnyValue(x => x.Settings.UseTor)
-			.Subscribe(async x =>
-			{
-				IsTorEnabled = (x != TorMode.Disabled) && (Settings.GetTorStartupMode() != TorMode.Disabled);
-			});
+			.Subscribe(x => ModifyTwoFactorEnabled = x != TorMode.Disabled && Settings.GetTorStartupMode() != TorMode.Disabled);
 	}
 
 	public bool IsReadOnly => Settings.IsOverridden;

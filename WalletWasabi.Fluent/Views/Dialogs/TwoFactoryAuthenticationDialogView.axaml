@@ -14,7 +14,6 @@
                ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <DockPanel Margin="20 0">
 
-      <!-- <TextBox DockPanel.Dock="Bottom" Text="{Binding TwoFactorToken}" /> -->
       <TwoFactorEntryBox HorizontalAlignment="Center" DockPanel.Dock="Bottom" Text="{Binding TwoFactorToken, Mode=OneWayToSource}" />
       <Label HorizontalAlignment="Center" DockPanel.Dock="Bottom">Verification code:</Label>
 

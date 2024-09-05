@@ -13,6 +13,7 @@ namespace WalletWasabi.Fluent.ViewModels.Dialogs;
 public partial class TwoFactoryAuthenticationDialogViewModel : DialogViewModelBase<bool>
 {
 	[AutoNotify] private string? _twoFactorToken;
+
 	private string? _clientServerId;
 
 	private TwoFactoryAuthenticationDialogViewModel()
@@ -22,7 +23,7 @@ public partial class TwoFactoryAuthenticationDialogViewModel : DialogViewModelBa
 			try
 			{
 				IsBusy = true;
-				await UiContext.TwoFactorAuthenticationModel.VerifyAndSaveClientFileAsync(TwoFactorToken!, _clientServerId!);
+				await UiContext.TwoFactorAuthentication.VerifyAndSaveClientFileAsync(TwoFactorToken!, _clientServerId!);
 				Close(result: true);
 			}
 			catch (Exception ex)
@@ -43,7 +44,7 @@ public partial class TwoFactoryAuthenticationDialogViewModel : DialogViewModelBa
 			.Do(_ => NextCommand.ExecuteIfCan())
 			.Subscribe();
 
-		SetupCancel(enableCancel: false, enableCancelOnEscape: true, enableCancelOnPressed: true);
+		SetupCancel(enableCancel: true, enableCancelOnEscape: true, enableCancelOnPressed: true);
 	}
 
 	public IObservable<bool[,]>? QrCodeItem { get; set; }
@@ -60,7 +61,7 @@ public partial class TwoFactoryAuthenticationDialogViewModel : DialogViewModelBa
 			try
 			{
 				IsBusy = true;
-				var result = await UiContext.TwoFactorAuthenticationModel.SetupTwoFactorAuthentication();
+				var result = await UiContext.TwoFactorAuthentication.SetupTwoFactorAuthentication();
 				_clientServerId = result.ClientServerId;
 				QrCodeItem = UiContext.QrCodeGenerator.Generate(result.QrCodeUri);
 				this.RaisePropertyChanged(nameof(QrCodeItem));
@@ -68,7 +69,7 @@ public partial class TwoFactoryAuthenticationDialogViewModel : DialogViewModelBa
 			catch (Exception ex)
 			{
 				Logger.LogError(ex);
-				await ShowErrorAsync(Title, "Couldn't verify the token, please see the logs for further information.", "Error occurred.");
+				await ShowErrorAsync(Title, "Couldn't verify the token, please see the logs for further information.", "");
 			}
 			finally
 			{

@@ -1,4 +1,4 @@
-﻿﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
 using Avalonia;
@@ -111,7 +111,7 @@ public class TwoFactorTextBoxBehavior : AttachedToVisualTreeBehavior<TextBox>
 			return;
 		}
 
-		if (AssociatedObject is { } && KeyboardNavigationHandler.GetNext(AssociatedObject, NavigationDirection.Next) is TextBox nextFocus && GetIndex(nextFocus) > GetIndex(AssociatedObject))
+		if (sender is TextBox tb && KeyboardNavigationHandler.GetNext(tb, NavigationDirection.Next) is TextBox nextFocus && GetIndex(nextFocus) > GetIndex(tb))
 		{
 			nextFocus.Focus();
 		}

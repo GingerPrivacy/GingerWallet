@@ -20,7 +20,7 @@ public partial class VerifyTwoFactoryAuthenticationDialogViewModel : DialogViewM
 			{
 				IsBusy = true;
 
-				await UiContext.TwoFactorAuthenticationModel.LoginVerifyAsync(TwoFactorToken).ConfigureAwait(false);
+				await UiContext.TwoFactorAuthentication.LoginVerifyAsync(TwoFactorToken).ConfigureAwait(false);
 				UiContext.WalletRepository.LoadWalletListFromFileSystem();
 
 				Close(result: true);

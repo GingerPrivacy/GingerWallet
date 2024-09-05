@@ -6,14 +6,17 @@ using WalletWasabi.Services;
 namespace WalletWasabi.Fluent.Models.Wallets;
 
 [AutoInterface]
-public partial class TwoFactorAuthenticationModel : ReactiveObject
+public partial class TwoFactorAuthentication : ReactiveObject
 {
 	[AutoNotify] private bool _twoFactorEnabled;
 
-	public TwoFactorAuthenticationModel()
+	public TwoFactorAuthentication()
 	{
+		StartupValue = TwoFactorAuthenticationService.TwoFactorEnabled;
 		TwoFactorEnabled = TwoFactorAuthenticationService.TwoFactorEnabled;
 	}
+
+	public bool StartupValue { get; }
 
 	private TwoFactorAuthenticationService Service => Services.TwoFactorAuthenticationService;
 
@@ -25,7 +28,7 @@ public partial class TwoFactorAuthenticationModel : ReactiveObject
 	public async Task VerifyAndSaveClientFileAsync(string token, string clientServerId)
 	{
 		await Service.VerifyAndSaveClientFileAsync(token, clientServerId);
-		this.RaisePropertyChanged(nameof(TwoFactorEnabled));
+		TwoFactorEnabled = TwoFactorAuthenticationService.TwoFactorEnabled;
 	}
 
 	public Task LoginVerifyAsync(string token)
@@ -36,6 +39,6 @@ public partial class TwoFactorAuthenticationModel : ReactiveObject
 	public void RemoveTwoFactorAuthentication()
 	{
 		Service.RemoveTwoFactorAuthentication(Services.WalletManager);
-		this.RaisePropertyChanged(nameof(TwoFactorEnabled));
+		TwoFactorEnabled = TwoFactorAuthenticationService.TwoFactorEnabled;
 	}
 }

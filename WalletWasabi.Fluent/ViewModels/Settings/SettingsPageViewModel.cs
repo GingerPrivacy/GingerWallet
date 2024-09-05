@@ -1,5 +1,6 @@
 using System.Reactive;
 using System.Reactive.Concurrency;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -31,6 +32,8 @@ public partial class SettingsPageViewModel : DialogViewModelBase<Unit>
 	[AutoNotify] private bool _isModified;
 	[AutoNotify] private int _selectedTab;
 
+	private bool _isDisplayed;
+
 	public SettingsPageViewModel(UiContext uiContext)
 	{
 		UiContext = uiContext;
@@ -56,7 +59,7 @@ public partial class SettingsPageViewModel : DialogViewModelBase<Unit>
 
 		// Show restart notification when needed only if this page is not active.
 		UiContext.ApplicationSettings.IsRestartNeeded
-				 .Where(x => x && !IsActive)
+				 .Where(x => x && !IsActive && !_isDisplayed)
 				 .Do(_ => NotificationHelpers.Show(new RestartViewModel("To apply the new setting, Ginger Wallet needs to be restarted")))
 				 .Subscribe();
 
@@ -87,5 +90,19 @@ public partial class SettingsPageViewModel : DialogViewModelBase<Unit>
 	private void ChangeTheme(bool isDark)
 	{
 		RxApp.MainThreadScheduler.Schedule(() => ThemeHelper.ApplyTheme(isDark ? Theme.Dark : Theme.Light));
+	}
+
+	protected override void OnNavigatedTo(bool isInHistory, CompositeDisposable disposables)
+	{
+		base.OnNavigatedTo(isInHistory, disposables);
+
+		_isDisplayed = true;
+	}
+
+	protected override void OnNavigatedFrom(bool isInHistory)
+	{
+		base.OnNavigatedFrom(isInHistory);
+
+		_isDisplayed = false;
 	}
 }

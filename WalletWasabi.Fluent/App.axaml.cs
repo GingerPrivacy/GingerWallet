@@ -112,9 +112,9 @@ public class App : Application
 		return new ClientConfigModel();
 	}
 
-	private static IApplicationSettings CreateApplicationSettings()
+	private static IApplicationSettings CreateApplicationSettings(TwoFactorAuthentication twoFactorAuthentication)
 	{
-		return new ApplicationSettings(Services.PersistentConfigFilePath, Services.PersistentConfig, Services.Config, Services.UiConfig);
+		return new ApplicationSettings(Services.PersistentConfigFilePath, Services.PersistentConfig, Services.Config, Services.UiConfig, twoFactorAuthentication);
 	}
 
 	private static ITransactionBroadcasterModel CreateBroadcaster(Network network)
@@ -130,8 +130,8 @@ public class App : Application
 	private UiContext CreateUiContext()
 	{
 		var amountProvider = CreateAmountProvider();
-
-		var applicationSettings = CreateApplicationSettings();
+		var twoFactorAuthentication = new TwoFactorAuthentication();
+		var applicationSettings = CreateApplicationSettings(twoFactorAuthentication);
 		var torStatusChecker = new TorStatusCheckerModel();
 
 		// This class (App) represents the actual Avalonia Application and it's sole presence means we're in the actual runtime context (as opposed to unit tests)
@@ -152,6 +152,6 @@ public class App : Application
 			torStatusChecker,
 			new LegalDocumentsProvider(),
 			new HealthMonitor(applicationSettings, torStatusChecker),
-			new TwoFactorAuthenticationModel());
+			twoFactorAuthentication);
 	}
 }

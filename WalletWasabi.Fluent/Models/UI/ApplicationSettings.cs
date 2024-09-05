@@ -1,24 +1,20 @@
 using Avalonia.Controls;
 using NBitcoin;
 using ReactiveUI;
-using System.IO;
 using System.Net;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using System.Threading.Tasks;
-using WalletWasabi.Backend.Models;
-using WalletWasabi.Backend.Models.Responses;
 using WalletWasabi.Bases;
 using WalletWasabi.Daemon;
 using WalletWasabi.Exceptions;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Infrastructure;
+using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Helpers;
 using WalletWasabi.Logging;
 using WalletWasabi.Models;
-using WalletWasabi.Services;
 using WalletWasabi.Userfacing;
 using Unit = System.Reactive.Unit;
 
@@ -35,6 +31,7 @@ public partial class ApplicationSettings : ReactiveObject
 	private readonly PersistentConfig _startupConfig;
 	private readonly Config _config;
 	private readonly UiConfig _uiConfig;
+	private readonly ITwoFactorAuthentication _twoFactorAuthentication;
 
 	// Advanced
 	[AutoNotify] private bool _enableGpu;
@@ -70,19 +67,17 @@ public partial class ApplicationSettings : ReactiveObject
 	[AutoNotify] private bool _oobe;
 	[AutoNotify] private WindowState _windowState;
 
-	// Security
-	[AutoNotify] private bool _forceRestartNeeded;
-
 	// Non-persistent
 	[AutoNotify] private bool _doUpdateOnClose;
 
-	public ApplicationSettings(string persistentConfigFilePath, PersistentConfig persistentConfig, Config config, UiConfig uiConfig)
+	public ApplicationSettings(string persistentConfigFilePath, PersistentConfig persistentConfig, Config config, UiConfig uiConfig, ITwoFactorAuthentication twoFactorAuthentication)
 	{
 		_persistentConfigFilePath = persistentConfigFilePath;
 		_startupConfig = persistentConfig;
 
 		_config = config;
 		_uiConfig = uiConfig;
+		_twoFactorAuthentication = twoFactorAuthentication;
 
 		// Advanced
 		_enableGpu = _startupConfig.EnableGpu;
@@ -157,6 +152,10 @@ public partial class ApplicationSettings : ReactiveObject
 			.Do(_ => ApplyUiConfigChanges())
 			.Subscribe();
 
+		// Saving is not necessary; this call is only for evaluating if a restart is needed.
+		this.WhenAnyValue(x => x._twoFactorAuthentication.TwoFactorEnabled)
+			.Subscribe(_ => Save());
+
 		// Save UiConfig on change without throttling
 		this.WhenAnyValue(
 				x => x.PrivacyMode)
@@ -178,12 +177,6 @@ public partial class ApplicationSettings : ReactiveObject
 		// Apply DoUpdateOnClose
 		this.WhenAnyValue(x => x.DoUpdateOnClose)
 			.Do(x => Services.UpdateManager.DoUpdateOnClose = x)
-			.Subscribe();
-
-		// Apply DoUpdateOnClose
-		this.WhenAnyValue(x => x.ForceRestartNeeded)
-			.Where(x => x)
-			.Do(x => _isRestartNeeded.OnNext(ForceRestartNeeded))
 			.Subscribe();
 
 		// Save browser settings
@@ -248,7 +241,7 @@ public partial class ApplicationSettings : ReactiveObject
 
 	public bool CheckIfRestartIsNeeded(PersistentConfig config)
 	{
-		return !_startupConfig.DeepEquals(config);
+		return !_startupConfig.DeepEquals(config) || _twoFactorAuthentication.StartupValue != _twoFactorAuthentication.TwoFactorEnabled;
 	}
 
 	public TorMode GetTorStartupMode()
@@ -267,7 +260,7 @@ public partial class ApplicationSettings : ReactiveObject
 					PersistentConfig newConfig = ApplyChanges(currentConfig);
 					ConfigManagerNg.ToFile(_persistentConfigFilePath, newConfig);
 
-					_isRestartNeeded.OnNext(ForceRestartNeeded || CheckIfRestartIsNeeded(newConfig));
+					_isRestartNeeded.OnNext(CheckIfRestartIsNeeded(newConfig));
 				}
 				catch (Exception ex)
 				{

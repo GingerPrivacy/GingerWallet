@@ -13,9 +13,11 @@
 
   <StackPanel Classes="settingsLayout">
 
-    <DockPanel>
+    <DockPanel IsEnabled="{Binding ModifyTwoFactorEnabled}">
       <TextBlock Text="Two-factor authentication" />
-      <ToggleSwitch IsChecked="{Binding TwoFactorEnabled, Mode=TwoWay}" Command="{Binding GenerateTwoFactorCommand}" />
+      <ToggleSwitch IsChecked="{Binding TwoFactorEnabled, Mode=TwoWay}"
+                    Command="{Binding GenerateTwoFactorCommand}"
+                    ToolTip.Tip="Only available when Tor is enabled." />
     </DockPanel>
   </StackPanel>
 </UserControl>
