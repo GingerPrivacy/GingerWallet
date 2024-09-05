@@ -54,7 +54,7 @@ public class UiContextBuilder
 			Mock.Of<ITorStatusCheckerModel>(),
 			Mock.Of<ILegalDocumentsProvider>(),
 			Mock.Of<IHealthMonitor>(),
-			Mock.Of<ITwoFactorAuthenticationModel>());
+			Mock.Of<ITwoFactorAuthentication>());
 
 		uiContext.RegisterNavigation(Navigate);
 		return uiContext;

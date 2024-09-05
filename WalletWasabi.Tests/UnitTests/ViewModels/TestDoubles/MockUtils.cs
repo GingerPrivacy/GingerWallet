@@ -33,7 +33,7 @@ public static class MockUtils
 			Mock.Of<ITorStatusCheckerModel>(),
 			Mock.Of<ILegalDocumentsProvider>(),
 			Mock.Of<IHealthMonitor>(),
-			Mock.Of<ITwoFactorAuthenticationModel>());
+			Mock.Of<ITwoFactorAuthentication>());
 	}
 
 	public static UiContext ContextWith(INavigationStack<RoutableViewModel> navigationStack)
@@ -54,7 +54,7 @@ public static class MockUtils
 			Mock.Of<ITorStatusCheckerModel>(),
 			Mock.Of<ILegalDocumentsProvider>(),
 			Mock.Of<IHealthMonitor>(),
-			Mock.Of<ITwoFactorAuthenticationModel>());
+			Mock.Of<ITwoFactorAuthentication>());
 
 		uiContext.RegisterNavigation(new TestNavigation(navigationStack));
 		return uiContext;
