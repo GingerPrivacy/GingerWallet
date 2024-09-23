@@ -390,6 +390,7 @@ public partial class Arena : PeriodicRunner
 					await Rpc.SendRawTransactionAsync(coinjoin, cancellationToken).ConfigureAwait(false);
 					EndRound(round, EndRoundState.TransactionBroadcasted);
 					round.LogInfo($"Successfully broadcast the coinjoin: {coinjoin.GetHash()}.");
+					round.LogInfo($"Coinjoin summary {coinjoin.GetHash()}, {coinjoin.Inputs.Count}, {coinjoin.Outputs.Count}, {coinjoin.GetAnonScore():F2}, {state.Inputs.Select(x => x.Amount).Sum().Satoshi}, {coinjoin.Outputs.Select(x => x.Value).Sum().Satoshi}, {round.ExpectedCoordinationFee.Satoshi}, {round.CoordinationFee.Satoshi}, {feeRate.SatoshiPerByte}");
 
 					var coordinatorScriptPubKey = Config.GetNextCleanCoordinatorScript();
 					if (round.CoordinatorScript == coordinatorScriptPubKey)
@@ -693,18 +694,20 @@ public partial class Arena : PeriodicRunner
 		var sizeToPayFor = coinjoin.EstimatedVsize + coordinatorScriptPubKey.EstimateOutputVsize();
 		var miningFee = round.Parameters.MiningFeeRate.GetFee(sizeToPayFor) + Money.Satoshis(1);
 
-		var expectedCoordinationFee = round.Alices.Where(a => !a.IsCoordinationFeeExempted).Sum(x => round.Parameters.CoordinationFeeRate.GetFee(x.Coin.Amount));
+		round.ExpectedCoordinationFee = round.Alices.Where(a => !a.IsCoordinationFeeExempted).Sum(x => round.Parameters.CoordinationFeeRate.GetFee(x.Coin.Amount));
 		var availableCoordinationFee = coinjoin.Balance - miningFee;
 
-		round.LogInfo($"Expected coordination fee: {expectedCoordinationFee} - Available coordination: {availableCoordinationFee}.");
+		round.LogInfo($"Expected coordination fee: {round.ExpectedCoordinationFee} - Available coordination: {availableCoordinationFee}.");
 
 		if (availableCoordinationFee >= Config.MinFeeAmount)
 		{
 			coinjoin = coinjoin.AddFeeOutput(new TxOut(availableCoordinationFee, coordinatorScriptPubKey))
 				.AsPayingForSharedOverhead();
+			round.CoordinationFee = availableCoordinationFee;
 		}
 		else
 		{
+			round.CoordinationFee = 0L;
 			round.LogWarning($"Available coordination fee wasn't taken, because it was too small: {availableCoordinationFee}.");
 		}
 
