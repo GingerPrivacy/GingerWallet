@@ -11,6 +11,7 @@ public class WalletDirectories
 	public const string WalletsDirName = "Wallets";
 	public const string WalletsBackupDirName = "WalletBackups";
 	public const string WalletFileExtension = "json";
+	public const string WalletAttributesFileExtension = "attr";
 
 	public WalletDirectories(Network network, string workDir)
 	{

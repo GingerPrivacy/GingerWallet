@@ -19,7 +19,7 @@ public class Cluster : NotifyPropertyChangedBase, IEquatable<Cluster>
 		Lock = new object();
 		Keys = keys.ToList();
 		KeysSet = Keys.ToHashSet();
-		_labels = LabelsArray.Merge(Keys.Select(x => x.Labels));
+		_labels = Keys.Count == 1 ? Keys[0].Labels : LabelsArray.Merge(Keys.Select(x => x.Labels));
 	}
 
 	public LabelsArray Labels
@@ -64,7 +64,7 @@ public class Cluster : NotifyPropertyChangedBase, IEquatable<Cluster>
 
 	private void UpdateLabelsNoLock()
 	{
-		Labels = LabelsArray.Merge(Keys.Select(x => x.Labels));
+		Labels = Keys.Count == 1 ? Keys[0].Labels : LabelsArray.Merge(Keys.Select(x => x.Labels));
 	}
 
 	public override string ToString() => Labels;
