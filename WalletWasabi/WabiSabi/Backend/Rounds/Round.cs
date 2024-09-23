@@ -83,6 +83,9 @@ public class Round
 	public ImmutableSortedSet<Money> Denomination { get; set; }
 	public ImmutableList<double> DenominationFrequencies { get; set; }
 
+	public Money CoordinationFee { get; set; }
+	public Money ExpectedCoordinationFee { get; set; }
+
 	public TState Assert<TState>() where TState : MultipartyTransactionState =>
 		CoinjoinState switch
 		{

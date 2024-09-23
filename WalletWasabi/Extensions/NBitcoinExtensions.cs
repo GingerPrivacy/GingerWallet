@@ -518,6 +518,13 @@ public static class NBitcoinExtensions
 		}
 	}
 
+	public static double GetAnonScore(this Transaction transaction)
+	{
+		int totalCount = transaction.Outputs.Count;
+		int diffCount = transaction.Outputs.Select(x => x.Value.Satoshi).ToHashSet().Count;
+		return totalCount > 0 ? totalCount / (double)diffCount : 0;
+	}
+
 	public class KeyPathComparer : IComparer<KeyPath>
 	{
 		public int Compare(KeyPath? keyPath1, KeyPath? keyPath2)
