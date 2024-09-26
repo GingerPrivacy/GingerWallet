@@ -13,7 +13,7 @@ using WalletWasabi.Logging;
 namespace WalletWasabi.Fluent.ViewModels.AddWallet;
 
 [NavigationMetaData(
-	Title = "Add Wallet",
+	Title = WalletWasabi.Lang.Resources.AddWallet,
 	Caption = "Create, connect, import or recover",
 	Order = 2,
 	Category = "General",
@@ -26,8 +26,10 @@ namespace WalletWasabi.Fluent.ViewModels.AddWallet;
 	NavBarSelectionMode = NavBarSelectionMode.Button)]
 public partial class AddWalletPageViewModel : DialogViewModelBase<Unit>
 {
+
 	private AddWalletPageViewModel()
 	{
+
 		CreateWalletCommand = ReactiveCommand.Create(OnCreateWallet);
 
 		ConnectHardwareWalletCommand = ReactiveCommand.Create(OnConnectHardwareWallet);
@@ -108,5 +110,6 @@ public partial class AddWalletPageViewModel : DialogViewModelBase<Unit>
 		MainViewModel.Instance.IsOobeBackgroundVisible = true;
 		await NavigateDialogAsync(this, NavigationTarget.DialogScreen);
 		MainViewModel.Instance.IsOobeBackgroundVisible = false;
+
 	}
 }

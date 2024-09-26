@@ -35,8 +35,4 @@
 		<!-- See explanation of the additional properties here: https://github.com/dotnet/roslyn/issues/60744#issuecomment-1438273464 -->
 		<ProjectReference Include="..\WalletWasabi.Fluent.Generators\WalletWasabi.Fluent.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" AdditionalProperties="IsRidAgnostic=true" />
 	</ItemGroup>
-
-	<ItemGroup>
-		<RuntimeHostConfigurationOption Include="System.Globalization.Invariant" Value="true" />
-	</ItemGroup>
 </Project>

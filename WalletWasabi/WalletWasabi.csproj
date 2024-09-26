@@ -84,12 +84,9 @@
 		</None>
 	</ItemGroup>
 
-	<ItemGroup>
-		<RuntimeHostConfigurationOption Include="System.Globalization.Invariant" Value="true" />
-	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Resources.Designer.cs">
+	  <Compile Update="Lang\Resources.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>Resources.resx</DependentUpon>
@@ -97,8 +94,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Update="Resources.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
+	  <EmbeddedResource Update="Lang\Resources.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	</ItemGroup>

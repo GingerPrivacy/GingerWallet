@@ -121,4 +121,10 @@
     <value>Open</value>
     <comment>This is a button which is used to open your bitcoin wallet. One word only. </comment>
   </data>
+  <data name="AddWallet" xml:space="preserve">
+    <value>Add Wallet</value><comment>This is a button to Add or create a new wallet or just new wallet. Must be less then 10 characters. </comment>
+  </data>
+  <data name="TwoFactorDisabledWarnMessage" xml:space="preserve">
+    <value>Two-Factor authentication is disabled. Enable it in the Setting for greater protection.</value><comment>This is a notification message to the user that the two-factor authentication is disabled and consider enabling it. </comment>
+  </data>
 </root>

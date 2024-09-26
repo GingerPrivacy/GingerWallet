@@ -6,7 +6,8 @@
              mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371"
              x:DataType="login:LoginViewModel"
              x:CompileBindings="True"
-             x:Class="WalletWasabi.Fluent.Views.Login.LoginView">
+             x:Class="WalletWasabi.Fluent.Views.Login.LoginView"
+             xmlns:lang="using:WalletWasabi.Lang">
   <ContentArea HorizontalAlignment="Stretch"
                ScrollViewer.VerticalScrollBarVisibility="Disabled"
                IsBusy="{Binding IsBusy}">
@@ -58,7 +59,7 @@
               </Interaction.Behaviors>
             </CopyablePasswordTextBox>
             <Panel Margin="0 -20 0 0 ">
-              <Button Content="Open" Focusable="False" Classes="action" HorizontalAlignment="Right" Command="{Binding NextCommand}">
+              <Button Content="{x:Static lang:Resources.Open}" Focusable="False" Classes="action" HorizontalAlignment="Right" Command="{Binding NextCommand}">
                 <Button.IsDefault>
                   <MultiBinding Converter="{x:Static BoolConverters.And}">
                     <Binding Path="ErrorMessage" Converter="{x:Static StringConverters.IsNullOrEmpty}" />
@@ -70,7 +71,7 @@
           </DockPanel>
 
           <!-- Hardware & Watch only wallet -->
-          <Button Content="Open" IsVisible="{Binding !IsPasswordNeeded}" HorizontalAlignment="Center" Classes="action" Command="{Binding NextCommand}" />
+          <Button Content="{x:Static lang:Resources.Open}" IsVisible="{Binding !IsPasswordNeeded}" HorizontalAlignment="Center" Classes="action" Command="{Binding NextCommand}" />
         </DockPanel>
 
         <!-- Incorrect password -->

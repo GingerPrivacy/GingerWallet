@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Threading.Tasks;
@@ -42,6 +43,8 @@ public class App : Application
 
 	public override void OnFrameworkInitializationCompleted()
 	{
+		Lang.Resources.Culture = new CultureInfo("hu-HU");
+
 		if (!Design.IsDesignMode)
 		{
 			if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)

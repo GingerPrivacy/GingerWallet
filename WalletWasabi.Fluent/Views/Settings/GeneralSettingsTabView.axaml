@@ -92,7 +92,7 @@
       <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding BrowserList}" SelectedItem="{Binding Settings.SelectedBrowser}">
         <ComboBox.ItemTemplate>
           <DataTemplate x:DataType="models:BrowserTypeDropdownListEnum">
-            <TextBlock Text="{Binding Converter={x:Static conv:EnumConverters.ToFriendlyName}}}}" />
+            <TextBlock Text="{Binding Converter={x:Static conv:EnumConverters.ToFriendlyName}}" />
           </DataTemplate>
         </ComboBox.ItemTemplate>
       </ComboBox>

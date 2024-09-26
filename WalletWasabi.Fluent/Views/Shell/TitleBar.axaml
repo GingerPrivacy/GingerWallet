@@ -6,7 +6,8 @@
              xmlns:shell="clr-namespace:WalletWasabi.Fluent.Views.Shell"
              mc:Ignorable="d" d:DesignWidth="1000"
              x:Class="WalletWasabi.Fluent.Views.Shell.TitleBar"
-             x:Name="UserControl">
+             x:Name="UserControl"
+             xmlns:lang="using:WalletWasabi.Lang">
 
   <UserControl.Styles>
     <Style Selector="Panel#TitlePanel">
@@ -52,7 +53,7 @@
               <Viewbox DockPanel.Dock="Top" Height="40" HorizontalAlignment="Center">
                 <PathIcon Data="{StaticResource warning_regular}" />
               </Viewbox>
-              <TextBlock Margin="0 10 0 20" DockPanel.Dock="Top" Classes="h8" TextWrapping="Wrap" TextAlignment="Center" Text="Two-Factor authentication is disabled. Enable it in the Setting for greater protection." />
+              <TextBlock Margin="0 10 0 20" DockPanel.Dock="Top" Classes="h8" TextWrapping="Wrap" TextAlignment="Center" Text= "{x:Static lang:Resources.TwoFactorDisabledWarnMessage}" />
               <Button DockPanel.Dock="Bottom" Focusable="False" Content="Open Settings"
                       Classes="h8 plain activeHyperLink" Cursor="Hand"
                       HorizontalAlignment="Center" VerticalAlignment="Bottom"
