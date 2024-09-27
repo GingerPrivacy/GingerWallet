@@ -70,8 +70,14 @@ public class WalletAttributes
 	[JsonProperty(PropertyName = "CoinjoinSkipFactors")]
 	public CoinjoinSkipFactors CoinjoinSkipFactors { get; set; } = CoinjoinSkipFactors.SpeedMaximizing;
 
-	[JsonProperty(ItemConverterType = typeof(OutPointJsonConverter), PropertyName = "ExcludedCoinsFromCoinJoin")]
+	[JsonProperty(ItemConverterType = typeof(Uint256JsonConverter), PropertyName = "CoinJoinTransactions")]
+	public List<uint256> CoinJoinTransactions { get; internal set; } = new();
+
+	[JsonProperty(ItemConverterType = typeof(OutPointJsonConverter), Order = 800, PropertyName = "ExcludedCoinsFromCoinJoin")]
 	public List<OutPoint> ExcludedCoinsFromCoinJoin { get; internal set; } = new();
+
+	[JsonProperty(ItemConverterType = typeof(OutPointJsonConverter), Order = 900, PropertyName = "CoinJoinOutputs")]
+	public List<OutPoint> CoinJoinOutputs { get; internal set; } = new();
 
 	[JsonProperty(Order = 999, PropertyName = "HdPubKeys")]
 	private List<HdPubKey> HdPubKeys { get; } = new();

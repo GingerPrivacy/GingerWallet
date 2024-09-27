@@ -24,6 +24,7 @@ public class SmartCoin : NotifyPropertyChangedBase, IEquatable<SmartCoin>, IDest
 	private bool _confirmed;
 	private bool _isBanned;
 	private bool _isExcludedFromCoinJoin;
+	private bool _isCoinJoinOutput;
 
 	private Lazy<uint256> _transactionId;
 	private Lazy<OutPoint> _outPoint;
@@ -130,6 +131,12 @@ public class SmartCoin : NotifyPropertyChangedBase, IEquatable<SmartCoin>, IDest
 	{
 		get => _isExcludedFromCoinJoin;
 		set => RaiseAndSetIfChanged(ref _isExcludedFromCoinJoin, value);
+	}
+
+	public bool IsCoinJoinOutput
+	{
+		get => _isCoinJoinOutput;
+		set => RaiseAndSetIfChanged(ref _isCoinJoinOutput, value);
 	}
 
 	/// <returns>False if external, or the tx inputs are all external.</returns>

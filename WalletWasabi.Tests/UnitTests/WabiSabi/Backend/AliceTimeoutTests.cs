@@ -19,6 +19,8 @@ public class AliceTimeoutTests
 	public async Task AliceRegistrationTimesOutAsync()
 	{
 		using CancellationTokenSource testDeadlineCts = new(TimeSpan.FromMinutes(5)); // Sanity timeout for the unit test.
+		using CancellationTokenSource silentLeave = new();
+		var silentLeaveToken = silentLeave.Token;
 
 		// Alice times out when its deadline is reached.
 		WabiSabiConfig cfg = new();
@@ -38,7 +40,7 @@ public class AliceTimeoutTests
 		KeyChain keyChain = new(km, new Kitchen(ingredients: ""));
 
 		using CancellationTokenSource registrationCts = new();
-		Task<AliceClient> task = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round), arenaClient, smartCoin, keyChain, roundStateUpdater, registrationCts.Token, registrationCts.Token, confirmationCancellationToken: testDeadlineCts.Token);
+		Task<AliceClient> task = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round), arenaClient, smartCoin, keyChain, roundStateUpdater, registrationCts.Token, registrationCts.Token, confirmationCancellationToken: testDeadlineCts.Token, silentLeaveToken);
 
 		while (round.Alices.Count == 0)
 		{

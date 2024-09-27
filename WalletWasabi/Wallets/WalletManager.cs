@@ -377,6 +377,7 @@ public class WalletManager : IWalletProvider
 		{
 			foreach (var wallet in Wallets.Where(x => x.State == WalletState.Started && !x.TransactionProcessor.IsAware(tx.GetHash())))
 			{
+				wallet.AddCoinJoinTransaction(tx.GetHash());
 				wallet.TransactionProcessor.Process(tx);
 			}
 		}

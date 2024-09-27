@@ -9,6 +9,7 @@ using System.Security;
 using System.Text;
 using System.Xml.Linq;
 using WalletWasabi.Blockchain.Analysis.Clustering;
+using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Extensions;
 using WalletWasabi.Helpers;
 using WalletWasabi.Io;
@@ -877,10 +878,20 @@ public class KeyManager
 	private static HdPubKey CreateHdPubKey((KeyPath KeyPath, ExtPubKey ExtPubKey) x) =>
 		new(x.ExtPubKey.PubKey, x.KeyPath, LabelsArray.Empty, KeyState.Clean);
 
-	internal void SetExcludedCoinsFromCoinJoin(IEnumerable<OutPoint> excludedOutpoints)
+	internal void UpdateFromCoins(CoinsRegistry coins)
 	{
-		ExcludedCoinsFromCoinJoin = excludedOutpoints.ToList();
+		Attributes.ExcludedCoinsFromCoinJoin = coins.Where(c => c.IsExcludedFromCoinJoin).Select(c => c.Outpoint).ToList();
+		Attributes.CoinJoinOutputs = coins.Where(c => c.IsCoinJoinOutput).Select(c => c.Outpoint).ToList();
 		ToFile();
+	}
+
+	internal void AddCoinJoinTransaction(uint256 txHash)
+	{
+		if (!Attributes.CoinJoinTransactions.Contains(txHash))
+		{
+			Attributes.CoinJoinTransactions.Add(txHash);
+			ToFile();
+		}
 	}
 }
 

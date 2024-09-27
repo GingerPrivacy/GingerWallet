@@ -46,6 +46,7 @@ public partial class CoinJoinStateViewModel : ViewModelBase
 	private const string MiningFeeRateTooHighMessage = "Mining fee rate was too high";
 	private const string CoordinationFeeRateTooHighMessage = "Coordination fee rate was too high";
 	private const string MinInputCountTooLowMessage = "Min input count was too low";
+	private const string ServerDidNotGiveFeeExemptionMessage = "Server did not give remix fee exemption";
 
 	private readonly IWalletModel _wallet;
 	private readonly StateMachine<State, Trigger> _stateMachine;
@@ -379,6 +380,7 @@ public partial class CoinJoinStateViewModel : ViewModelBase
 					CoinjoinError.MiningFeeRateTooHigh => MiningFeeRateTooHighMessage,
 					CoinjoinError.CoordinationFeeRateTooHigh => CoordinationFeeRateTooHighMessage,
 					CoinjoinError.MinInputCountTooLow => MinInputCountTooLowMessage,
+					CoinjoinError.ServerDidNotGiveFeeExemption => ServerDidNotGiveFeeExemptionMessage,
 					_ => GeneralErrorMessage
 				};
 
