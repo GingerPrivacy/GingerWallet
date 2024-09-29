@@ -13,6 +13,8 @@ using WalletWasabi.Extensions;
 using System.Net.Http;
 using WabiSabi.Crypto.ZeroKnowledge;
 using WalletWasabi.WabiSabi.Models.MultipartyTransaction;
+using WalletWasabi.WabiSabi.Client.StatusChangedEvents;
+using WalletWasabi.Crypto.Randomness;
 
 namespace WalletWasabi.WabiSabi.Client.CoinJoin.Client;
 
@@ -63,12 +65,13 @@ public class AliceClient
 		RoundStateUpdater roundStatusUpdater,
 		CancellationToken unregisterCancellationToken,
 		CancellationToken registrationCancellationToken,
-		CancellationToken confirmationCancellationToken)
+		CancellationToken confirmationCancellationToken,
+		CancellationToken silentLeaveToken)
 	{
 		var aliceClient = await RegisterInputAsync(roundState, arenaClient, coin, keyChain, registrationCancellationToken).ConfigureAwait(false);
 		try
 		{
-			await aliceClient.ConfirmConnectionAsync(roundStatusUpdater, confirmationCancellationToken).ConfigureAwait(false);
+			await aliceClient.ConfirmConnectionAsync(roundState, roundStatusUpdater, confirmationCancellationToken, silentLeaveToken).ConfigureAwait(false);
 
 			Logger.LogInfo($"Round ({aliceClient.RoundId}), Alice ({aliceClient.AliceId}): Connection was confirmed.");
 		}
@@ -84,6 +87,10 @@ public class AliceClient
 		catch (UnexpectedRoundPhaseException)
 		{
 			// Do not unregister.
+			throw;
+		}
+		catch (CoinJoinClientException)
+		{
 			throw;
 		}
 		catch (Exception) when (aliceClient is { })
@@ -111,6 +118,13 @@ public class AliceClient
 			new CoinJoinInputCommitmentData(arenaClient.CoordinatorIdentifier, roundState.Id));
 
 		var (response, isCoordinationFeeExempted) = await arenaClient.RegisterInputAsync(roundState.Id, coin.Coin.Outpoint, ownershipProof, cancellationToken).ConfigureAwait(false);
+		if (roundState.CoinjoinState.Parameters.CoordinationFeeRate.Rate > 0m && !isCoordinationFeeExempted && coin.IsCoinJoinOutput)
+		{
+			string message = $"Coin {coin.Outpoint} is from a coinjoin, but the coordinator did not give the exemption.";
+			roundState.LogInfo(message);
+			throw new CoinJoinClientException(CoinjoinError.ServerDidNotGiveFeeExemption, message);
+		}
+
 		aliceClient = new(response.Value, roundState, arenaClient, coin, response.IssuedAmountCredentials, response.IssuedVsizeCredentials, isCoordinationFeeExempted);
 		coin.CoinJoinInProgress = true;
 
@@ -119,7 +133,7 @@ public class AliceClient
 		return aliceClient;
 	}
 
-	private async Task ConfirmConnectionAsync(RoundStateUpdater roundStatusUpdater, CancellationToken cancellationToken)
+	private async Task ConfirmConnectionAsync(RoundState roundState, RoundStateUpdater roundStatusUpdater, CancellationToken cancellationToken, CancellationToken silentLeaveToken)
 	{
 		long[] amountsToRequest = { EffectiveValue.Satoshi };
 		long[] vsizesToRequest = { MaxVsizeAllocationPerAlice - SmartCoin.ScriptPubKey.EstimateInputVsize() };
@@ -141,6 +155,15 @@ public class AliceClient
 			catch (OperationCanceledException)
 			{
 				cancellationToken.ThrowIfCancellationRequested();
+			}
+			if (silentLeaveToken.IsCancellationRequested)
+			{
+				var aliceWouldBeRemovedByBackendTime = DateTime.UtcNow + roundState.CoinjoinState.Parameters.ConnectionConfirmationTimeout;
+				if (aliceWouldBeRemovedByBackendTime > roundState.InputRegistrationEnd - TimeSpan.FromMinutes(1) || SecureRandom.Instance.GetInt(0, 100) < 50)
+				{
+					// We "forget" to confirm the connection
+					throw new WabiSabiProtocolException(WabiSabiProtocolErrorCode.SilentLeave, "Willingly leaved the connection confirmation as silent leave was requested earlier.");
+				}
 			}
 		}
 		while (!await TryConfirmConnectionAsync(amountsToRequest, vsizesToRequest, cancellationToken).ConfigureAwait(false));
@@ -218,7 +241,6 @@ public class AliceClient
 		await ArenaClient.ReadyToSignAsync(RoundId, AliceId, cancellationToken).ConfigureAwait(false);
 		Logger.LogInfo($"Round ({RoundId}), Alice ({AliceId}): Ready to sign.");
 	}
-
 
 	public Money EffectiveValue => SmartCoin.EffectiveValue(FeeRate, IsCoordinationFeeExempted ? CoordinationFeeRate.Zero : CoordinationFeeRate);
 }

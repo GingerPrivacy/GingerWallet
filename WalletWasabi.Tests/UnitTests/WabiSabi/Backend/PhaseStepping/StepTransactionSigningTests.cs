@@ -273,6 +273,8 @@ public class StepTransactionSigningTests
 	{
 		using CancellationTokenSource cancellationTokenSource = new(TestTimeout);
 		var token = cancellationTokenSource.Token;
+		using CancellationTokenSource silentLeave = new();
+		var silentLeaveToken = silentLeave.Token;
 
 		// Create the round.
 		await arena.TriggerAndWaitRoundAsync(token);
@@ -284,8 +286,8 @@ public class StepTransactionSigningTests
 		using RoundStateUpdater roundStateUpdater = new(TimeSpan.FromSeconds(2), arena);
 		await roundStateUpdater.StartAsync(token);
 
-		var task1 = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round), arenaClient, coin1, keyChain, roundStateUpdater, token, token, token);
-		var task2 = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round), arenaClient, coin2, keyChain, roundStateUpdater, token, token, token);
+		var task1 = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round), arenaClient, coin1, keyChain, roundStateUpdater, token, token, token, silentLeaveToken);
+		var task2 = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round), arenaClient, coin2, keyChain, roundStateUpdater, token, token, token, silentLeaveToken);
 
 		while (Phase.OutputRegistration != round.Phase)
 		{
