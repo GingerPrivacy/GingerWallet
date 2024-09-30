@@ -181,7 +181,7 @@ public class HwiKatas
 	{
 		// --- USER INTERACTIONS ---
 		//
-		// Connect and initialize your Trezor Safe 3 with the following seed phrase:
+		// Connect and initialize your Trezor Safe 5 with the following seed phrase:
 		// more maid moon upgrade layer alter marine screen benefit way cover alcohol
 		// NEVER STORE REAL MONEY ON THIS WALLET. IT IS NOT SAFE.
 		// Run this test.

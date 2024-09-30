@@ -163,6 +163,7 @@ public class HwiProcessBridgeMock : IHwiProcessInvoker
 			{
 				case HardwareWalletModels.Trezor_T:
 				case HardwareWalletModels.Trezor_Safe_3:
+				case HardwareWalletModels.Trezor_Safe_5:
 				case HardwareWalletModels.Trezor_1:
 				case HardwareWalletModels.Coldcard:
 				case HardwareWalletModels.Ledger_Nano_S:
