@@ -35,11 +35,15 @@ jobs:
 
       - name: Test
         run: dotnet test --no-restore --configuration Release --filter "UnitTests" --logger "console;verbosity=detailed"
+        continue-on-error: true # Continue even if tests fail to allow other OSs to complete
 
       - name: Check test results
-        if: failure() || success()
+        if: always() # Ensure this step runs regardless of the test result
         run: |
           if [ $? -ne 0 ]; then
             echo "Tests failed on ${{ matrix.os }}"
-            exit 1
           fi
+          
+      - name: Fail the job if any OS fails
+        if: failure()
+        run: exit 1
