@@ -35,29 +35,11 @@ jobs:
 
       - name: Test
         run: dotnet test --no-restore --configuration Release --filter "UnitTests" --logger "console;verbosity=detailed"
-        continue-on-error: true # Continue even if tests fail to ensure all OSs complete their runs
 
-      - name: Save test result for ${{ matrix.os }}
-        id: test_result
+      - name: Check test results
+        if: failure() || success()
         run: |
           if [ $? -ne 0 ]; then
-            echo "Test failed on ${{ matrix.os }}"
-            echo "::set-output name=test_result::fail"
-          else
-            echo "Test passed on ${{ matrix.os }}"
-            echo "::set-output name=test_result::pass"
-          fi
-
-  # This job runs after all OS-specific jobs and determines the overall result
-  summarize:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Fail if any test failed
-        run: |
-          # Check the outcome of each matrix OS
-          if [[ "${{ needs.build.outputs.test_result }}" == "fail" ]]; then
-            echo "Some tests failed."
+            echo "Tests failed on ${{ matrix.os }}"
             exit 1
-          else
-            echo "All tests passed."
+          fi
