@@ -17,29 +17,29 @@ public class CoreConfigTests
 
 		var config = new CoreConfig();
 		config.AddOrUpdate(configStringBuilder.ToString());
-		var expectedConfig =
+		var expectedConfig = EnsureNewLine(
 			"""
 			foo = bar
 
 			bar = bar
 
-			""";
+			""");
 		Assert.Equal(expectedConfig, config.ToString());
 	}
 
 	[Fact]
 	public void CanParse()
 	{
-		var testConfig =
+		var testConfig = EnsureNewLine(
 			"""
 			foo=buz
 			foo = bar
-			""";
+			""");
 
 		testConfig += Environment.NewLine;
 		testConfig += Environment.NewLine;
 		testConfig += Environment.NewLine;
-		testConfig +=
+		testConfig += EnsureNewLine(
 			"""
 			 foo = bar
 			foo bar = buz quxx
@@ -48,11 +48,11 @@ public class CoreConfigTests
 			foo
 			bar
 			#qoo=boo
-			""";
+			""");
 		var coreConfig = new CoreConfig();
 		coreConfig.AddOrUpdate(testConfig);
 
-		var expectedConfig =
+		var expectedConfig = EnsureNewLine(
 			"""
 			foo = bar
 
@@ -63,7 +63,7 @@ public class CoreConfigTests
 			bar
 			#qoo=boo
 
-			""";
+			""");
 
 		Assert.Equal(expectedConfig, coreConfig.ToString());
 
@@ -122,7 +122,7 @@ public class CoreConfigTests
 		Assert.Equal("bar", fooValue);
 		Assert.Equal("0", tooValue);
 
-		expectedConfig =
+		expectedConfig = EnsureNewLine(
 			"""
 			foo = bar
 
@@ -134,11 +134,11 @@ public class CoreConfigTests
 			moo = 1
 			too = 0
 
-			""";
+			""");
 
 		Assert.Equal(expectedConfig, coreConfig.ToString());
 
-		var expectedConfig2 =
+		var expectedConfig2 = EnsureNewLine(
 			"""
 			foo = bar
 
@@ -150,27 +150,27 @@ public class CoreConfigTests
 			moo = 1
 			too = 0
 
-			""";
+			""");
 		Assert.Equal(expectedConfig2, coreConfig2.ToString());
 	}
 
 	[Fact]
 	public void KeepsOrder()
 	{
-		var testConfig =
+		var testConfig = EnsureNewLine(
 			"""
 			foo=bar
 			buz=qux
-			""";
+			""");
 		var coreConfig = new CoreConfig();
 		coreConfig.AddOrUpdate(testConfig);
 
-		var expectedConfig =
+		var expectedConfig = EnsureNewLine(
 			"""
 			foo = bar
 			buz = qux
 
-			""";
+			""");
 
 		Assert.Equal(expectedConfig, coreConfig.ToString());
 
@@ -183,7 +183,7 @@ public class CoreConfigTests
 	[Fact]
 	public void HandlesSections()
 	{
-		var testConfig =
+		var testConfig = EnsureNewLine(
 			"""
 			qux=1
 			[main]
@@ -198,11 +198,11 @@ public class CoreConfigTests
 			[main]
 			buz=1
 			test.buz=2
-			""";
+			""");
 		var coreConfig = new CoreConfig();
 		coreConfig.AddOrUpdate(testConfig);
 
-		var expectedConfig =
+		var expectedConfig = EnsureNewLine(
 			"""
 			qux = 1
 			main.foo = 1
@@ -214,8 +214,11 @@ public class CoreConfigTests
 			main.buz = 1
 			test.buz = 2
 
-			""";
+			""");
 
 		Assert.Equal(expectedConfig, coreConfig.ToString());
 	}
+
+	// Depending on the source the new lines in """...""" block might be a simple '\n' regardless of the OS
+	public string EnsureNewLine(string text) => text.Replace("\r\n", "\n").Replace("\n", Environment.NewLine);
 }
