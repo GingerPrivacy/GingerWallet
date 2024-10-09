@@ -201,6 +201,7 @@ public class TransactionProcessor
 
 		IReadOnlyList<SmartCoin> myInputs = Coins.GetMyInputs(tx);
 
+		bool coinJoin = KeyManager.Attributes.CoinJoinTransactions.Contains(txId);
 		for (var i = 0U; i < tx.Transaction.Outputs.Count; i++)
 		{
 			// If transaction received to any of the wallet keys:
@@ -221,6 +222,7 @@ public class TransactionProcessor
 				}
 
 				SmartCoin newCoin = new(tx, i, foundKey);
+				newCoin.IsCoinJoinOutput = coinJoin;
 
 				result.ReceivedCoins.Add(newCoin);
 
@@ -231,12 +233,19 @@ public class TransactionProcessor
 				}
 				else // If we had this coin already.
 				{
-					if (newCoin.Height != Height.Mempool) // Update the height of this old coin we already had.
+					if (newCoin.Height != Height.Mempool || coinJoin) // Update the height of this old coin we already had.
 					{
 						if (Coins.AsAllCoinsView().TryGetByOutPoint(new OutPoint(txId, i), out var oldCoin)) // Just to be sure, it is a concurrent collection.
 						{
-							result.NewlyConfirmedReceivedCoins.Add(newCoin);
-							oldCoin.Height = newCoin.Height;
+							if (newCoin.Height != Height.Mempool)
+							{
+								result.NewlyConfirmedReceivedCoins.Add(newCoin);
+								oldCoin.Height = newCoin.Height;
+							}
+							if (coinJoin)
+							{
+								oldCoin.IsCoinJoinOutput = true;
+							}
 						}
 					}
 				}
@@ -272,6 +281,11 @@ public class TransactionProcessor
 		if (tx.WalletInputs.Count != 0 || tx.WalletOutputs.Count != 0)
 		{
 			TransactionStore.AddOrUpdate(tx);
+		}
+		if (coinJoin)
+		{
+			KeyManager.Attributes.CoinJoinTransactions.Remove(txId);
+			KeyManager.UpdateFromCoins(Coins);
 		}
 
 		BlockchainAnalyzer.Analyze(result.Transaction);

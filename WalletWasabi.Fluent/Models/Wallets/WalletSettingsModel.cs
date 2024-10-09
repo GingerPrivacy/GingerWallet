@@ -40,7 +40,7 @@ public partial class WalletSettingsModel : ReactiveObject
 		_autoCoinjoin = _keyManager.AutoCoinJoin;
 		_isCoinjoinProfileSelected = _keyManager.IsCoinjoinProfileSelected;
 		_preferPsbtWorkflow = _keyManager.PreferPsbtWorkflow;
-		_plebStopThreshold = _keyManager.PlebStopThreshold ?? KeyManager.DefaultPlebStopThreshold;
+		_plebStopThreshold = _keyManager.PlebStopThreshold ?? WalletAttributes.DefaultPlebStopThreshold;
 		_anonScoreTarget = _keyManager.AnonScoreTarget;
 		_redCoinIsolation = _keyManager.RedCoinIsolation;
 		_coinjoinSkipFactors = _keyManager.CoinjoinSkipFactors;

@@ -77,6 +77,8 @@ public class AmountDecomposer
 			AddPreDecompositions(setCandidates, denoms, myInputSum, maxNumberOfOutputsAllowed);
 		}
 
+		FilterDecompositions(setCandidates, denoms);
+
 		// Create Outputs from it
 		var outputCandidates = setCandidates.Select(x =>
 		{
@@ -180,6 +182,28 @@ public class AmountDecomposer
 		return decomposition.Length == 0 || denomHashSet.Contains(decomposition[^1].Amount) ? Money.Zero : decomposition[^1].Amount;
 	}
 
+	private void FilterDecompositions(Dictionary<int, List<Money>> candidateList, List<Money> denoms)
+	{
+		if (candidateList.Count == 0)
+		{
+			return;
+		}
+		var candidate = candidateList.Values.First();
+		if (denoms.Contains(candidate[^1]))
+		{
+			// Changeless solutions
+			return;
+		}
+
+		// Candidate list with change
+		var maxDenom = denoms[0];
+		var highChanges = candidateList.Where(x => x.Value[^1] > maxDenom).Select(x => x.Key).ToList();
+		if (highChanges.Count > 0 && highChanges.Count < candidateList.Count)
+		{
+			highChanges.ForEach(x => candidateList.Remove(x));
+		}
+	}
+
 	private void AddChangelessDecompositions(Dictionary<int, List<Money>> candidateList, List<Money> denoms, Money myInputSum, int preferedNumberOfOutputsAllowed, int maxNumberOfOutputsAllowed)
 	{
 		int origCount = candidateList.Count;
@@ -215,8 +239,8 @@ public class AmountDecomposer
 			List<Money> currentSet = new();
 			while (remainingCount > 0)
 			{
-				var denom = denoms.Where(x => IsDenomCanBeChoosen(x, remainingMoney, remainingCount) && x + MinimumOutputFee >= remainingMoney / 3).RandomElement(Random)
-					?? denoms.FirstOrDefault(x => IsDenomCanBeChoosen(x, remainingMoney, remainingCount));
+				var denomList = denoms.Where(x => IsDenomCanBeChoosen(x, remainingMoney, remainingCount) && x + MinimumOutputFee >= remainingMoney / 8).ToList();
+				var denom = denomList.RandomElement(Random) ?? denoms.FirstOrDefault(x => IsDenomCanBeChoosen(x, remainingMoney, remainingCount));
 
 				if (denom is null)
 				{
@@ -336,7 +360,7 @@ public class AmountDecomposer
 		return outputs;
 	}
 
-	private int CalculateHash(IEnumerable<Money> outputs)
+	private int CalculateHash(List<Money> outputs)
 	{
 		HashCode hash = new();
 		foreach (var item in outputs.OrderBy(x => x))

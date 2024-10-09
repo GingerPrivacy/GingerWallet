@@ -1,3 +1,4 @@
+using LinqKit;
 using Microsoft.Extensions.Hosting;
 using NBitcoin;
 using System.Collections.Generic;
@@ -314,7 +315,7 @@ public class Wallet : BackgroundService, IWallet
 
 			await LoadWalletStateAsync(cancel).ConfigureAwait(false);
 			await LoadDummyMempoolAsync().ConfigureAwait(false);
-			LoadExcludedCoins();
+			LoadCoinProperties();
 
 			await base.StartAsync(cancel).ConfigureAwait(false);
 
@@ -327,13 +328,13 @@ public class Wallet : BackgroundService, IWallet
 		}
 	}
 
-	private void LoadExcludedCoins()
+	private void LoadCoinProperties()
 	{
 		bool isUpdateRequired = false;
-		foreach (var excludedCoin in KeyManager.ExcludedCoinsFromCoinJoin)
+		WalletAttributes attributes = KeyManager.Attributes;
+		foreach (var excludedCoin in attributes.ExcludedCoinsFromCoinJoin)
 		{
-			var coin = Coins.SingleOrDefault(c => c.Outpoint == excludedCoin);
-			if (coin != null)
+			if (Coins.TryGetByOutPoint(excludedCoin, out SmartCoin? coin))
 			{
 				coin.IsExcludedFromCoinJoin = true;
 			}
@@ -342,9 +343,20 @@ public class Wallet : BackgroundService, IWallet
 				isUpdateRequired = true;
 			}
 		}
+		foreach (var coinjoinCoin in attributes.CoinJoinOutputs)
+		{
+			if (Coins.TryGetByOutPoint(coinjoinCoin, out SmartCoin? coin))
+			{
+				coin.IsCoinJoinOutput = true;
+			}
+			else
+			{
+				isUpdateRequired = true;
+			}
+		}
 		if (isUpdateRequired)
 		{
-			UpdateExcludedCoinFromCoinJoin();
+			KeyManager.UpdateFromCoins(Coins);
 		}
 	}
 
@@ -559,7 +571,7 @@ public class Wallet : BackgroundService, IWallet
 		}
 
 		coin.IsExcludedFromCoinJoin = exclude;
-		UpdateExcludedCoinFromCoinJoin();
+		KeyManager.UpdateFromCoins(Coins);
 	}
 
 	public void UpdateExcludedCoinsFromCoinJoin(OutPoint[] outPointsToExclude)
@@ -569,13 +581,7 @@ public class Wallet : BackgroundService, IWallet
 			coin.IsExcludedFromCoinJoin = outPointsToExclude.Contains(coin.Outpoint);
 		}
 
-		UpdateExcludedCoinFromCoinJoin();
-	}
-
-	private void UpdateExcludedCoinFromCoinJoin()
-	{
-		var excludedOutpoints = Coins.Where(c => c.IsExcludedFromCoinJoin).Select(c => c.Outpoint);
-		KeyManager.SetExcludedCoinsFromCoinJoin(excludedOutpoints);
+		KeyManager.UpdateFromCoins(Coins);
 	}
 
 	public void UpdateUsedHdPubKeysLabels(Dictionary<HdPubKey, LabelsArray> hdPubKeysWithLabels)
@@ -591,6 +597,19 @@ public class Wallet : BackgroundService, IWallet
 		}
 
 		KeyManager.ToFile();
+	}
+
+	public void AddCoinJoinTransaction(uint256 txHash)
+	{
+		if (TransactionProcessor.IsAware(txHash))
+		{
+			Coins.Where(x => x.TransactionId == txHash).ForEach(x => x.IsCoinJoinOutput = true);
+			KeyManager.UpdateFromCoins(Coins);
+		}
+		else
+		{
+			KeyManager.AddCoinJoinTransaction(txHash);
+		}
 	}
 
 	private void EnsureHeightsAreAtLeastSegWitActivation()

@@ -517,4 +517,37 @@ public static class NBitcoinExtensions
 			return false;
 		}
 	}
+
+	public static double GetAnonScore(this Transaction transaction)
+	{
+		int totalCount = transaction.Outputs.Count;
+		int diffCount = transaction.Outputs.Select(x => x.Value.Satoshi).ToHashSet().Count;
+		return totalCount > 0 ? totalCount / (double)diffCount : 0;
+	}
+
+	public class KeyPathComparer : IComparer<KeyPath>
+	{
+		public int Compare(KeyPath? keyPath1, KeyPath? keyPath2)
+		{
+			if (keyPath1 is null)
+			{
+				return keyPath2 is null ? 0 : 1;
+			}
+			if (keyPath2 is null)
+			{
+				return -1;
+			}
+
+			int len = Math.Min(keyPath1.Length, keyPath2.Length);
+			for (int idx = 0; idx < len; idx++)
+			{
+				uint v1 = keyPath1[idx], v2 = keyPath2[idx];
+				if (v1 != v2)
+				{
+					return v1 < v2 ? -1 : 1;
+				}
+			}
+			return keyPath1.Length < keyPath2.Length ? -1 : (keyPath1.Length == keyPath2.Length ? 0 : 1);
+		}
+	}
 }

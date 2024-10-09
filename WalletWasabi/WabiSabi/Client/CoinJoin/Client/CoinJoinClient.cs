@@ -424,6 +424,7 @@ public class CoinJoinClient
 		int eventInvokedAlready = 0;
 
 		UnexpectedRoundPhaseException? lastUnexpectedRoundPhaseException = null;
+		CoinJoinClientException? lastCoinJoinClientException = null;
 
 		var remainingInputRegTime = roundState.InputRegistrationEnd - DateTimeOffset.UtcNow;
 
@@ -432,6 +433,7 @@ public class CoinJoinClient
 		using CancellationTokenSource connConfTimeoutCts = new(remainingInputRegTime + roundState.CoinjoinState.Parameters.ConnectionConfirmationTimeout + ExtraPhaseTimeoutMargin);
 		using CancellationTokenSource registrationsCts = new();
 		using CancellationTokenSource confirmationsCts = new();
+		using CancellationTokenSource silentLeaveCts = new();
 
 		using CancellationTokenSource linkedUnregisterCts = CancellationTokenSource.CreateLinkedTokenSource(strictInputRegTimeoutCts.Token, registrationsCts.Token);
 		using CancellationTokenSource linkedRegistrationsCts = CancellationTokenSource.CreateLinkedTokenSource(inputRegTimeoutCts.Token, registrationsCts.Token, cancel);
@@ -456,7 +458,7 @@ public class CoinJoinClient
 					CoinJoinConfiguration.CoordinatorIdentifier,
 					arenaRequestHandler);
 
-				var aliceClient = await AliceClient.CreateRegisterAndConfirmInputAsync(roundState, aliceArenaClient, coin, KeyChain, RoundStatusUpdater, linkedUnregisterCts.Token, linkedRegistrationsCts.Token, linkedConfirmationsCts.Token).ConfigureAwait(false);
+				var aliceClient = await AliceClient.CreateRegisterAndConfirmInputAsync(roundState, aliceArenaClient, coin, KeyChain, RoundStatusUpdater, linkedUnregisterCts.Token, linkedRegistrationsCts.Token, linkedConfirmationsCts.Token, silentLeaveCts.Token).ConfigureAwait(false);
 
 				// Right after the first real-cred confirmation happened we entered into critical phase.
 				if (Interlocked.Exchange(ref eventInvokedAlready, 1) == 0)
@@ -536,6 +538,14 @@ public class CoinJoinClient
 						break;
 				}
 			}
+			catch (CoinJoinClientException ex)
+			{
+				// no new registrations
+				registrationsCts.Cancel();
+				// the registered ones will hold the registration for random time and leave
+				silentLeaveCts.Cancel();
+				lastCoinJoinClientException ??= ex;
+			}
 			catch (OperationCanceledException ex)
 			{
 				if (cancel.IsCancellationRequested)
@@ -607,6 +617,11 @@ public class CoinJoinClient
 			.Where(r => r.AliceClient is not null && r.PersonCircuit is not null)
 			.Select(r => (r.AliceClient!, r.PersonCircuit!))
 			.ToImmutableArray();
+
+		if (lastCoinJoinClientException is not null)
+		{
+			throw lastCoinJoinClientException;
+		}
 
 		if (!successfulAlices.Any() && lastUnexpectedRoundPhaseException is { })
 		{

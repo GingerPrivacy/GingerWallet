@@ -12,13 +12,14 @@ public record HdPubKeyGenerator(ExtPubKey ExtPubKey, KeyPath KeyPath, int MinGap
 
 	public IEnumerable<(KeyPath KeyPath, ExtPubKey ExtPubKey)> AssertCleanKeysIndexed(HdPubKeyPathView view)
 	{
-		var unusedKeys = view.Reverse().TakeWhile(x => x.KeyState == KeyState.Clean);
-		var unusedKeyCount = unusedKeys.Count();
-		var missingKeys = Math.Max(MinGapLimit - unusedKeyCount, 0);
 		var idx = GetNextKeyIndex(view);
-		return Enumerable.Range(idx, missingKeys)
-			.Select(GenerateKeyByIndex);
+		var firstClean = view.Where(x => x.KeyState != KeyState.Clean).Select(x => x.Index).MaxOrDefault(-1) + 1;
+		var unusedKeyCount = idx - firstClean;
+		var missingKeys = Math.Max(MinGapLimit - unusedKeyCount, 0);
+		return GenerateKeysByIndexRange(idx, missingKeys);
 	}
+
+	public IEnumerable<(KeyPath KeyPath, ExtPubKey ExtPubKey)> GenerateKeysByIndexRange(int index, int length) => Enumerable.Range(index, length).Select(GenerateKeyByIndex);
 
 	private (KeyPath, ExtPubKey) GenerateKeyByIndex(int index) =>
 		(KeyPath.Derive((uint)index), ExtPubKey.Derive((uint)index));

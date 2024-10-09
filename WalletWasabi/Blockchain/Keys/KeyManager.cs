@@ -7,7 +7,10 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Security;
 using System.Text;
+using System.Xml.Linq;
 using WalletWasabi.Blockchain.Analysis.Clustering;
+using WalletWasabi.Blockchain.TransactionOutputs;
+using WalletWasabi.Extensions;
 using WalletWasabi.Helpers;
 using WalletWasabi.Io;
 using WalletWasabi.JsonConverters;
@@ -22,15 +25,8 @@ namespace WalletWasabi.Blockchain.Keys;
 [JsonObject(MemberSerialization.OptIn)]
 public class KeyManager
 {
-	public const int DefaultAnonScoreTarget = 5;
-	public const bool DefaultAutoCoinjoin = false;
-	public const bool DefaultRedCoinIsolation = false;
-	public const int DefaultSafeMiningFeeRate = 10;
-	public const int DefaultFeeRateMedianTimeFrameHours = 0;
-
 	public const int AbsoluteMinGapLimit = 21;
 	public const int MaxGapLimit = 10_000;
-	public static readonly Money DefaultPlebStopThreshold = Money.Coins(0.01m);
 
 	private static readonly JsonConverter[] JsonConverters =
 	{
@@ -46,6 +42,7 @@ public class KeyManager
 	[JsonConstructor]
 	public KeyManager(BitcoinEncryptedSecretNoEC? encryptedSecret, byte[]? chainCode, HDFingerprint? masterFingerprint, ExtPubKey extPubKey, ExtPubKey? taprootExtPubKey, int? minGapLimit, BlockchainState blockchainState, string? filePath = null, KeyPath? segwitAccountKeyPath = null, KeyPath? taprootAccountKeyPath = null)
 	{
+		Attributes = new();
 		EncryptedSecret = encryptedSecret;
 		ChainCode = chainCode;
 		MasterFingerprint = masterFingerprint;
@@ -73,6 +70,7 @@ public class KeyManager
 
 	public KeyManager(BitcoinEncryptedSecretNoEC encryptedSecret, byte[] chainCode, string password, Network network)
 	{
+		Attributes = new();
 		BlockchainState = new BlockchainState(network);
 
 		password ??= "";
@@ -113,7 +111,7 @@ public class KeyManager
 	private void OnSerializingMethod(StreamingContext context)
 	{
 		HdPubKeys.Clear();
-		HdPubKeys.AddRange(HdPubKeyCache.HdPubKeys);
+		HdPubKeys.AddRange(HdPubKeyCache.HdPubKeys.ToHashSet().OrderBy(x => x.FullKeyPath, new NBitcoinExtensions.KeyPathComparer()));
 		MinGapLimit = Math.Max(SegwitExternalKeyGenerator.MinGapLimit, TaprootExternalKeyGenerator?.MinGapLimit ?? 0);
 	}
 
@@ -140,6 +138,18 @@ public class KeyManager
 	}
 
 	#region Properties
+
+	private WalletAttributes _attributes;
+
+	public WalletAttributes Attributes
+	{
+		get => _attributes;
+		[MemberNotNull(nameof(_attributes))]
+		set
+		{
+			_attributes = value; _attributes.KeyManager = this;
+		}
+	}
 
 	/// <remarks><c>null</c> if the watch-only mode is on.</remarks>
 	[JsonProperty(PropertyName = "EncryptedSecret")]
@@ -177,41 +187,41 @@ public class KeyManager
 	public bool PreferPsbtWorkflow { get; set; }
 
 	[JsonProperty(PropertyName = "AutoCoinJoin")]
-	public bool AutoCoinJoin { get; set; } = DefaultAutoCoinjoin;
+	public bool AutoCoinJoin { get => Attributes.AutoCoinJoin; set => Attributes.AutoCoinJoin = value; }
 
 	/// <summary>
 	/// Won't coinjoin automatically if the wallet balance is less than this.
 	/// </summary>
 	[JsonProperty(PropertyName = "PlebStopThreshold")]
 	[JsonConverter(typeof(MoneyBtcJsonConverter))]
-	public Money PlebStopThreshold { get; set; } = DefaultPlebStopThreshold;
+	public Money PlebStopThreshold { get => Attributes.PlebStopThreshold; set => Attributes.PlebStopThreshold = value; }
 
 	[JsonProperty(PropertyName = "Icon")]
-	public string? Icon { get; private set; }
+	public string? Icon { get => Attributes.Icon; private set => Attributes.Icon = value; }
 
 	[JsonProperty(PropertyName = "AnonScoreTarget")]
-	public int AnonScoreTarget { get; set; } = DefaultAnonScoreTarget;
+	public int AnonScoreTarget { get => Attributes.AnonScoreTarget; set => Attributes.AnonScoreTarget = value; }
 
 	[JsonProperty(PropertyName = "SafeMiningFeeRate")]
-	public int SafeMiningFeeRate { get; set; } = DefaultSafeMiningFeeRate;
+	public int SafeMiningFeeRate { get => Attributes.SafeMiningFeeRate; set => Attributes.SafeMiningFeeRate = value; }
 
 	[JsonProperty(PropertyName = "FeeRateMedianTimeFrameHours")]
-	public int FeeRateMedianTimeFrameHours { get; private set; } = DefaultFeeRateMedianTimeFrameHours;
+	public int FeeRateMedianTimeFrameHours { get => Attributes.FeeRateMedianTimeFrameHours; private set => Attributes.FeeRateMedianTimeFrameHours = value; }
 
 	[JsonProperty(PropertyName = "IsCoinjoinProfileSelected")]
-	public bool IsCoinjoinProfileSelected { get; set; } = false;
+	public bool IsCoinjoinProfileSelected { get => Attributes.IsCoinjoinProfileSelected; set => Attributes.IsCoinjoinProfileSelected = value; }
 
 	[JsonProperty(PropertyName = "RedCoinIsolation")]
-	public bool RedCoinIsolation { get; set; } = DefaultRedCoinIsolation;
+	public bool RedCoinIsolation { get => Attributes.RedCoinIsolation; set => Attributes.RedCoinIsolation = value; }
 
 	[JsonProperty(PropertyName = "CoinjoinSkipFactors")]
-	public CoinjoinSkipFactors CoinjoinSkipFactors { get; set; } = CoinjoinSkipFactors.SpeedMaximizing;
+	public CoinjoinSkipFactors CoinjoinSkipFactors { get => Attributes.CoinjoinSkipFactors; set => Attributes.CoinjoinSkipFactors = value; }
 
 	[JsonProperty(Order = 999, PropertyName = "HdPubKeys")]
 	private List<HdPubKey> HdPubKeys { get; } = new();
 
 	[JsonProperty(ItemConverterType = typeof(OutPointJsonConverter), PropertyName = "ExcludedCoinsFromCoinJoin")]
-	public List<OutPoint> ExcludedCoinsFromCoinJoin { get; private set; } = new();
+	public List<OutPoint> ExcludedCoinsFromCoinJoin { get => Attributes.ExcludedCoinsFromCoinJoin; private set => Attributes.ExcludedCoinsFromCoinJoin = value; }
 
 	public string? FilePath { get; private set; }
 
@@ -222,7 +232,7 @@ public class KeyManager
 	[MemberNotNullWhen(returnValue: true, nameof(MasterFingerprint))]
 	public bool IsHardwareWallet => EncryptedSecret is null && MasterFingerprint is not null;
 
-	private HdPubKeyCache HdPubKeyCache { get; } = new();
+	internal HdPubKeyCache HdPubKeyCache { get; } = new();
 
 	// `CriticalStateLock` is aimed to synchronize read/write access to the "critical" properties:
 	// keys (stored in the `HdPubKeyCache`), minGapLimit, secrets, height, network.
@@ -316,6 +326,31 @@ public class KeyManager
 
 		km.SetFilePath(filePath);
 		km.EncryptionKey = secret;
+
+		var attributeFilePath = GetWalletAttributeFilePath(filePath);
+		if (attributeFilePath.Length > 0 && File.Exists(attributeFilePath))
+		{
+			SafeIoManager safeIoManagerAttributes = new(attributeFilePath);
+			string jsonStringAttributes = safeIoManagerAttributes.ReadAllText(Encoding.UTF8);
+			WalletAttributes? walletAttributes;
+			try
+			{
+				if (!jsonStringAttributes.Contains('{'))
+				{
+					jsonStringAttributes = TwoFactorAuthenticationHelpers.DecryptString(jsonStringAttributes, km.SegwitExtPubKey.ToString(km.BlockchainState.Network));
+				}
+
+				walletAttributes = JsonConvert.DeserializeObject<WalletAttributes>(jsonStringAttributes, JsonConverters);
+				if (walletAttributes is not null)
+				{
+					km.Attributes = walletAttributes;
+				}
+			}
+			catch (Exception ex)
+			{
+				Logger.LogInfo($"Unable to load Wallet Attributes file at: `{attributeFilePath}` is not a valid wallet attributes file or it is corrupted. ({ex.Message})");
+			}
+		}
 
 		return km;
 	}
@@ -524,6 +559,39 @@ public class KeyManager
 		}
 	}
 
+	internal void AddOrUpdateKey(HdPubKey hdPubKey)
+	{
+		var info = new HdPubKeyInfo(hdPubKey, hdPubKey.FullKeyPath.GetScriptTypeFromKeyPath());
+		if (HdPubKeyCache.TryGetPubKey(info.ScriptPubKey, out HdPubKey? origKey))
+		{
+			if (hdPubKey.KeyState == KeyState.Locked && origKey.KeyState == KeyState.Clean)
+			{
+				origKey.SetKeyState(KeyState.Locked);
+			}
+			if (hdPubKey.Labels.Count > 0 && origKey.Labels.Count == 0)
+			{
+				origKey.SetLabel(hdPubKey.Labels);
+			}
+		}
+		else
+		{
+			// We have to be sure that all the lower index keys are there or the wallet will miss those values!
+			var parentKeyPath = hdPubKey.FullKeyPath.Parent;
+			if (parentKeyPath is not null)
+			{
+				var view = HdPubKeyCache.GetView(parentKeyPath);
+				var idx = view.Select(x => x.Index).MaxOrDefault(-1) + 1;
+
+				var keySource = GetHdPubKeyGenerator(hdPubKey.IsInternal, hdPubKey.FullKeyPath.GetScriptTypeFromKeyPath());
+				if (keySource is not null)
+				{
+					HdPubKeyCache.AddRangeKeys(keySource.GenerateKeysByIndexRange(idx, hdPubKey.Index - idx).Select(CreateHdPubKey));
+					HdPubKeyCache.AddKey(hdPubKey, info.ScriptPubKeyType);
+				}
+			}
+		}
+	}
+
 	public void SetKeyState(KeyState newKeyState, HdPubKey hdPubKey)
 	{
 		if (hdPubKey.KeyState == newKeyState)
@@ -625,22 +693,43 @@ public class KeyManager
 	public void ToFile(string filePath)
 	{
 		string jsonString = string.Empty;
+		string jsonStringAttributes = string.Empty;
 
 		lock (CriticalStateLock)
 		{
 			jsonString = JsonConvert.SerializeObject(this, Formatting.Indented, JsonConverters);
+			jsonStringAttributes = JsonConvert.SerializeObject(Attributes, Formatting.Indented, JsonConverters);
 		}
 
 		IoHelpers.EnsureContainingDirectoryExists(filePath);
 
 		SafeIoManager safeIoManager = new(filePath);
-
 		if (!string.IsNullOrWhiteSpace(EncryptionKey))
 		{
 			jsonString = TwoFactorAuthenticationHelpers.EncryptString(jsonString, EncryptionKey);
 		}
-
 		safeIoManager.WriteAllText(jsonString, Encoding.UTF8);
+
+		var attributeFilePath = GetWalletAttributeFilePath(filePath);
+		if (attributeFilePath.Length > 0)
+		{
+			SafeIoManager safeIoManagerAttributes = new(attributeFilePath);
+			if (!string.IsNullOrWhiteSpace(EncryptionKey))
+			{
+				jsonStringAttributes = TwoFactorAuthenticationHelpers.EncryptString(jsonStringAttributes, SegwitExtPubKey.ToString(BlockchainState.Network));
+			}
+
+			safeIoManagerAttributes.WriteAllText(jsonStringAttributes, Encoding.UTF8);
+		}
+	}
+
+	protected static string GetWalletAttributeFilePath(string filePath)
+	{
+		if (filePath.EndsWith(WalletDirectories.WalletFileExtension))
+		{
+			return filePath[..(filePath.Length - WalletDirectories.WalletFileExtension.Length)] + WalletDirectories.WalletAttributesFileExtension;
+		}
+		return "";
 	}
 
 	#region BlockchainState
@@ -789,10 +878,20 @@ public class KeyManager
 	private static HdPubKey CreateHdPubKey((KeyPath KeyPath, ExtPubKey ExtPubKey) x) =>
 		new(x.ExtPubKey.PubKey, x.KeyPath, LabelsArray.Empty, KeyState.Clean);
 
-	internal void SetExcludedCoinsFromCoinJoin(IEnumerable<OutPoint> excludedOutpoints)
+	internal void UpdateFromCoins(CoinsRegistry coins)
 	{
-		ExcludedCoinsFromCoinJoin = excludedOutpoints.ToList();
+		Attributes.ExcludedCoinsFromCoinJoin = coins.Where(c => c.IsExcludedFromCoinJoin).Select(c => c.Outpoint).ToList();
+		Attributes.CoinJoinOutputs = coins.Where(c => c.IsCoinJoinOutput).Select(c => c.Outpoint).ToList();
 		ToFile();
+	}
+
+	internal void AddCoinJoinTransaction(uint256 txHash)
+	{
+		if (!Attributes.CoinJoinTransactions.Contains(txHash))
+		{
+			Attributes.CoinJoinTransactions.Add(txHash);
+			ToFile();
+		}
 	}
 }
 

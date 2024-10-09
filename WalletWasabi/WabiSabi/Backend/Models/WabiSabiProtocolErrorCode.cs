@@ -37,6 +37,7 @@ public enum WabiSabiProtocolErrorCode
 	AliceAlreadyConfirmedConnection,
 	AlreadyRegisteredScript,
 	SignatureTooLong,
+	SilentLeave
 }
 
 public static class WabiSabiProtocolErrorCodeExtension

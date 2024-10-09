@@ -1,3 +1,4 @@
+using NBitcoin;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WalletWasabi.Blockchain.TransactionOutputs;
@@ -36,4 +37,6 @@ public interface IWallet
 	Task<IEnumerable<SmartCoin>> GetCoinjoinCoinCandidatesAsync();
 
 	Task<IEnumerable<SmartTransaction>> GetTransactionsAsync();
+
+	void AddCoinJoinTransaction(uint256 tx);
 }
