@@ -10,14 +10,16 @@ insert_final_newline = true
 # Formatting - remove any whitespace characters preceding newline characters
 trim_trailing_whitespace = true
 
+[*.{cs,csproj,props,axaml,resx,xaml}]
+
+# Formatting - set preferred newline characters
+end_of_line = lf
+
 [*.{cs,csproj,props}]
 
 # use hard tabs for indentation
 indent_style = tab
 indent_size = 4
-
-# Formatting - set preferred newline characters
-end_of_line = lf
 
 [*.{xaml,axaml}]
 
