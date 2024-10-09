@@ -10,6 +10,9 @@
 *.csproj text eol=lf
 *.props text eol=lf
 *.xaml text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.xaml text eol=lf
 
 
 ###############################################################################
