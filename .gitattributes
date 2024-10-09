@@ -4,6 +4,14 @@
 * text=auto
 **/osx64/Tor/tor text eol=lf
 
+*.axaml text eol=lf
+*.cs text eol=lf
+*.resx text eol=lf
+*.csproj text eol=lf
+*.props text eol=lf
+*.xaml text eol=lf
+
+
 ###############################################################################
 # Set default behavior for command prompt diff.
 #
