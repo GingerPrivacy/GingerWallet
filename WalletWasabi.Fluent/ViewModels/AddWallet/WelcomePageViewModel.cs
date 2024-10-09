@@ -5,7 +5,6 @@ using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
 
 namespace WalletWasabi.Fluent.ViewModels.AddWallet;
 
-[NavigationMetaData(Title = "Welcome")]
 public partial class WelcomePageViewModel : DialogViewModelBase<Unit>
 {
 	private const int NumberOfPages = 2;
@@ -15,6 +14,8 @@ public partial class WelcomePageViewModel : DialogViewModelBase<Unit>
 
 	private WelcomePageViewModel()
 	{
+		Title = "Welcome";
+
 		SetupCancel(enableCancel: false, enableCancelOnEscape: false, enableCancelOnPressed: false);
 
 		SelectedIndex = 0;

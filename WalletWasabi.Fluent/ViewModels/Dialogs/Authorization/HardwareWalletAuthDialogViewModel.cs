@@ -5,7 +5,7 @@ using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.ViewModels.Dialogs.Authorization;
 
-[NavigationMetaData(Title = "Authorize with Hardware Wallet", NavigationTarget = NavigationTarget.CompactDialogScreen)]
+[NavigationMetaData(NavigationTarget = NavigationTarget.CompactDialogScreen)]
 public partial class HardwareWalletAuthDialogViewModel : AuthorizationDialogBase
 {
 	private readonly IHardwareWalletModel _wallet;
@@ -13,6 +13,8 @@ public partial class HardwareWalletAuthDialogViewModel : AuthorizationDialogBase
 
 	public HardwareWalletAuthDialogViewModel(IHardwareWalletModel wallet, TransactionAuthorizationInfo transactionAuthorizationInfo)
 	{
+		Title = "Authorize with Hardware Wallet";
+
 		_wallet = wallet;
 		_transactionAuthorizationInfo = transactionAuthorizationInfo;
 		WalletType = wallet.Settings.WalletType;

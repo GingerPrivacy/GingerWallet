@@ -3,7 +3,7 @@ using WalletWasabi.Fluent.Models.Wallets;
 
 namespace WalletWasabi.Fluent.ViewModels.Dialogs.Authorization;
 
-[NavigationMetaData(Title = "Enter your passphrase", NavigationTarget = NavigationTarget.CompactDialogScreen)]
+[NavigationMetaData(NavigationTarget = NavigationTarget.CompactDialogScreen)]
 public partial class PasswordAuthDialogViewModel : AuthorizationDialogBase
 {
 	private readonly IWalletModel _wallet;
@@ -15,6 +15,8 @@ public partial class PasswordAuthDialogViewModel : AuthorizationDialogBase
 		{
 			throw new InvalidOperationException("Passphrase authorization is not possible on hardware wallets.");
 		}
+
+		Title = "Enter your passphrase";
 
 		ContinueText = continueText;
 

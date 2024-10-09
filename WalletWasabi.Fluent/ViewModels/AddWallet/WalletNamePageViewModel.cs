@@ -12,7 +12,6 @@ using WalletWasabi.Fluent.Models.UI;
 
 namespace WalletWasabi.Fluent.ViewModels.AddWallet;
 
-[NavigationMetaData(Title = "Wallet Name")]
 public partial class WalletNamePageViewModel : RoutableViewModel
 {
 	private readonly WalletCreationOptions _options;
@@ -20,6 +19,8 @@ public partial class WalletNamePageViewModel : RoutableViewModel
 
 	public WalletNamePageViewModel(UiContext uiContext, WalletCreationOptions options)
 	{
+		Title = "Wallet Name";
+
 		UiContext = uiContext;
 
 		_options = options;

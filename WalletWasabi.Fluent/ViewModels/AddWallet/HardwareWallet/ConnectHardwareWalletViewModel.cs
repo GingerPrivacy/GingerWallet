@@ -14,7 +14,6 @@ using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.ViewModels.AddWallet.HardwareWallet;
 
-[NavigationMetaData(Title = "Hardware Wallet")]
 public partial class ConnectHardwareWalletViewModel : RoutableViewModel
 {
 	private readonly WalletCreationOptions.ConnectToHardwareWallet _options;
@@ -25,6 +24,8 @@ public partial class ConnectHardwareWalletViewModel : RoutableViewModel
 
 	private ConnectHardwareWalletViewModel(WalletCreationOptions.ConnectToHardwareWallet options)
 	{
+		Title = "Hardware Wallet";
+
 		_options = options;
 
 		ArgumentException.ThrowIfNullOrEmpty(options.WalletName);

@@ -8,13 +8,14 @@ using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
 
 namespace WalletWasabi.Fluent.ViewModels.AddWallet;
 
-[NavigationMetaData(Title = "Terms and conditions")]
 public partial class TermsAndConditionsViewModel : DialogViewModelBase<bool>
 {
 	[AutoNotify] private bool _isAgreed;
 
 	private TermsAndConditionsViewModel()
 	{
+		Title = "Terms and conditions";
+
 		ViewTermsCommand = ReactiveCommand.Create(() => Navigate().To().LegalDocuments());
 
 		NextCommand = ReactiveCommand.Create(

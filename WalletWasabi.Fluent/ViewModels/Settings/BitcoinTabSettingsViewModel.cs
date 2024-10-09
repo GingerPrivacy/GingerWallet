@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Fluent.Infrastructure;
+using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Validation;
 using WalletWasabi.Fluent.ViewModels.Navigation;
@@ -13,16 +14,10 @@ namespace WalletWasabi.Fluent.ViewModels.Settings;
 
 [AppLifetime]
 [NavigationMetaData(
-	Title = "Bitcoin",
-	Caption = "Manage Bitcoin settings",
 	Order = 1,
-	Category = "Settings",
-	Keywords = new[]
-	{
-			"Settings", "Bitcoin", "Network", "Main", "TestNet", "RegTest", "Run", "Node", "Core", "Knots", "Version", "Startup",
-			"P2P", "Endpoint", "Dust", "Threshold", "BTC"
-	},
-	IconName = "settings_bitcoin_regular")]
+	Category = SearchCategory.Settings,
+	IconName = "settings_bitcoin_regular",
+	IsLocalized = true)]
 public partial class BitcoinTabSettingsViewModel : RoutableViewModel
 {
 	[AutoNotify] private string _bitcoinP2PEndPoint;

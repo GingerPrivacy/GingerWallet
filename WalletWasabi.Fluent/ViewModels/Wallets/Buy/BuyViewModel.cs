@@ -9,6 +9,7 @@ using DynamicData.Binding;
 using ReactiveUI;
 using WalletWasabi.BuyAnything;
 using WalletWasabi.Fluent.Extensions;
+using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.ViewModels.Navigation;
@@ -17,12 +18,9 @@ using WalletWasabi.Logging;
 namespace WalletWasabi.Fluent.ViewModels.Wallets.Buy;
 
 [NavigationMetaData(
-	Title = "Buy Anything",
-	Caption = "Display wallet buy dialog",
 	IconName = "wallet_action_buy",
 	Order = 7,
-	Category = "Wallet",
-	Keywords = new[] { "Wallet", "Buy", "Action", },
+	Category = SearchCategory.Wallet,
 	NavBarPosition = NavBarPosition.None,
 	NavigationTarget = NavigationTarget.DialogScreen,
 	Searchable = false)]
@@ -39,6 +37,10 @@ public partial class BuyViewModel : RoutableViewModel, IOrderManager
 
 	public BuyViewModel(UiContext uiContext, IWalletModel wallet)
 	{
+		Title = "Buy Anything";
+		Caption = "Display wallet buy dialog";
+		Keywords = new[] { "Wallet", "Buy", "Action", };
+
 		IsBusy = true;
 		UiContext = uiContext;
 		_wallet = wallet;

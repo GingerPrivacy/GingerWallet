@@ -5,11 +5,12 @@ using WalletWasabi.Fluent.ViewModels.Navigation;
 
 namespace WalletWasabi.Fluent.ViewModels;
 
-[NavigationMetaData(Title = "Success")]
 public partial class SuccessViewModel : RoutableViewModel
 {
 	private SuccessViewModel()
 	{
+		Title = "Success";
+
 		NextCommand = ReactiveCommand.CreateFromTask(OnNextAsync);
 
 		SetupCancel(enableCancel: false, enableCancelOnEscape: true, enableCancelOnPressed: true);

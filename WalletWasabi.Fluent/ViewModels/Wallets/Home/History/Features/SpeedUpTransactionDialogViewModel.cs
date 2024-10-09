@@ -12,7 +12,7 @@ using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.ViewModels.Wallets.Home.History.Features;
 
-[NavigationMetaData(Title = "Speed Up Transaction", NavigationTarget = NavigationTarget.CompactDialogScreen)]
+[NavigationMetaData(NavigationTarget = NavigationTarget.CompactDialogScreen)]
 public partial class SpeedUpTransactionDialogViewModel : RoutableViewModel
 {
 	private readonly SpeedupTransaction _speedupTransaction;
@@ -20,6 +20,8 @@ public partial class SpeedUpTransactionDialogViewModel : RoutableViewModel
 
 	private SpeedUpTransactionDialogViewModel(IWalletModel wallet, SpeedupTransaction speedupTransaction)
 	{
+		Title = "Speed Up Transaction";
+
 		_wallet = wallet;
 		_speedupTransaction = speedupTransaction;
 

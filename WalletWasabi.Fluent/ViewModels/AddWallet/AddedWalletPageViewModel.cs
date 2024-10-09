@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace WalletWasabi.Fluent.ViewModels.AddWallet;
 
-[NavigationMetaData(Title = "Success")]
 public partial class AddedWalletPageViewModel : RoutableViewModel
 {
 	private readonly IWalletSettingsModel _walletSettings;
@@ -16,6 +15,8 @@ public partial class AddedWalletPageViewModel : RoutableViewModel
 
 	private AddedWalletPageViewModel(IWalletSettingsModel walletSettings, WalletCreationOptions options)
 	{
+		Title = "Success";
+
 		_walletSettings = walletSettings;
 
 		WalletName = options.WalletName!;

@@ -7,6 +7,7 @@ using System.Windows.Input;
 using ReactiveUI;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Infrastructure;
+using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
 using WalletWasabi.Fluent.ViewModels.SearchBar.Settings;
@@ -16,11 +17,8 @@ namespace WalletWasabi.Fluent.ViewModels.Settings;
 
 [AppLifetime]
 [NavigationMetaData(
-	Title = "Settings",
-	Caption = "Manage appearance, privacy and other settings",
 	Order = 1,
-	Category = "General",
-	Keywords = new[] { "Settings", "General", "User", "Interface", "Advanced" },
+	Category = SearchCategory.General,
 	IconName = "nav_settings_24_regular",
 	IconNameFocused = "nav_settings_24_filled",
 	Searchable = false,
@@ -36,6 +34,10 @@ public partial class SettingsPageViewModel : DialogViewModelBase<Unit>
 
 	public SettingsPageViewModel(UiContext uiContext)
 	{
+		Title = "Settings";
+		Keywords = new[] { "Settings", "General", "User", "Interface", "Advanced" };
+		Caption = "Manage appearance, privacy and other settings";
+
 		UiContext = uiContext;
 		_selectedTab = 0;
 

@@ -60,11 +60,272 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Display Ginger Wallet&apos;s current info.
+        /// </summary>
+        public static string AboutViewModelCaption {
+            get {
+                return ResourceManager.GetString("AboutViewModelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About, Software, Version, Source, Code, Github, Website, Coordinator, Stats, Tor, Onion, User, Support, Bug, Report, FAQ, Questions, Docs, Documentation, License, Advanced, Information, Hardware, Wallet.
+        /// </summary>
+        public static string AboutViewModelKeywords {
+            get {
+                return ResourceManager.GetString("AboutViewModelKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About Ginger Wallet.
+        /// </summary>
+        public static string AboutViewModelTitle {
+            get {
+                return ResourceManager.GetString("AboutViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create, connect, import or recover.
+        /// </summary>
+        public static string AddWalletPageViewModelCaption {
+            get {
+                return ResourceManager.GetString("AddWalletPageViewModelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wallet, Add, Create, New, Recover, Import, Connect, Hardware, ColdCard, Trezor, Ledger.
+        /// </summary>
+        public static string AddWalletPageViewModelKeywords {
+            get {
+                return ResourceManager.GetString("AddWalletPageViewModelKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Wallet.
         /// </summary>
-        public static string AddWallet {
+        public static string AddWalletPageViewModelTitle {
             get {
-                return ResourceManager.GetString("AddWallet", resourceCulture);
+                return ResourceManager.GetString("AddWalletPageViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage advanced settings.
+        /// </summary>
+        public static string AdvancedSettingsTabViewModelCaption {
+            get {
+                return ResourceManager.GetString("AdvancedSettingsTabViewModelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings, Advanced, Enable, GPU.
+        /// </summary>
+        public static string AdvancedSettingsTabViewModelKeywords {
+            get {
+                return ResourceManager.GetString("AdvancedSettingsTabViewModelKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced.
+        /// </summary>
+        public static string AdvancedSettingsTabViewModelTitle {
+            get {
+                return ResourceManager.GetString("AdvancedSettingsTabViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Bitcoin settings.
+        /// </summary>
+        public static string BitcoinTabSettingsViewModelCaption {
+            get {
+                return ResourceManager.GetString("BitcoinTabSettingsViewModelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings, Bitcoin, Network, Main, TestNet, RegTest, Run, Node, Core, Knots, Version, Startup, P2P, Endpoint, Dust, Threshold, BTC.
+        /// </summary>
+        public static string BitcoinTabSettingsViewModelKeywords {
+            get {
+                return ResourceManager.GetString("BitcoinTabSettingsViewModelKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bitcoin.
+        /// </summary>
+        public static string BitcoinTabSettingsViewModelTitle {
+            get {
+                return ResourceManager.GetString("BitcoinTabSettingsViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Broadcast your transaction here.
+        /// </summary>
+        public static string BroadcasterViewModelCaption {
+            get {
+                return ResourceManager.GetString("BroadcasterViewModelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transaction Id, Input, Output, Amount, Network, Fee, Count, BTC, Signed, Paste, Import, Broadcast, Transaction.
+        /// </summary>
+        public static string BroadcasterViewModelKeywords {
+            get {
+                return ResourceManager.GetString("BroadcasterViewModelKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Broadcaster.
+        /// </summary>
+        public static string BroadcasterViewModelTitle {
+            get {
+                return ResourceManager.GetString("BroadcasterViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Ginger Wallet&apos;s GitHub issues website.
+        /// </summary>
+        public static string BugReportLinkViewModelCaption {
+            get {
+                return ResourceManager.GetString("BugReportLinkViewModelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Support, Website, Bug, Report.
+        /// </summary>
+        public static string BugReportLinkViewModelKeywords {
+            get {
+                return ResourceManager.GetString("BugReportLinkViewModelKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report a Bug.
+        /// </summary>
+        public static string BugReportLinkViewModelTitle {
+            get {
+                return ResourceManager.GetString("BugReportLinkViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Ginger Wallet&apos;s FAQ website.
+        /// </summary>
+        public static string DocsLinkViewModelCaption {
+            get {
+                return ResourceManager.GetString("DocsLinkViewModelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User, Support, Website, Docs, Documentation, Guide.
+        /// </summary>
+        public static string DocsLinkViewModelKeywords {
+            get {
+                return ResourceManager.GetString("DocsLinkViewModelKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Guide/FAQ.
+        /// </summary>
+        public static string DocsLinkViewModelTitle {
+            get {
+                return ResourceManager.GetString("DocsLinkViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string General {
+            get {
+                return ResourceManager.GetString("General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string GeneralSettingsTabViewModelCaption {
+            get {
+                return ResourceManager.GetString("GeneralSettingsTabViewModelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings, General, Bitcoin, Dark, Mode, Run, Wasabi, Computer, System, Start, Background, Close, Auto, Copy, Paste, Addresses, Custom, Change, Address, Fee, Display, Format, BTC, sats, browser.
+        /// </summary>
+        public static string GeneralSettingsTabViewModelKeywords {
+            get {
+                return ResourceManager.GetString("GeneralSettingsTabViewModelKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string GeneralSettingsTabViewModelTitle {
+            get {
+                return ResourceManager.GetString("GeneralSettingsTabViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Help &amp; Support.
+        /// </summary>
+        public static string HelpAndSupport {
+            get {
+                return ResourceManager.GetString("HelpAndSupport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display terms and conditions.
+        /// </summary>
+        public static string LegalDocumentsViewModelCaption {
+            get {
+                return ResourceManager.GetString("LegalDocumentsViewModelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View, Legal, Document, Terms, Conditions, Privacy, Policy, Statement.
+        /// </summary>
+        public static string LegalDocumentsViewModelKeywords {
+            get {
+                return ResourceManager.GetString("LegalDocumentsViewModelKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Legal Document.
+        /// </summary>
+        public static string LegalDocumentsViewModelTitle {
+            get {
+                return ResourceManager.GetString("LegalDocumentsViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No category.
+        /// </summary>
+        public static string NoCategory {
+            get {
+                return ResourceManager.GetString("NoCategory", resourceCulture);
             }
         }
         
@@ -78,11 +339,219 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string OpenConfigFileViewModelCaption {
+            get {
+                return ResourceManager.GetString("OpenConfigFileViewModelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse, Open, Config, File.
+        /// </summary>
+        public static string OpenConfigFileViewModelKeywords {
+            get {
+                return ResourceManager.GetString("OpenConfigFileViewModelKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Config File.
+        /// </summary>
+        public static string OpenConfigFileViewModelTitle {
+            get {
+                return ResourceManager.GetString("OpenConfigFileViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string OpenDataFolderViewModelCaption {
+            get {
+                return ResourceManager.GetString("OpenDataFolderViewModelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse, Open, Data, Folder.
+        /// </summary>
+        public static string OpenDataFolderViewModelKeywords {
+            get {
+                return ResourceManager.GetString("OpenDataFolderViewModelKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data Folder.
+        /// </summary>
+        public static string OpenDataFolderViewModelTitle {
+            get {
+                return ResourceManager.GetString("OpenDataFolderViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string OpenLogsViewModelCaption {
+            get {
+                return ResourceManager.GetString("OpenLogsViewModelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse, Open, Logs.
+        /// </summary>
+        public static string OpenLogsViewModelKeywords {
+            get {
+                return ResourceManager.GetString("OpenLogsViewModelKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logs.
+        /// </summary>
+        public static string OpenLogsViewModelTitle {
+            get {
+                return ResourceManager.GetString("OpenLogsViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string OpenTorLogsViewModelCaption {
+            get {
+                return ResourceManager.GetString("OpenTorLogsViewModelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse, Open, Tor, Logs.
+        /// </summary>
+        public static string OpenTorLogsViewModelKeywords {
+            get {
+                return ResourceManager.GetString("OpenTorLogsViewModelKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tor Logs.
+        /// </summary>
+        public static string OpenTorLogsViewModelTitle {
+            get {
+                return ResourceManager.GetString("OpenTorLogsViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string OpenWalletsFolderViewModelCaption {
+            get {
+                return ResourceManager.GetString("OpenWalletsFolderViewModelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse, Open, Wallet, Folder.
+        /// </summary>
+        public static string OpenWalletsFolderViewModelKeywords {
+            get {
+                return ResourceManager.GetString("OpenWalletsFolderViewModelKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wallet Folder.
+        /// </summary>
+        public static string OpenWalletsFolderViewModelTitle {
+            get {
+                return ResourceManager.GetString("OpenWalletsFolderViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage security settings.
+        /// </summary>
+        public static string SecuritySettingsTabViewModelCaption {
+            get {
+                return ResourceManager.GetString("SecuritySettingsTabViewModelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Security, Settings, 2FA, Two-Factor, Authentication, Two, Factor.
+        /// </summary>
+        public static string SecuritySettingsTabViewModelKeywords {
+            get {
+                return ResourceManager.GetString("SecuritySettingsTabViewModelKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Security.
+        /// </summary>
+        public static string SecuritySettingsTabViewModelTitle {
+            get {
+                return ResourceManager.GetString("SecuritySettingsTabViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Two-Factor authentication is disabled. Enable it in the Setting for greater protection..
         /// </summary>
         public static string TwoFactorDisabledWarnMessage {
             get {
                 return ResourceManager.GetString("TwoFactorDisabledWarnMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Ginger Wallet&apos;s user support website
+        ///.
+        /// </summary>
+        public static string UserSupportViewModelCaption {
+            get {
+                return ResourceManager.GetString("UserSupportViewModelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User, Support, Website.
+        /// </summary>
+        public static string UserSupportViewModelKeywords {
+            get {
+                return ResourceManager.GetString("UserSupportViewModelKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Support.
+        /// </summary>
+        public static string UserSupportViewModelTitle {
+            get {
+                return ResourceManager.GetString("UserSupportViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wallet.
+        /// </summary>
+        public static string Wallet {
+            get {
+                return ResourceManager.GetString("Wallet", resourceCulture);
             }
         }
     }

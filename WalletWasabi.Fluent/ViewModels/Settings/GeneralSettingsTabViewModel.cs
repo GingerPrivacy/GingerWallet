@@ -13,16 +13,10 @@ namespace WalletWasabi.Fluent.ViewModels.Settings;
 
 [AppLifetime]
 [NavigationMetaData(
-	Title = "General",
-	Caption = "Manage general settings",
 	Order = 0,
-	Category = "Settings",
-	Keywords = new[]
-	{
-			"Settings", "General", "Bitcoin", "Dark", "Mode", "Run", "Wasabi", "Computer", "System", "Start", "Background", "Close",
-			"Auto", "Copy", "Paste", "Addresses", "Custom", "Change", "Address", "Fee", "Display", "Format", "BTC", "sats", "browser"
-	},
-	IconName = "settings_general_regular")]
+	Category = SearchCategory.Settings,
+	IconName = "settings_general_regular",
+	IsLocalized = true)]
 public partial class GeneralSettingsTabViewModel : RoutableViewModel
 {
 	[AutoNotify] private bool _runOnSystemStartup;

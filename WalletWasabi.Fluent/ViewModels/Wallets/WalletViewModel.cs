@@ -36,8 +36,6 @@ public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
 	[AutoNotify(SetterModifier = AccessModifier.Private)] private bool _isSendButtonVisible;
 
 	[AutoNotify(SetterModifier = AccessModifier.Private)] private bool _isWalletBalanceZero;
-
-	private string _title = "";
 	[AutoNotify(SetterModifier = AccessModifier.Protected)] private WalletState _walletState;
 
 	public WalletViewModel(UiContext uiContext, IWalletModel walletModel, Wallet wallet)
@@ -180,12 +178,6 @@ public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
 	public ICommand WalletCoinsCommand { get; private set; }
 
 	public ICommand CoinJoinSettingsCommand { get; private set; }
-
-	public override string Title
-	{
-		get => _title;
-		protected set => this.RaiseAndSetIfChanged(ref _title, value);
-	}
 
 	public IObservable<bool> HasUnreadConversations { get; }
 

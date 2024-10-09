@@ -16,7 +16,6 @@ using WalletWasabi.Blockchain.Analysis.FeesEstimation;
 namespace WalletWasabi.Fluent.ViewModels.Wallets.Send;
 
 [NavigationMetaData(
-	Title = "Send",
 	Caption = "",
 	IconName = "wallet_action_send",
 	NavBarPosition = NavBarPosition.None,
@@ -30,6 +29,7 @@ public partial class SendFeeViewModel : DialogViewModelBase<FeeRate>
 
 	private SendFeeViewModel(Wallet wallet, TransactionInfo transactionInfo, bool isSilent)
 	{
+		Title = "Send";
 		_isSilent = isSilent;
 		IsBusy = isSilent;
 		_wallet = wallet;

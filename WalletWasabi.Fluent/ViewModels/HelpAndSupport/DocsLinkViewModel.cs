@@ -1,18 +1,14 @@
 using System.Windows.Input;
 using ReactiveUI;
+using WalletWasabi.Fluent.Models;
 
 namespace WalletWasabi.Fluent.ViewModels.HelpAndSupport;
 
 [NavigationMetaData(
-	Title = "User Guide/FAQ",
-	Caption = "Open Ginger Wallet's FAQ website",
 	Order = 2,
-	Category = "Help & Support",
-	Keywords =
-	[
-		"User", "Support", "Website", "Docs", "Documentation", "Guide"
-	],
-	IconName = "book_question_mark_regular")]
+	Category = SearchCategory.HelpAndSupport,
+	IconName = "book_question_mark_regular",
+	IsLocalized = true)]
 public partial class DocsLinkViewModel : TriggerCommandViewModel
 {
 	private DocsLinkViewModel()

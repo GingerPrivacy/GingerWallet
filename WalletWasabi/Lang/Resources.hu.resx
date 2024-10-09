@@ -59,4 +59,149 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddWallet"><value>Új tárca</value></data><data name="Open"><value>Megnyitás</value></data><data name="TwoFactorDisabledWarnMessage"><value>A kétlépcsős hitelesítés le van tiltva. Engedélyezze a Beállításokban a nagyobb védelem érdekében.</value></data></root>
+  <data name="Open"><value>Megnyitás</value></data><data name="TwoFactorDisabledWarnMessage"><value>A kétlépcsős hitelesítés le van tiltva. Engedélyezze a Beállításokban a nagyobb védelem érdekében.</value></data>
+  <data name="AddWalletPageViewModelTitle" xml:space="preserve">
+    <value>Új tárca</value>
+  </data>
+  <data name="AddWalletPageViewModelCaption" xml:space="preserve">
+    <value>Létrehozás, csatlakozás, importálás vagy helyreállítás</value>
+  </data>
+  <data name="AddWalletPageViewModelKeywords" xml:space="preserve">
+    <value>Pénztárca, Hozzáadás, Létrehozás, Új, Helyreállítás, Importálás, Csatlakozás, Hardver, ColdCard, Trezor, Ledger</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>Általános</value>
+  </data>
+  <data name="HelpAndSupport" xml:space="preserve">
+    <value>Segítség &amp; támogatás</value>
+  </data>
+  <data name="NoCategory" xml:space="preserve">
+    <value>Nincs kategória</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Nincs kategória</value>
+  </data>
+  <data name="Wallet" xml:space="preserve">
+    <value>Tárca</value>
+  </data>
+  <data name="GeneralSettingsTabViewModelCaption" xml:space="preserve">
+    <value>Általános beállítások kezelése</value>
+  </data>
+  <data name="GeneralSettingsTabViewModelTitle" xml:space="preserve">
+    <value>Általános</value>
+  </data>
+  <data name="GeneralSettingsTabViewModelKeywords" xml:space="preserve">
+    <value>Beállítások, Általános, Bitcoin, Sötét, Mód, Futtatás, Wasabi, Számítógép, Rendszer, Indítás, Háttér, Bezárás, Automatikus, Másolás, Beillesztés, Címek, Egyéni, Módosítás, Cím, Díj, Kijelző, Formátum, BTC, sats, böngésző</value>
+  </data>
+  <data name="BitcoinTabSettingsViewModelTitle" xml:space="preserve">
+    <value>Bitcoin</value>
+  </data>
+  <data name="BitcoinTabSettingsViewModelCaption" xml:space="preserve">
+    <value>Bitcoin beállítások kezelése</value>
+  </data>
+  <data name="BitcoinTabSettingsViewModelKeywords" xml:space="preserve">
+    <value>Beállítások, Bitcoin, Hálózat, Fő, TestNet, RegTest, Futtatás, Csomópont, Core, Knots, Verzió, Indítás, P2P, Végpont, Por, Küszöb, BTC</value>
+  </data>
+  <data name="AdvancedSettingsTabViewModelCaption" xml:space="preserve">
+    <value>Haladó beállítások kezelése</value>
+  </data>
+  <data name="AdvancedSettingsTabViewModelTitle" xml:space="preserve">
+    <value>Haladó</value>
+  </data>
+  <data name="AdvancedSettingsTabViewModelKeywords" xml:space="preserve">
+    <value>Beállítások, Fejlett, Engedélyezés, GPU</value>
+  </data>
+  <data name="SecuritySettingsTabViewModelTitle" xml:space="preserve">
+    <value>Biztonság</value>
+  </data>
+  <data name="SecuritySettingsTabViewModelCaption" xml:space="preserve">
+    <value>Biztonsági beállítások kezelése</value>
+  </data>
+  <data name="SecuritySettingsTabViewModelKeywords" xml:space="preserve">
+    <value>Biztonság, Beállítások, 2FA, Kétfaktoros, Hitelesítés, Két, Faktor</value>
+  </data>
+  <data name="AboutViewModelTitle" xml:space="preserve">
+    <value>A, Szoftver, Verzió, Forrás, Kód, Github, Weboldal, Koordinátor, Statisztika, Tor, Onion, Felhasználó, Támogatás, Hiba, Jelentés, GYIK, Kérdések, Dokumentumok, Dokumentáció, Licenc, Fejlett, Információ, Hardver, Pénztárca</value>
+  </data>
+  <data name="AboutViewModelKeywords" xml:space="preserve">
+    <value>A Ginger Walletról</value>
+  </data>
+  <data name="AboutViewModelCaption" xml:space="preserve">
+    <value>A Ginger Wallet aktuális információinak megjelenítése</value>
+  </data>
+  <data name="BroadcasterViewModelTitle" xml:space="preserve">
+    <value>Adó</value>
+  </data>
+  <data name="BroadcasterViewModelKeywords" xml:space="preserve">
+    <value>Tranzakció azonosító, Bemenet, Kimenet, Összeg, Hálózat, Díj, Szám, BTC, Aláírt, Beillesztés, Importálás, Közvetítés, Tranzakció</value>
+  </data>
+  <data name="BroadcasterViewModelCaption" xml:space="preserve">
+    <value>Küldje el a tranzakcióját itt</value>
+  </data>
+  <data name="LegalDocumentsViewModelTitle" xml:space="preserve">
+    <value>Jogi dokumentum</value>
+  </data>
+  <data name="LegalDocumentsViewModelKeywords" xml:space="preserve">
+    <value>Nézet, Jogi, Dokumentum, Feltételek, Kikötések, Adatvédelmi, Politika, Nyilatkozat</value>
+  </data>
+  <data name="LegalDocumentsViewModelCaption" xml:space="preserve">
+    <value>A feltételek és kikötések megjelenítése</value>
+  </data>
+  <data name="UserSupportViewModelKeywords" xml:space="preserve">
+    <value>Felhasználó, Támogatás, Weboldal</value>
+  </data>
+  <data name="UserSupportViewModelTitle" xml:space="preserve">
+    <value>Felhasználói támogatás</value>
+  </data>
+  <data name="UserSupportViewModelCaption" xml:space="preserve">
+    <value>Nyissa meg a Ginger Wallet felhasználói támogatási weboldalát</value>
+  </data>
+  <data name="BugReportLinkViewModelTitle" xml:space="preserve">
+    <value>Hiba jelentése</value>
+  </data>
+  <data name="BugReportLinkViewModelKeywords" xml:space="preserve">
+    <value>Támogatás, Weboldal, Hiba, Jelentés</value>
+  </data>
+  <data name="BugReportLinkViewModelCaption" xml:space="preserve">
+    <value>Nyissa meg a Ginger Wallet GitHub hibák weboldalát</value>
+  </data>
+  <data name="DocsLinkViewModelTitle" xml:space="preserve">
+    <value>Felhasználói útmutató/GYIK</value>
+  </data>
+  <data name="DocsLinkViewModelKeywords" xml:space="preserve">
+    <value>Felhasználó, Támogatás, Weboldal, Dokumentumok, Dokumentáció, Útmutató</value>
+  </data>
+  <data name="DocsLinkViewModelCaption" xml:space="preserve">
+    <value>Nyissa meg a Ginger Wallet GYIK weboldalát</value>
+  </data>
+  <data name="OpenDataFolderViewModelTitle" xml:space="preserve">
+    <value>Adatmappa</value>
+  </data>
+  <data name="OpenDataFolderViewModelKeywords" xml:space="preserve">
+    <value>Böngészés, Megnyitás, Adatok, Mappa</value>
+  </data>
+  <data name="OpenWalletsFolderViewModelTitle" xml:space="preserve">
+    <value>Tárca mappa</value>
+  </data>
+  <data name="OpenWalletsFolderViewModelKeywords" xml:space="preserve">
+    <value>Böngészés, Megnyitás, Tárca, Mappa</value>
+  </data>
+  <data name="OpenLogsViewModelTitle" xml:space="preserve">
+    <value>Naplók</value>
+  </data>
+  <data name="OpenLogsViewModelKeywords" xml:space="preserve">
+    <value>Böngészés, Megnyitás, Naplók</value>
+  </data>
+  <data name="OpenTorLogsViewModelTitle" xml:space="preserve">
+    <value>Tor naplók</value>
+  </data>
+  <data name="OpenTorLogsViewModelKeywords" xml:space="preserve">
+    <value>Böngészés, Megnyitás, Tor, Naplók</value>
+  </data>
+  <data name="OpenConfigFileViewModelTitle" xml:space="preserve">
+    <value>Beállítási fájl</value>
+  </data>
+  <data name="OpenConfigFileViewModelKeywords" xml:space="preserve">
+    <value>Böngészés, Megnyitás, Beállítás, Fájl</value>
+  </data>
+</root>

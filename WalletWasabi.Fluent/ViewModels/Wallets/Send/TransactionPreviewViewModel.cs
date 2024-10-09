@@ -26,7 +26,6 @@ using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.ViewModels.Wallets.Send;
 
-[NavigationMetaData(Title = "Transaction Preview")]
 public partial class TransactionPreviewViewModel : RoutableViewModel
 {
 	private readonly Stack<(BuildTransactionResult, TransactionInfo)> _undoHistory;
@@ -44,6 +43,7 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 
 	public TransactionPreviewViewModel(UiContext uiContext, IWalletModel walletModel, SendFlowModel sendFlow)
 	{
+		Title = "Transaction Preview";
 		_undoHistory = new();
 		_wallet = sendFlow.Wallet;
 		_walletModel = walletModel;

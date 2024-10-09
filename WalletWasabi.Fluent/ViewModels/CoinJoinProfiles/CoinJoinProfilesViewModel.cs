@@ -10,7 +10,7 @@ using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
 
 namespace WalletWasabi.Fluent.ViewModels.CoinJoinProfiles;
 
-[NavigationMetaData(Title = "Coinjoin Strategy", NavigationTarget = NavigationTarget.DialogScreen)]
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class CoinJoinProfilesViewModel : DialogViewModelBase<bool>
 {
 	private readonly IWalletSettingsModel _walletSettings;
@@ -19,6 +19,7 @@ public partial class CoinJoinProfilesViewModel : DialogViewModelBase<bool>
 
 	private CoinJoinProfilesViewModel(IWalletSettingsModel walletSettings, WalletCreationOptions? options = null)
 	{
+		Title = "Coinjoin Strategy";
 		NextCommand = ReactiveCommand.Create(() => OnNext(walletSettings));
 		EnableBack = true;
 

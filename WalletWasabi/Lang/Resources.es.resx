@@ -59,4 +59,150 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-<data name="AddWallet"><value>Agregar Cartera</value></data><data name="Open"><value>Abrir</value></data><data name="TwoFactorDisabledWarnMessage"><value>La autenticación de dos factores está deshabilitada. Actívela en la Configuración para mayor protección.</value></data></root>
+  <data name="Open"><value>Abrir</value></data><data name="TwoFactorDisabledWarnMessage"><value>La autenticación de dos factores está deshabilitada. Actívela en la Configuración para mayor protección.</value></data>
+  <data name="AddWalletPageViewModelTitle" xml:space="preserve">
+    <value>Agregar Cartera</value>
+  </data>
+  <data name="AddWalletPageViewModelCaption" xml:space="preserve">
+    <value>Crear, conectar, importar o recuperar</value>
+  </data>
+  <data name="AddWalletPageViewModelKeywords" xml:space="preserve">
+    <value>Cartera, Añadir, Crear, Nuevo, Recuperar, Importar, Conectar, Hardware, ColdCard, Trezor, Ledger</value>
+  </data>
+  <data name="Wallet" xml:space="preserve">
+    <value>Cartera</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Configuración</value>
+  </data>
+  <data name="NoCategory" xml:space="preserve">
+    <value>Sin categoría</value>
+  </data>
+  <data name="HelpAndSupport" xml:space="preserve">
+    <value>Ayuda y soporte</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="GeneralSettingsTabViewModelCaption" xml:space="preserve">
+    <value>Administrar la configuración general</value>
+  </data>
+  <data name="GeneralSettingsTabViewModelTitle" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="GeneralSettingsTabViewModelKeywords" xml:space="preserve">
+    <value>Configuración, General, Bitcoin, Oscuro, Modo, Ejecutar, Wasabi, Computadora, Sistema, Inicio, Fondo, Cerrar, Automático, Copiar, Pegar, Direcciones, Personalizado, Cambiar, Dirección, Tarifa, Pantalla, Formato, BTC, sats, navegador</value>
+  </data>
+  <data name="BitcoinTabSettingsViewModelTitle" xml:space="preserve">
+    <value>Bitcoin</value>
+  </data>
+  <data name="BitcoinTabSettingsViewModelCaption" xml:space="preserve">
+    <value>Administrar la configuración de Bitcoin</value>
+  </data>
+  <data name="BitcoinTabSettingsViewModelKeywords" xml:space="preserve">
+    <value>Configuración, Bitcoin, Red, Principal, TestNet, RegTest, Ejecutar, Nodo, Core, Knots, Versión, Inicio, P2P, Punto final, Polvo, Umbral, BTC</value>
+  </data>
+  <data name="AdvancedSettingsTabViewModelTitle" xml:space="preserve">
+    <value>Avanzado</value>
+  </data>
+  <data name="AdvancedSettingsTabViewModelCaption" xml:space="preserve">
+    <value>Administrar la configuración avanzada
+</value>
+  </data>
+  <data name="AdvancedSettingsTabViewModelKeywords" xml:space="preserve">
+    <value>Configuración, Avanzado, Habilitar, GPU</value>
+  </data>
+  <data name="SecuritySettingsTabViewModelTitle" xml:space="preserve">
+    <value>Seguridad</value>
+  </data>
+  <data name="SecuritySettingsTabViewModelCaption" xml:space="preserve">
+    <value>Administrar la configuración de seguridad</value>
+  </data>
+  <data name="SecuritySettingsTabViewModelKeywords" xml:space="preserve">
+    <value>Seguridad, Configuración, 2FA, Autenticación, de dos factores, Dos, Factores</value>
+  </data>
+  <data name="AboutViewModelCaption" xml:space="preserve">
+    <value>Mostrar la información actual de Ginger Wallet</value>
+  </data>
+  <data name="AboutViewModelKeywords" xml:space="preserve">
+    <value>Acerca de Ginger Wallet</value>
+  </data>
+  <data name="AboutViewModelTitle" xml:space="preserve">
+    <value>Acerca de, Software, Versión, Fuente, Código, Github, Sitio web, Coordinador, Estadísticas, Tor, Onion, Usuario, Soporte, Informe de errores, Preguntas frecuentes, Preguntas, Documentos, Documentación, Licencia, Avanzado, Información, Hardware, Cartera</value>
+  </data>
+  <data name="BroadcasterViewModelTitle" xml:space="preserve">
+    <value>Locutor</value>
+  </data>
+  <data name="BroadcasterViewModelKeywords" xml:space="preserve">
+    <value>ID de transacción, Entrada, Salida, Monto, Red, Tarifa, Conteo, BTC, Firmado, Pegar, Importar, Transmitir, Transacción</value>
+  </data>
+  <data name="BroadcasterViewModelCaption" xml:space="preserve">
+    <value>Transmita su transacción aquí</value>
+  </data>
+  <data name="LegalDocumentsViewModelTitle" xml:space="preserve">
+    <value>Documento legal</value>
+  </data>
+  <data name="LegalDocumentsViewModelKeywords" xml:space="preserve">
+    <value>Ver, Legal, Documento, Términos, Condiciones, Privacidad, Política, Declaración</value>
+  </data>
+  <data name="LegalDocumentsViewModelCaption" xml:space="preserve">
+    <value>Mostrar términos y condiciones</value>
+  </data>
+  <data name="UserSupportViewModelKeywords" xml:space="preserve">
+    <value>Usuario, Soporte, Sitio web</value>
+  </data>
+  <data name="UserSupportViewModelTitle" xml:space="preserve">
+    <value>Soporte al usuario</value>
+  </data>
+  <data name="UserSupportViewModelCaption" xml:space="preserve">
+    <value>Abrir el sitio web de soporte al usuario de Ginger Wallet</value>
+  </data>
+  <data name="BugReportLinkViewModelTitle" xml:space="preserve">
+    <value>Informar un error</value>
+  </data>
+  <data name="BugReportLinkViewModelKeywords" xml:space="preserve">
+    <value>Soporte, Sitio web, Error, Informe</value>
+  </data>
+  <data name="BugReportLinkViewModelCaption" xml:space="preserve">
+    <value>Abrir el sitio web de problemas de GitHub de Ginger Wallet</value>
+  </data>
+  <data name="DocsLinkViewModelTitle" xml:space="preserve">
+    <value>Guía del usuario/FAQ</value>
+  </data>
+  <data name="DocsLinkViewModelKeywords" xml:space="preserve">
+    <value>Usuario, Soporte, Sitio web, Documentos, Documentación, Guía</value>
+  </data>
+  <data name="DocsLinkViewModelCaption" xml:space="preserve">
+    <value>Abrir el sitio web de preguntas frecuentes de Ginger Wallet</value>
+  </data>
+  <data name="OpenDataFolderViewModelTitle" xml:space="preserve">
+    <value>Carpeta de datos</value>
+  </data>
+  <data name="OpenDataFolderViewModelKeywords" xml:space="preserve">
+    <value>Navegar, Abrir, Datos, Carpeta</value>
+  </data>
+  <data name="OpenWalletsFolderViewModelTitle" xml:space="preserve">
+    <value>Carpeta de billetera</value>
+  </data>
+  <data name="OpenWalletsFolderViewModelKeywords" xml:space="preserve">
+    <value>Navegar, Abrir, Billetera, Carpeta</value>
+  </data>
+  <data name="OpenLogsViewModelTitle" xml:space="preserve">
+    <value>Registros</value>
+  </data>
+  <data name="OpenLogsViewModelKeywords" xml:space="preserve">
+    <value>Navegar, Abrir, Registros</value>
+  </data>
+  <data name="OpenTorLogsViewModelTitle" xml:space="preserve">
+    <value>Registros de Tor</value>
+  </data>
+  <data name="OpenTorLogsViewModelKeywords" xml:space="preserve">
+    <value>Navegar, Abrir, Tor, Registros</value>
+  </data>
+  <data name="OpenConfigFileViewModelTitle" xml:space="preserve">
+    <value>Archivo de configuración</value>
+  </data>
+  <data name="OpenConfigFileViewModelKeywords" xml:space="preserve">
+    <value>Navegar, Abrir, Configuración, Archivo</value>
+  </data>
+</root>

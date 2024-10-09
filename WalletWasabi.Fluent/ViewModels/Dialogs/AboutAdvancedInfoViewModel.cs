@@ -4,11 +4,13 @@ using WalletWasabi.WebClients.Wasabi;
 
 namespace WalletWasabi.Fluent.ViewModels.Dialogs;
 
-[NavigationMetaData(Title = "About", NavigationTarget = NavigationTarget.CompactDialogScreen)]
+[NavigationMetaData(NavigationTarget = NavigationTarget.CompactDialogScreen)]
 public partial class AboutAdvancedInfoViewModel : DialogViewModelBase<System.Reactive.Unit>
 {
 	public AboutAdvancedInfoViewModel()
 	{
+		Title = "About";
+
 		SetupCancel(enableCancel: false, enableCancelOnEscape: true, enableCancelOnPressed: true);
 
 		EnableBack = false;

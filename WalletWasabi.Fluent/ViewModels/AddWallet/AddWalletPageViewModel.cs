@@ -13,23 +13,18 @@ using WalletWasabi.Logging;
 namespace WalletWasabi.Fluent.ViewModels.AddWallet;
 
 [NavigationMetaData(
-	Title = WalletWasabi.Lang.Resources.AddWallet,
-	Caption = "Create, connect, import or recover",
 	Order = 2,
-	Category = "General",
-	Keywords = new[]
-		{ "Wallet", "Add", "Create", "New", "Recover", "Import", "Connect", "Hardware", "ColdCard", "Trezor", "Ledger" },
+	Category = SearchCategory.General,
 	IconName = "nav_add_circle_24_regular",
 	IconNameFocused = "nav_add_circle_24_filled",
 	NavigationTarget = NavigationTarget.DialogScreen,
 	NavBarPosition = NavBarPosition.Bottom,
-	NavBarSelectionMode = NavBarSelectionMode.Button)]
+	NavBarSelectionMode = NavBarSelectionMode.Button,
+	IsLocalized = true)]
 public partial class AddWalletPageViewModel : DialogViewModelBase<Unit>
 {
-
 	private AddWalletPageViewModel()
 	{
-
 		CreateWalletCommand = ReactiveCommand.Create(OnCreateWallet);
 
 		ConnectHardwareWalletCommand = ReactiveCommand.Create(OnConnectHardwareWallet);
