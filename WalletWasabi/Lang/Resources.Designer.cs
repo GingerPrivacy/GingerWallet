@@ -241,6 +241,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Coinjoin Settings.
+        /// </summary>
+        public static string CoinjoinSettings {
+            get {
+                return ResourceManager.GetString("CoinjoinSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy Amount.
         /// </summary>
         public static string CopyAmount {
@@ -309,6 +318,15 @@ namespace WalletWasabi.Lang {
         public static string DocsLinkViewModelTitle {
             get {
                 return ResourceManager.GetString("DocsLinkViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exclude Coins.
+        /// </summary>
+        public static string ExcludeCoins {
+            get {
+                return ResourceManager.GetString("ExcludeCoins", resourceCulture);
             }
         }
         
@@ -498,6 +516,15 @@ namespace WalletWasabi.Lang {
         public static string OpenDataFolderViewModelTitle {
             get {
                 return ResourceManager.GetString("OpenDataFolderViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open in the browser.
+        /// </summary>
+        public static string OpenInTheBrowser {
+            get {
+                return ResourceManager.GetString("OpenInTheBrowser", resourceCulture);
             }
         }
         
@@ -755,11 +782,29 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wallet Coins.
+        /// </summary>
+        public static string WalletCoins {
+            get {
+                return ResourceManager.GetString("WalletCoins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to EXCHANGE RATE.
         /// </summary>
         public static string WalletExchangeRate {
             get {
                 return ResourceManager.GetString("WalletExchangeRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wallet Info.
+        /// </summary>
+        public static string WalletInfo {
+            get {
+                return ResourceManager.GetString("WalletInfo", resourceCulture);
             }
         }
         
@@ -782,11 +827,38 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Receive.
+        /// </summary>
+        public static string WalletReceive {
+            get {
+                return ResourceManager.GetString("WalletReceive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send.
         /// </summary>
         public static string WalletSend {
             get {
                 return ResourceManager.GetString("WalletSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wallet Settings.
+        /// </summary>
+        public static string WalletSettings {
+            get {
+                return ResourceManager.GetString("WalletSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wallet Stats.
+        /// </summary>
+        public static string WalletStats {
+            get {
+                return ResourceManager.GetString("WalletStats", resourceCulture);
             }
         }
         

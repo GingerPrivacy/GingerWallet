@@ -363,4 +363,28 @@
   <data name="CancelTransaction" xml:space="preserve">
     <value>Tranzakció Visszavonása</value>
   </data>
+  <data name="OpenInTheBrowser" xml:space="preserve">
+    <value>Megnyitás a böngészőben</value>
+  </data>
+  <data name="WalletSettings" xml:space="preserve">
+    <value>Pénztárca beállítások</value>
+  </data>
+  <data name="WalletCoins" xml:space="preserve">
+    <value>Pénztárca érmék</value>
+  </data>
+  <data name="WalletStats" xml:space="preserve">
+    <value>Pénztárca statisztikák</value>
+  </data>
+  <data name="WalletInfo" xml:space="preserve">
+    <value>Pénztárca információ</value>
+  </data>
+  <data name="WalletReceive" xml:space="preserve">
+    <value>Fogadás</value>
+  </data>
+  <data name="ExcludeCoins" xml:space="preserve">
+    <value>Érmék kizárása</value>
+  </data>
+  <data name="CoinjoinSettings" xml:space="preserve">
+    <value>Coinjoin beállítások</value>
+  </data>
 </root>

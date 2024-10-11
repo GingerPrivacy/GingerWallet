@@ -366,4 +366,28 @@
   <data name="CancelTransaction" xml:space="preserve">
     <value>Cancel Transaction</value>
   </data>
+  <data name="OpenInTheBrowser" xml:space="preserve">
+    <value>Open in the browser</value>
+  </data>
+  <data name="WalletSettings" xml:space="preserve">
+    <value>Wallet Settings</value>
+  </data>
+  <data name="WalletCoins" xml:space="preserve">
+    <value>Wallet Coins</value>
+  </data>
+  <data name="WalletStats" xml:space="preserve">
+    <value>Wallet Stats</value>
+  </data>
+  <data name="WalletInfo" xml:space="preserve">
+    <value>Wallet Info</value>
+  </data>
+  <data name="WalletReceive" xml:space="preserve">
+    <value>Receive</value>
+  </data>
+  <data name="ExcludeCoins" xml:space="preserve">
+    <value>Exclude Coins</value>
+  </data>
+  <data name="CoinjoinSettings" xml:space="preserve">
+    <value>Coinjoin Settings</value>
+  </data>
 </root>
