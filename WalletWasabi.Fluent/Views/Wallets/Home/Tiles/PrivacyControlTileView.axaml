@@ -6,9 +6,10 @@
              xmlns:converters="clr-namespace:WalletWasabi.Fluent.Converters"
              mc:Ignorable="d" d:DesignWidth="310" d:DesignHeight="140"
              x:CompileBindings="True" x:DataType="vms:PrivacyControlTileViewModel"
-             x:Class="WalletWasabi.Fluent.Views.Wallets.Home.Tiles.PrivacyControlTileView">
+             x:Class="WalletWasabi.Fluent.Views.Wallets.Home.Tiles.PrivacyControlTileView"
+             xmlns:lang="using:WalletWasabi.Lang">
 
-  <TileControl Title="PRIVACY PROGRESS" IsBottomContentVisible="{Binding HasPrivateBalance}">
+  <TileControl Title="{x:Static lang:Resources.WalletPrivacyProgress}" IsBottomContentVisible="{Binding HasPrivateBalance}">
 
     <DockPanel>
       <Button Command="{Binding ShowDetailsCommand}" Classes="plain" DockPanel.Dock="Bottom">

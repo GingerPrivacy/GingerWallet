@@ -321,4 +321,46 @@
   <data name="LoadingViewProcessLonger" xml:space="preserve">
     <value>Ez a folyamat hosszabb lesz az első indításkor, nagyobb pénztárcáknál, vagy ha hosszabb idő telt el a szinkronizálások között.</value>
   </data>
+  <data name="WalletBalance" xml:space="preserve">
+    <value>EGYENLEG</value>
+  </data>
+  <data name="WalletPrivacyProgress" xml:space="preserve">
+    <value>ANONIMITÁS ÁLLAPOTA</value>
+  </data>
+  <data name="WalletExchangeRate" xml:space="preserve">
+    <value>ÁRFOLYAM</value>
+  </data>
+  <data name="WalletTransactions" xml:space="preserve">
+    <value>Tranzakciók</value>
+  </data>
+  <data name="Sorting" xml:space="preserve">
+    <value>Rendezés</value>
+  </data>
+  <data name="ShowDetails" xml:space="preserve">
+    <value>Részletek megjelenítése</value>
+  </data>
+  <data name="CopyTransactionId" xml:space="preserve">
+    <value>Tranzakcióazonosító másolása</value>
+  </data>
+  <data name="CopyLabel" xml:space="preserve">
+    <value>Címke másolása</value>
+  </data>
+  <data name="CopyAmount" xml:space="preserve">
+    <value>Összeg másolása</value>
+  </data>
+  <data name="WalletSend" xml:space="preserve">
+    <value>Küldés</value>
+  </data>
+  <data name="WalletAutomatic" xml:space="preserve">
+    <value>Automatikus</value>
+  </data>
+  <data name="WalletManualControl" xml:space="preserve">
+    <value>Kézi vezérlés</value>
+  </data>
+  <data name="SpeedUpTransaction" xml:space="preserve">
+    <value>Tranzakció Felgyorsítása</value>
+  </data>
+  <data name="CancelTransaction" xml:space="preserve">
+    <value>Tranzakció Visszavonása</value>
+  </data>
 </root>

@@ -6,9 +6,10 @@
              xmlns:converters="clr-namespace:WalletWasabi.Fluent.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:CompileBindings="True" x:DataType="vm:BtcPriceTileViewModel"
-             x:Class="WalletWasabi.Fluent.Views.Wallets.Home.Tiles.BtcPriceTileView">
+             x:Class="WalletWasabi.Fluent.Views.Wallets.Home.Tiles.BtcPriceTileView"
+             xmlns:lang="using:WalletWasabi.Lang">
 
-  <TileControl Title="EXCHANGE RATE" IsBottomContentVisible="False">
+  <TileControl Title="{x:Static lang:Resources.WalletExchangeRate}" IsBottomContentVisible="False">
     <TextBlock Margin="0 3"
                Classes="h2 monoSpaced bold"
                VerticalAlignment="Center" HorizontalAlignment="Center"

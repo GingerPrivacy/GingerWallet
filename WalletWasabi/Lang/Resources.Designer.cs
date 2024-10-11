@@ -232,6 +232,42 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel Transaction.
+        /// </summary>
+        public static string CancelTransaction {
+            get {
+                return ResourceManager.GetString("CancelTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Amount.
+        /// </summary>
+        public static string CopyAmount {
+            get {
+                return ResourceManager.GetString("CopyAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Label.
+        /// </summary>
+        public static string CopyLabel {
+            get {
+                return ResourceManager.GetString("CopyLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Transaction ID.
+        /// </summary>
+        public static string CopyTransactionId {
+            get {
+                return ResourceManager.GetString("CopyTransactionId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to day.
         /// </summary>
         public static string day {
@@ -619,6 +655,33 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show Details.
+        /// </summary>
+        public static string ShowDetails {
+            get {
+                return ResourceManager.GetString("ShowDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorting.
+        /// </summary>
+        public static string Sorting {
+            get {
+                return ResourceManager.GetString("Sorting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speed Up Transaction.
+        /// </summary>
+        public static string SpeedUpTransaction {
+            get {
+                return ResourceManager.GetString("SpeedUpTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Two-Factor authentication is disabled. Enable it in the Setting for greater protection..
         /// </summary>
         public static string TwoFactorDisabledWarnMessage {
@@ -670,6 +733,69 @@ namespace WalletWasabi.Lang {
         public static string Wallet {
             get {
                 return ResourceManager.GetString("Wallet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatic.
+        /// </summary>
+        public static string WalletAutomatic {
+            get {
+                return ResourceManager.GetString("WalletAutomatic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BALANCE.
+        /// </summary>
+        public static string WalletBalance {
+            get {
+                return ResourceManager.GetString("WalletBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EXCHANGE RATE.
+        /// </summary>
+        public static string WalletExchangeRate {
+            get {
+                return ResourceManager.GetString("WalletExchangeRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual Control.
+        /// </summary>
+        public static string WalletManualControl {
+            get {
+                return ResourceManager.GetString("WalletManualControl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PRIVACY PROGRESS.
+        /// </summary>
+        public static string WalletPrivacyProgress {
+            get {
+                return ResourceManager.GetString("WalletPrivacyProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send.
+        /// </summary>
+        public static string WalletSend {
+            get {
+                return ResourceManager.GetString("WalletSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transactions.
+        /// </summary>
+        public static string WalletTransactions {
+            get {
+                return ResourceManager.GetString("WalletTransactions", resourceCulture);
             }
         }
     }

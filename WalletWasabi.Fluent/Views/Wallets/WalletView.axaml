@@ -9,7 +9,8 @@
              x:DataType="wallets:WalletViewModel"
              x:CompileBindings="True"
              ClipToBounds="False"
-             x:Class="WalletWasabi.Fluent.Views.Wallets.WalletView">
+             x:Class="WalletWasabi.Fluent.Views.Wallets.WalletView"
+             xmlns:lang="using:WalletWasabi.Lang">
   <Interaction.Behaviors>
     <ShowWalletCoinsOnKeyCombinationBehavior Wallet="{Binding}" Key1="LeftCtrl" Key2="D" Key3="C" />
   </Interaction.Behaviors>
@@ -37,19 +38,19 @@
               </StackPanel>
             </Button>
 
-            <SubActionButton Content="Send"
+            <SubActionButton Content="{x:Static lang:Resources.WalletSend}"
                              Icon="{StaticResource wallet_action_send}"
                              Command="{Binding SendCommand}"
                              IsVisible="{Binding IsSendButtonVisible}">
               <SubActionButton.SubCommands>
                 <UICommandCollection>
-                  <UICommand Name="Automatic" Command="{Binding SendCommand}" IsDefault="True">
+                  <UICommand Name="{x:Static lang:Resources.WalletAutomatic}" Command="{Binding SendCommand}" IsDefault="True">
                     <UICommand.Icon>
                       <PathIcon Data="{StaticResource automatic_control}"
-                                Classes="Icon"/>
+                                Classes="Icon" />
                     </UICommand.Icon>
                   </UICommand>
-                  <UICommand Name="Manual Control" Command="{Binding SendManualControlCommand}">
+                  <UICommand Name="{x:Static lang:Resources.WalletManualControl}" Command="{Binding SendManualControlCommand}">
                     <UICommand.Icon>
                       <PathIcon Data="{StaticResource manual_control}"
                                 Classes="Icon" />
@@ -68,7 +69,7 @@
             </Button>
             <Panel>
               <Button Classes="function"
-                      IsVisible="{Binding CanBuy^}"
+                      IsVisible="False"
                       Command="{Binding BuyCommand}">
                 <StackPanel Orientation="Horizontal">
                   <PathIcon Data="{StaticResource wallet_action_buy}" />
