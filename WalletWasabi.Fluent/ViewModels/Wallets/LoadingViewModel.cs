@@ -38,9 +38,8 @@ public partial class LoadingViewModel : RoutableViewModel
 
 		var userFriendlyTime = TextHelpers.TimeSpanToFriendlyString(remainingTimeSpan);
 		var remainingTimeText = string.IsNullOrEmpty(userFriendlyTime)
-	? ""
-	: string.Format(CultureInfo.CurrentCulture, Resources.LoadingViewModelTimeRemaining, userFriendlyTime);
-
+			? ""
+			: string.Format(CultureInfo.CurrentCulture, Resources.LoadingViewModelTimeRemaining, userFriendlyTime);
 		StatusText = $"{percentText} {remainingTimeText}";
 	}
 }
