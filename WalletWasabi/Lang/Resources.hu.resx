@@ -288,4 +288,37 @@
   <data name="TwoFactorDisabledWarnMessageOpenSettings" xml:space="preserve">
     <value>Nyissa meg a beállításokat</value>
   </data>
+  <data name="LoadingViewModelPercentCompleted" xml:space="preserve">
+    <value>{0}% kész</value>
+  </data>
+  <data name="LoadingViewModelTimeRemaining" xml:space="preserve">
+    <value>- hátravan {0}</value>
+  </data>
+  <data name="day" xml:space="preserve">
+    <value>nap</value>
+  </data>
+  <data name="hour" xml:space="preserve">
+    <value>óra</value>
+  </data>
+  <data name="minute" xml:space="preserve">
+    <value>perc</value>
+  </data>
+  <data name="second" xml:space="preserve">
+    <value>másodperc</value>
+  </data>
+  <data name="and" xml:space="preserve">
+    <value>és</value>
+  </data>
+  <data name="Plural" xml:space="preserve">
+    <value> </value>
+  </data>
+  <data name="LoadingViewDownloadText" xml:space="preserve">
+    <value>Bitcoin-hálózati adatok letöltése és feldolgozása</value>
+  </data>
+  <data name="LoadingViewThirdparty" xml:space="preserve">
+    <value>A Wasabi ezt anélkül teszi, hogy harmadik fél tudomást szerezne az egyenlegedről és pénzügyi tevékenységedről.</value>
+  </data>
+  <data name="LoadingViewProcessLonger" xml:space="preserve">
+    <value>Ez a folyamat hosszabb lesz az első indításkor, nagyobb pénztárcáknál, vagy ha hosszabb idő telt el a szinkronizálások között.</value>
+  </data>
 </root>

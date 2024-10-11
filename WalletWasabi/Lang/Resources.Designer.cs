@@ -142,6 +142,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to and.
+        /// </summary>
+        public static string and {
+            get {
+                return ResourceManager.GetString("and", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage Bitcoin settings.
         /// </summary>
         public static string BitcoinTabSettingsViewModelCaption {
@@ -219,6 +228,15 @@ namespace WalletWasabi.Lang {
         public static string BugReportLinkViewModelTitle {
             get {
                 return ResourceManager.GetString("BugReportLinkViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to day.
+        /// </summary>
+        public static string day {
+            get {
+                return ResourceManager.GetString("day", resourceCulture);
             }
         }
         
@@ -304,6 +322,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to hour.
+        /// </summary>
+        public static string hour {
+            get {
+                return ResourceManager.GetString("hour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Display terms and conditions.
         /// </summary>
         public static string LegalDocumentsViewModelCaption {
@@ -327,6 +354,60 @@ namespace WalletWasabi.Lang {
         public static string LegalDocumentsViewModelTitle {
             get {
                 return ResourceManager.GetString("LegalDocumentsViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  Downloading and processing Bitcoin network data.
+        /// </summary>
+        public static string LoadingViewDownloadText {
+            get {
+                return ResourceManager.GetString("LoadingViewDownloadText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}% completed.
+        /// </summary>
+        public static string LoadingViewModelPercentCompleted {
+            get {
+                return ResourceManager.GetString("LoadingViewModelPercentCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to - {0} remaining.
+        /// </summary>
+        public static string LoadingViewModelTimeRemaining {
+            get {
+                return ResourceManager.GetString("LoadingViewModelTimeRemaining", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;This process will be longer on first launch, with larger wallets, or after long gaps between synchronizations..
+        /// </summary>
+        public static string LoadingViewProcessLonger {
+            get {
+                return ResourceManager.GetString("LoadingViewProcessLonger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wasabi does this without any third party knowing about your balance and financial activity..
+        /// </summary>
+        public static string LoadingViewThirdparty {
+            get {
+                return ResourceManager.GetString("LoadingViewThirdparty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to minute.
+        /// </summary>
+        public static string minute {
+            get {
+                return ResourceManager.GetString("minute", resourceCulture);
             }
         }
         
@@ -448,11 +529,29 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to s.
+        /// </summary>
+        public static string Plural {
+            get {
+                return ResourceManager.GetString("Plural", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search settings / advanced features.
         /// </summary>
         public static string SearchBoxWatermark {
             get {
                 return ResourceManager.GetString("SearchBoxWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to second.
+        /// </summary>
+        public static string second {
+            get {
+                return ResourceManager.GetString("second", resourceCulture);
             }
         }
         

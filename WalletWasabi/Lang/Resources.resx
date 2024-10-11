@@ -291,4 +291,37 @@
   <data name="TwoFactorDisabledWarnMessageOpenSettings" xml:space="preserve">
     <value>Open Settings</value>
   </data>
+  <data name="LoadingViewModelPercentCompleted" xml:space="preserve">
+    <value>{0}% completed</value>
+  </data>
+  <data name="LoadingViewModelTimeRemaining" xml:space="preserve">
+    <value>- {0} remaining</value>
+  </data>
+  <data name="day" xml:space="preserve">
+    <value>day</value>
+  </data>
+  <data name="hour" xml:space="preserve">
+    <value>hour</value>
+  </data>
+  <data name="minute" xml:space="preserve">
+    <value>minute</value>
+  </data>
+  <data name="second" xml:space="preserve">
+    <value>second</value>
+  </data>
+  <data name="and" xml:space="preserve">
+    <value>and</value>
+  </data>
+  <data name="Plural" xml:space="preserve">
+    <value>s</value>
+  </data>
+  <data name="LoadingViewDownloadText" xml:space="preserve">
+    <value> Downloading and processing Bitcoin network data</value>
+  </data>
+  <data name="LoadingViewThirdparty" xml:space="preserve">
+    <value>Wasabi does this without any third party knowing about your balance and financial activity.</value>
+  </data>
+  <data name="LoadingViewProcessLonger" xml:space="preserve">
+    <value>"This process will be longer on first launch, with larger wallets, or after long gaps between synchronizations.</value>
+  </data>
 </root>
