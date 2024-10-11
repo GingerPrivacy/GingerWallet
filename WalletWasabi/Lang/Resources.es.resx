@@ -268,4 +268,25 @@
   <data name="OpenConfigFileViewModelKeywords" xml:space="preserve">
     <value>Navegar, Abrir, Configuración, Archivo</value>
   </data>
+  <data name="SearchBoxWatermark" xml:space="preserve">
+    <value>Buscar configuraciones / funciones avanzadas</value>
+  </data>
+  <data name="OpenPasswordBoxWatermark" xml:space="preserve">
+    <value>Frase secreta</value>
+  </data>
+  <data name="DiscreetMode" xml:space="preserve">
+    <value>Modo discreto</value>
+  </data>
+  <data name="SettingsPageViewModelKeywords" xml:space="preserve">
+    <value>Configuración, General, Usuario, Interfaz, Avanzado</value>
+  </data>
+  <data name="SettingsPageViewModelCaption" xml:space="preserve">
+    <value>Administra la apariencia, la privacidad y otros ajustes</value>
+  </data>
+  <data name="SettingsPageViewModelTitle" xml:space="preserve">
+    <value>Configuración</value>
+  </data>
+  <data name="TwoFactorDisabledWarnMessageOpenSettings" xml:space="preserve">
+    <value>Abrir configuración</value>
+  </data>
 </root>

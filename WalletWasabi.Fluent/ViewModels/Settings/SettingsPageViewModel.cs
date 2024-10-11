@@ -11,6 +11,7 @@ using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
 using WalletWasabi.Fluent.ViewModels.SearchBar.Settings;
+using WalletWasabi.Lang;
 using WalletWasabi.Services;
 
 namespace WalletWasabi.Fluent.ViewModels.Settings;
@@ -24,7 +25,8 @@ namespace WalletWasabi.Fluent.ViewModels.Settings;
 	Searchable = false,
 	NavBarPosition = NavBarPosition.Bottom,
 	NavigationTarget = NavigationTarget.DialogScreen,
-	NavBarSelectionMode = NavBarSelectionMode.Button)]
+	NavBarSelectionMode = NavBarSelectionMode.Button,
+	IsLocalized = true)]
 public partial class SettingsPageViewModel : DialogViewModelBase<Unit>
 {
 	[AutoNotify] private bool _isModified;
@@ -34,10 +36,6 @@ public partial class SettingsPageViewModel : DialogViewModelBase<Unit>
 
 	public SettingsPageViewModel(UiContext uiContext)
 	{
-		Title = "Settings";
-		Keywords = new[] { "Settings", "General", "User", "Interface", "Advanced" };
-		Caption = "Manage appearance, privacy and other settings";
-
 		UiContext = uiContext;
 		_selectedTab = 0;
 

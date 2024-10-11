@@ -3,6 +3,7 @@ using ReactiveUI;
 using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.ViewModels.Navigation;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.ViewModels.Settings;
 
@@ -19,7 +20,7 @@ public partial class PrivacyModeViewModel : RoutableViewModel
 
 	public PrivacyModeViewModel(IApplicationSettings applicationSettings)
 	{
-		Title = "Discreet Mode";
+		Title = Resources.DiscreetMode;
 
 		_privacyMode = applicationSettings.PrivacyMode;
 

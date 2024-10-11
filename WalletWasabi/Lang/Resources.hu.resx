@@ -145,7 +145,7 @@
     <value>Segítség &amp; támogatás</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Nincs kategória</value>
+    <value>Beállítások</value>
   </data>
   <data name="GeneralSettingsTabViewModelTitle" xml:space="preserve">
     <value>Általános</value>
@@ -266,5 +266,26 @@
   </data>
   <data name="OpenConfigFileViewModelKeywords" xml:space="preserve">
     <value>Böngészés, Megnyitás, Beállítás, Fájl</value>
+  </data>
+  <data name="SearchBoxWatermark" xml:space="preserve">
+    <value>Beállítások keresése / haladó funkciók</value>
+  </data>
+  <data name="OpenPasswordBoxWatermark" xml:space="preserve">
+    <value>Jelszó</value>
+  </data>
+  <data name="DiscreetMode" xml:space="preserve">
+    <value>Diszkrét mód</value>
+  </data>
+  <data name="SettingsPageViewModelKeywords" xml:space="preserve">
+    <value>Beállítások, Általános, Felhasználó, Felület, Haladó</value>
+  </data>
+  <data name="SettingsPageViewModelCaption" xml:space="preserve">
+    <value>Kezelje a megjelenést, az adatvédelmet és egyéb beállításokat</value>
+  </data>
+  <data name="SettingsPageViewModelTitle" xml:space="preserve">
+    <value>Beállítások</value>
+  </data>
+  <data name="TwoFactorDisabledWarnMessageOpenSettings" xml:space="preserve">
+    <value>Nyissa meg a beállításokat</value>
   </data>
 </root>

@@ -223,6 +223,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Discreet Mode.
+        /// </summary>
+        public static string DiscreetMode {
+            get {
+                return ResourceManager.GetString("DiscreetMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open Ginger Wallet&apos;s FAQ website.
         /// </summary>
         public static string DocsLinkViewModelCaption {
@@ -394,6 +403,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Passphrase.
+        /// </summary>
+        public static string OpenPasswordBoxWatermark {
+            get {
+                return ResourceManager.GetString("OpenPasswordBoxWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Browse, Open, Tor, Logs.
         /// </summary>
         public static string OpenTorLogsViewModelKeywords {
@@ -426,6 +444,15 @@ namespace WalletWasabi.Lang {
         public static string OpenWalletsFolderViewModelTitle {
             get {
                 return ResourceManager.GetString("OpenWalletsFolderViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search settings / advanced features.
+        /// </summary>
+        public static string SearchBoxWatermark {
+            get {
+                return ResourceManager.GetString("SearchBoxWatermark", resourceCulture);
             }
         }
         
@@ -466,11 +493,47 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage appearance, privacy and other settings.
+        /// </summary>
+        public static string SettingsPageViewModelCaption {
+            get {
+                return ResourceManager.GetString("SettingsPageViewModelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings, General, User, Interface, Advanced.
+        /// </summary>
+        public static string SettingsPageViewModelKeywords {
+            get {
+                return ResourceManager.GetString("SettingsPageViewModelKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string SettingsPageViewModelTitle {
+            get {
+                return ResourceManager.GetString("SettingsPageViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Two-Factor authentication is disabled. Enable it in the Setting for greater protection..
         /// </summary>
         public static string TwoFactorDisabledWarnMessage {
             get {
                 return ResourceManager.GetString("TwoFactorDisabledWarnMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Settings.
+        /// </summary>
+        public static string TwoFactorDisabledWarnMessageOpenSettings {
+            get {
+                return ResourceManager.GetString("TwoFactorDisabledWarnMessageOpenSettings", resourceCulture);
             }
         }
         

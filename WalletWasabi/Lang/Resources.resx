@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -269,5 +269,26 @@
   </data>
   <data name="OpenConfigFileViewModelKeywords" xml:space="preserve">
     <value>Browse, Open, Config, File</value>
+  </data>
+  <data name="SearchBoxWatermark" xml:space="preserve">
+    <value>Search settings / advanced features</value>
+  </data>
+  <data name="OpenPasswordBoxWatermark" xml:space="preserve">
+    <value>Passphrase</value>
+  </data>
+  <data name="DiscreetMode" xml:space="preserve">
+    <value>Discreet Mode</value>
+  </data>
+  <data name="SettingsPageViewModelKeywords" xml:space="preserve">
+    <value>Settings, General, User, Interface, Advanced</value>
+  </data>
+  <data name="SettingsPageViewModelCaption" xml:space="preserve">
+    <value>Manage appearance, privacy and other settings</value>
+  </data>
+  <data name="SettingsPageViewModelTitle" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="TwoFactorDisabledWarnMessageOpenSettings" xml:space="preserve">
+    <value>Open Settings</value>
   </data>
 </root>

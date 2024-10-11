@@ -11,7 +11,7 @@
              x:Class="WalletWasabi.Fluent.Views.Settings.SettingsPageView">
 
   <ContentArea Title="{Binding Title}"
-                 Caption="Manage appearance, privacy and other settings"
+                 Caption="{Binding Caption}"
                  EnableNext="True"
                  NextContent="Done"
                  ScrollViewer.VerticalScrollBarVisibility="Disabled">

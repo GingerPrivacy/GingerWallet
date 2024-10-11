@@ -54,7 +54,7 @@
                 <PathIcon Data="{StaticResource warning_regular}" />
               </Viewbox>
               <TextBlock Margin="0 10 0 20" DockPanel.Dock="Top" Classes="h8" TextWrapping="Wrap" TextAlignment="Center" Text= "{x:Static lang:Resources.TwoFactorDisabledWarnMessage}" />
-              <Button DockPanel.Dock="Bottom" Focusable="False" Content="Open Settings"
+              <Button DockPanel.Dock="Bottom" Focusable="False" Content="{x:Static lang:Resources.TwoFactorDisabledWarnMessageOpenSettings}"
                       Classes="h8 plain activeHyperLink" Cursor="Hand"
                       HorizontalAlignment="Center" VerticalAlignment="Bottom"
                       Command="{Binding #UserControl.DataContext.SettingsPage.OpenSecurityTabCommand}">
