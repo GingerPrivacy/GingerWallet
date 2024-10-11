@@ -387,4 +387,94 @@
   <data name="CoinjoinSettings" xml:space="preserve">
     <value>Coinjoin beállítások</value>
   </data>
+  <data name="CountDownMessage" xml:space="preserve">
+    <value>Coinjoin automatikus indítására várakozik</value>
+  </data>
+  <data name="WaitingMessage" xml:space="preserve">
+    <value>Coinjoin-ra várakozik</value>
+  </data>
+  <data name="UneconomicalRoundMessage" xml:space="preserve">
+    <value>Olcsóbb Coinjoin-ra várakozik</value>
+  </data>
+  <data name="RandomlySkippedRoundMessage" xml:space="preserve">
+    <value>Egy kör kihagyása a jobb anonimitás érdekében</value>
+  </data>
+  <data name="PauseMessage" xml:space="preserve">
+    <value>A Coinjoin szünetel</value>
+  </data>
+  <data name="StoppedMessage" xml:space="preserve">
+    <value>A Coinjoin leállt</value>
+  </data>
+  <data name="PressPlayToStartMessage" xml:space="preserve">
+    <value>Nyomd meg a Play gombot az indításhoz</value>
+  </data>
+  <data name="RoundSucceedMessage" xml:space="preserve">
+    <value>Coinjoin sikeres! Folytatás...</value>
+  </data>
+  <data name="RoundFinishedMessage" xml:space="preserve">
+    <value>A kör befejeződött, várakozás a következő körre</value>
+  </data>
+  <data name="AbortedNotEnoughAlicesMessage" xml:space="preserve">
+    <value>Nincs elegendő résztvevő, újrapróbálkozás...</value>
+  </data>
+  <data name="CoinJoinInProgress" xml:space="preserve">
+    <value>Coinjoin folyamatban</value>
+  </data>
+  <data name="InputRegistrationMessage" xml:space="preserve">
+    <value>Várakozás más résztvevőkre</value>
+  </data>
+  <data name="WaitingForBlameRoundMessage" xml:space="preserve">
+    <value>Várakozás az ismétlő körre</value>
+  </data>
+  <data name="WaitingRoundMessage" xml:space="preserve">
+    <value>Várakozás egy körre</value>
+  </data>
+  <data name="PlebStopMessage" xml:space="preserve">
+    <value>A Coinjoin gazdaságtalan lehet</value>
+  </data>
+  <data name="PlebStopMessageBelow" xml:space="preserve">
+    <value>Adj hozzá több pénzt, vagy nyomd meg a Play gombot a folytatáshoz</value>
+  </data>
+  <data name="NoCoinsEligibleToMixMessage" xml:space="preserve">
+    <value>Nincs elegendő Coinjoin-ra jogosult összeg</value>
+  </data>
+  <data name="UserInSendWorkflowMessage" xml:space="preserve">
+    <value>Várakozás a küldési párbeszédablak bezárására</value>
+  </data>
+  <data name="AllPrivateMessage" xml:space="preserve">
+    <value>Hurrá! Minden pénzed anonim!</value>
+  </data>
+  <data name="BackendNotConnected" xml:space="preserve">
+    <value>Várakozás a kapcsolatra</value>
+  </data>
+  <data name="GeneralErrorMessage" xml:space="preserve">
+    <value>Érvényes feltételekre várakozik</value>
+  </data>
+  <data name="WaitingForConfirmedFunds" xml:space="preserve">
+    <value>Várakozás a megerősített érmékre</value>
+  </data>
+  <data name="CoinsRejectedMessage" xml:space="preserve">
+    <value>Néhány érmét elutasítottak a Coinjoinból</value>
+  </data>
+  <data name="OnlyImmatureCoinsAvailableMessage" xml:space="preserve">
+    <value>Csak konfirmálatlan érmék állnak rendelkezésre</value>
+  </data>
+  <data name="OnlyExcludedCoinsAvailableMessage" xml:space="preserve">
+    <value>Csak kizárt érmék állnak rendelkezésre</value>
+  </data>
+  <data name="MiningFeeRateTooHighMessage" xml:space="preserve">
+    <value>A bányászati díj túl magas volt</value>
+  </data>
+  <data name="CoordinationFeeRateTooHighMessage" xml:space="preserve">
+    <value>A koordinációs díj túl magas volt</value>
+  </data>
+  <data name="MinInputCountTooLowMessage" xml:space="preserve">
+    <value>A minimális bemenetszám túl alacsony volt</value>
+  </data>
+  <data name="ServerDidNotGiveFeeExemptionMessage" xml:space="preserve">
+    <value>A szerver nem adott remix díjmentességet</value>
+  </data>
+  <data name="WaitingForResponse" xml:space="preserve">
+    <value>Válaszra várakozás</value>
+  </data>
 </root>

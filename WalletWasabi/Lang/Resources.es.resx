@@ -388,4 +388,94 @@
   <data name="CoinjoinSettings" xml:space="preserve">
     <value>Configuración de Coinjoin</value>
   </data>
+  <data name="CountDownMessage" xml:space="preserve">
+    <value>Esperando el inicio automático de Coinjoin</value>
+  </data>
+  <data name="WaitingMessage" xml:space="preserve">
+    <value>Esperando Coinjoin</value>
+  </data>
+  <data name="UneconomicalRoundMessage" xml:space="preserve">
+    <value>Esperando Coinjoins más baratos</value>
+  </data>
+  <data name="RandomlySkippedRoundMessage" xml:space="preserve">
+    <value>Saltando una ronda para mejor privacidad</value>
+  </data>
+  <data name="PauseMessage" xml:space="preserve">
+    <value>Coinjoin está en pausa</value>
+  </data>
+  <data name="StoppedMessage" xml:space="preserve">
+    <value>Coinjoin se ha detenido</value>
+  </data>
+  <data name="PressPlayToStartMessage" xml:space="preserve">
+    <value>Presiona Play para comenzar</value>
+  </data>
+  <data name="RoundSucceedMessage" xml:space="preserve">
+    <value>¡Coinjoin exitoso! Continuando...</value>
+  </data>
+  <data name="RoundFinishedMessage" xml:space="preserve">
+    <value>La ronda terminó, esperando la siguiente ronda</value>
+  </data>
+  <data name="AbortedNotEnoughAlicesMessage" xml:space="preserve">
+    <value>Participantes insuficientes, reintentando...</value>
+  </data>
+  <data name="CoinJoinInProgress" xml:space="preserve">
+    <value>Coinjoin en progreso</value>
+  </data>
+  <data name="InputRegistrationMessage" xml:space="preserve">
+    <value>Esperando a otros participantes</value>
+  </data>
+  <data name="WaitingForBlameRoundMessage" xml:space="preserve">
+    <value>Esperando la ronda de repetición</value>
+  </data>
+  <data name="WaitingRoundMessage" xml:space="preserve">
+    <value>Esperando una ronda</value>
+  </data>
+  <data name="PlebStopMessage" xml:space="preserve">
+    <value>El Coinjoin puede no ser rentable</value>
+  </data>
+  <data name="PlebStopMessageBelow" xml:space="preserve">
+    <value>Agrega más fondos o presiona Play para continuar</value>
+  </data>
+  <data name="NoCoinsEligibleToMixMessage" xml:space="preserve">
+    <value>Fondos insuficientes elegibles para Coinjoin</value>
+  </data>
+  <data name="UserInSendWorkflowMessage" xml:space="preserve">
+    <value>Esperando el cierre del cuadro de diálogo de envío</value>
+  </data>
+  <data name="AllPrivateMessage" xml:space="preserve">
+    <value>¡Hurra! ¡Todos tus fondos son privados!</value>
+  </data>
+  <data name="BackendNotConnected" xml:space="preserve">
+    <value>Esperando conexión</value>
+  </data>
+  <data name="GeneralErrorMessage" xml:space="preserve">
+    <value>Esperando condiciones válidas</value>
+  </data>
+  <data name="WaitingForConfirmedFunds" xml:space="preserve">
+    <value>Esperando fondos confirmados</value>
+  </data>
+  <data name="CoinsRejectedMessage" xml:space="preserve">
+    <value>Algunos fondos son rechazados del Coinjoin</value>
+  </data>
+  <data name="OnlyImmatureCoinsAvailableMessage" xml:space="preserve">
+    <value>Solo monedas no confirmadas están disponibles</value>
+  </data>
+  <data name="OnlyExcludedCoinsAvailableMessage" xml:space="preserve">
+    <value>Solo los fondos excluidos están disponibles</value>
+  </data>
+  <data name="MiningFeeRateTooHighMessage" xml:space="preserve">
+    <value>La tasa de comisión de minería era demasiado alta</value>
+  </data>
+  <data name="CoordinationFeeRateTooHighMessage" xml:space="preserve">
+    <value>La tasa de comisión de coordinación era demasiado alta</value>
+  </data>
+  <data name="MinInputCountTooLowMessage" xml:space="preserve">
+    <value>El recuento mínimo de entradas era demasiado bajo</value>
+  </data>
+  <data name="ServerDidNotGiveFeeExemptionMessage" xml:space="preserve">
+    <value>El servidor no otorgó la exención de la tarifa de remix</value>
+  </data>
+  <data name="WaitingForResponse" xml:space="preserve">
+    <value>Esperando respuesta</value>
+  </data>
 </root>

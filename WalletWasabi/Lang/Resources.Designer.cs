@@ -61,6 +61,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insufficient participants, retrying....
+        /// </summary>
+        public static string AbortedNotEnoughAlicesMessage {
+            get {
+                return ResourceManager.GetString("AbortedNotEnoughAlicesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Display Ginger Wallet&apos;s current info.
         /// </summary>
         public static string AboutViewModelCaption {
@@ -142,11 +151,29 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hurray! All your funds are private!.
+        /// </summary>
+        public static string AllPrivateMessage {
+            get {
+                return ResourceManager.GetString("AllPrivateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to and.
         /// </summary>
         public static string and {
             get {
                 return ResourceManager.GetString("and", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Awaiting connection.
+        /// </summary>
+        public static string BackendNotConnected {
+            get {
+                return ResourceManager.GetString("BackendNotConnected", resourceCulture);
             }
         }
         
@@ -241,11 +268,38 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Coinjoin in progress.
+        /// </summary>
+        public static string CoinJoinInProgress {
+            get {
+                return ResourceManager.GetString("CoinJoinInProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Coinjoin Settings.
         /// </summary>
         public static string CoinjoinSettings {
             get {
                 return ResourceManager.GetString("CoinjoinSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Some funds are rejected from coinjoining.
+        /// </summary>
+        public static string CoinsRejectedMessage {
+            get {
+                return ResourceManager.GetString("CoinsRejectedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Coordination fee rate was too high.
+        /// </summary>
+        public static string CoordinationFeeRateTooHighMessage {
+            get {
+                return ResourceManager.GetString("CoordinationFeeRateTooHighMessage", resourceCulture);
             }
         }
         
@@ -273,6 +327,15 @@ namespace WalletWasabi.Lang {
         public static string CopyTransactionId {
             get {
                 return ResourceManager.GetString("CopyTransactionId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Awaiting auto-start of coinjoin.
+        /// </summary>
+        public static string CountDownMessage {
+            get {
+                return ResourceManager.GetString("CountDownMessage", resourceCulture);
             }
         }
         
@@ -340,6 +403,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Awaiting valid conditions.
+        /// </summary>
+        public static string GeneralErrorMessage {
+            get {
+                return ResourceManager.GetString("GeneralErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to General.
         /// </summary>
         public static string GeneralSettingsTabViewModelCaption {
@@ -381,6 +453,15 @@ namespace WalletWasabi.Lang {
         public static string hour {
             get {
                 return ResourceManager.GetString("hour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Awaiting other participants.
+        /// </summary>
+        public static string InputRegistrationMessage {
+            get {
+                return ResourceManager.GetString("InputRegistrationMessage", resourceCulture);
             }
         }
         
@@ -457,6 +538,24 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mining fee rate was too high.
+        /// </summary>
+        public static string MiningFeeRateTooHighMessage {
+            get {
+                return ResourceManager.GetString("MiningFeeRateTooHighMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min input count was too low.
+        /// </summary>
+        public static string MinInputCountTooLowMessage {
+            get {
+                return ResourceManager.GetString("MinInputCountTooLowMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to minute.
         /// </summary>
         public static string minute {
@@ -471,6 +570,33 @@ namespace WalletWasabi.Lang {
         public static string NoCategory {
             get {
                 return ResourceManager.GetString("NoCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insufficient funds eligible for coinjoin.
+        /// </summary>
+        public static string NoCoinsEligibleToMixMessage {
+            get {
+                return ResourceManager.GetString("NoCoinsEligibleToMixMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only excluded funds are available.
+        /// </summary>
+        public static string OnlyExcludedCoinsAvailableMessage {
+            get {
+                return ResourceManager.GetString("OnlyExcludedCoinsAvailableMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only immature funds are available.
+        /// </summary>
+        public static string OnlyImmatureCoinsAvailableMessage {
+            get {
+                return ResourceManager.GetString("OnlyImmatureCoinsAvailableMessage", resourceCulture);
             }
         }
         
@@ -592,11 +718,74 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Coinjoin is paused.
+        /// </summary>
+        public static string PauseMessage {
+            get {
+                return ResourceManager.GetString("PauseMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Coinjoin may be uneconomical.
+        /// </summary>
+        public static string PlebStopMessage {
+            get {
+                return ResourceManager.GetString("PlebStopMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add more funds or press Play to bypass.
+        /// </summary>
+        public static string PlebStopMessageBelow {
+            get {
+                return ResourceManager.GetString("PlebStopMessageBelow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to s.
         /// </summary>
         public static string Plural {
             get {
                 return ResourceManager.GetString("Plural", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Press Play to start.
+        /// </summary>
+        public static string PressPlayToStartMessage {
+            get {
+                return ResourceManager.GetString("PressPlayToStartMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skipping a round for better privacy.
+        /// </summary>
+        public static string RandomlySkippedRoundMessage {
+            get {
+                return ResourceManager.GetString("RandomlySkippedRoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Round ended, awaiting next round.
+        /// </summary>
+        public static string RoundFinishedMessage {
+            get {
+                return ResourceManager.GetString("RoundFinishedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Coinjoin successful! Continuing....
+        /// </summary>
+        public static string RoundSucceedMessage {
+            get {
+                return ResourceManager.GetString("RoundSucceedMessage", resourceCulture);
             }
         }
         
@@ -642,6 +831,15 @@ namespace WalletWasabi.Lang {
         public static string SecuritySettingsTabViewModelTitle {
             get {
                 return ResourceManager.GetString("SecuritySettingsTabViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server did not give remix fee exemption.
+        /// </summary>
+        public static string ServerDidNotGiveFeeExemptionMessage {
+            get {
+                return ResourceManager.GetString("ServerDidNotGiveFeeExemptionMessage", resourceCulture);
             }
         }
         
@@ -709,6 +907,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Coinjoin has stopped.
+        /// </summary>
+        public static string StoppedMessage {
+            get {
+                return ResourceManager.GetString("StoppedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Two-Factor authentication is disabled. Enable it in the Setting for greater protection..
         /// </summary>
         public static string TwoFactorDisabledWarnMessage {
@@ -723,6 +930,24 @@ namespace WalletWasabi.Lang {
         public static string TwoFactorDisabledWarnMessageOpenSettings {
             get {
                 return ResourceManager.GetString("TwoFactorDisabledWarnMessageOpenSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Awaiting cheaper coinjoins.
+        /// </summary>
+        public static string UneconomicalRoundMessage {
+            get {
+                return ResourceManager.GetString("UneconomicalRoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Awaiting closure of send dialog.
+        /// </summary>
+        public static string UserInSendWorkflowMessage {
+            get {
+                return ResourceManager.GetString("UserInSendWorkflowMessage", resourceCulture);
             }
         }
         
@@ -751,6 +976,51 @@ namespace WalletWasabi.Lang {
         public static string UserSupportViewModelTitle {
             get {
                 return ResourceManager.GetString("UserSupportViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Awaiting the blame round.
+        /// </summary>
+        public static string WaitingForBlameRoundMessage {
+            get {
+                return ResourceManager.GetString("WaitingForBlameRoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Awaiting confirmed funds.
+        /// </summary>
+        public static string WaitingForConfirmedFunds {
+            get {
+                return ResourceManager.GetString("WaitingForConfirmedFunds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting for response.
+        /// </summary>
+        public static string WaitingForResponse {
+            get {
+                return ResourceManager.GetString("WaitingForResponse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Awaiting coinjoin.
+        /// </summary>
+        public static string WaitingMessage {
+            get {
+                return ResourceManager.GetString("WaitingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WaitingRoundMessage.
+        /// </summary>
+        public static string WaitingRoundMessage {
+            get {
+                return ResourceManager.GetString("WaitingRoundMessage", resourceCulture);
             }
         }
         

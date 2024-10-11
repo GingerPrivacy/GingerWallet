@@ -9,6 +9,7 @@ using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.State;
 using WalletWasabi.Fluent.ViewModels.Wallets.Settings;
+using WalletWasabi.Lang;
 using WalletWasabi.WabiSabi.Backend.Rounds;
 using WalletWasabi.WabiSabi.Client.CoinJoinProgressEvents;
 using WalletWasabi.WabiSabi.Client.StatusChangedEvents;
@@ -18,35 +19,35 @@ namespace WalletWasabi.Fluent.ViewModels.Wallets;
 [AppLifetime]
 public partial class CoinJoinStateViewModel : ViewModelBase
 {
-	private const string CountDownMessage = "Awaiting auto-start of coinjoin";
-	private const string WaitingMessage = "Awaiting coinjoin";
-	private const string UneconomicalRoundMessage = "Awaiting cheaper coinjoins";
-	private const string RandomlySkippedRoundMessage = "Skipping a round for better privacy";
-	private const string PauseMessage = "Coinjoin is paused";
-	private const string StoppedMessage = "Coinjoin has stopped";
-	private const string PressPlayToStartMessage = "Press Play to start";
-	private const string RoundSucceedMessage = "Coinjoin successful! Continuing...";
-	private const string RoundFinishedMessage = "Round ended, awaiting next round";
-	private const string AbortedNotEnoughAlicesMessage = "Insufficient participants, retrying...";
-	private const string CoinJoinInProgress = "Coinjoin in progress";
-	private const string InputRegistrationMessage = "Awaiting other participants";
-	private const string WaitingForBlameRoundMessage = "Awaiting the blame round";
-	private const string WaitingRoundMessage = "Awaiting a round";
-	private const string PlebStopMessage = "Coinjoin may be uneconomical";
-	private const string PlebStopMessageBelow = "Add more funds or press Play to bypass";
-	private const string NoCoinsEligibleToMixMessage = "Insufficient funds eligible for coinjoin";
-	private const string UserInSendWorkflowMessage = "Awaiting closure of send dialog";
-	private const string AllPrivateMessage = "Hurray! All your funds are private!";
-	private const string BackendNotConnected = "Awaiting connection";
-	private const string GeneralErrorMessage = "Awaiting valid conditions";
-	private const string WaitingForConfirmedFunds = "Awaiting confirmed funds";
-	private const string CoinsRejectedMessage = "Some funds are rejected from coinjoining";
-	private const string OnlyImmatureCoinsAvailableMessage = "Only immature funds are available";
-	private const string OnlyExcludedCoinsAvailableMessage = "Only excluded funds are available";
-	private const string MiningFeeRateTooHighMessage = "Mining fee rate was too high";
-	private const string CoordinationFeeRateTooHighMessage = "Coordination fee rate was too high";
-	private const string MinInputCountTooLowMessage = "Min input count was too low";
-	private const string ServerDidNotGiveFeeExemptionMessage = "Server did not give remix fee exemption";
+	private static string CountDownMessage = Resources.CountDownMessage;
+	private static string WaitingMessage = Resources.WaitingMessage;
+	private static string UneconomicalRoundMessage = Resources.UneconomicalRoundMessage;
+	private static string RandomlySkippedRoundMessage = Resources.RandomlySkippedRoundMessage;
+	private static string PauseMessage = Resources.PauseMessage;
+	private static string StoppedMessage = Resources.StoppedMessage;
+	private static string PressPlayToStartMessage = Resources.PressPlayToStartMessage;
+	private static string RoundSucceedMessage = Resources.RoundSucceedMessage;
+	private static string RoundFinishedMessage = Resources.RoundFinishedMessage;
+	private static string AbortedNotEnoughAlicesMessage = Resources.AbortedNotEnoughAlicesMessage;
+	private static string CoinJoinInProgress = Resources.CoinJoinInProgress;
+	private static string InputRegistrationMessage = Resources.InputRegistrationMessage;
+	private static string WaitingForBlameRoundMessage = Resources.WaitingForBlameRoundMessage;
+	private static string WaitingRoundMessage = Resources.WaitingRoundMessage;
+	private static string PlebStopMessage = Resources.PlebStopMessage;
+	private static string PlebStopMessageBelow = Resources.PlebStopMessageBelow;
+	private static string NoCoinsEligibleToMixMessage = Resources.NoCoinsEligibleToMixMessage;
+	private static string UserInSendWorkflowMessage = Resources.UserInSendWorkflowMessage;
+	private static string AllPrivateMessage = Resources.AllPrivateMessage;
+	private static string BackendNotConnected = Resources.BackendNotConnected;
+	private static string GeneralErrorMessage = Resources.GeneralErrorMessage;
+	private static string WaitingForConfirmedFunds = Resources.WaitingForConfirmedFunds;
+	private static string CoinsRejectedMessage = Resources.CoinsRejectedMessage;
+	private static string OnlyImmatureCoinsAvailableMessage = Resources.OnlyImmatureCoinsAvailableMessage;
+	private static string OnlyExcludedCoinsAvailableMessage = Resources.OnlyExcludedCoinsAvailableMessage;
+	private static string MiningFeeRateTooHighMessage = Resources.MiningFeeRateTooHighMessage;
+	private static string CoordinationFeeRateTooHighMessage = Resources.CoordinationFeeRateTooHighMessage;
+	private static string MinInputCountTooLowMessage = Resources.MinInputCountTooLowMessage;
+	private static string ServerDidNotGiveFeeExemptionMessage = Resources.ServerDidNotGiveFeeExemptionMessage;
 
 	private readonly IWalletModel _wallet;
 	private readonly StateMachine<State, Trigger> _stateMachine;
@@ -325,7 +326,7 @@ public partial class CoinJoinStateViewModel : ViewModelBase
 		// and the countdown has finished but the client hasn't received any new phase changed message.
 		if (IsCountDownDelayHappening)
 		{
-			LeftText = "Waiting for response";
+			LeftText = Resources.WaitingForResponse;
 			RightText = "";
 			return;
 		}
