@@ -136,7 +136,7 @@
                  CancelContent="{x:Static lang:Resources.Cancel}"
                  EnableCancel="{Binding EnableCancel}"
                  EnableBack="true"
-                 EnableNext="True" NextContent="Continue"
+                 EnableNext="True" NextContent="{x:Static lang:Resources.Continue}"
                  IsBusy="{Binding IsBusy}">
     <DockPanel>
 

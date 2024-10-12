@@ -154,7 +154,7 @@
     <value>Administrar la configuración general</value>
   </data>
   <data name="GeneralSettingsTabViewModelKeywords" xml:space="preserve">
-    <value>Configuración, General, Bitcoin, Oscuro, Modo, Ejecutar, Wasabi, Computadora, Sistema, Inicio, Fondo, Cerrar, Automático, Copiar, Pegar, Direcciones, Personalizado, Cambiar, Dirección, Tarifa, Pantalla, Formato, BTC, sats, navegador</value>
+    <value>Configuración, General, Bitcoin, Oscuro, Modo, Ejecutar, Ginger, Computadora, Sistema, Inicio, Fondo, Cerrar, Automático, Copiar, Pegar, Direcciones, Personalizado, Cambiar, Dirección, Tarifa, Pantalla, Formato, BTC, sats, navegador</value>
   </data>
   <data name="BitcoinTabSettingsViewModelTitle" xml:space="preserve">
     <value>Bitcoin</value>
@@ -317,7 +317,7 @@
     <value>Descargando y procesando datos de la red de Bitcoin</value>
   </data>
   <data name="LoadingViewThirdparty" xml:space="preserve">
-    <value>Wasabi hace esto sin que ningún tercero conozca tu saldo y actividad financiera.</value>
+    <value>Ginger hace esto sin que ningún tercero conozca tu saldo y actividad financiera.</value>
   </data>
   <data name="LoadingViewProcessLonger" xml:space="preserve">
     <value>Este proceso será más largo en el primer lanzamiento, con carteras más grandes o si ha pasado más tiempo entre las sincronizaciones.</value>
@@ -551,7 +551,7 @@
     <value>Estrategia de Coinjoin</value>
   </data>
   <data name="CoinJoinProfilesCaption" xml:space="preserve">
-    <value>Wasabi se encarga de tu privacidad financiera al iniciar automáticamente el coinjoin de todos tus fondos por una tarifa de coordinación fija del 0.3% + las tarifas de minería. ¡Selecciona la estrategia de coinjoin que mejor se adapte a ti!</value>
+    <value>Ginger se encarga de tu privacidad financiera al iniciar automáticamente el coinjoin de todos tus fondos por una tarifa de coordinación fija del 0.3% + las tarifas de minería. ¡Selecciona la estrategia de coinjoin que mejor se adapte a ti!</value>
   </data>
   <data name="PrivateCoinJoinProfileTitle" xml:space="preserve">
     <value>Maximizar la privacidad</value>
@@ -615,5 +615,35 @@
   </data>
   <data name="Skip" xml:space="preserve">
     <value>Saltar</value>
+  </data>
+  <data name="CreateNewWallet" xml:space="preserve">
+    <value>Crear una nueva cartera</value>
+  </data>
+  <data name="ConnectHardwareWallet" xml:space="preserve">
+    <value>Conectar a una cartera de hardware</value>
+  </data>
+  <data name="ImportWallet" xml:space="preserve">
+    <value>Importar una cartera</value>
+  </data>
+  <data name="RecoverWallet" xml:space="preserve">
+    <value>Recuperar una cartera</value>
+  </data>
+  <data name="or" xml:space="preserve">
+    <value>o</value>
+  </data>
+  <data name="WalletName" xml:space="preserve">
+    <value>Nombre de la cartera</value>
+  </data>
+  <data name="WalletRenameCaption" xml:space="preserve">
+    <value>Puedes modificar el nombre de tu cartera</value>
+  </data>
+  <data name="TypeInWalletName" xml:space="preserve">
+    <value>Escribe un nombre para la cartera</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Continuar</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Éxito</value>
   </data>
 </root>

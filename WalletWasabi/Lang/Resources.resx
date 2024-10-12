@@ -156,7 +156,7 @@
     <value>General</value>
   </data>
   <data name="GeneralSettingsTabViewModelKeywords" xml:space="preserve">
-    <value>Settings, General, Bitcoin, Dark, Mode, Run, Wasabi, Computer, System, Start, Background, Close, Auto, Copy, Paste, Addresses, Custom, Change, Address, Fee, Display, Format, BTC, sats, browser</value>
+    <value>Settings, General, Bitcoin, Dark, Mode, Run, Ginger, Computer, System, Start, Background, Close, Auto, Copy, Paste, Addresses, Custom, Change, Address, Fee, Display, Format, BTC, sats, browser</value>
   </data>
   <data name="BitcoinTabSettingsViewModelTitle" xml:space="preserve">
     <value>Bitcoin</value>
@@ -319,7 +319,7 @@
     <value> Downloading and processing Bitcoin network data</value>
   </data>
   <data name="LoadingViewThirdparty" xml:space="preserve">
-    <value>Wasabi does this without any third party knowing about your balance and financial activity.</value>
+    <value>Ginger does this without any third party knowing about your balance and financial activity.</value>
   </data>
   <data name="LoadingViewProcessLonger" xml:space="preserve">
     <value>"This process will be longer on first launch, with larger wallets, or after long gaps between synchronizations.</value>
@@ -553,7 +553,7 @@
     <value>Coinjoin Strategy</value>
   </data>
   <data name="CoinJoinProfilesCaption" xml:space="preserve">
-    <value>Wasabi takes care of your financial privacy by automatically starting to coinjoin all your funds for a fixed 0.3% coordination fee + the mining fees. Select a coinjoin strategy that fits you best!</value>
+    <value>Ginger takes care of your financial privacy by automatically starting to coinjoin all your funds for a fixed 0.3% coordination fee + the mining fees. Select a coinjoin strategy that fits you best!</value>
   </data>
   <data name="PrivateCoinJoinProfileTitle" xml:space="preserve">
     <value>Maximize Privacy</value>
@@ -617,5 +617,35 @@
   </data>
   <data name="Skip" xml:space="preserve">
     <value>Skip</value>
+  </data>
+  <data name="CreateNewWallet" xml:space="preserve">
+    <value>Create a new wallet</value>
+  </data>
+  <data name="ConnectHardwareWallet" xml:space="preserve">
+    <value>Connect to hardware wallet</value>
+  </data>
+  <data name="ImportWallet" xml:space="preserve">
+    <value>Import a wallet</value>
+  </data>
+  <data name="RecoverWallet" xml:space="preserve">
+    <value>Recover a wallet</value>
+  </data>
+  <data name="or" xml:space="preserve">
+    <value>or</value>
+  </data>
+  <data name="WalletName" xml:space="preserve">
+    <value>Wallet Name</value>
+  </data>
+  <data name="WalletRenameCaption" xml:space="preserve">
+    <value>You can modify the name of your wallet</value>
+  </data>
+  <data name="TypeInWalletName" xml:space="preserve">
+    <value>Type in a wallet name</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Success</value>
   </data>
 </root>

@@ -154,7 +154,7 @@
     <value>Általános beállítások kezelése</value>
   </data>
   <data name="GeneralSettingsTabViewModelKeywords" xml:space="preserve">
-    <value>Beállítások, Általános, Bitcoin, Sötét, Mód, Futtatás, Wasabi, Számítógép, Rendszer, Indítás, Háttér, Bezárás, Automatikus, Másolás, Beillesztés, Címek, Egyéni, Módosítás, Cím, Díj, Kijelző, Formátum, BTC, sats, böngésző</value>
+    <value>Beállítások, Általános, Bitcoin, Sötét, Mód, Futtatás, Ginger, Számítógép, Rendszer, Indítás, Háttér, Bezárás, Automatikus, Másolás, Beillesztés, Címek, Egyéni, Módosítás, Cím, Díj, Kijelző, Formátum, BTC, sats, böngésző</value>
   </data>
   <data name="BitcoinTabSettingsViewModelTitle" xml:space="preserve">
     <value>Bitcoin</value>
@@ -316,7 +316,7 @@
     <value>Bitcoin-hálózati adatok letöltése és feldolgozása</value>
   </data>
   <data name="LoadingViewThirdparty" xml:space="preserve">
-    <value>A Wasabi ezt anélkül teszi, hogy harmadik fél tudomást szerezne az egyenlegedről és pénzügyi tevékenységedről.</value>
+    <value>A Ginger ezt anélkül teszi, hogy harmadik fél tudomást szerezne az egyenlegedről és pénzügyi tevékenységedről.</value>
   </data>
   <data name="LoadingViewProcessLonger" xml:space="preserve">
     <value>Ez a folyamat hosszabb lesz az első indításkor, nagyobb pénztárcáknál, vagy ha hosszabb idő telt el a szinkronizálások között.</value>
@@ -550,7 +550,7 @@
     <value>Coinjoin stratégia</value>
   </data>
   <data name="CoinJoinProfilesCaption" xml:space="preserve">
-    <value>A Wasabi gondoskodik a pénzügyi anonimitásodról, automatikusan coinjoinba vonja az összes pénzedet egy fix 0,3%-os koordinációs díjért + a bányászati díjakért. Válassz egy hozzád legjobban illő coinjoin stratégiát!</value>
+    <value>A Ginger gondoskodik a pénzügyi anonimitásodról, automatikusan coinjoinba vonja az összes pénzedet egy fix 0,3%-os koordinációs díjért + a bányászati díjakért. Válassz egy hozzád legjobban illő coinjoin stratégiát!</value>
   </data>
   <data name="PrivateCoinJoinProfileTitle" xml:space="preserve">
     <value>Az anonimitás maximalizálása</value>
@@ -614,5 +614,35 @@
   </data>
   <data name="Skip" xml:space="preserve">
     <value>Kihagyás</value>
+  </data>
+  <data name="CreateNewWallet" xml:space="preserve">
+    <value>Új pénztárca létrehozása</value>
+  </data>
+  <data name="ConnectHardwareWallet" xml:space="preserve">
+    <value>Csatlakozás hardveres pénztárcához</value>
+  </data>
+  <data name="ImportWallet" xml:space="preserve">
+    <value>Pénztárca importálása</value>
+  </data>
+  <data name="RecoverWallet" xml:space="preserve">
+    <value>Pénztárca helyreállítása</value>
+  </data>
+  <data name="or" xml:space="preserve">
+    <value>vagy</value>
+  </data>
+  <data name="WalletName" xml:space="preserve">
+    <value>Pénztárca megnevezés</value>
+  </data>
+  <data name="WalletRenameCaption" xml:space="preserve">
+    <value>Módosíthatod a pénztárcád megnevezését</value>
+  </data>
+  <data name="TypeInWalletName" xml:space="preserve">
+    <value>Írd be a pénztárca megnevezését</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Folytatás</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Siker</value>
   </data>
 </root>

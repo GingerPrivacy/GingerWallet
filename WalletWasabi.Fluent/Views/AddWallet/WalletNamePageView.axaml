@@ -6,14 +6,15 @@
              mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371"
              x:DataType="vm:WalletNamePageViewModel"
              x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.AddWallet.WalletNamePageView">
   <ContentArea Title="{Binding Title}"
                  EnableCancel="{Binding EnableCancel}"
                  EnableBack="{Binding EnableBack}"
                  IsBusy="{Binding IsBusy}"
-                 EnableNext="True" NextContent="Continue">
+                 EnableNext="True" NextContent="{x:Static lang:Resources.Continue}">
     <StackPanel DockPanel.Dock="Top">
-      <TextBox MaxLength="{StaticResource WalletNameMaxLength}" Text="{Binding WalletName}" Watermark="Type in a wallet name">
+      <TextBox MaxLength="{StaticResource WalletNameMaxLength}" Text="{Binding WalletName}" Watermark="{x:Static lang:Resources.TypeInWalletName}">
         <Interaction.Behaviors>
           <FocusOnAttachedBehavior />
           <TextBoxSelectAllTextBehavior />

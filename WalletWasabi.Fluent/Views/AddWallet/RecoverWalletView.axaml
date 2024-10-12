@@ -13,7 +13,7 @@
                  CancelContent="{x:Static lang:Resources.Cancel}"
                  EnableCancel="{Binding EnableCancel}"
                  EnableBack="{Binding EnableBack}"
-                 EnableNext="True" NextContent="Continue"
+                 EnableNext="True" NextContent="{x:Static lang:Resources.Continue}"
                  IsBusy="{Binding IsBusy}">
     <DockPanel>
       <DockPanel DockPanel.Dock="Top">

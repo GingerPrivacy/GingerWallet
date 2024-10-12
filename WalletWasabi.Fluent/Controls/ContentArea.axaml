@@ -8,7 +8,7 @@
                      TopContent="This is the top content"
                      EnableBack="True"
                      EnableCancel="True" CancelContent="{x:Static lang:Resources.Cancel}" FocusCancel="False"
-                     EnableNext="True" NextContent="Continue" FocusNext="True"
+                     EnableNext="True" NextContent="{x:Static lang:Resources.Continue}" FocusNext="True"
                      Caption="Type in your Wallet's name and select an option below:">
         This is the content.
       </ContentArea>

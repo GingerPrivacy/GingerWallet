@@ -2,6 +2,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using ReactiveUI;
 using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.ViewModels.AddWallet;
 
@@ -27,7 +28,7 @@ public partial class WelcomePageViewModel : DialogViewModelBase<Unit>
 			.Subscribe(
 				x =>
 				{
-					NextLabel = x < NumberOfPages - 1 ? "Continue" : "Get Started";
+					NextLabel = x < NumberOfPages - 1 ? Resources.Continue : "Get Started";
 					EnableNextKey = x < NumberOfPages - 1;
 				});
 

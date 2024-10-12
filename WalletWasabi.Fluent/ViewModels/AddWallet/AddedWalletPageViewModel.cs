@@ -5,6 +5,7 @@ using WalletWasabi.Wallets;
 using System.Reactive.Disposables;
 using WalletWasabi.Fluent.Models;
 using System.Threading.Tasks;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.ViewModels.AddWallet;
 
@@ -15,7 +16,7 @@ public partial class AddedWalletPageViewModel : RoutableViewModel
 
 	private AddedWalletPageViewModel(IWalletSettingsModel walletSettings, WalletCreationOptions options)
 	{
-		Title = "Success";
+		Title = Resources.Success;
 
 		_walletSettings = walletSettings;
 

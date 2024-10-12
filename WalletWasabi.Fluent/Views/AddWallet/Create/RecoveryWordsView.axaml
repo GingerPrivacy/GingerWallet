@@ -13,7 +13,7 @@
                  CancelContent="{x:Static lang:Resources.Cancel}"
                  EnableCancel="{Binding EnableCancel}"
                  EnableBack="{Binding EnableBack}"
-                 EnableNext="True" NextContent="Continue" FocusNext="True"
+                 EnableNext="True" NextContent="{x:Static lang:Resources.Continue}" FocusNext="True"
                  ScrollViewer.HorizontalScrollBarVisibility="Auto">
     <Grid>
       <Grid.RowDefinitions>

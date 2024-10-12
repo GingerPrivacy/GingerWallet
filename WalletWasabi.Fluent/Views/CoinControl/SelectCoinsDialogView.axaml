@@ -8,11 +8,12 @@
              xmlns:sorting="clr-namespace:WalletWasabi.Fluent.Controls.Sorting"
              x:DataType="coinControl:SelectCoinsDialogViewModel"
              x:Class="WalletWasabi.Fluent.Views.CoinControl.SelectCoinsDialogView"
+             xmlns:lang="using:WalletWasabi.Lang"
              x:CompileBindings="True">
   <ContentArea Title="{Binding Title}"
                EnableBack="{Binding EnableBack}"
                EnableNext="True"
-               NextContent="Continue"
+               NextContent="{x:Static lang:Resources.Continue}"
                EnableCancel="{Binding EnableCancel}"
                IsBusy="{Binding IsBusy}"
                ScrollViewer.VerticalScrollBarVisibility="Disabled">
