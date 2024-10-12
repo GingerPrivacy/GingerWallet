@@ -477,4 +477,73 @@
   <data name="WaitingForResponse" xml:space="preserve">
     <value>Válaszra várakozás</value>
   </data>
+  <data name="WalletSettingsViewModelTitle" xml:space="preserve">
+    <value>Pénztárca beállítások</value>
+  </data>
+  <data name="WalletSettingsViewModelCaption" xml:space="preserve">
+    <value>Pénztárca beállítások megjelenítése</value>
+  </data>
+  <data name="WalletSettingsViewModelKeywords" xml:space="preserve">
+    <value>Pénztárca, Beállítások</value>
+  </data>
+  <data name="Coinjoin" xml:space="preserve">
+    <value>Coinjoin</value>
+  </data>
+  <data name="Tools" xml:space="preserve">
+    <value>Eszközök</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Megnevezés</value>
+  </data>
+  <data name="PSBTworkflow" xml:space="preserve">
+    <value>PSBT munkafolyamat</value>
+  </data>
+  <data name="AutomaticallyStartCoinjoin" xml:space="preserve">
+    <value>Coinjoin automatikus indítása</value>
+  </data>
+  <data name="CoinjoinStrategy" xml:space="preserve">
+    <value>Coinjoin stratégia:</value>
+  </data>
+  <data name="CoinjoinToThisWallet" xml:space="preserve">
+    <value>Coinjoin erre a pénztárcára:</value>
+  </data>
+  <data name="CoinjoinToOtherWalletRestrictions1" xml:space="preserve">
+    <value>- Csak betöltött pénztárcák választhatók ki.</value>
+  </data>
+  <data name="CoinjoinToOtherWalletRestrictions2" xml:space="preserve">
+    <value>- A Coinjoin tranzakcióból származó érméket ez a pénztárca fogja megkapni. Azonban ez a beállítás a Ginger újraindítása után visszaáll.</value>
+  </data>
+  <data name="CoinjoinToOtherWalletRestrictions3" xml:space="preserve">
+    <value>- A kiválasztott pénztárca nem változtatható meg, ha egy Coinjoin folyamatban van.</value>
+  </data>
+  <data name="PlebStopToolTip" xml:space="preserve">
+    <value>A Coinjoin automatikusan leáll, ha a pénztárca egyenlege kevesebb ennél.</value>
+  </data>
+  <data name="PlebStopThreshold" xml:space="preserve">
+    <value>Coinjoin leállításának küszöbértéke</value>
+  </data>
+  <data name="WalletToolsCheckBackup" xml:space="preserve">
+    <value>Ellenőrizted a pénztárca biztonsági mentését?</value>
+  </data>
+  <data name="WalletToolsRecommend" xml:space="preserve">
+    <value>Ajánlott időnként ellenőrizni a pénztárca helyreállítási szavait.</value>
+  </data>
+  <data name="WalletToolsDoNotForget" xml:space="preserve">
+    <value>A pénztárca visszaállításához szükséges a jelszó is, ne felejtsd el.</value>
+  </data>
+  <data name="WalletToolsVerifyRecoveryWords" xml:space="preserve">
+    <value>Helyreállítási szavak ellenőrzése</value>
+  </data>
+  <data name="Change" xml:space="preserve">
+    <value>Módosítás</value>
+  </data>
+  <data name="WalletCoinJoinSettingsViewModelTitle" xml:space="preserve">
+    <value>Coinjoin beállítások</value>
+  </data>
+  <data name="WalletCoinJoinSettingsViewModelCaption" xml:space="preserve">
+    <value>Pénztárca Coinjoin beállítások megjelenítése</value>
+  </data>
+  <data name="WalletCoinJoinSettingsViewModelKeywords" xml:space="preserve">
+    <value>Pénztárca, Beállítások</value>
+  </data>
 </root>

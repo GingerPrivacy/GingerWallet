@@ -478,4 +478,73 @@
   <data name="WaitingForResponse" xml:space="preserve">
     <value>Esperando respuesta</value>
   </data>
+  <data name="WalletSettingsViewModelTitle" xml:space="preserve">
+    <value>Configuración de la cartera</value>
+  </data>
+  <data name="WalletSettingsViewModelCaption" xml:space="preserve">
+    <value>Mostrar configuración de la cartera</value>
+  </data>
+  <data name="WalletSettingsViewModelKeywords" xml:space="preserve">
+    <value>Cartera, Configuración</value>
+  </data>
+  <data name="Coinjoin" xml:space="preserve">
+    <value>Coinjoin</value>
+  </data>
+  <data name="Tools" xml:space="preserve">
+    <value>Herramientas</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Denominación</value>
+  </data>
+  <data name="PSBTworkflow" xml:space="preserve">
+    <value>Flujo de trabajo PSBT</value>
+  </data>
+  <data name="AutomaticallyStartCoinjoin" xml:space="preserve">
+    <value>Iniciar Coinjoin automáticamente</value>
+  </data>
+  <data name="CoinjoinStrategy" xml:space="preserve">
+    <value>Estrategia de Coinjoin:</value>
+  </data>
+  <data name="CoinjoinToThisWallet" xml:space="preserve">
+    <value>Coinjoin a esta cartera:</value>
+  </data>
+  <data name="CoinjoinToOtherWalletRestrictions1" xml:space="preserve">
+    <value>- Solo se pueden seleccionar carteras cargadas.</value>
+  </data>
+  <data name="CoinjoinToOtherWalletRestrictions2" xml:space="preserve">
+    <value>- Las monedas de la transacción Coinjoin serán recibidas por esta cartera. Sin embargo, esta configuración se restablece después de reiniciar Ginger.</value>
+  </data>
+  <data name="CoinjoinToOtherWalletRestrictions3" xml:space="preserve">
+    <value>- La cartera seleccionada no se puede cambiar cuando un Coinjoin está en progreso.</value>
+  </data>
+  <data name="PlebStopToolTip" xml:space="preserve">
+    <value>El Coinjoin se detendrá automáticamente si el saldo de la cartera es menor que esto.</value>
+  </data>
+  <data name="PlebStopThreshold" xml:space="preserve">
+    <value>Umbral para detener el Coinjoin</value>
+  </data>
+  <data name="WalletToolsCheckBackup" xml:space="preserve">
+    <value>¿Has verificado la copia de seguridad de tu cartera?</value>
+  </data>
+  <data name="WalletToolsRecommend" xml:space="preserve">
+    <value>Se recomienda que verifiques las Palabras de Recuperación de tu cartera de vez en cuando.</value>
+  </data>
+  <data name="WalletToolsDoNotForget" xml:space="preserve">
+    <value>Tu frase de contraseña también es necesaria para restaurar tu cartera, no la olvides.</value>
+  </data>
+  <data name="WalletToolsVerifyRecoveryWords" xml:space="preserve">
+    <value>Verificar Palabras de Recuperación</value>
+  </data>
+  <data name="Change" xml:space="preserve">
+    <value>Cambiar</value>
+  </data>
+  <data name="WalletCoinJoinSettingsViewModelTitle" xml:space="preserve">
+    <value>Configuración de Coinjoin</value>
+  </data>
+  <data name="WalletCoinJoinSettingsViewModelCaption" xml:space="preserve">
+    <value>Mostrar configuración de Coinjoin de la cartera</value>
+  </data>
+  <data name="WalletCoinJoinSettingsViewModelKeywords" xml:space="preserve">
+    <value>Cartera, Configuración</value>
+  </data>
 </root>

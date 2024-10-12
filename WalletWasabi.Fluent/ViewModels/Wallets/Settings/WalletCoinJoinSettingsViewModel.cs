@@ -21,6 +21,7 @@ namespace WalletWasabi.Fluent.ViewModels.Wallets.Settings;
 	Category = SearchCategory.Wallet,
 	NavBarPosition = NavBarPosition.None,
 	NavigationTarget = NavigationTarget.DialogScreen,
+	IsLocalized = true,
 	Searchable = false)]
 public partial class WalletCoinJoinSettingsViewModel : RoutableViewModel
 {
@@ -38,10 +39,6 @@ public partial class WalletCoinJoinSettingsViewModel : RoutableViewModel
 
 	public WalletCoinJoinSettingsViewModel(UiContext uiContext, IWalletModel walletModel)
 	{
-		Title = "Coinjoin Settings";
-		Caption = "Display wallet coinjoin settings";
-		Keywords = new[] { "Wallet", "Settings", };
-
 		UiContext = uiContext;
 		_wallet = walletModel;
 		_autoCoinJoin = _wallet.Settings.AutoCoinjoin;

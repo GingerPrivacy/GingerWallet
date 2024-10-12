@@ -7,6 +7,7 @@
              xmlns:v="clr-namespace:WalletWasabi.Fluent.Views.Wallets.Settings"
              x:DataType="vm:WalletSettingsViewModel"
              x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.Wallets.Settings.WalletSettingsView">
   <ContentArea Title="{Binding Title}"
                EnableNext="True" NextContent="Done"
@@ -17,25 +18,23 @@
     <TabControl SelectedIndex="{Binding SelectedTab, Mode=TwoWay}"
                 Classes="Settings">
 
-      <TabItem Header="General">
+      <TabItem Header="{x:Static lang:Resources.General}">
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
           <v:WalletGeneralSettingsView />
         </ScrollViewer>
       </TabItem>
 
-      <TabItem Header="Coinjoin" IsVisible="{Binding !IsWatchOnly}">
+      <TabItem Header="{x:Static lang:Resources.Coinjoin}" IsVisible="{Binding !IsWatchOnly}">
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
           <v:WalletCoinJoinSettingsView DataContext="{Binding WalletCoinJoinSettings}" />
         </ScrollViewer>
       </TabItem>
 
-      <TabItem Header="Tools" IsVisible="{Binding !IsWatchOnly}">
+      <TabItem Header="{x:Static lang:Resources.Tools}" IsVisible="{Binding !IsWatchOnly}">
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
           <v:WalletToolsView />
         </ScrollViewer>
       </TabItem>
-
     </TabControl>
-
   </ContentArea>
 </UserControl>

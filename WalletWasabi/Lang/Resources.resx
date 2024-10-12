@@ -480,4 +480,73 @@
   <data name="WaitingForResponse" xml:space="preserve">
     <value>Waiting for response</value>
   </data>
+  <data name="WalletSettingsViewModelTitle" xml:space="preserve">
+    <value>Wallet Settings</value>
+  </data>
+  <data name="WalletSettingsViewModelCaption" xml:space="preserve">
+    <value>Display wallet settings</value>
+  </data>
+  <data name="WalletSettingsViewModelKeywords" xml:space="preserve">
+    <value>Wallet, Settings</value>
+  </data>
+  <data name="Coinjoin" xml:space="preserve">
+    <value>Coinjoin</value>
+  </data>
+  <data name="Tools" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="PSBTworkflow" xml:space="preserve">
+    <value>PSBT workflow</value>
+  </data>
+  <data name="AutomaticallyStartCoinjoin" xml:space="preserve">
+    <value>Automatically start coinjoin</value>
+  </data>
+  <data name="CoinjoinStrategy" xml:space="preserve">
+    <value>Coinjoin strategy:</value>
+  </data>
+  <data name="CoinjoinToThisWallet" xml:space="preserve">
+    <value>Coinjoin to this wallet:</value>
+  </data>
+  <data name="CoinjoinToOtherWalletRestrictions1" xml:space="preserve">
+    <value>- Only loaded wallets can be selected.</value>
+  </data>
+  <data name="CoinjoinToOtherWalletRestrictions2" xml:space="preserve">
+    <value>- Coins from the coinjoin transaction will be received by this wallet. However, this setting resets after Ginger restarts.</value>
+  </data>
+  <data name="CoinjoinToOtherWalletRestrictions3" xml:space="preserve">
+    <value>- The selected wallet cannot be changed when a coinjoin is in progress.</value>
+  </data>
+  <data name="PlebStopToolTip" xml:space="preserve">
+    <value>Coinjoin will automatically stop if the wallet balance is less than this.</value>
+  </data>
+  <data name="PlebStopThreshold" xml:space="preserve">
+    <value>Stop coinjoin threshold</value>
+  </data>
+  <data name="WalletToolsCheckBackup" xml:space="preserve">
+    <value>Have you checked your wallet backup?</value>
+  </data>
+  <data name="WalletToolsRecommend" xml:space="preserve">
+    <value>It is recommended that you verify your wallet Recovery Words from time to time.</value>
+  </data>
+  <data name="WalletToolsDoNotForget" xml:space="preserve">
+    <value>Your passphrase is also required to restore your wallet, do not forget it.</value>
+  </data>
+  <data name="WalletToolsVerifyRecoveryWords" xml:space="preserve">
+    <value>Verify Recovery Words</value>
+  </data>
+  <data name="Change" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="WalletCoinJoinSettingsViewModelTitle" xml:space="preserve">
+    <value>Coinjoin Settings</value>
+  </data>
+  <data name="WalletCoinJoinSettingsViewModelCaption" xml:space="preserve">
+    <value>Display wallet coinjoin settings</value>
+  </data>
+  <data name="WalletCoinJoinSettingsViewModelKeywords" xml:space="preserve">
+    <value>Wallet, Settings</value>
+  </data>
 </root>

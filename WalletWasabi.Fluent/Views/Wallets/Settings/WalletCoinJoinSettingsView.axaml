@@ -8,30 +8,33 @@
              xmlns:wallets1="clr-namespace:WalletWasabi.Fluent.Models.Wallets"
              x:DataType="vm:WalletCoinJoinSettingsViewModel"
              x:Class="WalletWasabi.Fluent.Views.Wallets.Settings.WalletCoinJoinSettingsView"
+             xmlns:lang="using:WalletWasabi.Lang"
              x:CompileBindings="True">
 
   <StackPanel Classes="settingsLayout">
 
     <DockPanel>
-      <TextBlock Text="Automatically start coinjoin" />
+      <TextBlock Text="{x:Static lang:Resources.AutomaticallyStartCoinjoin}" />
       <ToggleSwitch IsChecked="{Binding AutoCoinJoin, Mode=OneWay}" Command="{Binding SetAutoCoinJoin}" />
     </DockPanel>
 
     <DockPanel>
-      <TextBlock Text="Coinjoin strategy:" VerticalAlignment="Center" DockPanel.Dock="Left" Margin="0" />
-      <Button Theme="{StaticResource AccentButton}" Content="Change" Command="{Binding SelectCoinjoinProfileCommand}" DockPanel.Dock="Right" />
+      <TextBlock Text="{x:Static lang:Resources.CoinjoinStrategy}" VerticalAlignment="Center" DockPanel.Dock="Left" Margin="0" />
+      <Button Theme="{StaticResource AccentButton}" Content="{x:Static lang:Resources.Change}" Command="{Binding SelectCoinjoinProfileCommand}" DockPanel.Dock="Right" />
       <TextBlock Text="{Binding SelectedCoinjoinProfileName}" VerticalAlignment="Center" MinWidth="120" Margin="10 0 10 0" />
     </DockPanel>
 
     <StackPanel>
       <StackPanel Orientation="Horizontal" Spacing="10">
-        <TextBlock Text="Coinjoin to this wallet:" />
+        <TextBlock Text="{x:Static lang:Resources.CoinjoinToThisWallet}" />
         <PathIcon Data="{StaticResource warning_regular}" Foreground="{DynamicResource WarningMessageForeground}" Height="17">
           <ToolTip.Tip>
             <TextBlock>
-              - Only loaded wallets can be selected.<LineBreak />
-              - Coins from the coinjoin transaction will be received by this wallet. However, this setting resets after Ginger restarts.<LineBreak />
-              - The selected wallet cannot be changed when a coinjoin is in progress.
+              <Run Text="{x:Static lang:Resources.CoinjoinToOtherWalletRestrictions1}" />
+              <LineBreak />
+              <Run Text="{x:Static lang:Resources.CoinjoinToOtherWalletRestrictions2}" />
+              <LineBreak />
+              <Run Text="{x:Static lang:Resources.CoinjoinToOtherWalletRestrictions3}" />
             </TextBlock>
           </ToolTip.Tip>
         </PathIcon>
@@ -45,10 +48,9 @@
       </ComboBox>
     </StackPanel>
 
-    <StackPanel ToolTip.Tip="Coinjoin will automatically stop if the wallet balance is less than this.">
-      <TextBlock Text="Stop coinjoin threshold" />
+    <StackPanel ToolTip.Tip="{x:Static lang:Resources.PlebStopToolTip}">
+      <TextBlock Text="{x:Static lang:Resources.PlebStopThreshold}" />
       <CurrencyEntryBox Classes="standalone" Text="{Binding PlebStopThreshold}" CurrencyCode="BTC" />
     </StackPanel>
-
   </StackPanel>
 </UserControl>

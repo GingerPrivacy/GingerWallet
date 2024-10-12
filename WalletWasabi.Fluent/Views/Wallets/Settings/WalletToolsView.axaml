@@ -6,19 +6,20 @@
              xmlns:vm="clr-namespace:WalletWasabi.Fluent.ViewModels.Wallets.Settings"
              x:DataType="vm:WalletSettingsViewModel"
              x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.Wallets.Settings.WalletToolsView">
 
   <StackPanel Spacing="20">
-    <TextBlock Classes="h6" Text="Have you checked your wallet backup?" />
+    <TextBlock Classes="h6" Text="{x:Static lang:Resources.WalletToolsCheckBackup}" />
     <InfoMessage>
       <DockPanel>
-        <Button Margin="50 0" Theme="{StaticResource AccentButton}" Command="{Binding VerifyRecoveryWordsCommand}" Content="Verify Recovery Words" DockPanel.Dock="Right" />
-        <TextBlock Text="It is recommended that you verify your wallet Recovery Words from time to time." />
+        <Button Margin="50 0" Theme="{StaticResource AccentButton}" Command="{Binding VerifyRecoveryWordsCommand}" Content="{x:Static lang:Resources.WalletToolsVerifyRecoveryWords}" DockPanel.Dock="Right" />
+        <TextBlock Text="{x:Static lang:Resources.WalletToolsRecommend}" />
       </DockPanel>
     </InfoMessage>
     <InfoMessage>
       <DockPanel>
-        <TextBlock Text="Your passphrase is also required to restore your wallet, do not forget it." />
+        <TextBlock Text="{x:Static lang:Resources.WalletToolsDoNotForget}" />
       </DockPanel>
     </InfoMessage>
   </StackPanel>
