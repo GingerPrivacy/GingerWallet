@@ -582,4 +582,31 @@
   <data name="Done" xml:space="preserve">
     <value>Done</value>
   </data>
+  <data name="ManualCoinJoinProfileDialogTitle" xml:space="preserve">
+    <value>Coinjoin Strategy Settings</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewRedcoinText" xml:space="preserve">
+    <value>Red coin isolation</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewRedcoinToolTip" xml:space="preserve">
+    <value>Only allow a single coin with anonymity score 1 into coinjoin registration.</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewAnonTargetText" xml:space="preserve">
+    <value>Anonymity score target</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewAnonTargetTooltip" xml:space="preserve">
+    <value>Minimum anonymity score for a coin to be considered private.</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewSafeFeeText" xml:space="preserve">
+    <value>Safe fee rate</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewSafeFeeToolTip" xml:space="preserve">
+    <value>Always coinjoin when the fee rate is below this value (has precedence over Coinjoin time preference).</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewCoinJoinTimePrefText" xml:space="preserve">
+    <value>Coinjoin time preference</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewCoinJoinTimePrefToolTip" xml:space="preserve">
+    <value>Only coinjoin when the fee rate is below the median of this time period.</value>
+  </data>
 </root>

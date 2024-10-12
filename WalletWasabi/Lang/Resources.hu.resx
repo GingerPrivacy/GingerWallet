@@ -579,4 +579,31 @@
   <data name="Done" xml:space="preserve">
     <value>Kész</value>
   </data>
+  <data name="ManualCoinJoinProfileDialogTitle" xml:space="preserve">
+    <value>Coinjoin stratégia beállítások</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewRedcoinText" xml:space="preserve">
+    <value>Piros érmék elkülönítése</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewRedcoinToolTip" xml:space="preserve">
+    <value>Csak egy érmét engedélyezzen, amelynek anonimitási pontszáma 1, a Coinjoin regisztrációban.</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewAnonTargetText" xml:space="preserve">
+    <value>Anonimitási pontszám cél</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewAnonTargetTooltip" xml:space="preserve">
+    <value>A minimális anonimitási pontszám, amely szükséges ahhoz, hogy egy érme privátnak minősüljön.</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewSafeFeeText" xml:space="preserve">
+    <value>Biztonságos díj mértéke</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewSafeFeeToolTip" xml:space="preserve">
+    <value>Mindig végezzen Coinjoint, ha a díj mértéke ez alatti (elsőbbséget élvez a Coinjoin időpreferenciával szemben).</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewCoinJoinTimePrefText" xml:space="preserve">
+    <value>Coinjoin időpreferencia</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewCoinJoinTimePrefToolTip" xml:space="preserve">
+    <value>Csak akkor végezzen Coinjoint, ha a díj mértéke az adott időszak mediánja alatt van.</value>
+  </data>
 </root>

@@ -580,4 +580,31 @@
   <data name="Done" xml:space="preserve">
     <value>Hecho</value>
   </data>
+  <data name="ManualCoinJoinProfileDialogTitle" xml:space="preserve">
+    <value>Configuración de la estrategia de Coinjoin</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewRedcoinText" xml:space="preserve">
+    <value>Aislamiento de monedas rojas</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewRedcoinToolTip" xml:space="preserve">
+    <value>Solo permitir una moneda con una puntuación de anonimato de 1 en el registro de Coinjoin.</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewAnonTargetText" xml:space="preserve">
+    <value>Objetivo de puntuación de anonimato</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewAnonTargetTooltip" xml:space="preserve">
+    <value>Puntuación mínima de anonimato para que una moneda sea considerada privada.</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewSafeFeeText" xml:space="preserve">
+    <value>Tarifa segura</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewSafeFeeToolTip" xml:space="preserve">
+    <value>Siempre hacer Coinjoin cuando la tarifa sea inferior a este valor (tiene prioridad sobre la preferencia de tiempo de Coinjoin).</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewCoinJoinTimePrefText" xml:space="preserve">
+    <value>Preferencia de tiempo de Coinjoin</value>
+  </data>
+  <data name="AdvancedCoinjoinOptionsViewCoinJoinTimePrefToolTip" xml:space="preserve">
+    <value>Solo hacer Coinjoin cuando la tarifa esté por debajo de la mediana de este período de tiempo.</value>
+  </data>
 </root>

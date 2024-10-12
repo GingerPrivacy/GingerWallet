@@ -124,6 +124,78 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Anonymity score target.
+        /// </summary>
+        public static string AdvancedCoinjoinOptionsViewAnonTargetText {
+            get {
+                return ResourceManager.GetString("AdvancedCoinjoinOptionsViewAnonTargetText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum anonymity score for a coin to be considered private..
+        /// </summary>
+        public static string AdvancedCoinjoinOptionsViewAnonTargetTooltip {
+            get {
+                return ResourceManager.GetString("AdvancedCoinjoinOptionsViewAnonTargetTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Coinjoin time preference.
+        /// </summary>
+        public static string AdvancedCoinjoinOptionsViewCoinJoinTimePrefText {
+            get {
+                return ResourceManager.GetString("AdvancedCoinjoinOptionsViewCoinJoinTimePrefText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only coinjoin when the fee rate is below the median of this time period..
+        /// </summary>
+        public static string AdvancedCoinjoinOptionsViewCoinJoinTimePrefToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedCoinjoinOptionsViewCoinJoinTimePrefToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red coin isolation.
+        /// </summary>
+        public static string AdvancedCoinjoinOptionsViewRedcoinText {
+            get {
+                return ResourceManager.GetString("AdvancedCoinjoinOptionsViewRedcoinText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only allow a single coin with anonymity score 1 into coinjoin registration..
+        /// </summary>
+        public static string AdvancedCoinjoinOptionsViewRedcoinToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedCoinjoinOptionsViewRedcoinToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Safe fee rate.
+        /// </summary>
+        public static string AdvancedCoinjoinOptionsViewSafeFeeText {
+            get {
+                return ResourceManager.GetString("AdvancedCoinjoinOptionsViewSafeFeeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Always coinjoin when the fee rate is below this value (has precedence over Coinjoin time preference)..
+        /// </summary>
+        public static string AdvancedCoinjoinOptionsViewSafeFeeToolTip {
+            get {
+                return ResourceManager.GetString("AdvancedCoinjoinOptionsViewSafeFeeToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage advanced settings.
         /// </summary>
         public static string AdvancedSettingsTabViewModelCaption {
@@ -660,6 +732,15 @@ namespace WalletWasabi.Lang {
         public static string LoadingViewThirdparty {
             get {
                 return ResourceManager.GetString("LoadingViewThirdparty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Coinjoin Strategy Settings.
+        /// </summary>
+        public static string ManualCoinJoinProfileDialogTitle {
+            get {
+                return ResourceManager.GetString("ManualCoinJoinProfileDialogTitle", resourceCulture);
             }
         }
         
