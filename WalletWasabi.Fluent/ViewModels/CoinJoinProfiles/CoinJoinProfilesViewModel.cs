@@ -19,7 +19,7 @@ public partial class CoinJoinProfilesViewModel : DialogViewModelBase<bool>
 
 	private CoinJoinProfilesViewModel(IWalletSettingsModel walletSettings, WalletCreationOptions? options = null)
 	{
-		Title = "Coinjoin Strategy";
+		Title = Lang.Resources.CoinJoinProfilesViewModelTitle;
 		NextCommand = ReactiveCommand.Create(() => OnNext(walletSettings));
 		EnableBack = true;
 

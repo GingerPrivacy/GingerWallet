@@ -10,7 +10,7 @@
              xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.Wallets.Settings.WalletSettingsView">
   <ContentArea Title="{Binding Title}"
-               EnableNext="True" NextContent="Done"
+               EnableNext="True" NextContent="{x:Static lang:Resources.Done}"
                EnableCancel="{Binding EnableCancel}"
                EnableBack="{Binding EnableBack}"
                ScrollViewer.VerticalScrollBarVisibility="Disabled">

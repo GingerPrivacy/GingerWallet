@@ -7,12 +7,13 @@
              mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371"
              x:DataType="vm:CoinJoinProfilesViewModel"
              x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.CoinJoinProfiles.CoinJoinProfilesView">
   <ContentArea Title="{Binding Title}"
-               Caption="Wasabi takes care of your financial privacy by automatically starting to coinjoin all your funds for a fixed 0.3% coordination fee + the mining fees. Select a coinjoin strategy that fits you best!"
+               Caption="{x:Static lang:Resources.CoinJoinProfilesCaption}"
                EnableCancel="{Binding EnableCancel}"
                EnableBack="{Binding EnableBack}"
-               NextContent="Done" EnableNext="True"
+               NextContent="{x:Static lang:Resources.Done}" EnableNext="True"
                ScrollViewer.VerticalScrollBarVisibility="Disabled" ClipToBounds="False">
 
     <ContentArea.Styles>
@@ -28,7 +29,7 @@
               Command="{Binding ManualSetupCommand}"
               HorizontalAlignment="Center"
               VerticalAlignment="Bottom"
-              Content="Customize" />
+              Content="{x:Static lang:Resources.Customize}" />
 
       <ListBox ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}" Background="Transparent"
                VerticalAlignment="Center"

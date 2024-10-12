@@ -7,9 +7,10 @@
              xmlns:conv="clr-namespace:WalletWasabi.Fluent.Converters"
              x:DataType="advanced:WalletInfoViewModel"
              x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.Wallets.Advanced.WalletInfoView">
   <ContentArea Title="{Binding Title}"
-                 EnableNext="True" NextContent="Done"
+                 EnableNext="True" NextContent="{x:Static lang:Resources.Done}"
                  EnableCancel="{Binding EnableCancel}"
                  EnableBack="{Binding EnableBack}">
     <ContentArea.CancelContent>

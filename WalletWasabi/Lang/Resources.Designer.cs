@@ -304,6 +304,24 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wasabi takes care of your financial privacy by automatically starting to coinjoin all your funds for a fixed 0.3% coordination fee + the mining fees. Select a coinjoin strategy that fits you best!.
+        /// </summary>
+        public static string CoinJoinProfilesCaption {
+            get {
+                return ResourceManager.GetString("CoinJoinProfilesCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Coinjoin Strategy.
+        /// </summary>
+        public static string CoinJoinProfilesViewModelTitle {
+            get {
+                return ResourceManager.GetString("CoinJoinProfilesViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Coinjoin Settings.
         /// </summary>
         public static string CoinjoinSettings {
@@ -412,6 +430,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customize.
+        /// </summary>
+        public static string Customize {
+            get {
+                return ResourceManager.GetString("Customize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to day.
         /// </summary>
         public static string day {
@@ -453,6 +480,33 @@ namespace WalletWasabi.Lang {
         public static string DocsLinkViewModelTitle {
             get {
                 return ResourceManager.GetString("DocsLinkViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Done.
+        /// </summary>
+        public static string Done {
+            get {
+                return ResourceManager.GetString("Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For savers. Only participates in coinjoins during the cheapest parts of the week..
+        /// </summary>
+        public static string EconomicCoinJoinProfileDescription {
+            get {
+                return ResourceManager.GetString("EconomicCoinJoinProfileDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimize Costs.
+        /// </summary>
+        public static string EconomicCoinJoinProfileTitle {
+            get {
+                return ResourceManager.GetString("EconomicCoinJoinProfileTitle", resourceCulture);
             }
         }
         
@@ -606,6 +660,15 @@ namespace WalletWasabi.Lang {
         public static string LoadingViewThirdparty {
             get {
                 return ResourceManager.GetString("LoadingViewThirdparty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom.
+        /// </summary>
+        public static string ManualCoinJoinProfileTitle {
+            get {
+                return ResourceManager.GetString("ManualCoinJoinProfileTitle", resourceCulture);
             }
         }
         
@@ -862,6 +925,24 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choice of the paranoid. Optimizes for privacy at all costs..
+        /// </summary>
+        public static string PrivateCoinJoinProfileDescription {
+            get {
+                return ResourceManager.GetString("PrivateCoinJoinProfileDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximize Privacy.
+        /// </summary>
+        public static string PrivateCoinJoinProfileTitle {
+            get {
+                return ResourceManager.GetString("PrivateCoinJoinProfileTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PSBT workflow.
         /// </summary>
         public static string PSBTworkflow {
@@ -1011,6 +1092,24 @@ namespace WalletWasabi.Lang {
         public static string SpeedUpTransaction {
             get {
                 return ResourceManager.GetString("SpeedUpTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Getting things done. Geared towards speed and convenience..
+        /// </summary>
+        public static string SpeedyCoinJoinProfileDescription {
+            get {
+                return ResourceManager.GetString("SpeedyCoinJoinProfileDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximize Speed.
+        /// </summary>
+        public static string SpeedyCoinJoinProfileTitle {
+            get {
+                return ResourceManager.GetString("SpeedyCoinJoinProfileTitle", resourceCulture);
             }
         }
         

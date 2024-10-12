@@ -7,10 +7,11 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="details:CoinJoinsDetailsViewModel"
              x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.Wallets.Home.History.Details.CoinJoinsDetailsView"
              Name="CoinJoinDetails">
   <ContentArea Title="{Binding Title}"
-                 NextContent="Done" EnableNext="True"
+                 NextContent="{x:Static lang:Resources.Done}" EnableNext="True"
                  EnableCancel="{Binding EnableCancel}">
     <StackPanel Spacing="15">
 

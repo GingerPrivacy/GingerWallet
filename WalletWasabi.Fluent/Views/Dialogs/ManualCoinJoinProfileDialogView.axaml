@@ -7,15 +7,15 @@
              mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="470"
              x:DataType="dialogs:ManualCoinJoinProfileDialogViewModel"
              x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.Dialogs.ManualCoinJoinProfileDialogView">
   <ContentArea
     Title="{Binding Title}"
     CancelContent="Cancel"
     EnableCancel="{Binding EnableCancel}"
     EnableBack="{Binding EnableBack}"
-    EnableNext="True" NextContent="Done">
+    EnableNext="True" NextContent="{x:Static lang:Resources.Done}">
 
     <dv:AdvancedCoinjoinOptionsView DataContext="{Binding CoinjoinAdvancedSettings}" />
-
   </ContentArea>
 </UserControl>

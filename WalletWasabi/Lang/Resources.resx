@@ -549,4 +549,37 @@
   <data name="WalletCoinJoinSettingsViewModelKeywords" xml:space="preserve">
     <value>Wallet, Settings</value>
   </data>
+  <data name="CoinJoinProfilesViewModelTitle" xml:space="preserve">
+    <value>Coinjoin Strategy</value>
+  </data>
+  <data name="CoinJoinProfilesCaption" xml:space="preserve">
+    <value>Wasabi takes care of your financial privacy by automatically starting to coinjoin all your funds for a fixed 0.3% coordination fee + the mining fees. Select a coinjoin strategy that fits you best!</value>
+  </data>
+  <data name="PrivateCoinJoinProfileTitle" xml:space="preserve">
+    <value>Maximize Privacy</value>
+  </data>
+  <data name="PrivateCoinJoinProfileDescription" xml:space="preserve">
+    <value>Choice of the paranoid. Optimizes for privacy at all costs.</value>
+  </data>
+  <data name="EconomicCoinJoinProfileTitle" xml:space="preserve">
+    <value>Minimize Costs</value>
+  </data>
+  <data name="EconomicCoinJoinProfileDescription" xml:space="preserve">
+    <value>For savers. Only participates in coinjoins during the cheapest parts of the week.</value>
+  </data>
+  <data name="ManualCoinJoinProfileTitle" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="SpeedyCoinJoinProfileTitle" xml:space="preserve">
+    <value>Maximize Speed</value>
+  </data>
+  <data name="SpeedyCoinJoinProfileDescription" xml:space="preserve">
+    <value>Getting things done. Geared towards speed and convenience.</value>
+  </data>
+  <data name="Customize" xml:space="preserve">
+    <value>Customize</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
 </root>

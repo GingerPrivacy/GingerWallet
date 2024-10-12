@@ -8,12 +8,13 @@
              mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371"
              x:DataType="settings:SettingsPageViewModel"
              x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.Settings.SettingsPageView">
 
   <ContentArea Title="{Binding Title}"
                  Caption="{Binding Caption}"
                  EnableNext="True"
-                 NextContent="Done"
+                 NextContent="{x:Static lang:Resources.Done}"
                  ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <DockPanel LastChildFill="True">
 

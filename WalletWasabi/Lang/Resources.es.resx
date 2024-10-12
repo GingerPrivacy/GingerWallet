@@ -547,4 +547,37 @@
   <data name="WalletCoinJoinSettingsViewModelKeywords" xml:space="preserve">
     <value>Cartera, Configuración</value>
   </data>
+  <data name="CoinJoinProfilesViewModelTitle" xml:space="preserve">
+    <value>Estrategia de Coinjoin</value>
+  </data>
+  <data name="CoinJoinProfilesCaption" xml:space="preserve">
+    <value>Wasabi se encarga de tu privacidad financiera al iniciar automáticamente el coinjoin de todos tus fondos por una tarifa de coordinación fija del 0.3% + las tarifas de minería. ¡Selecciona la estrategia de coinjoin que mejor se adapte a ti!</value>
+  </data>
+  <data name="PrivateCoinJoinProfileTitle" xml:space="preserve">
+    <value>Maximizar la privacidad</value>
+  </data>
+  <data name="PrivateCoinJoinProfileDescription" xml:space="preserve">
+    <value>Elección de los paranoicos. Optimiza la privacidad a toda costa.</value>
+  </data>
+  <data name="EconomicCoinJoinProfileTitle" xml:space="preserve">
+    <value>Minimizar los costos</value>
+  </data>
+  <data name="EconomicCoinJoinProfileDescription" xml:space="preserve">
+    <value>Para los ahorradores. Solo participa en coinjoins durante las partes más económicas de la semana.</value>
+  </data>
+  <data name="ManualCoinJoinProfileTitle" xml:space="preserve">
+    <value>Personalizado</value>
+  </data>
+  <data name="SpeedyCoinJoinProfileTitle" xml:space="preserve">
+    <value>Maximizar la velocidad</value>
+  </data>
+  <data name="SpeedyCoinJoinProfileDescription" xml:space="preserve">
+    <value>Hacer las cosas. Orientado hacia la rapidez y la conveniencia.</value>
+  </data>
+  <data name="Customize" xml:space="preserve">
+    <value>Personalizar</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Hecho</value>
+  </data>
 </root>

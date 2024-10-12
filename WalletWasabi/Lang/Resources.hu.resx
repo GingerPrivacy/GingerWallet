@@ -546,4 +546,37 @@
   <data name="WalletCoinJoinSettingsViewModelKeywords" xml:space="preserve">
     <value>Pénztárca, Beállítások</value>
   </data>
+  <data name="CoinJoinProfilesViewModelTitle" xml:space="preserve">
+    <value>Coinjoin stratégia</value>
+  </data>
+  <data name="CoinJoinProfilesCaption" xml:space="preserve">
+    <value>A Wasabi gondoskodik a pénzügyi anonimitásodról, automatikusan coinjoinba vonja az összes pénzedet egy fix 0,3%-os koordinációs díjért + a bányászati díjakért. Válassz egy hozzád legjobban illő coinjoin stratégiát!</value>
+  </data>
+  <data name="PrivateCoinJoinProfileTitle" xml:space="preserve">
+    <value>Az anonimitás maximalizálása</value>
+  </data>
+  <data name="PrivateCoinJoinProfileDescription" xml:space="preserve">
+    <value>A paranoiások választása. Bármi áron az anonimitást optimalizálja.</value>
+  </data>
+  <data name="EconomicCoinJoinProfileTitle" xml:space="preserve">
+    <value>A költségek minimalizálása</value>
+  </data>
+  <data name="EconomicCoinJoinProfileDescription" xml:space="preserve">
+    <value>A takarékoskodóknak. Csak a hét legolcsóbb szakaszaiban vesz részt a coinjoinokban.</value>
+  </data>
+  <data name="ManualCoinJoinProfileTitle" xml:space="preserve">
+    <value>Egyéni</value>
+  </data>
+  <data name="SpeedyCoinJoinProfileTitle" xml:space="preserve">
+    <value>A sebesség maximalizálása</value>
+  </data>
+  <data name="SpeedyCoinJoinProfileDescription" xml:space="preserve">
+    <value>A dolgok elvégzése. A sebességre és a kényelemre van hangolva.</value>
+  </data>
+  <data name="Customize" xml:space="preserve">
+    <value>Testreszabás</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Kész</value>
+  </data>
 </root>

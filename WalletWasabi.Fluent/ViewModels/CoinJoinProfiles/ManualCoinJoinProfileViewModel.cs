@@ -1,4 +1,5 @@
 using WalletWasabi.Fluent.Models.Wallets;
+using WalletWasabi.Lang;
 using WalletWasabi.Models;
 
 namespace WalletWasabi.Fluent.ViewModels.CoinJoinProfiles;
@@ -29,7 +30,7 @@ public class ManualCoinJoinProfileViewModel : CoinJoinProfileViewModelBase
 	{
 	}
 
-	public override string Title => "Custom";
+	public override string Title => Resources.ManualCoinJoinProfileTitle;
 
 	public override string Description => "";
 
