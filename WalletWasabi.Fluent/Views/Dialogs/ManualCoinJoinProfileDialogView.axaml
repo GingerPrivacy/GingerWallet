@@ -11,7 +11,7 @@
              x:Class="WalletWasabi.Fluent.Views.Dialogs.ManualCoinJoinProfileDialogView">
   <ContentArea
     Title="{Binding Title}"
-    CancelContent="Cancel"
+    CancelContent="{x:Static lang:Resources.Cancel}"
     EnableCancel="{Binding EnableCancel}"
     EnableBack="{Binding EnableBack}"
     EnableNext="True" NextContent="{x:Static lang:Resources.Done}">

@@ -6,6 +6,7 @@
              x:Class="WalletWasabi.Fluent.Views.Dialogs.AdvancedRecoveryOptionsView"
              x:DataType="dialogs:AdvancedRecoveryOptionsViewModel"
              x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
              mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371">
   <UserControl.Styles>
     <Style Selector="TextBox /template/ DataValidationErrors">
@@ -13,7 +14,7 @@
     </Style>
   </UserControl.Styles>
   <ContentArea Title="{Binding Title}"
-                 CancelContent="Cancel"
+                 CancelContent="{x:Static lang:Resources.Cancel}"
                  EnableCancel="{Binding EnableCancel}"
                  EnableBack="{Binding EnableBack}"
                  EnableNext="True" NextContent="OK">

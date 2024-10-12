@@ -606,4 +606,13 @@
   <data name="AdvancedCoinjoinOptionsViewCoinJoinTimePrefToolTip" xml:space="preserve">
     <value>Csak akkor végezzen Coinjoint, ha a díj mértéke az adott időszak mediánja alatt van.</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Mégse</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Következő</value>
+  </data>
+  <data name="Skip" xml:space="preserve">
+    <value>Kihagyás</value>
+  </data>
 </root>

@@ -6,11 +6,12 @@
              mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371"
              x:DataType="hardwareWallet:ConnectHardwareWalletViewModel"
              x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.AddWallet.HardwareWallet.ConnectHardwareWalletView">
 
   <ContentArea Title="{Binding Title}"
                  Caption="Connect your hardware wallet to the PC"
-                 CancelContent="Cancel"
+                 CancelContent="{x:Static lang:Resources.Cancel}"
                  EnableCancel="{Binding EnableCancel}"
                  EnableBack="{Binding EnableBack}"
                  EnableNext="{Binding ConfirmationRequired}" NextContent="Rescan"
@@ -38,9 +39,8 @@
           <Viewbox MaxHeight="100" HorizontalAlignment="Center" VerticalAlignment="Center">
             <ProgressRing IsIndeterminate="True" Height="100" Width="100" />
           </Viewbox>
-          <InfoMessage Content="Enter your passphrase on the hardware wallet if needed." HorizontalAlignment="Center" VerticalAlignment="Bottom" Opacity="0.6"/>
+          <InfoMessage Content="Enter your passphrase on the hardware wallet if needed." HorizontalAlignment="Center" VerticalAlignment="Bottom" Opacity="0.6" />
         </Panel>
-
       </Panel>
     </DockPanel>
   </ContentArea>

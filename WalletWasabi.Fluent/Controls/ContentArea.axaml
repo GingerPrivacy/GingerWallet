@@ -7,7 +7,7 @@
                      Title="Add a Wallet"
                      TopContent="This is the top content"
                      EnableBack="True"
-                     EnableCancel="True" CancelContent="Cancel" FocusCancel="False"
+                     EnableCancel="True" CancelContent="{x:Static lang:Resources.Cancel}" FocusCancel="False"
                      EnableNext="True" NextContent="Continue" FocusNext="True"
                      Caption="Type in your Wallet's name and select an option below:">
         This is the content.
@@ -38,27 +38,27 @@
                     IsEnabled="{Binding FocusCancel, RelativeSource={RelativeSource TemplatedParent}}" />
                 </Interaction.Behaviors>
               </Button>
-              
-                <StackPanel Orientation="Horizontal" Spacing="30" DockPanel.Dock="Right">
-                  <Button Name="PART_SkipButton"
-                          IsVisible="{TemplateBinding EnableSkip}"
-                          Content="{TemplateBinding SkipContent}"
-                          Command="{Binding SkipCommand}"
-                          Classes="activeHyperLink skip"
-                          VerticalAlignment="Center" />
-                  <Button Name="PART_NextButton" Classes="action"
-                          IsVisible="{TemplateBinding EnableNext}"
-                          Content="{TemplateBinding NextContent}"
-                          Command="{Binding NextCommand}"
-                          IsDefault="{Binding IsActive}">
-                    <Interaction.Behaviors>
-                      <FocusOnAttachedBehavior
-                        IsEnabled="{Binding FocusNext, RelativeSource={RelativeSource TemplatedParent}}" />
-                    </Interaction.Behaviors>
-                  </Button>
-                </StackPanel>
-                <ContentPresenter Content="{TemplateBinding BottomContent}"
-                                  x:Name="PART_BottomContentPresenter" />
+
+              <StackPanel Orientation="Horizontal" Spacing="30" DockPanel.Dock="Right">
+                <Button Name="PART_SkipButton"
+                        IsVisible="{TemplateBinding EnableSkip}"
+                        Content="{TemplateBinding SkipContent}"
+                        Command="{Binding SkipCommand}"
+                        Classes="activeHyperLink skip"
+                        VerticalAlignment="Center" />
+                <Button Name="PART_NextButton" Classes="action"
+                        IsVisible="{TemplateBinding EnableNext}"
+                        Content="{TemplateBinding NextContent}"
+                        Command="{Binding NextCommand}"
+                        IsDefault="{Binding IsActive}">
+                  <Interaction.Behaviors>
+                    <FocusOnAttachedBehavior
+                      IsEnabled="{Binding FocusNext, RelativeSource={RelativeSource TemplatedParent}}" />
+                  </Interaction.Behaviors>
+                </Button>
+              </StackPanel>
+              <ContentPresenter Content="{TemplateBinding BottomContent}"
+                                x:Name="PART_BottomContentPresenter" />
             </DockPanel>
 
             <Panel DockPanel.Dock="Top">
@@ -121,9 +121,9 @@
     </Style>
 
     <Style Selector="^/template/ Button#PART_BackButton">
-      <Setter Property="Margin" Value="-31,0,0,0"/>
+      <Setter Property="Margin" Value="-31,0,0,0" />
     </Style>
-    
+
     <Style Selector="^/template/ ContentPresenter#PART_TitlePresenter">
       <Setter Property="TextElement.Foreground" Value="{DynamicResource TextControlForeground}" />
       <Setter Property="TextElement.FontSize" Value="{DynamicResource FontSizeH3}" />

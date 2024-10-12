@@ -6,10 +6,11 @@
              mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371"
              x:DataType="dialog:ShuttingDownViewModel"
              x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.Dialogs.ShuttingDownView">
   <ContentArea
     ScrollViewer.VerticalScrollBarVisibility="Disabled"
-    NextContent="Cancel" EnableNext="True">
+    NextContent="{x:Static lang:Resources.Cancel}" EnableNext="True">
     <ContentArea.Title>
       <TextBlock TextAlignment="Center" Text="{Binding Title}" />
     </ContentArea.Title>
