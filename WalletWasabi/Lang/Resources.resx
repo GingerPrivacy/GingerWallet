@@ -648,4 +648,96 @@
   <data name="Success" xml:space="preserve">
     <value>Success</value>
   </data>
+  <data name="RecoveryWordsViewCaption" xml:space="preserve">
+    <value>Write down the recovery words in the correct order and store them in a safe place. They are needed to recover your wallet.</value>
+  </data>
+  <data name="RecoveryWordsViewCopyRecoveryWords" xml:space="preserve">
+    <value>Copy recovery words</value>
+  </data>
+  <data name="RecoveryWordsViewNotSeeAfter" xml:space="preserve">
+    <value>You will not be able to see these words again once the wallet is created.</value>
+  </data>
+  <data name="ConfirmRecoveryWordsViewModel" xml:space="preserve">
+    <value>Confirm Recovery Words</value>
+  </data>
+  <data name="ConfirmRecoveryWordsViewModelStoreSafely" xml:space="preserve">
+    <value>Store your passphrase safely, it cannot be reset if lost.
+It's needed to open and to recover your wallet.
+It's a recovery words extension for more security.</value>
+  </data>
+  <data name="ConfirmRecoveryWordsViewModelClickRecovery" xml:space="preserve">
+    <value>Click the recovery word #{0}</value>
+  </data>
+  <data name="RecoveryWords" xml:space="preserve">
+    <value>Recovery Words</value>
+  </data>
+  <data name="VerifyRecoveryWords" xml:space="preserve">
+    <value>Verify Recovery Words</value>
+  </data>
+  <data name="CreatePasswordDialogTypePassphrase" xml:space="preserve">
+    <value>Type a passphrase</value>
+  </data>
+  <data name="CreatePasswordDialogConfirmPassphrase" xml:space="preserve">
+    <value>Confirm the passphrase</value>
+  </data>
+  <data name="PassphrasesNotMatch" xml:space="preserve">
+    <value>Passphrases don't match.</value>
+  </data>
+  <data name="TrimWarnMessage" xml:space="preserve">
+    <value>Leading and trailing white spaces will be removed!</value>
+  </data>
+  <data name="WhitespaceMessage" xml:space="preserve">
+    <value>Leading and trailing white spaces are not allowed!</value>
+  </data>
+  <data name="AddPassphrase" xml:space="preserve">
+    <value>Add Passphrase</value>
+  </data>
+  <data name="HardwareWallet" xml:space="preserve">
+    <value>Hardware Wallet</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelCaption" xml:space="preserve">
+    <value>Connect your hardware wallet to the PC</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelEnterPassphrase" xml:space="preserve">
+    <value>Enter your passphrase on the hardware wallet if needed.</value>
+  </data>
+  <data name="HardwareWalletAuthDialogViewModelCaption" xml:space="preserve">
+    <value>Connect your hardware wallet, press Continue and then follow the instructions on the device.</value>
+  </data>
+  <data name="Rescan" xml:space="preserve">
+    <value>Rescan</value>
+  </data>
+  <data name="OpenWallet" xml:space="preserve">
+    <value>Open wallet</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelConnectPc" xml:space="preserve">
+    <value>Connect the hardware wallet to the PC / Enter the PIN on the device.</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelMakeSureOnlyOne" xml:space="preserve">
+    <value>Make sure you have only one hardware wallet connected to the PC.</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelAlreadyAdded" xml:space="preserve">
+    <value>The connected hardware wallet is already added to the software, click below to open it or click Rescan to search again.</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelEnterPassphraseOnDevice" xml:space="preserve">
+    <value>Enter your passphrase on your device.</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelEnterPin" xml:space="preserve">
+    <value>Enter your PIN on your device.</value>
+  </data>
+  <data name="TypeInYourRecoveryWords" xml:space="preserve">
+    <value>Type in your recovery words in the correct order</value>
+  </data>
+  <data name="EnterPassphrase" xml:space="preserve">
+    <value>Enter the correct passphrase</value>
+  </data>
+  <data name="RecoverWalletViewModelPassphraseMessage" xml:space="preserve">
+    <value>If you used a passphrase when you created your wallet you must type it below, otherwise leave this empty.</value>
+  </data>
+  <data name="AdvancedRecoveryOptionsViewModelTitle" xml:space="preserve">
+    <value>Advanced Recovery Options</value>
+  </data>
+  <data name="AdvancedRecoveryOptionsViewModelMinimumGapLimit" xml:space="preserve">
+    <value>Minimum _Gap Limit:</value>
+  </data>
 </root>

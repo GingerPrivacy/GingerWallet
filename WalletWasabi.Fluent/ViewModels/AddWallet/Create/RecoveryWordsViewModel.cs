@@ -15,7 +15,7 @@ public partial class RecoveryWordsViewModel : RoutableViewModel
 {
 	private RecoveryWordsViewModel(WalletCreationOptions.AddNewWallet options)
 	{
-		Title = "Recovery Words";
+		Title = Lang.Resources.RecoveryWords;
 
 		var (_, _, mnemonic) = options;
 

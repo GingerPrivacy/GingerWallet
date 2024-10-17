@@ -22,7 +22,7 @@ public partial class ConfirmRecoveryWordsViewModel : RoutableViewModel
 
 	private ConfirmRecoveryWordsViewModel(WalletCreationOptions.AddNewWallet options, List<RecoveryWordViewModel> words)
 	{
-		Title = "Confirm Recovery Words";
+		Title = Lang.Resources.ConfirmRecoveryWordsViewModel;
 
 		_options = options;
 		_availableWords = new List<RecoveryWordViewModel>();
@@ -135,10 +135,8 @@ public partial class ConfirmRecoveryWordsViewModel : RoutableViewModel
 
 	private async Task OnNextAsync()
 	{
-		var dialogCaption = "Store your passphrase safely, it cannot be reset if lost.\n" +
-			"It's needed to open and to recover your wallet.\n" +
-			"It's a recovery words extension for more security.";
-		var password = await Navigate().To().CreatePasswordDialog("Add Passphrase", dialogCaption, enableEmpty: true).GetResultAsync();
+		var dialogCaption = Lang.Resources.ConfirmRecoveryWordsViewModelStoreSafely;
+		var password = await Navigate().To().CreatePasswordDialog(Lang.Resources.AddPassphrase, dialogCaption, enableEmpty: true).GetResultAsync();
 
 		if (password is { })
 		{

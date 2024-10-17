@@ -646,4 +646,97 @@
   <data name="Success" xml:space="preserve">
     <value>Éxito</value>
   </data>
+  <data name="RecoveryWordsViewCaption" xml:space="preserve">
+    <value>Escribe las palabras de recuperación en el orden correcto y guárdalas en un lugar seguro. Son necesarias para recuperar tu cartera.</value>
+  </data>
+  <data name="RecoveryWordsViewCopyRecoveryWords" xml:space="preserve">
+    <value>Copiar palabras de recuperación</value>
+  </data>
+  <data name="RecoveryWordsViewNotSeeAfter" xml:space="preserve">
+    <value>No podrás volver a ver estas palabras una vez que la cartera se haya creado.</value>
+  </data>
+  <data name="ConfirmRecoveryWordsViewModel" xml:space="preserve">
+    <value>Confirmar Palabras de Recuperación</value>
+  </data>
+  <data name="ConfirmRecoveryWordsViewModelStoreSafely" xml:space="preserve">
+    <value>Guarda tu frase de contraseña en un lugar seguro, no se puede restablecer si se pierde.
+Es necesaria para abrir y recuperar tu cartera.
+Es una extensión de las palabras de recuperación para mayor seguridad.
+</value>
+  </data>
+  <data name="ConfirmRecoveryWordsViewModelClickRecovery" xml:space="preserve">
+    <value>Haz clic en la palabra de recuperación #{0}</value>
+  </data>
+  <data name="RecoveryWords" xml:space="preserve">
+    <value>Palabras de Recuperación</value>
+  </data>
+  <data name="VerifyRecoveryWords" xml:space="preserve">
+    <value>Verificar Palabras de Recuperación</value>
+  </data>
+  <data name="CreatePasswordDialogTypePassphrase" xml:space="preserve">
+    <value>Escribe una frase de contraseña</value>
+  </data>
+  <data name="CreatePasswordDialogConfirmPassphrase" xml:space="preserve">
+    <value>Confirma la frase de contraseña</value>
+  </data>
+  <data name="PassphrasesNotMatch" xml:space="preserve">
+    <value>Las frases de contraseña no coinciden.</value>
+  </data>
+  <data name="TrimWarnMessage" xml:space="preserve">
+    <value>¡Los espacios en blanco al principio y al final serán eliminados!</value>
+  </data>
+  <data name="WhitespaceMessage" xml:space="preserve">
+    <value>¡No se permiten espacios en blanco al principio o al final!</value>
+  </data>
+  <data name="AddPassphrase" xml:space="preserve">
+    <value>Agregar frase de contraseña</value>
+  </data>
+  <data name="HardwareWallet" xml:space="preserve">
+    <value>Cartera de hardware</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelCaption" xml:space="preserve">
+    <value>Conecta tu cartera de hardware al PC</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelEnterPassphrase" xml:space="preserve">
+    <value>Introduce tu frase de contraseña en la cartera de hardware si es necesario.</value>
+  </data>
+  <data name="HardwareWalletAuthDialogViewModelCaption" xml:space="preserve">
+    <value>Conecta tu cartera de hardware, presiona Continuar y luego sigue las instrucciones en el dispositivo.</value>
+  </data>
+  <data name="Rescan" xml:space="preserve">
+    <value>Volver a escanear</value>
+  </data>
+  <data name="OpenWallet" xml:space="preserve">
+    <value>Abrir cartera</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelConnectPc" xml:space="preserve">
+    <value>Conecta la cartera de hardware al PC / Introduce el PIN en el dispositivo.</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelMakeSureOnlyOne" xml:space="preserve">
+    <value>Asegúrate de tener solo una cartera de hardware conectada al PC.</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelAlreadyAdded" xml:space="preserve">
+    <value>La cartera de hardware conectada ya está añadida al software, haz clic abajo para abrirla o haz clic en Volver a escanear para buscar nuevamente.</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelEnterPassphraseOnDevice" xml:space="preserve">
+    <value>Introduce tu frase de contraseña en tu dispositivo.</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelEnterPin" xml:space="preserve">
+    <value>Introduce tu PIN en tu dispositivo.</value>
+  </data>
+  <data name="TypeInYourRecoveryWords" xml:space="preserve">
+    <value>Escribe tus palabras de recuperación en el orden correcto</value>
+  </data>
+  <data name="EnterPassphrase" xml:space="preserve">
+    <value>Introduce la frase de contraseña correcta</value>
+  </data>
+  <data name="RecoverWalletViewModelPassphraseMessage" xml:space="preserve">
+    <value>Si usaste una frase de contraseña cuando creaste tu cartera, debes escribirla abajo, de lo contrario, déjalo en blanco.</value>
+  </data>
+  <data name="AdvancedRecoveryOptionsViewModelTitle" xml:space="preserve">
+    <value>Opciones avanzadas de recuperación</value>
+  </data>
+  <data name="AdvancedRecoveryOptionsViewModelMinimumGapLimit" xml:space="preserve">
+    <value>Límite de _Espacio mínimo:</value>
+  </data>
 </root>

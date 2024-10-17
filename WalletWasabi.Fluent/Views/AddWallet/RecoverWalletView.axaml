@@ -29,7 +29,7 @@
                    RestrictInputToSuggestions="True"
                    Items="{Binding Mnemonics}"
                    Suggestions="{Binding Suggestions}"
-                   Watermark="Type in your recovery words in the correct order"
+                   Watermark="{x:Static lang:Resources.TypeInYourRecoveryWords}"
                    AllowDuplication="True"
                    EnableCounter="True"
                    EnableDelete="False">
@@ -48,7 +48,7 @@
               HorizontalAlignment="Center"
               VerticalAlignment="Bottom"
               Command="{Binding AdvancedRecoveryOptionsDialogCommand}"
-              Content="Advanced Recovery Options" />
+              Content="{x:Static lang:Resources.AdvancedRecoveryOptionsViewModelTitle}" />
     </DockPanel>
   </ContentArea>
 </UserControl>

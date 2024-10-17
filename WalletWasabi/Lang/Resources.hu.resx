@@ -619,7 +619,7 @@
     <value>Új pénztárca létrehozása</value>
   </data>
   <data name="ConnectHardwareWallet" xml:space="preserve">
-    <value>Csatlakozás hardveres pénztárcához</value>
+    <value>Hardvertárca csatlakoztatása</value>
   </data>
   <data name="ImportWallet" xml:space="preserve">
     <value>Pénztárca importálása</value>
@@ -644,5 +644,98 @@
   </data>
   <data name="Success" xml:space="preserve">
     <value>Siker</value>
+  </data>
+  <data name="RecoveryWordsViewCaption" xml:space="preserve">
+    <value>Írd le a helyreállítási szavakat a megfelelő sorrendben, és tárold őket biztonságos helyen. Szükségesek a pénztárca visszaállításához.</value>
+  </data>
+  <data name="RecoveryWordsViewCopyRecoveryWords" xml:space="preserve">
+    <value>Helyreállítási szavak másolása</value>
+  </data>
+  <data name="RecoveryWordsViewNotSeeAfter" xml:space="preserve">
+    <value>A pénztárca létrehozása után nem fogod tudni újra megtekinteni ezeket a szavakat.</value>
+  </data>
+  <data name="ConfirmRecoveryWordsViewModel" xml:space="preserve">
+    <value>Helyreállítási szavak megerősítése</value>
+  </data>
+  <data name="ConfirmRecoveryWordsViewModelStoreSafely" xml:space="preserve">
+    <value>Tárold biztonságosan a jelszavadat, nem állítható vissza, ha elveszik.
+A pénztárcád megnyitásához és visszaállításához szükséges.
+Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.
+</value>
+  </data>
+  <data name="ConfirmRecoveryWordsViewModelClickRecovery" xml:space="preserve">
+    <value>Kattints a helyreállítási szóra: #{0}</value>
+  </data>
+  <data name="RecoveryWords" xml:space="preserve">
+    <value>Helyreállítási szavak</value>
+  </data>
+  <data name="VerifyRecoveryWords" xml:space="preserve">
+    <value>Helyreállítási szavak ellenőrzése</value>
+  </data>
+  <data name="CreatePasswordDialogTypePassphrase" xml:space="preserve">
+    <value>Írj be egy jelszót</value>
+  </data>
+  <data name="CreatePasswordDialogConfirmPassphrase" xml:space="preserve">
+    <value>Erősítsd meg a jelszót</value>
+  </data>
+  <data name="PassphrasesNotMatch" xml:space="preserve">
+    <value>A jelszavak nem egyeznek.</value>
+  </data>
+  <data name="TrimWarnMessage" xml:space="preserve">
+    <value>A kezdő és a záró szóközök eltávolításra kerülnek!</value>
+  </data>
+  <data name="WhitespaceMessage" xml:space="preserve">
+    <value>Kezdő és záró szóközök nem engedélyezettek!</value>
+  </data>
+  <data name="AddPassphrase" xml:space="preserve">
+    <value>Jelszó hozzáadása</value>
+  </data>
+  <data name="HardwareWallet" xml:space="preserve">
+    <value>Hardveres pénztárca</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelCaption" xml:space="preserve">
+    <value>Csatlakoztasd a hardveres pénztárcádat a számítógéphez</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelEnterPassphrase" xml:space="preserve">
+    <value>Add meg a jelszavadat a hardveres pénztárcán, ha szükséges.</value>
+  </data>
+  <data name="HardwareWalletAuthDialogViewModelCaption" xml:space="preserve">
+    <value>Csatlakoztasd a hardveres pénztárcádat, nyomd meg a Folytatás gombot, majd kövesd az utasításokat az eszközön.</value>
+  </data>
+  <data name="Rescan" xml:space="preserve">
+    <value>Újraszkennelés</value>
+  </data>
+  <data name="OpenWallet" xml:space="preserve">
+    <value>Pénztárca megnyitása</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelConnectPc" xml:space="preserve">
+    <value>Csatlakoztasd a hardveres pénztárcát a számítógéphez / Add meg a PIN-kódot az eszközön.</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelMakeSureOnlyOne" xml:space="preserve">
+    <value>Győződj meg arról, hogy csak egy hardveres pénztárca van csatlakoztatva a számítógéphez.</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelAlreadyAdded" xml:space="preserve">
+    <value>A csatlakoztatott hardveres pénztárca már hozzá van adva a szoftverhez, kattints alul a megnyitáshoz, vagy kattints az Újraszkennelésre a kereséshez.</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelEnterPassphraseOnDevice" xml:space="preserve">
+    <value>Add meg a jelszavadat az eszközön.</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelEnterPin" xml:space="preserve">
+    <value>Add meg a PIN-kódodat az eszközön.</value>
+  </data>
+  <data name="TypeInYourRecoveryWords" xml:space="preserve">
+    <value>Írd be a helyreállítási szavaidat a megfelelő sorrendben</value>
+  </data>
+  <data name="EnterPassphrase" xml:space="preserve">
+    <value>Add meg a helyes jelszót</value>
+  </data>
+  <data name="RecoverWalletViewModelPassphraseMessage" xml:space="preserve">
+    <value>Ha használtál jelszót a pénztárca létrehozásakor, akkor azt lent kell megadnod, különben hagyd üresen.</value>
+  </data>
+  <data name="AdvancedRecoveryOptionsViewModelTitle" xml:space="preserve">
+    <value>Speciális helyreállítási lehetőségek</value>
+  </data>
+  <data name="AdvancedRecoveryOptionsViewModelMinimumGapLimit" xml:space="preserve">
+    <value>Minimális _Rés határ:</value>
   </data>
 </root>

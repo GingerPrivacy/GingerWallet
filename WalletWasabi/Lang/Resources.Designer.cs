@@ -97,6 +97,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Passphrase.
+        /// </summary>
+        public static string AddPassphrase {
+            get {
+                return ResourceManager.GetString("AddPassphrase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create, connect, import or recover.
         /// </summary>
         public static string AddWalletPageViewModelCaption {
@@ -192,6 +201,24 @@ namespace WalletWasabi.Lang {
         public static string AdvancedCoinjoinOptionsViewSafeFeeToolTip {
             get {
                 return ResourceManager.GetString("AdvancedCoinjoinOptionsViewSafeFeeToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum _Gap Limit:.
+        /// </summary>
+        public static string AdvancedRecoveryOptionsViewModelMinimumGapLimit {
+            get {
+                return ResourceManager.GetString("AdvancedRecoveryOptionsViewModelMinimumGapLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced Recovery Options.
+        /// </summary>
+        public static string AdvancedRecoveryOptionsViewModelTitle {
+            get {
+                return ResourceManager.GetString("AdvancedRecoveryOptionsViewModelTitle", resourceCulture);
             }
         }
         
@@ -466,11 +493,103 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirm Recovery Words.
+        /// </summary>
+        public static string ConfirmRecoveryWordsViewModel {
+            get {
+                return ResourceManager.GetString("ConfirmRecoveryWordsViewModel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click the recovery word #{0}.
+        /// </summary>
+        public static string ConfirmRecoveryWordsViewModelClickRecovery {
+            get {
+                return ResourceManager.GetString("ConfirmRecoveryWordsViewModelClickRecovery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Store your passphrase safely, it cannot be reset if lost.
+        ///It&apos;s needed to open and to recover your wallet.
+        ///It&apos;s a recovery words extension for more security..
+        /// </summary>
+        public static string ConfirmRecoveryWordsViewModelStoreSafely {
+            get {
+                return ResourceManager.GetString("ConfirmRecoveryWordsViewModelStoreSafely", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connect to hardware wallet.
         /// </summary>
         public static string ConnectHardwareWallet {
             get {
                 return ResourceManager.GetString("ConnectHardwareWallet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The connected hardware wallet is already added to the software, click below to open it or click Rescan to search again..
+        /// </summary>
+        public static string ConnectHardwareWalletViewModelAlreadyAdded {
+            get {
+                return ResourceManager.GetString("ConnectHardwareWalletViewModelAlreadyAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connect your hardware wallet to the PC.
+        /// </summary>
+        public static string ConnectHardwareWalletViewModelCaption {
+            get {
+                return ResourceManager.GetString("ConnectHardwareWalletViewModelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connect the hardware wallet to the PC / Enter the PIN on the device..
+        /// </summary>
+        public static string ConnectHardwareWalletViewModelConnectPc {
+            get {
+                return ResourceManager.GetString("ConnectHardwareWalletViewModelConnectPc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your passphrase on the hardware wallet if needed..
+        /// </summary>
+        public static string ConnectHardwareWalletViewModelEnterPassphrase {
+            get {
+                return ResourceManager.GetString("ConnectHardwareWalletViewModelEnterPassphrase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your passphrase on your device..
+        /// </summary>
+        public static string ConnectHardwareWalletViewModelEnterPassphraseOnDevice {
+            get {
+                return ResourceManager.GetString("ConnectHardwareWalletViewModelEnterPassphraseOnDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your PIN on your device..
+        /// </summary>
+        public static string ConnectHardwareWalletViewModelEnterPin {
+            get {
+                return ResourceManager.GetString("ConnectHardwareWalletViewModelEnterPin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make sure you have only one hardware wallet connected to the PC..
+        /// </summary>
+        public static string ConnectHardwareWalletViewModelMakeSureOnlyOne {
+            get {
+                return ResourceManager.GetString("ConnectHardwareWalletViewModelMakeSureOnlyOne", resourceCulture);
             }
         }
         
@@ -534,6 +653,24 @@ namespace WalletWasabi.Lang {
         public static string CreateNewWallet {
             get {
                 return ResourceManager.GetString("CreateNewWallet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm the passphrase.
+        /// </summary>
+        public static string CreatePasswordDialogConfirmPassphrase {
+            get {
+                return ResourceManager.GetString("CreatePasswordDialogConfirmPassphrase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type a passphrase.
+        /// </summary>
+        public static string CreatePasswordDialogTypePassphrase {
+            get {
+                return ResourceManager.GetString("CreatePasswordDialogTypePassphrase", resourceCulture);
             }
         }
         
@@ -619,6 +756,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter the correct passphrase.
+        /// </summary>
+        public static string EnterPassphrase {
+            get {
+                return ResourceManager.GetString("EnterPassphrase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exclude Coins.
         /// </summary>
         public static string ExcludeCoins {
@@ -669,6 +815,24 @@ namespace WalletWasabi.Lang {
         public static string GeneralSettingsTabViewModelTitle {
             get {
                 return ResourceManager.GetString("GeneralSettingsTabViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hardware Wallet.
+        /// </summary>
+        public static string HardwareWallet {
+            get {
+                return ResourceManager.GetString("HardwareWallet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connect your hardware wallet, press Continue and then follow the instructions on the device..
+        /// </summary>
+        public static string HardwareWalletAuthDialogViewModelCaption {
+            get {
+                return ResourceManager.GetString("HardwareWalletAuthDialogViewModelCaption", resourceCulture);
             }
         }
         
@@ -979,6 +1143,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open wallet.
+        /// </summary>
+        public static string OpenWallet {
+            get {
+                return ResourceManager.GetString("OpenWallet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Browse, Open, Wallet, Folder.
         /// </summary>
         public static string OpenWalletsFolderViewModelKeywords {
@@ -1002,6 +1175,15 @@ namespace WalletWasabi.Lang {
         public static string or {
             get {
                 return ResourceManager.GetString("or", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passphrases don&apos;t match..
+        /// </summary>
+        public static string PassphrasesNotMatch {
+            get {
+                return ResourceManager.GetString("PassphrasesNotMatch", resourceCulture);
             }
         }
         
@@ -1110,6 +1292,60 @@ namespace WalletWasabi.Lang {
         public static string RecoverWallet {
             get {
                 return ResourceManager.GetString("RecoverWallet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you used a passphrase when you created your wallet you must type it below, otherwise leave this empty..
+        /// </summary>
+        public static string RecoverWalletViewModelPassphraseMessage {
+            get {
+                return ResourceManager.GetString("RecoverWalletViewModelPassphraseMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recovery Words.
+        /// </summary>
+        public static string RecoveryWords {
+            get {
+                return ResourceManager.GetString("RecoveryWords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write down the recovery words in the correct order and store them in a safe place. They are needed to recover your wallet..
+        /// </summary>
+        public static string RecoveryWordsViewCaption {
+            get {
+                return ResourceManager.GetString("RecoveryWordsViewCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy recovery words.
+        /// </summary>
+        public static string RecoveryWordsViewCopyRecoveryWords {
+            get {
+                return ResourceManager.GetString("RecoveryWordsViewCopyRecoveryWords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You will not be able to see these words again once the wallet is created..
+        /// </summary>
+        public static string RecoveryWordsViewNotSeeAfter {
+            get {
+                return ResourceManager.GetString("RecoveryWordsViewNotSeeAfter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rescan.
+        /// </summary>
+        public static string Rescan {
+            get {
+                return ResourceManager.GetString("Rescan", resourceCulture);
             }
         }
         
@@ -1303,6 +1539,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Leading and trailing white spaces will be removed!.
+        /// </summary>
+        public static string TrimWarnMessage {
+            get {
+                return ResourceManager.GetString("TrimWarnMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Two-Factor authentication is disabled. Enable it in the Setting for greater protection..
         /// </summary>
         public static string TwoFactorDisabledWarnMessage {
@@ -1326,6 +1571,15 @@ namespace WalletWasabi.Lang {
         public static string TypeInWalletName {
             get {
                 return ResourceManager.GetString("TypeInWalletName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type in your recovery words in the correct order.
+        /// </summary>
+        public static string TypeInYourRecoveryWords {
+            get {
+                return ResourceManager.GetString("TypeInYourRecoveryWords", resourceCulture);
             }
         }
         
@@ -1372,6 +1626,15 @@ namespace WalletWasabi.Lang {
         public static string UserSupportViewModelTitle {
             get {
                 return ResourceManager.GetString("UserSupportViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verify Recovery Words.
+        /// </summary>
+        public static string VerifyRecoveryWords {
+            get {
+                return ResourceManager.GetString("VerifyRecoveryWords", resourceCulture);
             }
         }
         
@@ -1642,6 +1905,15 @@ namespace WalletWasabi.Lang {
         public static string WalletTransactions {
             get {
                 return ResourceManager.GetString("WalletTransactions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leading and trailing white spaces are not allowed!.
+        /// </summary>
+        public static string WhitespaceMessage {
+            get {
+                return ResourceManager.GetString("WhitespaceMessage", resourceCulture);
             }
         }
     }

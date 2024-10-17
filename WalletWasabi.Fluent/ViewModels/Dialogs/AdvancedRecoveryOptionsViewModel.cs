@@ -14,7 +14,7 @@ public partial class AdvancedRecoveryOptionsViewModel : DialogViewModelBase<int?
 
 	public AdvancedRecoveryOptionsViewModel(int minGapLimit)
 	{
-		Title = "Advanced Recovery Options";
+		Title = Lang.Resources.AdvancedRecoveryOptionsViewModelTitle;
 
 		_minGapLimit = minGapLimit.ToString();
 

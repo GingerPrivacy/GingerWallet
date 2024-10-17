@@ -66,7 +66,7 @@
 
       <TextBlock Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="1" TextAlignment="Center" Text="{x:Static lang:Resources.or}" />
 
-      <TileButton Grid.Row="2" Grid.Column="0" Text="{x:Static lang:Resources.CreateNewWallet}"
+      <TileButton Grid.Row="2" Grid.Column="0" Text="{x:Static lang:Resources.ConnectHardwareWallet}"
                     Icon="{StaticResource calculator_regular}"
                     Classes="bottomtext"
                     Command="{Binding ConnectHardwareWalletCommand}" />

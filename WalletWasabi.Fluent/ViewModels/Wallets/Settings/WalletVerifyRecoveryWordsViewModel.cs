@@ -23,7 +23,7 @@ public partial class WalletVerifyRecoveryWordsViewModel : RoutableViewModel
 
 	private WalletVerifyRecoveryWordsViewModel(IWalletModel wallet)
 	{
-		Title = "Verify Recovery Words";
+		Title = Lang.Resources.VerifyRecoveryWords;
 
 		_suggestions = new Mnemonic(Wordlist.English, WordCount.Twelve).WordList.GetWords();
 
