@@ -145,12 +145,9 @@
       },
       "System.Text.Json": {
         "type": "Direct",
-        "requested": "[8.0.4, )",
-        "resolved": "8.0.4",
-        "contentHash": "bAkhgDJ88XTsqczoxEMliSrpijKZHhbJQldhAmObj/RbrN3sU5dcokuXmWJWsdQAhiMJ9bTayWsL1C9fbbCRhw==",
-        "dependencies": {
-          "System.Text.Encodings.Web": "8.0.0"
-        }
+        "requested": "[8.0.5, )",
+        "resolved": "8.0.5",
+        "contentHash": "0f1B50Ss7rqxXiaBJyzUu9bWFOO2/zSlifZ/UNMdiIpDYe4cY4LQQicP4nirK1OS31I43rn062UIJ1Q9bpmHpg=="
       },
       "Avalonia.BuildServices": {
         "type": "Transitive",
@@ -872,11 +869,6 @@
           "System.Runtime.CompilerServices.Unsafe": "4.5.2"
         }
       },
-      "System.Text.Encodings.Web": {
-        "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "yev/k9GHAEGx2Rg3/tU6MQh4HGBXJs70y7j1LaM1i/ER9po+6nnQ6RRqTJn1E7Xu0fbIFK80Nh5EoODxrbxwBQ=="
-      },
       "System.Threading": {
         "type": "Transitive",
         "resolved": "4.3.0",
@@ -918,7 +910,7 @@
           "NBitcoin": "[7.0.27, )",
           "NNostr.Client": "[0.0.49, )",
           "System.IO.Pipelines": "[8.0.0, )",
-          "System.Text.Json": "[8.0.4, )",
+          "System.Text.Json": "[8.0.5, )",
           "WabiSabi": "[1.0.1.2, )"
         }
       },
@@ -926,7 +918,7 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.Extensions.Caching.Memory": "[8.0.0, )",
-          "System.Text.Json": "[8.0.4, )",
+          "System.Text.Json": "[8.0.5, )",
           "WalletWasabi": "[1.0.0, )"
         }
       },
@@ -1457,11 +1449,6 @@
           "System.Runtime.CompilerServices.Unsafe": "4.5.2"
         }
       },
-      "System.Text.Encodings.Web": {
-        "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "yev/k9GHAEGx2Rg3/tU6MQh4HGBXJs70y7j1LaM1i/ER9po+6nnQ6RRqTJn1E7Xu0fbIFK80Nh5EoODxrbxwBQ=="
-      },
       "System.Threading.Tasks": {
         "type": "Transitive",
         "resolved": "4.3.0",
@@ -1862,11 +1849,6 @@
           "Microsoft.NETCore.Platforms": "2.1.2",
           "System.Runtime.CompilerServices.Unsafe": "4.5.2"
         }
-      },
-      "System.Text.Encodings.Web": {
-        "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "yev/k9GHAEGx2Rg3/tU6MQh4HGBXJs70y7j1LaM1i/ER9po+6nnQ6RRqTJn1E7Xu0fbIFK80Nh5EoODxrbxwBQ=="
       },
       "System.Threading.Tasks": {
         "type": "Transitive",
@@ -2269,11 +2251,6 @@
           "System.Runtime.CompilerServices.Unsafe": "4.5.2"
         }
       },
-      "System.Text.Encodings.Web": {
-        "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "yev/k9GHAEGx2Rg3/tU6MQh4HGBXJs70y7j1LaM1i/ER9po+6nnQ6RRqTJn1E7Xu0fbIFK80Nh5EoODxrbxwBQ=="
-      },
       "System.Threading.Tasks": {
         "type": "Transitive",
         "resolved": "4.3.0",
@@ -2675,11 +2652,6 @@
           "System.Runtime.CompilerServices.Unsafe": "4.5.2"
         }
       },
-      "System.Text.Encodings.Web": {
-        "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "yev/k9GHAEGx2Rg3/tU6MQh4HGBXJs70y7j1LaM1i/ER9po+6nnQ6RRqTJn1E7Xu0fbIFK80Nh5EoODxrbxwBQ=="
-      },
       "System.Threading.Tasks": {
         "type": "Transitive",
         "resolved": "4.3.0",
@@ -2980,11 +2952,6 @@
           "Microsoft.NETCore.Platforms": "2.1.2",
           "System.Runtime.CompilerServices.Unsafe": "4.5.2"
         }
-      },
-      "System.Text.Encodings.Web": {
-        "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "yev/k9GHAEGx2Rg3/tU6MQh4HGBXJs70y7j1LaM1i/ER9po+6nnQ6RRqTJn1E7Xu0fbIFK80Nh5EoODxrbxwBQ=="
       },
       "System.Threading.Tasks": {
         "type": "Transitive",
