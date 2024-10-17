@@ -10,7 +10,7 @@ insert_final_newline = true
 # Formatting - remove any whitespace characters preceding newline characters
 trim_trailing_whitespace = true
 
-[*.{cs,csproj,props,axaml,resx,xaml,json,md}]
+[*.{cs,csproj,props,axaml,resx,xaml,json,md,nix}]
 
 # Formatting - set preferred newline characters
 end_of_line = lf

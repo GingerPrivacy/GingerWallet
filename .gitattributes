@@ -12,6 +12,7 @@
 *.xaml text eol=lf
 *.md text eol=lf
 *.json text eol=lf
+*.nix text eol=lf
 
 
 ###############################################################################
