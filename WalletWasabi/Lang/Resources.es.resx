@@ -254,10 +254,10 @@
     <value>Registros</value>
   </data>
   <data name="OpenLogsViewModelKeywords" xml:space="preserve">
-    <value>Navegar, Abrir, Registros</value>
+    <value>Navegar, Abrir, Registros, log</value>
   </data>
   <data name="OpenTorLogsViewModelKeywords" xml:space="preserve">
-    <value>Navegar, Abrir, Tor, Registros</value>
+    <value>Navegar, Abrir, Tor, Registros, log</value>
   </data>
   <data name="OpenTorLogsViewModelTitle" xml:space="preserve">
     <value>Registros de Tor</value>

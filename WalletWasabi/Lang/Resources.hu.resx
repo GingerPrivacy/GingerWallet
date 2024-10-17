@@ -253,10 +253,10 @@
     <value>Naplók</value>
   </data>
   <data name="OpenLogsViewModelKeywords" xml:space="preserve">
-    <value>Böngészés, Megnyitás, Naplók</value>
+    <value>Böngészés, Megnyitás, Naplók, log</value>
   </data>
   <data name="OpenTorLogsViewModelKeywords" xml:space="preserve">
-    <value>Böngészés, Megnyitás, Tor, Naplók</value>
+    <value>Böngészés, Megnyitás, Tor, Naplók, log</value>
   </data>
   <data name="OpenTorLogsViewModelTitle" xml:space="preserve">
     <value>Tor naplók</value>
