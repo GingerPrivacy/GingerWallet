@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.BitcoinCore.Rpc;
 
@@ -10,21 +11,19 @@ public static class RpcErrorTools
 	public const string SpentError3 = "txn-mempool-conflict";
 	public const string TooLongMempoolChainError = "too-long-mempool-chain";
 
-	public const string SpentErrorTranslation = "At least one coin you are trying to spend is already spent.";
-
 	public static Dictionary<string, string> ErrorTranslations { get; } = new Dictionary<string, string>
 	{
-		[TooLongMempoolChainError] = "At least one coin you are trying to spend is part of long or heavy chain of unconfirmed transactions. You must wait for some previous transactions to confirm.",
-		[SpentError1] = SpentErrorTranslation,
-		[SpentError2] = SpentErrorTranslation,
-		[SpentError3] = SpentErrorTranslation,
-		["bad-txns-inputs-duplicate"] = "The transaction contains duplicated inputs.",
-		["bad-txns-nonfinal"] = "The transaction is not final and cannot be broadcasted.",
-		["bad-txns-oversize"] = "The transaction is too big.",
+		[TooLongMempoolChainError] = Resources.CoinInUnconfirmedChain,
+		[SpentError1] = Resources.CoinAlreadySpent,
+		[SpentError2] = Resources.CoinAlreadySpent,
+		[SpentError3] = Resources.CoinAlreadySpent,
+		["bad-txns-inputs-duplicate"] = Resources.TransactionDuplicatedInputs,
+		["bad-txns-nonfinal"] = Resources.TransactionNotFinal,
+		["bad-txns-oversize"] = Resources.TransactionTooBig,
 
-		["invalid password"] = "Wrong passphrase.",
-		["Invalid wallet name"] = "Invalid wallet name.",
-		["Wallet name is already taken"] = "Wallet name is already taken."
+		["invalid password"] = Resources.WrongPassphrase,
+		["Invalid wallet name"] = Resources.InvalidWalletName,
+		["Wallet name is already taken"] = Resources.WalletNameTaken,
 	};
 
 	public static bool IsSpentError(string error)

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:send="clr-namespace:WalletWasabi.Fluent.ViewModels.Wallets.Send"
              xmlns:converters="clr-namespace:WalletWasabi.Fluent.Converters"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:CompileBindings="True"
              x:DataType="send:TransactionSummaryViewModel"
@@ -31,7 +32,7 @@
     <DockPanel>
       <Button Classes="activeHyperLink"
               Command="{Binding Parent.ChangeCoinsCommand}"
-              Content="Review coins"
+              Content="{x:Static lang:Resources.ReviewCoins}"
               Margin="10 0"
               VerticalAlignment="Center"
               DockPanel.Dock="Right">
@@ -43,11 +44,14 @@
         </Button.IsVisible>
       </Button>
       <PreviewItem Icon="{StaticResource btc_logo}"
-                     Label="Amount" HorizontalContentAlignment="Stretch"
-                     CopyableContent="{Binding Amount.Btc}">
+                   Label="{x:Static lang:Resources.Amount}" HorizontalContentAlignment="Stretch"
+                   CopyableContent="{Binding Amount.Btc}">
         <StackPanel Orientation="Horizontal">
           <AmountControl Amount="{Binding Amount}" />
-          <TextBlock Margin="8 0" FontWeight="Bold" Foreground="{Binding FeeDiff, Converter={StaticResource NeutralDiffConverter}}" IsVisible="{Binding !!AmountDiff}" VerticalAlignment="Bottom" Text="{Binding AmountDiff, Converter={x:Static converters:MoneyConverters.PercentageDifferenceConverter}}" />
+          <TextBlock Margin="8 0" FontWeight="Bold"
+                     Foreground="{Binding FeeDiff, Converter={StaticResource NeutralDiffConverter}}"
+                     IsVisible="{Binding !!AmountDiff}" VerticalAlignment="Bottom"
+                     Text="{Binding AmountDiff, Converter={x:Static converters:MoneyConverters.PercentageDifferenceConverter}}" />
         </StackPanel>
 
         <Classes.Dimmed>
@@ -62,22 +66,22 @@
 
     <!-- Address -->
     <PreviewItem Icon="{StaticResource transceive_regular}"
-                   x:Name="PreviewItem"
-                   Label="Address"
-                   CopyableContent="{Binding AddressText}"
-                   Classes.Dimmed="{Binding IsPreview}">
+                 x:Name="PreviewItem"
+                 Label="{x:Static lang:Resources.Address}"
+                 CopyableContent="{Binding AddressText}"
+                 Classes.Dimmed="{Binding IsPreview}">
       <TextBlock Classes="monoSpaced" Text="{Binding AddressText, FallbackValue=btc029382398fkj34f98df239823}" />
     </PreviewItem>
     <Separator />
 
     <!-- Recipient -->
     <PreviewItem Icon="{StaticResource person_regular}"
-                   Classes.Dimmed="{Binding IsPreview}"
-                   Label="Recipient"
-                   CopyableContent="{Binding Recipient}">
+                 Classes.Dimmed="{Binding IsPreview}"
+                 Label="{x:Static lang:Resources.Recipient}"
+                 CopyableContent="{Binding Recipient}">
       <LabelsItemsPresenter ItemsSource="{Binding Recipient}"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Center" />
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center" />
     </PreviewItem>
     <Separator />
 
@@ -85,7 +89,7 @@
     <DockPanel>
       <Button Classes="plain"
               Command="{Binding Parent.AdjustFeeCommand}"
-              ToolTip.Tip="Change transaction fee or confirmation time"
+              ToolTip.Tip="{x:Static lang:Resources.ChangeTransactionFeeOrConfirmationTime}"
               DockPanel.Dock="Right"
               Margin="10 0"
               IsVisible="{Binding !IsPreview}">
@@ -96,18 +100,22 @@
 
       <StackPanel Spacing="10">
         <PreviewItem Icon="{StaticResource timer_regular}"
-                       Label="Expected confirmation time"
-                       IsVisible="{Binding !IsCustomFeeUsed}"
-                       Classes.Dimmed="{Binding IsPreview}"
-                       ToolTip.Tip="This is just an estimation based on some data for transactions and blocks. The confirmation time might change.">
-          <TextBlock Text="{Binding ConfirmationTime, Converter={x:Static converters:TimeSpanConverter.ToEstimatedConfirmationTime}, FallbackValue=~20 minutes}" />
+                     Label="{x:Static lang:Resources.ExpectedConfirmationTime}"
+                     IsVisible="{Binding !IsCustomFeeUsed}"
+                     Classes.Dimmed="{Binding IsPreview}"
+                     ToolTip.Tip="{x:Static lang:Resources.ConfirmationTimeEstimation}">
+          <TextBlock
+            Text="{Binding ConfirmationTime, Converter={x:Static converters:TimeSpanConverter.ToEstimatedConfirmationTime}, FallbackValue=~20 minutes}" />
         </PreviewItem>
         <PreviewItem Icon="{StaticResource paper_cash_regular}"
-                       Label="Fee"
-                       CopyableContent="{Binding Fee.Btc, Converter={x:Static converters:MoneyConverters.ToFeeWithoutUnit}}">
+                     Label="{x:Static lang:Resources.Fee}"
+                     CopyableContent="{Binding Fee.Btc, Converter={x:Static converters:MoneyConverters.ToFeeWithoutUnit}}">
           <StackPanel Orientation="Horizontal">
             <AmountControl Classes="Fee" Amount="{Binding Fee}" />
-            <TextBlock Margin="8 0" FontWeight="Bold" Foreground="{Binding FeeDiff, Converter={StaticResource InvertedDiffConverter}}" IsVisible="{Binding !!FeeDiff}" VerticalAlignment="Bottom" Text="{Binding FeeDiff, Converter={x:Static converters:MoneyConverters.PercentageDifferenceConverter}}" />
+            <TextBlock Margin="8 0" FontWeight="Bold"
+                       Foreground="{Binding FeeDiff, Converter={StaticResource InvertedDiffConverter}}"
+                       IsVisible="{Binding !!FeeDiff}" VerticalAlignment="Bottom"
+                       Text="{Binding FeeDiff, Converter={x:Static converters:MoneyConverters.PercentageDifferenceConverter}}" />
           </StackPanel>
 
           <Classes.Dimmed>

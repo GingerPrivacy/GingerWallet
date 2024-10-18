@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
+  <!--
+    Microsoft ResX Schema
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -648,6 +648,522 @@
   <data name="Success" xml:space="preserve">
     <value>Success</value>
   </data>
+  <data name="UnexpextedError" xml:space="preserve">
+    <value>An unexpected error occurred. Please try again or contact support.</value>
+  </data>
+  <data name="SomethingWrong" xml:space="preserve">
+    <value>Something went wrong. Please try again.</value>
+  </data>
+  <data name="PermissionError" xml:space="preserve">
+    <value>Ginger Wallet was unable to perform this action due to a lack of permission.</value>
+  </data>
+  <data name="HardwareWalletNotFound" xml:space="preserve">
+    <value>Could not find the hardware wallet. Make sure it is connected.</value>
+  </data>
+  <data name="TransactionCanceledOnDevice" xml:space="preserve">
+    <value>The transaction was canceled on the device.</value>
+  </data>
+  <data name="UnknownErrorDeviceCheck" xml:space="preserve">
+    <value>Unknown error. Make sure the device is connected and isn't busy, then try again.</value>
+  </data>
+  <data name="CoinAlreadySpent" xml:space="preserve">
+    <value>At least one coin you are trying to spend is already spent.</value>
+  </data>
+  <data name="CoinInUnconfirmedChain" xml:space="preserve">
+    <value>At least one coin you are trying to spend is part of a long or heavy chain of unconfirmed transactions. You must wait for some previous transactions to confirm.</value>
+  </data>
+  <data name="TransactionDuplicatedInputs" xml:space="preserve">
+    <value>The transaction contains duplicated inputs.</value>
+  </data>
+  <data name="TransactionNotFinal" xml:space="preserve">
+    <value>The transaction is not final and cannot be broadcasted.</value>
+  </data>
+  <data name="TransactionTooBig" xml:space="preserve">
+    <value>The transaction is too big.</value>
+  </data>
+  <data name="WrongPassphrase" xml:space="preserve">
+    <value>Wrong passphrase.</value>
+  </data>
+  <data name="InvalidWalletName" xml:space="preserve">
+    <value>Invalid wallet name.</value>
+  </data>
+  <data name="WalletNameTaken" xml:space="preserve">
+    <value>Wallet name is already taken.</value>
+  </data>
+  <data name="BalanceNotAccurateServerConnection" xml:space="preserve">
+    <value>The reported balance might not be accurate, and some other features may not be available because Ginger was unable to connect to the server. Retrying to connect.</value>
+  </data>
+  <data name="UpdateAvailable" xml:space="preserve">
+    <value>Update available.</value>
+  </data>
+  <data name="CloseAndUpdate" xml:space="preserve">
+    <value>Close and update.</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="AskMeLater" xml:space="preserve">
+    <value>Ask me later</value>
+  </data>
+  <data name="IsRunning" xml:space="preserve">
+    <value>is running</value>
+  </data>
+  <data name="IsNotRunning" xml:space="preserve">
+    <value>is not running</value>
+  </data>
+  <data name="IsTurnedOff" xml:space="preserve">
+    <value>is turned off</value>
+  </data>
+  <data name="IsConnected" xml:space="preserve">
+    <value>is connected</value>
+  </data>
+  <data name="IsNotConnected" xml:space="preserve">
+    <value>is not connected</value>
+  </data>
+  <data name="FullNodeConnecting" xml:space="preserve">
+    <value>Full node is connecting...</value>
+  </data>
+  <data name="FullNodeSynchronized" xml:space="preserve">
+    <value>Full node is synchronized</value>
+  </data>
+  <data name="FullNodeDownloadingBlocks" xml:space="preserve">
+    <value>Full node is downloading {0} blocks...</value>
+  </data>
+  <data name="FullNodeUnresponsive" xml:space="preserve">
+    <value>Full node is unresponsive</value>
+  </data>
+  <data name="ApplicationRestartApplyChanges" xml:space="preserve">
+    <value>After pressing Continue, the application will restart to apply changes.</value>
+  </data>
+  <data name="WelcomeToGingerWallet" xml:space="preserve">
+    <value>Welcome to Ginger Wallet</value>
+  </data>
+  <data name="SelectPreferredLanguage" xml:space="preserve">
+    <value>Select your preferred language:</value>
+  </data>
+  <data name="CoinjoinFees" xml:space="preserve">
+    <value>Coinjoin Fees</value>
+  </data>
+  <data name="CoordinationFeeInfo" xml:space="preserve">
+    <value>You will pay a fee of 0.3% only for new coins you coinjoin.</value>
+  </data>
+  <data name="CoordinationFee" xml:space="preserve">
+    <value>Coordination Fee</value>
+  </data>
+  <data name="TransactionFee" xml:space="preserve">
+    <value>Transaction Fee</value>
+  </data>
+  <data name="TransactionFeeInfo" xml:space="preserve">
+    <value>You will pay mining fees for every coinjoin.</value>
+  </data>
+  <data name="PlebsDontPay" xml:space="preserve">
+    <value>Plebs Don't Pay</value>
+  </data>
+  <data name="PlebsDontPayInfo" xml:space="preserve">
+    <value>You won't pay the coordination fee for coins that are less than or equal to 0.01 BTC.</value>
+  </data>
+  <data name="FriendsDontPay" xml:space="preserve">
+    <value>Friends Don't Pay</value>
+  </data>
+  <data name="FriendsDontPayInfo" xml:space="preserve">
+    <value>You won't pay the coordination fee for coins received from other Ginger coinjoins.</value>
+  </data>
+  <data name="GetStarted" xml:space="preserve">
+    <value>Get Started</value>
+  </data>
+  <data name="AddressesAwaitingPayment" xml:space="preserve">
+    <value>Addresses Awaiting Payment</value>
+  </data>
+  <data name="SeparateWithCommaOrEnter" xml:space="preserve">
+    <value>Separate with , or by pressing Enter</value>
+  </data>
+  <data name="EnterNamesForAddress" xml:space="preserve">
+    <value>Enter the names of the persons or companies who you will give this address to</value>
+  </data>
+  <data name="ReceiveViewModelTitle" xml:space="preserve">
+    <value>Receive</value>
+  </data>
+  <data name="ReceiveViewModelCaption" xml:space="preserve">
+    <value>Display wallet receive dialog</value>
+  </data>
+  <data name="ReceiveViewModelKeywords" xml:space="preserve">
+    <value>Wallet, Receive, Action</value>
+  </data>
+  <data name="AddressAwaitingPayment" xml:space="preserve">
+    <value>Address Awaiting Payment</value>
+  </data>
+  <data name="ShowOnHardwareWallet" xml:space="preserve">
+    <value>Show on the hardware wallet</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="UnableToSendAddressToDevice" xml:space="preserve">
+    <value>Unable to send the address to the device</value>
+  </data>
+  <data name="ChooseHideModifyDisplayAddresses" xml:space="preserve">
+    <value>You can choose to hide, modify, or display the addresses listed below</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="Label" xml:space="preserve">
+    <value>Label</value>
+  </data>
+  <data name="HideAddress" xml:space="preserve">
+    <value>Hide address</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="QRCode" xml:space="preserve">
+    <value>QR Code</value>
+  </data>
+  <data name="WishToHideAddressWithLabels" xml:space="preserve">
+    <value>Do you wish to hide the address with the following labels?</value>
+  </data>
+  <data name="ThisCannotBeUndone" xml:space="preserve">
+    <value>This can not be undone</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="EditSelectedAddressLabels" xml:space="preserve">
+    <value>Edit the selected address's labels here:</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ChangesAppliedAfterRestart" xml:space="preserve">
+    <value>Changes will be applied after restarting the application.</value>
+  </data>
+  <data name="RestartApplication" xml:space="preserve">
+    <value>Restart Application</value>
+  </data>
+  <data name="ModifyingSettingsNotPossible" xml:space="preserve">
+    <value>Modifying settings is not possible, as certain parameters have been overridden during startup.</value>
+  </data>
+  <data name="Advanced" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="Security" xml:space="preserve">
+    <value>Security</value>
+  </data>
+  <data name="ApplyNewSettingRestart" xml:space="preserve">
+    <value>To apply the new setting, Ginger Wallet needs to be restarted.</value>
+  </data>
+  <data name="DarkMode" xml:space="preserve">
+    <value>Dark mode</value>
+  </data>
+  <data name="RunAtStartup" xml:space="preserve">
+    <value>Run Ginger when computer starts</value>
+  </data>
+  <data name="RunInBackgroundWhenClosed" xml:space="preserve">
+    <value>Run in background when window closed</value>
+  </data>
+  <data name="AutoCopyAddresses" xml:space="preserve">
+    <value>Auto copy addresses</value>
+  </data>
+  <data name="AutoPasteAddresses" xml:space="preserve">
+    <value>Auto paste addresses</value>
+  </data>
+  <data name="NetworkAnonymizationTor" xml:space="preserve">
+    <value>Network anonymization (Tor)</value>
+  </data>
+  <data name="CannotModifyWithTwoFactorEnabled" xml:space="preserve">
+    <value>Cannot be modified when Two-Factor authentication is enabled.</value>
+  </data>
+  <data name="TerminateTorWhenShutdown" xml:space="preserve">
+    <value>Terminate Tor when Ginger shuts down</value>
+  </data>
+  <data name="AutoDownloadNewVersion" xml:space="preserve">
+    <value>Auto download new version</value>
+  </data>
+  <data name="FeeDisplayUnit" xml:space="preserve">
+    <value>Fee display unit</value>
+  </data>
+  <data name="SetPreferredBrowserPath" xml:space="preserve">
+    <value>Set the full path of the preferred browser</value>
+  </data>
+  <data name="CustomBrowserPath" xml:space="preserve">
+    <value>Custom browser path</value>
+  </data>
+  <data name="OpenInBrowser" xml:space="preserve">
+    <value>Open in browser</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="CouldNotSaveChange" xml:space="preserve">
+    <value>Couldn't save your change, please see the logs for further information.</value>
+  </data>
+  <data name="Network" xml:space="preserve">
+    <value>Network</value>
+  </data>
+  <data name="RunBitcoinKnotsOnStartup" xml:space="preserve">
+    <value>(EXPERIMENTAL) Run Bitcoin Knots on startup</value>
+  </data>
+  <data name="StopBitcoinKnotsOnShutdown" xml:space="preserve">
+    <value>Stop Bitcoin Knots on shutdown</value>
+  </data>
+  <data name="LocalBitcoinCoreKnotsVersion" xml:space="preserve">
+    <value>Local Bitcoin Core/Knots version</value>
+  </data>
+  <data name="BitcoinCoreKnotsDataFolder" xml:space="preserve">
+    <value>Bitcoin Core/Knots Data Folder</value>
+  </data>
+  <data name="WasabiDownloadBlocksFromFullNode" xml:space="preserve">
+    <value>Wasabi will download blocks from a full node you control.</value>
+  </data>
+  <data name="BitcoinP2PEndpoint" xml:space="preserve">
+    <value>Bitcoin P2P Endpoint</value>
+  </data>
+  <data name="CoinsReceivedFromOthers" xml:space="preserve">
+    <value>Coins received from others to already used addresses won't appear below this amount. To prevent potential dust attacks.</value>
+  </data>
+  <data name="DustThreshold" xml:space="preserve">
+    <value>Dust Threshold</value>
+  </data>
+  <data name="InvalidEndpoint" xml:space="preserve">
+    <value>Invalid endpoint.</value>
+  </data>
+  <data name="UseDecimalPoint" xml:space="preserve">
+    <value>Use decimal point instead of comma.</value>
+  </data>
+  <data name="InvalidDustThreshold" xml:space="preserve">
+    <value>Invalid dust threshold.</value>
+  </data>
+  <data name="EnableGPURendering" xml:space="preserve">
+    <value>When enabled use a graphics card (GPU) to render user interface. Using a GPU rather than the CPU can improve performance.</value>
+  </data>
+  <data name="EnableGPU" xml:space="preserve">
+    <value>Enable GPU</value>
+  </data>
+  <data name="TwoFactorAuthentication" xml:space="preserve">
+    <value>Two-factor authentication</value>
+  </data>
+  <data name="OnlyAvailableWhenTorEnabled" xml:space="preserve">
+    <value>Only available when Tor is enabled.</value>
+  </data>
+  <data name="SystemDefaultEnum" xml:space="preserve">
+    <value>System Default</value>
+  </data>
+  <data name="CustomEnum" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Max:</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>To:</value>
+  </data>
+  <data name="ExampleBitcoinAddressOrPayjoinURI" xml:space="preserve">
+    <value>(e.g. Bitcoin address or payjoin URI)</value>
+  </data>
+  <data name="Paste" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="ScanQRCode" xml:space="preserve">
+    <value>Scan QR Code</value>
+  </data>
+  <data name="AmountWithColom" xml:space="preserve">
+    <value>Amount:</value>
+  </data>
+  <data name="RecipientWithColon" xml:space="preserve">
+    <value>Recipient:</value>
+  </data>
+  <data name="SendViewModelTitle" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="SendViewModelCaption" xml:space="preserve">
+    <value>Display wallet send dialog</value>
+  </data>
+  <data name="SendViewModelKeywords" xml:space="preserve">
+    <value>Wallet, Send, Action</value>
+  </data>
+  <data name="SendNow" xml:space="preserve">
+    <value>Send Now</value>
+  </data>
+  <data name="PreviewTransaction" xml:space="preserve">
+    <value>Preview Transaction</value>
+  </data>
+  <data name="PrivacyProtectedWithPayjoin" xml:space="preserve">
+    <value>Your privacy is being protected with payjoin.</value>
+  </data>
+  <data name="UndoLastModification" xml:space="preserve">
+    <value>Undo last modification</value>
+  </data>
+  <data name="TransactionInterlinksLabels" xml:space="preserve">
+    <value>Transaction interlinks labels:</value>
+  </data>
+  <data name="EntitiesKnowTransaction" xml:space="preserve">
+    <value>Those entities know this is your transaction. Coinjoin more or use the label management tool to carefully select who would know that this transaction is yours.</value>
+  </data>
+  <data name="TransactionKnownAsYoursBy" xml:space="preserve">
+    <value>Transaction known as yours by:</value>
+  </data>
+  <data name="EntitiesKnowThisIsYourTransaction" xml:space="preserve">
+    <value>Those entities know this is your transaction. Coinjoin more or use the label management tool to carefully select who would know that this transaction is yours.</value>
+  </data>
+  <data name="TransactionUsesNonPrivateCoins" xml:space="preserve">
+    <value>Transaction uses non-private coins.</value>
+  </data>
+  <data name="EntitiesCanDeanonymizeTransaction" xml:space="preserve">
+    <value>Some entities can deanonymize this transaction because it spends coins with no privacy. Coinjoin more to have enough private coins for this transaction.</value>
+  </data>
+  <data name="TransactionUsesSemiPrivateCoins" xml:space="preserve">
+    <value>Transaction uses semi-private coins.</value>
+  </data>
+  <data name="TransactionNotPrivateEnough" xml:space="preserve">
+    <value>This transaction is not private enough because it spends not fully private coins. Coinjoin more to have enough private coins for this transaction.</value>
+  </data>
+  <data name="TransactionCreatesChange" xml:space="preserve">
+    <value>Transaction creates change.</value>
+  </data>
+  <data name="ChangeCanLinkTransactions" xml:space="preserve">
+    <value>Change can be used to link this transaction with the next transaction that will use it. Use the change avoidance suggestion to send a little more or less if this is OK for the receiver, or coinjoin the change later.</value>
+  </data>
+  <data name="TransactionConsolidatesCoins" xml:space="preserve">
+    <value>Transaction consolidates over {0} coins.</value>
+  </data>
+  <data name="ReducePrivacyOfTransaction" xml:space="preserve">
+    <value>This might reduce the privacy of your transaction.</value>
+  </data>
+  <data name="TransactionUsesUnconfirmedCoins" xml:space="preserve">
+    <value>Transaction uses unconfirmed coins.</value>
+  </data>
+  <data name="UnconfirmedCoinsMayCauseIssues" xml:space="preserve">
+    <value>This may cause your transaction to be rejected, or delay its confirmation, or cost more than needed to get it confirmed within the desired time. Wait for a confirmation to only use confirmed coins.</value>
+  </data>
+  <data name="TransactionUsesCoinjoiningCoins" xml:space="preserve">
+    <value>Transaction uses coinjoining coins.</value>
+  </data>
+  <data name="TransactionMayBeReplacedByCoinjoin" xml:space="preserve">
+    <value>This may cause your transaction to be replaced by the coinjoin. Consider waiting for the current coinjoin to be finished before sending this transaction.</value>
+  </data>
+  <data name="ImproveThisTransaction" xml:space="preserve">
+    <value>Improve this transaction:</value>
+  </data>
+  <data name="LabelManagement" xml:space="preserve">
+    <value>Label Management</value>
+  </data>
+  <data name="ChooseLabelsForTransaction" xml:space="preserve">
+    <value>Choose labels to link with this transaction.</value>
+  </data>
+  <data name="FullPrivacy" xml:space="preserve">
+    <value>Full Privacy</value>
+  </data>
+  <data name="SendSuggestion" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="BetterPrivacy" xml:space="preserve">
+    <value>Better Privacy</value>
+  </data>
+  <data name="ChangeAvoidance" xml:space="preserve">
+    <value>Change Avoidance</value>
+  </data>
+  <data name="TransactionWellOptimized" xml:space="preserve">
+    <value>This transaction is well optimized.</value>
+  </data>
+  <data name="ReviewCoins" xml:space="preserve">
+    <value>Review coins</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="Recipient" xml:space="preserve">
+    <value>Recipient</value>
+  </data>
+  <data name="ChangeTransactionFeeOrConfirmationTime" xml:space="preserve">
+    <value>Change transaction fee or confirmation time</value>
+  </data>
+  <data name="ExpectedConfirmationTime" xml:space="preserve">
+    <value>Expected confirmation time</value>
+  </data>
+  <data name="ConfirmationTimeEstimation" xml:space="preserve">
+    <value>This is just an estimation based on some data for transactions and blocks. The confirmation time might change.</value>
+  </data>
+  <data name="Fee" xml:space="preserve">
+    <value>Fee</value>
+  </data>
+  <data name="SavePSBTFile" xml:space="preserve">
+    <value>Save PSBT file</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="TransactionExport" xml:space="preserve">
+    <value>Transaction Export</value>
+  </data>
+  <data name="UnableToExportPSBT" xml:space="preserve">
+    <value>Ginger Wallet was unable to export the PSBT.</value>
+  </data>
+  <data name="TransactionBuilding" xml:space="preserve">
+    <value>Transaction Building</value>
+  </data>
+  <data name="TransactionFeeExceedsPaymentAmount" xml:space="preserve">
+    <value>The transaction cannot be sent because its fee is more than the payment amount.</value>
+  </data>
+  <data name="UnableToCreateTransaction" xml:space="preserve">
+    <value>Ginger Wallet was unable to create your transaction.</value>
+  </data>
+  <data name="InsufficientFundsForTransactionFee" xml:space="preserve">
+    <value>There are not enough funds to cover the transaction fee.</value>
+  </data>
+  <data name="Transaction" xml:space="preserve">
+    <value>Transaction</value>
+  </data>
+  <data name="UnableToSendTransaction" xml:space="preserve">
+    <value>Ginger Wallet was unable to send your transaction.</value>
+  </data>
+  <data name="Camera" xml:space="preserve">
+    <value>Camera</value>
+  </data>
+  <data name="InternalError" xml:space="preserve">
+    <value>Internal error.</value>
+  </data>
+  <data name="InvalidInputLength" xml:space="preserve">
+    <value>Input length is invalid.</value>
+  </data>
+  <data name="InputTooLong" xml:space="preserve">
+    <value>Input is too long.</value>
+  </data>
+  <data name="LightningAddressesNotSupported" xml:space="preserve">
+    <value>Lightning addresses are not supported.</value>
+  </data>
+  <data name="BitcoinAddressValidity" xml:space="preserve">
+    <value>Bitcoin address is valid for {0} and not for {1}.</value>
+  </data>
+  <data name="SetTransactionConfirmationPreference" xml:space="preserve">
+    <value>Set your preference for how fast the transaction should be confirmed.</value>
+  </data>
+  <data name="FeeRateSatPerVByte" xml:space="preserve">
+    <value>Fee Rate (sat/vByte)</value>
+  </data>
+  <data name="EstimatedConfirmationTime" xml:space="preserve">
+    <value>Estimated Confirmation Time</value>
+  </data>
+  <data name="TransactionFeeEstimationsUnavailable" xml:space="preserve">
+    <value>Transaction fee estimations are not available at the moment. Try again later or you can enter the fee rate manually.</value>
+  </data>
+  <data name="ChooseTransactionVisibility" xml:space="preserve">
+    <value>Choose who can and can't see this transaction.</value>
+  </data>
+  <data name="CouldSeeThisTransaction" xml:space="preserve">
+    <value>Could see this transaction:</value>
+  </data>
+  <data name="CantSeeThisTransaction" xml:space="preserve">
+    <value>Can't see this transaction:</value>
+  </data>
+  <data name="NoInformationAboutPeople" xml:space="preserve">
+    <value>There is no information about these people, only use it when necessary!</value>
+  </data>
+  <data name="CoinControl" xml:space="preserve">
+    <value>Coin Control</value>
+  </data>
   <data name="RecoveryWordsViewCaption" xml:space="preserve">
     <value>Write down the recovery words in the correct order and store them in a safe place. They are needed to recover your wallet.</value>
   </data>
@@ -739,5 +1255,8 @@ It's a recovery words extension for more security.</value>
   </data>
   <data name="AdvancedRecoveryOptionsViewModelMinimumGapLimit" xml:space="preserve">
     <value>Minimum _Gap Limit:</value>
+  </data>
+  <data name="PeersConnected" xml:space="preserve">
+    <value>{0} connected</value>
   </data>
 </root>
