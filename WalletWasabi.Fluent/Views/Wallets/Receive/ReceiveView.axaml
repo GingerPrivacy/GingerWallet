@@ -13,14 +13,14 @@
                  EnableCancel="{Binding EnableCancel}"
                  EnableBack="{Binding EnableBack}">
     <DockPanel>
-      <Button DockPanel.Dock="Bottom" Focusable="False" Content="Addresses Awaiting Payment"
+      <Button DockPanel.Dock="Bottom" Focusable="False" Content="{x:Static lang:Resources.AddressesAwaitingPayment}"
               IsVisible="{Binding HasUnusedAddresses^, FallbackValue=False}"
               Classes="h8 plain activeHyperLink" Command="{Binding ShowExistingAddressesCommand}" Cursor="Hand"
               HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 0 0" />
       <StackPanel HorizontalAlignment="Stretch" Spacing="10">
         <DockPanel HorizontalAlignment="Left">
-          <InfoMessage DockPanel.Dock="Right" VerticalAlignment="Center" ToolTip.Tip="Separate with , or by pressing Enter" />
-          <TextBlock TextWrapping="Wrap" Margin="0 2 10 0" Text="Enter the names of the persons or companies who you will give this address to" HorizontalAlignment="Left"
+          <InfoMessage DockPanel.Dock="Right" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Resources.SeparateWithCommaOrEnter}" />
+          <TextBlock TextWrapping="Wrap" Margin="0 2 10 0" Text="{x:Static lang:Resources.EnterNamesForAddress}" HorizontalAlignment="Left"
                      FontWeight="Normal" />
         </DockPanel>
         <TagsBox x:Name="LabelsTbx"

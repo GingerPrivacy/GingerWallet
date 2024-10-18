@@ -10,6 +10,7 @@ using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
 using WalletWasabi.Fluent.ViewModels.Wallets.Coins;
 using WalletWasabi.Fluent.ViewModels.Wallets.Send;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.ViewModels.CoinControl;
 
@@ -23,7 +24,7 @@ public partial class SelectCoinsDialogViewModel : DialogViewModelBase<IEnumerabl
 {
 	public SelectCoinsDialogViewModel(IWalletModel wallet, IList<ICoinModel> selectedCoins, SendFlowModel sendFlow)
 	{
-		Title = "Coin Control";
+		Title = Resources.CoinControl;
 
 		var transactionInfo = sendFlow.TransactionInfo ?? throw new InvalidOperationException($"Missing required TransactionInfo.");
 

@@ -59,8 +59,8 @@ public partial class SettingsPageViewModel : DialogViewModelBase<Unit>
 
 		// Show restart notification when needed only if this page is not active.
 		UiContext.ApplicationSettings.IsRestartNeeded
-				 .Where(x => x && !IsActive && !_isDisplayed)
-				 .Do(_ => NotificationHelpers.Show(new RestartViewModel("To apply the new setting, Ginger Wallet needs to be restarted")))
+				 .Where(x => x && !IsActive && !_isDisplayed && !UiContext.ApplicationSettings.Oobe)
+				 .Do(_ => NotificationHelpers.Show(new RestartViewModel(Resources.ApplyNewSettingRestart)))
 				 .Subscribe();
 
 		OpenSecurityTabCommand = ReactiveCommand.CreateFromTask(async () =>

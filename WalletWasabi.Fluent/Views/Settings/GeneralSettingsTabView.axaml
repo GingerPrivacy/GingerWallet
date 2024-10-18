@@ -6,6 +6,7 @@
              xmlns:conv="using:WalletWasabi.Fluent.Converters"
              xmlns:basemodels="using:WalletWasabi.Models"
              xmlns:models="clr-namespace:WalletWasabi.Fluent.Models"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371"
              x:Class="WalletWasabi.Fluent.Views.Settings.GeneralSettingsTabView"
              x:CompileBindings="True"
@@ -13,27 +14,27 @@
   <StackPanel Classes="settingsLayout">
 
     <DockPanel>
-      <TextBlock Text="Dark mode" />
+      <TextBlock Text="{x:Static lang:Resources.DarkMode}" />
       <ToggleSwitch IsChecked="{Binding Settings.DarkModeEnabled}" />
     </DockPanel>
 
     <DockPanel>
-      <TextBlock Text="Run Ginger when computer starts" />
+      <TextBlock Text="{x:Static lang:Resources.RunAtStartup}" />
       <ToggleSwitch IsChecked="{Binding RunOnSystemStartup}" Command="{Binding StartupCommand}" />
     </DockPanel>
 
     <DockPanel>
-      <TextBlock Text="Run in background when window closed" />
+      <TextBlock Text="{x:Static lang:Resources.RunInBackgroundWhenClosed}" />
       <ToggleSwitch IsChecked="{Binding Settings.HideOnClose}" />
     </DockPanel>
 
     <DockPanel>
-      <TextBlock Text="Auto copy addresses" />
+      <TextBlock Text="{x:Static lang:Resources.AutoCopyAddresses}" />
       <ToggleSwitch IsChecked="{Binding Settings.AutoCopy}" />
     </DockPanel>
 
     <DockPanel>
-      <TextBlock Text="Auto paste addresses" />
+      <TextBlock Text="{x:Static lang:Resources.AutoPasteAddresses}" />
       <ToggleSwitch IsChecked="{Binding Settings.AutoPaste}" />
     </DockPanel>
     <!-- Temporarily remove from settings view for release
@@ -45,9 +46,9 @@
     -->
 
     <StackPanel IsEnabled="{Binding ModifyTorEnabled}">
-      <TextBlock Text="Network anonymization (Tor)" />
+      <TextBlock Text="{x:Static lang:Resources.NetworkAnonymizationTor}" />
       <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding TorModes}" SelectedItem="{Binding Settings.UseTor}"
-                ToolTip.Tip="Cannot be modified when Two-Factor authentication is enabled.">
+                ToolTip.Tip="{x:Static lang:Resources.CannotModifyWithTwoFactorEnabled}">
         <ComboBox.ItemTemplate>
           <DataTemplate x:DataType="basemodels:TorMode">
             <TextBlock Text="{Binding Converter={x:Static conv:EnumConverters.ToFriendlyName}}" />
@@ -57,17 +58,17 @@
     </StackPanel>
 
     <DockPanel IsVisible="{Binding Settings.UseTor, ConverterParameter={x:Static basemodels:TorMode.Enabled}, Converter={x:Static conv:EnumToBoolConverter.Instance}}">
-      <TextBlock Text="Terminate Tor when Ginger shuts down" />
+      <TextBlock Text="{x:Static lang:Resources.TerminateTorWhenShutdown}" />
       <ToggleSwitch IsChecked="{Binding Settings.TerminateTorOnExit}" />
     </DockPanel>
 
     <DockPanel>
-      <TextBlock Text="Auto download new version" />
+      <TextBlock Text="{x:Static lang:Resources.AutoDownloadNewVersion}" />
       <ToggleSwitch IsChecked="{Binding Settings.DownloadNewVersion}" />
     </DockPanel>
 
     <StackPanel>
-      <TextBlock Text="Fee display unit" />
+      <TextBlock Text="{x:Static lang:Resources.FeeDisplayUnit}" />
       <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding FeeDisplayUnits}" SelectedItem="{Binding Settings.SelectedFeeDisplayUnit}">
         <ComboBox.ItemTemplate>
           <DataTemplate x:DataType="models:FeeDisplayUnit">
@@ -78,8 +79,8 @@
     </StackPanel>
 
     <StackPanel IsVisible="{Binding Settings.SelectedBrowser, Converter={x:Static conv:EnumToBoolConverter.Instance}, ConverterParameter={x:Static models:BrowserTypeDropdownListEnum.Custom}}"
-        ToolTip.Tip="Set the full path of the preferred browser">
-      <TextBlock Text="Custom browser path" />
+        ToolTip.Tip="{x:Static lang:Resources.SetPreferredBrowserPath}">
+      <TextBlock Text="{x:Static lang:Resources.CustomBrowserPath}" />
       <TextBox Text="{Binding Settings.BrowserPath}">
         <Interaction.Behaviors>
           <TextBoxAutoSelectTextBehavior />
@@ -88,7 +89,7 @@
     </StackPanel>
 
     <StackPanel>
-      <TextBlock Text="Open in browser" />
+      <TextBlock Text="{x:Static lang:Resources.OpenInBrowser}" />
       <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding BrowserList}" SelectedItem="{Binding Settings.SelectedBrowser}">
         <ComboBox.ItemTemplate>
           <DataTemplate x:DataType="models:BrowserTypeDropdownListEnum">
@@ -97,5 +98,18 @@
         </ComboBox.ItemTemplate>
       </ComboBox>
     </StackPanel>
+
+    <StackPanel>
+      <TextBlock Text="{x:Static lang:Resources.Language}" />
+      <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding DisplayLanguagesList}" SelectedItem="{Binding Settings.SelectedDisplayLanguage}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate x:DataType="basemodels:DisplayLanguage">
+            <TextBlock Text="{Binding Converter={x:Static conv:EnumConverters.ToLocalTranslation}}" />
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+    </StackPanel>
+
   </StackPanel>
+
 </UserControl>

@@ -37,7 +37,8 @@ namespace WalletWasabi.Fluent.ViewModels.Wallets.Send;
 	Category = SearchCategory.Wallet,
 	NavBarPosition = NavBarPosition.None,
 	NavigationTarget = NavigationTarget.DialogScreen,
-	Searchable = false)]
+	Searchable = false,
+	IsLocalized = true)]
 public partial class SendViewModel : RoutableViewModel
 {
 	private readonly object _parsingLock = new();
@@ -60,10 +61,6 @@ public partial class SendViewModel : RoutableViewModel
 
 	public SendViewModel(UiContext uiContext, IWalletModel walletModel, SendFlowModel parameters)
 	{
-		Title = "Send";
-		Caption = "Display wallet send dialog";
-		Keywords = new[] { "Wallet", "Send", "Action", };
-
 		UiContext = uiContext;
 		_to = "";
 

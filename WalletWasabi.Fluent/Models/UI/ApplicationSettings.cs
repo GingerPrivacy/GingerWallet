@@ -60,6 +60,7 @@ public partial class ApplicationSettings : ReactiveObject
 	[AutoNotify] private bool _downloadNewVersion;
 	[AutoNotify] private BrowserTypeDropdownListEnum _selectedBrowser;
 	[AutoNotify] private string _browserPath;
+	[AutoNotify] private DisplayLanguage _selectedDisplayLanguage;
 
 	// Privacy Mode
 	[AutoNotify] private bool _privacyMode;
@@ -99,15 +100,14 @@ public partial class ApplicationSettings : ReactiveObject
 		_selectedFeeDisplayUnit = Enum.IsDefined(typeof(FeeDisplayUnit), _uiConfig.FeeDisplayUnit)
 			? (FeeDisplayUnit)_uiConfig.FeeDisplayUnit
 			: FeeDisplayUnit.Satoshis;
-
 		_browserPath = _uiConfig.SelectedBrowser;
 		_selectedBrowser = GetSelectedBrowser();
-
 		_runOnSystemStartup = _uiConfig.RunOnSystemStartup;
 		_hideOnClose = _uiConfig.HideOnClose;
 		_useTor = Config.ObjectToTorMode(_config.UseTor);
 		_terminateTorOnExit = _startupConfig.TerminateTorOnExit;
 		_downloadNewVersion = _startupConfig.DownloadNewVersion;
+		_selectedDisplayLanguage = (DisplayLanguage)_startupConfig.DisplayLanguage;
 
 		// Privacy Mode
 		_privacyMode = _uiConfig.PrivacyMode;
@@ -154,6 +154,10 @@ public partial class ApplicationSettings : ReactiveObject
 
 		// Saving is not necessary; this call is only for evaluating if a restart is needed.
 		this.WhenAnyValue(x => x._twoFactorAuthentication.TwoFactorEnabled)
+			.Subscribe(_ => Save());
+
+		// Saving is not necessary; this call is only for evaluating if a restart is needed.
+		this.WhenAnyValue(x => x.SelectedDisplayLanguage)
 			.Subscribe(_ => Save());
 
 		// Save UiConfig on change without throttling
@@ -342,7 +346,8 @@ public partial class ApplicationSettings : ReactiveObject
 		{
 			UseTor = UseTor.ToString(),
 			TerminateTorOnExit = TerminateTorOnExit,
-			DownloadNewVersion = DownloadNewVersion
+			DownloadNewVersion = DownloadNewVersion,
+			DisplayLanguage = (int)SelectedDisplayLanguage,
 		};
 
 		return result;

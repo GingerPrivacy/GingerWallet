@@ -4,6 +4,7 @@ using Avalonia.Controls.Models.TreeDataGrid;
 using Avalonia.Controls.Templates;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Views.Wallets.Receive.Columns;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.ViewModels.Wallets.Receive;
 
@@ -43,7 +44,7 @@ public static class ReceiveAddressesDataGridSource
 	private static IColumn<AddressViewModel> AddressColumn()
 	{
 		return new TemplateColumn<AddressViewModel>(
-			"Address",
+			Resources.Address,
 			new FuncDataTemplate<AddressViewModel>((_, _) => new AddressColumnView(), true),
 			null,
 			options: new TemplateColumnOptions<AddressViewModel>
@@ -59,7 +60,7 @@ public static class ReceiveAddressesDataGridSource
 	private static IColumn<AddressViewModel> LabelsColumn()
 	{
 		return new TemplateColumn<AddressViewModel>(
-			"Labels",
+			Resources.Label,
 			new FuncDataTemplate<AddressViewModel>((_, _) => new LabelsColumnView(), true),
 			null,
 			options: new TemplateColumnOptions<AddressViewModel>

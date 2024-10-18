@@ -6,6 +6,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
+using WalletWasabi.Lang;
 using WalletWasabi.Userfacing;
 using WalletWasabi.Userfacing.Bip21;
 
@@ -21,7 +22,7 @@ public partial class ShowQrCameraDialogViewModel : DialogViewModelBase<string?>
 
 	public ShowQrCameraDialogViewModel(UiContext context, Network network)
 	{
-		Title = "Camera";
+		Title = Resources.Camera;
 
 		_network = network;
 
@@ -66,7 +67,7 @@ public partial class ShowQrCameraDialogViewModel : DialogViewModelBase<string?>
 				onError: error => Dispatcher.UIThread.Post(async () =>
 					{
 						Close();
-						await ShowErrorAsync(Title, error.Message, "Something went wrong", NavigationTarget.CompactDialogScreen);
+						await ShowErrorAsync(Title, error.Message, "", NavigationTarget.CompactDialogScreen);
 					}))
 			.DisposeWith(disposables);
 	}

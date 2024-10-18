@@ -45,8 +45,8 @@ public class QuestionControl : ContentControl
 	public QuestionControl()
 	{
 		UpdateHighlightedButton(HighlightButton);
-		YesContent = "Yes";
-		NoContent = "No";
+		YesContent = Lang.Resources.Yes;
+		NoContent = Lang.Resources.No;
 	}
 
 	public ICommand YesCommand

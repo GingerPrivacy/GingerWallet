@@ -4,32 +4,33 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:send="clr-namespace:WalletWasabi.Fluent.Views.Wallets.Send"
              xmlns:vm="using:WalletWasabi.Fluent.ViewModels.Wallets.Send"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              mc:Ignorable="d"
              x:DataType="vm:TransactionPreviewViewModel"
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.Views.Wallets.Send.TransactionPreviewView">
-  <ContentArea Caption=""
-                 MinWidth="550"
-                 EnableCancel="{Binding EnableCancel}"
-                 EnableBack="{Binding EnableBack}"
-                 EnableNext="True" NextContent="{Binding NextButtonText}"
-                 EnableSkip="{Binding PreferPsbtWorkflow}" SkipContent="Send Now"
-                 IsBusy="{Binding IsBusy}"
-                 ScrollViewer.VerticalScrollBarVisibility="Auto"
-                 Title="Preview Transaction">
+  <ContentArea MinWidth="550"
+               EnableCancel="{Binding EnableCancel}"
+               EnableBack="{Binding EnableBack}"
+               EnableNext="True" NextContent="{Binding NextButtonText}"
+               EnableSkip="{Binding PreferPsbtWorkflow}" SkipContent="{x:Static lang:Resources.SendNow}"
+               IsBusy="{Binding IsBusy}"
+               ScrollViewer.VerticalScrollBarVisibility="Auto"
+               Title="{Binding Title}">
 
     <Interaction.Behaviors>
       <HoldKeyBehavior Key="LeftAlt" IsKeyPressed="{Binding IsCoinControlVisible}" />
     </Interaction.Behaviors>
 
     <ContentArea.TopContent>
-      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" VerticalAlignment="Center" TextElement.FontSize="{DynamicResource ControlContentThemeFontSize}">
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" VerticalAlignment="Center"
+                  TextElement.FontSize="{DynamicResource ControlContentThemeFontSize}">
         <Image Width="120" Margin="10 4 10 5" Source="avares://WalletWasabi.Fluent/Assets/TechnologyLogos/payjoin.png"
-               ToolTip.Tip="Your privacy is being protected with payjoin."
+               ToolTip.Tip="{x:Static lang:Resources.PrivacyProtectedWithPayjoin}"
                IsVisible="{Binding CurrentTransactionSummary.IsPayJoin}" />
 
         <Button Command="{Binding UndoCommand}" Classes="plain" Padding="10 0 10 10"
-                ToolTip.Tip="Undo last modification" IsVisible="{Binding CanUndo}">
+                ToolTip.Tip="{x:Static lang:Resources.UndoLastModification}" IsVisible="{Binding CanUndo}">
           <Viewbox Height="20">
             <PathIcon Data="{StaticResource undo_icon_regular}" Foreground="{DynamicResource SystemAccentColor}" />
           </Viewbox>
@@ -66,7 +67,8 @@
               <Setter Property="Data" Value="{StaticResource shield_regular}" />
               <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
               <Style.Animations>
-                <Animation Duration="0:0:0.8" IterationCount="Infinite" PlaybackDirection="Alternate" Easing="{StaticResource FluentEasing}">
+                <Animation Duration="0:0:0.8" IterationCount="Infinite" PlaybackDirection="Alternate"
+                           Easing="{StaticResource FluentEasing}">
                   <KeyFrame Cue="0%">
                     <Setter Property="Opacity" Value="0.2" />
                   </KeyFrame>
@@ -88,7 +90,8 @@
 
                 <!-- Full privacy message -->
                 <DockPanel IsVisible="{Binding MaxPrivacy}">
-                  <TextBlock Text="This transaction is well optimized" DockPanel.Dock="Top" HorizontalAlignment="Center" />
+                  <TextBlock Text="{x:Static lang:Resources.TransactionWellOptimized}" DockPanel.Dock="Top"
+                             HorizontalAlignment="Center" />
                   <Image Margin="0 20" Source="{StaticResource privacy_indicator_good}" Height="100" Width="100" />
                 </DockPanel>
               </Panel>

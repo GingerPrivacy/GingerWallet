@@ -7,6 +7,7 @@ using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Validation;
 using WalletWasabi.Fluent.ViewModels.Navigation;
 using WalletWasabi.Helpers;
+using WalletWasabi.Lang;
 using WalletWasabi.Models;
 using WalletWasabi.Userfacing;
 
@@ -51,7 +52,7 @@ public partial class BitcoinTabSettingsViewModel : RoutableViewModel
 		{
 			if (!EndPointParser.TryParse(BitcoinP2PEndPoint, Settings.Network.DefaultPort, out _))
 			{
-				errors.Add(ErrorSeverity.Error, "Invalid endpoint.");
+				errors.Add(ErrorSeverity.Error, Resources.InvalidEndpoint);
 			}
 			else
 			{
@@ -72,13 +73,13 @@ public partial class BitcoinTabSettingsViewModel : RoutableViewModel
 				StringComparison.InvariantCultureIgnoreCase))
 			{
 				error = true;
-				errors.Add(ErrorSeverity.Error, "Use decimal point instead of comma.");
+				errors.Add(ErrorSeverity.Error, Resources.UseDecimalPoint);
 			}
 
 			if (!decimal.TryParse(dustThreshold, out var dust) || dust < 0)
 			{
 				error = true;
-				errors.Add(ErrorSeverity.Error, "Invalid dust threshold.");
+				errors.Add(ErrorSeverity.Error, Resources.InvalidDustThreshold);
 			}
 
 			if (!error)

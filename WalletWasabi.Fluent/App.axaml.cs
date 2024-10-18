@@ -43,8 +43,6 @@ public class App : Application
 
 	public override void OnFrameworkInitializationCompleted()
 	{
-		Lang.Resources.Culture = new CultureInfo("hu-HU");
-
 		if (!Design.IsDesignMode)
 		{
 			if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)

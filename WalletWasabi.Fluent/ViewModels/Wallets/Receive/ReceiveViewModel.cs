@@ -18,7 +18,8 @@ namespace WalletWasabi.Fluent.ViewModels.Wallets.Receive;
 	Category = SearchCategory.Wallet,
 	NavBarPosition = NavBarPosition.None,
 	NavigationTarget = NavigationTarget.DialogScreen,
-	Searchable = false)]
+	Searchable = false,
+	IsLocalized = true)]
 public partial class ReceiveViewModel : RoutableViewModel, IDisposable
 {
 	private readonly IWalletModel _wallet;
@@ -26,10 +27,6 @@ public partial class ReceiveViewModel : RoutableViewModel, IDisposable
 
 	private ReceiveViewModel(IWalletModel wallet)
 	{
-		Title = "Receive";
-		Caption = "Display wallet receive dialog";
-		Keywords = new[] { "Wallet", "Receive", "Action", };
-
 		_wallet = wallet;
 		SetupCancel(enableCancel: true, enableCancelOnEscape: true, enableCancelOnPressed: true);
 

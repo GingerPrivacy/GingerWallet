@@ -7,6 +7,7 @@ using System.Windows.Input;
 using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.ViewModels.Navigation;
+using WalletWasabi.Lang;
 using WalletWasabi.Models;
 
 namespace WalletWasabi.Fluent.ViewModels.Settings;
@@ -38,7 +39,7 @@ public partial class GeneralSettingsTabViewModel : RoutableViewModel
 			{
 				Logger.LogError(ex);
 				RunOnSystemStartup = !RunOnSystemStartup;
-				await ShowErrorAsync(Title, "Couldn't save your change, please see the logs for further information.", "Error occurred.");
+				await ShowErrorAsync(Title, Resources.CouldNotSaveChange, "");
 			}
 		});
 
@@ -75,4 +76,6 @@ public partial class GeneralSettingsTabViewModel : RoutableViewModel
 		Enum.GetValues(typeof(TorMode)).Cast<TorMode>();
 
 	public IEnumerable<BrowserTypeDropdownListEnum> BrowserList { get; }
+
+	public IEnumerable<DisplayLanguage> DisplayLanguagesList => Enum.GetValues(typeof(DisplayLanguage)).Cast<DisplayLanguage>();
 }

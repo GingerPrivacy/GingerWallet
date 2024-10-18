@@ -3,15 +3,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:receive="clr-namespace:WalletWasabi.Fluent.ViewModels.Wallets.Receive"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="receive:AddressLabelEditViewModel"
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.Views.Wallets.Receive.AddressLabelEditView">
   <ContentArea Title="{Binding Title}"
-                 Caption="Edit the selected address's labels here:"
+                 Caption="{x:Static lang:Resources.EditSelectedAddressLabels}"
                  EnableBack="{Binding EnableBack}"
                  EnableCancel="{Binding EnableCancel}"
-                 EnableNext="True" NextContent="Save"
+                 EnableNext="True" NextContent="{x:Static lang:Resources.Save}"
                  Height="280">
     <TagsBox x:Name="LabelTagBox"
                TagSeparator=","

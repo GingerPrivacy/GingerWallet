@@ -20,6 +20,7 @@ using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
 using WalletWasabi.Fluent.ViewModels.Navigation;
+using WalletWasabi.Lang;
 using WalletWasabi.Logging;
 using WalletWasabi.WabiSabi.Client;
 using WalletWasabi.Wallets;
@@ -43,7 +44,7 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 
 	public TransactionPreviewViewModel(UiContext uiContext, IWalletModel walletModel, SendFlowModel sendFlow)
 	{
-		Title = "Transaction Preview";
+		Title = Resources.PreviewTransaction;
 		_undoHistory = new();
 		_wallet = sendFlow.Wallet;
 		_walletModel = walletModel;
@@ -73,13 +74,13 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 			SkipCommand = ReactiveCommand.CreateFromTask(OnConfirmAsync);
 			NextCommand = ReactiveCommand.CreateFromTask(OnExportPsbtAsync);
 
-			_nextButtonText = "Save PSBT file";
+			_nextButtonText = Resources.SavePSBTFile;
 		}
 		else
 		{
 			NextCommand = ReactiveCommand.CreateFromTask(OnConfirmAsync);
 
-			_nextButtonText = "Confirm";
+			_nextButtonText = Resources.Confirm;
 		}
 
 		AdjustFeeCommand = ReactiveCommand.CreateFromTask(OnAdjustFeeAsync);
@@ -126,7 +127,7 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 			catch (Exception ex)
 			{
 				Logger.LogError(ex);
-				await ShowErrorAsync("Transaction Export", ex.ToUserFriendlyString(), "Ginger Wallet was unable to export the PSBT.");
+				await ShowErrorAsync(Resources.TransactionExport, ex.ToUserFriendlyString(), Resources.UnableToExportPSBT);
 			}
 
 			if (saved)
@@ -253,9 +254,9 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 			}
 
 			await ShowErrorAsync(
-				"Transaction Building",
-				"The transaction cannot be sent because its fee is more than the payment amount.",
-				"Ginger Wallet was unable to create your transaction.");
+				Resources.TransactionBuilding,
+				Resources.TransactionFeeExceedsPaymentAmount,
+				Resources.UnableToCreateTransaction);
 
 			return null;
 		}
@@ -280,9 +281,9 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 			}
 
 			await ShowErrorAsync(
-				"Transaction Building",
-				"There are not enough funds to cover the transaction fee.",
-				"Ginger Wallet was unable to create your transaction.");
+				Resources.TransactionBuilding,
+				Resources.InsufficientFundsForTransactionFee,
+				Resources.UnableToCreateTransaction);
 
 			return null;
 		}
@@ -291,9 +292,9 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 			Logger.LogError(ex);
 
 			await ShowErrorAsync(
-				"Transaction Building",
+				Resources.TransactionBuilding,
 				ex.ToUserFriendlyString(),
-				"Ginger Wallet was unable to create your transaction.");
+				Resources.UnableToCreateTransaction);
 
 			return null;
 		}
@@ -411,9 +412,9 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 		{
 			Logger.LogError(ex);
 			await ShowErrorAsync(
-				"Transaction",
+				Resources.Transaction,
 				ex.ToUserFriendlyString(),
-				"Ginger Wallet was unable to send your transaction.");
+				Resources.UnableToSendTransaction);
 		}
 		finally
 		{

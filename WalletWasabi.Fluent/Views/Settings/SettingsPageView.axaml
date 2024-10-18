@@ -12,33 +12,35 @@
              x:Class="WalletWasabi.Fluent.Views.Settings.SettingsPageView">
 
   <ContentArea Title="{Binding Title}"
-                 Caption="{Binding Caption}"
-                 EnableNext="True"
-                 NextContent="{x:Static lang:Resources.Done}"
-                 ScrollViewer.VerticalScrollBarVisibility="Disabled">
+               Caption="{Binding Caption}"
+               EnableNext="True"
+               NextContent="{x:Static lang:Resources.Done}"
+               ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <DockPanel LastChildFill="True">
 
       <InfoMessage Foreground="{DynamicResource WarningMessageForeground}"
-                     Margin="0,16,0,0"
-                     HorizontalAlignment="Center"
-                     Opacity="{Binding IsModified, Converter={x:Static conv:BoolOpacityConverters.BoolToOpacity}}"
-                     DockPanel.Dock="Bottom">
+                   Margin="0,16,0,0"
+                   HorizontalAlignment="Center"
+                   Opacity="{Binding IsModified, Converter={x:Static conv:BoolOpacityConverters.BoolToOpacity}}"
+                   DockPanel.Dock="Bottom">
         <StackPanel Orientation="Horizontal">
-          <TextBlock Text="Changes will be applied after restarting the application." />
-          <Button Content="Restart Ginger" Classes="activeHyperLink plain" Margin="5 0 0 0" Command="{Binding RestartCommand}" />
+          <TextBlock Text="{x:Static lang:Resources.ChangesAppliedAfterRestart}" />
+          <Button Content="{x:Static lang:Resources.RestartApplication}" Classes="activeHyperLink plain" Margin="5 0 0 0"
+                  Command="{Binding RestartCommand}" />
         </StackPanel>
       </InfoMessage>
       <InfoMessage Foreground="{StaticResource WarningMessageForeground}"
-                     Margin="0,16,0,0"
-                     HorizontalAlignment="Center"
-                     IsVisible="{Binding IsReadOnly}"
-                     DockPanel.Dock="Bottom">
-        <TextBlock Text="Modifying settings is not possible, as certain parameters have been overridden during startup." />
+                   Margin="0,16,0,0"
+                   HorizontalAlignment="Center"
+                   IsVisible="{Binding IsReadOnly}"
+                   DockPanel.Dock="Bottom">
+        <TextBlock
+          Text="{x:Static lang:Resources.ModifyingSettingsNotPossible}" />
       </InfoMessage>
 
       <TabControl SelectedIndex="{Binding SelectedTab, Mode=TwoWay}"
                   Classes="Settings">
-        <TabItem Header="General">
+        <TabItem Header="{x:Static lang:Resources.General}">
           <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
             <v:GeneralSettingsTabView DataContext="{Binding GeneralSettingsTab}" IsEnabled="{Binding !IsReadOnly}" />
           </ScrollViewer>
@@ -50,13 +52,13 @@
           </ScrollViewer>
         </TabItem>
 
-        <TabItem Header="Advanced">
+        <TabItem Header="{x:Static lang:Resources.Advanced}">
           <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
             <v:AdvancedSettingsTabView DataContext="{Binding AdvancedSettingsTab}" IsEnabled="{Binding !IsReadOnly}" />
           </ScrollViewer>
         </TabItem>
 
-        <TabItem Header="Security">
+        <TabItem Header="{x:Static lang:Resources.Security}">
           <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
             <v:SecuritySettingsTabView DataContext="{Binding SecuritySettingsTab}" IsEnabled="{Binding !IsReadOnly}" />
           </ScrollViewer>

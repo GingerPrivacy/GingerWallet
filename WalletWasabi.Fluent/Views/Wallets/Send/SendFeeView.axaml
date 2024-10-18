@@ -132,12 +132,12 @@
     </Style>
   </UserControl.Styles>
   <ContentArea Title="{Binding Title}"
-                 Caption="Set your preference for how fast the transaction should be confirmed"
-                 CancelContent="{x:Static lang:Resources.Cancel}"
-                 EnableCancel="{Binding EnableCancel}"
-                 EnableBack="true"
-                 EnableNext="True" NextContent="{x:Static lang:Resources.Continue}"
-                 IsBusy="{Binding IsBusy}">
+               Caption="{x:Static lang:Resources.SetTransactionConfirmationPreference}"
+               CancelContent="{x:Static lang:Resources.Cancel}"
+               EnableCancel="{Binding EnableCancel}"
+               EnableBack="true"
+               EnableNext="True" NextContent="{x:Static lang:Resources.Continue}"
+               IsBusy="{Binding IsBusy}">
     <DockPanel>
 
       <!-- Advanced -->
@@ -146,12 +146,9 @@
               DockPanel.Dock="Bottom"
               HorizontalAlignment="Center"
               VerticalAlignment="Bottom"
-              Content="Advanced" />
+              Content="{x:Static lang:Resources.Advanced}" />
       <DockPanel MinHeight="80" DataContext="{Binding FeeChart}">
         <DockPanel.Resources>
-          <Thickness x:Key="SliderTopHeaderMargin">0,0,0,4</Thickness>
-          <GridLength x:Key="SliderPreContentMargin">0</GridLength>
-          <GridLength x:Key="SliderPostContentMargin">0</GridLength>
         </DockPanel.Resources>
         <Slider x:Name="CursorValue2"
                 Margin="38,0,18,0"
@@ -166,19 +163,23 @@
                 Value="{Binding SliderValue}"
                 IsVisible="{Binding EnableCursor}">
           <Interaction.Behaviors>
-            <ExecuteCommandOnKeyDownBehavior Command="{Binding MoveSliderRightCommand}" IsEnabled="{Binding #SendFeeView.DataContext.IsActive}" x:CompileBindings="False" Key="Right" EventRoutingStrategy="Tunnel" />
-            <ExecuteCommandOnKeyDownBehavior Command="{Binding MoveSliderLeftCommand}" IsEnabled="{Binding #SendFeeView.DataContext.IsActive}" x:CompileBindings="False" Key="Left" EventRoutingStrategy="Tunnel" />
+            <ExecuteCommandOnKeyDownBehavior Command="{Binding MoveSliderRightCommand}"
+                                             IsEnabled="{Binding #SendFeeView.DataContext.IsActive}"
+                                             x:CompileBindings="False" Key="Right" EventRoutingStrategy="Tunnel" />
+            <ExecuteCommandOnKeyDownBehavior Command="{Binding MoveSliderLeftCommand}"
+                                             IsEnabled="{Binding #SendFeeView.DataContext.IsActive}"
+                                             x:CompileBindings="False" Key="Left" EventRoutingStrategy="Tunnel" />
           </Interaction.Behaviors>
         </Slider>
         <Panel>
 
           <LineChart Classes="cursor border xAxis yAxis xAxisLabels yAxisLabels xAxisTitle yAxisTitle area"
-                       XAxisLabels="{Binding ConfirmationTargetLabels}"
-                       XAxisValues="{Binding ConfirmationTargetValues}"
-                       XAxisCurrentValue="{Binding CurrentConfirmationTarget, Mode=TwoWay}"
-                       YAxisLabels="{Binding SatoshiPerByteLabels}"
-                       YAxisValues="{Binding SatoshiPerByteValues}"
-                       EnableCursor="{Binding EnableCursor}">
+                     XAxisLabels="{Binding ConfirmationTargetLabels}"
+                     XAxisValues="{Binding ConfirmationTargetValues}"
+                     XAxisCurrentValue="{Binding CurrentConfirmationTarget, Mode=TwoWay}"
+                     YAxisLabels="{Binding SatoshiPerByteLabels}"
+                     YAxisValues="{Binding SatoshiPerByteValues}"
+                     EnableCursor="{Binding EnableCursor}">
             <LineChart.Styles>
               <Style Selector="LineChart">
                 <Setter Property="XAxisPlotMode" Value="EvenlySpaced" />
@@ -191,8 +192,8 @@
                 <Setter Property="AreaMinViableWidth" Value="40" />
                 <Setter Property="AreaMinViableHeight" Value="20" />
                 <Setter Property="Focusable" Value="True" />
-                <Setter Property="YAxisTitle" Value="Fee Rate (sat/vByte)" />
-                <Setter Property="XAxisTitle" Value="Estimated Confirmation Time" />
+                <Setter Property="YAxisTitle" Value="{x:Static lang:Resources.FeeRateSatPerVByte}" />
+                <Setter Property="XAxisTitle" Value="{x:Static lang:Resources.EstimatedConfirmationTime}" />
               </Style>
               <Style Selector="LineChart.narrow">
                 <Setter Property="AreaMargin" Value="30,0,10,45" />
@@ -222,7 +223,8 @@
               </Style>
             </StackPanel.Styles>
             <TextBlock Text="{Binding CurrentSatoshiPerByte, Mode=OneWay, StringFormat='Fee Rate: \{0:0\} sat/vByte'}" />
-            <TextBlock Text="{Binding CurrentConfirmationTargetString, Mode=OneWay, StringFormat='Estimated Confirmation Time: \{0\}'}" />
+            <TextBlock
+              Text="{Binding CurrentConfirmationTargetString, Mode=OneWay, StringFormat='Estimated Confirmation Time: \{0\}'}" />
           </StackPanel>
         </Panel>
       </DockPanel>

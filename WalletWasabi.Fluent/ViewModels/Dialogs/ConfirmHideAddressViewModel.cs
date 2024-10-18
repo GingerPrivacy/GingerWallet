@@ -1,6 +1,7 @@
 using ReactiveUI;
 using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.ViewModels.Dialogs;
 
@@ -9,7 +10,7 @@ public partial class ConfirmHideAddressViewModel : DialogViewModelBase<bool>
 {
 	public ConfirmHideAddressViewModel(LabelsArray labels)
 	{
-		Title = "Hide Address";
+		Title = Resources.HideAddress;
 
 		Labels = labels;
 

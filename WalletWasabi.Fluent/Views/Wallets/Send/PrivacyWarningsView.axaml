@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:model="using:WalletWasabi.Fluent.Models.Transactions"
              xmlns:send="clr-namespace:WalletWasabi.Fluent.ViewModels.Wallets.Send"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              x:Class="WalletWasabi.Fluent.Views.Wallets.Send.PrivacyWarningsView"
              x:DataType="send:PrivacySuggestionsFlyoutViewModel"
              x:CompileBindings="True">
@@ -133,8 +134,8 @@
           <Border Classes="warning critical">
             <DockPanel>
               <PathIcon />
-              <TextBlock Text="Transaction interlinks labels:" Margin="0 0 5 0"
-                         ToolTip.Tip="Those entities know this is your transaction. Coinjoin more or use the label management tool to carefully select who would know that this transaction is yours." />
+              <TextBlock Text="{x:Static lang:Resources.TransactionInterlinksLabels}" Margin="0 0 5 0"
+                         ToolTip.Tip="{x:Static lang:Resources.EntitiesKnowTransaction}" />
               <LabelsItemsPresenter ItemsSource="{Binding Labels}" />
             </DockPanel>
           </Border>
@@ -145,8 +146,8 @@
           <Border Classes="warning critical">
             <DockPanel>
               <PathIcon />
-              <TextBlock Text="Transaction known as yours by:" Margin="0 0 5 0"
-                         ToolTip.Tip="Those entities know this is your transaction. Coinjoin more or use the label management tool to carefully select who would know that this transaction is yours." />
+              <TextBlock Text="{x:Static lang:Resources.TransactionKnownAsYoursBy}" Margin="0 0 5 0"
+                         ToolTip.Tip="{x:Static lang:Resources.EntitiesKnowThisIsYourTransaction}" />
               <LabelsItemsPresenter ItemsSource="{Binding Labels}" />
             </DockPanel>
           </Border>
@@ -157,8 +158,8 @@
           <Border Classes="warning critical">
             <DockPanel>
               <PathIcon />
-              <TextBlock Text="Transaction uses non-private coins."
-                         ToolTip.Tip="Some entities can deanonymize this transaction because it spends coins with no privacy. Coinjoin more to have enough private coins for this transaction." />
+              <TextBlock Text="{x:Static lang:Resources.TransactionUsesNonPrivateCoins}"
+                         ToolTip.Tip="{x:Static lang:Resources.EntitiesCanDeanonymizeTransaction}" />
             </DockPanel>
           </Border>
         </DataTemplate>
@@ -168,8 +169,8 @@
           <Border Classes="warning">
             <DockPanel>
               <PathIcon />
-              <TextBlock Text="Transaction uses semi-private coins."
-                         ToolTip.Tip="This transaction is not private enough because it spends not fully private coins. Coinjoin more to have enough private coins for this transaction." />
+              <TextBlock Text="{x:Static lang:Resources.TransactionUsesSemiPrivateCoins}"
+                         ToolTip.Tip="{x:Static lang:Resources.TransactionNotPrivateEnough}" />
             </DockPanel>
           </Border>
         </DataTemplate>
@@ -179,8 +180,8 @@
           <Border Classes="warning info">
             <DockPanel>
               <PathIcon />
-              <TextBlock Text="Transaction creates change."
-                         ToolTip.Tip="Change can be used to link this transaction with the next transaction that will use it. Use the change avoidance suggestion to send a little more or less if this is OK for the receiver, or coinjoin the change later." />
+              <TextBlock Text="{x:Static lang:Resources.TransactionCreatesChange}"
+                         ToolTip.Tip="{x:Static lang:Resources.ChangeCanLinkTransactions}" />
             </DockPanel>
           </Border>
         </DataTemplate>
@@ -190,8 +191,8 @@
           <Border Classes="warning">
             <DockPanel>
               <PathIcon />
-              <TextBlock Text="{Binding CoinCount, StringFormat='Transaction consolidates over {0} coins.'}"
-                         ToolTip.Tip="This might reduce the privacy of your transaction." />
+              <TextBlock Text="{Binding CoinCount, StringFormat={x:Static lang:Resources.TransactionConsolidatesCoins}}"
+                         ToolTip.Tip="{x:Static lang:Resources.ReducePrivacyOfTransaction}" />
             </DockPanel>
           </Border>
         </DataTemplate>
@@ -201,8 +202,8 @@
           <Border Classes="warning info">
             <DockPanel>
               <PathIcon />
-              <TextBlock Text="Transaction uses unconfirmed coins."
-                         ToolTip.Tip="This may cause your transaction to be rejected, or delay its confirmation, or cost more than needed to get it confirmed within the desired time. Wait for a confirmation to only use confirmed coins." />
+              <TextBlock Text="{x:Static lang:Resources.TransactionUsesUnconfirmedCoins}"
+                         ToolTip.Tip="{x:Static lang:Resources.UnconfirmedCoinsMayCauseIssues}" />
             </DockPanel>
           </Border>
         </DataTemplate>
@@ -212,14 +213,14 @@
           <Border Classes="warning info">
             <DockPanel>
               <PathIcon />
-              <TextBlock Text="Transaction uses coinjoining coins."
-                         ToolTip.Tip="This may cause your transaction to be replaced by the coinjoin. Consider waiting for the current coinjoin to be finished before sending this transaction." />
+              <TextBlock Text="{x:Static lang:Resources.TransactionUsesCoinjoiningCoins}"
+                         ToolTip.Tip="{x:Static lang:Resources.TransactionMayBeReplacedByCoinjoin}" />
             </DockPanel>
           </Border>
         </DataTemplate>
       </ItemsControl.DataTemplates>
     </ItemsControl>
-    <TextBlock Text="Improve this transaction:" HorizontalAlignment="Center"
+    <TextBlock Text="{x:Static lang:Resources.ImproveThisTransaction}" HorizontalAlignment="Center"
                Margin="0 10 0 5"
                IsVisible="{Binding !!Suggestions.Count}" />
     <ListBox ItemsSource="{Binding Suggestions}" SelectedItem="{Binding SelectedSuggestion}">
@@ -234,9 +235,9 @@
             <DockPanel>
               <PathIcon Data="{StaticResource entities_edit_regular}" />
               <StackPanel Classes="suggestion">
-                <TextBlock Text="Label Management" Classes="title" />
+                <TextBlock Text="{x:Static lang:Resources.LabelManagement}" Classes="title" />
                 <StackPanel Classes="description">
-                  <TextBlock Text="Choose labels to link with this transaction." />
+                  <TextBlock Text="{x:Static lang:Resources.ChooseLabelsForTransaction}" />
                 </StackPanel>
               </StackPanel>
             </DockPanel>
@@ -249,9 +250,9 @@
             <DockPanel>
               <PathIcon Data="{StaticResource shield_tick_regular}" />
               <StackPanel Classes="suggestion">
-                <TextBlock Text="Full Privacy" Classes="title" />
+                <TextBlock Text="{x:Static lang:Resources.FullPrivacy}" Classes="title" />
                 <StackPanel Orientation="Horizontal" Classes="description">
-                  <TextBlock Text="Send" />
+                  <TextBlock Text="{x:Static lang:Resources.SendSuggestion}" />
                   <TextBlock Text="{Binding DifferenceText}"
                              Foreground="{DynamicResource SystemAccentColor}" />
                   <TextBlock Text="{Binding DifferenceAmountText, StringFormat='by {0}'}" />
@@ -267,9 +268,9 @@
             <DockPanel>
               <PathIcon Data="{StaticResource shield_regular}" />
               <StackPanel Classes="suggestion">
-                <TextBlock Text="Better Privacy" Classes="title" />
+                <TextBlock Text="{x:Static lang:Resources.BetterPrivacy}" Classes="title" />
                 <StackPanel Orientation="Horizontal" Classes="description">
-                  <TextBlock Text="Send" />
+                  <TextBlock Text="{x:Static lang:Resources.SendSuggestion}" />
                   <TextBlock Text="{Binding DifferenceText}"
                              Foreground="{DynamicResource SystemAccentColor}" />
                   <TextBlock Text="{Binding DifferenceAmountText, StringFormat='by {0}'}" />
@@ -297,9 +298,9 @@
               <PathIcon Classes.more="{Binding IsMore}"
                         Classes.less="{Binding IsLess}" />
               <StackPanel Classes="suggestion">
-                <TextBlock Text="Change Avoidance" Classes="title" />
+                <TextBlock Text="{x:Static lang:Resources.ChangeAvoidance}" Classes="title" />
                 <StackPanel Orientation="Horizontal" Classes="description">
-                  <TextBlock Text="Send" />
+                  <TextBlock Text="{x:Static lang:Resources.SendSuggestion}" />
                   <TextBlock Text="{Binding DifferenceText}"
                              Foreground="{DynamicResource SystemAccentColor}" />
                   <TextBlock Text="{Binding DifferenceAmountText, StringFormat='by {0}'}" IsVisible="{Binding !IsSameAmount}" />

@@ -28,8 +28,6 @@ public partial class PrivacyControlViewModel : DialogViewModelBase<IEnumerable<S
 
 	public PrivacyControlViewModel(Wallet wallet, SendFlowModel sendFlow, TransactionInfo transactionInfo, IEnumerable<SmartCoin>? usedCoins, bool isSilent)
 	{
-		Title = "Privacy Control";
-
 		_wallet = wallet;
 		_sendFlow = sendFlow;
 		_transactionInfo = transactionInfo;
