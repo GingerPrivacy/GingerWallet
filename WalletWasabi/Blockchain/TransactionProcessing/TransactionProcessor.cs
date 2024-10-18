@@ -200,52 +200,70 @@ public class TransactionProcessor
 		}
 
 		IReadOnlyList<SmartCoin> myInputs = Coins.GetMyInputs(tx);
-
-		bool coinJoin = KeyManager.Attributes.CoinJoinTransactions.Contains(txId);
+		List<(uint Index, TxOut Output, HdPubKey PubKey)> myOutputs = new();
 		for (var i = 0U; i < tx.Transaction.Outputs.Count; i++)
 		{
-			// If transaction received to any of the wallet keys:
 			var output = tx.Transaction.Outputs[i];
 			if (KeyManager.TryGetKeyForScriptPubKey(output.ScriptPubKey, out HdPubKey? foundKey))
 			{
-				if (!foundKey.IsInternal)
+				myOutputs.Add(new(i, output, foundKey));
+			}
+		}
+
+		bool coinJoin = KeyManager.Attributes.CoinJoinTransactions.Contains(txId);
+		if (!coinJoin && !tx.Confirmed)
+		{
+			// We are allowed to do false negative here, but false positive is not allowed or we might falsly try to get exemption later from the coordinator
+			int txInputCount = tx.Transaction.Inputs.Count, txOutputCount = tx.Transaction.Outputs.Count;
+			if (txInputCount >= 21 && txOutputCount >= 15 && myOutputs.All(x => x.PubKey.IsInternal))
+			{
+				int myInputCount = myInputs.Count, myOutputCount = myOutputs.Count;
+				if (txInputCount > myOutputCount + 4 && txOutputCount > myOutputCount + 4 && myInputCount + myOutputCount > 0)
 				{
-					tx.Labels = LabelsArray.Merge(tx.Labels, foundKey.Labels);
+					coinJoin = true;
 				}
+			}
+		}
 
-				var couldBeDustAttack = CanBeConsideredDustAttack(output, foundKey, myInputs.Any());
-				KeyManager.SetKeyState(KeyState.Used, foundKey);
-				if (couldBeDustAttack)
+		foreach (var (i, output, foundKey) in myOutputs)
+		{
+			if (!foundKey.IsInternal)
+			{
+				tx.Labels = LabelsArray.Merge(tx.Labels, foundKey.Labels);
+			}
+
+			var couldBeDustAttack = CanBeConsideredDustAttack(output, foundKey, myInputs.Any());
+			KeyManager.SetKeyState(KeyState.Used, foundKey);
+			if (couldBeDustAttack)
+			{
+				result.ReceivedDusts.Add(output);
+				continue;
+			}
+
+			SmartCoin newCoin = new(tx, i, foundKey);
+			newCoin.IsCoinJoinOutput = coinJoin;
+
+			result.ReceivedCoins.Add(newCoin);
+
+			// If we did not have it.
+			if (Coins.TryAdd(newCoin))
+			{
+				result.NewlyReceivedCoins.Add(newCoin);
+			}
+			else // If we had this coin already.
+			{
+				if (newCoin.Height != Height.Mempool || coinJoin) // Update the height of this old coin we already had.
 				{
-					result.ReceivedDusts.Add(output);
-					continue;
-				}
-
-				SmartCoin newCoin = new(tx, i, foundKey);
-				newCoin.IsCoinJoinOutput = coinJoin;
-
-				result.ReceivedCoins.Add(newCoin);
-
-				// If we did not have it.
-				if (Coins.TryAdd(newCoin))
-				{
-					result.NewlyReceivedCoins.Add(newCoin);
-				}
-				else // If we had this coin already.
-				{
-					if (newCoin.Height != Height.Mempool || coinJoin) // Update the height of this old coin we already had.
+					if (Coins.AsAllCoinsView().TryGetByOutPoint(new OutPoint(txId, i), out var oldCoin)) // Just to be sure, it is a concurrent collection.
 					{
-						if (Coins.AsAllCoinsView().TryGetByOutPoint(new OutPoint(txId, i), out var oldCoin)) // Just to be sure, it is a concurrent collection.
+						if (newCoin.Height != Height.Mempool)
 						{
-							if (newCoin.Height != Height.Mempool)
-							{
-								result.NewlyConfirmedReceivedCoins.Add(newCoin);
-								oldCoin.Height = newCoin.Height;
-							}
-							if (coinJoin)
-							{
-								oldCoin.IsCoinJoinOutput = true;
-							}
+							result.NewlyConfirmedReceivedCoins.Add(newCoin);
+							oldCoin.Height = newCoin.Height;
+						}
+						if (coinJoin)
+						{
+							oldCoin.IsCoinJoinOutput = true;
 						}
 					}
 				}
