@@ -151,7 +151,8 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 					ConnectionConfirmationTimeout = TimeSpan.FromSeconds(60),
 					OutputRegistrationTimeout = TimeSpan.FromSeconds(60),
 					TransactionSigningTimeout = TimeSpan.FromSeconds(60),
-					MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountPerAlice)
+					MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountPerAlice),
+					CreateNewRoundBeforeInputRegEnd = TimeSpan.Zero
 				});
 
 				// Emulate that the first coin is coming from a coinjoin.
@@ -225,7 +226,8 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 					ConnectionConfirmationTimeout = TimeSpan.FromSeconds(60),
 					OutputRegistrationTimeout = TimeSpan.FromSeconds(60),
 					TransactionSigningTimeout = TimeSpan.FromSeconds(60),
-					MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountPerAlice)
+					MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountPerAlice),
+					CreateNewRoundBeforeInputRegEnd = TimeSpan.Zero
 				});
 
 				// Emulate that all our outputs had been already used in the past.
@@ -340,7 +342,8 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 				ConnectionConfirmationTimeout = TimeSpan.FromSeconds(60),
 				OutputRegistrationTimeout = TimeSpan.FromSeconds(60),
 				TransactionSigningTimeout = TimeSpan.FromSeconds(5 * inputCount),
-				MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountPerAlice)
+				MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountPerAlice),
+				CreateNewRoundBeforeInputRegEnd = TimeSpan.Zero
 			}))).CreateClient();
 
 		// Create the coinjoin client
@@ -442,7 +445,8 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 						ConnectionConfirmationTimeout = TimeSpan.FromSeconds(2 * ExpectedInputNumber),
 						OutputRegistrationTimeout = TimeSpan.FromSeconds(5 * ExpectedInputNumber),
 						TransactionSigningTimeout = TimeSpan.FromSeconds(3 * ExpectedInputNumber),
-						MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountPerAlice)
+						MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountPerAlice),
+						CreateNewRoundBeforeInputRegEnd = TimeSpan.Zero
 					});
 				}));
 

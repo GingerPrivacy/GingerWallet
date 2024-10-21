@@ -94,6 +94,10 @@ public class WabiSabiConfig : ConfigBase
 	public TimeSpan BlameInputRegistrationTimeout { get; set; } = TimeSpan.FromMinutes(3);
 
 	[DefaultValueTimeSpan("0d 0h 1m 0s")]
+	[JsonProperty(PropertyName = "CreateNewRoundBeforeInputRegEnd", DefaultValueHandling = DefaultValueHandling.Populate)]
+	public TimeSpan CreateNewRoundBeforeInputRegEnd { get; set; } = TimeSpan.FromMinutes(1);
+
+	[DefaultValueTimeSpan("0d 0h 1m 0s")]
 	[JsonProperty(PropertyName = "ConnectionConfirmationTimeout", DefaultValueHandling = DefaultValueHandling.Populate)]
 	public TimeSpan ConnectionConfirmationTimeout { get; set; } = TimeSpan.FromMinutes(1);
 
