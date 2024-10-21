@@ -33,8 +33,8 @@ public enum CoinjoinError
 	CoordinationFeeRateTooHigh,
 	MiningFeeRateTooHigh,
 	MinInputCountTooLow,
-	TamperedRoundState,
-	ServerDidNotGiveFeeExemption
+	ServerDidNotGiveFeeExemption,
+	TamperedRoundState
 }
 
 public class StatusChangedEventArgs : EventArgs
