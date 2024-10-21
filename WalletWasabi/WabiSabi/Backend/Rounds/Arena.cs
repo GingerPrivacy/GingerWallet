@@ -607,8 +607,18 @@ public partial class Arena : PeriodicRunner
 			}
 		}
 
+		bool IsRoundRegistrable(TimeSpan inputRegRemainingTime, TimeSpan createNewRoundBeforeInputRegEnd)
+		{
+			var remainingTime = inputRegRemainingTime < TimeSpan.Zero ? TimeSpan.Zero : inputRegRemainingTime;
+			return remainingTime >= Config.CreateNewRoundBeforeInputRegEnd;
+		}
+
 		// Add more rounds if not enough.
-		var registrableRoundCount = Rounds.Count(x => x is not BlameRound && x.Phase == Phase.InputRegistration && x.InputRegistrationTimeFrame.Remaining > TimeSpan.FromMinutes(1));
+		var registrableRoundCount = Rounds.Count(
+			x => x is not BlameRound &&
+			x.Phase == Phase.InputRegistration &&
+			IsRoundRegistrable(x.InputRegistrationTimeFrame.Remaining, Config.CreateNewRoundBeforeInputRegEnd));
+
 		int roundsToCreate = Config.RoundParallelization - registrableRoundCount;
 		for (int i = 0; i < roundsToCreate; i++)
 		{
