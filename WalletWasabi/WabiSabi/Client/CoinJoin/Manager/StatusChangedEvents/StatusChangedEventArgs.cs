@@ -33,6 +33,7 @@ public enum CoinjoinError
 	CoordinationFeeRateTooHigh,
 	MiningFeeRateTooHigh,
 	MinInputCountTooLow,
+	TamperedRoundState,
 	ServerDidNotGiveFeeExemption
 }
 
