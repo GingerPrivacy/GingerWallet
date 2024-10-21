@@ -44,6 +44,13 @@ public class RoundStateUpdater : PeriodicRunner
 	private TimeSpan _waitSlowRequestMode = TimeSpan.Zero;
 	private TimeSpan _waitPeriod = TimeSpan.Zero;
 
+	public async Task ForceTriggerAndWaitRoundAsync(TimeSpan timeout)
+	{
+		_waitPeriod = TimeSpan.Zero;
+		_waitSlowRequestMode = TimeSpan.Zero;
+		await TriggerAndWaitRoundAsync(timeout).ConfigureAwait(false);
+	}
+
 	protected override async Task ActionAsync(CancellationToken cancellationToken)
 	{
 		if (DateTimeOffset.UtcNow - _lastRequestTime < _waitPeriod)
