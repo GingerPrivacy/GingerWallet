@@ -1,6 +1,7 @@
 using NBitcoin;
 using WabiSabi.Crypto;
 using WabiSabi.Crypto.Randomness;
+using WalletWasabi.Helpers;
 using WalletWasabi.WabiSabi.Backend.Rounds;
 using WalletWasabi.WabiSabi.Models.MultipartyTransaction;
 using CredentialIssuerParameters = WabiSabi.Crypto.CredentialIssuerParameters;
@@ -54,7 +55,7 @@ public record RoundState(uint256 Id,
 		};
 
 	public WabiSabiClient CreateAmountCredentialClient(WasabiRandom random) =>
-		new(AmountCredentialIssuerParameters, random, CoinjoinState.Parameters.MaxAmountCredentialValue);
+		new(AmountCredentialIssuerParameters, random, Constants.MaximumSupportedAmount);
 
 	public WabiSabiClient CreateVsizeCredentialClient(WasabiRandom random) =>
 		new(VsizeCredentialIssuerParameters, random, CoinjoinState.Parameters.MaxVsizeCredentialValue);

@@ -74,6 +74,7 @@ public class ConfigManagerTests
 			  "AllowNotedInputRegistration": true,
 			  "StandardInputRegistrationTimeout": "0d 1h 0m 0s",
 			  "BlameInputRegistrationTimeout": "0d 0h 3m 0s",
+			  "CreateNewRoundBeforeInputRegEnd": "0d 0h 1m 0s",
 			  "ConnectionConfirmationTimeout": "0d 0h 1m 0s",
 			  "OutputRegistrationTimeout": "0d 0h 1m 0s",
 			  "TransactionSigningTimeout": "0d 0h 1m 0s",

@@ -35,56 +35,56 @@ public record RoundStateAwaiter
 
 	public Task<RoundState> Task => TaskCompletionSource.Task;
 
-	public bool IsCompleted(IDictionary<uint256, RoundState> allRoundStates)
+	public bool IsCompleted(IDictionary<uint256, RoundStateHolder> allRoundStates)
 	{
 		if (Task.IsCompleted)
 		{
 			return true;
 		}
 
-		if (RoundId is not null && !allRoundStates.ContainsKey(RoundId))
+		if (RoundId is not null)
 		{
-			TaskCompletionSource.TrySetException(new InvalidOperationException($"Round {RoundId} is not running anymore."));
-			return true;
+			if (!allRoundStates.TryGetValue(RoundId, out RoundStateHolder? roundStateHolder))
+			{
+				TaskCompletionSource.TrySetException(new InvalidOperationException($"Round {RoundId} is not running anymore."));
+				return true;
+			}
+			return CheckAndSetRoundStateHolder(roundStateHolder);
 		}
 
-		foreach (var roundState in allRoundStates.Values.ToArray())
+		return allRoundStates.Values.FirstOrDefault(CheckAndSetRoundStateHolder) is not null;
+	}
+
+	protected bool CheckAndSetRoundStateHolder(RoundStateHolder roundStateHolder)
+	{
+		if (Phase is { } expectedPhase)
 		{
-			if (RoundId is { })
+			if (roundStateHolder.RoundState.Phase > expectedPhase)
 			{
-				if (roundState.Id != RoundId)
-				{
-					continue;
-				}
+				TaskCompletionSource.TrySetException(new UnexpectedRoundPhaseException(RoundId ?? uint256.Zero, expectedPhase, roundStateHolder.RoundState));
+				return true;
 			}
 
-			if (Phase is { } expectedPhase)
+			if (roundStateHolder.RoundState.Phase != expectedPhase)
 			{
-				if (roundState.Phase > expectedPhase)
-				{
-					TaskCompletionSource.TrySetException(new UnexpectedRoundPhaseException(RoundId ?? uint256.Zero, expectedPhase, roundState));
-					return true;
-				}
-
-				if (roundState.Phase != expectedPhase)
-				{
-					continue;
-				}
+				return false;
 			}
-
-			if (Predicate is { })
-			{
-				if (!Predicate(roundState))
-				{
-					continue;
-				}
-			}
-
-			TaskCompletionSource.SetResult(roundState);
-			return true;
 		}
 
-		return false;
+		if (Predicate is { } && !Predicate(roundStateHolder.RoundState))
+		{
+			return false;
+		}
+
+		if (roundStateHolder.Exception is not null)
+		{
+			TaskCompletionSource.TrySetException(roundStateHolder.Exception);
+		}
+		else
+		{
+			TaskCompletionSource.SetResult(roundStateHolder.RoundState);
+		}
+		return true;
 	}
 
 	public void Cancel()
