@@ -1,5 +1,4 @@
 using NBitcoin;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
@@ -10,19 +9,17 @@ using WabiSabi.Crypto.Randomness;
 using WalletWasabi.Bases;
 using WalletWasabi.WabiSabi.Backend.PostRequests;
 using WalletWasabi.WabiSabi.Backend.Rounds;
-using WalletWasabi.WabiSabi.Client.CoinJoin.Client;
-using WalletWasabi.WabiSabi.Client.StatusChangedEvents;
 using WalletWasabi.WabiSabi.Models;
-using WalletWasabi.WabiSabi.Models.MultipartyTransaction;
-using WalletWasabi.WabiSabi.Models.Serialization;
 
 namespace WalletWasabi.WabiSabi.Client.RoundStateAwaiters;
 
 public class RoundStateUpdater : PeriodicRunner
 {
-	public RoundStateUpdater(TimeSpan requestInterval, IWabiSabiApiRequestHandler arenaRequestHandler) : base(requestInterval)
+	public RoundStateUpdater(TimeSpan requestInterval, IWabiSabiApiRequestHandler arenaRequestHandler, bool verifyRoundState = true) : base(requestInterval)
 	{
 		ArenaRequestHandler = arenaRequestHandler;
+		// To turn off the RoundState verify code for simple tests
+		_verifyRoundState = verifyRoundState;
 	}
 
 	private IWabiSabiApiRequestHandler ArenaRequestHandler { get; }
@@ -38,6 +35,7 @@ public class RoundStateUpdater : PeriodicRunner
 
 	private DateTimeOffset LastSuccessfulRequestTime { get; set; }
 
+	private bool _verifyRoundState;
 	private WasabiRandom _random = SecureRandom.Instance;
 
 	private DateTimeOffset _lastRequestTime;
@@ -105,61 +103,11 @@ public class RoundStateUpdater : PeriodicRunner
 	{
 		if (!RoundStates.TryGetValue(rs.Id, out RoundStateHolder? rsh))
 		{
-			rsh = new(rs);
-			CheckAndSetFailRoundState(rsh, rs);
-			return rsh;
+			return new(rs);
 		}
 
-		// For safety reasons, we don't try to update already failed RoundState
-		if (rsh.Confidence < 0)
-		{
-			return rsh;
-		}
-
-		var ors = rsh.RoundState;
-
-		if (rs.AmountCredentialIssuerParameters != ors.AmountCredentialIssuerParameters || rs.VsizeCredentialIssuerParameters != ors.VsizeCredentialIssuerParameters)
-		{
-			// Something fishy here, tampered with the credentials
-			rsh.Exception = new CoinJoinClientException(CoinjoinError.TamperedRoundState, $"Credential change at round {rs.Id}.");
-			return rsh;
-		}
-
-		if (requestFromCheckpointList.ContainsKey(rs.Id))
-		{
-			var nrs = rs with { CoinjoinState = rs.CoinjoinState.AddPreviousStates(ors.CoinjoinState) };
-			if (CheckAndSetFailRoundState(rsh, nrs))
-			{
-				rsh.RoundState = nrs;
-			}
-			return rsh;
-		}
-
-		if (CheckAndSetFailRoundState(rsh, rs))
-		{
-			var olstStr = JsonConvert.SerializeObject(ors.CoinjoinState.Events, JsonSerializationOptions.Default.Settings);
-			var nlstStr = JsonConvert.SerializeObject(rs.CoinjoinState.Events.Take(ors.CoinjoinState.Events.Count), JsonSerializationOptions.Default.Settings);
-			if (olstStr != nlstStr)
-			{
-				rsh.Exception = new CoinJoinClientException(CoinjoinError.TamperedRoundState, $"Tampered event elements at round {rs.Id}.");
-				return rsh;
-			}
-			rsh.Confidence++;
-			rsh.RoundState = rs;
-		}
-
+		rsh.VerifyAndSet(rs, requestFromCheckpointList.ContainsKey(rs.Id), _verifyRoundState);
 		return rsh;
-	}
-
-	private bool CheckAndSetFailRoundState(RoundStateHolder roundStateHolder, RoundState roundState)
-	{
-		if (roundState.CoinjoinState.Events.OfType<RoundCreated>().Count() != 1)
-		{
-			// Possibly protocol error
-			roundStateHolder.Exception = new CoinJoinClientException(CoinjoinError.TamperedRoundState, $"Incorrect RoundCreated event at round {roundState.Id}.");
-			return false;
-		}
-		return true;
 	}
 
 	private Task<RoundState> CreateRoundAwaiterAsync(uint256? roundId, Phase? phase, Predicate<RoundState>? predicate, CancellationToken cancellationToken)

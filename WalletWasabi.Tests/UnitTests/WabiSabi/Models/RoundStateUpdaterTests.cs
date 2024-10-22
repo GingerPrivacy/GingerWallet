@@ -38,7 +38,7 @@ public class RoundStateUpdaterTests
 			RoundStateResponseBuilder());
 		var apiClient = new WabiSabiHttpApiClient(mockHttpClient);
 
-		using RoundStateUpdater roundStatusUpdater = new(TimeSpan.FromDays(1), apiClient);
+		using RoundStateUpdater roundStatusUpdater = new(TimeSpan.FromDays(1), apiClient, false);
 
 		// At this point in time the RoundStateUpdater only knows about `round1` and then we can subscribe to
 		// events for that round.
@@ -116,7 +116,7 @@ public class RoundStateUpdaterTests
 			RoundStateResponseBuilder());
 		var apiClient = new WabiSabiHttpApiClient(mockHttpClient);
 
-		using RoundStateUpdater roundStatusUpdater = new(TimeSpan.FromMilliseconds(100), apiClient);
+		using RoundStateUpdater roundStatusUpdater = new(TimeSpan.FromMilliseconds(100), apiClient, false);
 
 		// At this point in time the RoundStateUpdater only knows about `round1` and then we can subscribe to
 		// events for that round.
@@ -164,7 +164,7 @@ public class RoundStateUpdaterTests
 			RoundStateResponseBuilder());
 		var apiClient = new WabiSabiHttpApiClient(mockHttpClient);
 
-		using RoundStateUpdater roundStatusUpdater = new(TimeSpan.FromMilliseconds(100), apiClient);
+		using RoundStateUpdater roundStatusUpdater = new(TimeSpan.FromMilliseconds(100), apiClient, false);
 
 		// At this point in time the RoundStateUpdater only knows about `round1` and then we can subscribe to
 		// events for that round.
@@ -199,7 +199,7 @@ public class RoundStateUpdaterTests
 			RoundStateResponseBuilder(roundState with { Phase = Phase.InputRegistration }));
 		var apiClient = new WabiSabiHttpApiClient(mockHttpClient);
 
-		using RoundStateUpdater roundStatusUpdater = new(TimeSpan.FromSeconds(100), apiClient);
+		using RoundStateUpdater roundStatusUpdater = new(TimeSpan.FromSeconds(100), apiClient, false);
 		try
 		{
 			await roundStatusUpdater.StartAsync(CancellationToken.None);
