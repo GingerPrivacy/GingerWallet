@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using NBitcoin;
 using NBitcoin.Policy;
+using WalletWasabi.Helpers;
 using WalletWasabi.WabiSabi.Models;
 using WalletWasabi.WabiSabi.Models.MultipartyTransaction;
 
@@ -69,7 +70,7 @@ public record RoundParameters
 	public TimeSpan BlameInputRegistrationTimeout { get; init; }
 
 	public Money MinAmountCredentialValue => AllowedInputAmounts.Min;
-	public Money MaxAmountCredentialValue => AllowedInputAmounts.Max;
+	public Money MaxAmountCredentialValue => Constants.MaximumSupportedAmount;
 
 	public int InitialInputVsizeAllocation { get; init; }
 	public int MaxVsizeCredentialValue { get; init; }

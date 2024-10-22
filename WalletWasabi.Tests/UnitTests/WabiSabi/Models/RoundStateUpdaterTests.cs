@@ -59,12 +59,12 @@ public class RoundStateUpdaterTests
 
 		// Force the RoundStatusUpdater to run. After this it will know about the existence of `round2` so,
 		// we can subscribe to events.
-		await roundStatusUpdater.TriggerAndWaitRoundAsync(TestTimeOut);
+		await roundStatusUpdater.ForceTriggerAndWaitRoundAsync(TestTimeOut);
 		var round2IRTask = roundStatusUpdater.CreateRoundAwaiterAsync(roundState2.Id, Phase.InputRegistration, cancellationToken);
 		var round2TBTask = roundStatusUpdater.CreateRoundAwaiterAsync(roundState2.Id, Phase.Ended, cancellationToken);
 
 		// Force the RoundStatusUpdater to run again just to make it trigger the events.
-		await roundStatusUpdater.TriggerAndWaitRoundAsync(TestTimeOut);
+		await roundStatusUpdater.ForceTriggerAndWaitRoundAsync(TestTimeOut);
 
 		// Wait for round1 in input registration.
 		var round2 = await round2IRTask;
@@ -84,7 +84,7 @@ public class RoundStateUpdaterTests
 
 		// At this point in time all the rounds have disappeared and then the awaiter that was waiting for round1 to broadcast
 		// the transaction has to fail to let the sleeping component that the round doesn't exist any more.
-		await roundStatusUpdater.TriggerAndWaitRoundAsync(TestTimeOut);
+		await roundStatusUpdater.ForceTriggerAndWaitRoundAsync(TestTimeOut);
 		var ex = await Assert.ThrowsAsync<InvalidOperationException>(async () => await round1TBTask);
 		Assert.Contains(round1.Id.ToString(), ex.Message);
 		Assert.Contains("not running", ex.Message);

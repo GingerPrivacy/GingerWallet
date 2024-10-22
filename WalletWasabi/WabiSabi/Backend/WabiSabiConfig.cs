@@ -69,7 +69,7 @@ public class WabiSabiConfig : ConfigBase
 	public Money MinRegistrableAmount { get; set; } = Money.Coins(0.00005m);
 
 	/// <summary>
-	/// The width of the range proofs are calculated from this, so don't choose stupid numbers.
+	/// Must be lower or equal than 43000.
 	/// </summary>
 	[DefaultValueMoneyBtc("43000")]
 	[JsonProperty(PropertyName = "MaxRegistrableAmount", DefaultValueHandling = DefaultValueHandling.Populate)]
@@ -92,6 +92,10 @@ public class WabiSabiConfig : ConfigBase
 	[DefaultValueTimeSpan("0d 0h 3m 0s")]
 	[JsonProperty(PropertyName = "BlameInputRegistrationTimeout", DefaultValueHandling = DefaultValueHandling.Populate)]
 	public TimeSpan BlameInputRegistrationTimeout { get; set; } = TimeSpan.FromMinutes(3);
+
+	[DefaultValueTimeSpan("0d 0h 1m 0s")]
+	[JsonProperty(PropertyName = "CreateNewRoundBeforeInputRegEnd", DefaultValueHandling = DefaultValueHandling.Populate)]
+	public TimeSpan CreateNewRoundBeforeInputRegEnd { get; set; } = TimeSpan.FromMinutes(1);
 
 	[DefaultValueTimeSpan("0d 0h 1m 0s")]
 	[JsonProperty(PropertyName = "ConnectionConfirmationTimeout", DefaultValueHandling = DefaultValueHandling.Populate)]
