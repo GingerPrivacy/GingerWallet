@@ -1,8 +1,10 @@
 using NBitcoin;
 using System.Collections.Generic;
 using System.Linq;
+using WalletWasabi.Extensions;
 using WalletWasabi.Tests.Helpers;
 using WalletWasabi.WabiSabi.Backend;
+using WalletWasabi.WabiSabi.Client;
 using WalletWasabi.WabiSabi.Client.Batching;
 using WalletWasabi.WabiSabi.Recommendation;
 using Xunit;
@@ -34,8 +36,12 @@ public class PaymentAwareOutputProviderTests
 		Assert.Equal(outputs[0].ScriptPubKey, key.PubKey.GetScriptPubKey(ScriptPubKeyType.Segwit));
 		Assert.Equal(outputs[0].Value, Money.Coins(0.00005432m));
 
+		var miningLoss = outputs.Length * (wallet.SupportedScriptTypes.Max(x => roundParameters.MiningFeeRate.GetFee(x.EstimateOutputVsize())) ?? Money.Zero);
+		var changelessLoss = roundParameters.CalculateMinReasonableOutputAmount(wallet.SupportedScriptTypes);
+		var rangeMin = (myInputs.Sum() - miningLoss - changelessLoss).ToDecimal(MoneyUnit.BTC);
+
 		Assert.True(outputs.Length > 2, $"There were {outputs.Length} outputs."); // The rest was decomposed
-		Assert.InRange(outputs.Sum(x => x.Value.ToDecimal(MoneyUnit.BTC)), 0.007500m, 0.007800m); // no money was lost
+		Assert.InRange(outputs.Sum(x => x.Value.ToDecimal(MoneyUnit.BTC)), rangeMin, 0.007800m); // no money was lost
 	}
 
 	[Theory]
