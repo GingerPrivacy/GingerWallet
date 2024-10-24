@@ -155,7 +155,7 @@ public abstract partial class HistoryItemViewModelBase : ViewModelBase, ITreeDat
 	{
 		try
 		{
-			string urlToOpen = $"https://mempool.space/hu/tx/{transaction.Id}";
+			string urlToOpen = $"https://mempool.space/tx/{transaction.Id}";
 
 			await WebBrowserService.Instance.OpenUrlInPreferredBrowserAsync(urlToOpen).ConfigureAwait(false);
 		}
