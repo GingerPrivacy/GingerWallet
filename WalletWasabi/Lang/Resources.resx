@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!--
-    Microsoft ResX Schema
-
+  <!-- 
+    Microsoft ResX Schema 
+    
     Version 2.0
-
-    The primary goals of this format is to allow a simple XML format
-    that is mostly human readable. The generation and parsing of the
-    various data types are done through the TypeConverter classes
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
     associated with the data types.
-
+    
     Example:
-
+    
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-
-    There are any number of "resheader" rows that contain simple
+                
+    There are any number of "resheader" rows that contain simple 
     name/value pairs.
-
-    Each data row contains a name, and value. The row also contains a
-    type or mimetype. Type corresponds to a .NET class that support
-    text/value conversion through the TypeConverter architecture.
-    Classes that don't support this are serialized and stored with the
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
     mimetype set.
-
-    The mimetype is used for serialized objects, and tells the
-    ResXResourceReader how to depersist the object. This is currently not
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
     extensible. For a given mimetype the value must be set accordingly:
-
-    Note - application/x-microsoft.net.object.binary.base64 is the format
-    that the ResXResourceWriter will generate, however the reader can
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
     read any of the formats listed below.
-
+    
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-
+    
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array
+    value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -153,7 +153,7 @@
     <value>General</value>
   </data>
   <data name="GeneralSettingsTabViewModelCaption" xml:space="preserve">
-    <value>General</value>
+    <value>Manage general settings</value>
   </data>
   <data name="GeneralSettingsTabViewModelKeywords" xml:space="preserve">
     <value>Settings, General, Bitcoin, Dark, Mode, Run, Ginger, Computer, System, Start, Background, Close, Auto, Copy, Paste, Addresses, Custom, Change, Address, Fee, Display, Format, BTC, sats, browser</value>
@@ -1258,5 +1258,30 @@ It's a recovery words extension for more security.</value>
   </data>
   <data name="PeersConnected" xml:space="preserve">
     <value>{0} connected</value>
+  </data>
+  <data name="AmountLessThanTotalSupply" xml:space="preserve">
+    <value>Amount must be less than the total supply of BTC.</value>
+  </data>
+  <data name="InsufficientFunds" xml:space="preserve">
+    <value>Insufficient funds to cover the amount requested.</value>
+  </data>
+  <data name="AmountMoreThanZero" xml:space="preserve">
+    <value>Amount must be more than 0 BTC.</value>
+  </data>
+  <data name="InvalidBTCAddressOrURI" xml:space="preserve">
+    <value>Input a valid BTC address or URI.</value>
+    <comment>mycomment</comment>
+  </data>
+  <data name="PayjoinNotPossibleWithHardwareWallets" xml:space="preserve">
+    <value>Payjoin is not possible with hardware wallets.</value>
+  </data>
+  <data name="TermsAndConditionsViewCaption" xml:space="preserve">
+    <value>To continue using Ginger, please accept the terms and conditions</value>
+  </data>
+  <data name="TermsAndConditionsViewTermsAndConditions" xml:space="preserve">
+    <value>Terms and conditions</value>
+  </data>
+  <data name="TermsAndConditionsViewIAgree" xml:space="preserve">
+    <value>I _agree to the </value>
   </data>
 </root>

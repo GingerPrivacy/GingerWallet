@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!--
-    Microsoft ResX Schema
-
+  <!-- 
+    Microsoft ResX Schema 
+    
     Version 2.0
-
-    The primary goals of this format is to allow a simple XML format
-    that is mostly human readable. The generation and parsing of the
-    various data types are done through the TypeConverter classes
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
     associated with the data types.
-
+    
     Example:
-
+    
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-
-    There are any number of "resheader" rows that contain simple
+                
+    There are any number of "resheader" rows that contain simple 
     name/value pairs.
-
-    Each data row contains a name, and value. The row also contains a
-    type or mimetype. Type corresponds to a .NET class that support
-    text/value conversion through the TypeConverter architecture.
-    Classes that don't support this are serialized and stored with the
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
     mimetype set.
-
-    The mimetype is used for serialized objects, and tells the
-    ResXResourceReader how to depersist the object. This is currently not
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
     extensible. For a given mimetype the value must be set accordingly:
-
-    Note - application/x-microsoft.net.object.binary.base64 is the format
-    that the ResXResourceWriter will generate, however the reader can
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
     read any of the formats listed below.
-
+    
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-
+    
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array
+    value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -193,7 +193,7 @@
     <value>Szoftver, Verzió, Forrás, Kód, Github, Weboldal, Koordinátor, Statisztika, Tor, Onion, Felhasználó, Támogatás, Hiba, Jelentés, GYIK, Kérdések, Dokumentumok, Dokumentáció, Licenc, Fejlett, Információ, Hardver, Pénztárca</value>
   </data>
   <data name="BroadcasterViewModelTitle" xml:space="preserve">
-    <value>Adó</value>
+    <value>Tranzakció közzététele</value>
   </data>
   <data name="BroadcasterViewModelCaption" xml:space="preserve">
     <value>Küldje el a tranzakcióját itt</value>
@@ -644,99 +644,6 @@
   </data>
   <data name="Success" xml:space="preserve">
     <value>Siker</value>
-  </data>
-  <data name="RecoveryWordsViewCaption" xml:space="preserve">
-    <value>Írd le a helyreállítási szavakat a megfelelő sorrendben, és tárold őket biztonságos helyen. Szükségesek a pénztárca visszaállításához.</value>
-  </data>
-  <data name="RecoveryWordsViewCopyRecoveryWords" xml:space="preserve">
-    <value>Helyreállítási szavak másolása</value>
-  </data>
-  <data name="RecoveryWordsViewNotSeeAfter" xml:space="preserve">
-    <value>A pénztárca létrehozása után nem fogod tudni újra megtekinteni ezeket a szavakat.</value>
-  </data>
-  <data name="ConfirmRecoveryWordsViewModel" xml:space="preserve">
-    <value>Helyreállítási szavak megerősítése</value>
-  </data>
-  <data name="ConfirmRecoveryWordsViewModelStoreSafely" xml:space="preserve">
-    <value>Tárold biztonságosan a jelszavadat, nem állítható vissza, ha elveszik.
-A pénztárcád megnyitásához és visszaállításához szükséges.
-Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.
-</value>
-  </data>
-  <data name="ConfirmRecoveryWordsViewModelClickRecovery" xml:space="preserve">
-    <value>Kattints a helyreállítási szóra: #{0}</value>
-  </data>
-  <data name="RecoveryWords" xml:space="preserve">
-    <value>Helyreállítási szavak</value>
-  </data>
-  <data name="VerifyRecoveryWords" xml:space="preserve">
-    <value>Helyreállítási szavak ellenőrzése</value>
-  </data>
-  <data name="CreatePasswordDialogTypePassphrase" xml:space="preserve">
-    <value>Írj be egy jelszót</value>
-  </data>
-  <data name="CreatePasswordDialogConfirmPassphrase" xml:space="preserve">
-    <value>Erősítsd meg a jelszót</value>
-  </data>
-  <data name="PassphrasesNotMatch" xml:space="preserve">
-    <value>A jelszavak nem egyeznek.</value>
-  </data>
-  <data name="TrimWarnMessage" xml:space="preserve">
-    <value>A kezdő és a záró szóközök eltávolításra kerülnek!</value>
-  </data>
-  <data name="WhitespaceMessage" xml:space="preserve">
-    <value>Kezdő és záró szóközök nem engedélyezettek!</value>
-  </data>
-  <data name="AddPassphrase" xml:space="preserve">
-    <value>Jelszó hozzáadása</value>
-  </data>
-  <data name="HardwareWallet" xml:space="preserve">
-    <value>Hardveres pénztárca</value>
-  </data>
-  <data name="ConnectHardwareWalletViewModelCaption" xml:space="preserve">
-    <value>Csatlakoztasd a hardveres pénztárcádat a számítógéphez</value>
-  </data>
-  <data name="ConnectHardwareWalletViewModelEnterPassphrase" xml:space="preserve">
-    <value>Add meg a jelszavadat a hardveres pénztárcán, ha szükséges.</value>
-  </data>
-  <data name="HardwareWalletAuthDialogViewModelCaption" xml:space="preserve">
-    <value>Csatlakoztasd a hardveres pénztárcádat, nyomd meg a Folytatás gombot, majd kövesd az utasításokat az eszközön.</value>
-  </data>
-  <data name="Rescan" xml:space="preserve">
-    <value>Újraszkennelés</value>
-  </data>
-  <data name="OpenWallet" xml:space="preserve">
-    <value>Pénztárca megnyitása</value>
-  </data>
-  <data name="ConnectHardwareWalletViewModelConnectPc" xml:space="preserve">
-    <value>Csatlakoztasd a hardveres pénztárcát a számítógéphez / Add meg a PIN-kódot az eszközön.</value>
-  </data>
-  <data name="ConnectHardwareWalletViewModelMakeSureOnlyOne" xml:space="preserve">
-    <value>Győződj meg arról, hogy csak egy hardveres pénztárca van csatlakoztatva a számítógéphez.</value>
-  </data>
-  <data name="ConnectHardwareWalletViewModelAlreadyAdded" xml:space="preserve">
-    <value>A csatlakoztatott hardveres pénztárca már hozzá van adva a szoftverhez, kattints alul a megnyitáshoz, vagy kattints az Újraszkennelésre a kereséshez.</value>
-  </data>
-  <data name="ConnectHardwareWalletViewModelEnterPassphraseOnDevice" xml:space="preserve">
-    <value>Add meg a jelszavadat az eszközön.</value>
-  </data>
-  <data name="ConnectHardwareWalletViewModelEnterPin" xml:space="preserve">
-    <value>Add meg a PIN-kódodat az eszközön.</value>
-  </data>
-  <data name="TypeInYourRecoveryWords" xml:space="preserve">
-    <value>Írd be a helyreállítási szavaidat a megfelelő sorrendben</value>
-  </data>
-  <data name="EnterPassphrase" xml:space="preserve">
-    <value>Add meg a helyes jelszót</value>
-  </data>
-  <data name="RecoverWalletViewModelPassphraseMessage" xml:space="preserve">
-    <value>Ha használtál jelszót a pénztárca létrehozásakor, akkor azt lent kell megadnod, különben hagyd üresen.</value>
-  </data>
-  <data name="AdvancedRecoveryOptionsViewModelTitle" xml:space="preserve">
-    <value>Speciális helyreállítási lehetőségek</value>
-  </data>
-  <data name="AdvancedRecoveryOptionsViewModelMinimumGapLimit" xml:space="preserve">
-    <value>Minimális _Rés határ:</value>
   </data>
   <data name="UnexpextedError" xml:space="preserve">
     <value>Váratlan hiba történt. Kérjük, próbálja újra, vagy lépjen kapcsolatba az ügyfélszolgálattal.</value>
@@ -1254,7 +1161,124 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.
   <data name="CoinControl" xml:space="preserve">
     <value>Érmeirányítás</value>
   </data>
+  <data name="RecoveryWordsViewCaption" xml:space="preserve">
+    <value>Írd le a helyreállítási szavakat a megfelelő sorrendben, és tárold őket biztonságos helyen. Szükségesek a pénztárca visszaállításához.</value>
+  </data>
+  <data name="RecoveryWordsViewCopyRecoveryWords" xml:space="preserve">
+    <value>Helyreállítási szavak másolása</value>
+  </data>
+  <data name="RecoveryWordsViewNotSeeAfter" xml:space="preserve">
+    <value>A pénztárca létrehozása után nem fogod tudni újra megtekinteni ezeket a szavakat.</value>
+  </data>
+  <data name="ConfirmRecoveryWordsViewModel" xml:space="preserve">
+    <value>Helyreállítási szavak megerősítése</value>
+  </data>
+  <data name="ConfirmRecoveryWordsViewModelStoreSafely" xml:space="preserve">
+    <value>Tárold biztonságosan a jelszavadat, nem állítható vissza, ha elveszik.
+A pénztárcád megnyitásához és visszaállításához szükséges.
+Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.
+</value>
+  </data>
+  <data name="ConfirmRecoveryWordsViewModelClickRecovery" xml:space="preserve">
+    <value>Kattints a helyreállítási szóra: #{0}</value>
+  </data>
+  <data name="RecoveryWords" xml:space="preserve">
+    <value>Helyreállítási szavak</value>
+  </data>
+  <data name="VerifyRecoveryWords" xml:space="preserve">
+    <value>Helyreállítási szavak ellenőrzése</value>
+  </data>
+  <data name="CreatePasswordDialogTypePassphrase" xml:space="preserve">
+    <value>Írj be egy jelszót</value>
+  </data>
+  <data name="CreatePasswordDialogConfirmPassphrase" xml:space="preserve">
+    <value>Erősítsd meg a jelszót</value>
+  </data>
+  <data name="PassphrasesNotMatch" xml:space="preserve">
+    <value>A jelszavak nem egyeznek.</value>
+  </data>
+  <data name="TrimWarnMessage" xml:space="preserve">
+    <value>A kezdő és a záró szóközök eltávolításra kerülnek!</value>
+  </data>
+  <data name="WhitespaceMessage" xml:space="preserve">
+    <value>Kezdő és záró szóközök nem engedélyezettek!</value>
+  </data>
+  <data name="AddPassphrase" xml:space="preserve">
+    <value>Jelszó hozzáadása</value>
+  </data>
+  <data name="HardwareWallet" xml:space="preserve">
+    <value>Hardveres pénztárca</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelCaption" xml:space="preserve">
+    <value>Csatlakoztasd a hardveres pénztárcádat a számítógéphez</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelEnterPassphrase" xml:space="preserve">
+    <value>Add meg a jelszavadat a hardveres pénztárcán, ha szükséges.</value>
+  </data>
+  <data name="HardwareWalletAuthDialogViewModelCaption" xml:space="preserve">
+    <value>Csatlakoztasd a hardveres pénztárcádat, nyomd meg a Folytatás gombot, majd kövesd az utasításokat az eszközön.</value>
+  </data>
+  <data name="Rescan" xml:space="preserve">
+    <value>Újraszkennelés</value>
+  </data>
+  <data name="OpenWallet" xml:space="preserve">
+    <value>Pénztárca megnyitása</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelConnectPc" xml:space="preserve">
+    <value>Csatlakoztasd a hardveres pénztárcát a számítógéphez / Add meg a PIN-kódot az eszközön.</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelMakeSureOnlyOne" xml:space="preserve">
+    <value>Győződj meg arról, hogy csak egy hardveres pénztárca van csatlakoztatva a számítógéphez.</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelAlreadyAdded" xml:space="preserve">
+    <value>A csatlakoztatott hardveres pénztárca már hozzá van adva a szoftverhez, kattints alul a megnyitáshoz, vagy kattints az Újraszkennelésre a kereséshez.</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelEnterPassphraseOnDevice" xml:space="preserve">
+    <value>Add meg a jelszavadat az eszközön.</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelEnterPin" xml:space="preserve">
+    <value>Add meg a PIN-kódodat az eszközön.</value>
+  </data>
+  <data name="TypeInYourRecoveryWords" xml:space="preserve">
+    <value>Írd be a helyreállítási szavaidat a megfelelő sorrendben</value>
+  </data>
+  <data name="EnterPassphrase" xml:space="preserve">
+    <value>Add meg a helyes jelszót</value>
+  </data>
+  <data name="RecoverWalletViewModelPassphraseMessage" xml:space="preserve">
+    <value>Ha használtál jelszót a pénztárca létrehozásakor, akkor azt lent kell megadnod, különben hagyd üresen.</value>
+  </data>
+  <data name="AdvancedRecoveryOptionsViewModelTitle" xml:space="preserve">
+    <value>Speciális helyreállítási lehetőségek</value>
+  </data>
+  <data name="AdvancedRecoveryOptionsViewModelMinimumGapLimit" xml:space="preserve">
+    <value>Minimális _Rés határ:</value>
+  </data>
   <data name="PeersConnected" xml:space="preserve">
     <value>{0} csatlakoztatva</value>
+  </data>
+  <data name="AmountLessThanTotalSupply" xml:space="preserve">
+    <value>Az összegnek kisebbnek kell lennie a BTC teljes készleténél.</value>
+  </data>
+  <data name="InsufficientFunds" xml:space="preserve">
+    <value>Nincs elegendő fedezet a kért összeghez.</value>
+  </data>
+  <data name="AmountMoreThanZero" xml:space="preserve">
+    <value>Az összegnek nagyobbnak kell lennie, mint 0 BTC.</value>
+  </data>
+  <data name="InvalidBTCAddressOrURI" xml:space="preserve">
+    <value>Adjon meg egy érvényes BTC címet vagy URI-t.</value>
+  </data>
+  <data name="PayjoinNotPossibleWithHardwareWallets" xml:space="preserve">
+    <value>Payjoin nem lehetséges hardveres tárcákkal.</value>
+  </data>
+  <data name="TermsAndConditionsViewCaption" xml:space="preserve">
+    <value>A Ginger használatának folytatásához kérjük, fogadd el a feltételeket és kikötéseket.</value>
+  </data>
+  <data name="TermsAndConditionsViewTermsAndConditions" xml:space="preserve">
+    <value>Általános szerződési feltételek</value>
+  </data>
+  <data name="TermsAndConditionsViewIAgree" xml:space="preserve">
+    <value>Elfogadom az </value>
   </data>
 </root>

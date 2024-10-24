@@ -28,6 +28,7 @@ using WalletWasabi.Fluent.ViewModels.Wallets.Labels;
 using WalletWasabi.Userfacing.Bip21;
 using WalletWasabi.Fluent.Models.Transactions;
 using Constants = WalletWasabi.Helpers.Constants;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.ViewModels.Wallets.Send;
 
@@ -237,15 +238,15 @@ public partial class SendViewModel : RoutableViewModel
 
 		if (AmountBtc > Constants.MaximumNumberOfBitcoins)
 		{
-			errors.Add(ErrorSeverity.Error, "Amount must be less than the total supply of BTC.");
+			errors.Add(ErrorSeverity.Error, Resources.AmountLessThanTotalSupply);
 		}
 		else if (AmountBtc > _parameters.AvailableAmountBtc)
 		{
-			errors.Add(ErrorSeverity.Error, "Insufficient funds to cover the amount requested.");
+			errors.Add(ErrorSeverity.Error, Resources.InsufficientFunds);
 		}
 		else if (AmountBtc <= 0)
 		{
-			errors.Add(ErrorSeverity.Error, "Amount must be more than 0 BTC");
+			errors.Add(ErrorSeverity.Error, Resources.AmountMoreThanZero);
 		}
 	}
 
@@ -253,11 +254,11 @@ public partial class SendViewModel : RoutableViewModel
 	{
 		if (!string.IsNullOrEmpty(To) && (To.IsTrimmable() || !AddressStringParser.TryParse(To, _walletModel.Network, out _)))
 		{
-			errors.Add(ErrorSeverity.Error, "Input a valid BTC address or URL.");
+			errors.Add(ErrorSeverity.Error, Resources.InvalidBTCAddressOrURI);
 		}
 		else if (IsPayJoin && _walletModel.IsHardwareWallet)
 		{
-			errors.Add(ErrorSeverity.Error, "Payjoin is not possible with hardware wallets.");
+			errors.Add(ErrorSeverity.Error, Resources.PayjoinNotPossibleWithHardwareWallets);
 		}
 	}
 
