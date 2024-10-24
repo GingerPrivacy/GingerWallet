@@ -3,14 +3,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:settings="using:WalletWasabi.Fluent.ViewModels.Settings"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371"
              x:Class="WalletWasabi.Fluent.Views.Settings.AdvancedSettingsTabView"
              x:CompileBindings="False"
              x:DataType="settings:AdvancedSettingsTabViewModel">
   <StackPanel Classes="settingsLayout">
 
-    <DockPanel ToolTip.Tip="When enabled use a graphics card (GPU) to render user interface. Using a GPU rather than the CPU can improve performance.">
-      <TextBlock Text="Enable GPU" />
+    <DockPanel ToolTip.Tip="{x:Static lang:Resources.EnableGPURendering}">
+      <TextBlock Text="{x:Static lang:Resources.EnableGPU}" />
       <ToggleSwitch IsChecked="{Binding Settings.EnableGpu}" />
     </DockPanel>
   </StackPanel>

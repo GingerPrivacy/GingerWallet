@@ -7,6 +7,7 @@
              mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371"
              x:DataType="vm:AddWalletPageViewModel"
              x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.AddWallet.AddWalletPageView">
   <ContentArea Title="{Binding Title}"
                  EnableCancel="{Binding EnableCancel}"
@@ -56,26 +57,26 @@
         </Style>
       </Grid.Styles>
 
-      <TileButton Text="Create a new wallet"
+      <TileButton Text="{x:Static lang:Resources.CreateNewWallet}"
                     Grid.ColumnSpan="3"
                     Classes="action bottomtext"
                     Icon="{StaticResource add_regular}"
                     IsDefault="True"
                     Command="{Binding CreateWalletCommand}" />
 
-      <TextBlock Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="1" TextAlignment="Center" Text="or" />
+      <TextBlock Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="1" TextAlignment="Center" Text="{x:Static lang:Resources.or}" />
 
-      <TileButton Grid.Row="2" Grid.Column="0" Text="Connect to hardware wallet"
+      <TileButton Grid.Row="2" Grid.Column="0" Text="{x:Static lang:Resources.ConnectHardwareWallet}"
                     Icon="{StaticResource calculator_regular}"
                     Classes="bottomtext"
                     Command="{Binding ConnectHardwareWalletCommand}" />
 
-      <TileButton Grid.Row="2" Grid.Column="1" Text="Import a wallet"
+      <TileButton Grid.Row="2" Grid.Column="1" Text="{x:Static lang:Resources.ImportWallet}"
                     Icon="{StaticResource import_regular}"
                     Classes="bottomtext"
                     Command="{Binding ImportWalletCommand}" />
 
-      <TileButton Grid.Row="2" Grid.Column="2" Text="Recover a wallet"
+      <TileButton Grid.Row="2" Grid.Column="2" Text="{x:Static lang:Resources.RecoverWallet}"
                     Icon="{StaticResource recover_arrow_right_regular}"
                     Classes="bottomtext"
                     Command="{Binding RecoverWalletCommand}" />

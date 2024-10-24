@@ -7,13 +7,15 @@ using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.ViewModels.Dialogs;
 
-[NavigationMetaData(Title = "Two-Factor Authentication", NavigationTarget = NavigationTarget.CompactDialogScreen)]
+[NavigationMetaData(NavigationTarget = NavigationTarget.CompactDialogScreen)]
 public partial class VerifyTwoFactoryAuthenticationDialogViewModel : DialogViewModelBase<bool>
 {
 	[AutoNotify] private string _twoFactorToken = "";
 
 	private VerifyTwoFactoryAuthenticationDialogViewModel()
 	{
+		Title = "Two-Factor Authentication";
+
 		NextCommand = ReactiveCommand.CreateFromTask(async () =>
 		{
 			try

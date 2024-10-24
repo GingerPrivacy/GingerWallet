@@ -1,16 +1,14 @@
 using ReactiveUI;
+using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.ViewModels.Navigation;
 
 namespace WalletWasabi.Fluent.ViewModels.Wallets.Advanced;
 
 [NavigationMetaData(
-	Title = "Wallet Info",
-	Caption = "Display wallet info",
 	IconName = "nav_wallet_24_regular",
 	Order = 4,
-	Category = "Wallet",
-	Keywords = new[] { "Wallet", "Info", },
+	Category = SearchCategory.Wallet,
 	NavBarPosition = NavBarPosition.None,
 	NavigationTarget = NavigationTarget.DialogScreen,
 	Searchable = false)]
@@ -24,6 +22,10 @@ public partial class WalletInfoViewModel : RoutableViewModel
 
 	private WalletInfoViewModel(IWalletModel wallet)
 	{
+		Title = "Wallet Info";
+		Caption = "Display wallet info";
+		Keywords = new[] { "Wallet", "Info", };
+
 		_model = wallet.GetWalletInfo();
 		IsHardwareWallet = wallet.IsHardwareWallet;
 

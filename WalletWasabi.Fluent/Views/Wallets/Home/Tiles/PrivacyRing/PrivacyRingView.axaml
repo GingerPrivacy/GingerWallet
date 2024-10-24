@@ -7,6 +7,7 @@
              xmlns:ringView="using:WalletWasabi.Fluent.Views.Wallets.Home.Tiles.PrivacyRing"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="WalletWasabi.Fluent.Views.Wallets.Home.Tiles.PrivacyRing.PrivacyRingView"
+             xmlns:lang="using:WalletWasabi.Lang"
              x:Name="View">
   <UserControl.Styles>
     <Style Selector="Path:pointerover">
@@ -55,7 +56,7 @@
     </Style>
   </UserControl.Styles>
   <ContentArea Title="{Binding Title}"
-                 EnableNext="True" NextContent="Done"
+                 EnableNext="True" NextContent="{x:Static lang:Resources.Done}"
                  EnableCancel="False"
                  EnableBack="False"
                  Caption="Hover over the ring segments to see coin details"

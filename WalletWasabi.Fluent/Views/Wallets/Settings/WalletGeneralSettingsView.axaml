@@ -6,11 +6,12 @@
              xmlns:vm="clr-namespace:WalletWasabi.Fluent.ViewModels.Wallets.Settings"
              x:DataType="vm:WalletSettingsViewModel"
              x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.Wallets.Settings.WalletGeneralSettingsView">
 
   <StackPanel Classes="settingsLayout">
     <DockPanel>
-      <TextBlock Text="Name" />
+      <TextBlock Text="{x:Static lang:Resources.Name}" />
       <Button MaxWidth="150"
               Command="{Binding RenameCommand}"
               Theme="{StaticResource AccentButton}"
@@ -27,10 +28,8 @@
     </DockPanel>
 
     <DockPanel IsVisible="{Binding IsHardwareWallet}">
-      <TextBlock Text="PSBT workflow" />
+      <TextBlock Text="{x:Static lang:Resources.PSBTworkflow}" />
       <ToggleSwitch IsChecked="{Binding PreferPsbtWorkflow}" />
     </DockPanel>
-
   </StackPanel>
-
 </UserControl>

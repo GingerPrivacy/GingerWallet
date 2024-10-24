@@ -1,6 +1,8 @@
 using NBitcoin;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using WalletWasabi.Extensions;
+using WalletWasabi.Lang;
 using WalletWasabi.Userfacing.Bip21;
 
 namespace WalletWasabi.Userfacing;
@@ -25,7 +27,7 @@ public static class AddressStringParser
 
 		if (text is null || expectedNetwork is null)
 		{
-			errorMessage = "Internal error.";
+			errorMessage = Resources.InternalError;
 			return false;
 		}
 
@@ -33,14 +35,14 @@ public static class AddressStringParser
 
 		if (text == "")
 		{
-			errorMessage = "Input length is invalid.";
+			errorMessage = Resources.InvalidInputLength;
 			return false;
 		}
 
 		// Too long URIs/Bitcoin address are unsupported.
 		if (text.Length > 1000)
 		{
-			errorMessage = "Input is too long.";
+			errorMessage = Resources.InputTooLong;
 			return false;
 		}
 
@@ -53,7 +55,7 @@ public static class AddressStringParser
 
 		if (isLightningAddress)
 		{
-			errorMessage = "Lightning addresses are not supported.";
+			errorMessage = Resources.LightningAddressesNotSupported;
 			return false;
 		}
 
@@ -88,7 +90,7 @@ public static class AddressStringParser
 
 			if (NBitcoinExtensions.TryParseBitcoinAddressForNetwork(error.Details!, networkGuess, out _))
 			{
-				errorMessage = $"Bitcoin address is valid for {networkGuess} and not for {expectedNetwork}.";
+				errorMessage = string.Format(CultureInfo.InvariantCulture, Resources.BitcoinAddressValidity, networkGuess, expectedNetwork);;
 				return false;
 			}
 		}

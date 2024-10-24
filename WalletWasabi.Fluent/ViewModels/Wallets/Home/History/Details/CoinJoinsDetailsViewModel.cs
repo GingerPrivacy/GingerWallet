@@ -9,7 +9,7 @@ using WalletWasabi.Fluent.ViewModels.Navigation;
 
 namespace WalletWasabi.Fluent.ViewModels.Wallets.Home.History.Details;
 
-[NavigationMetaData(Title = "Coinjoins", NavigationTarget = NavigationTarget.DialogScreen)]
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class CoinJoinsDetailsViewModel : RoutableViewModel
 {
 	private readonly IWalletModel _wallet;
@@ -26,6 +26,7 @@ public partial class CoinJoinsDetailsViewModel : RoutableViewModel
 
 	public CoinJoinsDetailsViewModel(UiContext uiContext, IWalletModel wallet, TransactionModel transaction)
 	{
+		Title = "Coinjoins";
 		_wallet = wallet;
 		_transaction = transaction;
 

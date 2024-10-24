@@ -8,7 +8,8 @@
              x:DataType="wallets:WalletViewModel"
              x:CompileBindings="True"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="64"
-             x:Class="WalletWasabi.Fluent.Views.Wallets.MusicControlsView">
+             x:Class="WalletWasabi.Fluent.Views.Wallets.MusicControlsView"
+             xmlns:lang="using:WalletWasabi.Lang">
   <UserControl.Resources>
     <converters:ReplaceWordsByContentConverter x:Key="ReplaceWordsByContentConverter">
       <ResourceDictionary x:CompileBindings="False">
@@ -109,12 +110,12 @@
           <Button Classes="plain" IsVisible="{Binding CanNavigateToCoinjoinSettings^}">
             <Button.Flyout>
               <MenuFlyout Placement="Top">
-                <MenuItem Header="Coinjoin Settings" Command="{Binding NavigateToSettingsCommand}">
+                <MenuItem Header="{x:Static lang:Resources.CoinjoinSettings}" Command="{Binding NavigateToSettingsCommand}">
                   <MenuItem.Icon>
                     <PathIcon Data="{StaticResource settings_general_regular}" />
                   </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Exclude Coins" Command="{Binding NavigateToExcludedCoinsCommand}">
+                <MenuItem Header="{x:Static lang:Resources.ExcludeCoins}" Command="{Binding NavigateToExcludedCoinsCommand}">
                   <MenuItem.Icon>
                     <PathIcon Data="{StaticResource exclude_coins}" />
                   </MenuItem.Icon>

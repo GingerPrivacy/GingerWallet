@@ -14,7 +14,6 @@ using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.ViewModels.AddWallet.HardwareWallet;
 
-[NavigationMetaData(Title = "Hardware Wallet")]
 public partial class ConnectHardwareWalletViewModel : RoutableViewModel
 {
 	private readonly WalletCreationOptions.ConnectToHardwareWallet _options;
@@ -25,6 +24,8 @@ public partial class ConnectHardwareWalletViewModel : RoutableViewModel
 
 	private ConnectHardwareWalletViewModel(WalletCreationOptions.ConnectToHardwareWallet options)
 	{
+		Title = Lang.Resources.HardwareWallet;
+
 		_options = options;
 
 		ArgumentException.ThrowIfNullOrEmpty(options.WalletName);
@@ -121,13 +122,13 @@ public partial class ConnectHardwareWalletViewModel : RoutableViewModel
 	{
 		if (devices.Length == 0)
 		{
-			Message = "Connect the hardware wallet to the PC / Enter the PIN on the device.";
+			Message = Lang.Resources.ConnectHardwareWalletViewModelConnectPc;
 			return;
 		}
 
 		if (devices.Length > 1)
 		{
-			Message = "Make sure you have only one hardware wallet connected to the PC.";
+			Message = Lang.Resources.ConnectHardwareWalletViewModelMakeSureOnlyOne;
 			return;
 		}
 
@@ -137,7 +138,7 @@ public partial class ConnectHardwareWalletViewModel : RoutableViewModel
 		if (existingWallet is { })
 		{
 			ExistingWallet = existingWallet;
-			Message = "The connected hardware wallet is already added to the software, click below to open it or click Rescan to search again.";
+			Message = Lang.Resources.ConnectHardwareWalletViewModelAlreadyAdded;
 			ExistingWalletFound = true;
 			return;
 		}
@@ -165,13 +166,13 @@ public partial class ConnectHardwareWalletViewModel : RoutableViewModel
 
 		if (device.NeedsPassphraseSent == true)
 		{
-			Message = "Enter your passphrase on your device.";
+			Message = Lang.Resources.ConnectHardwareWalletViewModelEnterPassphraseOnDevice;
 			return;
 		}
 
 		if (device.NeedsPinSent == true)
 		{
-			Message = "Enter your PIN on your device.";
+			Message = Lang.Resources.ConnectHardwareWalletViewModelEnterPin;
 			return;
 		}
 

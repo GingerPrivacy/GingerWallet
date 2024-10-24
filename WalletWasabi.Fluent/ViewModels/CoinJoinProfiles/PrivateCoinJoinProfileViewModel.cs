@@ -1,4 +1,5 @@
 using WalletWasabi.Crypto.Randomness;
+using WalletWasabi.Lang;
 using WalletWasabi.Models;
 
 namespace WalletWasabi.Fluent.ViewModels.CoinJoinProfiles;
@@ -20,9 +21,9 @@ internal class PrivateCoinJoinProfileViewModel : CoinJoinProfileViewModelBase
 		AnonScoreTarget = GetRandom(MinAnonScore, MaxAnonScore);
 	}
 
-	public override string Title => "Maximize Privacy";
+	public override string Title => Resources.PrivateCoinJoinProfileTitle;
 
-	public override string Description => "Choice of the paranoid. Optimizes for privacy at all costs.";
+	public override string Description => Resources.PrivateCoinJoinProfileDescription;
 
 	public override int AnonScoreTarget { get; }
 

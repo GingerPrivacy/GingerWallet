@@ -1,3 +1,6 @@
+using System.Globalization;
+using WalletWasabi.Lang;
+
 namespace WalletWasabi.BitcoinCore.Monitoring;
 
 public class RpcStatus : IEquatable<RpcStatus>
@@ -10,21 +13,21 @@ public class RpcStatus : IEquatable<RpcStatus>
 			var diff = headers - blocks;
 			if (peersCount == 0)
 			{
-				Status = "Full node is connecting...";
+				Status = Resources.FullNodeConnecting;
 			}
 			else if (diff == 0)
 			{
 				Synchronized = true;
-				Status = "Full node is synchronized";
+				Status = Resources.FullNodeSynchronized;
 			}
 			else
 			{
-				Status = $"Full node is downloading {diff} blocks...";
+				Status = string.Format(CultureInfo.InvariantCulture, Resources.FullNodeDownloadingBlocks, diff);
 			}
 		}
 		else
 		{
-			Status = "Full node is unresponsive";
+			Status = Resources.FullNodeUnresponsive;
 		}
 
 		Success = success;

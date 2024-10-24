@@ -1,14 +1,17 @@
 using ReactiveUI;
 using WalletWasabi.Fluent.ViewModels.CoinJoinProfiles;
 using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.ViewModels.Dialogs;
 
-[NavigationMetaData(Title = "Coinjoin Strategy Settings", NavigationTarget = NavigationTarget.CompactDialogScreen)]
+[NavigationMetaData(NavigationTarget = NavigationTarget.CompactDialogScreen)]
 public partial class ManualCoinJoinProfileDialogViewModel : DialogViewModelBase<ManualCoinJoinProfileDialogViewModel.ManualCoinJoinProfileDialogViewModelResult?>
 {
 	public ManualCoinJoinProfileDialogViewModel(CoinJoinProfileViewModelBase current)
 	{
+		Title = Resources.ManualCoinJoinProfileDialogTitle;
+
 		CoinjoinAdvancedSettings = new ManualCoinJoinSettingsViewModel(current);
 
 		SetupCancel(enableCancel: true, enableCancelOnEscape: true, enableCancelOnPressed: true);

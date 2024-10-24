@@ -11,6 +11,7 @@ using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Extensions;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Infrastructure;
+using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.Validation;
 using WalletWasabi.Fluent.ViewModels.Navigation;
 using WalletWasabi.Logging;
@@ -31,15 +32,13 @@ using Constants = WalletWasabi.Helpers.Constants;
 namespace WalletWasabi.Fluent.ViewModels.Wallets.Send;
 
 [NavigationMetaData(
-	Title = "Send",
-	Caption = "Display wallet send dialog",
 	IconName = "wallet_action_send",
 	Order = 5,
-	Category = "Wallet",
-	Keywords = new[] { "Wallet", "Send", "Action", },
+	Category = SearchCategory.Wallet,
 	NavBarPosition = NavBarPosition.None,
 	NavigationTarget = NavigationTarget.DialogScreen,
-	Searchable = false)]
+	Searchable = false,
+	IsLocalized = true)]
 public partial class SendViewModel : RoutableViewModel
 {
 	private readonly object _parsingLock = new();

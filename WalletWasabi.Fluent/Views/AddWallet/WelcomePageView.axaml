@@ -3,6 +3,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:addWallet="clr-namespace:WalletWasabi.Fluent.ViewModels.AddWallet"
+             xmlns:conv="clr-namespace:WalletWasabi.Fluent.Converters"
+             xmlns:basemodels="clr-namespace:WalletWasabi.Models;assembly=WalletWasabi"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              mc:Ignorable="d" d:DesignWidth="800"
              x:Class="WalletWasabi.Fluent.Views.AddWallet.WelcomePageView"
              x:DataType="addWallet:WelcomePageViewModel"
@@ -18,11 +21,11 @@
   </UserControl.Styles>
 
   <ContentArea EnableCancel="False"
-                        EnableBack="{Binding CanGoBack^}"
-                        EnableNext="True"
-                        ClipToBounds="False"
-                        NextContent="{Binding NextLabel}"
-                        ScrollViewer.VerticalScrollBarVisibility="Disabled">
+               EnableBack="{Binding CanGoBack^}"
+               EnableNext="True"
+               ClipToBounds="False"
+               NextContent="{Binding NextLabel}"
+               ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
     <DockPanel LastChildFill="True">
 
@@ -59,6 +62,7 @@
         <Ellipse />
         <Ellipse />
       </ListBox>
+
       <!-- Pages -->
       <Carousel SelectedIndex="{Binding SelectedIndex}"
                 DockPanel.Dock="Top"
@@ -113,19 +117,38 @@
 
         <!-- Get started -->
         <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-          <StackPanel DockPanel.Dock="Bottom" Spacing="10">
-            <TextBlock Text="Welcome to Ginger Wallet" FontSize="30" HorizontalAlignment="Center" />
 
-            <TextBlock TextAlignment="Center" Text="An easy to use, privacy focused, open source bitcoin wallet." FontWeight="Light" />
-          </StackPanel>
-          <Panel Height="120" HorizontalAlignment="Center" DockPanel.Dock="Bottom" Margin="0 0 0 20">
-            <Viewbox>
-              <ThemeImage Source="{DynamicResource GingerWalletLogo}"/>
-            </Viewbox>
+          <Panel Height="40" DockPanel.Dock="Bottom" Margin="0 15 0 0">
+            <InfoMessage Foreground="{DynamicResource WarningMessageForeground}"
+                         Opacity="{Binding IsRestartNeeded, Converter={x:Static conv:BoolOpacityConverters.BoolToOpacity}}"
+                         HorizontalAlignment="Center" VerticalAlignment="Center">
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{x:Static lang:Resources.ApplicationRestartApplyChanges}" />
+              </StackPanel>
+            </InfoMessage>
           </Panel>
+
+          <StackPanel DockPanel.Dock="Bottom" Spacing="10">
+            <TextBlock Text="{x:Static lang:Resources.WelcomeToGingerWallet}" FontSize="30" HorizontalAlignment="Center" FontWeight="Bold" />
+            <TextBlock Margin="0 20 0 0" TextAlignment="Center" HorizontalAlignment="Center"
+                       Text="{x:Static lang:Resources.SelectPreferredLanguage}" />
+            <ListBox MaxWidth="300" DockPanel.Dock="Top" HorizontalAlignment="Stretch"
+                     ItemsSource="{Binding DisplayLanguagesList}"
+                     SelectedItem="{Binding Settings.SelectedDisplayLanguage}">
+              <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="basemodels:DisplayLanguage">
+                  <TextBlock Text="{Binding Converter={x:Static conv:EnumConverters.ToLocalTranslation}}" />
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+          </StackPanel>
+
+          <Viewbox MaxHeight="120" HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0 0 0 15">
+            <ThemeImage Source="{DynamicResource GingerWalletLogo}" />
+          </Viewbox>
         </DockPanel>
 
-        <!-- Get started -->
+        <!-- Coinjoin fees -->
         <Grid ColumnDefinitions="*,*" RowDefinitions="*,*,*" MaxHeight="350">
           <Grid.Styles>
             <Style Selector="TextBlock.AnimatedOrange">
@@ -206,26 +229,29 @@
             </DataTriggerBehavior>
           </Interaction.Behaviors>
 
-          <TextBlock Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" Text="Coinjoin Fees" Classes="title1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+          <TextBlock Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" Text="{x:Static lang:Resources.CoinjoinFees}" Classes="title1"
+                     HorizontalAlignment="Center" VerticalAlignment="Center" />
 
           <StackPanel Grid.Column="0" Grid.Row="1">
-            <TextBlock Name="CoinjoinFeeTextBlock" Text="Coordination Fee" Classes="title2" />
-            <TextBlock Text="You will pay a fee of 0.3% only for new coins you coinjoin." Classes="text" />
+            <TextBlock Name="CoinjoinFeeTextBlock" Text="{x:Static lang:Resources.CoordinationFee}" Classes="title2" />
+            <TextBlock Text="{x:Static lang:Resources.CoordinationFeeInfo}" Classes="text" />
           </StackPanel>
 
           <StackPanel Grid.Column="1" Grid.Row="1">
-            <TextBlock Name="MiningFeeTextBlock" Text="Transaction Fee" Classes="title2" />
-            <TextBlock Text="You will pay mining fees for every coinjoin." Classes="text" />
+            <TextBlock Name="MiningFeeTextBlock" Text="{x:Static lang:Resources.TransactionFee}" Classes="title2" />
+            <TextBlock Text="{x:Static lang:Resources.TransactionFeeInfo}" Classes="text" />
           </StackPanel>
 
           <StackPanel Grid.Column="0" Grid.Row="2">
-            <TextBlock Name="PlebsTextBlock" Text="Plebs Don't Pay" Classes="title2" />
-            <TextBlock Text="You won't pay the coordination fee for coins that are less than or equal to 0.01 BTC." Classes="text" />
+            <TextBlock Name="PlebsTextBlock" Text="{x:Static lang:Resources.PlebsDontPay}" Classes="title2" />
+            <TextBlock Text="{x:Static lang:Resources.PlebsDontPayInfo}"
+                       Classes="text" />
           </StackPanel>
 
           <StackPanel Grid.Column="1" Grid.Row="2">
-            <TextBlock Name="FriendsTextBlock" Text="Friends Don't Pay" Classes="title2" />
-            <TextBlock Text="You won't pay the coordination fee for coins received from other Ginger coinjoins." Classes="text" />
+            <TextBlock Name="FriendsTextBlock" Text="{x:Static lang:Resources.FriendsDontPay}" Classes="title2" />
+            <TextBlock Text="{x:Static lang:Resources.FriendsDontPayInfo}"
+                       Classes="text" />
           </StackPanel>
         </Grid>
       </Carousel>

@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -255,7 +257,7 @@ public static class Logger
 		{
 			if (Interlocked.Increment(ref LoggingFailedCount) == 1) // If it only failed the first time, try log the failure.
 			{
-				LogDebug($"Logging failed: {ex}");
+				LogDebug($"Logging failed: {GetEnglishExceptionString(ex)}");
 			}
 
 			// If logging the failure is successful then clear the failure counter.
@@ -273,7 +275,7 @@ public static class Logger
 	/// </summary>
 	private static void Log(string message, Exception ex, LogLevel level, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1)
 	{
-		Log(level, message: $"{message} Exception: {ex}", callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+		Log(level, message: $"{message} Exception: {GetEnglishExceptionString(ex)}", callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
 	}
 
 	/// <summary>
@@ -281,7 +283,25 @@ public static class Logger
 	/// </summary>
 	private static void Log(Exception exception, LogLevel level, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1)
 	{
-		Log(level, exception.ToString(), callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+		Log(level, GetEnglishExceptionString(exception), callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+	}
+
+	private static readonly CultureInfo EnglishCulture = CultureInfo.GetCultureInfo("en-US");
+
+	private static string GetEnglishExceptionString(Exception ex)
+	{
+		var originalCulture = Thread.CurrentThread.CurrentUICulture;
+		try
+		{
+			// Set the culture to English for logging
+			Thread.CurrentThread.CurrentUICulture = EnglishCulture;
+			return ex.ToString();
+		}
+		finally
+		{
+			// Ensure the original culture is always restored
+			Thread.CurrentThread.CurrentUICulture = originalCulture;
+		}
 	}
 
 	#endregion ExceptionLoggingMethods

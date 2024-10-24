@@ -8,6 +8,7 @@ using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Models;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.ViewModels.Wallets.Send;
 
@@ -199,7 +200,7 @@ public partial class LabelSelectionViewModel : ViewModelBase
 		if (AllLabelsViewModel.FirstOrDefault(x => x.Value == CoinPocketHelper.UnlabelledFundsText) is { } unlabelledViewModel)
 		{
 			unlabelledViewModel.IsDangerous = true;
-			unlabelledViewModel.ToolTip = "There is no information about these people, only use it when necessary!";
+			unlabelledViewModel.ToolTip = Resources.NoInformationAboutPeople;
 		}
 
 		if (!_isSilent)

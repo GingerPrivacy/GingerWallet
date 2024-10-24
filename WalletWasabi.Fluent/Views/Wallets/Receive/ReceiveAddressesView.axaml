@@ -4,12 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:receive="clr-namespace:WalletWasabi.Fluent.ViewModels.Wallets.Receive"
              xmlns:sorting="clr-namespace:WalletWasabi.Fluent.Controls.Sorting"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="receive:ReceiveAddressesViewModel"
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.Views.Wallets.Receive.ReceiveAddressesView">
   <ContentArea Title="{Binding Title}"
-               Caption="You can choose to hide, modify, or display the addresses listed below."
+               Caption="{x:Static lang:Resources.ChooseHideModifyDisplayAddresses}"
                EnableCancel="{Binding EnableCancel}"
                EnableBack="{Binding EnableBack}"
                ScrollViewer.VerticalScrollBarVisibility="Disabled">

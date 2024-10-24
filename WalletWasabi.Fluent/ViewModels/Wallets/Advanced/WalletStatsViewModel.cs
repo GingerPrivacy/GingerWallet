@@ -1,17 +1,15 @@
 using System.Reactive.Disposables;
 using ReactiveUI;
+using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.ViewModels.Navigation;
 
 namespace WalletWasabi.Fluent.ViewModels.Wallets.Advanced;
 
 [NavigationMetaData(
-	Title = "Wallet Stats",
-	Caption = "Display wallet stats",
 	IconName = "nav_wallet_24_regular",
 	Order = 3,
-	Category = "Wallet",
-	Keywords = new[] { "Wallet", "Stats", },
+	Category = SearchCategory.Wallet,
 	NavBarPosition = NavBarPosition.None,
 	NavigationTarget = NavigationTarget.DialogScreen,
 	Searchable = false)]
@@ -22,6 +20,10 @@ public partial class WalletStatsViewModel : RoutableViewModel
 
 	private WalletStatsViewModel(IWalletModel wallet)
 	{
+		Title = "Wallet Stats";
+		Caption = "Display wallet stats";
+		Keywords = new[] { "Wallet", "Stats", };
+
 		_wallet = wallet;
 
 		NextCommand = ReactiveCommand.Create(() => Navigate().Clear());

@@ -1,12 +1,13 @@
+using WalletWasabi.Lang;
 using WalletWasabi.Models;
 
 namespace WalletWasabi.Fluent.ViewModels.CoinJoinProfiles;
 
 internal class SpeedyCoinJoinProfileViewModel : CoinJoinProfileViewModelBase
 {
-	public override string Title => "Maximize Speed";
+	public override string Title => Resources.SpeedyCoinJoinProfileTitle;
 
-	public override string Description => "Getting things done. Geared towards speed and convenience.";
+	public override string Description => Resources.SpeedyCoinJoinProfileDescription;
 
 	public override int SafeMiningFeeRate => 30;
 

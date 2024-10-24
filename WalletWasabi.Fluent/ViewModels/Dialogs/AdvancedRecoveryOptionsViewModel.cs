@@ -7,13 +7,15 @@ using WalletWasabi.Models;
 
 namespace WalletWasabi.Fluent.ViewModels.Dialogs;
 
-[NavigationMetaData(Title = "Advanced Recovery Options", NavigationTarget = NavigationTarget.CompactDialogScreen)]
+[NavigationMetaData(NavigationTarget = NavigationTarget.CompactDialogScreen)]
 public partial class AdvancedRecoveryOptionsViewModel : DialogViewModelBase<int?>
 {
 	[AutoNotify] private string _minGapLimit;
 
 	public AdvancedRecoveryOptionsViewModel(int minGapLimit)
 	{
+		Title = Lang.Resources.AdvancedRecoveryOptionsViewModelTitle;
+
 		_minGapLimit = minGapLimit.ToString();
 
 		this.ValidateProperty(x => x.MinGapLimit, ValidateMinGapLimit);

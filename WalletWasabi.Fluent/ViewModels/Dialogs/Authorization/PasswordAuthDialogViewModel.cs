@@ -1,20 +1,25 @@
 using System.Threading.Tasks;
 using WalletWasabi.Fluent.Models.Wallets;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.ViewModels.Dialogs.Authorization;
 
-[NavigationMetaData(Title = "Enter your passphrase", NavigationTarget = NavigationTarget.CompactDialogScreen)]
+[NavigationMetaData(NavigationTarget = NavigationTarget.CompactDialogScreen)]
 public partial class PasswordAuthDialogViewModel : AuthorizationDialogBase
 {
 	private readonly IWalletModel _wallet;
 	[AutoNotify] private string _password;
 
-	public PasswordAuthDialogViewModel(IWalletModel wallet, string continueText = "Continue")
+	public PasswordAuthDialogViewModel(IWalletModel wallet, string? continueText = null)
 	{
+		continueText ??= Resources.Continue;
+
 		if (wallet.IsHardwareWallet)
 		{
 			throw new InvalidOperationException("Passphrase authorization is not possible on hardware wallets.");
 		}
+
+		Title = "Enter your passphrase";
 
 		ContinueText = continueText;
 

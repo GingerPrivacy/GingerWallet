@@ -1,12 +1,13 @@
+using System.Globalization;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.ViewModels.Navigation;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.ViewModels.Wallets;
 
-[NavigationMetaData(Title = null)]
 public partial class LoadingViewModel : RoutableViewModel
 {
 	private readonly IWalletModel _wallet;
@@ -33,11 +34,12 @@ public partial class LoadingViewModel : RoutableViewModel
 	private void UpdateStatus(double percent, TimeSpan remainingTimeSpan)
 	{
 		Percent = percent;
-		var percentText = $"{Percent}% completed";
+		var percentText = string.Format(CultureInfo.CurrentCulture, Resources.LoadingViewModelPercentCompleted, Percent);
 
 		var userFriendlyTime = TextHelpers.TimeSpanToFriendlyString(remainingTimeSpan);
-		var remainingTimeText = string.IsNullOrEmpty(userFriendlyTime) ? "" : $"- {userFriendlyTime} remaining";
-
+		var remainingTimeText = string.IsNullOrEmpty(userFriendlyTime)
+			? ""
+			: string.Format(CultureInfo.CurrentCulture, Resources.LoadingViewModelTimeRemaining, userFriendlyTime);
 		StatusText = $"{percentText} {remainingTimeText}";
 	}
 }

@@ -6,14 +6,15 @@
              mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371"
              x:DataType="authorization:HardwareWalletAuthDialogViewModel"
              x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.Dialogs.Authorization.HardwareWalletAuthDialogView">
   <ContentArea Title="{Binding Title}"
-                 Caption="Connect your hardware wallet, press Continue and then follow the instructions on the device."
+                 Caption="{x:Static lang:Resources.HardwareWalletAuthDialogViewModelCaption}"
                  MaxWidth="500"
-                 CancelContent="Cancel"
+                 CancelContent="{x:Static lang:Resources.Cancel}"
                  EnableCancel="{Binding EnableCancel}"
                  EnableBack="{Binding EnableBack}"
-                 EnableNext="True" NextContent="Continue"
+                 EnableNext="True" NextContent="{x:Static lang:Resources.Continue}"
                  IsBusy="{Binding IsBusy}"
                  ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <StackPanel>

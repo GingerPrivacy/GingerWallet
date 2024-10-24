@@ -12,11 +12,12 @@ using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.ViewModels.AddWallet.HardwareWallet;
 
-[NavigationMetaData(Title = "Hardware Wallet")]
 public partial class DetectedHardwareWalletViewModel : RoutableViewModel
 {
 	private DetectedHardwareWalletViewModel(WalletCreationOptions.ConnectToHardwareWallet options)
 	{
+		Title = "Hardware Wallet";
+
 		var (walletName, device) = options;
 
 		ArgumentException.ThrowIfNullOrEmpty(walletName);

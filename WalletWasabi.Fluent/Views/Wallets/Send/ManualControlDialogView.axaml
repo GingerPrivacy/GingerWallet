@@ -5,11 +5,12 @@
              xmlns:coins="clr-namespace:WalletWasabi.Fluent.Views.Wallets.Coins"
              x:DataType="vm:ManualControlDialogViewModel"
              x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.Wallets.Send.ManualControlDialogView">
 
   <ContentArea Title="{Binding Title}"
                Caption="Select the coins that are allowed for the transaction to use"
-               EnableNext="True" NextContent="Continue"
+               EnableNext="True" NextContent="{x:Static lang:Resources.Continue}"
                EnableCancel="{Binding EnableCancel}"
                EnableBack="{Binding EnableBack}"
                ScrollViewer.VerticalScrollBarVisibility="Disabled"
@@ -26,13 +27,12 @@
 
         <ToggleButton Theme="{StaticResource DialogSelectAllButton}"
                       Command="{Binding ToggleSelectionCommand}"
-                      IsChecked="{Binding HasSelection}"/>
+                      IsChecked="{Binding HasSelection}" />
       </StackPanel>
-
     </ContentArea.TopContent>
     <ContentArea.BottomContent>
       <!-- Selected Amount -->
-      <AmountControl Amount="{Binding SelectedAmount^}" Classes="Material" HorizontalAlignment="Center"/>
+      <AmountControl Amount="{Binding SelectedAmount^}" Classes="Material" HorizontalAlignment="Center" />
     </ContentArea.BottomContent>
     <coins:CoinListView DataContext="{Binding CoinList}" />
   </ContentArea>

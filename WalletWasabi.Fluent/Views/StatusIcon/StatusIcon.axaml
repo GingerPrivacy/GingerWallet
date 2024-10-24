@@ -6,6 +6,7 @@
              xmlns:models="clr-namespace:WalletWasabi.Fluent.Models"
              xmlns:statusIcon="clr-namespace:WalletWasabi.Fluent.ViewModels.StatusIcon"
              xmlns:st="clr-namespace:WalletWasabi.Fluent.Views.StatusIcon"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              mc:Ignorable="d" d:DesignWidth="671" d:DesignHeight="32"
              x:DataType="statusIcon:StatusIconViewModel"
              x:CompileBindings="True"
@@ -68,7 +69,7 @@
                       HorizontalAlignment="Center"
                       Height="30" />
             <TextBlock DockPanel.Dock="Bottom"
-                       Text="The reported balance might not be accurate, and some other features may not be available, because Ginger was unable to connect to the server. Retrying to connect."
+                       Text="{x:Static lang:Resources.BalanceNotAccurateServerConnection}"
                        TextWrapping="Wrap"
                        TextAlignment="Center" />
           </DockPanel>
@@ -91,8 +92,7 @@
                 <PathIcon Data="{StaticResource connector_regular}" />
               </StatusItem.Icon>
             </StatusItem>
-            <StatusItem
-              Title="Peers" StatusText="{Binding HealthMonitor.Peers, Mode=OneWay, StringFormat={}{0} connected}">
+            <StatusItem Title="Peers" StatusText="{Binding HealthMonitor.Peers, Mode=OneWay, Converter={x:Static converters:StatusConverters.PeerStatusStringConverter}}">
               <StatusItem.Icon>
                 <PathIcon Data="{StaticResource entities_regular}" />
               </StatusItem.Icon>
@@ -121,7 +121,7 @@
 
             <Separator Margin="-12 0 -12 6" />
 
-            <StatusItem Title="Update available"
+            <StatusItem Title="{x:Static lang:Resources.UpdateAvailable}"
                           StatusText="{Binding VersionText}">
               <StatusItem.Icon>
                 <PathIcon Data="{StaticResource arrow_clockwise_regular}" />
@@ -130,20 +130,20 @@
             <Button IsVisible="{Binding HealthMonitor.IsReadyToInstall}" Classes="activeHyperLink" Command="{Binding UpdateCommand}">
               <StackPanel Spacing="5" Orientation="Horizontal">
                 <PathIcon Data="{StaticResource arrow_download_regular}" Height="13" />
-                <AccessText Text="Close and Update" />
+                <AccessText Text="{x:Static lang:Resources.CloseAndUpdate}" />
               </StackPanel>
             </Button>
             <Button IsVisible="{Binding !HealthMonitor.IsReadyToInstall}" Classes="activeHyperLink" Command="{Binding ManualUpdateCommand}">
               <StackPanel Spacing="5" Orientation="Horizontal">
                 <PathIcon Data="{StaticResource arrow_download_regular}" Height="13" />
-                <AccessText Text="Update" />
+                <AccessText Text="{x:Static lang:Resources.Update}" />
               </StackPanel>
             </Button>
 
             <Button Classes="activeHyperLink" Command="{Binding AskMeLaterCommand}">
               <StackPanel Spacing="5" Orientation="Horizontal">
                 <PathIcon Data="{StaticResource clock_regular}" Height="13" />
-                <AccessText Text="Ask me later" />
+                <AccessText Text="{x:Static lang:Resources.AskMeLater}" />
               </StackPanel>
             </Button>
           </StackPanel>

@@ -6,13 +6,14 @@
              mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371"
              x:CompileBindings="True"
              x:DataType="create:RecoveryWordsViewModel"
+             xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.AddWallet.Create.RecoveryWordsView">
   <ContentArea Title="{Binding Title}"
-                 Caption="Write down the recovery words in the correct order and store them in a safe place. They are needed to recover your wallet."
-                 CancelContent="Cancel"
+                 Caption="{x:Static lang:Resources.RecoveryWordsViewCaption}"
+                 CancelContent="{x:Static lang:Resources.Cancel}"
                  EnableCancel="{Binding EnableCancel}"
                  EnableBack="{Binding EnableBack}"
-                 EnableNext="True" NextContent="Continue" FocusNext="True"
+                 EnableNext="True" NextContent="{x:Static lang:Resources.Continue}" FocusNext="True"
                  ScrollViewer.HorizontalScrollBarVisibility="Auto">
     <Grid>
       <Grid.RowDefinitions>
@@ -26,7 +27,7 @@
       <Panel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Background="Transparent">
         <Panel.ContextMenu>
           <ContextMenu>
-            <MenuItem Header="Copy recovery words"
+            <MenuItem Header="{x:Static lang:Resources.RecoveryWordsViewCopyRecoveryWords}"
                       Command="{Binding CopyToClipboardCommand}">
               <MenuItem.Icon>
                 <PathIcon Data="{StaticResource clipboard_text_regular}" />
@@ -65,7 +66,7 @@
       <InfoMessage Opacity="0.5"
                      HorizontalAlignment="Center"
                      Grid.Row="4">
-        <TextBlock Text="You will not be able to see these words again once the wallet is created." />
+        <TextBlock Text="{x:Static lang:Resources.RecoveryWordsViewNotSeeAfter}" />
       </InfoMessage>
     </Grid>
   </ContentArea>

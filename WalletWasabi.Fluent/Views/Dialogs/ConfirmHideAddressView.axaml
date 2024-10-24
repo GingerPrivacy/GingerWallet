@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:dialog="using:WalletWasabi.Fluent.ViewModels.Dialogs"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371"
              x:DataType="dialog:ConfirmHideAddressViewModel"
              x:CompileBindings="True"
@@ -18,9 +19,9 @@
         </Viewbox>
       </QuestionControl.IconContent>
       <StackPanel Spacing="10">
-        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Do you wish to hide the address with the following labels?" />
+        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="{x:Static lang:Resources.WishToHideAddressWithLabels}" />
         <LabelsItemsPresenter HorizontalAlignment="Center" ItemsSource="{Binding Labels}" />
-        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="This can not be undone." />
+        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="{x:Static lang:Resources.ThisCannotBeUndone}" />
       </StackPanel>
     </QuestionControl>
   </ContentArea>

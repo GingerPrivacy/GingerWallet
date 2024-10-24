@@ -1,20 +1,19 @@
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using ReactiveUI;
+using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.ViewModels.Navigation;
 using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.ViewModels.AddWallet;
 
 [NavigationMetaData(
-	Title = "Legal Document",
-	Caption = "Display terms and conditions",
 	Order = 3,
-	Category = "General",
-	Keywords = new[] { "View", "Legal", "Document", "Terms", "Conditions", "Privacy", "Policy", "Statement" },
+	Category = SearchCategory.General,
 	IconName = "info_regular",
 	Searchable = true,
-	NavigationTarget = NavigationTarget.DialogScreen)]
+	NavigationTarget = NavigationTarget.DialogScreen,
+	IsLocalized = true)]
 public partial class LegalDocumentsViewModel : RoutableViewModel
 {
 	[AutoNotify] private string? _content;

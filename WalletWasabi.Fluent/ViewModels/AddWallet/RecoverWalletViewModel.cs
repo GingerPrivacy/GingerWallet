@@ -18,7 +18,6 @@ using WalletWasabi.Fluent.Models;
 
 namespace WalletWasabi.Fluent.ViewModels.AddWallet;
 
-[NavigationMetaData(Title = "Recovery Words")]
 public partial class RecoverWalletViewModel : RoutableViewModel
 {
 	[AutoNotify] private IEnumerable<string>? _suggestions;
@@ -27,6 +26,8 @@ public partial class RecoverWalletViewModel : RoutableViewModel
 
 	private RecoverWalletViewModel(WalletCreationOptions.RecoverWallet options)
 	{
+		Title = Lang.Resources.RecoveryWords;
+
 		Suggestions = new Mnemonic(Wordlist.English, WordCount.Twelve).WordList.GetWords();
 
 		Mnemonics.ToObservableChangeSet().ToCollection()
@@ -60,7 +61,7 @@ public partial class RecoverWalletViewModel : RoutableViewModel
 		var (walletName, _, _, _) = options;
 		ArgumentException.ThrowIfNullOrEmpty(walletName);
 
-		var password = await Navigate().To().CreatePasswordDialog("Add Passphrase", "If you used a passphrase when you created your wallet you must type it below, otherwise leave this empty.").GetResultAsync();
+		var password = await Navigate().To().CreatePasswordDialog(Lang.Resources.EnterPassphrase, Lang.Resources.RecoverWalletViewModelPassphraseMessage).GetResultAsync();
 		if (password is not { } || CurrentMnemonics is not { IsValidChecksum: true } currentMnemonics)
 		{
 			return;

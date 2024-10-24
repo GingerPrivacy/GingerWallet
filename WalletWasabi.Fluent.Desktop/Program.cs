@@ -18,10 +18,12 @@ using System.Diagnostics.CodeAnalysis;
 using WalletWasabi.Fluent.Desktop.Extensions;
 using System.Net.Sockets;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using WalletWasabi.Daemon;
 using LogLevel = WalletWasabi.Logging.LogLevel;
 using System.Threading;
 using System.Reactive.Linq;
+using WalletWasabi.Extensions;
 
 namespace WalletWasabi.Fluent.Desktop;
 
@@ -185,10 +187,15 @@ public static class WasabiAppExtensions
 
 							// Make sure that wallet startup set correctly regarding RunOnSystemStartup
 							await StartupHelper.ModifyStartupSettingAsync(uiConfig.RunOnSystemStartup).ConfigureAwait(false);
-						}, startInBg: runGuiInBackground))
+						},
+						startInBg: runGuiInBackground))
 					.UseReactiveUI()
 					.SetupAppBuilder()
-					.AfterSetup(_ => ThemeHelper.ApplyTheme(uiConfig.DarkModeEnabled ? Theme.Dark : Theme.Light));
+					.AfterSetup(_ =>
+					{
+						Lang.Resources.Culture = new CultureInfo(((DisplayLanguage)app.Global!.Config.Language).GetDescription()!);
+						ThemeHelper.ApplyTheme(uiConfig.DarkModeEnabled ? Theme.Dark : Theme.Light);
+					});
 
 				if (app.TerminateService.CancellationToken.IsCancellationRequested)
 				{

@@ -41,6 +41,7 @@ public class NullApplicationSettings : IApplicationSettings
 	public bool DoUpdateOnClose { get; set; }
 	public BrowserTypeDropdownListEnum SelectedBrowser { get; set; }
 	public string BrowserPath { get; set; } = "";
+	public DisplayLanguage SelectedDisplayLanguage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 	public bool CheckIfRestartIsNeeded(PersistentConfig config)
 	{

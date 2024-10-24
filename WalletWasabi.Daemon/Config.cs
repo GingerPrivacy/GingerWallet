@@ -136,6 +136,9 @@ public class Config
 			[nameof(AbsoluteMinInputCount)] = (
 				"Minimum number of inputs the client is willing to accept to participate into a round",
 				GetLongValue("AbsoluteMinInputCount", PersistentConfig.AbsoluteMinInputCount, cliArgs)),
+			[nameof(Language)] = (
+				"Display language of the application",
+				GetLongValue("Language", PersistentConfig.DisplayLanguage, cliArgs)),
 		};
 
 		// Check if any config value is overridden (either by an environment value, or by a CLI argument).
@@ -190,6 +193,7 @@ public class Config
 	public bool BlockOnlyMode => GetEffectiveValue<BoolValue, bool>(nameof(BlockOnlyMode));
 	public string LogLevel => GetEffectiveValue<StringValue, string>(nameof(LogLevel));
 	public LogMode[] LogModes => GetEffectiveValue<LogModeArrayValue, LogMode[]>(nameof(LogModes));
+	public int Language => GetEffectiveValue<IntValue, int>(nameof(Language));
 
 	public bool EnableGpu => GetEffectiveValue<BoolValue, bool>(nameof(EnableGpu));
 	public string CoordinatorIdentifier => GetEffectiveValue<StringValue, string>(nameof(CoordinatorIdentifier));

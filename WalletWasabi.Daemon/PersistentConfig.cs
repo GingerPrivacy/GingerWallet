@@ -9,6 +9,7 @@ using WalletWasabi.Helpers;
 using WalletWasabi.Interfaces;
 using WalletWasabi.JsonConverters;
 using WalletWasabi.JsonConverters.Bitcoin;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Daemon;
 
@@ -129,6 +130,10 @@ public record PersistentConfig : IConfigNg
 	[JsonPropertyName("AbsoluteMinInputCount")]
 	public int AbsoluteMinInputCount { get; init; } = Constants.DefaultAbsoluteMinInputCount;
 
+	[JsonPropertyName("Language")]
+	[JsonConverter(typeof(DisplayLanguageJsonConverter))]
+	public int DisplayLanguage { get; init; } = (int)Models.DisplayLanguage.English;
+
 	public bool DeepEquals(PersistentConfig other)
 	{
 		bool useTorIsEqual = Config.ObjectToTorMode(UseTor) == Config.ObjectToTorMode(other.UseTor);
@@ -159,7 +164,8 @@ public record PersistentConfig : IConfigNg
 			CoordinatorIdentifier == other.CoordinatorIdentifier &&
 			MaxCoordinationFeeRate == other.MaxCoordinationFeeRate &&
 			MaxCoinJoinMiningFeeRate == other.MaxCoinJoinMiningFeeRate &&
-			AbsoluteMinInputCount == other.AbsoluteMinInputCount;
+			AbsoluteMinInputCount == other.AbsoluteMinInputCount &&
+			DisplayLanguage == other.DisplayLanguage;
 	}
 
 	public EndPoint GetBitcoinP2pEndPoint()

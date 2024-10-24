@@ -13,6 +13,7 @@ using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Helpers;
 using WalletWasabi.Hwi.Models;
+using WalletWasabi.Lang;
 using WalletWasabi.Models;
 using WalletWasabi.Wallets;
 
@@ -60,7 +61,7 @@ public partial class WalletRepository : ReactiveObject
 
 	public string GetNextWalletName()
 	{
-		return Services.WalletManager.WalletDirectories.GetNextWalletName("Wallet");
+		return Services.WalletManager.WalletDirectories.GetNextWalletName(Resources.Wallet);
 	}
 
 	public async Task<IWalletSettingsModel> NewWalletAsync(WalletCreationOptions options, CancellationToken? cancelToken = null)

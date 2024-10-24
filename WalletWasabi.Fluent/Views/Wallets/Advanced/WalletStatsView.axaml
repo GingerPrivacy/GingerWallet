@@ -6,9 +6,10 @@
              xmlns:advanced="clr-namespace:WalletWasabi.Fluent.ViewModels.Wallets.Advanced"
              x:DataType="advanced:WalletStatsViewModel"
              x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.Wallets.Advanced.WalletStatsView">
   <ContentArea Title="{Binding Title}"
-               EnableNext="True" NextContent="Done">
+               EnableNext="True" NextContent="{x:Static lang:Resources.Done}">
     <StackPanel Spacing="10" Margin="0 20 20 0">
       <PreviewItem Label="Number of coins (UTXOs)"
                    CopyableContent="{Binding Model.CoinCount}">

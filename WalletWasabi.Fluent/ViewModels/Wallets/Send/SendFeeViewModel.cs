@@ -12,11 +12,11 @@ using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
 using WalletWasabi.Logging;
 using WalletWasabi.Wallets;
 using WalletWasabi.Blockchain.Analysis.FeesEstimation;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.ViewModels.Wallets.Send;
 
 [NavigationMetaData(
-	Title = "Send",
 	Caption = "",
 	IconName = "wallet_action_send",
 	NavBarPosition = NavBarPosition.None,
@@ -30,6 +30,7 @@ public partial class SendFeeViewModel : DialogViewModelBase<FeeRate>
 
 	private SendFeeViewModel(Wallet wallet, TransactionInfo transactionInfo, bool isSilent)
 	{
+		Title = Resources.WalletSend;
 		_isSilent = isSilent;
 		IsBusy = isSilent;
 		_wallet = wallet;
@@ -75,8 +76,8 @@ public partial class SendFeeViewModel : DialogViewModelBase<FeeRate>
 	private async Task FeeEstimationsAreNotAvailableAsync()
 	{
 		await ShowErrorAsync(
-			"Transaction fee",
-			"Transaction fee estimations are not available at the moment. Try again later or you can enter the fee rate manually.",
+			Resources.TransactionFee,
+			Resources.TransactionFeeEstimationsUnavailable,
 			"",
 			NavigationTarget.CompactDialogScreen);
 

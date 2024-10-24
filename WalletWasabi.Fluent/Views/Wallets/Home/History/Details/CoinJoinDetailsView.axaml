@@ -8,9 +8,10 @@
              x:DataType="details:CoinJoinDetailsViewModel"
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.Views.Wallets.Home.History.Details.CoinJoinDetailsView"
+             xmlns:lang="using:WalletWasabi.Lang"
              Name="CoinJoinDetails">
   <ContentArea Title="{Binding Title}"
-                 NextContent="Done" EnableNext="True"
+                 NextContent="{x:Static lang:Resources.Done}" EnableNext="True"
                  EnableCancel="{Binding EnableCancel}">
     <StackPanel Spacing="15">
 

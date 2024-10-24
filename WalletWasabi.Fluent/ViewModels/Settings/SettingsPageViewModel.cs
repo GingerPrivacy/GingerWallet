@@ -7,26 +7,26 @@ using System.Windows.Input;
 using ReactiveUI;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Infrastructure;
+using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
 using WalletWasabi.Fluent.ViewModels.SearchBar.Settings;
+using WalletWasabi.Lang;
 using WalletWasabi.Services;
 
 namespace WalletWasabi.Fluent.ViewModels.Settings;
 
 [AppLifetime]
 [NavigationMetaData(
-	Title = "Settings",
-	Caption = "Manage appearance, privacy and other settings",
 	Order = 1,
-	Category = "General",
-	Keywords = new[] { "Settings", "General", "User", "Interface", "Advanced" },
+	Category = SearchCategory.General,
 	IconName = "nav_settings_24_regular",
 	IconNameFocused = "nav_settings_24_filled",
 	Searchable = false,
 	NavBarPosition = NavBarPosition.Bottom,
 	NavigationTarget = NavigationTarget.DialogScreen,
-	NavBarSelectionMode = NavBarSelectionMode.Button)]
+	NavBarSelectionMode = NavBarSelectionMode.Button,
+	IsLocalized = true)]
 public partial class SettingsPageViewModel : DialogViewModelBase<Unit>
 {
 	[AutoNotify] private bool _isModified;
@@ -59,8 +59,8 @@ public partial class SettingsPageViewModel : DialogViewModelBase<Unit>
 
 		// Show restart notification when needed only if this page is not active.
 		UiContext.ApplicationSettings.IsRestartNeeded
-				 .Where(x => x && !IsActive && !_isDisplayed)
-				 .Do(_ => NotificationHelpers.Show(new RestartViewModel("To apply the new setting, Ginger Wallet needs to be restarted")))
+				 .Where(x => x && !IsActive && !_isDisplayed && !UiContext.ApplicationSettings.Oobe)
+				 .Do(_ => NotificationHelpers.Show(new RestartViewModel(Resources.ApplyNewSettingRestart)))
 				 .Subscribe();
 
 		OpenSecurityTabCommand = ReactiveCommand.CreateFromTask(async () =>

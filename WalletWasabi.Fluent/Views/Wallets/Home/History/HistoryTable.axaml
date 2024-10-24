@@ -6,6 +6,7 @@
              xmlns:historyItems="clr-namespace:WalletWasabi.Fluent.ViewModels.Wallets.Home.History.HistoryItems"
              xmlns:treeDataGrid="clr-namespace:WalletWasabi.Fluent.TreeDataGrid"
              xmlns:sorting="clr-namespace:WalletWasabi.Fluent.Controls.Sorting"
+             xmlns:lang="using:WalletWasabi.Lang"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="history:HistoryViewModel"
              x:CompileBindings="True"
@@ -15,21 +16,21 @@
   <UserControl.Resources>
 
     <ContextMenu x:Key="TransactionContextMenu" x:DataType="historyItems:TransactionHistoryItemViewModel">
-      <MenuItem Header="Copy Transaction ID"
+      <MenuItem Header="{x:Static lang:Resources.CopyTransactionId}"
                 Command="{Binding ClipboardCopyCommand}"
                 CommandParameter="{Binding Transaction.Id, StringFormat={}{0}}">
         <MenuItem.Icon>
           <PathIcon Data="{StaticResource transaction_id}" />
         </MenuItem.Icon>
       </MenuItem>
-      <MenuItem Header="Copy Label"
+      <MenuItem Header="{x:Static lang:Resources.CopyLabel}"
                 Command="{Binding ClipboardCopyCommand}"
                 CommandParameter="{Binding Transaction.Labels, StringFormat={}{0}}">
         <MenuItem.Icon>
           <PathIcon Data="{StaticResource entities_regular}" />
         </MenuItem.Icon>
       </MenuItem>
-      <MenuItem Header="Copy Amount"
+      <MenuItem Header="{x:Static lang:Resources.CopyAmount}"
                 Command="{Binding  ClipboardCopyCommand}"
                 CommandParameter="{Binding Transaction.DisplayAmount, StringFormat={}{0}}"
                 IsVisible="{Binding Transaction.DisplayAmount, Converter={x:Static ObjectConverters.IsNotNull}}">
@@ -62,7 +63,7 @@
         </MenuItem.Icon>
       </MenuItem>
       <Separator IsVisible="{Binding TransactionOperationsVisible}" />
-      <MenuItem Header="Show Details"
+      <MenuItem Header="{x:Static lang:Resources.ShowDetails}"
                 Command="{Binding ShowDetailsCommand}">
         <MenuItem.Icon>
           <PathIcon Data="{StaticResource details_regular}" />
@@ -71,7 +72,7 @@
     </ContextMenu>
 
     <ContextMenu x:Key="CoinJoinContextMenu" x:DataType="historyItems:CoinJoinHistoryItemViewModel">
-      <MenuItem Header="Copy Transaction ID"
+      <MenuItem Header="{x:Static lang:Resources.CopyTransactionId}"
                 Command="{Binding ClipboardCopyCommand}"
                 CommandParameter="{Binding Transaction.Id, StringFormat={}{0}}">
         <MenuItem.Icon>
@@ -79,7 +80,7 @@
         </MenuItem.Icon>
       </MenuItem>
       <Separator />
-      <MenuItem Header="Show Details"
+      <MenuItem Header="{x:Static lang:Resources.ShowDetails}"
                 Command="{Binding ShowDetailsCommand}">
         <MenuItem.Icon>
           <PathIcon Data="{StaticResource details_regular}" />
@@ -88,7 +89,7 @@
     </ContextMenu>
 
     <ContextMenu x:Key="CoinJoinsTransactionContextMenu" x:DataType="historyItems:CoinJoinsHistoryItemViewModel">
-      <MenuItem Header="Show Details"
+      <MenuItem Header="{x:Static lang:Resources.ShowDetails}"
                 Command="{Binding ShowDetailsCommand}">
         <MenuItem.Icon>
           <PathIcon Data="{StaticResource details_regular}" />
@@ -97,20 +98,20 @@
     </ContextMenu>
 
     <ContextMenu x:Key="SpeedUpContextMenu" x:DataType="historyItems:SpeedUpHistoryItemViewModel">
-      <MenuItem Header="Speed Up Transaction" IsVisible="{Binding CanBeSpedUp}"
+      <MenuItem Header="{x:Static lang:Resources.SpeedUpTransaction}" IsVisible="{Binding CanBeSpedUp}"
                 Command="{Binding SpeedUpTransactionCommand}">
         <MenuItem.Icon>
           <PathIcon Data="{StaticResource rocket_regular}" />
         </MenuItem.Icon>
       </MenuItem>
-      <MenuItem Header="Cancel Transaction" IsVisible="{Binding Transaction.CanCancelTransaction}"
+      <MenuItem Header="{x:Static lang:Resources.CancelTransaction}" IsVisible="{Binding Transaction.CanCancelTransaction}"
                 Command="{Binding CancelTransactionCommand}">
         <MenuItem.Icon>
           <PathIcon Data="{StaticResource dismiss_light}" />
         </MenuItem.Icon>
       </MenuItem>
       <Separator IsVisible="{Binding TransactionOperationsVisible}" />
-      <MenuItem Header="Show Details"
+      <MenuItem Header="{x:Static lang:Resources.ShowDetails}"
                 Command="{Binding ShowDetailsCommand}">
         <MenuItem.Icon>
           <PathIcon Data="{StaticResource details_regular}" />
@@ -121,8 +122,8 @@
 
   <DockPanel>
     <StackPanel Margin="0 20 0 20" HorizontalAlignment="Left" DockPanel.Dock="Top" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
-      <TextBlock VerticalAlignment="Center" Text="Transactions" FontSize="{StaticResource FontSizeH5}" />
-      <Button IsVisible="{Binding !IsTransactionHistoryEmpty}" Theme="{StaticResource HistorySortButton}" ToolTip.Tip="Sorting">
+      <TextBlock VerticalAlignment="Center" Text="{x:Static lang:Resources.WalletTransactions}" FontSize="{StaticResource FontSizeH5}" />
+      <Button IsVisible="{Binding !IsTransactionHistoryEmpty}" Theme="{StaticResource HistorySortButton}" ToolTip.Tip="{x:Static lang:Resources.Sorting}">
         <Button.Flyout>
           <Flyout Placement="BottomEdgeAlignedLeft">
             <sorting:SortControl Sortables="{Binding Sortables}" />

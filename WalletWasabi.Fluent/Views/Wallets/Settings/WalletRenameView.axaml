@@ -5,9 +5,10 @@
              xmlns:vm="clr-namespace:WalletWasabi.Fluent.ViewModels.Wallets.Settings"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="WalletWasabi.Fluent.Views.Wallets.Settings.WalletRenameView"
-             x:DataType="vm:WalletRenameViewModel" >
+             xmlns:lang="using:WalletWasabi.Lang"
+             x:DataType="vm:WalletRenameViewModel">
   <ContentArea Title="{Binding Title}"
-                 Caption="You can modify the name of your wallet"
+                 Caption="{x:Static lang:Resources.WalletRenameCaption}"
                  EnableBack="{Binding EnableBack}"
                  EnableCancel="{Binding EnableCancel}"
                  EnableNext="True" NextContent="Save"
@@ -15,7 +16,7 @@
     <TextBox MaxLength="{StaticResource WalletNameMaxLength}"
              Text="{Binding NewWalletName}"
              VerticalAlignment="Top"
-             Watermark="Wallet name">
+             Watermark="{x:Static lang:Resources.WalletName}">
       <Interaction.Behaviors>
         <FocusOnAttachedBehavior />
         <TextBoxSelectAllTextBehavior />

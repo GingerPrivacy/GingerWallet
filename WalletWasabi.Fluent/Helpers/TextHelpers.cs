@@ -9,7 +9,7 @@ namespace WalletWasabi.Fluent.Helpers;
 
 public static partial class TextHelpers
 {
-	public static string AddSIfPlural(int n) => n > 1 ? "s" : "";
+	public static string AddSIfPlural(int n) => n > 1 ? Lang.Resources.Plural : "";
 
 	public static string CloseSentenceIfZero(params int[] counts) => counts.All(x => x == 0) ? "." : " ";
 
@@ -31,10 +31,10 @@ public static partial class TextHelpers
 		var textMembers = new List<string>();
 		string result = "";
 
-		AddIfNotEmpty(textMembers, ConcatNumberAndUnit(time.Days, "day"));
-		AddIfNotEmpty(textMembers, ConcatNumberAndUnit(time.Hours, "hour"));
-		AddIfNotEmpty(textMembers, ConcatNumberAndUnit(time.Minutes, "minute"));
-		AddIfNotEmpty(textMembers, ConcatNumberAndUnit(time.Seconds, "second"));
+		AddIfNotEmpty(textMembers, ConcatNumberAndUnit(time.Days, Lang.Resources.day));
+		AddIfNotEmpty(textMembers, ConcatNumberAndUnit(time.Hours, Lang.Resources.hour));
+		AddIfNotEmpty(textMembers, ConcatNumberAndUnit(time.Minutes, Lang.Resources.minute));
+		AddIfNotEmpty(textMembers, ConcatNumberAndUnit(time.Seconds, Lang.Resources.second));
 
 		for (int i = 0; i < textMembers.Count; i++)
 		{
@@ -46,7 +46,7 @@ public static partial class TextHelpers
 			}
 			else if (textMembers.Count > 1 && i == textMembers.Count - 2)
 			{
-				result += " and ";
+				result += $" {Lang.Resources.and} ";
 			}
 		}
 

@@ -6,13 +6,14 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:PrivacyControlViewModel"
              x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.Wallets.Send.PrivacyControlView">
-  <ContentArea Title="Send - Control your privacy"
-                 Caption="Choose who can and can't see this transaction"
-                 EnableBack="{Binding EnableBack}"
-                 EnableNext="True" NextContent="Continue"
-                 IsBusy="{Binding IsBusy}"
-                 ScrollViewer.VerticalScrollBarVisibility="Disabled">
+  <ContentArea Title="{x:Static lang:Resources.LabelManagement}"
+               Caption="{x:Static lang:Resources.LabelManagement}"
+               EnableBack="{Binding EnableBack}"
+               EnableNext="True" NextContent="{x:Static lang:Resources.Continue}"
+               IsBusy="{Binding IsBusy}"
+               ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <ContentArea.Styles>
       <Style Selector="Button.faded">
         <Style.Animations>
@@ -46,9 +47,11 @@
         <DockPanel>
           <Border DockPanel.Dock="Top" Padding="20 20 20 0">
             <StackPanel Orientation="Horizontal" Spacing="10">
-              <PathIcon Data="{StaticResource shield_regular}" Foreground="{DynamicResource PrivacyControlWhiteListHeaderForeground}" Height="20" />
-              <TextBlock VerticalAlignment="Bottom" FontSize="18" Margin="0 2 0 0" Foreground="{DynamicResource PrivacyControlWhiteListHeaderForeground}"
-                         Text="Could see this transaction: " />
+              <PathIcon Data="{StaticResource shield_regular}"
+                        Foreground="{DynamicResource PrivacyControlWhiteListHeaderForeground}" Height="20" />
+              <TextBlock VerticalAlignment="Bottom" FontSize="18" Margin="0 2 0 0"
+                         Foreground="{DynamicResource PrivacyControlWhiteListHeaderForeground}"
+                         Text="{x:Static lang:Resources.CouldSeeThisTransaction}" />
             </StackPanel>
           </Border>
 
@@ -71,21 +74,21 @@
               </ItemsControl.ItemsPanel>
               <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="vm:LabelViewModel">
-                  <Button Classes="plain" Margin="5" Command="{Binding ClickedCommand}" Classes.faded="{Binding IsFaded}" ToolTip.Tip="{Binding ToolTip}">
+                  <Button Classes="plain" Margin="5" Command="{Binding ClickedCommand}"
+                          Classes.faded="{Binding IsFaded}" ToolTip.Tip="{Binding ToolTip}">
                     <Interaction.Behaviors>
                       <BindPointerOverBehavior IsPointerOver="{Binding IsPointerOver}" />
                     </Interaction.Behaviors>
                     <TagControl Classes.highlighted="{Binding IsHighlighted}"
-                                  Classes.dangerous="{Binding IsDangerous}"
-                                  Content="{Binding Value}"
-                                  IsHitTestVisible="False"
-                                  Background="{DynamicResource PrivacyControlItemBackground}" />
+                                Classes.dangerous="{Binding IsDangerous}"
+                                Content="{Binding Value}"
+                                IsHitTestVisible="False"
+                                Background="{DynamicResource PrivacyControlItemBackground}" />
                   </Button>
                 </DataTemplate>
               </ItemsControl.ItemTemplate>
             </ItemsControl>
           </ScrollViewer>
-
         </DockPanel>
       </Border>
 
@@ -97,7 +100,7 @@
             <StackPanel Orientation="Horizontal" Spacing="10">
               <PathIcon Data="{StaticResource warning_regular}" Height="20" />
               <TextBlock VerticalAlignment="Bottom" FontSize="18" Margin="0 2 0 0"
-                         Text="Can't see this transaction: " />
+                         Text="{x:Static lang:Resources.CantSeeThisTransaction}" />
             </StackPanel>
           </Border>
 
@@ -120,7 +123,8 @@
               </ItemsControl.ItemsPanel>
               <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="vm:LabelViewModel">
-                  <Button Classes="plain" Margin="5" Command="{Binding ClickedCommand}" Classes.faded="{Binding IsFaded}" ToolTip.Tip="{Binding ToolTip}">
+                  <Button Classes="plain" Margin="5" Command="{Binding ClickedCommand}"
+                          Classes.faded="{Binding IsFaded}" ToolTip.Tip="{Binding ToolTip}">
                     <Interaction.Behaviors>
                       <BindPointerOverBehavior IsPointerOver="{Binding IsPointerOver}" />
                     </Interaction.Behaviors>
@@ -135,7 +139,6 @@
               </ItemsControl.ItemTemplate>
             </ItemsControl>
           </ScrollViewer>
-
         </DockPanel>
       </Border>
     </Grid>

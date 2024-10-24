@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Windows.Input;
 using ReactiveUI;
+using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.ViewModels.Navigation;
 using WalletWasabi.Helpers;
@@ -8,19 +9,12 @@ using WalletWasabi.Helpers;
 namespace WalletWasabi.Fluent.ViewModels.HelpAndSupport;
 
 [NavigationMetaData(
-	Title = "About Ginger Wallet",
-	Caption = "Display Ginger Wallet's current info",
 	IconName = "info_regular",
 	Order = 4,
-	Category = "Help & Support",
-	Keywords = new[]
-	{
-			"About", "Software", "Version", "Source", "Code", "Github", "Website", "Coordinator", "Stats", "Tor", "Onion",
-			"User", "Support", "Bug", "Report", "FAQ", "Questions,", "Docs", "Documentation", "License", "Advanced", "Information",
-			"Hardware", "Wallet"
-	},
+	Category = SearchCategory.HelpAndSupport,
 	NavBarPosition = NavBarPosition.None,
-	NavigationTarget = NavigationTarget.DialogScreen)]
+	NavigationTarget = NavigationTarget.DialogScreen,
+	IsLocalized = true)]
 public partial class AboutViewModel : RoutableViewModel
 {
 	public AboutViewModel(UiContext uiContext, bool navigateBack = false)

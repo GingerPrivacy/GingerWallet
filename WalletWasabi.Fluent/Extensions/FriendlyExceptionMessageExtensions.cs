@@ -3,6 +3,7 @@ using System.Net.Http;
 using WalletWasabi.BitcoinCore.Rpc;
 using WalletWasabi.Helpers;
 using WalletWasabi.Hwi.Exceptions;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.Extensions;
 
@@ -14,7 +15,7 @@ public static class FriendlyExceptionMessageExtensions
 
 		if (exceptionMessage.Length == 0)
 		{
-			return "An unexpected error occurred. Please try again or contact support.";
+			return Resources.UnexpextedError;
 		}
 
 		if (TryFindRpcErrorMessage(exceptionMessage, out var friendlyMessage))
@@ -25,8 +26,8 @@ public static class FriendlyExceptionMessageExtensions
 		return ex switch
 		{
 			HwiException hwiEx => GetFriendlyHwiExceptionMessage(hwiEx),
-			HttpRequestException => "Something went wrong. Please try again.",
-			UnauthorizedAccessException => "Ginger Wallet was unable to perform this action due to a lack of permission.",
+			HttpRequestException => Resources.SomethingWrong,
+			UnauthorizedAccessException => Resources.PermissionError,
 			_ => ex.Message
 		};
 	}
@@ -35,9 +36,9 @@ public static class FriendlyExceptionMessageExtensions
 	{
 		return hwiEx.ErrorCode switch
 		{
-			HwiErrorCode.DeviceConnError => "Could not find the hardware wallet. Make sure it is connected.",
-			HwiErrorCode.ActionCanceled => "The transaction was canceled on the device.",
-			HwiErrorCode.UnknownError => "Unknown error. Make sure the device is connected and isn't busy, then try again.",
+			HwiErrorCode.DeviceConnError => Resources.HardwareWalletNotFound,
+			HwiErrorCode.ActionCanceled => Resources.TransactionCanceledOnDevice,
+			HwiErrorCode.UnknownError => Resources.UnknownErrorDeviceCheck,
 			_ => hwiEx.Message
 		};
 	}

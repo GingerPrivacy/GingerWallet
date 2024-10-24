@@ -10,10 +10,10 @@ using ReactiveUI;
 using WalletWasabi.Fluent.Controls.Sorting;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.ViewModels.Navigation;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.ViewModels.Wallets.Receive;
 
-[NavigationMetaData(Title = "Addresses Awaiting Payment")]
 public partial class ReceiveAddressesViewModel : RoutableViewModel
 {
 	private readonly IWalletModel _wallet;
@@ -22,6 +22,7 @@ public partial class ReceiveAddressesViewModel : RoutableViewModel
 
 	private ReceiveAddressesViewModel(IWalletModel wallet)
 	{
+		Title = Resources.AddressesAwaitingPayment;
 		_wallet = wallet;
 
 		EnableBack = true;
@@ -48,8 +49,8 @@ public partial class ReceiveAddressesViewModel : RoutableViewModel
 
 		Sortables =
 		[
-			new SortableItem("Address") { SortByAscendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[0], ListSortDirection.Ascending)), SortByDescendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[0], ListSortDirection.Descending)) },
-			new SortableItem("Label") { SortByAscendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[1], ListSortDirection.Ascending)), SortByDescendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[1], ListSortDirection.Descending)) }
+			new SortableItem(Resources.Address) { SortByAscendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[0], ListSortDirection.Ascending)), SortByDescendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[0], ListSortDirection.Descending)) },
+			new SortableItem(Resources.Label) { SortByAscendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[1], ListSortDirection.Ascending)), SortByDescendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[1], ListSortDirection.Descending)) }
 		];
 
 		base.OnNavigatedTo(isInHistory, disposables);

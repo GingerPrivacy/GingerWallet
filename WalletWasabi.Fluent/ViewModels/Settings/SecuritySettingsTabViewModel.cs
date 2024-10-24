@@ -17,15 +17,10 @@ namespace WalletWasabi.Fluent.ViewModels.Settings;
 
 [AppLifetime]
 [NavigationMetaData(
-	Title = "Security",
-	Caption = "Manage security settings",
 	Order = 3,
-	Category = "Settings",
-	Keywords = new[]
-	{
-			"Security", "Settings", "2FA", "Two-Factor", "Authentication", "Two", "Factor"
-	},
-	IconName = "settings_general_regular")]
+	Category = SearchCategory.Settings,
+	IconName = "settings_general_regular",
+	IsLocalized = true)]
 public partial class SecuritySettingsTabViewModel : RoutableViewModel
 {
 	[AutoNotify] private bool _twoFactorEnabled;

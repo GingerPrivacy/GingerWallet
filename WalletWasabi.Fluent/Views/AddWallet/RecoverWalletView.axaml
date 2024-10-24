@@ -6,13 +6,14 @@
              mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371"
              x:DataType="recoverWallet:RecoverWalletViewModel"
              x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.AddWallet.RecoverWalletView">
   <ContentArea x:Name="RecoveryPageRoot"
                  Title="{Binding Title}"
-                 CancelContent="Cancel"
+                 CancelContent="{x:Static lang:Resources.Cancel}"
                  EnableCancel="{Binding EnableCancel}"
                  EnableBack="{Binding EnableBack}"
-                 EnableNext="True" NextContent="Continue"
+                 EnableNext="True" NextContent="{x:Static lang:Resources.Continue}"
                  IsBusy="{Binding IsBusy}">
     <DockPanel>
       <DockPanel DockPanel.Dock="Top">
@@ -28,7 +29,7 @@
                    RestrictInputToSuggestions="True"
                    Items="{Binding Mnemonics}"
                    Suggestions="{Binding Suggestions}"
-                   Watermark="Type in your recovery words in the correct order"
+                   Watermark="{x:Static lang:Resources.TypeInYourRecoveryWords}"
                    AllowDuplication="True"
                    EnableCounter="True"
                    EnableDelete="False">
@@ -47,7 +48,7 @@
               HorizontalAlignment="Center"
               VerticalAlignment="Bottom"
               Command="{Binding AdvancedRecoveryOptionsDialogCommand}"
-              Content="Advanced Recovery Options" />
+              Content="{x:Static lang:Resources.AdvancedRecoveryOptionsViewModelTitle}" />
     </DockPanel>
   </ContentArea>
 </UserControl>
