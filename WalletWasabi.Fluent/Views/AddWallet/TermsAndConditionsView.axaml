@@ -10,7 +10,7 @@
              xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.AddWallet.TermsAndConditionsView">
   <ContentArea Title="{Binding Title}"
-                 Caption="To continue using Wasabi, please accept the terms and conditions"
+                 Caption="{x:Static lang:Resources.TermsAndConditionsViewCaption}"
                  EnableNext="True" NextContent="{x:Static lang:Resources.Continue}" FocusNext="True"
                  ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <DockPanel>
@@ -22,10 +22,10 @@
           <ExecuteCommandOnKeyDownBehavior Command="{Binding NextCommand}" IsEnabled="{Binding IsAgreed}" Key="Enter" EventRoutingStrategy="Tunnel" />
         </Interaction.Behaviors>
         <StackPanel Orientation="Horizontal">
-          <Label Content="I _agree to the " Target="CheckBox_Agree" FontWeight="Normal" Margin="0"
+          <Label Content="{x:Static lang:Resources.TermsAndConditionsViewIAgree}" Target="CheckBox_Agree" FontWeight="Normal" Margin="0"
                  Padding="0" IsHitTestVisible="False" />
           <Button Classes="plain" Command="{Binding ViewTermsCommand}">
-            <TextBlock Text="Terms and conditions" TextDecorations="Underline"
+            <TextBlock Text="{x:Static lang:Resources.TermsAndConditionsViewTermsAndConditions}" TextDecorations="Underline"
                        Foreground="{DynamicResource SystemAccentColor}" />
           </Button>
         </StackPanel>

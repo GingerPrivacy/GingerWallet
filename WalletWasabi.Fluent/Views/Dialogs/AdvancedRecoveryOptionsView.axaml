@@ -19,7 +19,7 @@
                  EnableBack="{Binding EnableBack}"
                  EnableNext="True" NextContent="OK">
     <StackPanel HorizontalAlignment="Center" Spacing="20" MinWidth="380">
-      <Label Content="{x:Static lang:Resources.Cancel}" Target="TbGapLimit" />
+      <Label Content="{x:Static lang:Resources.AdvancedRecoveryOptionsViewModelMinimumGapLimit}" Target="TbGapLimit" />
       <TextBox Name="TbGapLimit" Watermark="e.g., 63"
                Text="{Binding MinGapLimit}"
                DockPanel.Dock="Top"
