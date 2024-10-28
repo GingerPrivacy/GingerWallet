@@ -12,4 +12,7 @@ public enum DisplayLanguage
 
 	[Description("hu-HU")]
 	Hungarian = 3,
+
+	[Description("fr-FR")]
+	French = 4,
 }

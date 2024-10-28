@@ -19,6 +19,7 @@ public static class LocalizationExtension
 			DisplayLanguage.English => "English",
 			DisplayLanguage.Spanish => "Español",
 			DisplayLanguage.Hungarian => "Magyar",
+			DisplayLanguage.French => "Français",
 			_ => language.ToString()
 		};
 	}
