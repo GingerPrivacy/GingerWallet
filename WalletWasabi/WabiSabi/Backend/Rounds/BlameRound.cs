@@ -7,11 +7,10 @@ namespace WalletWasabi.WabiSabi.Backend.Rounds;
 public class BlameRound : Round
 {
 	public BlameRound(RoundParameters parameters, Round blameOf, ISet<OutPoint> blameWhitelist, WasabiRandom random)
-		: base(parameters, random)
+		: base(parameters, random, parameters.BlameInputRegistrationTimeout)
 	{
 		BlameOf = blameOf;
 		BlameWhitelist = blameWhitelist;
-		InputRegistrationTimeFrame = TimeFrame.Create(Parameters.BlameInputRegistrationTimeout).StartNow();
 	}
 
 	public Round BlameOf { get; }

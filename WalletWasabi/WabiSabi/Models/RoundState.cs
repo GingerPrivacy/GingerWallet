@@ -55,7 +55,7 @@ public record RoundState(uint256 Id,
 		};
 
 	public WabiSabiClient CreateAmountCredentialClient(WasabiRandom random) =>
-		new(AmountCredentialIssuerParameters, random, Constants.MaximumSupportedAmount);
+		new(AmountCredentialIssuerParameters, random, ProtocolConstants.MaxAmountCredentialValue);
 
 	public WabiSabiClient CreateVsizeCredentialClient(WasabiRandom random) =>
 		new(VsizeCredentialIssuerParameters, random, CoinjoinState.Parameters.MaxVsizeCredentialValue);
