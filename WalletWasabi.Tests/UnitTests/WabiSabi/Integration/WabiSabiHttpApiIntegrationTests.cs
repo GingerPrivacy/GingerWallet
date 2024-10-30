@@ -151,7 +151,7 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 					ConnectionConfirmationTimeout = TimeSpan.FromSeconds(60),
 					OutputRegistrationTimeout = TimeSpan.FromSeconds(60),
 					TransactionSigningTimeout = TimeSpan.FromSeconds(60),
-					MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountPerAlice),
+					MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountCredentialValue),
 					CreateNewRoundBeforeInputRegEnd = TimeSpan.Zero
 				});
 
@@ -226,7 +226,7 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 					ConnectionConfirmationTimeout = TimeSpan.FromSeconds(60),
 					OutputRegistrationTimeout = TimeSpan.FromSeconds(60),
 					TransactionSigningTimeout = TimeSpan.FromSeconds(60),
-					MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountPerAlice),
+					MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountCredentialValue),
 					CreateNewRoundBeforeInputRegEnd = TimeSpan.Zero
 				});
 
@@ -342,7 +342,7 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 				ConnectionConfirmationTimeout = TimeSpan.FromSeconds(60),
 				OutputRegistrationTimeout = TimeSpan.FromSeconds(60),
 				TransactionSigningTimeout = TimeSpan.FromSeconds(5 * inputCount),
-				MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountPerAlice),
+				MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountCredentialValue),
 				CreateNewRoundBeforeInputRegEnd = TimeSpan.Zero
 			}))).CreateClient();
 
@@ -451,7 +451,7 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 						ConnectionConfirmationTimeout = TimeSpan.FromSeconds(2 * ExpectedInputNumber),
 						OutputRegistrationTimeout = TimeSpan.FromSeconds(5 * ExpectedInputNumber),
 						TransactionSigningTimeout = TimeSpan.FromSeconds(3 * ExpectedInputNumber),
-						MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountPerAlice),
+						MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountCredentialValue),
 						CreateNewRoundBeforeInputRegEnd = TimeSpan.Zero
 					});
 				}));
