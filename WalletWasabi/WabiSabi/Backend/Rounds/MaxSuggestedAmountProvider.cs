@@ -17,7 +17,7 @@ public class MaxSuggestedAmountProvider
 	private WabiSabiConfig Config { get; init; }
 	private int Counter { get; set; }
 	public Money MaxSuggestedAmount { get; private set; }
-	public Money AbsoluteMaximumInput { get; } = Money.Satoshis(ProtocolConstants.MaxAmountCredentialValue);
+	public Money AbsoluteMaximumInput { get; } = Money.Satoshis(ProtocolConstants.MaxAmountPerAlice);
 
 	private void CheckOrGenerateRoundCounterDividerAndMaxAmounts()
 	{

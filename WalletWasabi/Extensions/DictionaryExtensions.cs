@@ -15,10 +15,12 @@ public static class DictionaryExtensions
 
 	public static TValue GetOrCreate<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key) where TValue : new()
 	{
-		if (!dict.TryGetValue(key, out TValue? value))
+		if (dict.ContainsKey(key))
 		{
-			dict.Add(key, value = new());
+			return dict[key];
 		}
+		TValue value = new();
+		dict.Add(key, value);
 		return value;
 	}
 }

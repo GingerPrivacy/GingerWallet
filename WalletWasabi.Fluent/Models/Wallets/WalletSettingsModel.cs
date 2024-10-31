@@ -113,4 +113,9 @@ public partial class WalletSettingsModel : ReactiveObject
 		_keyManager.SetFeeRateMedianTimeFrame(FeeRateMedianTimeFrameHours);
 		_isDirty = true;
 	}
+
+	public void ResetHeight()
+	{
+		_keyManager.SetBestHeights(0, 0);
+	}
 }
