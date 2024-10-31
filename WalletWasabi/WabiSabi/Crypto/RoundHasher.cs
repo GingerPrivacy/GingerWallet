@@ -21,6 +21,7 @@ public static class RoundHasher
 			ImmutableSortedSet<ScriptType> allowedOutputTypes,
 			Network network,
 			long feePerK,
+			CoordinationFeeRate coordinationFeeRate,
 			int maxTransactionSize,
 			long minRelayTxFeePerK,
 			long maxAmountCredentialValue,
@@ -43,7 +44,7 @@ public static class RoundHasher
 			.Append(ProtocolConstants.RoundAllowedOutputTypesStrobeLabel, allowedOutputTypes)
 			.Append(ProtocolConstants.RoundNetworkStrobeLabel, network.ToString())
 			.Append(ProtocolConstants.RoundFeeRateStrobeLabel, feePerK)
-			.Append(ProtocolConstants.RoundCoordinationFeeRateStrobeLabel, CoordinationFeeRate.Zero)
+			.Append(ProtocolConstants.RoundCoordinationFeeRateStrobeLabel, coordinationFeeRate)
 			.Append(ProtocolConstants.RoundMaxTransactionSizeStrobeLabel, maxTransactionSize)
 			.Append(ProtocolConstants.RoundMinRelayTxFeeStrobeLabel, minRelayTxFeePerK)
 			.Append(ProtocolConstants.RoundMaxAmountCredentialValueStrobeLabel, maxAmountCredentialValue)

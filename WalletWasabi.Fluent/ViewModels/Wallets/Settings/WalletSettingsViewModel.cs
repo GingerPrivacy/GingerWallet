@@ -2,7 +2,9 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Avalonia.Input;
 using ReactiveUI;
+using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models;
@@ -56,6 +58,16 @@ public partial class WalletSettingsViewModel : RoutableViewModel
 		this.WhenAnyValue(x => x._wallet.Name).BindTo(this, x => x.WalletName);
 
 		RenameCommand = ReactiveCommand.CreateFromTask(OnRenameWalletAsync);
+		ResyncWalletCommand = ReactiveCommand.CreateFromTask(async () =>
+		{
+			var doResync = await UiContext.Navigate().To().ResyncWallet().GetResultAsync();
+			if (doResync)
+			{
+				walletModel.Settings.ResetHeight();
+				UiContext.Navigate(MetaData.NavigationTarget).Clear();
+				AppLifetimeHelper.Shutdown(withShutdownPrevention: true, restart: true);
+			}
+		});
 	}
 
 	public ICommand RenameCommand { get; set; }
@@ -67,6 +79,8 @@ public partial class WalletSettingsViewModel : RoutableViewModel
 	public WalletCoinJoinSettingsViewModel WalletCoinJoinSettings { get; private set; }
 
 	public ICommand VerifyRecoveryWordsCommand { get; }
+
+	public ICommand ResyncWalletCommand { get; }
 
 	private async Task OnRenameWalletAsync()
 	{

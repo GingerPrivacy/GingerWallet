@@ -108,7 +108,7 @@ public class ArenaClientTests
 		var wabiSabiApi = new WabiSabiController(idempotencyRequestCache, arena, coinJoinFeeRateStatStore, affiliationManager, coinJoinMempoolManager);
 
 		InsecureRandom rnd = InsecureRandom.Instance;
-		var amountClient = new WabiSabiClient(round.AmountCredentialIssuerParameters, rnd, ProtocolConstants.MaxAmountCredentialValue);
+		var amountClient = new WabiSabiClient(round.AmountCredentialIssuerParameters, rnd, 4300000000000L);
 		var vsizeClient = new WabiSabiClient(round.VsizeCredentialIssuerParameters, rnd, 2000L);
 		var apiClient = new ArenaClient(amountClient, vsizeClient, config.CoordinatorIdentifier, wabiSabiApi);
 

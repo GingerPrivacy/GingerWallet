@@ -5,6 +5,4 @@ public class TwoFactorVerifyResponse
 	public required string SecretWallet { get; set; }
 
 	public required string ClientServerId { get; set; }
-
-	public required int InvalidLoginCounter { get; set; }
 }

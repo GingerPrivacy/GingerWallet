@@ -70,7 +70,7 @@ public record RoundParameters
 	public TimeSpan BlameInputRegistrationTimeout { get; init; }
 
 	public Money MinAmountCredentialValue => AllowedInputAmounts.Min;
-	public Money MaxAmountCredentialValue => ProtocolConstants.MaxAmountCredentialValue;
+	public Money MaxAmountCredentialValue => Constants.MaximumSupportedAmount;
 
 	public int InitialInputVsizeAllocation { get; init; }
 	public int MaxVsizeCredentialValue { get; init; }

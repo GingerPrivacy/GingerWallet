@@ -27,7 +27,7 @@ public record DependencyGraph
 
 	// Internal properties used to keep track of effective values and edges
 	public ImmutableSortedDictionary<CredentialType, CredentialEdgeSet> EdgeSets { get; init; } = ImmutableSortedDictionary<CredentialType, CredentialEdgeSet>.Empty
-		.Add(CredentialType.Amount, new() { CredentialType = CredentialType.Amount, MaxCredentialValue = ProtocolConstants.MaxAmountCredentialValue })
+		.Add(CredentialType.Amount, new() { CredentialType = CredentialType.Amount, MaxCredentialValue = ProtocolConstants.MaxAmountPerAlice })
 		.Add(CredentialType.Vsize, new() { CredentialType = CredentialType.Vsize, MaxCredentialValue = ProtocolConstants.MaxVsizeCredentialValue });
 
 	public long Balance(RequestNode node, CredentialType credentialType) => EdgeSets[credentialType].Balance(node);

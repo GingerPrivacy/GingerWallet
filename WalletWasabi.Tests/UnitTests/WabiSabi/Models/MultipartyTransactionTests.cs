@@ -5,7 +5,6 @@ using WalletWasabi.Crypto;
 using WalletWasabi.Extensions;
 using WalletWasabi.Helpers;
 using WalletWasabi.Tests.Helpers;
-using WalletWasabi.WabiSabi;
 using WalletWasabi.WabiSabi.Backend;
 using WalletWasabi.WabiSabi.Backend.Models;
 using WalletWasabi.WabiSabi.Backend.Rounds;
@@ -423,7 +422,7 @@ public class MultipartyTransactionTests
 		var parameters = WabiSabiFactory.CreateRoundParameters(new()
 		{
 			MinRegistrableAmount = Money.Zero,
-			MaxRegistrableAmount = Money.Satoshis(ProtocolConstants.MaxAmountCredentialValue),
+			MaxRegistrableAmount = Money.Coins(43000m),
 			MaxSuggestedAmountBase = Money.Coins(Constants.MaximumNumberOfBitcoins)
 		}) with
 		{
