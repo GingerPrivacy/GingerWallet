@@ -1281,4 +1281,13 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.
   <data name="TermsAndConditionsViewIAgree" xml:space="preserve">
     <value>Elfogadom az </value>
   </data>
+  <data name="TransactionID" xml:space="preserve">
+    <value>Tranzakcióazonosító</value>
+  </data>
+  <data name="Index" xml:space="preserve">
+    <value>Index</value>
+  </data>
+  <data name="CoinDetails" xml:space="preserve">
+    <value>Érme részletei</value>
+  </data>
 </root>

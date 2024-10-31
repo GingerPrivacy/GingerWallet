@@ -6,6 +6,7 @@ using DynamicData.Binding;
 using ReactiveUI;
 using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Fluent.Models.Transactions;
+using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
 using WalletWasabi.Fluent.ViewModels.Wallets.Coins;
@@ -22,13 +23,14 @@ namespace WalletWasabi.Fluent.ViewModels.CoinControl;
 	NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class SelectCoinsDialogViewModel : DialogViewModelBase<IEnumerable<SmartCoin>>
 {
-	public SelectCoinsDialogViewModel(IWalletModel wallet, IList<ICoinModel> selectedCoins, SendFlowModel sendFlow)
+	public SelectCoinsDialogViewModel(UiContext uiContext, IWalletModel wallet, IList<ICoinModel> selectedCoins, SendFlowModel sendFlow)
 	{
 		Title = Resources.CoinControl;
+		UiContext = uiContext;
 
 		var transactionInfo = sendFlow.TransactionInfo ?? throw new InvalidOperationException($"Missing required TransactionInfo.");
 
-		CoinList = new CoinListViewModel(sendFlow.CoinList, selectedCoins, allowCoinjoiningCoinSelection: true, ignorePrivacyMode: true, allowSelection: true);
+		CoinList = new CoinListViewModel(UiContext, sendFlow.CoinList, selectedCoins, allowCoinjoiningCoinSelection: true, ignorePrivacyMode: true, allowSelection: true);
 
 		EnoughSelected = CoinList.Selection.ToObservableChangeSet()
 			.ToCollection()

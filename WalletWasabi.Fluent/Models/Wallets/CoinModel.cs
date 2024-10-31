@@ -3,6 +3,7 @@ using NBitcoin;
 using ReactiveUI;
 using System.Reactive.Linq;
 using WalletWasabi.Blockchain.Analysis.Clustering;
+using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Fluent.Helpers;
 
@@ -22,7 +23,7 @@ public partial class CoinModel : ReactiveObject
 	[AutoNotify] private int _confirmations;
 	[AutoNotify] private bool _isConfirmed;
 
-	public CoinModel(SmartCoin coin, int anonScoreTarget)
+	public CoinModel(SmartCoin coin, Network network, int anonScoreTarget)
 	{
 		Coin = coin;
 		PrivacyLevel = coin.GetPrivacyLevel(anonScoreTarget);
@@ -32,6 +33,9 @@ public partial class CoinModel : ReactiveObject
 		Key = coin.Outpoint.GetHashCode();
 		BannedUntilUtc = coin.BannedUntilUtc;
 		ScriptType = ScriptType.FromEnum(coin.ScriptType);
+		Address = coin.HdPubKey.GetAddress(network);
+		Index = coin.HdPubKey.Index;
+		TransactionId = coin.TransactionId;
 
 		IsExcludedFromCoinJoin = coin.IsExcludedFromCoinJoin;
 		IsConfirmed = coin.Confirmed;
@@ -56,6 +60,11 @@ public partial class CoinModel : ReactiveObject
 	public LabelsArray Labels { get; }
 
 	public ScriptType ScriptType { get; }
+
+	public BitcoinAddress Address { get; }
+	public uint256 TransactionId { get; }
+
+	public int Index { get; }
 
 	public DateTimeOffset? BannedUntilUtc { get; }
 

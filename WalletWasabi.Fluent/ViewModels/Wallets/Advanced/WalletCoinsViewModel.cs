@@ -30,7 +30,7 @@ public partial class WalletCoinsViewModel : RoutableViewModel
 		_wallet = wallet;
 		SetupCancel(enableCancel: false, enableCancelOnEscape: true, enableCancelOnPressed: true);
 		NextCommand = CancelCommand;
-		CoinList = new CoinListViewModel(_wallet.Coins, new List<ICoinModel>(), allowCoinjoiningCoinSelection: false, ignorePrivacyMode: false, allowSelection: false);
+		CoinList = new CoinListViewModel(UiContext, _wallet.Coins, new List<ICoinModel>(), allowCoinjoiningCoinSelection: false, ignorePrivacyMode: false, allowSelection: false);
 	}
 
 	public CoinListViewModel CoinList { get; }

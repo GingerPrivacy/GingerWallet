@@ -1282,4 +1282,13 @@ Es una extensión de las palabras de recuperación para mayor seguridad.
   <data name="TermsAndConditionsViewIAgree" xml:space="preserve">
     <value>Acepto los </value>
   </data>
+  <data name="TransactionID" xml:space="preserve">
+    <value>ID de Transacción</value>
+  </data>
+  <data name="Index" xml:space="preserve">
+    <value>Índice</value>
+  </data>
+  <data name="CoinDetails" xml:space="preserve">
+    <value>Detalles de la Moneda</value>
+  </data>
 </root>

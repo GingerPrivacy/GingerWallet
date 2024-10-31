@@ -7,6 +7,7 @@ using DynamicData.Aggregation;
 using ReactiveUI;
 using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Fluent.Models;
+using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.ViewModels.CoinControl.Core;
 
@@ -14,8 +15,11 @@ namespace WalletWasabi.Fluent.ViewModels.Wallets.Coins;
 
 public class PocketViewModel : CoinListItem
 {
-	public PocketViewModel(Pocket pocket, ICoinListModel availableCoins, bool canSelectCoinjoiningCoins, bool ignorePrivacyMode)
+	public PocketViewModel(UiContext uiContext, Pocket pocket, ICoinListModel availableCoins, bool canSelectCoinjoiningCoins, bool ignorePrivacyMode, bool allowSelection)
 	{
+		UiContext = uiContext;
+		AllowSelection = allowSelection;
+
 		var pocketCoins = pocket.Coins.ToList();
 
 		var unconfirmedCount = pocketCoins.Count(x => !x.Confirmed);
@@ -32,7 +36,7 @@ public class PocketViewModel : CoinListItem
 			pocketCoins
 				.Select(availableCoins.GetCoinModel)
 				.OrderByDescending(x => x.AnonScore)
-				.Select(coin => new CoinViewModel("", coin, canSelectCoinjoiningCoins, ignorePrivacyMode) { IsChild = true })
+				.Select(coin => new CoinViewModel(UiContext, "", coin, canSelectCoinjoiningCoins, ignorePrivacyMode, allowSelection) { IsChild = true })
 				.ToList();
 
 		Children
