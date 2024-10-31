@@ -401,7 +401,7 @@ public static class WabiSabiFactory
 		{
 			MaxInputCountByRound = 2,
 			MinInputCountByRoundMultiplier = 0.5,
-			MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountPerAlice),
+			MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountCredentialValue),
 			CreateNewRoundBeforeInputRegEnd = TimeSpan.Zero,
 
 			DoSSeverity = Money.Coins(1.0m),

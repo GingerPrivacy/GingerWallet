@@ -85,7 +85,7 @@ public class MultipartyTransactionStateTests
 		Round roundLargest = new(parameters, SecureRandom.Instance);
 
 		// First Round is the largest.
-		Assert.Equal(Money.Satoshis(ProtocolConstants.MaxAmountPerAlice), roundLargest.Parameters.MaxSuggestedAmount);
+		Assert.Equal(Money.Satoshis(ProtocolConstants.MaxAmountCredentialValue), roundLargest.Parameters.MaxSuggestedAmount);
 
 		// Simulate 63 successful rounds.
 		Dictionary<Money, int> histogram = new();
@@ -119,12 +119,12 @@ public class MultipartyTransactionStateTests
 		for (int i = 0; i < 2; i++)
 		{
 			maxSuggestedAmountProvider.StepMaxSuggested(roundLargest, false);
-			Assert.Equal(Money.Satoshis(ProtocolConstants.MaxAmountPerAlice), maxSuggestedAmountProvider.MaxSuggestedAmount);
+			Assert.Equal(Money.Satoshis(ProtocolConstants.MaxAmountCredentialValue), maxSuggestedAmountProvider.MaxSuggestedAmount);
 		}
 
 		// Finally one successful round.
 		maxSuggestedAmountProvider.StepMaxSuggested(roundLargest, true);
-		Assert.Equal(Money.Satoshis(ProtocolConstants.MaxAmountPerAlice), maxSuggestedAmountProvider.MaxSuggestedAmount);
+		Assert.Equal(Money.Satoshis(ProtocolConstants.MaxAmountCredentialValue), maxSuggestedAmountProvider.MaxSuggestedAmount);
 
 		maxSuggestedAmountProvider.StepMaxSuggested(roundLargest, true);
 		Assert.Equal(Money.Coins(0.1m), maxSuggestedAmountProvider.MaxSuggestedAmount);

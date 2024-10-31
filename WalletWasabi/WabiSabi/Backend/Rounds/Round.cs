@@ -31,7 +31,7 @@ public enum EndRoundState
 
 public class Round
 {
-	public Round(RoundParameters parameters, WasabiRandom random)
+	public Round(RoundParameters parameters, WasabiRandom random, TimeSpan? inputRegistrationTimeout = null)
 	{
 		Parameters = parameters;
 
@@ -42,7 +42,7 @@ public class Round
 		AmountCredentialIssuerParameters = AmountCredentialIssuer.CredentialIssuerSecretKey.ComputeCredentialIssuerParameters();
 		VsizeCredentialIssuerParameters = VsizeCredentialIssuer.CredentialIssuerSecretKey.ComputeCredentialIssuerParameters();
 
-		InputRegistrationTimeFrame = TimeFrame.Create(Parameters.StandardInputRegistrationTimeout).StartNow();
+		InputRegistrationTimeFrame = TimeFrame.Create(inputRegistrationTimeout ?? Parameters.StandardInputRegistrationTimeout).StartNow();
 		ConnectionConfirmationTimeFrame = TimeFrame.Create(Parameters.ConnectionConfirmationTimeout);
 		OutputRegistrationTimeFrame = TimeFrame.Create(Parameters.OutputRegistrationTimeout);
 		TransactionSigningTimeFrame = TimeFrame.Create(Parameters.TransactionSigningTimeout);
@@ -165,7 +165,6 @@ public class Round
 				Parameters.AllowedOutputTypes,
 				Parameters.Network,
 				Parameters.MiningFeeRate.FeePerK,
-				Parameters.CoordinationFeeRate,
 				Parameters.MaxTransactionSize,
 				Parameters.MinRelayTxFee.FeePerK,
 				Parameters.MaxAmountCredentialValue,

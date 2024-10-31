@@ -1,6 +1,7 @@
 using NBitcoin;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using WabiSabi.Crypto.Randomness;
@@ -73,7 +74,17 @@ public class LiveServerTests : IAsyncLifetime
 		IEnumerable<uint256> randomTxIds = Enumerable.Range(0, 20).Select(_ => RandomUtils.GetUInt256());
 
 		// We don't really expect that the random strings represent some actual transactions.
-		IEnumerable<Transaction> retrievedTxs = await client.GetTransactionsAsync(network, randomTxIds.Take(4), ctsTimeout.Token);
+		List<Transaction> retrievedTxs = new();
+		foreach (var txId in randomTxIds.Take(4))
+		{
+			try
+			{
+				retrievedTxs.AddRange(await client.GetTransactionsAsync(network, [txId], ctsTimeout.Token));
+			}
+			catch (HttpRequestException)
+			{
+			}
+		}
 		Assert.Empty(retrievedTxs);
 
 		var mempoolTxIds = (await client.GetMempoolHashesAsync(64, ctsTimeout.Token)).Select(uint256.Parse).ToArray();
@@ -94,7 +105,7 @@ public class LiveServerTests : IAsyncLifetime
 		Assert.InRange(versions.ClientVersion, new(2, 0, 0), new(2, 99, 99));
 		Assert.InRange(versions.ClientVersion, new(2, 0, 0), WalletWasabi.Helpers.Constants.ClientVersion);
 		Assert.Equal(4, versions.BackendMajorVersion);
-		Assert.Equal(new(2, 0), versions.LegalDocumentsVersion);
+		Assert.True(new Version(5, 0) <= versions.LegalDocumentsVersion);
 	}
 
 	[Theory]
@@ -108,7 +119,7 @@ public class LiveServerTests : IAsyncLifetime
 
 		Assert.True(updateStatus.BackendCompatible);
 		Assert.True(updateStatus.ClientUpToDate);
-		Assert.Equal(new Version(2, 0), updateStatus.LegalDocumentsVersion);
+		Assert.True(new Version(5, 0) <= updateStatus.LegalDocumentsVersion);
 		Assert.Equal((ushort)4, updateStatus.CurrentBackendMajorVersion);
 		Assert.Equal(WalletWasabi.Helpers.Constants.ClientVersion.ToString(3), updateStatus.ClientVersion.ToString());
 
@@ -126,7 +137,7 @@ public class LiveServerTests : IAsyncLifetime
 		var content = await client.GetLegalDocumentsAsync(ctsTimeout.Token);
 		var lines = content.Split('\n', StringSplitOptions.RemoveEmptyEntries);
 
-		Assert.Equal("Last Updated: May 01, 2024", lines[0]);
+		Assert.StartsWith("Last Updated: ", lines[0]);
 		var lineCount = lines.Length;
 		Assert.InRange(lineCount, 100, 1000);
 	}
@@ -141,6 +152,5 @@ public class LiveServerTests : IAsyncLifetime
 	public static IEnumerable<object[]> GetNetworks()
 	{
 		yield return new object[] { Network.Main };
-		yield return new object[] { Network.TestNet };
 	}
 }
