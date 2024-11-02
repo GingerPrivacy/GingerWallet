@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Windows.Input;
 using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Blockchain.Analysis.Clustering;
@@ -26,6 +27,7 @@ public abstract partial class CoinListItem : ViewModelBase, ITreeDataGridExpande
 	[AutoNotify] private bool _isCoinjoining;
 	[AutoNotify] private bool _isExcludedFromCoinJoin;
 	[AutoNotify] private bool _canBeSelected;
+	[AutoNotify] private bool _allowSelection;
 
 	protected CoinListItem()
 	{
@@ -114,6 +116,8 @@ public abstract partial class CoinListItem : ViewModelBase, ITreeDataGridExpande
 			this.RaiseAndSetIfChanged(ref _isSelected, value);
 		}
 	}
+
+	public ICommand? ShowDetailsCommand { get; set; }
 
 	public ScriptType? ScriptType { get; protected set; }
 

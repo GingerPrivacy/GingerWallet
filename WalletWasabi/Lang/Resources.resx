@@ -1293,4 +1293,13 @@ It's a recovery words extension for more security.</value>
   <data name="ProceedConfirmation" xml:space="preserve">
     <value>Would you like to proceed?</value>
   </data>
+  <data name="TransactionID" xml:space="preserve">
+    <value>Transaction ID</value>
+  </data>
+  <data name="Index" xml:space="preserve">
+    <value>Index</value>
+  </data>
+  <data name="CoinDetails" xml:space="preserve">
+    <value>Coin Details</value>
+  </data>
 </root>

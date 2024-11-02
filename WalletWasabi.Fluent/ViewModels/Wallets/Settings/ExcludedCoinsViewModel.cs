@@ -7,6 +7,7 @@ using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
 using WalletWasabi.Fluent.Extensions;
+using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
 using WalletWasabi.Fluent.ViewModels.Wallets.Coins;
@@ -20,12 +21,13 @@ public partial class ExcludedCoinsViewModel : DialogViewModelBase<Unit>
 
 	[AutoNotify] private bool _hasSelection;
 
-	public ExcludedCoinsViewModel(IWalletModel wallet)
+	public ExcludedCoinsViewModel(UiContext uiContext, IWalletModel wallet)
 	{
+		UiContext = uiContext;
 		Title = "Exclude Coins";
 		_wallet = wallet;
 		var initialCoins = wallet.Coins.List.Items.Where(x => x.IsExcludedFromCoinJoin);
-		CoinList = new CoinListViewModel(wallet.Coins, initialCoins.ToList(), allowCoinjoiningCoinSelection: false, ignorePrivacyMode: true);
+		CoinList = new CoinListViewModel(UiContext, wallet.Coins, initialCoins.ToList(), allowCoinjoiningCoinSelection: false, ignorePrivacyMode: true);
 		SetupCancel(enableCancel: true, enableCancelOnEscape: true, enableCancelOnPressed: true);
 		NextCommand = ReactiveCommand.Create(() => Close());
 		ToggleSelectionCommand = ReactiveCommand.Create(() => SelectAll(!CoinList.Selection.Any()));

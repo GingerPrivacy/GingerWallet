@@ -8,6 +8,7 @@ using System.Reactive.Linq;
 using System.Windows.Input;
 using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Fluent.Models.Transactions;
+using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
 using WalletWasabi.Fluent.ViewModels.Wallets.Coins;
@@ -27,10 +28,12 @@ public partial class ManualControlDialogViewModel : DialogViewModelBase<IEnumera
 	private readonly IWalletModel _walletModel;
 	private readonly Wallet _wallet;
 
-	private ManualControlDialogViewModel(IWalletModel walletModel, Wallet wallet)
+	public ManualControlDialogViewModel(UiContext uiContext, IWalletModel walletModel, Wallet wallet)
 	{
+		UiContext = uiContext;
 		Title = "Manual Control";
-		CoinList = new CoinListViewModel(walletModel.Coins, [], allowCoinjoiningCoinSelection: true, ignorePrivacyMode: true, allowSelection: true);
+
+		CoinList = new CoinListViewModel(UiContext, walletModel.Coins, [], allowCoinjoiningCoinSelection: true, ignorePrivacyMode: true, allowSelection: true);
 
 		var nextCommandCanExecute =
 			CoinList.Selection

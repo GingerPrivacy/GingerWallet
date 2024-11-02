@@ -8,12 +8,13 @@ using WalletWasabi.Fluent.ViewModels.CoinControl.Core;
 
 namespace WalletWasabi.Fluent.ViewModels.Wallets.Coins;
 
-public class CoinViewModel : CoinListItem
+public partial class CoinViewModel : CoinListItem
 {
-    public CoinViewModel(LabelsArray labels, ICoinModel coin, bool canSelectWhenCoinjoining, bool ignorePrivacyMode)
+    private CoinViewModel(LabelsArray labels, ICoinModel coin, bool canSelectWhenCoinjoining, bool ignorePrivacyMode, bool allowSelection)
 	{
 		Labels = labels;
 		Coin = coin;
+		AllowSelection = allowSelection;
 		Amount = coin.Amount;
 		IsConfirmed = coin.IsConfirmed;
 		IsBanned = coin.IsBanned;
@@ -36,6 +37,8 @@ public class CoinViewModel : CoinListItem
         {
             this.WhenAnyValue(x => x.Coin.IsCoinJoinInProgress, b => !b).BindTo(this, x => x.CanBeSelected).DisposeWith(_disposables);
         }
+
+        ShowDetailsCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().CoinDetails(coin));
 	}
 
 	public ICoinModel Coin { get; }
