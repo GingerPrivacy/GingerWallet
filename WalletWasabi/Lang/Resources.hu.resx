@@ -1281,6 +1281,15 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.
   <data name="TermsAndConditionsViewIAgree" xml:space="preserve">
     <value>Elfogadom az </value>
   </data>
+  <data name="ResyncWallet" xml:space="preserve">
+    <value>Tárca újraszinkronizálása</value>
+  </data>
+  <data name="ApplicationRestartRescan" xml:space="preserve">
+    <value>Az alkalmazás újraindul, és a tárca megnyitásakor elkezdődik az újraszkennelés. Ez a folyamat eltarthat egy ideig, a tárcában lévő tranzakciók számától függően.</value>
+  </data>
+  <data name="ProceedConfirmation" xml:space="preserve">
+    <value>Szeretné folytatni?</value>
+  </data>
   <data name="TransactionID" xml:space="preserve">
     <value>Tranzakcióazonosító</value>
   </data>

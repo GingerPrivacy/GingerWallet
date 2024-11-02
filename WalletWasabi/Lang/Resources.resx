@@ -1284,6 +1284,15 @@ It's a recovery words extension for more security.</value>
   <data name="TermsAndConditionsViewIAgree" xml:space="preserve">
     <value>I _agree to the </value>
   </data>
+  <data name="ResyncWallet" xml:space="preserve">
+    <value>Resync Wallet</value>
+  </data>
+  <data name="ApplicationRestartRescan" xml:space="preserve">
+    <value>The application will restart, and upon reopening your wallet, the rescan will begin. This process may take some time, depending on the number of transactions in your wallet.</value>
+  </data>
+  <data name="ProceedConfirmation" xml:space="preserve">
+    <value>Would you like to proceed?</value>
+  </data>
   <data name="TransactionID" xml:space="preserve">
     <value>Transaction ID</value>
   </data>
