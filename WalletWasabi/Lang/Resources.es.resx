@@ -1282,4 +1282,13 @@ Es una extensión de las palabras de recuperación para mayor seguridad.
   <data name="TermsAndConditionsViewIAgree" xml:space="preserve">
     <value>Acepto los </value>
   </data>
+  <data name="ResyncWallet" xml:space="preserve">
+    <value>Resincronizar Cartera</value>
+  </data>
+  <data name="ApplicationRestartRescan" xml:space="preserve">
+    <value>La aplicación se reiniciará y, al reabrir tu cartera, comenzará el reescaneo. Este proceso puede tomar tiempo, dependiendo de la cantidad de transacciones en tu cartera.</value>
+  </data>
+  <data name="ProceedConfirmation" xml:space="preserve">
+    <value>¿Te gustaría continuar?</value>
+  </data>
 </root>
