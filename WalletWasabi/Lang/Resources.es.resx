@@ -169,8 +169,7 @@
     <value>Avanzado</value>
   </data>
   <data name="AdvancedSettingsTabViewModelCaption" xml:space="preserve">
-    <value>Administrar la configuración avanzada
-</value>
+    <value>Administrar la configuración avanzada</value>
   </data>
   <data name="AdvancedSettingsTabViewModelKeywords" xml:space="preserve">
     <value>Configuración, Avanzado, Habilitar, GPU</value>
@@ -1177,8 +1176,7 @@
   <data name="ConfirmRecoveryWordsViewModelStoreSafely" xml:space="preserve">
     <value>Guarda tu frase de contraseña en un lugar seguro, no se puede restablecer si se pierde.
 Es necesaria para abrir y recuperar tu cartera.
-Es una extensión de las palabras de recuperación para mayor seguridad.
-</value>
+Es una extensión de las palabras de recuperación para mayor seguridad.</value>
   </data>
   <data name="ConfirmRecoveryWordsViewModelClickRecovery" xml:space="preserve">
     <value>Haz clic en la palabra de recuperación #{0}</value>
@@ -1274,7 +1272,7 @@ Es una extensión de las palabras de recuperación para mayor seguridad.
     <value>Payjoin no es posible con carteras de hardware.</value>
   </data>
   <data name="TermsAndConditionsViewCaption" xml:space="preserve">
-    <value>Para continuar usando Ginger, por favor acepta los términos y condiciones.</value>
+    <value>Para continuar usando Ginger, por favor acepta los términos y condiciones</value>
   </data>
   <data name="TermsAndConditionsViewTermsAndConditions" xml:space="preserve">
     <value>Términos y condiciones</value>

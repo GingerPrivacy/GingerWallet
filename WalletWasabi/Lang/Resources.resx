@@ -216,8 +216,7 @@
     <value>User Support</value>
   </data>
   <data name="UserSupportViewModelCaption" xml:space="preserve">
-    <value>Open Ginger Wallet's user support website
-</value>
+    <value>Open Ginger Wallet's user support website</value>
   </data>
   <data name="UserSupportViewModelKeywords" xml:space="preserve">
     <value>User, Support, Website</value>
@@ -316,7 +315,7 @@
     <value>s</value>
   </data>
   <data name="LoadingViewDownloadText" xml:space="preserve">
-    <value> Downloading and processing Bitcoin network data</value>
+    <value>Downloading and processing Bitcoin network data</value>
   </data>
   <data name="LoadingViewThirdparty" xml:space="preserve">
     <value>Ginger does this without any third party knowing about your balance and financial activity.</value>
