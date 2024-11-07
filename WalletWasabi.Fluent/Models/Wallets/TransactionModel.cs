@@ -55,15 +55,15 @@ public partial class TransactionModel : ReactiveObject
 
 	public bool IsCancellation => Type == TransactionType.Cancellation;
 
+	public bool ShowWarning { get; set; }
+
 	public FeeRate? FeeRate { get; set; }
-	
+
 	public bool HasBeenSpedUp { get; set; }
 
 	private Money GetAmount()
 	{
-		return Amount < Money.Zero
-			? Amount + (Fee ?? Money.Zero)
-			: Amount;
+		return Type == TransactionType.OutgoingTransaction ? Amount + (Fee ?? Money.Zero) : Amount;
 	}
 
 	public void Add(TransactionModel child)

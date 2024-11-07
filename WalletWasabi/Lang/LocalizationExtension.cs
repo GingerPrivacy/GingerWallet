@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Resources;
 using WalletWasabi.Extensions;
 using WalletWasabi.Models;
@@ -20,6 +20,7 @@ public static class LocalizationExtension
 			DisplayLanguage.Spanish => "Español",
 			DisplayLanguage.Hungarian => "Magyar",
 			DisplayLanguage.French => "Français",
+			DisplayLanguage.Chinese => "中文",
 			_ => language.ToString()
 		};
 	}

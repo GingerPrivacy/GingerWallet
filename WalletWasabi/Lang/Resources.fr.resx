@@ -1280,4 +1280,25 @@ Ce sont des mots de récupération supplémentaires pour plus de sécurité.</va
   <data name="Confirm" xml:space="preserve">
     <value>Confirmer</value>
   </data>
+  <data name="ResyncWallet" xml:space="preserve">
+    <value>Resynchroniser le portefeuille</value>
+  </data>
+  <data name="ApplicationRestartRescan" xml:space="preserve">
+    <value>L'application redémarrera, et lors de la réouverture de votre portefeuille, le rescannage commencera. Ce processus peut prendre un certain temps, en fonction du nombre de transactions dans votre portefeuille.</value>
+  </data>
+  <data name="ProceedConfirmation" xml:space="preserve">
+    <value>Souhaitez-vous continuer ?</value>
+  </data>
+  <data name="TransactionID" xml:space="preserve">
+    <value>ID de transaction</value>
+  </data>
+  <data name="Index" xml:space="preserve">
+    <value>Index</value>
+  </data>
+  <data name="CoinDetails" xml:space="preserve">
+    <value>Détails de la pièce</value>
+  </data>
+  <data name="SelfCoinJoinToolTip" xml:space="preserve">
+    <value>Dans ce Coinjoin, la majorité des pièces vous appartiennent. Cela réduira significativement vos progrès en matière de confidentialité. Envisagez de participer avec moins de portefeuilles jusqu'à ce que davantage de participants se joignent.</value>
+  </data>
 </root>

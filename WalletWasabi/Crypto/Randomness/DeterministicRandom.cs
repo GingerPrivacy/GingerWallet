@@ -1,3 +1,4 @@
+using System.Buffers.Binary;
 using System.IO;
 using System.Numerics;
 using System.Runtime.CompilerServices;
@@ -38,12 +39,25 @@ public class DeterministicRandom : WasabiRandom
 
 	public override void GetBytes(byte[] buffer)
 	{
-		throw new NotImplementedException();
+		GetBytes(new Span<byte>(buffer, 0, buffer.Length));
 	}
 
 	public override void GetBytes(Span<byte> buffer)
 	{
-		throw new NotImplementedException();
+		int idx = 0, sizeFull = buffer.Length, size8 = sizeFull & ~7;
+		for (; idx < size8; idx += 8)
+		{
+			BinaryPrimitives.WriteUInt64LittleEndian(buffer.Slice(idx, 8), Next());
+		}
+		if (idx < sizeFull)
+		{
+			ulong rnd = Next();
+			for (; idx < sizeFull; idx++)
+			{
+				buffer[idx] = (byte)rnd;
+				rnd >>= 8;
+			}
+		}
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveOptimization)]

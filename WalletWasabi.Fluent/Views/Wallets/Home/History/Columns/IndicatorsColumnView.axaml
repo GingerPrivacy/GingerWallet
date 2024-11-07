@@ -5,6 +5,7 @@
              xmlns:model="clr-namespace:WalletWasabi.Fluent.Models.Wallets"
              xmlns:viewmodel="clr-namespace:WalletWasabi.Fluent.ViewModels.Wallets.Home.History.HistoryItems"
              xmlns:converters="clr-namespace:WalletWasabi.Fluent.Converters"
+             xmlns:lang="using:WalletWasabi.Lang"
              mc:Ignorable="d" d:DesignWidth="100" d:DesignHeight="50"
              x:Class="WalletWasabi.Fluent.Views.Wallets.Home.History.Columns.IndicatorsColumnView"
              x:CompileBindings="True"
@@ -46,7 +47,8 @@
                   Classes.Cancellation="{Binding Transaction.Type, ConverterParameter={x:Static model:TransactionType.Cancellation}, Converter={x:Static converters:EnumToBoolConverter.Instance}}"
                   Classes.CoinjoinGroup="{Binding Transaction.Type, ConverterParameter={x:Static model:TransactionType.CoinjoinGroup}, Converter={x:Static converters:EnumToBoolConverter.Instance}}"
                   Classes.CPFP="{Binding Transaction.Type, ConverterParameter={x:Static model:TransactionType.CPFP}, Converter={x:Static converters:EnumToBoolConverter.Instance}}"
-                  Classes.SelfTransfer="{Binding Transaction.Type, ConverterParameter={x:Static model:TransactionType.SelfTransferTransaction}, Converter={x:Static converters:EnumToBoolConverter.Instance}}">
+                  Classes.SelfTransfer="{Binding Transaction.Type, ConverterParameter={x:Static model:TransactionType.SelfTransferTransaction}, Converter={x:Static converters:EnumToBoolConverter.Instance}}"
+                  Classes.Warning="{Binding Transaction.ShowWarning}">
           <PathIcon.Styles>
             <Style Selector="PathIcon.IncomingTransaction">
               <Setter Property="Data" Value="{StaticResource wallet_action_receive}" />
@@ -81,6 +83,12 @@
               <Setter Property="Data" Value="{StaticResource rocket_bolt}" />
               <Setter Property="Height" Value="14" />
               <Setter Property="ToolTip.Tip" Value="Accelerator" />
+            </Style>
+            <Style Selector="PathIcon.Warning">
+              <Setter Property="Data" Value="{StaticResource warning_filled}" />
+              <Setter Property="Foreground" Value="{DynamicResource SystemControlErrorTextForegroundBrush}" />
+              <Setter Property="Height" Value="14" />
+              <Setter Property="ToolTip.Tip" Value="{x:Static lang:Resources.SelfCoinJoinToolTip}" />
             </Style>
           </PathIcon.Styles>
         </PathIcon>

@@ -11,7 +11,7 @@
 
   <StackPanel Classes="settingsLayout" Spacing="20">
 
-    <DockPanel>
+    <DockPanel IsVisible="{Binding !IsWatchOnly}">
       <ToolTip.Tip>
         <TextBlock>
           <Run Text="{x:Static lang:Resources.WalletToolsRecommend}" />
@@ -27,6 +27,5 @@
       <TextBlock Text="{x:Static lang:Resources.ResyncWallet}" />
       <Button Theme="{StaticResource AccentButton}" Command="{Binding ResyncWalletCommand}" Content="{x:Static lang:Resources.Open}" DockPanel.Dock="Right" />
     </DockPanel>
-
   </StackPanel>
 </UserControl>

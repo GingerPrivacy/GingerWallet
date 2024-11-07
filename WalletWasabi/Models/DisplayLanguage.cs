@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 
 namespace WalletWasabi.Models;
 
@@ -15,4 +15,7 @@ public enum DisplayLanguage
 
 	[Description("fr-FR")]
 	French = 4,
+
+	[Description("zh-SG")]
+	Chinese = 5,
 }

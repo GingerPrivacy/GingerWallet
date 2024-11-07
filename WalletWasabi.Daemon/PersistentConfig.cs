@@ -130,6 +130,9 @@ public record PersistentConfig : IConfigNg
 	[JsonPropertyName("AbsoluteMinInputCount")]
 	public int AbsoluteMinInputCount { get; init; } = Constants.DefaultAbsoluteMinInputCount;
 
+	[JsonPropertyName("MaxBlockRepositorySize")]
+	public int MaxBlockRepositorySize { get; init; } = Constants.DefaultMaxBlockRepositorySize;
+
 	[JsonPropertyName("Language")]
 	[JsonConverter(typeof(DisplayLanguageJsonConverter))]
 	public int DisplayLanguage { get; init; } = (int)Models.DisplayLanguage.English;

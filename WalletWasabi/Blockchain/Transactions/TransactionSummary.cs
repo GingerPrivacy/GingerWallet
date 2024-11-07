@@ -6,15 +6,21 @@ namespace WalletWasabi.Blockchain.Transactions;
 
 public class TransactionSummary
 {
-	public TransactionSummary(SmartTransaction tx, Money amount, FeeRate? effectiveFeeRate)
+	public TransactionSummary(SmartTransaction tx, FeeRate? effectiveFeeRate)
 	{
 		Transaction = tx;
-		Amount = amount;
 		EffectiveFeeRate = effectiveFeeRate;
 	}
 
 	public SmartTransaction Transaction { get; }
-	public Money Amount { get; set; }
+
+	public int OutputCoinCount { get; private set; } = 0;
+	public int InputCoinCount { get; private set; } = 0;
+
+	public Money Amount => OutputAmount - InputAmount;
+	public Money OutputAmount { get; private set; } = Money.Zero;
+	public Money InputAmount { get; private set; } = Money.Zero;
+
 	public FeeRate? EffectiveFeeRate { get; }
 
 	public DateTimeOffset FirstSeen => Transaction.FirstSeen;
@@ -34,4 +40,23 @@ public class TransactionSummary
 	public uint256 GetHash() => Transaction.GetHash();
 
 	public bool IsOwnCoinjoin() => Transaction.IsOwnCoinjoin();
+
+	public bool IsCoinjoin()
+	{
+		return InputCoinCount > 0 && InputCoinCount < Transaction.Transaction.Inputs.Count;
+	}
+
+	public double ClientInputRatio => Transaction.WalletInputs.Count / (double)Transaction.Transaction.Inputs.Count;
+
+	public void AddOutputCoin(Money amount)
+	{
+		OutputCoinCount++;
+		OutputAmount += amount;
+	}
+
+	public void AddInputCoin(Money amount)
+	{
+		InputCoinCount++;
+		InputAmount += amount;
+	}
 }

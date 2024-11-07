@@ -2565,6 +2565,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to In this Coinjoin, the majority of the coins belong to you. This will significantly reduce your privacy progress. Consider participating with fewer wallets until more participants join..
+        /// </summary>
+        public static string SelfCoinJoinToolTip {
+            get {
+                return ResourceManager.GetString("SelfCoinJoinToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send Now.
         /// </summary>
         public static string SendNow {

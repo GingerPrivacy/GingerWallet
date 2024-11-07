@@ -68,6 +68,7 @@ public static class Constants
 	public const decimal DefaultMaxCoinJoinMiningFeeRate = 300.0m;
 	public const int DefaultAbsoluteMinInputCount = 6;
 	public const int AbsoluteMinInputCount = 6;
+	public const int DefaultMaxBlockRepositorySize = 1000;
 	public const decimal AbsoluteMaxCoordinationFeeRate = 0.003m;
 
 	public const string AlphaNumericCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -89,7 +90,7 @@ public static class Constants
 
 	public static readonly Money MaximumNumberOfBitcoinsMoney = Money.Coins(MaximumNumberOfBitcoins);
 
-	public static readonly Version ClientVersion = new(2, 0, 13, 0);
+	public static readonly Version ClientVersion = new(2, 0, 14, 0);
 
 	public static readonly Version HwiVersion = new("3.1.0");
 	public static readonly Version BitcoinCoreVersion = new("23.0");

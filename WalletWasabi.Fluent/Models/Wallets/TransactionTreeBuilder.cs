@@ -31,35 +31,18 @@ public class TransactionTreeBuilder
 		{
 			var item = summaries[i];
 
-			if (!item.IsOwnCoinjoin())
+			if (!item.IsCoinjoin())
 			{
+				AddCoinjoinOrGroup(result, ref coinJoinGroup);
 				result.Add(CreateRegular(i, item));
 			}
-
-			if (item.IsOwnCoinjoin())
+			else
 			{
 				coinJoinGroup ??= CreateCoinjoinGroup(i, item);
-
 				coinJoinGroup.Add(CreateCoinjoinTransaction(i, item));
 			}
-
-			if (coinJoinGroup is { } cjg &&
-				((i + 1 < summaries.Count && !summaries[i + 1].IsOwnCoinjoin()) || // The next item is not CJ so add the group.
-				 i == summaries.Count - 1)) // There is no following item in the list so add the group.
-			{
-				if (cjg.Children.Count == 1)
-				{
-					result.Add(cjg.Children[0]);
-				}
-				else
-				{
-					UpdateCoinjoinGroup(cjg);
-					result.Add(cjg);
-				}
-
-				coinJoinGroup = null;
-			}
 		}
+		AddCoinjoinOrGroup(result, ref coinJoinGroup);
 
 		// This second iteration is necessary to transform the flat list of speed-ups into actual groups.
 		// Here are the steps:
@@ -104,6 +87,23 @@ public class TransactionTreeBuilder
 		}
 
 		return result;
+	}
+
+	private void AddCoinjoinOrGroup(List<TransactionModel> list, ref TransactionModel? group)
+	{
+		if (group is not null)
+		{
+			if (group.Children.Count == 1)
+			{
+				list.Add(group.Children[0]);
+			}
+			else
+			{
+				UpdateCoinjoinGroup(group);
+				list.Add(group);
+			}
+			group = default;
+		}
 	}
 
 	private bool TryFindHistoryItem(uint256 txid, IEnumerable<TransactionModel> history, [NotNullWhen(true)] out TransactionModel? found)
@@ -277,24 +277,32 @@ public class TransactionTreeBuilder
 			BlockHash = transactionSummary.BlockHash,
 			ConfirmedTooltip = GetConfirmationToolTip(status, confirmations, transactionSummary.Transaction),
 			Fee = transactionSummary.GetFee(),
-			FeeRate = transactionSummary.FeeRate()
+			FeeRate = transactionSummary.FeeRate(),
+			ShowWarning = transactionSummary.ClientInputRatio > 0.5
 		};
 	}
 
 	private TransactionType GetItemType(TransactionSummary transactionSummary)
 	{
-		var isSelfSpend = transactionSummary.Amount == -(transactionSummary.GetFee() ?? Money.Zero);
-		if (!transactionSummary.IsCancellation && !transactionSummary.IsCPFP && isSelfSpend)
+		var transaction = transactionSummary.Transaction.Transaction;
+		int inputCount = transactionSummary.InputCoinCount;
+		int outputCount = transactionSummary.OutputCoinCount;
+
+		// 0: Zero, 1: Some, 2: All coins are ours.
+		int inputType = inputCount == 0 ? 0 : (inputCount < transaction.Inputs.Count ? 1 : 2);
+		int outputType = outputCount == 0 ? 0 : (outputCount < transaction.Outputs.Count ? 1 : 2);
+
+		if (!transactionSummary.IsCPFP && !transactionSummary.IsCancellation && inputType == 2 && outputType == 2)
 		{
 			return TransactionType.SelfTransferTransaction;
 		}
 
-		if (!transactionSummary.IsCPFP && transactionSummary.Amount > Money.Zero)
+		if (!transactionSummary.IsCPFP && inputType == 0 && outputType > 0)
 		{
 			return TransactionType.IncomingTransaction;
 		}
 
-		if (!transactionSummary.IsCPFP && !transactionSummary.IsCancellation && transactionSummary.Amount < Money.Zero)
+		if (!transactionSummary.IsCPFP && !transactionSummary.IsCancellation && inputType == 2 && outputType <= 1)
 		{
 			return TransactionType.OutgoingTransaction;
 		}
