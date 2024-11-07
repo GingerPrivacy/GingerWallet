@@ -1728,7 +1728,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  Downloading and processing Bitcoin network data.
+        ///   Looks up a localized string similar to Downloading and processing Bitcoin network data.
         /// </summary>
         public static string LoadingViewDownloadText {
             get {
@@ -1755,7 +1755,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;This process will be longer on first launch, with larger wallets, or after long gaps between synchronizations..
+        ///   Looks up a localized string similar to This process will be longer on first launch, with larger wallets, or after long gaps between synchronizations..
         /// </summary>
         public static string LoadingViewProcessLonger {
             get {
@@ -3231,8 +3231,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open Ginger Wallet&apos;s user support website
-        ///.
+        ///   Looks up a localized string similar to Open Ginger Wallet&apos;s user support website.
         /// </summary>
         public static string UserSupportViewModelCaption {
             get {

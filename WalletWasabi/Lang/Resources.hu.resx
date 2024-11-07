@@ -1176,8 +1176,7 @@
   <data name="ConfirmRecoveryWordsViewModelStoreSafely" xml:space="preserve">
     <value>Tárold biztonságosan a jelszavadat, nem állítható vissza, ha elveszik.
 A pénztárcád megnyitásához és visszaállításához szükséges.
-Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.
-</value>
+Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</value>
   </data>
   <data name="ConfirmRecoveryWordsViewModelClickRecovery" xml:space="preserve">
     <value>Kattints a helyreállítási szóra: #{0}</value>
@@ -1273,7 +1272,7 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.
     <value>Payjoin nem lehetséges hardveres tárcákkal.</value>
   </data>
   <data name="TermsAndConditionsViewCaption" xml:space="preserve">
-    <value>A Ginger használatának folytatásához kérjük, fogadd el a feltételeket és kikötéseket.</value>
+    <value>A Ginger használatának folytatásához kérjük, fogadd el a feltételeket és kikötéseket</value>
   </data>
   <data name="TermsAndConditionsViewTermsAndConditions" xml:space="preserve">
     <value>Általános szerződési feltételek</value>

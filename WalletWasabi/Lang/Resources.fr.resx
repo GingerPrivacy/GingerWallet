@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
+  <!--
+    Microsoft ResX Schema
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -118,1184 +118,1166 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Open" xml:space="preserve">
-    <value>Abrir</value>
+    <value>Ouvrir</value>
   </data>
   <data name="TwoFactorDisabledWarnMessage" xml:space="preserve">
-    <value>La autenticación de dos factores está deshabilitada. Actívela en la Configuración para mayor protección.</value>
+    <value>L'authentification à deux facteurs est désactivée. Activez-la dans les paramètres pour une meilleure protection.</value>
   </data>
   <data name="AddWalletPageViewModelTitle" xml:space="preserve">
-    <value>Agregar Cartera</value>
+    <value>Ajouter un Portefeuille</value>
   </data>
   <data name="AddWalletPageViewModelCaption" xml:space="preserve">
-    <value>Crear, conectar, importar o recuperar</value>
+    <value>Créer, se connecter, importer or récupérer</value>
   </data>
   <data name="AddWalletPageViewModelKeywords" xml:space="preserve">
-    <value>Cartera, Añadir, Crear, Nuevo, Recuperar, Importar, Conectar, Hardware, ColdCard, Trezor, Ledger</value>
+    <value>Portefeuille, Ajouter, Créer, Nouveau, Récupérer, Importer, Connecter, Matériel, ColdCard, Trezor, Ledger</value>
   </data>
   <data name="NoCategory" xml:space="preserve">
-    <value>Sin categoría</value>
+    <value>Pas de catégorie</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>General</value>
+    <value>Général</value>
   </data>
   <data name="Wallet" xml:space="preserve">
-    <value>Cartera</value>
+    <value>Portefeuille</value>
   </data>
   <data name="HelpAndSupport" xml:space="preserve">
-    <value>Ayuda y soporte</value>
+    <value>Aide &amp; Support</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Configuración</value>
+    <value>Paramètres</value>
   </data>
   <data name="GeneralSettingsTabViewModelTitle" xml:space="preserve">
-    <value>General</value>
+    <value>Général</value>
   </data>
   <data name="GeneralSettingsTabViewModelCaption" xml:space="preserve">
-    <value>Administrar la configuración general</value>
+    <value>Gérer les paramètres généraux</value>
   </data>
   <data name="GeneralSettingsTabViewModelKeywords" xml:space="preserve">
-    <value>Configuración, General, Bitcoin, Oscuro, Modo, Ejecutar, Ginger, Computadora, Sistema, Inicio, Fondo, Cerrar, Automático, Copiar, Pegar, Direcciones, Personalizado, Cambiar, Dirección, Tarifa, Pantalla, Formato, BTC, sats, navegador</value>
+    <value>Paramètres, Général, Bitcoin, Nuit, Mode, Lancer, Ginger, Ordinateur, Système, Démarrer, en tâche de fond, Fermer, Auto, Copier, Coller, Adresses, Personnalisée, Monnaie, Adresse, Frais, Afficher, Format, BTC, sats, navigateur</value>
   </data>
   <data name="BitcoinTabSettingsViewModelTitle" xml:space="preserve">
     <value>Bitcoin</value>
   </data>
   <data name="BitcoinTabSettingsViewModelCaption" xml:space="preserve">
-    <value>Administrar la configuración de Bitcoin</value>
+    <value>Gérer les paramètres Bitcoin</value>
   </data>
   <data name="BitcoinTabSettingsViewModelKeywords" xml:space="preserve">
-    <value>Configuración, Bitcoin, Red, Principal, TestNet, RegTest, Ejecutar, Nodo, Core, Knots, Versión, Inicio, P2P, Punto final, Polvo, Umbral, BTC</value>
+    <value>Paramètres, Bitcoin, Réseau, Principal, TestNet, RegTest, Lancer, Noeud, Core, Knots, Version, Démarrage, P2P, Point de fin, Dust, Seuil, BTC</value>
   </data>
   <data name="AdvancedSettingsTabViewModelTitle" xml:space="preserve">
-    <value>Avanzado</value>
+    <value>Avancé</value>
   </data>
   <data name="AdvancedSettingsTabViewModelCaption" xml:space="preserve">
-    <value>Administrar la configuración avanzada</value>
+    <value>Gérer les réglages avancés</value>
   </data>
   <data name="AdvancedSettingsTabViewModelKeywords" xml:space="preserve">
-    <value>Configuración, Avanzado, Habilitar, GPU</value>
+    <value>Paramètres, Avancé, Activer, GPU</value>
   </data>
   <data name="SecuritySettingsTabViewModelTitle" xml:space="preserve">
-    <value>Seguridad</value>
+    <value>Sécurité</value>
   </data>
   <data name="SecuritySettingsTabViewModelCaption" xml:space="preserve">
-    <value>Administrar la configuración de seguridad</value>
+    <value>Gérer les paramètres de sécurité</value>
   </data>
   <data name="SecuritySettingsTabViewModelKeywords" xml:space="preserve">
-    <value>Seguridad, Configuración, 2FA, Autenticación, de dos factores, Dos, Factores</value>
-  </data>
-  <data name="AboutViewModelCaption" xml:space="preserve">
-    <value>Mostrar la información actual de Ginger Wallet</value>
+    <value>Sécurité, Paramètres, 2FA, Deux facteurs, Authentification, Deux, Facteurs</value>
   </data>
   <data name="AboutViewModelTitle" xml:space="preserve">
-    <value>Acerca de</value>
+    <value>À propos de Ginger Wallet</value>
   </data>
   <data name="AboutViewModelKeywords" xml:space="preserve">
-    <value>Software, Versión, Fuente, Código, Github, Sitio web, Coordinador, Estadísticas, Tor, Onion, Usuario, Soporte, Informe de errores, Preguntas frecuentes, Preguntas, Documentos, Documentación, Licencia, Avanzado, Información, Hardware, Cartera</value>
+    <value>À propos, Logiciel, Version, Source, Code, Github, Site Web, Coordinateur, Stats, Tor, Onion, Utilisateur, Support, Bug, Report, FAQ, Questions, Docs, Documentation, License, Avancé, Information, Matériel, Portefeuille</value>
   </data>
   <data name="BroadcasterViewModelTitle" xml:space="preserve">
-    <value>Publicación de la transacción</value>
+    <value>Diffuseur</value>
   </data>
   <data name="BroadcasterViewModelCaption" xml:space="preserve">
-    <value>Transmita su transacción aquí</value>
+    <value>Partagez votre transaction ici</value>
   </data>
   <data name="BroadcasterViewModelKeywords" xml:space="preserve">
-    <value>ID de transacción, Entrada, Salida, Monto, Red, Tarifa, Conteo, BTC, Firmado, Pegar, Importar, Transmitir, Transacción</value>
+    <value>Transaction Id, Entrée, Sortie, Montant, Réseau, Frais, Compte, BTC, Signé, Coller, Importer, Partager, Transaction</value>
   </data>
   <data name="LegalDocumentsViewModelTitle" xml:space="preserve">
-    <value>Documento legal</value>
+    <value>Document légal</value>
   </data>
   <data name="LegalDocumentsViewModelCaption" xml:space="preserve">
-    <value>Mostrar términos y condiciones</value>
+    <value>Afficher les termes et conditions</value>
   </data>
   <data name="LegalDocumentsViewModelKeywords" xml:space="preserve">
-    <value>Ver, Legal, Documento, Términos, Condiciones, Privacidad, Política, Declaración</value>
+    <value>Voir, Légal, Document, Termes, Conditions, Confidentialité, Politique d'usage, Déclaration</value>
   </data>
   <data name="UserSupportViewModelTitle" xml:space="preserve">
-    <value>Soporte al usuario</value>
+    <value>Support utilisateur</value>
   </data>
   <data name="UserSupportViewModelCaption" xml:space="preserve">
-    <value>Abrir el sitio web de soporte al usuario de Ginger Wallet</value>
+    <value>Ouvrir le support utilisateur depuis le site de Ginger Wallet</value>
   </data>
   <data name="UserSupportViewModelKeywords" xml:space="preserve">
-    <value>Usuario, Soporte, Sitio web</value>
+    <value>Utilisateur, Support, Site internet</value>
   </data>
   <data name="BugReportLinkViewModelTitle" xml:space="preserve">
-    <value>Informar un error</value>
+    <value>Signaler un bug</value>
   </data>
   <data name="BugReportLinkViewModelCaption" xml:space="preserve">
-    <value>Abrir el sitio web de problemas de GitHub de Ginger Wallet</value>
+    <value>Ouvrir la page de résolution des problème GitHub de Ginger</value>
   </data>
   <data name="BugReportLinkViewModelKeywords" xml:space="preserve">
-    <value>Soporte, Sitio web, Error, Informe</value>
+    <value>Support, Website, Bug, Reporter</value>
   </data>
   <data name="DocsLinkViewModelTitle" xml:space="preserve">
-    <value>Guía del usuario/FAQ</value>
+    <value>Guide d’utilisateur/FAQ</value>
   </data>
   <data name="DocsLinkViewModelCaption" xml:space="preserve">
-    <value>Abrir el sitio web de preguntas frecuentes de Ginger Wallet</value>
+    <value>Ouvrir la page de FAQ de Ginger Wallet</value>
   </data>
   <data name="DocsLinkViewModelKeywords" xml:space="preserve">
-    <value>Usuario, Soporte, Sitio web, Documentos, Documentación, Guía</value>
+    <value>Utilisateur, Support, Site web, Docs, Documentation, Guide</value>
   </data>
   <data name="OpenDataFolderViewModelTitle" xml:space="preserve">
-    <value>Carpeta de datos</value>
+    <value>Dossier de données</value>
   </data>
   <data name="OpenDataFolderViewModelKeywords" xml:space="preserve">
-    <value>Navegar, Abrir, Datos, Carpeta</value>
+    <value>Naviguer, Ouvrir, Données, Fichier</value>
   </data>
   <data name="OpenWalletsFolderViewModelTitle" xml:space="preserve">
-    <value>Carpeta de billetera</value>
+    <value>Dossier du portefeuille</value>
   </data>
   <data name="OpenWalletsFolderViewModelKeywords" xml:space="preserve">
-    <value>Navegar, Abrir, Billetera, Carpeta</value>
+    <value>Naviguer, Ouvrir, Portefeuille, Dossier</value>
   </data>
   <data name="OpenLogsViewModelTitle" xml:space="preserve">
-    <value>Registros</value>
+    <value>Logs</value>
   </data>
   <data name="OpenLogsViewModelKeywords" xml:space="preserve">
-    <value>Navegar, Abrir, Registros, log</value>
+    <value>Naviguer, Ouvrir, Logs</value>
   </data>
   <data name="OpenTorLogsViewModelKeywords" xml:space="preserve">
-    <value>Navegar, Abrir, Tor, Registros, log</value>
+    <value>Naviguer, Ouvrir, Tor, Logs</value>
   </data>
   <data name="OpenTorLogsViewModelTitle" xml:space="preserve">
-    <value>Registros de Tor</value>
+    <value>Logs Tor</value>
   </data>
   <data name="OpenConfigFileViewModelTitle" xml:space="preserve">
-    <value>Archivo de configuración</value>
+    <value>Fichier de configuration</value>
   </data>
   <data name="OpenConfigFileViewModelKeywords" xml:space="preserve">
-    <value>Navegar, Abrir, Configuración, Archivo</value>
+    <value>Naviguer, Ouvrir, Configurer, Fichier</value>
   </data>
   <data name="SearchBoxWatermark" xml:space="preserve">
-    <value>Buscar configuraciones / funciones avanzadas</value>
+    <value>Chercher des paramètres / fonctions avancées</value>
   </data>
   <data name="OpenPasswordBoxWatermark" xml:space="preserve">
-    <value>Frase secreta</value>
+    <value>Phrase de récupération</value>
   </data>
   <data name="DiscreetMode" xml:space="preserve">
-    <value>Modo discreto</value>
+    <value>Mode Discret</value>
   </data>
   <data name="SettingsPageViewModelKeywords" xml:space="preserve">
-    <value>Configuración, General, Usuario, Interfaz, Avanzado</value>
+    <value>Paramètres, Général, Utilisateur, Interface, Avancé</value>
   </data>
   <data name="SettingsPageViewModelCaption" xml:space="preserve">
-    <value>Administra la apariencia, la privacidad y otros ajustes</value>
+    <value>Gérer l’apparence, la confidentialité et les autres paramètres</value>
   </data>
   <data name="SettingsPageViewModelTitle" xml:space="preserve">
-    <value>Configuración</value>
+    <value>Paramètres</value>
   </data>
   <data name="TwoFactorDisabledWarnMessageOpenSettings" xml:space="preserve">
-    <value>Abrir configuración</value>
+    <value>Ouvrir les paramètres</value>
   </data>
   <data name="LoadingViewModelPercentCompleted" xml:space="preserve">
-    <value>{0}% completado</value>
+    <value>{0}% achevé</value>
   </data>
   <data name="LoadingViewModelTimeRemaining" xml:space="preserve">
-    <value>- {0} restante</value>
+    <value>- {0} restant</value>
   </data>
   <data name="day" xml:space="preserve">
-    <value>día</value>
+    <value>jour</value>
   </data>
   <data name="hour" xml:space="preserve">
-    <value>hora</value>
+    <value>heure</value>
   </data>
   <data name="minute" xml:space="preserve">
-    <value>minuto</value>
+    <value>minute</value>
   </data>
   <data name="second" xml:space="preserve">
-    <value>segundo</value>
+    <value>deuxième</value>
   </data>
   <data name="and" xml:space="preserve">
-    <value>y</value>
+    <value>et</value>
   </data>
   <data name="Plural" xml:space="preserve">
-    <value>(s)</value>
+    <value> </value>
   </data>
   <data name="LoadingViewDownloadText" xml:space="preserve">
-    <value>Descargando y procesando datos de la red de Bitcoin</value>
+    <value>Téléchargement et traitement des données du réseau Bitcoin</value>
   </data>
   <data name="LoadingViewThirdparty" xml:space="preserve">
-    <value>Ginger hace esto sin que ningún tercero conozca tu saldo y actividad financiera.</value>
+    <value>Ginger fait cela sans qu’aucun tiers ne puisse connaitre votre solde et vos activités financières.</value>
   </data>
   <data name="LoadingViewProcessLonger" xml:space="preserve">
-    <value>Este proceso será más largo en el primer lanzamiento, con carteras más grandes o si ha pasado más tiempo entre las sincronizaciones.</value>
+    <value>Ce processus sera plus long lors du premier lancement, avec des portefeuilles ayant un long historique*, ou après de longs intervalles entre les synchronisations.</value>
   </data>
   <data name="WalletBalance" xml:space="preserve">
-    <value>SALDO</value>
+    <value>SOLDE</value>
   </data>
   <data name="WalletPrivacyProgress" xml:space="preserve">
-    <value>PROGRESO DE PRIVACIDAD</value>
+    <value>AVANCÉE DE LA CONFIDENTIALITÉ</value>
   </data>
   <data name="WalletExchangeRate" xml:space="preserve">
-    <value>TIPO DE CAMBIO</value>
+    <value>TAUX D’ÉCHANGE</value>
   </data>
   <data name="WalletTransactions" xml:space="preserve">
-    <value>Transacciones</value>
+    <value>Transactions</value>
   </data>
   <data name="Sorting" xml:space="preserve">
-    <value>Ordenación</value>
+    <value>Trie</value>
   </data>
   <data name="ShowDetails" xml:space="preserve">
-    <value>Mostrar detalles</value>
+    <value>Montrer les détails</value>
   </data>
   <data name="CopyTransactionId" xml:space="preserve">
-    <value>Copiar ID de transacción</value>
+    <value>Copier Transaction ID</value>
   </data>
   <data name="CopyLabel" xml:space="preserve">
-    <value>Copiar etiqueta</value>
+    <value>Copier étiquette</value>
   </data>
   <data name="CopyAmount" xml:space="preserve">
-    <value>Copiar cantidad</value>
+    <value>Copier montant</value>
   </data>
   <data name="WalletSend" xml:space="preserve">
-    <value>Enviar</value>
+    <value>Envoyer</value>
   </data>
   <data name="WalletAutomatic" xml:space="preserve">
-    <value>Automático</value>
+    <value>Automatique</value>
   </data>
   <data name="WalletManualControl" xml:space="preserve">
-    <value>Control manual</value>
+    <value>Contrôle manuel</value>
   </data>
   <data name="SpeedUpTransaction" xml:space="preserve">
-    <value>Acelerar Transacción</value>
+    <value>Accélérer la transaction</value>
   </data>
   <data name="CancelTransaction" xml:space="preserve">
-    <value>Cancelar Transacción</value>
+    <value>Annuler la transaction</value>
   </data>
   <data name="OpenInTheBrowser" xml:space="preserve">
-    <value>Abrir en el navegador</value>
+    <value>Ouvrir dans le navigateur</value>
   </data>
   <data name="WalletSettings" xml:space="preserve">
-    <value>Configuración de la cartera</value>
+    <value>Paramètres du portefeuille</value>
   </data>
   <data name="WalletCoins" xml:space="preserve">
-    <value>Monedas de la cartera</value>
+    <value>Coins du portefeuille</value>
   </data>
   <data name="WalletStats" xml:space="preserve">
-    <value>Estadísticas de la cartera</value>
+    <value>Stats du portefeuille</value>
   </data>
   <data name="WalletInfo" xml:space="preserve">
-    <value>Información de la cartera</value>
+    <value>Infos portefeuille</value>
   </data>
   <data name="WalletReceive" xml:space="preserve">
-    <value>Recibir</value>
+    <value>Recevoir</value>
   </data>
   <data name="ExcludeCoins" xml:space="preserve">
-    <value>Excluir monedas</value>
+    <value>Coins exclus</value>
   </data>
   <data name="CoinjoinSettings" xml:space="preserve">
-    <value>Configuración de Coinjoin</value>
+    <value>Paramètres de Coinjoin</value>
   </data>
   <data name="CountDownMessage" xml:space="preserve">
-    <value>Esperando el inicio automático de Coinjoin</value>
+    <value>En attente du démarrage automatique de Coinjoin</value>
   </data>
   <data name="WaitingMessage" xml:space="preserve">
-    <value>Esperando Coinjoin</value>
+    <value>En attente de coinjoin</value>
   </data>
   <data name="UneconomicalRoundMessage" xml:space="preserve">
-    <value>Esperando Coinjoins más baratos</value>
+    <value>En attente de coinjoins moins coûteux</value>
   </data>
   <data name="RandomlySkippedRoundMessage" xml:space="preserve">
-    <value>Saltando una ronda para mejor privacidad</value>
+    <value>Attendre un tour pour maximiser la confidentialité</value>
   </data>
   <data name="PauseMessage" xml:space="preserve">
-    <value>Coinjoin está en pausa</value>
+    <value>Coinjoin en pause</value>
   </data>
   <data name="StoppedMessage" xml:space="preserve">
-    <value>Coinjoin se ha detenido</value>
+    <value>Coinjoin s’est arrêté</value>
   </data>
   <data name="PressPlayToStartMessage" xml:space="preserve">
-    <value>Presiona Play para comenzar</value>
+    <value>Appuyez sur Lancer pour démarrer</value>
   </data>
   <data name="RoundSucceedMessage" xml:space="preserve">
-    <value>¡Coinjoin exitoso! Continuando...</value>
+    <value>Succès de Coinjoin ! Continue...</value>
   </data>
   <data name="RoundFinishedMessage" xml:space="preserve">
-    <value>La ronda terminó, esperando la siguiente ronda</value>
-  </data>
-  <data name="AbortedNotEnoughAlicesMessage" xml:space="preserve">
-    <value>Participantes insuficientes, reintentando...</value>
+    <value>Fin du tour, en attente du tour suivant</value>
   </data>
   <data name="CoinJoinInProgress" xml:space="preserve">
-    <value>Coinjoin en progreso</value>
+    <value>Coinjoin en cours</value>
   </data>
   <data name="InputRegistrationMessage" xml:space="preserve">
-    <value>Esperando a otros participantes</value>
+    <value>En attente d’autres participants</value>
   </data>
   <data name="WaitingForBlameRoundMessage" xml:space="preserve">
-    <value>Esperando la ronda de repetición</value>
+    <value>En attente du tour de contrôle</value>
   </data>
   <data name="WaitingRoundMessage" xml:space="preserve">
-    <value>Esperando una ronda</value>
+    <value>MessageD’Attente</value>
   </data>
   <data name="PlebStopMessage" xml:space="preserve">
-    <value>El Coinjoin puede no ser rentable</value>
+    <value>Coinjoin pourrait être non-économique</value>
   </data>
   <data name="PlebStopMessageBelow" xml:space="preserve">
-    <value>Agrega más fondos o presiona Play para continuar</value>
+    <value>Ajoutez des fonds ou appuyez sur Lancer pour passer</value>
   </data>
   <data name="NoCoinsEligibleToMixMessage" xml:space="preserve">
-    <value>Fondos insuficientes elegibles para Coinjoin</value>
+    <value>Fonds éligibles insuffisants pour Coinjoin</value>
   </data>
   <data name="UserInSendWorkflowMessage" xml:space="preserve">
-    <value>Esperando el cierre del cuadro de diálogo de envío</value>
+    <value>En attente de la fermeture du dialog d’envois</value>
   </data>
   <data name="AllPrivateMessage" xml:space="preserve">
-    <value>¡Hurra! ¡Todos tus fondos son privados!</value>
+    <value>Bravo ! Tous vos fonds sont privés !</value>
   </data>
   <data name="BackendNotConnected" xml:space="preserve">
-    <value>Esperando conexión</value>
+    <value>En attente de connexion</value>
   </data>
   <data name="GeneralErrorMessage" xml:space="preserve">
-    <value>Esperando condiciones válidas</value>
+    <value>En attente de conditions valides</value>
   </data>
   <data name="WaitingForConfirmedFunds" xml:space="preserve">
-    <value>Esperando fondos confirmados</value>
+    <value>En attente de la confirmation des fonds</value>
   </data>
   <data name="CoinsRejectedMessage" xml:space="preserve">
-    <value>Algunos fondos son rechazados del Coinjoin</value>
+    <value>Certains fonds sont rejetés du Coinjoin</value>
   </data>
   <data name="OnlyImmatureCoinsAvailableMessage" xml:space="preserve">
-    <value>Solo monedas no confirmadas están disponibles</value>
+    <value>Seuls des fonds immatures sont disponibles</value>
   </data>
   <data name="OnlyExcludedCoinsAvailableMessage" xml:space="preserve">
-    <value>Solo los fondos excluidos están disponibles</value>
+    <value>Seuls les fonds exclus sont disponibles</value>
   </data>
   <data name="MiningFeeRateTooHighMessage" xml:space="preserve">
-    <value>La tasa de comisión de minería era demasiado alta</value>
+    <value>Les frais de minage étaient trop haut</value>
   </data>
   <data name="CoordinationFeeRateTooHighMessage" xml:space="preserve">
-    <value>La tasa de comisión de coordinación era demasiado alta</value>
+    <value>Les frais de Coordination étaient trop hauts</value>
   </data>
   <data name="MinInputCountTooLowMessage" xml:space="preserve">
-    <value>El recuento mínimo de entradas era demasiado bajo</value>
+    <value>Le nombre d’entrées minimum était trop bas</value>
   </data>
   <data name="ServerDidNotGiveFeeExemptionMessage" xml:space="preserve">
-    <value>El servidor no otorgó la exención de la tarifa de remix</value>
+    <value>Le serveur n'a pas accordé d'exemption pour les frais de mixage</value>
   </data>
   <data name="WaitingForResponse" xml:space="preserve">
-    <value>Esperando respuesta</value>
+    <value>En attente d’une réponse</value>
   </data>
   <data name="WalletSettingsViewModelTitle" xml:space="preserve">
-    <value>Configuración de la cartera</value>
+    <value>Paramètres du portefeuille</value>
   </data>
   <data name="WalletSettingsViewModelCaption" xml:space="preserve">
-    <value>Mostrar configuración de la cartera</value>
+    <value>Paramètres d’affichage du portefeuille</value>
   </data>
   <data name="WalletSettingsViewModelKeywords" xml:space="preserve">
-    <value>Cartera, Configuración</value>
+    <value>Portefeuille, Paramètres</value>
   </data>
   <data name="Coinjoin" xml:space="preserve">
     <value>Coinjoin</value>
   </data>
   <data name="Tools" xml:space="preserve">
-    <value>Herramientas</value>
+    <value>Outils</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Denominación</value>
+    <value>Nom</value>
   </data>
   <data name="PSBTworkflow" xml:space="preserve">
-    <value>Flujo de trabajo PSBT</value>
+    <value>Déroulement de PSBT</value>
   </data>
   <data name="AutomaticallyStartCoinjoin" xml:space="preserve">
-    <value>Iniciar Coinjoin automáticamente</value>
+    <value>Démarrer automatiquement Coinjoin</value>
   </data>
   <data name="CoinjoinStrategy" xml:space="preserve">
-    <value>Estrategia de Coinjoin:</value>
+    <value>Stratégie Coinjoin :</value>
   </data>
   <data name="CoinjoinToThisWallet" xml:space="preserve">
-    <value>Coinjoin a esta cartera:</value>
+    <value>Coinjoin vers ce portefeuille :</value>
   </data>
   <data name="CoinjoinToOtherWalletRestrictions1" xml:space="preserve">
-    <value>- Solo se pueden seleccionar carteras cargadas.</value>
+    <value>- Seuls des portefeuilles alimentés peuvent être sélectionnés.</value>
   </data>
   <data name="CoinjoinToOtherWalletRestrictions2" xml:space="preserve">
-    <value>- Las monedas de la transacción Coinjoin serán recibidas por esta cartera. Sin embargo, esta configuración se restablece después de reiniciar Ginger.</value>
+    <value>- Les coins issus de la transaction Coinjoin seront reçus dans ce portfeuille. Cependant, ce paramètre se remet à zéro lorsque Ginger redémarre.</value>
   </data>
   <data name="CoinjoinToOtherWalletRestrictions3" xml:space="preserve">
-    <value>- La cartera seleccionada no se puede cambiar cuando un Coinjoin está en progreso.</value>
+    <value>- Les frais sélectionnés ne peuvent pas être modifiés lorsque Coinjoin est en cours.</value>
   </data>
   <data name="PlebStopToolTip" xml:space="preserve">
-    <value>El Coinjoin se detendrá automáticamente si el saldo de la cartera es menor que esto.</value>
+    <value>Coinjoin va automatiquement s’arrêter si le solde du portefeuille est inférieur à cela.</value>
   </data>
   <data name="PlebStopThreshold" xml:space="preserve">
-    <value>Umbral para detener el Coinjoin</value>
+    <value>Seuil d’arrêt de Coinjoin</value>
   </data>
   <data name="WalletToolsCheckBackup" xml:space="preserve">
-    <value>¿Has verificado la copia de seguridad de tu cartera?</value>
+    <value>Avez-vous vérifié votre sauvegarde du portefeuille ?</value>
   </data>
   <data name="WalletToolsRecommend" xml:space="preserve">
-    <value>Se recomienda que verifiques las Palabras de Recuperación de tu cartera de vez en cuando.</value>
+    <value>Il est recommandé de vérifier de temps en temps les mots de récupération de votre portefeuille.</value>
   </data>
   <data name="WalletToolsDoNotForget" xml:space="preserve">
-    <value>Tu frase de contraseña también es necesaria para restaurar tu cartera, no la olvides.</value>
+    <value>Votre phrase de sécurité est également nécessaire pour restaurer votre portefeuille, ne l'oubliez pas.</value>
   </data>
   <data name="WalletToolsVerifyRecoveryWords" xml:space="preserve">
-    <value>Verificar Palabras de Recuperación</value>
+    <value>Vérifiez les mots de récupération</value>
   </data>
   <data name="Change" xml:space="preserve">
-    <value>Cambiar</value>
+    <value>Monnaie</value>
   </data>
   <data name="WalletCoinJoinSettingsViewModelTitle" xml:space="preserve">
-    <value>Configuración de Coinjoin</value>
+    <value>Paramètres de Coinjoin</value>
   </data>
   <data name="WalletCoinJoinSettingsViewModelCaption" xml:space="preserve">
-    <value>Mostrar configuración de Coinjoin de la cartera</value>
+    <value>Afficher les paramètres coinjoin du portefeuille</value>
   </data>
   <data name="WalletCoinJoinSettingsViewModelKeywords" xml:space="preserve">
-    <value>Cartera, Configuración</value>
+    <value>Portefeuille, Paramètres</value>
   </data>
   <data name="CoinJoinProfilesViewModelTitle" xml:space="preserve">
-    <value>Estrategia de Coinjoin</value>
+    <value>Stratégie Coinjoin</value>
   </data>
   <data name="CoinJoinProfilesCaption" xml:space="preserve">
-    <value>Ginger se encarga de tu privacidad financiera al iniciar automáticamente el coinjoin de todos tus fondos por una tarifa de coordinación fija del 0.3% + las tarifas de minería. ¡Selecciona la estrategia de coinjoin que mejor se adapte a ti!</value>
+    <value>Ginger prend soin de votre vie privée financière en appliquant automatiquement Coinjoin à tous vos fonds avec des frais de coordinateur fixes de 0.3% + les frais de transaction. Selectionnez la stratégie de Coinjoin qui vous convient le mieux !</value>
   </data>
   <data name="PrivateCoinJoinProfileTitle" xml:space="preserve">
-    <value>Maximizar la privacidad</value>
+    <value>Maximiser la confidentialité</value>
   </data>
   <data name="PrivateCoinJoinProfileDescription" xml:space="preserve">
-    <value>Elección de los paranoicos. Optimiza la privacidad a toda costa.</value>
+    <value>Choix des paranos. Place la vie privée au dessus de tout.</value>
   </data>
   <data name="EconomicCoinJoinProfileTitle" xml:space="preserve">
-    <value>Minimizar los costos</value>
+    <value>Minimiser les coûts</value>
   </data>
   <data name="EconomicCoinJoinProfileDescription" xml:space="preserve">
-    <value>Para los ahorradores. Solo participa en coinjoins durante las partes más económicas de la semana.</value>
+    <value>Pour les radins. Ne participe aux Coinjoin que pendant les périodes les moins chères de la semaine.</value>
   </data>
   <data name="ManualCoinJoinProfileTitle" xml:space="preserve">
-    <value>Personalizado</value>
+    <value>Personnalisé</value>
   </data>
   <data name="SpeedyCoinJoinProfileTitle" xml:space="preserve">
-    <value>Maximizar la velocidad</value>
+    <value>Maximiser la vitesse</value>
   </data>
   <data name="SpeedyCoinJoinProfileDescription" xml:space="preserve">
-    <value>Hacer las cosas. Orientado hacia la rapidez y la conveniencia.</value>
+    <value>Faire ce qu'il y a à faire. Orienté vers la rapidité et la commodité.</value>
   </data>
   <data name="Customize" xml:space="preserve">
-    <value>Personalizar</value>
+    <value>Personnalise</value>
   </data>
   <data name="Done" xml:space="preserve">
-    <value>Hecho</value>
+    <value>Fait</value>
   </data>
   <data name="ManualCoinJoinProfileDialogTitle" xml:space="preserve">
-    <value>Configuración de la estrategia de Coinjoin</value>
+    <value>Paramètres de stratégie Coinjoin</value>
   </data>
   <data name="AdvancedCoinjoinOptionsViewRedcoinText" xml:space="preserve">
-    <value>Aislamiento de monedas rojas</value>
+    <value>Isolation coin rouge</value>
   </data>
   <data name="AdvancedCoinjoinOptionsViewRedcoinToolTip" xml:space="preserve">
-    <value>Solo permitir una moneda con una puntuación de anonimato de 1 en el registro de Coinjoin.</value>
+    <value>Autoriser seulement un seul coin avec un score de confidentialité de 1 durant l’inscription Coinjoin.</value>
   </data>
   <data name="AdvancedCoinjoinOptionsViewAnonTargetText" xml:space="preserve">
-    <value>Objetivo de puntuación de anonimato</value>
+    <value>Objectif de score d’anonymat</value>
   </data>
   <data name="AdvancedCoinjoinOptionsViewAnonTargetTooltip" xml:space="preserve">
-    <value>Puntuación mínima de anonimato para que una moneda sea considerada privada.</value>
+    <value>Score minimum d’anonymat pour qu’un coin soit considéré confidentiel.</value>
   </data>
   <data name="AdvancedCoinjoinOptionsViewSafeFeeText" xml:space="preserve">
-    <value>Tarifa segura</value>
+    <value>Frais de sécurité</value>
   </data>
   <data name="AdvancedCoinjoinOptionsViewSafeFeeToolTip" xml:space="preserve">
-    <value>Siempre hacer Coinjoin cuando la tarifa sea inferior a este valor (tiene prioridad sobre la preferencia de tiempo de Coinjoin).</value>
+    <value>Toujours Coinjoin lorsque le taux de frais est inférieur à cette valeur (a priorité sur la préférence temporelle de Coinjoin).</value>
   </data>
   <data name="AdvancedCoinjoinOptionsViewCoinJoinTimePrefText" xml:space="preserve">
-    <value>Preferencia de tiempo de Coinjoin</value>
+    <value>Préférence de temps de Coinjoin</value>
   </data>
   <data name="AdvancedCoinjoinOptionsViewCoinJoinTimePrefToolTip" xml:space="preserve">
-    <value>Solo hacer Coinjoin cuando la tarifa esté por debajo de la mediana de este período de tiempo.</value>
+    <value>Coinjoin seulement lorsque les frais sont en-dessous de la moyenne actuelle.</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancelar</value>
+    <value>Annuler</value>
   </data>
   <data name="Next" xml:space="preserve">
-    <value>Siguiente</value>
+    <value>Suivant</value>
   </data>
   <data name="Skip" xml:space="preserve">
-    <value>Saltar</value>
+    <value>Passer</value>
   </data>
   <data name="CreateNewWallet" xml:space="preserve">
-    <value>Crear una nueva cartera</value>
+    <value>Créer un nouveau portfeuille</value>
   </data>
   <data name="ConnectHardwareWallet" xml:space="preserve">
-    <value>Conectar a una cartera de hardware</value>
+    <value>Se connecter au portefeuille matériel</value>
   </data>
   <data name="ImportWallet" xml:space="preserve">
-    <value>Importar una cartera</value>
+    <value>Importer un portefeuille</value>
   </data>
   <data name="RecoverWallet" xml:space="preserve">
-    <value>Recuperar una cartera</value>
+    <value>Récupérer un portefeuille</value>
   </data>
   <data name="or" xml:space="preserve">
-    <value>o</value>
+    <value>ou</value>
   </data>
   <data name="WalletName" xml:space="preserve">
-    <value>Nombre de la cartera</value>
+    <value>Nom du portefeuille</value>
   </data>
   <data name="WalletRenameCaption" xml:space="preserve">
-    <value>Puedes modificar el nombre de tu cartera</value>
+    <value>Vous pouvez modifier le nom du portefeuille</value>
   </data>
   <data name="TypeInWalletName" xml:space="preserve">
-    <value>Escribe un nombre para la cartera</value>
+    <value>Entrez un nom de portefeuille</value>
   </data>
   <data name="Continue" xml:space="preserve">
-    <value>Continuar</value>
+    <value>Continuer</value>
   </data>
   <data name="Success" xml:space="preserve">
-    <value>Éxito</value>
+    <value>Succès</value>
   </data>
   <data name="UnexpextedError" xml:space="preserve">
-    <value>Ocurrió un error inesperado. Por favor, inténtelo de nuevo o contacte con soporte.</value>
+    <value>Une erreur inattendue s’est produite. Essayez encore ou contactez le support.</value>
   </data>
   <data name="SomethingWrong" xml:space="preserve">
-    <value>Algo salió mal. Por favor, inténtelo de nuevo.</value>
+    <value>Quelque chose s’est mal passé. Essayer encore.</value>
   </data>
   <data name="PermissionError" xml:space="preserve">
-    <value>Ginger Wallet no pudo realizar esta acción debido a la falta de permisos.</value>
+    <value>Ginger n’a pas été en mesure d’effectuer cette action à cause d’un manque de permissions.</value>
   </data>
   <data name="HardwareWalletNotFound" xml:space="preserve">
-    <value>No se pudo encontrar la billetera de hardware. Asegúrese de que esté conectada.</value>
+    <value>N’a pas pu trouver le portefeuille matériel. Vérifiez qu’il est connecté.</value>
   </data>
   <data name="TransactionCanceledOnDevice" xml:space="preserve">
-    <value>La transacción fue cancelada en el dispositivo.</value>
+    <value>La transaction a été annulée sur l'appareil.</value>
   </data>
   <data name="UnknownErrorDeviceCheck" xml:space="preserve">
-    <value>Error desconocido. Asegúrese de que el dispositivo esté conectado y no esté ocupado, luego inténtelo de nuevo.</value>
+    <value>Erreur inconnue. Assurez-vous que l'appareil soit bien connecté et qu'il ne soit pas occupé, puis réessayez.</value>
   </data>
   <data name="CoinAlreadySpent" xml:space="preserve">
-    <value>Al menos una de las monedas que intentas gastar ya ha sido gastada.</value>
+    <value>Au moins un coin que vous essayez de dépenser est déjà dépensé.</value>
   </data>
   <data name="CoinInUnconfirmedChain" xml:space="preserve">
-    <value>Al menos una de las monedas que intentas gastar es parte de una cadena larga o pesada de transacciones no confirmadas. Debes esperar a que se confirmen algunas transacciones anteriores.</value>
+    <value>Au moins un coin que vous essayez de dépenser fait partie d'une longue chaîne de transactions non confirmées. Vous devez attendre que certaines transactions antérieures soient confirmées.</value>
   </data>
   <data name="TransactionDuplicatedInputs" xml:space="preserve">
-    <value>La transacción contiene entradas duplicadas.</value>
+    <value>La transaction contient des entrées dupliquées.</value>
   </data>
   <data name="TransactionNotFinal" xml:space="preserve">
-    <value>La transacción no es final y no se puede difundir.</value>
+    <value>La transaction n'est pas définitive et ne peut être diffusée.</value>
   </data>
   <data name="TransactionTooBig" xml:space="preserve">
-    <value>La transacción es demasiado grande.</value>
+    <value>Cette transaction est trop grande.</value>
   </data>
   <data name="WrongPassphrase" xml:space="preserve">
-    <value>Frase de contraseña incorrecta.</value>
+    <value>Mot de passe erroné.</value>
   </data>
   <data name="InvalidWalletName" xml:space="preserve">
-    <value>Nombre de billetera inválido.</value>
+    <value>Nom de portefeuille invalide.</value>
   </data>
   <data name="WalletNameTaken" xml:space="preserve">
-    <value>El nombre de la billetera ya está en uso.</value>
+    <value>Ce nom de portefeuille est déjà pris.</value>
   </data>
   <data name="BalanceNotAccurateServerConnection" xml:space="preserve">
-    <value>El saldo reportado puede no ser exacto, y algunas otras funciones pueden no estar disponibles porque Ginger no pudo conectarse al servidor. Reintentando la conexión.</value>
+    <value>Il se peut que le solde indiqué ne soit pas exact et que d'autres fonctions ne soient pas disponibles parce que Ginger n'a pas pu se connecter au serveur. Nouvelle tentative de connexion.</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
-    <value>Actualización disponible.</value>
+    <value>Mise à jour disponible.</value>
   </data>
   <data name="CloseAndUpdate" xml:space="preserve">
-    <value>Cerrar y actualizar.</value>
+    <value>Fermer et mettre à jour.</value>
   </data>
   <data name="Update" xml:space="preserve">
-    <value>Actualizar</value>
+    <value>Mise à jour</value>
   </data>
   <data name="AskMeLater" xml:space="preserve">
-    <value>Pregúntame más tarde</value>
+    <value>Demandez-moi plus tard</value>
   </data>
   <data name="IsRunning" xml:space="preserve">
-    <value>está en funcionamiento</value>
+    <value>est en cours d’utilisation</value>
   </data>
   <data name="IsNotRunning" xml:space="preserve">
-    <value>no está en funcionamiento</value>
+    <value>n’est pas en cours d’utilisation</value>
   </data>
   <data name="IsTurnedOff" xml:space="preserve">
-    <value>está apagado</value>
+    <value>est éteint</value>
   </data>
   <data name="IsConnected" xml:space="preserve">
-    <value>está conectado</value>
+    <value>est connecté</value>
   </data>
   <data name="IsNotConnected" xml:space="preserve">
-    <value>no está conectado</value>
+    <value>n’est pas connecté</value>
   </data>
   <data name="FullNodeConnecting" xml:space="preserve">
-    <value>El nodo completo se está conectando...</value>
+    <value>Le noeud se connecte...</value>
   </data>
   <data name="FullNodeSynchronized" xml:space="preserve">
-    <value>El nodo completo está sincronizado</value>
+    <value>Le noeud est synchronisé</value>
   </data>
   <data name="FullNodeDownloadingBlocks" xml:space="preserve">
-    <value>El nodo completo está descargando {0} bloques...</value>
+    <value>Le noeud télécharge {0} blocks...</value>
   </data>
   <data name="FullNodeUnresponsive" xml:space="preserve">
-    <value>El nodo completo no responde</value>
+    <value>Le noeud ne répond pas</value>
   </data>
   <data name="ApplicationRestartApplyChanges" xml:space="preserve">
-    <value>Después de presionar Continuar, la aplicación se reiniciará para aplicar los cambios.</value>
+    <value>Après avoir appuyé sur Entrée, l’application va redémarrer pour appliquer les changements.</value>
   </data>
   <data name="WelcomeToGingerWallet" xml:space="preserve">
-    <value>Bienvenido a Ginger Wallet</value>
+    <value>Bienvenue dans Ginger Wallet</value>
   </data>
   <data name="SelectPreferredLanguage" xml:space="preserve">
-    <value>Selecciona tu idioma preferido:</value>
+    <value>Sélectionnez la langue souhaitée :</value>
   </data>
   <data name="CoinjoinFees" xml:space="preserve">
-    <value>Tarifas de Coinjoin</value>
+    <value>Frais Coinjoin</value>
   </data>
   <data name="CoordinationFeeInfo" xml:space="preserve">
-    <value>Solo pagarás una tarifa del 0.3% por las nuevas monedas que combines.</value>
+    <value>Vous allez payer des frais de 0.3% seulement pour les Coinjoin de vos nouveaux coins.</value>
   </data>
   <data name="CoordinationFee" xml:space="preserve">
-    <value>Tarifa de Coordinación</value>
+    <value>Frais de coordination</value>
   </data>
   <data name="TransactionFee" xml:space="preserve">
-    <value>Tarifa de Transacción</value>
+    <value>Frais de transaction</value>
   </data>
   <data name="TransactionFeeInfo" xml:space="preserve">
-    <value>Pagarás tarifas de minería por cada coinjoin.</value>
+    <value>Vous paierez des frais de minage pour chaque Coinjoin.</value>
   </data>
   <data name="PlebsDontPay" xml:space="preserve">
-    <value>Los plebeyos no pagan</value>
+    <value>Les gens ne paient pas</value>
   </data>
   <data name="PlebsDontPayInfo" xml:space="preserve">
-    <value>No pagarás la tarifa de coordinación por monedas que sean menores o iguales a 0.01 BTC.</value>
+    <value>Vous ne paierez pas les frais de coordination pour les montants de moins ou égaux à 0.01 BTC.</value>
   </data>
   <data name="FriendsDontPay" xml:space="preserve">
-    <value>Los amigos no pagan</value>
+    <value>Les amis ne paient pas</value>
   </data>
   <data name="FriendsDontPayInfo" xml:space="preserve">
-    <value>No pagarás la tarifa de coordinación por monedas recibidas de otros coinjoins de Ginger.</value>
+    <value>Vous ne paierez pas de frais de coordination pour les coins reçus provenant d'autres Coinjoin Ginger.</value>
   </data>
   <data name="GetStarted" xml:space="preserve">
-    <value>Empezar</value>
+    <value>Pour commencer</value>
   </data>
   <data name="AddressesAwaitingPayment" xml:space="preserve">
-    <value>Direcciones a la Espera de Pago</value>
+    <value>Adresses en attente de paiement</value>
   </data>
   <data name="SeparateWithCommaOrEnter" xml:space="preserve">
-    <value>Separe con , o presionando Enter</value>
+    <value>Séparer avec , ou en appuyant sur Entrée</value>
   </data>
   <data name="EnterNamesForAddress" xml:space="preserve">
-    <value>Ingresa los nombres de las personas o empresas a quienes le darás esta dirección</value>
+    <value>Entrez les noms des personnes ou entreprises à qui vous souhaitez donner cette adresse</value>
   </data>
   <data name="ReceiveViewModelTitle" xml:space="preserve">
-    <value>Recibir</value>
+    <value>Recevoir</value>
   </data>
   <data name="ReceiveViewModelCaption" xml:space="preserve">
-    <value>Mostrar el diálogo de recepción de la billetera</value>
+    <value>Afficher le dialog du portefeuille</value>
   </data>
   <data name="ReceiveViewModelKeywords" xml:space="preserve">
-    <value>Billetera, Recibir, Acción</value>
+    <value>Portefeuille, Recevoir, Action</value>
   </data>
   <data name="AddressAwaitingPayment" xml:space="preserve">
-    <value>Dirección a la Espera de Pago</value>
+    <value>Adresse en attente de paiement</value>
   </data>
   <data name="ShowOnHardwareWallet" xml:space="preserve">
-    <value>Mostrar en la billetera de hardware</value>
+    <value>Montrer sur le portefeuille matériel</value>
   </data>
   <data name="Copy" xml:space="preserve">
-    <value>Copiar</value>
+    <value>Copier</value>
   </data>
   <data name="UnableToSendAddressToDevice" xml:space="preserve">
-    <value>No se puede enviar la dirección al dispositivo</value>
+    <value>Incapable d’envoyer l’adresse à l’appareil</value>
   </data>
   <data name="ChooseHideModifyDisplayAddresses" xml:space="preserve">
-    <value>Puedes elegir ocultar, modificar o mostrar las direcciones que se enumeran a continuación</value>
+    <value>Vous pouvez choisir de cacher, modifier ou afficher les adresses listées ci-dessous</value>
   </data>
   <data name="Address" xml:space="preserve">
-    <value>Dirección</value>
+    <value>Adresse</value>
   </data>
   <data name="Label" xml:space="preserve">
-    <value>Etiqueta</value>
+    <value>Étiquette</value>
   </data>
   <data name="HideAddress" xml:space="preserve">
-    <value>Ocultar dirección</value>
+    <value>Cacher l’adresse</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>Editar</value>
+    <value>Éditer</value>
   </data>
   <data name="QRCode" xml:space="preserve">
-    <value>Código QR</value>
+    <value>QR Code</value>
   </data>
   <data name="WishToHideAddressWithLabels" xml:space="preserve">
-    <value>¿Deseas ocultar la dirección con las siguientes etiquetas?</value>
+    <value>Voulez-vous cacher l’adresse avec les étiquettes suivantes ?</value>
   </data>
   <data name="ThisCannotBeUndone" xml:space="preserve">
-    <value>Esto no se puede deshacer</value>
+    <value>Ceci ne peut pas être annulé</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Sí</value>
+    <value>Oui</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>No</value>
+    <value>Non</value>
   </data>
   <data name="EditSelectedAddressLabels" xml:space="preserve">
-    <value>Edita las etiquetas de la dirección seleccionada aquí:</value>
+    <value>Edit the selected address's labels here:</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Guardar</value>
+    <value>Sauvegarder</value>
   </data>
   <data name="ChangesAppliedAfterRestart" xml:space="preserve">
-    <value>Los cambios se aplicarán después de reiniciar la aplicación.</value>
+    <value>Les changements seront appliqués après redémarrage de l’application.</value>
   </data>
   <data name="RestartApplication" xml:space="preserve">
-    <value>Reiniciar la Aplicación</value>
+    <value>Redémarrer l’application</value>
   </data>
   <data name="ModifyingSettingsNotPossible" xml:space="preserve">
-    <value>No es posible modificar la configuración, ya que ciertos parámetros han sido anulados durante el inicio.</value>
+    <value>Modifier des paramètres n’est pas possible, comme certains paramètres ont été réécrits durant le démarrage.</value>
   </data>
   <data name="Advanced" xml:space="preserve">
-    <value>Avanzado</value>
+    <value>Avancé</value>
   </data>
   <data name="Security" xml:space="preserve">
-    <value>Seguridad</value>
+    <value>Sécurité</value>
   </data>
   <data name="ApplyNewSettingRestart" xml:space="preserve">
-    <value>Para aplicar la nueva configuración, Ginger Wallet necesita ser reiniciado.</value>
+    <value>Pour appliquer le changement, Ginger Wallet a besoin de redémarrer.</value>
   </data>
   <data name="DarkMode" xml:space="preserve">
-    <value>Modo oscuro</value>
+    <value>Mode nuit</value>
   </data>
   <data name="RunAtStartup" xml:space="preserve">
-    <value>Ejecutar Ginger al iniciar el ordenador</value>
+    <value>Lancer Ginger lors du démarrage de l’ordinateur</value>
   </data>
   <data name="RunInBackgroundWhenClosed" xml:space="preserve">
-    <value>Ejecutar en segundo plano cuando la ventana esté cerrada</value>
+    <value>Exécution en arrière-plan lorsque la fenêtre est fermée</value>
   </data>
   <data name="AutoCopyAddresses" xml:space="preserve">
-    <value>Copiar direcciones automáticamente</value>
+    <value>Copier automatiquement les adresses</value>
   </data>
   <data name="AutoPasteAddresses" xml:space="preserve">
-    <value>Pegar direcciones automáticamente</value>
+    <value>Copier automatiquemet les adresses</value>
   </data>
   <data name="NetworkAnonymizationTor" xml:space="preserve">
-    <value>Anonimización de red (Tor)</value>
+    <value>Anonymisation du réseau (Tor)</value>
   </data>
   <data name="CannotModifyWithTwoFactorEnabled" xml:space="preserve">
-    <value>No se puede modificar cuando la autenticación de dos factores está habilitada.</value>
+    <value>Ne peut être modifié lorsque l'authentification à deux facteurs est activée.</value>
   </data>
   <data name="TerminateTorWhenShutdown" xml:space="preserve">
-    <value>Terminar Tor cuando Ginger se apague</value>
+    <value>Éteindre Tor lors de la fermeture de Ginger</value>
   </data>
   <data name="AutoDownloadNewVersion" xml:space="preserve">
-    <value>Descargar automáticamente la nueva versión</value>
+    <value>Téléchargement automatique des nouvelles versions</value>
   </data>
   <data name="FeeDisplayUnit" xml:space="preserve">
-    <value>Unidad de visualización de tarifas</value>
+    <value>Unité d’affichage des frais</value>
   </data>
   <data name="SetPreferredBrowserPath" xml:space="preserve">
-    <value>Establecer la ruta completa del navegador preferido</value>
+    <value>Définir le chemin complet du navigateur préféré</value>
   </data>
   <data name="CustomBrowserPath" xml:space="preserve">
-    <value>Ruta del navegador personalizada</value>
+    <value>Chemin de navigateur personnalisé</value>
   </data>
   <data name="OpenInBrowser" xml:space="preserve">
-    <value>Abrir en el navegador</value>
+    <value>Ouvrir dans le navigateur</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>Idioma</value>
+    <value>Langue</value>
   </data>
   <data name="CouldNotSaveChange" xml:space="preserve">
-    <value>No se pudo guardar su cambio, consulte los registros para obtener más información.</value>
+    <value>Nous n’avons pas pu sauvegarder vos changements, vous pouvez lire les logs pour plus d’informations.</value>
   </data>
   <data name="Network" xml:space="preserve">
-    <value>Red</value>
+    <value>Réseau</value>
   </data>
   <data name="RunBitcoinKnotsOnStartup" xml:space="preserve">
-    <value>(EXPERIMENTAL) Ejecutar Bitcoin Knots al iniciar</value>
+    <value>(EXPÉRIMENTAL) Exécuter Bitcoin Knots au démarrage</value>
   </data>
   <data name="StopBitcoinKnotsOnShutdown" xml:space="preserve">
-    <value>Detener Bitcoin Knots al apagar</value>
+    <value>Arrêter Bitcoin Knots lors de l’extinction du système</value>
   </data>
   <data name="LocalBitcoinCoreKnotsVersion" xml:space="preserve">
-    <value>Versión local de Bitcoin Core/Knots</value>
+    <value>Bitcoin Core/Knots version locale</value>
   </data>
   <data name="BitcoinCoreKnotsDataFolder" xml:space="preserve">
-    <value>Carpeta de datos de Bitcoin Core/Knots</value>
+    <value>Dossiers de données Bitcoin Core/Knots</value>
   </data>
   <data name="WasabiDownloadBlocksFromFullNode" xml:space="preserve">
-    <value>Wasabi descargará bloques de un nodo completo que controlas.</value>
+    <value>Ginger va télécharger les blocks depuis un noeud complet que vous contrôlez.</value>
   </data>
   <data name="BitcoinP2PEndpoint" xml:space="preserve">
-    <value>Punto final P2P de Bitcoin</value>
+    <value>Point final de P2P Bitcoin</value>
   </data>
   <data name="CoinsReceivedFromOthers" xml:space="preserve">
-    <value>Las monedas recibidas de otros en direcciones ya utilizadas no aparecerán por debajo de esta cantidad. Para prevenir posibles ataques de polvo.</value>
+    <value>Les coins reçus d'autres personnes à des adresses déjà utilisées n'apparaîtront pas en dessous de ce montant. Pour éviter les attaques dust potentielles.</value>
   </data>
   <data name="DustThreshold" xml:space="preserve">
-    <value>Umbral de polvo</value>
+    <value>Seuil des dust</value>
   </data>
   <data name="InvalidEndpoint" xml:space="preserve">
-    <value>Punto final no válido.</value>
+    <value>Point d'arrivée non valide.</value>
   </data>
   <data name="UseDecimalPoint" xml:space="preserve">
-    <value>Usar punto decimal en lugar de coma.</value>
+    <value>Utiliser le point au lieu de la virgule.</value>
   </data>
   <data name="InvalidDustThreshold" xml:space="preserve">
-    <value>Umbral de polvo no válido.</value>
+    <value>Seuil de dust non valide.</value>
   </data>
   <data name="EnableGPURendering" xml:space="preserve">
-    <value>Cuando está habilitado, use una tarjeta gráfica (GPU) para renderizar la interfaz de usuario. Usar una GPU en lugar de la CPU puede mejorar el rendimiento.</value>
+    <value>Lorsque c'est activé, une carte graphique (GPU) est utilisée pour afficher l'interface utilisateur. L'utilisation d'une carte graphique plutôt que du processeur peut améliorer les performances.</value>
   </data>
   <data name="EnableGPU" xml:space="preserve">
-    <value>Habilitar GPU</value>
+    <value>Activer la carte graphique</value>
   </data>
   <data name="TwoFactorAuthentication" xml:space="preserve">
-    <value>Autenticación de dos factores</value>
+    <value>Authentification à deux facteurs</value>
   </data>
   <data name="OnlyAvailableWhenTorEnabled" xml:space="preserve">
-    <value>Solo disponible cuando Tor está habilitado.</value>
+    <value>Seulement disponible lorsque Tor est activé.</value>
   </data>
   <data name="SystemDefaultEnum" xml:space="preserve">
-    <value>Predeterminado del sistema</value>
+    <value>Système par défaut</value>
   </data>
   <data name="CustomEnum" xml:space="preserve">
-    <value>Personalizado</value>
+    <value>Personnalisé</value>
   </data>
   <data name="Max" xml:space="preserve">
-    <value>Máx:</value>
+    <value>Max:</value>
   </data>
   <data name="To" xml:space="preserve">
-    <value>A:</value>
+    <value>À :</value>
   </data>
   <data name="ExampleBitcoinAddressOrPayjoinURI" xml:space="preserve">
-    <value>(p. ej., dirección de Bitcoin o URI de payjoin)</value>
+    <value>(ex. adresse Bitcoin ou URL payjoin)</value>
   </data>
   <data name="Paste" xml:space="preserve">
-    <value>Pegar</value>
+    <value>Coller</value>
   </data>
   <data name="ScanQRCode" xml:space="preserve">
-    <value>Escanear código QR</value>
+    <value>Scanner le QR Code</value>
   </data>
   <data name="AmountWithColom" xml:space="preserve">
-    <value>Cantidad:</value>
+    <value>Montant :</value>
   </data>
   <data name="RecipientWithColon" xml:space="preserve">
-    <value>Destinatario:</value>
+    <value>Receveur:</value>
   </data>
   <data name="SendViewModelTitle" xml:space="preserve">
-    <value>Enviar</value>
+    <value>Envoyer</value>
   </data>
   <data name="SendViewModelCaption" xml:space="preserve">
-    <value>Mostrar el diálogo de envío de la billetera</value>
+    <value>Montrer le dialog d’envois du portefeuille</value>
   </data>
   <data name="SendViewModelKeywords" xml:space="preserve">
-    <value>Billetera, Enviar, Acción</value>
+    <value>Portefeuille, Envoyer, Action</value>
   </data>
   <data name="SendNow" xml:space="preserve">
-    <value>Enviar ahora</value>
+    <value>Envoyer maintenant</value>
   </data>
   <data name="PreviewTransaction" xml:space="preserve">
-    <value>Vista previa de la transacción</value>
+    <value>Aperçu de la transaction</value>
   </data>
   <data name="PrivacyProtectedWithPayjoin" xml:space="preserve">
-    <value>Tu privacidad está siendo protegida con payjoin.</value>
+    <value>Votre vie privée est protégée par payjoin.</value>
   </data>
   <data name="UndoLastModification" xml:space="preserve">
-    <value>Deshacer la última modificación</value>
+    <value>Défaire la dernière modification</value>
   </data>
   <data name="TransactionInterlinksLabels" xml:space="preserve">
-    <value>Etiquetas de interconexión de transacciones:</value>
+    <value>La transaction relie les étiquettes :</value>
   </data>
   <data name="EntitiesKnowTransaction" xml:space="preserve">
-    <value>Esas entidades saben que esta es tu transacción. Realiza más Coinjoin o usa la herramienta de gestión de etiquetas para seleccionar cuidadosamente quién sabría que esta transacción es tuya.</value>
+    <value>Ces entités savent qu’il s’agit de votre transaction. Utilisez Coinjoin ou utilisez l’outil de gestion d’étiquettes pour choisir avec précaution qui pourra savoir que cette transaction est la votre.</value>
   </data>
   <data name="TransactionKnownAsYoursBy" xml:space="preserve">
-    <value>Transacción conocida como tuya por:</value>
+    <value>Transaction connue comme étant la vôtre par :</value>
   </data>
   <data name="EntitiesKnowThisIsYourTransaction" xml:space="preserve">
-    <value>Esas entidades saben que esta es tu transacción. Realiza más Coinjoin o usa la herramienta de gestión de etiquetas para seleccionar cuidadosamente quién sabría que esta transacción es tuya.</value>
+    <value>Ces entités savent qu’il s’agit de votre transaction. Utilisez Coinjoin ou utilisez l’outil de gestion d’étiquettes pour choisir avec précaution qui pourra savoir que cette transaction est la votre.</value>
   </data>
   <data name="TransactionUsesNonPrivateCoins" xml:space="preserve">
-    <value>La transacción utiliza monedas no privadas.</value>
+    <value>La transaction utilise des coins non-confidentiels.</value>
   </data>
   <data name="EntitiesCanDeanonymizeTransaction" xml:space="preserve">
-    <value>Algunas entidades pueden desanonimizar esta transacción porque gasta monedas sin privacidad. Realiza más Coinjoin para tener suficientes monedas privadas para esta transacción.</value>
+    <value>Certaines entités pourraient désanonymiser cette transaction parce qu'elle inclue des coins sans aucune confidentialité. Utilisez plus Coinjoin pour avoir suffisamment de coins privés pour cette transaction.</value>
   </data>
   <data name="TransactionUsesSemiPrivateCoins" xml:space="preserve">
-    <value>La transacción utiliza monedas semi-privadas.</value>
+    <value>La transaction utilise des coins semi-confidentiels.</value>
   </data>
   <data name="TransactionNotPrivateEnough" xml:space="preserve">
-    <value>Esta transacción no es lo suficientemente privada porque gasta monedas que no son completamente privadas. Realiza más Coinjoin para tener suficientes monedas privadas para esta transacción.</value>
+    <value>Cette transaction n'est pas assez confidentielle parce qu'elle dépense des coins qui ne sont pas entièrement confidentiels. Utilisez Coinjoin pour avoir assez de coins confidentiels pour cette transaction.</value>
   </data>
   <data name="TransactionCreatesChange" xml:space="preserve">
-    <value>La transacción genera cambio.</value>
+    <value>La transaction créée de la monnaie.</value>
   </data>
   <data name="ChangeCanLinkTransactions" xml:space="preserve">
-    <value>El cambio se puede usar para vincular esta transacción con la siguiente que la utilizará. Utiliza la sugerencia de evitar el cambio para enviar un poco más o menos si esto está bien para el receptor, o realiza un Coinjoin con el cambio más tarde.</value>
+    <value>La monnaie peut être utilisée pour lier cette transaction à la prochaine transaction qui l'utilisera. Utilisez la suggestion d'éviter la monnaie pour envoyer un peu plus ou un peu moins si cela convient au destinataire, ou utilisez CoinJoin pour la monnaie plus tard.</value>
   </data>
   <data name="TransactionConsolidatesCoins" xml:space="preserve">
-    <value>La transacción consolida más de {0} monedas.</value>
+    <value>La transaction consolide plus de {0} coins.</value>
   </data>
   <data name="ReducePrivacyOfTransaction" xml:space="preserve">
-    <value>Esto podría reducir la privacidad de tu transacción.</value>
+    <value>Cela pourrait réduire la confidentialité de votre transaction.</value>
   </data>
   <data name="TransactionUsesUnconfirmedCoins" xml:space="preserve">
-    <value>La transacción utiliza monedas no confirmadas.</value>
+    <value>La transaction utilise des coins non-confirmés.</value>
   </data>
   <data name="UnconfirmedCoinsMayCauseIssues" xml:space="preserve">
-    <value>Esto puede hacer que tu transacción sea rechazada, retrasar su confirmación o costar más de lo necesario para que se confirme dentro del tiempo deseado. Espera a una confirmación para usar solo monedas confirmadas.</value>
+    <value>Cela peut entraîner le rejet de votre transaction, retarder sa confirmation ou coûter plus cher que nécessaire pour qu'elle soit confirmée dans les délais souhaités. Attendez une confirmation pour n'utiliser que des dépôts confirmés.</value>
   </data>
   <data name="TransactionUsesCoinjoiningCoins" xml:space="preserve">
-    <value>La transacción utiliza monedas de coinjoin.</value>
+    <value>La transaction utilise des coins issus de Coinjoin.</value>
   </data>
   <data name="TransactionMayBeReplacedByCoinjoin" xml:space="preserve">
-    <value>Esto puede hacer que tu transacción sea reemplazada por el coinjoin. Considera esperar a que se termine el coinjoin actual antes de enviar esta transacción.</value>
+    <value>Cela peut entraîner le remplacement de votre transaction par le Coinjoin. Pensez à attendre que le Coinjoin en cours soit terminé avant d'envoyer cette transaction.</value>
   </data>
   <data name="ImproveThisTransaction" xml:space="preserve">
-    <value>Mejora esta transacción:</value>
+    <value>Améliorer cette transaction :</value>
   </data>
   <data name="LabelManagement" xml:space="preserve">
-    <value>Gestión de etiquetas</value>
+    <value>Gestion des étiquettes</value>
   </data>
   <data name="ChooseLabelsForTransaction" xml:space="preserve">
-    <value>Elige etiquetas para vincular con esta transacción.</value>
+    <value>Choisir des étiquettes à appliquer à cette transaction.</value>
   </data>
   <data name="FullPrivacy" xml:space="preserve">
-    <value>Privacidad Total</value>
+    <value>Confidentialité complète</value>
   </data>
   <data name="SendSuggestion" xml:space="preserve">
-    <value>Enviar</value>
+    <value>Envoyer</value>
   </data>
   <data name="BetterPrivacy" xml:space="preserve">
-    <value>Mejor Privacidad</value>
+    <value>Meilleure confidentialité</value>
   </data>
   <data name="ChangeAvoidance" xml:space="preserve">
-    <value>Evitar el Vuelto</value>
+    <value>Éviter la monnaie</value>
   </data>
   <data name="TransactionWellOptimized" xml:space="preserve">
-    <value>Esta transacción está bien optimizada.</value>
+    <value>Cette transaction est bien optimisée.</value>
   </data>
   <data name="ReviewCoins" xml:space="preserve">
-    <value>Revisar monedas</value>
+    <value>Analyser les coins</value>
   </data>
   <data name="Amount" xml:space="preserve">
-    <value>Cantidad</value>
+    <value>Montant</value>
   </data>
   <data name="Recipient" xml:space="preserve">
-    <value>Destinatario</value>
+    <value>Receveur</value>
   </data>
   <data name="ChangeTransactionFeeOrConfirmationTime" xml:space="preserve">
-    <value>Cambiar la tarifa de transacción o el tiempo de confirmación</value>
+    <value>Changer les frais de transaction ou le temps de confirmation</value>
   </data>
   <data name="ExpectedConfirmationTime" xml:space="preserve">
-    <value>Tiempo de confirmación esperado</value>
+    <value>Temps de confirmation estimé</value>
   </data>
   <data name="ConfirmationTimeEstimation" xml:space="preserve">
-    <value>Esto es solo una estimación basada en algunos datos de transacciones y bloques. El tiempo de confirmación puede cambiar.</value>
+    <value>Il s'agit d'une estimation basée sur des données relatives aux transactions et aux blocs. Le temps de confirmation peut changer.</value>
   </data>
   <data name="Fee" xml:space="preserve">
-    <value>Tarifa</value>
+    <value>Frais</value>
   </data>
   <data name="SavePSBTFile" xml:space="preserve">
-    <value>Guardar archivo PSBT</value>
-  </data>
-  <data name="Confirm" xml:space="preserve">
-    <value>Confirmar</value>
+    <value>Sauvegarder le fichier PSBT</value>
   </data>
   <data name="TransactionExport" xml:space="preserve">
-    <value>Exportar Transacción</value>
+    <value>Exporter la transaction</value>
   </data>
   <data name="UnableToExportPSBT" xml:space="preserve">
-    <value>Ginger Wallet no pudo exportar el PSBT.</value>
+    <value>Ginger Wallet a été dans l’incapacité d’exporter le PSBT.</value>
   </data>
   <data name="TransactionBuilding" xml:space="preserve">
-    <value>Construcción de Transacción</value>
+    <value>Construction de la transaction</value>
   </data>
   <data name="TransactionFeeExceedsPaymentAmount" xml:space="preserve">
-    <value>La transacción no se puede enviar porque su tarifa es mayor que el monto del pago.</value>
+    <value>La transaction ne peut pas être envoyée car ses frais sont supérieurs au montant du paiement.</value>
   </data>
   <data name="UnableToCreateTransaction" xml:space="preserve">
-    <value>Ginger Wallet no pudo crear tu transacción.</value>
+    <value>Ginger Wallet a été dans l’incapacité de créer votre transaction.</value>
   </data>
   <data name="InsufficientFundsForTransactionFee" xml:space="preserve">
-    <value>No hay suficientes fondos para cubrir la tarifa de transacción.</value>
+    <value>Il n'y a pas assez de fonds pour couvrir les frais de transaction.</value>
   </data>
   <data name="Transaction" xml:space="preserve">
-    <value>Transacción</value>
+    <value>Transaction</value>
   </data>
   <data name="UnableToSendTransaction" xml:space="preserve">
-    <value>Ginger Wallet no pudo enviar tu transacción.</value>
+    <value>Ginger Wallet a été dans l’incapacité d’envoyer votre transaction.</value>
   </data>
   <data name="Camera" xml:space="preserve">
-    <value>Cámara</value>
+    <value>Caméra</value>
   </data>
   <data name="InternalError" xml:space="preserve">
-    <value>Error interno.</value>
+    <value>Erreur interne.</value>
   </data>
   <data name="InvalidInputLength" xml:space="preserve">
-    <value>La longitud de entrada no es válida.</value>
+    <value>La longueur de l'entrée n'est pas valide.</value>
   </data>
   <data name="InputTooLong" xml:space="preserve">
-    <value>La entrada es demasiado larga.</value>
+    <value>La valeur entrée est trop longue.</value>
   </data>
   <data name="LightningAddressesNotSupported" xml:space="preserve">
-    <value>Las direcciones de Lightning no son compatibles.</value>
+    <value>Les adresses Lightning ne sont pas prises en charge.</value>
   </data>
   <data name="BitcoinAddressValidity" xml:space="preserve">
-    <value>La dirección de Bitcoin es válida para {0} y no para {1}.</value>
+    <value>L’adresse Bitcoin est valide pour {0} mais pas pour {1}.</value>
   </data>
   <data name="SetTransactionConfirmationPreference" xml:space="preserve">
-    <value>Establezca su preferencia sobre cuán rápido debe confirmarse la transacción.</value>
+    <value>Définissez votre préférence quant à la vitesse de confirmation de la transaction.</value>
   </data>
   <data name="FeeRateSatPerVByte" xml:space="preserve">
-    <value>Tasa de Tarifa (sat/vByte)</value>
+    <value>Taux des frais (sat/vByte)</value>
   </data>
   <data name="EstimatedConfirmationTime" xml:space="preserve">
-    <value>Tiempo de Confirmación Estimado</value>
+    <value>Temps de confirmation estimé</value>
   </data>
   <data name="TransactionFeeEstimationsUnavailable" xml:space="preserve">
-    <value>Las estimaciones de tarifas de transacción no están disponibles en este momento. Intenta nuevamente más tarde o puedes ingresar la tarifa manualmente.</value>
+    <value>Les estimations de frais de transaction ne sont pas disponibles pour le moment. Réessayez plus tard ou entrez le taux de frais manuellement.</value>
   </data>
   <data name="ChooseTransactionVisibility" xml:space="preserve">
-    <value>Elige quién puede y quién no puede ver esta transacción.</value>
+    <value>Choisir qui peut et ne peut pas voir cette transaction.</value>
   </data>
   <data name="CouldSeeThisTransaction" xml:space="preserve">
-    <value>Podría ver esta transacción:</value>
+    <value>Peut voir cette transaction :</value>
   </data>
   <data name="CantSeeThisTransaction" xml:space="preserve">
-    <value>No puede ver esta transacción:</value>
+    <value>Ne trouve pas cette transaction :</value>
   </data>
   <data name="NoInformationAboutPeople" xml:space="preserve">
-    <value>No hay información sobre estas personas, ¡úsalo solo cuando sea necesario!</value>
+    <value>Il n'y a pas d'informations sur ces personnes, utilisez-les uniquement lorsque c'est nécessaire !</value>
   </data>
   <data name="CoinControl" xml:space="preserve">
-    <value>Control de Monedas</value>
+    <value>Coin Control</value>
   </data>
   <data name="RecoveryWordsViewCaption" xml:space="preserve">
-    <value>Escribe las palabras de recuperación en el orden correcto y guárdalas en un lugar seguro. Son necesarias para recuperar tu cartera.</value>
+    <value>Notez les mots de récupération dans le bon ordre et conservez-les en lieu sûr. Ils sont nécessaires pour restaurer votre portefeuille.</value>
   </data>
   <data name="RecoveryWordsViewCopyRecoveryWords" xml:space="preserve">
-    <value>Copiar palabras de recuperación</value>
+    <value>Copier les mots de récupération</value>
   </data>
   <data name="RecoveryWordsViewNotSeeAfter" xml:space="preserve">
-    <value>No podrás volver a ver estas palabras una vez que la cartera se haya creado.</value>
+    <value>Vous ne pourrez plus voir ces mots lorsque le portefeuille sera créé.</value>
   </data>
   <data name="ConfirmRecoveryWordsViewModel" xml:space="preserve">
-    <value>Confirmar Palabras de Recuperación</value>
+    <value>Confirmer les mots de récupération</value>
   </data>
   <data name="ConfirmRecoveryWordsViewModelStoreSafely" xml:space="preserve">
-    <value>Guarda tu frase de contraseña en un lugar seguro, no se puede restablecer si se pierde.
-Es necesaria para abrir y recuperar tu cartera.
-Es una extensión de las palabras de recuperación para mayor seguridad.</value>
+    <value>Stockez votre phrase de récupération en toute sécurité, elle ne peut pas être refaite si elle est perdue.
+C’est nécessaire pour ouvrir et récupérer votre portefeuille.
+Ce sont des mots de récupération supplémentaires pour plus de sécurité.</value>
   </data>
   <data name="ConfirmRecoveryWordsViewModelClickRecovery" xml:space="preserve">
-    <value>Haz clic en la palabra de recuperación #{0}</value>
+    <value>Cliquez sur le mot de récupération #{0}</value>
   </data>
   <data name="RecoveryWords" xml:space="preserve">
-    <value>Palabras de Recuperación</value>
+    <value>Mots de récupération</value>
   </data>
   <data name="VerifyRecoveryWords" xml:space="preserve">
-    <value>Verificar Palabras de Recuperación</value>
+    <value>Vérifier les mots de récupération</value>
   </data>
   <data name="CreatePasswordDialogTypePassphrase" xml:space="preserve">
-    <value>Escribe una frase de contraseña</value>
+    <value>Entrez une phrase de récupération</value>
   </data>
   <data name="CreatePasswordDialogConfirmPassphrase" xml:space="preserve">
-    <value>Confirma la frase de contraseña</value>
+    <value>Confirmer la phrase de récupération</value>
   </data>
   <data name="PassphrasesNotMatch" xml:space="preserve">
-    <value>Las frases de contraseña no coinciden.</value>
+    <value>Les phrases de récupération sont différentes.</value>
   </data>
   <data name="TrimWarnMessage" xml:space="preserve">
-    <value>¡Los espacios en blanco al principio y al final serán eliminados!</value>
+    <value>Les espaces au début et à la fin seront supprimés !</value>
   </data>
   <data name="WhitespaceMessage" xml:space="preserve">
-    <value>¡No se permiten espacios en blanco al principio o al final!</value>
+    <value>Les espaces au début et à la fin ne sont pas autorisés !</value>
   </data>
   <data name="AddPassphrase" xml:space="preserve">
-    <value>Agregar frase de contraseña</value>
+    <value>Ajouter phrase de récupération</value>
   </data>
   <data name="HardwareWallet" xml:space="preserve">
-    <value>Cartera de hardware</value>
+    <value>Portefeuille matériel</value>
   </data>
   <data name="ConnectHardwareWalletViewModelCaption" xml:space="preserve">
-    <value>Conecta tu cartera de hardware al PC</value>
+    <value>Connectez votre portefeuille matériel au PC</value>
   </data>
   <data name="ConnectHardwareWalletViewModelEnterPassphrase" xml:space="preserve">
-    <value>Introduce tu frase de contraseña en la cartera de hardware si es necesario.</value>
+    <value>Entrez votre phrase de récupération sur le portefeuille matériel si nécessaire.</value>
   </data>
   <data name="HardwareWalletAuthDialogViewModelCaption" xml:space="preserve">
-    <value>Conecta tu cartera de hardware, presiona Continuar y luego sigue las instrucciones en el dispositivo.</value>
+    <value>Connectez votre portefeuille matériel, appuyez sur Continuer puis suivez les instructions sur l’appareil.</value>
   </data>
   <data name="Rescan" xml:space="preserve">
-    <value>Volver a escanear</value>
+    <value>Rescanner</value>
   </data>
   <data name="OpenWallet" xml:space="preserve">
-    <value>Abrir cartera</value>
+    <value>Ouvrir le portefeuille</value>
   </data>
   <data name="ConnectHardwareWalletViewModelConnectPc" xml:space="preserve">
-    <value>Conecta la cartera de hardware al PC / Introduce el PIN en el dispositivo.</value>
+    <value>Connectez votre portefeuille matériel au PC / Entre le PIN sur l’appareil.</value>
   </data>
   <data name="ConnectHardwareWalletViewModelMakeSureOnlyOne" xml:space="preserve">
-    <value>Asegúrate de tener solo una cartera de hardware conectada al PC.</value>
+    <value>Vérifiez que vous n’ayez qu’un seul portefeuille matériel connecté au PC.</value>
   </data>
   <data name="ConnectHardwareWalletViewModelAlreadyAdded" xml:space="preserve">
-    <value>La cartera de hardware conectada ya está añadida al software, haz clic abajo para abrirla o haz clic en Volver a escanear para buscar nuevamente.</value>
+    <value>Le portefeuille matériel connecté est déjà ajouté au logiciel, cliquez ci-dessous pour l’ouvrir ou cliquez sur Rescanner pour chercher à nouveau.</value>
   </data>
   <data name="ConnectHardwareWalletViewModelEnterPassphraseOnDevice" xml:space="preserve">
-    <value>Introduce tu frase de contraseña en tu dispositivo.</value>
+    <value>Entrez votre phrase de récupération sur l’appareil.</value>
   </data>
   <data name="ConnectHardwareWalletViewModelEnterPin" xml:space="preserve">
-    <value>Introduce tu PIN en tu dispositivo.</value>
+    <value>Entrez le PIN sur l’appareil.</value>
   </data>
   <data name="TypeInYourRecoveryWords" xml:space="preserve">
-    <value>Escribe tus palabras de recuperación en el orden correcto</value>
+    <value>Tapez vos mots de récupération dans le bon ordre</value>
   </data>
   <data name="EnterPassphrase" xml:space="preserve">
-    <value>Introduce la frase de contraseña correcta</value>
+    <value>Entrez la phrase de récupération correcte</value>
   </data>
   <data name="RecoverWalletViewModelPassphraseMessage" xml:space="preserve">
-    <value>Si usaste una frase de contraseña cuando creaste tu cartera, debes escribirla abajo, de lo contrario, déjalo en blanco.</value>
+    <value>Si vous avez utilisé une phrase de récupération lors de la création du portefeuille, vous devez la rentrer ci-dessous, autrement laissez l’espace vide.</value>
   </data>
   <data name="AdvancedRecoveryOptionsViewModelTitle" xml:space="preserve">
-    <value>Opciones avanzadas de recuperación</value>
+    <value>Options de récupération avancées</value>
   </data>
   <data name="AdvancedRecoveryOptionsViewModelMinimumGapLimit" xml:space="preserve">
-    <value>Límite de _Espacio mínimo:</value>
+    <value>Limite minimale _Espace:</value>
   </data>
   <data name="PeersConnected" xml:space="preserve">
-    <value>{0} conectado</value>
+    <value>{0} connecté</value>
   </data>
   <data name="AmountLessThanTotalSupply" xml:space="preserve">
-    <value>La cantidad debe ser menor que el suministro total de BTC.</value>
+    <value>Le montant doit être inférieur à la circulation totale de BTC.</value>
   </data>
   <data name="InsufficientFunds" xml:space="preserve">
-    <value>Fondos insuficientes para cubrir la cantidad solicitada.</value>
+    <value>Fonds insuffisants pour couvrir le montant demandé.</value>
   </data>
   <data name="AmountMoreThanZero" xml:space="preserve">
-    <value>La cantidad debe ser mayor que 0 BTC.</value>
+    <value>Le montant doit être supérieur à 0 BTC.</value>
   </data>
   <data name="InvalidBTCAddressOrURI" xml:space="preserve">
-    <value>Ingresa una dirección BTC o URI válida.</value>
+    <value>Renseignez un url ou adresse BTC valide.</value>
   </data>
   <data name="PayjoinNotPossibleWithHardwareWallets" xml:space="preserve">
-    <value>Payjoin no es posible con carteras de hardware.</value>
+    <value>Payjoin n’est pas possible avec les portefeuilles matériels.</value>
   </data>
   <data name="TermsAndConditionsViewCaption" xml:space="preserve">
-    <value>Para continuar usando Ginger, por favor acepta los términos y condiciones</value>
+    <value>Pour continuer à utiliser Ginger, veuillez accepter les termes et conditions</value>
   </data>
   <data name="TermsAndConditionsViewTermsAndConditions" xml:space="preserve">
-    <value>Términos y condiciones</value>
+    <value>Termes et conditions</value>
   </data>
   <data name="TermsAndConditionsViewIAgree" xml:space="preserve">
-    <value>Acepto los </value>
+    <value>J’approuve les </value>
   </data>
-  <data name="ResyncWallet" xml:space="preserve">
-    <value>Resincronizar Cartera</value>
+  <data name="AbortedNotEnoughAlicesMessage" xml:space="preserve">
+    <value>Pas assez de participants, nous réessayons...</value>
   </data>
-  <data name="ApplicationRestartRescan" xml:space="preserve">
-    <value>La aplicación se reiniciará y, al reabrir tu cartera, comenzará el reescaneo. Este proceso puede tomar tiempo, dependiendo de la cantidad de transacciones en tu cartera.</value>
+  <data name="AboutViewModelCaption" xml:space="preserve">
+    <value>Afficher les infos de Ginger Wallet</value>
   </data>
-  <data name="ProceedConfirmation" xml:space="preserve">
-    <value>¿Te gustaría continuar?</value>
-  </data>
-  <data name="TransactionID" xml:space="preserve">
-    <value>ID de Transacción</value>
-  </data>
-  <data name="Index" xml:space="preserve">
-    <value>Índice</value>
-  </data>
-  <data name="CoinDetails" xml:space="preserve">
-    <value>Detalles de la Moneda</value>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirmer</value>
   </data>
 </root>
