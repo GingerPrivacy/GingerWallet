@@ -30,7 +30,7 @@
         </ScrollViewer>
       </TabItem>
 
-      <TabItem Header="{x:Static lang:Resources.Tools}" IsVisible="{Binding !IsWatchOnly}">
+      <TabItem Header="{x:Static lang:Resources.Tools}">
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
           <v:WalletToolsView />
         </ScrollViewer>

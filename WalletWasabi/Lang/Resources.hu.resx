@@ -1298,4 +1298,7 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
   <data name="CoinDetails" xml:space="preserve">
     <value>Érme részletei</value>
   </data>
+  <data name="SelfCoinJoinToolTip" xml:space="preserve">
+    <value>Ebben a Coinjoin-ban az érmék többsége Önhöz tartozik. Ez jelentősen csökkenti az anonimitás előrehaladását. Fontolja meg kevesebb pénztárcával való részvételt, amíg több résztvevő csatlakozik.</value>
+  </data>
 </root>

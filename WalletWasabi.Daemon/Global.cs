@@ -71,7 +71,7 @@ public class Global
 		SmartHeaderChain smartHeaderChain = new(maxChainSize: 20_000);
 		IndexStore = new IndexStore(Path.Combine(networkWorkFolderPath, "IndexStore"), Network, smartHeaderChain);
 		var mempoolService = new MempoolService();
-		var blocks = new FileSystemBlockRepository(Path.Combine(networkWorkFolderPath, "Blocks"), Network);
+		var blocks = new FileSystemBlockRepository(Path.Combine(networkWorkFolderPath, "Blocks"), Network, config.PersistentConfig.MaxBlockRepositorySize);
 
 		BitcoinStore = new BitcoinStore(IndexStore, AllTransactionStore, mempoolService, smartHeaderChain, blocks);
 		HttpClientFactory = BuildHttpClientFactory(() => Config.GetBackendUri());

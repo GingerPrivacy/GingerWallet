@@ -48,7 +48,10 @@ public partial class SelectCoinsDialogViewModel : DialogViewModelBase<IEnumerabl
 
 	protected override void OnNavigatedFrom(bool isInHistory)
 	{
-		CoinList.Dispose();
+		if (!isInHistory)
+		{
+			CoinList.Dispose();
+		}
 
 		base.OnNavigatedFrom(isInHistory);
 	}

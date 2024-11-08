@@ -430,7 +430,7 @@ public class WasabiJsonRpcService : IJsonRpcService
 				["amount"] = x.Amount.Satoshi,
 				["label"] = x.Labels.ToString(),
 				["tx"] = x.GetHash(),
-				["islikelycoinjoin"] = x.IsOwnCoinjoin()
+				["islikelycoinjoin"] = x.IsCoinjoin()
 			}).ToImmutableArray();
 	}
 

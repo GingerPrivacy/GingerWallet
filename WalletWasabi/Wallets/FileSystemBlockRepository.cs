@@ -18,8 +18,13 @@ public class FileSystemBlockRepository : IFileSystemBlockRepository
 {
 	private const double MegaByte = 1024 * 1024;
 
-	public FileSystemBlockRepository(string blocksFolderPath, Network network, long targetBlocksFolderSizeMb = 300)
+	public FileSystemBlockRepository(string blocksFolderPath, Network network, long targetBlocksFolderSizeMb = Constants.DefaultMaxBlockRepositorySize)
 	{
+		if (targetBlocksFolderSizeMb < 200)
+		{
+			targetBlocksFolderSizeMb = 200;
+		}
+
 		BlocksFolderPath = blocksFolderPath;
 		Network = network;
 		CreateFolders();

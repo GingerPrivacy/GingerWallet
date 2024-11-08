@@ -78,6 +78,7 @@ public class ConfigManagerNgTests
 			  "MaxCoordinationFeeRate": 0.003,
 			  "MaxCoinJoinMiningFeeRate": 300.0,
 			  "AbsoluteMinInputCount": 6,
+			  "MaxBlockRepositorySize": 1000,
 			  "Language": 1
 			}
 			""";

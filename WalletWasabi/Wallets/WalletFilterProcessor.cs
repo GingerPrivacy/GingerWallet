@@ -10,6 +10,7 @@ using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Blockchain.TransactionProcessing;
 using WalletWasabi.Blockchain.Transactions;
 using WalletWasabi.Extensions;
+using WalletWasabi.Filter;
 using WalletWasabi.Logging;
 using WalletWasabi.Models;
 using WalletWasabi.Services.Terminate;
@@ -208,7 +209,7 @@ public class WalletFilterProcessor : BackgroundService
 	/// <param name="filterHeight">Height of the filter that needs to be tested.</param>
 	/// <param name="syncType">First sync of TurboSync, second one, or complete synchronization.</param>
 	/// <returns>Keys to test against this filter.</returns>
-	private IEnumerable<byte[]> GetScriptPubKeysToTest(Height filterHeight, SyncType syncType)
+	private List<byte[]> GetScriptPubKeysToTest(Height filterHeight, SyncType syncType)
 	{
 		bool ScriptAlreadySpent(KeyManager.ScriptPubKeySpendingInfo spendingInfo) =>
 			spendingInfo.LatestSpendingHeight is { } spendingHeight && spendingHeight < filterHeight;
@@ -225,7 +226,7 @@ public class WalletFilterProcessor : BackgroundService
 			_ => throw new ArgumentOutOfRangeException(nameof(syncType), syncType, null)
 		};
 
-		return scriptPubKeyAccordingSyncType.Select(x => x.CompressedScriptPubKey);
+		return scriptPubKeyAccordingSyncType.Select(x => x.CompressedScriptPubKey).ToList();
 	}
 
 	private async Task<bool> ProcessFilterModelAsync(FilterModel filter, SyncType syncType, CancellationToken cancel)
@@ -237,7 +238,7 @@ public class WalletFilterProcessor : BackgroundService
 		if (toTestKeys.Any())
 		{
 			var compressedScriptPubKeys = toTestKeys;
-			matchFound = filter.Filter.MatchAny(compressedScriptPubKeys, filter.FilterKey);
+			matchFound = FilterChecker.HasMatch(filter.Filter, filter.FilterKey, compressedScriptPubKeys);
 
 			if (matchFound)
 			{
@@ -302,6 +303,7 @@ public class WalletFilterProcessor : BackgroundService
 				{
 					case BlockDownloadService.SuccessResult successFullNodeResult:
 						return successFullNodeResult.Block;
+
 					case BlockDownloadService.CanceledResult:
 						throw new OperationCanceledException();
 				}
