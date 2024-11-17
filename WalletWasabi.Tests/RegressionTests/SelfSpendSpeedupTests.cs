@@ -108,9 +108,6 @@ public class SelfSpendSpeedupTests : IClassFixture<RegTestFixture>
 
 			wallet.Kitchen.Cook(password);
 
-			TransactionBroadcaster broadcaster = new(network, bitcoinStore, httpClientFactory, walletManager);
-			broadcaster.Initialize(nodes, rpc);
-
 			var waitCount = 0;
 			while (wallet.Coins.Sum(x => x.Amount) == Money.Zero)
 			{
@@ -127,6 +124,8 @@ public class SelfSpendSpeedupTests : IClassFixture<RegTestFixture>
 
 			Money amountToSend = wallet.Coins.Where(x => x.IsAvailable()).Sum(x => x.Amount) / 2;
 			var txToSpeedUp = wallet.BuildTransaction(password, new PaymentIntent(keyManager.GetNextReceiveKey("foo").GetAssumedScriptPubKey(), amountToSend, label: "bar"), FeeStrategy.SevenDaysConfirmationTargetStrategy, allowUnconfirmed: true);
+
+			TransactionBroadcaster broadcaster = new([new RpcBroadcaster(rpc)], bitcoinStore.MempoolService, walletManager);
 			await broadcaster.SendTransactionAsync(txToSpeedUp.Transaction);
 
 			Assert.Equal(Assert.Single(txToSpeedUp.SpentCoins).SpenderTransaction, txToSpeedUp.Transaction);

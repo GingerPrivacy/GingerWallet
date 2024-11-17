@@ -38,7 +38,7 @@ public class MempoolService
 
 	public bool TrustedNodeMode { get; set; }
 
-	public bool TryAddToBroadcastStore(SmartTransaction transaction, string nodeRemoteSocketEndpoint)
+	public bool TryAddToBroadcastStore(SmartTransaction transaction)
 	{
 		lock (BroadcastStoreLock)
 		{
@@ -46,12 +46,10 @@ public class MempoolService
 			{
 				return false;
 			}
-			else
-			{
-				var entry = new TransactionBroadcastEntry(transaction, nodeRemoteSocketEndpoint);
-				BroadcastStore.Add(entry);
-				return true;
-			}
+
+			var entry = new TransactionBroadcastEntry(transaction);
+			BroadcastStore.Add(entry);
+			return true;
 		}
 	}
 
