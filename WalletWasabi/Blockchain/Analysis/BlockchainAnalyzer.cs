@@ -94,18 +94,21 @@ public class BlockchainAnalyzer
 		// For cases when it isn't we calculate the rest.
 		CalculateWeightedAverage(tx, cjAnal, out double mixedAnonScore, out double mixedAnonScoreSanctioned);
 		CalculateMinAnonScore(tx, cjAnal, out double nonMixedAnonScore, out double nonMixedAnonScoreSanctioned);
-		CalculateHalfMixedAnonScore(tx, cjAnal, mixedAnonScore, mixedAnonScoreSanctioned, out double halfMixedAnonScore, out double halfMixedAnonScoreSanctioned);
+		//CalculateHalfMixedAnonScore(tx, cjAnal, mixedAnonScore, mixedAnonScoreSanctioned, out double halfMixedAnonScore, out double halfMixedAnonScoreSanctioned);
 
 		startingAnonScores = new()
 		{
 			Minimum = (nonMixedAnonScore, nonMixedAnonScoreSanctioned),
-			BigInputMinimum = (halfMixedAnonScore, halfMixedAnonScoreSanctioned),
+			BigInputMinimum = (mixedAnonScore, mixedAnonScoreSanctioned),
 			WeightedAverage = (mixedAnonScore, mixedAnonScoreSanctioned)
 		};
 	}
 
 	private static void CalculateHalfMixedAnonScore(SmartTransaction tx, CoinjoinAnalyzer cjAnal, double mixedAnonScore, double mixedAnonScoreSanctioned, out double halfMixedAnonScore, out double halfMixedAnonScoreSanctioned)
 	{
+		// This is buggy and not consistent as it will not recognize the users' input if it is the 2nd, 3rd etc. in the list, but with the same amount
+		// No immediate fix possible as we don't know the non-wallet inputs' amount
+
 		// Calculate punishment to the smallest anonscore input from the largest inputs.
 		// We know WW2 coinjoins order inputs by amount.
 		var ourLargeHdPubKeys = new HashSet<HdPubKey>();
@@ -272,6 +275,7 @@ public class BlockchainAnalyzer
 			.ToDictionary(x => x.Key, y => y.Count())
 			.Select(x => (x.Key, x.Value))
 			.Where(x => x.Value > 1)
+			.OrderByDescending(x => x.Key)
 			.FirstOrDefault().Key;
 
 		largestEqualForeignOutputAmount = found == default ? null : found;

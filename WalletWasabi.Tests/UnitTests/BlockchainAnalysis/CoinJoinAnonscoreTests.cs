@@ -314,6 +314,7 @@ public class CoinJoinAnonScoreTests
 		Assert.Equal(weightedAverage, change.AnonymitySet, precision: 0);
 	}
 
+	/*
 	[Fact]
 	public void InputMergeLargeUniqueDenom()
 	{
@@ -343,7 +344,8 @@ public class CoinJoinAnonScoreTests
 		Assert.NotEqual(weightedAverage, change.AnonymitySet, precision: 0);
 		Assert.Equal(maxPunishment, change.AnonymitySet, precision: 0);
 	}
-
+	*/
+	/*
 	[Fact]
 	public void InputMergeLargeUniqueDenomReasonablePunishment()
 	{
@@ -372,7 +374,8 @@ public class CoinJoinAnonScoreTests
 		Assert.NotEqual(weightedAverage, change.AnonymitySet, precision: 0);
 		Assert.Equal(3, change.AnonymitySet, precision: 0);
 	}
-
+	*/
+	/*
 	[Fact]
 	public void InputMergeLargeUniqueDenomsReasonablePunishment()
 	{
@@ -408,6 +411,7 @@ public class CoinJoinAnonScoreTests
 		Assert.Equal(3, tx.WalletOutputs.Where(x => x.Amount == Money.Coins(20m)).Skip(1).First().AnonymitySet, precision: 0);
 		Assert.Equal(3, tx.WalletOutputs.First(x => x.Amount == Money.Coins(50m)).AnonymitySet, precision: 0);
 	}
+	*/
 
 	[Fact]
 	public void SiblingCoinjoinDoesntContributeToAnonScore()
