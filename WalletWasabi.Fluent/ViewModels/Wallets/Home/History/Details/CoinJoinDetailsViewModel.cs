@@ -3,6 +3,7 @@ using NBitcoin;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.ViewModels.Navigation;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.ViewModels.Wallets.Home.History.Details;
 
@@ -24,7 +25,7 @@ public partial class CoinJoinDetailsViewModel : RoutableViewModel
 
 	public CoinJoinDetailsViewModel(UiContext uiContext, IWalletModel wallet, TransactionModel transaction)
 	{
-		Title = "Coinjoin Details";
+		Title = Resources.CoinjoinDetails;
 		_wallet = wallet;
 		_transaction = transaction;
 

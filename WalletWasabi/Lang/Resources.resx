@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!--
-    Microsoft ResX Schema
-
+  <!-- 
+    Microsoft ResX Schema 
+    
     Version 2.0
-
-    The primary goals of this format is to allow a simple XML format
-    that is mostly human readable. The generation and parsing of the
-    various data types are done through the TypeConverter classes
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
     associated with the data types.
-
+    
     Example:
-
+    
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-
-    There are any number of "resheader" rows that contain simple
+                
+    There are any number of "resheader" rows that contain simple 
     name/value pairs.
-
-    Each data row contains a name, and value. The row also contains a
-    type or mimetype. Type corresponds to a .NET class that support
-    text/value conversion through the TypeConverter architecture.
-    Classes that don't support this are serialized and stored with the
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
     mimetype set.
-
-    The mimetype is used for serialized objects, and tells the
-    ResXResourceReader how to depersist the object. This is currently not
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
     extensible. For a given mimetype the value must be set accordingly:
-
-    Note - application/x-microsoft.net.object.binary.base64 is the format
-    that the ResXResourceWriter will generate, however the reader can
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
     read any of the formats listed below.
-
+    
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-
+    
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array
+    value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -371,19 +371,19 @@
   <data name="WalletSettings" xml:space="preserve">
     <value>Wallet Settings</value>
   </data>
-  <data name="WalletCoins" xml:space="preserve">
+  <data name="WalletCoinsViewModelTitle" xml:space="preserve">
     <value>Wallet Coins</value>
   </data>
-  <data name="WalletStats" xml:space="preserve">
+  <data name="WalletStatsViewModelTitle" xml:space="preserve">
     <value>Wallet Stats</value>
   </data>
-  <data name="WalletInfo" xml:space="preserve">
+  <data name="WalletInfoViewModelTitle" xml:space="preserve">
     <value>Wallet Info</value>
   </data>
   <data name="WalletReceive" xml:space="preserve">
     <value>Receive</value>
   </data>
-  <data name="ExcludeCoins" xml:space="preserve">
+  <data name="ExcludedCoinsViewModelTitle" xml:space="preserve">
     <value>Exclude Coins</value>
   </data>
   <data name="CoinjoinSettings" xml:space="preserve">
@@ -503,11 +503,8 @@
   <data name="AutomaticallyStartCoinjoin" xml:space="preserve">
     <value>Automatically start coinjoin</value>
   </data>
-  <data name="CoinjoinStrategy" xml:space="preserve">
-    <value>Coinjoin strategy:</value>
-  </data>
   <data name="CoinjoinToThisWallet" xml:space="preserve">
-    <value>Coinjoin to this wallet:</value>
+    <value>Coinjoin to this wallet</value>
   </data>
   <data name="CoinjoinToOtherWalletRestrictions1" xml:space="preserve">
     <value>- Only loaded wallets can be selected.</value>
@@ -536,9 +533,6 @@
   <data name="WalletToolsVerifyRecoveryWords" xml:space="preserve">
     <value>Verify Recovery Words</value>
   </data>
-  <data name="Change" xml:space="preserve">
-    <value>Change</value>
-  </data>
   <data name="WalletCoinJoinSettingsViewModelTitle" xml:space="preserve">
     <value>Coinjoin Settings</value>
   </data>
@@ -548,64 +542,34 @@
   <data name="WalletCoinJoinSettingsViewModelKeywords" xml:space="preserve">
     <value>Wallet, Settings</value>
   </data>
-  <data name="CoinJoinProfilesViewModelTitle" xml:space="preserve">
-    <value>Coinjoin Strategy</value>
-  </data>
   <data name="CoinJoinProfilesCaption" xml:space="preserve">
-    <value>Ginger takes care of your financial privacy by automatically starting to coinjoin all your funds for a fixed 0.3% coordination fee + the mining fees. Select a coinjoin strategy that fits you best!</value>
-  </data>
-  <data name="PrivateCoinJoinProfileTitle" xml:space="preserve">
-    <value>Maximize Privacy</value>
-  </data>
-  <data name="PrivateCoinJoinProfileDescription" xml:space="preserve">
-    <value>Choice of the paranoid. Optimizes for privacy at all costs.</value>
-  </data>
-  <data name="EconomicCoinJoinProfileTitle" xml:space="preserve">
-    <value>Minimize Costs</value>
-  </data>
-  <data name="EconomicCoinJoinProfileDescription" xml:space="preserve">
-    <value>For savers. Only participates in coinjoins during the cheapest parts of the week.</value>
-  </data>
-  <data name="ManualCoinJoinProfileTitle" xml:space="preserve">
-    <value>Custom</value>
-  </data>
-  <data name="SpeedyCoinJoinProfileTitle" xml:space="preserve">
-    <value>Maximize Speed</value>
-  </data>
-  <data name="SpeedyCoinJoinProfileDescription" xml:space="preserve">
-    <value>Getting things done. Geared towards speed and convenience.</value>
-  </data>
-  <data name="Customize" xml:space="preserve">
-    <value>Customize</value>
+    <value>Ginger takes care of your financial privacy by automatically starting to coinjoin all your funds for a fixed 0.3% coordination fee plus the mining fees. We've pre-applied the default configuration for ease of use.</value>
   </data>
   <data name="Done" xml:space="preserve">
     <value>Done</value>
   </data>
-  <data name="ManualCoinJoinProfileDialogTitle" xml:space="preserve">
-    <value>Coinjoin Strategy Settings</value>
+  <data name="RedcoinText" xml:space="preserve">
+    <value>Single non-private coin restriction</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewRedcoinText" xml:space="preserve">
-    <value>Red coin isolation</value>
-  </data>
-  <data name="AdvancedCoinjoinOptionsViewRedcoinToolTip" xml:space="preserve">
+  <data name="RedcoinToolTip" xml:space="preserve">
     <value>Only allow a single coin with anonymity score 1 into coinjoin registration.</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewAnonTargetText" xml:space="preserve">
+  <data name="AnonTargetText" xml:space="preserve">
     <value>Anonymity score target</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewAnonTargetTooltip" xml:space="preserve">
+  <data name="AnonTargetTooltip" xml:space="preserve">
     <value>Minimum anonymity score for a coin to be considered private.</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewSafeFeeText" xml:space="preserve">
-    <value>Safe fee rate</value>
+  <data name="SafeFeeText" xml:space="preserve">
+    <value>Ignore coinjoin time preference below</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewSafeFeeToolTip" xml:space="preserve">
+  <data name="SafeFeeToolTip" xml:space="preserve">
     <value>Always coinjoin when the fee rate is below this value (has precedence over Coinjoin time preference).</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewCoinJoinTimePrefText" xml:space="preserve">
+  <data name="CoinJoinTimePrefText" xml:space="preserve">
     <value>Coinjoin time preference</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewCoinJoinTimePrefToolTip" xml:space="preserve">
+  <data name="CoinJoinTimePrefToolTip" xml:space="preserve">
     <value>Only coinjoin when the fee rate is below the median of this time period.</value>
   </data>
   <data name="Cancel" xml:space="preserve">
@@ -1303,5 +1267,380 @@ It's a recovery words extension for more security.</value>
   </data>
   <data name="SelfCoinJoinToolTip" xml:space="preserve">
     <value>In this Coinjoin, the majority of the coins belong to you. This will significantly reduce your privacy progress. Consider participating with fewer wallets until more participants join.</value>
+  </data>
+  <data name="AuthCodePrompt" xml:space="preserve">
+    <value>Scan the QR code below using your preferred authenticator app, then enter the verification code.</value>
+  </data>
+  <data name="Verify" xml:space="preserve">
+    <value>Verify</value>
+  </data>
+  <data name="TwoFactorSetup" xml:space="preserve">
+    <value>Two-Factor Authentication Setup</value>
+  </data>
+  <data name="TokenVerificationFailed" xml:space="preserve">
+    <value>Couldn't verify the token, please see the logs for further information.</value>
+  </data>
+  <data name="TwoFactorAuthenticationWithCapitals" xml:space="preserve">
+    <value>Two-Factor Authentication</value>
+  </data>
+  <data name="TransactionFeeRate" xml:space="preserve">
+    <value>_Transaction fee rate:</value>
+  </data>
+  <data name="InvalidFee" xml:space="preserve">
+    <value>The entered fee is not valid.</value>
+  </data>
+  <data name="MinFeeLimit" xml:space="preserve">
+    <value>Cannot be less than 1 sat/vByte.</value>
+  </data>
+  <data name="FeeTooHigh" xml:space="preserve">
+    <value>The entered fee is too high.</value>
+  </data>
+  <data name="ExcludedCoinsViewModelCaption" xml:space="preserve">
+    <value>Display exclude coins</value>
+  </data>
+  <data name="ExcludedCoinsViewModelKeywords" xml:space="preserve">
+    <value>Wallet, Exclude, Coins, Coinjoin, Freeze, UTXO</value>
+  </data>
+  <data name="WalletCoinsViewModelCaption" xml:space="preserve">
+    <value>Display wallet coins</value>
+  </data>
+  <data name="WalletCoinsViewModelKeywords" xml:space="preserve">
+    <value>Wallet, Coins, UTXO</value>
+  </data>
+  <data name="WalletStatsViewModelCaption" xml:space="preserve">
+    <value>Display wallet stats</value>
+  </data>
+  <data name="WalletStatsViewModelKeywords" xml:space="preserve">
+    <value>Wallet, Stats</value>
+  </data>
+  <data name="WalletInfoViewModelCaption" xml:space="preserve">
+    <value>Display wallet info</value>
+  </data>
+  <data name="WalletInfoViewModelKeywords" xml:space="preserve">
+    <value>Wallet, Info</value>
+  </data>
+  <data name="ExcludeCoinjoinDescription" xml:space="preserve">
+    <value>The chosen coins will be excluded from coinjoin. It's important to note that there will be no increase in the privacy of those coins.</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="WalletCoinsDescription" xml:space="preserve">
+    <value>A list of coins that you own.</value>
+  </data>
+  <data name="NumberOfCoins" xml:space="preserve">
+    <value>Number of coins (UTXOs)</value>
+  </data>
+  <data name="UnconfirmedBalance" xml:space="preserve">
+    <value>Unconfirmed balance</value>
+  </data>
+  <data name="ConfirmedBalance" xml:space="preserve">
+    <value>Confirmed balance</value>
+  </data>
+  <data name="TotalBalance" xml:space="preserve">
+    <value>Total balance</value>
+  </data>
+  <data name="TotalTransactions" xml:space="preserve">
+    <value>Total number of transactions</value>
+  </data>
+  <data name="NonCoinjoinTransactions" xml:space="preserve">
+    <value>Number of non-coinjoin transactions</value>
+  </data>
+  <data name="CoinjoinTransactions" xml:space="preserve">
+    <value>Number of coinjoin transactions</value>
+  </data>
+  <data name="NumberOfAddresses" xml:space="preserve">
+    <value>Number of addresses</value>
+  </data>
+  <data name="NumberOfCleanAddresses" xml:space="preserve">
+    <value>Number of clean addresses</value>
+  </data>
+  <data name="NumberOfLockedAddresses" xml:space="preserve">
+    <value>Number of locked addresses</value>
+  </data>
+  <data name="NumberOfUsedAddresses" xml:space="preserve">
+    <value>Number of used addresses</value>
+  </data>
+  <data name="ExtendedMasterPrivateKey" xml:space="preserve">
+    <value>Extended Master Private Key</value>
+  </data>
+  <data name="ExtendedMasterZprv" xml:space="preserve">
+    <value>Extended Master zprv</value>
+  </data>
+  <data name="ExtendedMasterFingerprint" xml:space="preserve">
+    <value>Extended Master Fingerprint</value>
+  </data>
+  <data name="AccountKeyPathSegWit" xml:space="preserve">
+    <value>Account Key Path (SegWit)</value>
+  </data>
+  <data name="AccountKeyPathTaproot" xml:space="preserve">
+    <value>Account Key Path (Taproot)</value>
+  </data>
+  <data name="ExtendedAccountPrivateKeyXpriv" xml:space="preserve">
+    <value>Extended Account Private Key xpriv</value>
+  </data>
+  <data name="PublicExternalOutputDescriptor" xml:space="preserve">
+    <value>Public External Output descriptor</value>
+  </data>
+  <data name="PublicInternalOutputDescriptor" xml:space="preserve">
+    <value>Public Internal Output descriptor</value>
+  </data>
+  <data name="PrivateExternalOutputDescriptor" xml:space="preserve">
+    <value>Private External Output descriptor</value>
+  </data>
+  <data name="PrivateInternalOutputDescriptor" xml:space="preserve">
+    <value>Private Internal Output descriptor</value>
+  </data>
+  <data name="ExtendedAccountPublicKeySegWit" xml:space="preserve">
+    <value>Extended Account Public Key (SegWit)</value>
+  </data>
+  <data name="ExtendedAccountPublicKeyTaproot" xml:space="preserve">
+    <value>Extended Account Public Key (Taproot)</value>
+  </data>
+  <data name="HideSensitiveData" xml:space="preserve">
+    <value>Hide sensitive data</value>
+  </data>
+  <data name="ShowSensitiveData" xml:space="preserve">
+    <value>Show sensitive data</value>
+  </data>
+  <data name="DateTime" xml:space="preserve">
+    <value>Date / Time</value>
+  </data>
+  <data name="DestinationAddresses" xml:space="preserve">
+    <value>Destination addresses</value>
+  </data>
+  <data name="FeeRate" xml:space="preserve">
+    <value>Fee Rate</value>
+  </data>
+  <data name="Confirmed" xml:space="preserve">
+    <value>Confirmed</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="Confirmations" xml:space="preserve">
+    <value>({0} confirmations)</value>
+  </data>
+  <data name="ConfirmationEstimationDisclaimer" xml:space="preserve">
+    <value>This is just an estimation based on some data for transactions and blocks. The confirmation time might change.</value>
+  </data>
+  <data name="BlockHash" xml:space="preserve">
+    <value>Block hash</value>
+  </data>
+  <data name="BlockHeight" xml:space="preserve">
+    <value>Block height</value>
+  </data>
+  <data name="TransactionDetails" xml:space="preserve">
+    <value>Transaction Details</value>
+  </data>
+  <data name="AmountSent" xml:space="preserve">
+    <value>Amount sent</value>
+  </data>
+  <data name="AmountReceived" xml:space="preserve">
+    <value>Amount received</value>
+  </data>
+  <data name="Fees" xml:space="preserve">
+    <value>Fees</value>
+  </data>
+  <data name="CoinjoinDetails" xml:space="preserve">
+    <value>Coinjoin Details</value>
+  </data>
+  <data name="NumberOfTransactions" xml:space="preserve">
+    <value>Number of transactions</value>
+  </data>
+  <data name="TransactionIDs" xml:space="preserve">
+    <value>Transaction IDs</value>
+  </data>
+  <data name="Incoming" xml:space="preserve">
+    <value>Incoming</value>
+  </data>
+  <data name="Outgoing" xml:space="preserve">
+    <value>Outgoing</value>
+  </data>
+  <data name="SelfTransfer" xml:space="preserve">
+    <value>Self Transfer</value>
+  </data>
+  <data name="Coinjoins" xml:space="preserve">
+    <value>Coinjoins</value>
+  </data>
+  <data name="Cancellation" xml:space="preserve">
+    <value>Cancellation</value>
+  </data>
+  <data name="Accelerator" xml:space="preserve">
+    <value>Accelerator</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="Yesterday" xml:space="preserve">
+    <value>Yesterday</value>
+  </data>
+  <data name="PendingConfirmingIn" xml:space="preserve">
+    <value>Pending (confirming in ≈ {0})</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="ConfirmedWithConfirmationCount" xml:space="preserve">
+    <value>Confirmed ({0} confirmation{1})</value>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>Less than</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>more</value>
+  </data>
+  <data name="Less" xml:space="preserve">
+    <value>less</value>
+  </data>
+  <data name="TheSameAmount" xml:space="preserve">
+    <value>the same amount</value>
+  </data>
+  <data name="EditLabels" xml:space="preserve">
+    <value>Edit Labels</value>
+  </data>
+  <data name="UnknownPeople" xml:space="preserve">
+    <value>Unknown People</value>
+  </data>
+  <data name="PrivateCoins" xml:space="preserve">
+    <value>Private Coins</value>
+  </data>
+  <data name="SemiPrivateCoins" xml:space="preserve">
+    <value>Semi-private Coins</value>
+  </data>
+  <data name="Coinjoining" xml:space="preserve">
+    <value>Coinjoining</value>
+  </data>
+  <data name="NotCoinjoining" xml:space="preserve">
+    <value>Not coinjoining</value>
+  </data>
+  <data name="ExcludedFromCoinjoins" xml:space="preserve">
+    <value>Excluded from coinjoins</value>
+  </data>
+  <data name="ConfirmationCount" xml:space="preserve">
+    <value>{0} confirmation{1}</value>
+  </data>
+  <data name="CantParticipateInCoinjoinUntil" xml:space="preserve">
+    <value>Can't participate in coinjoin until: {0}</value>
+  </data>
+  <data name="AnonymityScore" xml:space="preserve">
+    <value>Anonymity Score</value>
+  </data>
+  <data name="PersonOrCompanyExample" xml:space="preserve">
+    <value>Person or Company i.e. Alice, Bob, Pizza Inc</value>
+  </data>
+  <data name="EstimatedConfirmationTimeWithValue" xml:space="preserve">
+    <value>Estimated Confirmation Time: {0}</value>
+  </data>
+  <data name="FeeRateFormatted" xml:space="preserve">
+    <value>Fee Rate: {0:0} sat/vByte</value>
+  </data>
+  <data name="Fastest" xml:space="preserve">
+    <value>fastest</value>
+  </data>
+  <data name="min" xml:space="preserve">
+    <value>min</value>
+  </data>
+  <data name="DisabledEnum" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="EnabledEnum" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="EnabledOnlyRunningEnum" xml:space="preserve">
+    <value>Enabled (connect-only mode)</value>
+  </data>
+  <data name="WouldYouLikeToPersonalizeIt" xml:space="preserve">
+    <value>Would you like to personalize it?</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="Weeks" xml:space="preserve">
+    <value>Weeks</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="Minimal" xml:space="preserve">
+    <value>Minimal</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="CostEfficiency" xml:space="preserve">
+    <value>Cost-Efficiency</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="RandomSkip" xml:space="preserve">
+    <value>Random Skip</value>
+  </data>
+  <data name="Months" xml:space="preserve">
+    <value>Months</value>
+  </data>
+  <data name="Often" xml:space="preserve">
+    <value>Often</value>
+  </data>
+  <data name="Sometimes" xml:space="preserve">
+    <value>Sometimes</value>
+  </data>
+  <data name="Rarely" xml:space="preserve">
+    <value>Rarely</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Hours</value>
+  </data>
+  <data name="Announcements" xml:space="preserve">
+    <value>Announcements</value>
+  </data>
+  <data name="MarkAllAsRead" xml:space="preserve">
+    <value>Mark all as read</value>
+  </data>
+  <data name="LabelsWatermarkText" xml:space="preserve">
+    <value>Person or Company i.e. Alice, Bob, Pizza Inc</value>
+  </data>
+  <data name="ValidationErrorNotNumber" xml:space="preserve">
+    <value>Not a number.</value>
+  </data>
+  <data name="ValidationErrorNotInRange" xml:space="preserve">
+    <value>Value must be between {0} and {1}.</value>
+  </data>
+  <data name="CoinJoinCoinSelection" xml:space="preserve">
+    <value>Coin Selection</value>
+  </data>
+  <data name="ExperimentalCoinJoinCoinSelector" xml:space="preserve">
+    <value>(EXPERIMENTAL) Improved Coin Selection</value>
+  </data>
+  <data name="ForceUsingLowPrivacyCoinsInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Force to use low privacy coins</value>
+  </data>
+  <data name="ForceUsingLowPrivacyCoinsInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>The selection should contain at least one from the lowest privacy coins.</value>
+  </data>
+  <data name="WeightedAnonymityLossNormalInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Coin privacy difference normalization for score calculation</value>
+  </data>
+  <data name="WeightedAnonymityLossNormalInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>With lower value the coin selector will favor coins with smaller difference in privacy score.</value>
+  </data>
+  <data name="ValueLossRateNormalInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Amount loss normalization for score calculation</value>
+  </data>
+  <data name="ValueLossRateNormalInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>With lower value the coin selector will favor coin selections with less amount rate loss.</value>
+  </data>
+  <data name="TargetCoinCountPerBucketInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Target coin number per wallet bucket</value>
+  </data>
+  <data name="TargetCoinCountPerBucketInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>The coin selector will favor giving coins from buckets (10k.., 20k.., 40k.. etc. satoshi range of coins) that are overpopulated.</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>Configuration</value>
   </data>
 </root>

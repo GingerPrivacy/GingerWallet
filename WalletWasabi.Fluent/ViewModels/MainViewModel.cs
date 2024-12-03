@@ -9,6 +9,7 @@ using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Affiliation.Models;
 using WalletWasabi.Fluent.Infrastructure;
+using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.ViewModels.Dialogs.Announcement;
 using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
@@ -46,6 +47,7 @@ public partial class MainViewModel : ViewModelBase
 		UiContext.RegisterNavigation(new NavigationState(UiContext, MainScreen, DialogScreen, FullScreen, CompactDialogScreen, NavBar));
 
 		StatusIcon = new StatusIconViewModel(UiContext);
+		AnnouncementIcon = new AnnouncementIconViewModel(UiContext, new AnnouncementsModel());
 
 		SettingsPage = new SettingsPageViewModel(UiContext);
 		PrivacyMode = new PrivacyModeViewModel(UiContext.ApplicationSettings);
@@ -77,6 +79,13 @@ public partial class MainViewModel : ViewModelBase
 
 		IsOobeBackgroundVisible = UiContext.ApplicationSettings.Oobe;
 
+		SearchBar = CreateSearchBar();
+
+		NetworkBadgeName =
+			UiContext.ApplicationSettings.Network == Network.Main
+			? ""
+			: UiContext.ApplicationSettings.Network.Name;
+
 		RxApp.MainThreadScheduler.Schedule(async () =>
 		{
 			if (UiContext.TwoFactorAuthentication.TwoFactorEnabled)
@@ -85,7 +94,9 @@ public partial class MainViewModel : ViewModelBase
 				await UiContext.Navigate().To().VerifyTwoFactoryAuthenticationDialog().GetResultAsync();
 				IsOobeBackgroundVisible = false;
 			}
+
 			NavBar.Activate();
+
 			if (!UiContext.WalletRepository.HasWallet || UiContext.ApplicationSettings.Oobe)
 			{
 				IsOobeBackgroundVisible = true;
@@ -99,20 +110,8 @@ public partial class MainViewModel : ViewModelBase
 				}
 			}
 
-			await Task.Delay(1000);
-
-			foreach (var page in GetAnnouncements())
-			{
-				await uiContext.Navigate().NavigateDialogAsync(page, navigationMode: NavigationMode.Clear);
-			}
+			await AnnouncementIcon.ShowImportantAnnouncementsAsync();
 		});
-
-		SearchBar = CreateSearchBar();
-
-		NetworkBadgeName =
-			UiContext.ApplicationSettings.Network == Network.Main
-			? ""
-			: UiContext.ApplicationSettings.Network.Name;
 
 		// TODO: the reason why this MainViewModel singleton is even needed throughout the codebase is dubious.
 		// Also it causes tight coupling which damages testability.
@@ -140,17 +139,12 @@ public partial class MainViewModel : ViewModelBase
 	public DialogScreenViewModel CompactDialogScreen { get; }
 	public NavBarViewModel NavBar { get; }
 	public StatusIconViewModel StatusIcon { get; }
+	public AnnouncementIconViewModel AnnouncementIcon { get; }
 	public SettingsPageViewModel SettingsPage { get; }
 	public PrivacyModeViewModel PrivacyMode { get; }
 	public WalletNotificationsViewModel Notifications { get; }
 
 	public static MainViewModel Instance { get; private set; }
-
-	private IEnumerable<AnnouncementBase> GetAnnouncements()
-	{
-		var announcements = new List<AnnouncementBase>();
-		return announcements;
-	}
 
 	public bool IsDialogOpen()
 	{
@@ -200,6 +194,8 @@ public partial class MainViewModel : ViewModelBase
 			.BindTo(this, x => x.IsCoinJoinActive);
 
 		Notifications.StartListening();
+
+		AnnouncementIcon.Initialize();
 
 		if (UiContext.ApplicationSettings.Network != Network.Main)
 		{

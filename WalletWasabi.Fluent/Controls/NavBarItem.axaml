@@ -63,7 +63,7 @@
     <Style Selector="^/template/ Border#SelectionBackground">
       <Setter Property="Opacity" Value="0" />
       <Setter Property="Background" Value="{DynamicResource NavBarItemSelectedBrush}" />
-      <Setter Property="CornerRadius" Value="2" />
+      <Setter Property="CornerRadius" Value="10" />
       <Setter Property="Transitions">
         <Transitions>
           <DoubleTransition Property="Opacity" Duration="0:0:0.275" Easing="{StaticResource FluentEasing}" />

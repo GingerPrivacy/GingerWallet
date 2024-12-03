@@ -14,7 +14,7 @@ namespace WalletWasabi.WabiSabi.Client.RoundStateAwaiters;
 
 public class RoundStateHolder
 {
-	public RoundStateHolder(RoundState roundState)
+	public RoundStateHolder(RoundState roundState, string[] allowedCoordinatorIdentifiers, bool verify)
 	{
 		RoundState = roundState;
 		Confidence = 0;
@@ -22,13 +22,16 @@ public class RoundStateHolder
 		_inputVerifyIndex = 0;
 		_inputCount = -1;
 		_exception = null;
-		VerifyAndSet(roundState, false);
+		_allowedCoordinatorIdentifiers = allowedCoordinatorIdentifiers;
+		VerifyAndSet(roundState, false, verify);
 	}
 
 	// The round state that the application can see
 	public RoundState RoundState { get; private set; }
 
 	public int Confidence { get; private set; }
+
+	private string[] _allowedCoordinatorIdentifiers;
 
 	// This is always the round state that we last get, but we don't give to the others if something is not right
 	private RoundState _roundState;
@@ -55,7 +58,7 @@ public class RoundStateHolder
 		}
 	}
 
-	public void VerifyAndSet(RoundState rs, bool checkPoint, bool verify = true)
+	public void VerifyAndSet(RoundState rs, bool checkPoint, bool verify)
 	{
 		var ors = _roundState;
 		var nrs = checkPoint ? rs with { CoinjoinState = rs.CoinjoinState.AddPreviousStates(ors.CoinjoinState) } : rs;
@@ -89,6 +92,14 @@ public class RoundStateHolder
 		{
 			// Possibly protocol error
 			Exception = new CoinJoinClientException(CoinjoinError.TamperedRoundState, $"Incorrect RoundCreated event count at round {ors.Id}.");
+			return;
+		}
+
+		if (!_allowedCoordinatorIdentifiers.Contains(nrs.CoinjoinState.Parameters.CoordinationIdentifier))
+		{
+			// Not allowed CoordinatorIdentifier
+			var list = string.Join(", ", _allowedCoordinatorIdentifiers.Select(x => $"\"{x}\""));
+			Exception = new CoinJoinClientException(CoinjoinError.TamperedRoundState, $"Incorrect CoordinatorIdentifier, \"{nrs.CoinjoinState.Parameters.CoordinationIdentifier}\" is not from the list [{list}].");
 			return;
 		}
 

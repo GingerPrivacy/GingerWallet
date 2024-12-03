@@ -42,7 +42,7 @@ public class CoinJoinTrackerFactory
 		// The only use-case when we set consolidation mode to true, when we are mixing to another wallet.
 		wallet.ConsolidationMode = outputWallet is not null && outputWallet.WalletId != wallet.WalletId;
 
-		var coinSelector = CoinJoinCoinSelector.FromWallet(wallet);
+		CoinJoinCoinSelector coinSelector = new(wallet);
 		var coinJoinClient = new CoinJoinClient(
 			HttpClientFactory,
 			wallet.KeyChain,

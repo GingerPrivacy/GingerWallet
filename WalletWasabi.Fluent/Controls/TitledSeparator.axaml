@@ -1,0 +1,13 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="WalletWasabi.Fluent.Controls.TitledSeparator">
+  <Grid ColumnDefinitions="*,Auto,*">
+    <Separator Grid.Column="0" />
+    <TextBlock Grid.Column="1"
+               Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}"
+               Margin="10 0 10 0"
+               Opacity="0.6"
+               FontWeight="Bold" />
+    <Separator Grid.Column="2" />
+  </Grid>
+</UserControl>

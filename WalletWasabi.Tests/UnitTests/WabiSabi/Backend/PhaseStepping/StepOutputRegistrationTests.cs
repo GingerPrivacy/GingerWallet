@@ -221,7 +221,7 @@ public class StepOutputRegistrationTests
 		// Refresh the Arena States because of vsize manipulation.
 		await arena.TriggerAndWaitRoundAsync(token);
 
-		using RoundStateUpdater roundStateUpdater = new(TimeSpan.FromSeconds(2), arena);
+		using RoundStateUpdater roundStateUpdater = new(TimeSpan.FromSeconds(2), ["CoinJoinCoordinatorIdentifier"], arena);
 		await roundStateUpdater.StartAsync(token);
 		var task1 = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round), arenaClient, coin1, keyChain, roundStateUpdater, token, token, token, silentLeaveToken);
 		var task2 = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round), arenaClient, coin2, keyChain, roundStateUpdater, token, token, token, silentLeaveToken);
@@ -284,7 +284,7 @@ public class StepOutputRegistrationTests
 		// Refresh the Arena States because of vsize manipulation.
 		await arena.TriggerAndWaitRoundAsync(token);
 
-		using RoundStateUpdater roundStateUpdater = new(TimeSpan.FromSeconds(2), arena);
+		using RoundStateUpdater roundStateUpdater = new(TimeSpan.FromSeconds(2), ["CoinJoinCoordinatorIdentifier"], arena);
 		await roundStateUpdater.StartAsync(token);
 		var task1a = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round1), arenaClient1, coin1a, keyChain1, roundStateUpdater, token, token, token, silentLeaveToken);
 		var task1b = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round1), arenaClient1, coin1b, keyChain1, roundStateUpdater, token, token, token, silentLeaveToken);

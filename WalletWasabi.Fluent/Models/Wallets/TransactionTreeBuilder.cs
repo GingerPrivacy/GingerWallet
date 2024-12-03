@@ -3,10 +3,12 @@ using NBitcoin;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using WalletWasabi.Blockchain.Transactions;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
+using WalletWasabi.Lang;
 using WalletWasabi.Models;
 using WalletWasabi.Wallets;
 
@@ -338,9 +340,9 @@ public class TransactionTreeBuilder
 
 		return (status, friendlyString != "") switch
 		{
-			(TransactionStatus.Pending, true) => $"Pending (confirming in ≈ {friendlyString})",
-			(TransactionStatus.Pending, false) => "Pending",
-			_ => "Unknown"
+			(TransactionStatus.Pending, true) => string.Format(CultureInfo.InvariantCulture, Resources.PendingConfirmingIn, friendlyString),
+			(TransactionStatus.Pending, false) => Resources.Pending,
+			_ => Resources.Unknown
 		};
 	}
 }

@@ -70,7 +70,7 @@ public class ConfigManagerTests
 			  "DoSMinTimeInPrison": "0d 0h 20m 0s",
 			  "MinRegistrableAmount": "0.00005",
 			  "MaxRegistrableAmount": "43000.00",
-			  "MinFeeAmount": "0.00001",
+			  "MinFeeAmount": "0.00002",
 			  "AllowNotedInputRegistration": true,
 			  "StandardInputRegistrationTimeout": "0d 1h 0m 0s",
 			  "BlameInputRegistrationTimeout": "0d 0h 3m 0s",

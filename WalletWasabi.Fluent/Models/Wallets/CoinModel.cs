@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Reactive.Disposables;
 using NBitcoin;
 using ReactiveUI;
@@ -6,6 +7,7 @@ using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Fluent.Helpers;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
 
@@ -42,7 +44,7 @@ public partial class CoinModel : ReactiveObject
 		AnonScore = (int)coin.HdPubKey.AnonymitySet;
 		IsCoinJoinInProgress = coin.CoinJoinInProgress;
 		IsBanned = coin.IsBanned;
-		BannedUntilUtcToolTip = $"Can't participate in coinjoin until: {coin.BannedUntilUtc}";
+		BannedUntilUtcToolTip = string.Format(CultureInfo.InvariantCulture, Resources.CantParticipateInCoinjoinUntil, coin.BannedUntilUtc);
 
 		var confirmations = coin.GetConfirmations();
 		Confirmations = confirmations;
@@ -90,7 +92,7 @@ public partial class CoinModel : ReactiveObject
 		this.WhenAnyValue(c => c.Coin.HdPubKey.AnonymitySet).Select(x => (int)x).BindTo(this, x => x.AnonScore).DisposeWith(disposable);
 		this.WhenAnyValue(c => c.Coin.CoinJoinInProgress).BindTo(this, x => x.IsCoinJoinInProgress).DisposeWith(disposable);
 		this.WhenAnyValue(c => c.Coin.IsBanned).BindTo(this, x => x.IsBanned).DisposeWith(disposable);
-		this.WhenAnyValue(c => c.Coin.BannedUntilUtc).WhereNotNull().Subscribe(x => BannedUntilUtcToolTip = $"Can't participate in coinjoin until: {x:g}").DisposeWith(disposable);
+		this.WhenAnyValue(c => c.Coin.BannedUntilUtc).WhereNotNull().Subscribe(x => BannedUntilUtcToolTip = string.Format(CultureInfo.InvariantCulture, Resources.CantParticipateInCoinjoinUntil, $"{x:g}")).DisposeWith(disposable);
 
 		this.WhenAnyValue(c => c.Coin.Height).Select(_ => Coin.GetConfirmations()).Subscribe(
 			confirmations =>

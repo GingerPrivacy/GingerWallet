@@ -79,7 +79,7 @@ public class WabiSabiConfig : ConfigBase
 	[DefaultValueMoneyBtc("0.00001")]
 	[JsonProperty(PropertyName = "MinFeeAmount", DefaultValueHandling = DefaultValueHandling.Populate)]
 	[JsonConverter(typeof(MoneyBtcJsonConverter))]
-	public Money MinFeeAmount { get; set; } = Money.Coins(0.00001m);
+	public Money MinFeeAmount { get; set; } = Money.Coins(0.00002m);
 
 	[DefaultValue(true)]
 	[JsonProperty(PropertyName = "AllowNotedInputRegistration", DefaultValueHandling = DefaultValueHandling.Populate)]

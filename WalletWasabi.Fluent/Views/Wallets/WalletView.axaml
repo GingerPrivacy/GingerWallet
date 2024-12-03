@@ -67,17 +67,6 @@
                 <TextBlock Text="{x:Static lang:Resources.WalletReceive}" />
               </StackPanel>
             </Button>
-            <Panel>
-              <Button Classes="function"
-                      IsVisible="False"
-                      Command="{Binding BuyCommand}">
-                <StackPanel Orientation="Horizontal">
-                  <PathIcon Data="{StaticResource wallet_action_buy}" />
-                  <TextBlock Text="Buy Anything" />
-                </StackPanel>
-              </Button>
-              <Ellipse IsHitTestVisible="False" IsVisible="{Binding HasUnreadConversations^}" VerticalAlignment="Top" Margin="0 5 5 0" HorizontalAlignment="Right" Width="8" Height="8" Fill="{StaticResource UnreadBadgeColor}" />
-            </Panel>
             <Button Classes="transparentFunction">
               <Button.Flyout>
                 <MenuFlyout Placement="Bottom">
@@ -86,17 +75,17 @@
                       <PathIcon Data="{StaticResource settings_wallet_regular}" />
                     </MenuItem.Icon>
                   </MenuItem>
-                  <MenuItem Header="{x:Static lang:Resources.WalletCoins}" Command="{Binding WalletCoinsCommand}">
+                  <MenuItem Header="{x:Static lang:Resources.WalletCoinsViewModelTitle}" Command="{Binding WalletCoinsCommand}">
                     <MenuItem.Icon>
                       <PathIcon Data="{StaticResource wallet_coins}" />
                     </MenuItem.Icon>
                   </MenuItem>
-                  <MenuItem Header="{x:Static lang:Resources.WalletStats}" Command="{Binding WalletStatsCommand}">
+                  <MenuItem Header="{x:Static lang:Resources.WalletStatsViewModelTitle}" Command="{Binding WalletStatsCommand}">
                     <MenuItem.Icon>
                       <PathIcon Data="{StaticResource stats_wallet_regular}" />
                     </MenuItem.Icon>
                   </MenuItem>
-                  <MenuItem Header="{x:Static lang:Resources.WalletInfo}" Command="{Binding WalletInfoCommand}">
+                  <MenuItem Header="{x:Static lang:Resources.WalletInfoViewModelTitle}" Command="{Binding WalletInfoCommand}">
                     <MenuItem.Icon>
                       <PathIcon Data="{StaticResource info_regular}" />
                     </MenuItem.Icon>

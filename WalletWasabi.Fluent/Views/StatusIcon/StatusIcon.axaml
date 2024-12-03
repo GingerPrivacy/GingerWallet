@@ -44,7 +44,7 @@
     </Interaction.Behaviors>
 
     <FlyoutBase.AttachedFlyout>
-      <Flyout Placement="TopEdgeAlignedRight" ShowMode="TransientWithDismissOnPointerMoveAway">
+      <Flyout Placement="Bottom" ShowMode="TransientWithDismissOnPointerMoveAway" VerticalOffset="-15">
 
         <StackPanel TextElement.FontSize="14"
                     MaxWidth="160"
@@ -172,8 +172,7 @@
     <PathIcon
       IsVisible="{Binding HealthMonitor.State, Converter={x:Static converters:HealthMonitorStateVisibilityConverter.Instance}, ConverterParameter={x:Static models:HealthMonitorState.ConnectionIssueDetected}}"
       Data="{StaticResource warning_filled}"
-      Foreground="Gold"
-      VerticalAlignment="Center" HorizontalAlignment="Right" />
+      Foreground="Gold" />
 
     <!-- Loading -->
     <PathIcon

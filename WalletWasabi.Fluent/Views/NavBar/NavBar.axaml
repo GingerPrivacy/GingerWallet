@@ -20,9 +20,9 @@
     </Style>
 
     <Style Selector="NavBarItem" x:DataType="vm:NavBarItemViewModel">
-      <Setter Property="Width" Value="75" />
-      <Setter Property="Height" Value="58" />
-      <Setter Property="Margin" Value="4 1" />
+      <Setter Property="Width" Value="73" />
+      <Setter Property="Height" Value="55" />
+      <Setter Property="Margin" Value="5 2" />
       <Setter Property="Padding" Value="0" />
       <Setter Property="Cursor" Value="Hand" />
     </Style>

@@ -1,0 +1,170 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="using:WalletWasabi.Fluent.Converters"
+             xmlns:models="clr-namespace:WalletWasabi.Fluent.Models"
+             xmlns:statusIcon="clr-namespace:WalletWasabi.Fluent.ViewModels.StatusIcon"
+             xmlns:st="clr-namespace:WalletWasabi.Fluent.Views.StatusIcon"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
+             mc:Ignorable="d" d:DesignWidth="671" d:DesignHeight="32"
+             x:DataType="statusIcon:AnnouncementIconViewModel"
+             x:CompileBindings="True"
+             x:Class="WalletWasabi.Fluent.Views.StatusIcon.AnnouncementIcon">
+  <UserControl.Styles>
+
+    <Style Selector="FlyoutPresenter">
+      <Setter Property="Background" Value="{DynamicResource SystemControlTransientBackgroundBrush}" />
+      <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+      <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+    </Style>
+
+    <Style Selector="TextBlock.title">
+      <Setter Property="FontSize" Value="{StaticResource FontSizeH7}" />
+      <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+    <Style Selector="TextBlock.description">
+      <Setter Property="Opacity" Value="0.6" />
+      <Setter Property="FontSize" Value="{StaticResource FontSizeH7}" />
+    </Style>
+    <Style Selector="StackPanel.suggestion">
+      <Setter Property="Spacing" Value="2" />
+    </Style>
+
+    <Style Selector="ListBox">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="CornerRadius" Value="0" />
+    </Style>
+    <Style Selector="ListBoxItem">
+      <Setter Property="Cursor" Value="Hand" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="MinWidth" Value="200" />
+      <Setter Property="MaxWidth" Value="350" />
+    </Style>
+    <Style Selector="ListBoxItem /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+    <Style
+      Selector="ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter, ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="ListBoxItem Border#PART_MainContentBorder">
+      <Setter Property="Padding" Value="15 10" />
+      <Setter Property="CornerRadius" Value="8" />
+      <Setter Property="MaxHeight" Value="150" />
+    </Style>
+    <Style Selector="ListBoxItem Border#PART_DecorationBorderUnselected">
+      <Setter Property="Padding" Value="15 10" />
+      <Setter Property="CornerRadius" Value="8" />
+      <Setter Property="Margin" Value="0 2 0 2" />
+      <Setter Property="BorderBrush" Value="#14FFFFFF" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="Background" Value="{DynamicResource OptimizePrivacyOptionSelectedColor}" />
+      <Setter Property="BoxShadow" Value="{DynamicResource OptimizePrivacyOptionBoxShadow1}" />
+    </Style>
+    <Style Selector="ListBoxItem Border#PART_DecorationBorderHover">
+      <Setter Property="Padding" Value="15 10" />
+      <Setter Property="CornerRadius" Value="8" />
+      <Setter Property="Margin" Value="0 2 0 2" />
+      <Setter Property="BorderBrush" Value="#2AFFFFFF" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="Background" Value="{DynamicResource OptimizePrivacyOptionSelectedColor}" />
+      <Setter Property="BoxShadow" Value="{DynamicResource OptimizePrivacyOptionBoxShadow2}" />
+      <Setter Property="Opacity" Value="0" />
+    </Style>
+    <Style Selector="ListBoxItem:pointerover Border#PART_DecorationBorderHover">
+      <Setter Property="Opacity" Value="1" />
+    </Style>
+    <Style Selector="SuggestionItem > Panel > DockPanel > PathIcon">
+      <Setter Property="Foreground" Value="{DynamicResource SystemAccentCustomColorLight}" />
+      <Setter Property="Margin" Value="0 0 10 0" />
+      <Setter Property="DockPanel.Dock" Value="Left" />
+      <Setter Property="Height" Value="22" />
+      <Setter Property="Width" Value="22" />
+    </Style>
+  </UserControl.Styles>
+  <Panel>
+
+    <Interaction.Behaviors>
+      <ShowFlyoutOnPointerOverBehavior />
+      <HideFlyoutBehavior Hide="{Binding HideFlyout}" />
+    </Interaction.Behaviors>
+
+    <FlyoutBase.AttachedFlyout>
+      <Flyout Placement="Bottom" ShowMode="TransientWithDismissOnPointerMoveAway">
+        <StackPanel Spacing="10">
+          <DockPanel>
+            <Button Classes="plain" DockPanel.Dock="Right" HorizontalAlignment="Right" ToolTip.Tip="{x:Static lang:Resources.MarkAllAsRead}"
+                    IsVisible="{Binding Announcements.HasUnreadAnnouncements^}"
+                    Command="{Binding MarkAllAsReadCommand}">
+              <PathIcon Data="{StaticResource mark_all_read}" Opacity="0.6" Height="15" VerticalAlignment="Center"/>
+            </Button>
+            <TextBlock Text="{x:Static lang:Resources.Announcements}" HorizontalAlignment="Center" />
+          </DockPanel>
+          <ListBox ItemsSource="{Binding Announcements.List}" SelectedItem="{Binding SelectedAnnouncement}" MaxHeight="400" Width="350" Margin="0 0 0 10">
+            <ListBox.DataTemplates>
+
+              <DataTemplate DataType="{x:Type models:AnnouncementModel}">
+                <SuggestionItem ClipToBounds="False" Margin="2 0">
+                  <Panel>
+                    <DockPanel>
+                      <PathIcon DockPanel.Dock="Left"
+                                Classes.important="{Binding IsImportant}">
+                        <PathIcon.Styles>
+                          <Style Selector="PathIcon.important">
+                            <Setter Property="Data" Value="{StaticResource warning_regular}" />
+                          </Style>
+                          <Style Selector="PathIcon">
+                            <Setter Property="Data" Value="{StaticResource info_regular}" />
+                          </Style>
+                        </PathIcon.Styles>
+                      </PathIcon>
+                      <StackPanel Classes="suggestion" DockPanel.Dock="Right">
+                        <TextBlock Text="{Binding Title}" Classes="title" />
+                        <TextBlock Text="{Binding Caption}" Classes="description" TextTrimming="CharacterEllipsis" />
+                      </StackPanel>
+                    </DockPanel>
+                    <Ellipse IsHitTestVisible="False" VerticalAlignment="Top" Margin="0 -3 -8 0"
+                             HorizontalAlignment="Right" Width="8" Height="8"
+                             IsVisible="{Binding IsUnread}"
+                             Classes.important="{Binding IsImportant}">
+                      <Ellipse.Styles>
+                        <Style Selector="Ellipse">
+                          <Setter Property="Fill" Value="{StaticResource UnreadBadgeColor}" />
+                        </Style>
+                        <Style Selector="Ellipse.important">
+                          <Setter Property="Fill" Value="{StaticResource ImportantUnreadBadgeColor}" />
+                        </Style>
+                      </Ellipse.Styles>
+                    </Ellipse>
+                  </Panel>
+                </SuggestionItem>
+              </DataTemplate>
+            </ListBox.DataTemplates>
+          </ListBox>
+        </StackPanel>
+      </Flyout>
+    </FlyoutBase.AttachedFlyout>
+
+    <Panel ClipToBounds="False">
+      <PathIcon Data="{StaticResource news}" />
+      <Ellipse IsHitTestVisible="False" Margin="0 -3 -5 0"
+               VerticalAlignment="Top" HorizontalAlignment="Right"
+               Width="11" Height="11"
+               Stroke="{DynamicResource Layer1BackgroundBrush}" StrokeThickness="2"
+               IsVisible="{Binding Announcements.HasUnreadAnnouncements^}"
+               Classes.important="{Binding Announcements.HasImportantUnreadAnnouncements^}">
+        <Ellipse.Styles>
+          <Style Selector="Ellipse">
+            <Setter Property="Fill" Value="{StaticResource UnreadBadgeColor}" />
+          </Style>
+          <Style Selector="Ellipse.important">
+            <Setter Property="Fill" Value="{StaticResource ImportantUnreadBadgeColor}" />
+          </Style>
+        </Ellipse.Styles>
+      </Ellipse>
+    </Panel>
+  </Panel>
+</UserControl>

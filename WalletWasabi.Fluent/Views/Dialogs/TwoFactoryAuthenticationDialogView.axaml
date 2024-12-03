@@ -3,14 +3,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:dialog="using:WalletWasabi.Fluent.ViewModels.Dialogs"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371"
              x:DataType="dialog:TwoFactoryAuthenticationDialogViewModel"
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.Views.Dialogs.TwoFactoryAuthenticationDialogView">
   <ContentArea Title="{Binding Title}"
-               Caption="Scan the QR code below using your preferred authenticator app, then enter the verification code."
+               Caption="{x:Static lang:Resources.AuthCodePrompt}"
                IsBusy="{Binding IsBusy}"
-               EnableNext="True" NextContent="Verify"
+               EnableNext="True" NextContent="{x:Static lang:Resources.Verify}"
                ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <DockPanel Margin="20 0">
 

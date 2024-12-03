@@ -5,6 +5,7 @@ using ReactiveUI;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
+using WalletWasabi.Lang;
 using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.ViewModels.Dialogs;
@@ -18,7 +19,7 @@ public partial class TwoFactoryAuthenticationDialogViewModel : DialogViewModelBa
 
 	private TwoFactoryAuthenticationDialogViewModel()
 	{
-		Title = "Two Factor Authentication Setup";
+		Title = Resources.TwoFactorSetup;
 
 		NextCommand = ReactiveCommand.CreateFromTask(async () =>
 		{
@@ -31,7 +32,7 @@ public partial class TwoFactoryAuthenticationDialogViewModel : DialogViewModelBa
 			catch (Exception ex)
 			{
 				Logger.LogError(ex);
-				await ShowErrorAsync(Title, "Couldn't verify the token, please see the logs for further information.", $"{ex.Message}");
+				await ShowErrorAsync(Title, Resources.TokenVerificationFailed, $"{ex.Message}");
 			}
 			finally
 			{
@@ -71,7 +72,7 @@ public partial class TwoFactoryAuthenticationDialogViewModel : DialogViewModelBa
 			catch (Exception ex)
 			{
 				Logger.LogError(ex);
-				await ShowErrorAsync(Title, "Couldn't verify the token, please see the logs for further information.", "");
+				await ShowErrorAsync(Title, Resources.TokenVerificationFailed, "");
 			}
 			finally
 			{

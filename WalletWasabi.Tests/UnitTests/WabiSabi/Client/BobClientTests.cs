@@ -69,7 +69,7 @@ public class BobClientTests
 			wabiSabiApi);
 		Assert.Equal(Phase.InputRegistration, round.Phase);
 
-		using RoundStateUpdater roundStateUpdater = new(TimeSpan.FromSeconds(2), wabiSabiApi);
+		using RoundStateUpdater roundStateUpdater = new(TimeSpan.FromSeconds(2), ["CoinJoinCoordinatorIdentifier"], wabiSabiApi);
 		await roundStateUpdater.StartAsync(token);
 
 		var keyChain = new KeyChain(km, new Kitchen(""));

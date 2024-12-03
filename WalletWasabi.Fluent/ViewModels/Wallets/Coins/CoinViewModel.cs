@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ReactiveUI;
@@ -5,6 +6,7 @@ using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.ViewModels.CoinControl.Core;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.ViewModels.Wallets.Coins;
 
@@ -19,7 +21,7 @@ public partial class CoinViewModel : CoinListItem
 		IsConfirmed = coin.IsConfirmed;
 		IsBanned = coin.IsBanned;
 		var confirmationCount = coin.Confirmations;
-		ConfirmationStatus = $"{confirmationCount} confirmation{TextHelpers.AddSIfPlural(confirmationCount)}";
+		ConfirmationStatus = string.Format(CultureInfo.InvariantCulture, Resources.ConfirmationCount, confirmationCount, TextHelpers.AddSIfPlural(confirmationCount));
 		BannedUntilUtcToolTip = coin.BannedUntilUtcToolTip;
 		AnonymityScore = coin.AnonScore;
 		BannedUntilUtc = coin.BannedUntilUtc;

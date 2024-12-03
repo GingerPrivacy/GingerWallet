@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!--
     Microsoft ResX Schema
@@ -366,19 +366,19 @@
   <data name="WalletSettings" xml:space="preserve">
     <value>Paramètres du portefeuille</value>
   </data>
-  <data name="WalletCoins" xml:space="preserve">
+  <data name="WalletCoinsViewModelTitle" xml:space="preserve">
     <value>Coins du portefeuille</value>
   </data>
-  <data name="WalletStats" xml:space="preserve">
+  <data name="WalletStatsViewModelTitle" xml:space="preserve">
     <value>Stats du portefeuille</value>
   </data>
-  <data name="WalletInfo" xml:space="preserve">
+  <data name="WalletInfoViewModelTitle" xml:space="preserve">
     <value>Infos portefeuille</value>
   </data>
   <data name="WalletReceive" xml:space="preserve">
     <value>Recevoir</value>
   </data>
-  <data name="ExcludeCoins" xml:space="preserve">
+  <data name="ExcludedCoinsViewModelTitle" xml:space="preserve">
     <value>Coins exclus</value>
   </data>
   <data name="CoinjoinSettings" xml:space="preserve">
@@ -495,11 +495,8 @@
   <data name="AutomaticallyStartCoinjoin" xml:space="preserve">
     <value>Démarrer automatiquement Coinjoin</value>
   </data>
-  <data name="CoinjoinStrategy" xml:space="preserve">
-    <value>Stratégie Coinjoin :</value>
-  </data>
   <data name="CoinjoinToThisWallet" xml:space="preserve">
-    <value>Coinjoin vers ce portefeuille :</value>
+    <value>Coinjoin vers ce portefeuille</value>
   </data>
   <data name="CoinjoinToOtherWalletRestrictions1" xml:space="preserve">
     <value>- Seuls des portefeuilles alimentés peuvent être sélectionnés.</value>
@@ -528,9 +525,6 @@
   <data name="WalletToolsVerifyRecoveryWords" xml:space="preserve">
     <value>Vérifiez les mots de récupération</value>
   </data>
-  <data name="Change" xml:space="preserve">
-    <value>Monnaie</value>
-  </data>
   <data name="WalletCoinJoinSettingsViewModelTitle" xml:space="preserve">
     <value>Paramètres de Coinjoin</value>
   </data>
@@ -540,64 +534,34 @@
   <data name="WalletCoinJoinSettingsViewModelKeywords" xml:space="preserve">
     <value>Portefeuille, Paramètres</value>
   </data>
-  <data name="CoinJoinProfilesViewModelTitle" xml:space="preserve">
-    <value>Stratégie Coinjoin</value>
-  </data>
   <data name="CoinJoinProfilesCaption" xml:space="preserve">
-    <value>Ginger prend soin de votre vie privée financière en appliquant automatiquement Coinjoin à tous vos fonds avec des frais de coordinateur fixes de 0.3% + les frais de transaction. Selectionnez la stratégie de Coinjoin qui vous convient le mieux !</value>
-  </data>
-  <data name="PrivateCoinJoinProfileTitle" xml:space="preserve">
-    <value>Maximiser la confidentialité</value>
-  </data>
-  <data name="PrivateCoinJoinProfileDescription" xml:space="preserve">
-    <value>Choix des paranos. Place la vie privée au dessus de tout.</value>
-  </data>
-  <data name="EconomicCoinJoinProfileTitle" xml:space="preserve">
-    <value>Minimiser les coûts</value>
-  </data>
-  <data name="EconomicCoinJoinProfileDescription" xml:space="preserve">
-    <value>Pour les radins. Ne participe aux Coinjoin que pendant les périodes les moins chères de la semaine.</value>
-  </data>
-  <data name="ManualCoinJoinProfileTitle" xml:space="preserve">
-    <value>Personnalisé</value>
-  </data>
-  <data name="SpeedyCoinJoinProfileTitle" xml:space="preserve">
-    <value>Maximiser la vitesse</value>
-  </data>
-  <data name="SpeedyCoinJoinProfileDescription" xml:space="preserve">
-    <value>Faire ce qu'il y a à faire. Orienté vers la rapidité et la commodité.</value>
-  </data>
-  <data name="Customize" xml:space="preserve">
-    <value>Personnalise</value>
+    <value>Ginger s'occupe de votre confidentialité financière en commençant automatiquement à coinjoin tous vos fonds pour des frais de coordination fixes de 0,3% plus les frais de minage. Nous avons préappliqué la configuration par défaut pour faciliter l'utilisation.</value>
   </data>
   <data name="Done" xml:space="preserve">
     <value>Fait</value>
   </data>
-  <data name="ManualCoinJoinProfileDialogTitle" xml:space="preserve">
-    <value>Paramètres de stratégie Coinjoin</value>
+  <data name="RedcoinText" xml:space="preserve">
+    <value>Restriction à une seule pièce non privée</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewRedcoinText" xml:space="preserve">
-    <value>Isolation coin rouge</value>
-  </data>
-  <data name="AdvancedCoinjoinOptionsViewRedcoinToolTip" xml:space="preserve">
+  <data name="RedcoinToolTip" xml:space="preserve">
     <value>Autoriser seulement un seul coin avec un score de confidentialité de 1 durant l’inscription Coinjoin.</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewAnonTargetText" xml:space="preserve">
+  <data name="AnonTargetText" xml:space="preserve">
     <value>Objectif de score d’anonymat</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewAnonTargetTooltip" xml:space="preserve">
+  <data name="AnonTargetTooltip" xml:space="preserve">
     <value>Score minimum d’anonymat pour qu’un coin soit considéré confidentiel.</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewSafeFeeText" xml:space="preserve">
-    <value>Frais de sécurité</value>
+  <data name="SafeFeeText" xml:space="preserve">
+    <value>Ignorer la préférence de temps de Coinjoin en dessous de</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewSafeFeeToolTip" xml:space="preserve">
+  <data name="SafeFeeToolTip" xml:space="preserve">
     <value>Toujours Coinjoin lorsque le taux de frais est inférieur à cette valeur (a priorité sur la préférence temporelle de Coinjoin).</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewCoinJoinTimePrefText" xml:space="preserve">
+  <data name="CoinJoinTimePrefText" xml:space="preserve">
     <value>Préférence de temps de Coinjoin</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewCoinJoinTimePrefToolTip" xml:space="preserve">
+  <data name="CoinJoinTimePrefToolTip" xml:space="preserve">
     <value>Coinjoin seulement lorsque les frais sont en-dessous de la moyenne actuelle.</value>
   </data>
   <data name="Cancel" xml:space="preserve">
@@ -1300,5 +1264,380 @@ Ce sont des mots de récupération supplémentaires pour plus de sécurité.</va
   </data>
   <data name="SelfCoinJoinToolTip" xml:space="preserve">
     <value>Dans ce Coinjoin, la majorité des pièces vous appartiennent. Cela réduira significativement vos progrès en matière de confidentialité. Envisagez de participer avec moins de portefeuilles jusqu'à ce que davantage de participants se joignent.</value>
+  </data>
+  <data name="AuthCodePrompt" xml:space="preserve">
+    <value>Scannez le code QR ci-dessous avec votre application d'authentification préférée, puis entrez le code de vérification.</value>
+  </data>
+  <data name="Verify" xml:space="preserve">
+    <value>Vérifier</value>
+  </data>
+  <data name="TwoFactorSetup" xml:space="preserve">
+    <value>Configuration de l'authentification à deux facteurs</value>
+  </data>
+  <data name="TokenVerificationFailed" xml:space="preserve">
+    <value>Impossible de vérifier le jeton, veuillez consulter les journaux pour plus d'informations.</value>
+  </data>
+  <data name="TwoFactorAuthenticationWithCapitals" xml:space="preserve">
+    <value>Authentification À Deux Facteurs</value>
+  </data>
+  <data name="TransactionFeeRate" xml:space="preserve">
+    <value>_Taux de frais de transaction :</value>
+  </data>
+  <data name="InvalidFee" xml:space="preserve">
+    <value>Les frais saisis ne sont pas valides.</value>
+  </data>
+  <data name="MinFeeLimit" xml:space="preserve">
+    <value>Ne peut pas être inférieur à 1 sat/vByte.</value>
+  </data>
+  <data name="FeeTooHigh" xml:space="preserve">
+    <value>Les frais saisis sont trop élevés.</value>
+  </data>
+  <data name="ExcludedCoinsViewModelCaption" xml:space="preserve">
+    <value>Afficher exclure les pièces</value>
+  </data>
+  <data name="ExcludedCoinsViewModelKeywords" xml:space="preserve">
+    <value>Portefeuille, Exclure, Pièces, Coinjoin, Geler, UTXO</value>
+  </data>
+  <data name="WalletCoinsViewModelCaption" xml:space="preserve">
+    <value>Afficher les pièces du portefeuille</value>
+  </data>
+  <data name="WalletCoinsViewModelKeywords" xml:space="preserve">
+    <value>Portefeuille, Pièces, UTXO</value>
+  </data>
+  <data name="WalletStatsViewModelCaption" xml:space="preserve">
+    <value>Afficher les statistiques du portefeuille</value>
+  </data>
+  <data name="WalletStatsViewModelKeywords" xml:space="preserve">
+    <value>Portefeuille, Statistiques</value>
+  </data>
+  <data name="WalletInfoViewModelCaption" xml:space="preserve">
+    <value>Afficher les informations du portefeuille</value>
+  </data>
+  <data name="WalletInfoViewModelKeywords" xml:space="preserve">
+    <value>Portefeuille, Informations</value>
+  </data>
+  <data name="ExcludeCoinjoinDescription" xml:space="preserve">
+    <value>Les pièces choisies seront exclues de Coinjoin. Il est important de noter qu'il n'y aura aucune augmentation de la confidentialité de ces pièces.</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Statut</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="WalletCoinsDescription" xml:space="preserve">
+    <value>Une liste des pièces que vous possédez.</value>
+  </data>
+  <data name="NumberOfCoins" xml:space="preserve">
+    <value>Nombre de pièces (UTXOs)</value>
+  </data>
+  <data name="UnconfirmedBalance" xml:space="preserve">
+    <value>Solde non confirmé</value>
+  </data>
+  <data name="ConfirmedBalance" xml:space="preserve">
+    <value>Solde confirmé</value>
+  </data>
+  <data name="TotalBalance" xml:space="preserve">
+    <value>Solde total</value>
+  </data>
+  <data name="TotalTransactions" xml:space="preserve">
+    <value>Nombre total de transactions</value>
+  </data>
+  <data name="NonCoinjoinTransactions" xml:space="preserve">
+    <value>Nombre de transactions non-coinjoin</value>
+  </data>
+  <data name="CoinjoinTransactions" xml:space="preserve">
+    <value>Nombre de transactions coinjoin</value>
+  </data>
+  <data name="NumberOfAddresses" xml:space="preserve">
+    <value>Nombre d'adresses</value>
+  </data>
+  <data name="NumberOfCleanAddresses" xml:space="preserve">
+    <value>Nombre d'adresses propres</value>
+  </data>
+  <data name="NumberOfLockedAddresses" xml:space="preserve">
+    <value>Nombre d'adresses verrouillées</value>
+  </data>
+  <data name="NumberOfUsedAddresses" xml:space="preserve">
+    <value>Nombre d'adresses utilisées</value>
+  </data>
+  <data name="ExtendedMasterPrivateKey" xml:space="preserve">
+    <value>Clé privée maître étendue</value>
+  </data>
+  <data name="ExtendedMasterZprv" xml:space="preserve">
+    <value>Clé privée maître étendue zprv</value>
+  </data>
+  <data name="ExtendedMasterFingerprint" xml:space="preserve">
+    <value>Empreinte maître étendue</value>
+  </data>
+  <data name="AccountKeyPathSegWit" xml:space="preserve">
+    <value>Chemin de clé de compte (SegWit)</value>
+  </data>
+  <data name="AccountKeyPathTaproot" xml:space="preserve">
+    <value>Chemin de clé de compte (Taproot)</value>
+  </data>
+  <data name="ExtendedAccountPrivateKeyXpriv" xml:space="preserve">
+    <value>Clé privée étendue de compte xpriv</value>
+  </data>
+  <data name="PublicExternalOutputDescriptor" xml:space="preserve">
+    <value>Descripteur de sortie externe publique</value>
+  </data>
+  <data name="PublicInternalOutputDescriptor" xml:space="preserve">
+    <value>Descripteur de sortie interne publique</value>
+  </data>
+  <data name="PrivateExternalOutputDescriptor" xml:space="preserve">
+    <value>Descripteur de sortie externe privée</value>
+  </data>
+  <data name="PrivateInternalOutputDescriptor" xml:space="preserve">
+    <value>Descripteur de sortie interne privée</value>
+  </data>
+  <data name="ExtendedAccountPublicKeySegWit" xml:space="preserve">
+    <value>Clé publique étendue de compte (SegWit)</value>
+  </data>
+  <data name="ExtendedAccountPublicKeyTaproot" xml:space="preserve">
+    <value>Clé publique étendue de compte (Taproot)</value>
+  </data>
+  <data name="HideSensitiveData" xml:space="preserve">
+    <value>Masquer les données sensibles</value>
+  </data>
+  <data name="ShowSensitiveData" xml:space="preserve">
+    <value>Afficher les données sensibles</value>
+  </data>
+  <data name="DateTime" xml:space="preserve">
+    <value>Date / Heure</value>
+  </data>
+  <data name="DestinationAddresses" xml:space="preserve">
+    <value>Adresses de destination</value>
+  </data>
+  <data name="FeeRate" xml:space="preserve">
+    <value>Taux de frais</value>
+  </data>
+  <data name="Confirmed" xml:space="preserve">
+    <value>Confirmé</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>En attente</value>
+  </data>
+  <data name="Confirmations" xml:space="preserve">
+    <value>({0} confirmations)</value>
+  </data>
+  <data name="ConfirmationEstimationDisclaimer" xml:space="preserve">
+    <value>Ceci n'est qu'une estimation basée sur certaines données de transactions et de blocs. Le temps de confirmation pourrait changer.</value>
+  </data>
+  <data name="BlockHash" xml:space="preserve">
+    <value>Hachage du bloc</value>
+  </data>
+  <data name="BlockHeight" xml:space="preserve">
+    <value>Hauteur du bloc</value>
+  </data>
+  <data name="TransactionDetails" xml:space="preserve">
+    <value>Détails de la transaction</value>
+  </data>
+  <data name="AmountSent" xml:space="preserve">
+    <value>Montant envoyé</value>
+  </data>
+  <data name="AmountReceived" xml:space="preserve">
+    <value>Montant reçu</value>
+  </data>
+  <data name="Fees" xml:space="preserve">
+    <value>Frais</value>
+  </data>
+  <data name="CoinjoinDetails" xml:space="preserve">
+    <value>Détails de Coinjoin</value>
+  </data>
+  <data name="NumberOfTransactions" xml:space="preserve">
+    <value>Nombre de transactions</value>
+  </data>
+  <data name="TransactionIDs" xml:space="preserve">
+    <value>Identifiants des transactions</value>
+  </data>
+  <data name="Incoming" xml:space="preserve">
+    <value>Entrant</value>
+  </data>
+  <data name="Outgoing" xml:space="preserve">
+    <value>Sortant</value>
+  </data>
+  <data name="SelfTransfer" xml:space="preserve">
+    <value>Transfert interne</value>
+  </data>
+  <data name="Coinjoins" xml:space="preserve">
+    <value>Coinjoins</value>
+  </data>
+  <data name="Cancellation" xml:space="preserve">
+    <value>Annulation</value>
+  </data>
+  <data name="Accelerator" xml:space="preserve">
+    <value>Accélérateur</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>Aujourd'hui</value>
+  </data>
+  <data name="Yesterday" xml:space="preserve">
+    <value>Hier</value>
+  </data>
+  <data name="PendingConfirmingIn" xml:space="preserve">
+    <value>En attente (confirmation dans ≈ {0})</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Inconnu</value>
+  </data>
+  <data name="ConfirmedWithConfirmationCount" xml:space="preserve">
+    <value>Confirmé ({0} confirmation{1})</value>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>Moins que</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>plus</value>
+  </data>
+  <data name="Less" xml:space="preserve">
+    <value>moins</value>
+  </data>
+  <data name="TheSameAmount" xml:space="preserve">
+    <value>la même quantité</value>
+  </data>
+  <data name="EditLabels" xml:space="preserve">
+    <value>Modifier les étiquettes</value>
+  </data>
+  <data name="UnknownPeople" xml:space="preserve">
+    <value>Personnes inconnues</value>
+  </data>
+  <data name="PrivateCoins" xml:space="preserve">
+    <value>Pièces privées</value>
+  </data>
+  <data name="SemiPrivateCoins" xml:space="preserve">
+    <value>Pièces semi-privées</value>
+  </data>
+  <data name="Coinjoining" xml:space="preserve">
+    <value>Coinjoining</value>
+  </data>
+  <data name="NotCoinjoining" xml:space="preserve">
+    <value>Not coinjoining</value>
+  </data>
+  <data name="ExcludedFromCoinjoins" xml:space="preserve">
+    <value>Exclu des coinjoins</value>
+  </data>
+  <data name="ConfirmationCount" xml:space="preserve">
+    <value>{0} confirmation{1}</value>
+  </data>
+  <data name="CantParticipateInCoinjoinUntil" xml:space="preserve">
+    <value>Impossible de participer au coinjoin jusqu'à : {0}</value>
+  </data>
+  <data name="AnonymityScore" xml:space="preserve">
+    <value>Score d'anonymat</value>
+  </data>
+  <data name="PersonOrCompanyExample" xml:space="preserve">
+    <value>Personne ou entreprise, c'est-à-dire Alice, Bob, Pizza Inc</value>
+  </data>
+  <data name="EstimatedConfirmationTimeWithValue" xml:space="preserve">
+    <value>Temps estimé de confirmation : {0}</value>
+  </data>
+  <data name="FeeRateFormatted" xml:space="preserve">
+    <value>Taux de frais : {0:0} sat/vByte</value>
+  </data>
+  <data name="Fastest" xml:space="preserve">
+    <value>le plus rapide</value>
+  </data>
+  <data name="min" xml:space="preserve">
+    <value>min</value>
+  </data>
+  <data name="DisabledEnum" xml:space="preserve">
+    <value>Désactivé</value>
+  </data>
+  <data name="EnabledEnum" xml:space="preserve">
+    <value>Activé</value>
+  </data>
+  <data name="EnabledOnlyRunningEnum" xml:space="preserve">
+    <value>Activé (mode connexion uniquement)</value>
+  </data>
+  <data name="WouldYouLikeToPersonalizeIt" xml:space="preserve">
+    <value>Voulez-vous le personnaliser ?</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Désactivé</value>
+  </data>
+  <data name="Weeks" xml:space="preserve">
+    <value>Semaines</value>
+  </data>
+  <data name="Minimal" xml:space="preserve">
+    <value>Minimal</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Confidentialité</value>
+  </data>
+  <data name="CostEfficiency" xml:space="preserve">
+    <value>Efficacité économique</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Autre</value>
+  </data>
+  <data name="RandomSkip" xml:space="preserve">
+    <value>Saut aléatoire</value>
+  </data>
+  <data name="Months" xml:space="preserve">
+    <value>Mois</value>
+  </data>
+  <data name="Often" xml:space="preserve">
+    <value>Souvent</value>
+  </data>
+  <data name="Sometimes" xml:space="preserve">
+    <value>Parfois</value>
+  </data>
+  <data name="Rarely" xml:space="preserve">
+    <value>Rarement</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>Jours</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Heures</value>
+  </data>
+  <data name="Announcements" xml:space="preserve">
+    <value>Annonces</value>
+  </data>
+  <data name="MarkAllAsRead" xml:space="preserve">
+    <value>Marquer tout comme lu</value>
+  </data>
+  <data name="LabelsWatermarkText" xml:space="preserve">
+    <value>Personne ou Entreprise, par exemple Alice, Bob, Pizza Inc</value>
+  </data>
+  <data name="ValidationErrorNotNumber" xml:space="preserve">
+    <value>Ce n'est pas un nombre.</value>
+  </data>
+  <data name="ValidationErrorNotInRange" xml:space="preserve">
+    <value>La valeur doit être entre {0} et {1}.</value>
+  </data>
+  <data name="CoinJoinCoinSelection" xml:space="preserve">
+    <value>Sélection de coins</value>
+  </data>
+  <data name="ExperimentalCoinJoinCoinSelector" xml:space="preserve">
+    <value>(EXPÉRIMENTAL) Sélection de Pièces Améliorée</value>
+  </data>
+  <data name="ForceUsingLowPrivacyCoinsInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Forcer l'utilisation de pièces à faible confidentialité</value>
+  </data>
+  <data name="ForceUsingLowPrivacyCoinsInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>La sélection doit contenir au moins une des pièces avec la plus faible confidentialité.</value>
+  </data>
+  <data name="WeightedAnonymityLossNormalInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Normalisation de la différence de confidentialité des pièces pour le calcul du score</value>
+  </data>
+  <data name="WeightedAnonymityLossNormalInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>Avec une valeur plus basse, le sélecteur de pièces privilégiera celles avec une différence plus faible dans le score de confidentialité.</value>
+  </data>
+  <data name="ValueLossRateNormalInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Normalisation de la perte de montant pour le calcul du score</value>
+  </data>
+  <data name="ValueLossRateNormalInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>Avec une valeur plus basse, le sélecteur de pièces privilégiera les sélections avec une perte de montant proportionnelle plus faible.</value>
+  </data>
+  <data name="TargetCoinCountPerBucketInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Nombre cible de pièces par groupe de portefeuille</value>
+  </data>
+  <data name="TargetCoinCountPerBucketInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>Le sélecteur de pièces privilégiera les pièces des groupes (plages de pièces de 10k, 20k, 40k satoshis, etc.) qui sont surpeuplés.</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>Configuration</value>
   </data>
 </root>

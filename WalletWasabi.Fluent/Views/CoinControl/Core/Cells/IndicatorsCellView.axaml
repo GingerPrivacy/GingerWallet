@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:core="clr-namespace:WalletWasabi.Fluent.ViewModels.CoinControl.Core"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="core:CoinListItem"
              x:CompileBindings="True"
@@ -23,7 +24,7 @@
                 Data="{StaticResource clock_regular}"
                 Height="14"
                 Opacity="0.3"
-                ToolTip.Tip="Pending" />
+                ToolTip.Tip="{x:Static lang:Resources.Pending}" />
     </Panel>
 
     <Panel>
@@ -38,13 +39,13 @@
                 Data="{StaticResource wallet_action_coinjoin}"
                 Foreground="{DynamicResource SystemAccentColor}"
                 Height="15"
-                ToolTip.Tip="Coinjoining" />
+                ToolTip.Tip="{x:Static lang:Resources.Coinjoining}" />
       <!-- CJ inactive -->
       <PathIcon IsVisible="{Binding !IsCoinjoining}"
                 Data="{StaticResource wallet_action_coinjoin}"
                 Height="15"
                 Opacity="0.6"
-                ToolTip.Tip="Not coinjoining" />
+                ToolTip.Tip="{x:Static lang:Resources.NotCoinjoining}" />
     </Panel>
 
     <!-- Banned -->
@@ -64,7 +65,7 @@
               Data="{StaticResource forbidden}"
               Foreground="{DynamicResource CoinjoinActiveColor}"
               Height="14"
-              ToolTip.Tip="Excluded from coinjoins" />
+              ToolTip.Tip="{x:Static lang:Resources.ExcludedFromCoinjoins}" />
 
     <Border BorderThickness="1"
             VerticalAlignment="Center"

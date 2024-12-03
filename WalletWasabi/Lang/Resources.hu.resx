@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -369,19 +369,19 @@
   <data name="WalletSettings" xml:space="preserve">
     <value>Pénztárca beállítások</value>
   </data>
-  <data name="WalletCoins" xml:space="preserve">
+  <data name="WalletCoinsViewModelTitle" xml:space="preserve">
     <value>Pénztárca érmék</value>
   </data>
-  <data name="WalletStats" xml:space="preserve">
+  <data name="WalletStatsViewModelTitle" xml:space="preserve">
     <value>Pénztárca statisztikák</value>
   </data>
-  <data name="WalletInfo" xml:space="preserve">
+  <data name="WalletInfoViewModelTitle" xml:space="preserve">
     <value>Pénztárca információ</value>
   </data>
   <data name="WalletReceive" xml:space="preserve">
     <value>Fogadás</value>
   </data>
-  <data name="ExcludeCoins" xml:space="preserve">
+  <data name="ExcludedCoinsViewModelTitle" xml:space="preserve">
     <value>Érmék kizárása</value>
   </data>
   <data name="CoinjoinSettings" xml:space="preserve">
@@ -501,11 +501,8 @@
   <data name="AutomaticallyStartCoinjoin" xml:space="preserve">
     <value>Coinjoin automatikus indítása</value>
   </data>
-  <data name="CoinjoinStrategy" xml:space="preserve">
-    <value>Coinjoin stratégia:</value>
-  </data>
   <data name="CoinjoinToThisWallet" xml:space="preserve">
-    <value>Coinjoin erre a pénztárcára:</value>
+    <value>Coinjoin erre a pénztárcára</value>
   </data>
   <data name="CoinjoinToOtherWalletRestrictions1" xml:space="preserve">
     <value>- Csak betöltött pénztárcák választhatók ki.</value>
@@ -534,9 +531,6 @@
   <data name="WalletToolsVerifyRecoveryWords" xml:space="preserve">
     <value>Helyreállítási szavak ellenőrzése</value>
   </data>
-  <data name="Change" xml:space="preserve">
-    <value>Módosítás</value>
-  </data>
   <data name="WalletCoinJoinSettingsViewModelTitle" xml:space="preserve">
     <value>Coinjoin beállítások</value>
   </data>
@@ -546,64 +540,34 @@
   <data name="WalletCoinJoinSettingsViewModelKeywords" xml:space="preserve">
     <value>Pénztárca, Beállítások</value>
   </data>
-  <data name="CoinJoinProfilesViewModelTitle" xml:space="preserve">
-    <value>Coinjoin stratégia</value>
-  </data>
   <data name="CoinJoinProfilesCaption" xml:space="preserve">
-    <value>A Ginger gondoskodik a pénzügyi anonimitásodról, automatikusan coinjoinba vonja az összes pénzedet egy fix 0,3%-os koordinációs díjért + a bányászati díjakért. Válassz egy hozzád legjobban illő coinjoin stratégiát!</value>
-  </data>
-  <data name="PrivateCoinJoinProfileTitle" xml:space="preserve">
-    <value>Az anonimitás maximalizálása</value>
-  </data>
-  <data name="PrivateCoinJoinProfileDescription" xml:space="preserve">
-    <value>A paranoiások választása. Bármi áron az anonimitást optimalizálja.</value>
-  </data>
-  <data name="EconomicCoinJoinProfileTitle" xml:space="preserve">
-    <value>A költségek minimalizálása</value>
-  </data>
-  <data name="EconomicCoinJoinProfileDescription" xml:space="preserve">
-    <value>A takarékoskodóknak. Csak a hét legolcsóbb szakaszaiban vesz részt a coinjoinokban.</value>
-  </data>
-  <data name="ManualCoinJoinProfileTitle" xml:space="preserve">
-    <value>Egyéni</value>
-  </data>
-  <data name="SpeedyCoinJoinProfileTitle" xml:space="preserve">
-    <value>A sebesség maximalizálása</value>
-  </data>
-  <data name="SpeedyCoinJoinProfileDescription" xml:space="preserve">
-    <value>A dolgok elvégzése. A sebességre és a kényelemre van hangolva.</value>
-  </data>
-  <data name="Customize" xml:space="preserve">
-    <value>Testreszabás</value>
+    <value>A Ginger automatikusan kezeli pénzügyi adatvédelmét az összes alapja coinjoinolásával, egy fix 0,3%-os koordinációs díjjal és a bányászati díjakkal. A könnyű használat érdekében előre alkalmaztuk az alapértelmezett konfigurációt.</value>
   </data>
   <data name="Done" xml:space="preserve">
     <value>Kész</value>
   </data>
-  <data name="ManualCoinJoinProfileDialogTitle" xml:space="preserve">
-    <value>Coinjoin stratégia beállítások</value>
+  <data name="RedcoinText" xml:space="preserve">
+    <value>Egyetlen nem privát érme korlátozása</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewRedcoinText" xml:space="preserve">
-    <value>Piros érmék elkülönítése</value>
-  </data>
-  <data name="AdvancedCoinjoinOptionsViewRedcoinToolTip" xml:space="preserve">
+  <data name="RedcoinToolTip" xml:space="preserve">
     <value>Csak egy érmét engedélyezzen, amelynek anonimitási pontszáma 1, a Coinjoin regisztrációban.</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewAnonTargetText" xml:space="preserve">
+  <data name="AnonTargetText" xml:space="preserve">
     <value>Anonimitási pontszám cél</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewAnonTargetTooltip" xml:space="preserve">
+  <data name="AnonTargetTooltip" xml:space="preserve">
     <value>A minimális anonimitási pontszám, amely szükséges ahhoz, hogy egy érme privátnak minősüljön.</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewSafeFeeText" xml:space="preserve">
-    <value>Biztonságos díj mértéke</value>
+  <data name="SafeFeeText" xml:space="preserve">
+    <value>Coinjoin időpreferencia figyelmen kívül hagyása alatta</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewSafeFeeToolTip" xml:space="preserve">
+  <data name="SafeFeeToolTip" xml:space="preserve">
     <value>Mindig végezzen Coinjoint, ha a díj mértéke ez alatti (elsőbbséget élvez a Coinjoin időpreferenciával szemben).</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewCoinJoinTimePrefText" xml:space="preserve">
+  <data name="CoinJoinTimePrefText" xml:space="preserve">
     <value>Coinjoin időpreferencia</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewCoinJoinTimePrefToolTip" xml:space="preserve">
+  <data name="CoinJoinTimePrefToolTip" xml:space="preserve">
     <value>Csak akkor végezzen Coinjoint, ha a díj mértéke az adott időszak mediánja alatt van.</value>
   </data>
   <data name="Cancel" xml:space="preserve">
@@ -1300,5 +1264,380 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
   </data>
   <data name="SelfCoinJoinToolTip" xml:space="preserve">
     <value>Ebben a Coinjoin-ban az érmék többsége Önhöz tartozik. Ez jelentősen csökkenti az anonimitás előrehaladását. Fontolja meg kevesebb pénztárcával való részvételt, amíg több résztvevő csatlakozik.</value>
+  </data>
+  <data name="AuthCodePrompt" xml:space="preserve">
+    <value>Olvasd be az alábbi QR-kódot a kedvenc hitelesítő alkalmazásoddal, majd add meg a megerősítő kódot.</value>
+  </data>
+  <data name="Verify" xml:space="preserve">
+    <value>Ellenőriz</value>
+  </data>
+  <data name="TwoFactorSetup" xml:space="preserve">
+    <value>Kétfaktoros hitelesítés beállítása</value>
+  </data>
+  <data name="TokenVerificationFailed" xml:space="preserve">
+    <value>Nem sikerült ellenőrizni a tokent, kérlek, nézd meg a naplókat a további információkért.</value>
+  </data>
+  <data name="TwoFactorAuthenticationWithCapitals" xml:space="preserve">
+    <value>Kétfaktoros Hitelesítés</value>
+  </data>
+  <data name="TransactionFeeRate" xml:space="preserve">
+    <value>_Tranzakciós díj mértéke:</value>
+  </data>
+  <data name="InvalidFee" xml:space="preserve">
+    <value>A megadott díj nem érvényes.</value>
+  </data>
+  <data name="MinFeeLimit" xml:space="preserve">
+    <value>Nem lehet kevesebb, mint 1 sat/vByte.</value>
+  </data>
+  <data name="FeeTooHigh" xml:space="preserve">
+    <value>A megadott díj túl magas.</value>
+  </data>
+  <data name="ExcludedCoinsViewModelCaption" xml:space="preserve">
+    <value> Megjelenítés kizáró érmék</value>
+  </data>
+  <data name="ExcludedCoinsViewModelKeywords" xml:space="preserve">
+    <value>Pénztárca, Kizár, Érmék, Coinjoin, Befagyaszt, UTXO</value>
+  </data>
+  <data name="WalletCoinsViewModelCaption" xml:space="preserve">
+    <value>Pénztárca érmék megjelenítése</value>
+  </data>
+  <data name="WalletCoinsViewModelKeywords" xml:space="preserve">
+    <value>Pénztárca, Érmék, UTXO</value>
+  </data>
+  <data name="WalletStatsViewModelCaption" xml:space="preserve">
+    <value>Pénztárca statisztikák megjelenítése</value>
+  </data>
+  <data name="WalletStatsViewModelKeywords" xml:space="preserve">
+    <value>Pénztárca, Statisztikák</value>
+  </data>
+  <data name="WalletInfoViewModelCaption" xml:space="preserve">
+    <value>Pénztárca információk megjelenítése</value>
+  </data>
+  <data name="WalletInfoViewModelKeywords" xml:space="preserve">
+    <value>Pénztárca, Információk</value>
+  </data>
+  <data name="ExcludeCoinjoinDescription" xml:space="preserve">
+    <value>A kiválasztott érmék ki lesznek zárva a Coinjoinból. Fontos megjegyezni, hogy nem lesz növekedés a privát szférájukban.</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Állapot</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Dátum</value>
+  </data>
+  <data name="WalletCoinsDescription" xml:space="preserve">
+    <value> A birtokolt érmék listája.</value>
+  </data>
+  <data name="NumberOfCoins" xml:space="preserve">
+    <value>Érmék száma (UTXOs)</value>
+  </data>
+  <data name="UnconfirmedBalance" xml:space="preserve">
+    <value>Meg nem erősített egyenleg</value>
+  </data>
+  <data name="ConfirmedBalance" xml:space="preserve">
+    <value>Megerősített egyenleg</value>
+  </data>
+  <data name="TotalBalance" xml:space="preserve">
+    <value>Teljes egyenleg</value>
+  </data>
+  <data name="TotalTransactions" xml:space="preserve">
+    <value>Tranzakciók teljes száma</value>
+  </data>
+  <data name="NonCoinjoinTransactions" xml:space="preserve">
+    <value>Coinjoin nélküli tranzakciók száma</value>
+  </data>
+  <data name="CoinjoinTransactions" xml:space="preserve">
+    <value>Coinjoin tranzakciók száma</value>
+  </data>
+  <data name="NumberOfAddresses" xml:space="preserve">
+    <value>Címek száma</value>
+  </data>
+  <data name="NumberOfCleanAddresses" xml:space="preserve">
+    <value>Tiszta címek száma</value>
+  </data>
+  <data name="NumberOfLockedAddresses" xml:space="preserve">
+    <value>Zárolt címek száma</value>
+  </data>
+  <data name="NumberOfUsedAddresses" xml:space="preserve">
+    <value>Használt címek száma</value>
+  </data>
+  <data name="ExtendedMasterPrivateKey" xml:space="preserve">
+    <value>Kiterjesztett fő privát kulcs</value>
+  </data>
+  <data name="ExtendedMasterZprv" xml:space="preserve">
+    <value>Kiterjesztett fő privát kulcs zprv</value>
+  </data>
+  <data name="ExtendedMasterFingerprint" xml:space="preserve">
+    <value>Kiterjesztett fő ujjlenyomat</value>
+  </data>
+  <data name="AccountKeyPathSegWit" xml:space="preserve">
+    <value>Fiók kulcspatika (SegWit)</value>
+  </data>
+  <data name="AccountKeyPathTaproot" xml:space="preserve">
+    <value>Fiók kulcspatika (Taproot)</value>
+  </data>
+  <data name="ExtendedAccountPrivateKeyXpriv" xml:space="preserve">
+    <value>Kiterjesztett fiók privát kulcs xpriv</value>
+  </data>
+  <data name="PublicExternalOutputDescriptor" xml:space="preserve">
+    <value>Nyilvános külső kimeneti leíró</value>
+  </data>
+  <data name="PublicInternalOutputDescriptor" xml:space="preserve">
+    <value>Nyilvános belső kimeneti leíró</value>
+  </data>
+  <data name="PrivateExternalOutputDescriptor" xml:space="preserve">
+    <value>Privát külső kimeneti leíró</value>
+  </data>
+  <data name="PrivateInternalOutputDescriptor" xml:space="preserve">
+    <value>Privát belső kimeneti leíró</value>
+  </data>
+  <data name="ExtendedAccountPublicKeySegWit" xml:space="preserve">
+    <value>Kiterjesztett fiók nyilvános kulcs (SegWit)</value>
+  </data>
+  <data name="ExtendedAccountPublicKeyTaproot" xml:space="preserve">
+    <value>Kiterjesztett fiók nyilvános kulcs (Taproot)</value>
+  </data>
+  <data name="HideSensitiveData" xml:space="preserve">
+    <value>Érzékeny adatok elrejtése</value>
+  </data>
+  <data name="ShowSensitiveData" xml:space="preserve">
+    <value>Érzékeny adatok megjelenítése</value>
+  </data>
+  <data name="DateTime" xml:space="preserve">
+    <value>Dátum / Idő</value>
+  </data>
+  <data name="DestinationAddresses" xml:space="preserve">
+    <value>Célcímek</value>
+  </data>
+  <data name="FeeRate" xml:space="preserve">
+    <value>Díjkulcs</value>
+  </data>
+  <data name="Confirmed" xml:space="preserve">
+    <value>Megerősített</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Függőben</value>
+  </data>
+  <data name="Confirmations" xml:space="preserve">
+    <value>({0} megerősítés)</value>
+  </data>
+  <data name="ConfirmationEstimationDisclaimer" xml:space="preserve">
+    <value>Ez csupán egy becslés, amely tranzakciók és blokkok adatai alapján készült. A megerősítési idő változhat.</value>
+  </data>
+  <data name="BlockHash" xml:space="preserve">
+    <value>Blokk hash</value>
+  </data>
+  <data name="BlockHeight" xml:space="preserve">
+    <value>Blokk magassága</value>
+  </data>
+  <data name="TransactionDetails" xml:space="preserve">
+    <value>Tranzakciós részletek</value>
+  </data>
+  <data name="AmountSent" xml:space="preserve">
+    <value>Elküldött összeg</value>
+  </data>
+  <data name="AmountReceived" xml:space="preserve">
+    <value>Kapott összeg</value>
+  </data>
+  <data name="Fees" xml:space="preserve">
+    <value>Díjak</value>
+  </data>
+  <data name="CoinjoinDetails" xml:space="preserve">
+    <value>Coinjoin részletek</value>
+  </data>
+  <data name="NumberOfTransactions" xml:space="preserve">
+    <value>Tranzakciók száma</value>
+  </data>
+  <data name="TransactionIDs" xml:space="preserve">
+    <value>Tranzakciós azonosítók</value>
+  </data>
+  <data name="Incoming" xml:space="preserve">
+    <value>Bejövő</value>
+  </data>
+  <data name="Outgoing" xml:space="preserve">
+    <value>Kimenő</value>
+  </data>
+  <data name="SelfTransfer" xml:space="preserve">
+    <value>Saját átutalás</value>
+  </data>
+  <data name="Coinjoins" xml:space="preserve">
+    <value>Coinjoinok</value>
+  </data>
+  <data name="Cancellation" xml:space="preserve">
+    <value>Törlés</value>
+  </data>
+  <data name="Accelerator" xml:space="preserve">
+    <value>Gyorsító</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>Ma</value>
+  </data>
+  <data name="Yesterday" xml:space="preserve">
+    <value>Tegnap</value>
+  </data>
+  <data name="PendingConfirmingIn" xml:space="preserve">
+    <value>Függőben (megerősítés ≈ {0} múlva)</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Ismeretlen</value>
+  </data>
+  <data name="ConfirmedWithConfirmationCount" xml:space="preserve">
+    <value>Megerősítve ({0} megerősítés{1})</value>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>Kevesebb mint</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>több</value>
+  </data>
+  <data name="Less" xml:space="preserve">
+    <value>kevesebb</value>
+  </data>
+  <data name="TheSameAmount" xml:space="preserve">
+    <value>ugyanannyi</value>
+  </data>
+  <data name="EditLabels" xml:space="preserve">
+    <value>Címkék szerkesztése</value>
+  </data>
+  <data name="UnknownPeople" xml:space="preserve">
+    <value>Ismeretlen emberek</value>
+  </data>
+  <data name="PrivateCoins" xml:space="preserve">
+    <value>Privát érmék</value>
+  </data>
+  <data name="SemiPrivateCoins" xml:space="preserve">
+    <value>Félig privát érmék</value>
+  </data>
+  <data name="Coinjoining" xml:space="preserve">
+    <value>Coinjoining</value>
+  </data>
+  <data name="NotCoinjoining" xml:space="preserve">
+    <value>Not coinjoining</value>
+  </data>
+  <data name="ExcludedFromCoinjoins" xml:space="preserve">
+    <value>Kizárva a Coinjoinból</value>
+  </data>
+  <data name="ConfirmationCount" xml:space="preserve">
+    <value>{0} megerősítés{1}</value>
+  </data>
+  <data name="CantParticipateInCoinjoinUntil" xml:space="preserve">
+    <value>Nem vehet részt a Coinjoinban, eddig: {0}</value>
+  </data>
+  <data name="AnonymityScore" xml:space="preserve">
+    <value>Anonimitás pontszám</value>
+  </data>
+  <data name="PersonOrCompanyExample" xml:space="preserve">
+    <value>Személy vagy cég, például Alice, Bob, Pizza Inc</value>
+  </data>
+  <data name="EstimatedConfirmationTimeWithValue" xml:space="preserve">
+    <value>Becsült megerősítési idő: {0}</value>
+  </data>
+  <data name="FeeRateFormatted" xml:space="preserve">
+    <value>Díj mértéke: {0:0} sat/vByte</value>
+  </data>
+  <data name="Fastest" xml:space="preserve">
+    <value>leggyorsabb</value>
+  </data>
+  <data name="min" xml:space="preserve">
+    <value>perc</value>
+  </data>
+  <data name="DisabledEnum" xml:space="preserve">
+    <value>Letiltva</value>
+  </data>
+  <data name="EnabledEnum" xml:space="preserve">
+    <value>Engedélyezve</value>
+  </data>
+  <data name="EnabledOnlyRunningEnum" xml:space="preserve">
+    <value>Engedélyezve (csak-csatlakozás mód)</value>
+  </data>
+  <data name="WouldYouLikeToPersonalizeIt" xml:space="preserve">
+    <value>Szeretnéd személyre szabni?</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Letiltva</value>
+  </data>
+  <data name="Weeks" xml:space="preserve">
+    <value>Hetek</value>
+  </data>
+  <data name="Minimal" xml:space="preserve">
+    <value>Minimális</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Adatvédelem</value>
+  </data>
+  <data name="CostEfficiency" xml:space="preserve">
+    <value>Költséghatékonyság</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Egyéb</value>
+  </data>
+  <data name="RandomSkip" xml:space="preserve">
+    <value>Véletlenszerű kihagyás</value>
+  </data>
+  <data name="Months" xml:space="preserve">
+    <value>Hónapok</value>
+  </data>
+  <data name="Often" xml:space="preserve">
+    <value>Gyakran</value>
+  </data>
+  <data name="Sometimes" xml:space="preserve">
+    <value>Néha</value>
+  </data>
+  <data name="Rarely" xml:space="preserve">
+    <value>Ritkán</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>Napok</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Órák</value>
+  </data>
+  <data name="Announcements" xml:space="preserve">
+    <value>Közlemények</value>
+  </data>
+  <data name="MarkAllAsRead" xml:space="preserve">
+    <value>Az összes megjelölése olvasottként</value>
+  </data>
+  <data name="LabelsWatermarkText" xml:space="preserve">
+    <value>Személy vagy Cég, pl. Alice, Bob, Pizza Inc</value>
+  </data>
+  <data name="ValidationErrorNotNumber" xml:space="preserve">
+    <value>Nem szám.</value>
+  </data>
+  <data name="ValidationErrorNotInRange" xml:space="preserve">
+    <value>Az értéknek {0} és {1} között kell lennie.</value>
+  </data>
+  <data name="CoinJoinCoinSelection" xml:space="preserve">
+    <value>Érmeválasztás</value>
+  </data>
+  <data name="ExperimentalCoinJoinCoinSelector" xml:space="preserve">
+    <value>(KÍSÉRLETI) Fejlesztett Érme Kiválasztás</value>
+  </data>
+  <data name="ForceUsingLowPrivacyCoinsInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Alacsony anonimitású érmék használatának kényszerítése</value>
+  </data>
+  <data name="ForceUsingLowPrivacyCoinsInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>Az érmeválasztásnak tartalmaznia kell legalább egyet az alacsony anonimitású érmék közül.</value>
+  </data>
+  <data name="WeightedAnonymityLossNormalInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Érmék anonimitáskülönbségének normalizálása pontszámításhoz</value>
+  </data>
+  <data name="WeightedAnonymityLossNormalInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>Kisebb értékre előnyben részesíti az olyan érméket, amelyeknél az anonimitás pontszámaik között kisebb a különbség.</value>
+  </data>
+  <data name="ValueLossRateNormalInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Értékveszteség normalizálása pontszámításhoz</value>
+  </data>
+  <data name="ValueLossRateNormalInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>Kisebb értékre előnyben részesíti az alacsonyabb arányú értékveszteséggel rendelkező érmeválasztásokat.</value>
+  </data>
+  <data name="TargetCoinCountPerBucketInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Megcélzott érmeszám pénztárcacsoportonként</value>
+  </data>
+  <data name="TargetCoinCountPerBucketInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>Előnyben részesíti az olyan csoportokból való érmék kiosztását (10k.., 20k.., 40k.. stb. satoshi tartományok), amelyek túltelítettek.</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>Konfiguráció</value>
   </data>
 </root>

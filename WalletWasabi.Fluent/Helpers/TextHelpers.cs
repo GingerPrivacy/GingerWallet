@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using NBitcoin;
 using WalletWasabi.Fluent.Extensions;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.Helpers;
 
@@ -97,7 +98,7 @@ public static partial class TextHelpers
 
 	public static string GetConfirmationText(int confirmations)
 	{
-		return $"Confirmed ({confirmations} confirmation{AddSIfPlural(confirmations)})";
+		return  string.Format(CultureInfo.InvariantCulture, Resources.ConfirmedWithConfirmationCount, confirmations, AddSIfPlural(confirmations));
 	}
 
 	public static string FormatPercentageDiff(double n)
@@ -108,7 +109,7 @@ public static partial class TextHelpers
 		if (Math.Abs(withFriendlyDecimals) < precision)
 		{
 			var threshold = n > 0 ? "+" + precision : "-" + precision;
-			return "less than " + threshold.ToString(CultureInfo.InvariantCulture) + "%";
+			return $"{Resources.LessThan} " + threshold.ToString(CultureInfo.InvariantCulture) + "%";
 		}
 		else
 		{

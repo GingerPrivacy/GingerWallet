@@ -12,7 +12,8 @@ namespace WalletWasabi.Fluent.ViewModels.Wallets.Advanced;
 	Category = SearchCategory.Wallet,
 	NavBarPosition = NavBarPosition.None,
 	NavigationTarget = NavigationTarget.DialogScreen,
-	Searchable = false)]
+	Searchable = false,
+	IsLocalized = true)]
 public partial class WalletStatsViewModel : RoutableViewModel
 {
 	private readonly IWalletModel _wallet;
@@ -20,10 +21,6 @@ public partial class WalletStatsViewModel : RoutableViewModel
 
 	private WalletStatsViewModel(IWalletModel wallet)
 	{
-		Title = "Wallet Stats";
-		Caption = "Display wallet stats";
-		Keywords = new[] { "Wallet", "Stats", };
-
 		_wallet = wallet;
 
 		NextCommand = ReactiveCommand.Create(() => Navigate().Clear());

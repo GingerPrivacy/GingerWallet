@@ -6,6 +6,7 @@ using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
 using WalletWasabi.Fluent.ViewModels.Wallets.Labels;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.ViewModels.Wallets.Receive;
 
@@ -16,7 +17,7 @@ public partial class AddressLabelEditViewModel : DialogViewModelBase<LabelsArray
 
 	public AddressLabelEditViewModel(UiContext uiContext, IWalletModel wallet, IAddress address)
 	{
-		Title = "Edit Labels";
+		Title = Resources.EditLabels;
 		UiContext = uiContext;
 		SuggestionLabels = new SuggestionLabelsViewModel(wallet, Intent.Receive, 3, address.Labels);
 

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using WalletWasabi.Announcer;
 using WalletWasabi.BitcoinCore;
 using WalletWasabi.BitcoinCore.Endpointing;
 using WalletWasabi.BitcoinCore.Mempool;
@@ -34,9 +35,6 @@ using WalletWasabi.WabiSabi.Client.RoundStateAwaiters;
 using WalletWasabi.Wallets;
 using WalletWasabi.WebClients.BlockstreamInfo;
 using WalletWasabi.WebClients.Wasabi;
-using WalletWasabi.BuyAnything;
-using WalletWasabi.WebClients.BuyAnything;
-using WalletWasabi.WebClients.ShopWare;
 using WalletWasabi.Wallets.FilterProcessor;
 using WalletWasabi.Models;
 
@@ -249,16 +247,7 @@ public class Global
 					await CreateSleepInhibitorAsync().ConfigureAwait(false);
 				}
 
-				bool useTestApi = Network != Network.Main;
-				var apiKey = useTestApi ? "SWSCVTGZRHJOZWF0MTJFTK9ZSG" : "SWSCU3LIYWVHVXRVYJJNDLJZBG";
-				var uri = useTestApi ? new Uri("https://shopinbit.solution360.dev/store-api/") : new Uri("https://shopinbit.com/store-api/");
-				ShopWareApiClient shopWareApiClient = new(HttpClientFactory.NewHttpClient(() => uri, Mode.DefaultCircuit), apiKey);
-
-				BuyAnythingClient buyAnythingClient = new(shopWareApiClient, useTestApi);
-				HostedServices.Register<BuyAnythingManager>(() => new BuyAnythingManager(DataDir, TimeSpan.FromSeconds(5), buyAnythingClient, useTestApi), "BuyAnythingManager");
-				var buyAnythingManager = HostedServices.Get<BuyAnythingManager>();
-				await buyAnythingManager.EnsureConversationsAreLoadedAsync(cancel).ConfigureAwait(false);
-				await buyAnythingManager.EnsureCountriesAreLoadedAsync(cancel).ConfigureAwait(false);
+				HostedServices.Register<AnnouncementManager>(() => new AnnouncementManager(DataDir, TimeSpan.FromMinutes(.5), (DisplayLanguage)Config.Language, Config.PersistentConfig.ExtraNostrPubKey, HttpClientFactory), nameof(AnnouncementManager));
 
 				await HostedServices.StartAllAsync(cancel).ConfigureAwait(false);
 
@@ -407,8 +396,9 @@ public class Global
 
 	private void RegisterCoinJoinComponents()
 	{
+		string[] allowedCoordinationIdentifiers = Config.CoordinatorIdentifier.Length > 0 ? [Config.CoordinatorIdentifier, Config.MainNetCoordinatorUri] : [Config.MainNetCoordinatorUri];
 		Tor.Http.IHttpClient roundStateUpdaterHttpClient = CoordinatorHttpClientFactory.NewHttpClient(Mode.SingleCircuitPerLifetime, RoundStateUpdaterCircuit);
-		HostedServices.Register<RoundStateUpdater>(() => new RoundStateUpdater(TimeSpan.FromSeconds(0.1), new WabiSabiHttpApiClient(roundStateUpdaterHttpClient)), "Round info updater");
+		HostedServices.Register<RoundStateUpdater>(() => new RoundStateUpdater(TimeSpan.FromSeconds(0.1), allowedCoordinationIdentifiers, new WabiSabiHttpApiClient(roundStateUpdaterHttpClient)), "Round info updater");
 
 		var coinJoinConfiguration = new CoinJoinConfiguration(Config.CoordinatorIdentifier, Config.MaxCoordinationFeeRate, Config.MaxCoinjoinMiningFeeRate, Config.AbsoluteMinInputCount, AllowSoloCoinjoining: false);
 		HostedServices.Register<CoinJoinManager>(() => new CoinJoinManager(WalletManager, HostedServices.Get<RoundStateUpdater>(), CoordinatorHttpClientFactory, HostedServices.Get<WasabiSynchronizer>(), coinJoinConfiguration, CoinPrison), "CoinJoin Manager");

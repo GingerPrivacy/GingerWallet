@@ -11,7 +11,7 @@
              d:DesignWidth="1000" d:DesignHeight="1000"
              x:CompileBindings="True">
   <DockPanel IsEnabled="{Binding IsMainContentEnabled^}">
-    <shell:TitleBar DockPanel.Dock="Top" />
+    <shell:TitleBar Height="42" DockPanel.Dock="Top" />
     <DockPanel>
       <navbar:NavBar DockPanel.Dock="Left" DataContext="{Binding NavBar}" />
       <Border x:Name="ContentPart" CornerRadius="10 0 0 0" ClipToBounds="True" Background="{DynamicResource RegionColor}">
@@ -70,9 +70,6 @@
               </ContentControl.Styles>
             </ContentControl>
           </DockPanel>
-
-          <!-- Status Icon -->
-          <statusIcon:StatusIcon Margin="10" Foreground="{DynamicResource AcrylicTrimForeground}" DataContext="{Binding StatusIcon}" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
         </Panel>
       </Border>
     </DockPanel>

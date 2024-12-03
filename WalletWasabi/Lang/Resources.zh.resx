@@ -366,19 +366,19 @@
   <data name="WalletSettings" xml:space="preserve">
     <value>钱包设置</value>
   </data>
-  <data name="WalletCoins" xml:space="preserve">
+  <data name="WalletCoinsViewModelTitle" xml:space="preserve">
     <value>钱包硬币</value>
   </data>
-  <data name="WalletStats" xml:space="preserve">
+  <data name="WalletStatsViewModelTitle" xml:space="preserve">
     <value>钱包统计</value>
   </data>
-  <data name="WalletInfo" xml:space="preserve">
+  <data name="WalletInfoViewModelTitle" xml:space="preserve">
     <value>钱包信息</value>
   </data>
   <data name="WalletReceive" xml:space="preserve">
     <value>接收</value>
   </data>
-  <data name="ExcludeCoins" xml:space="preserve">
+  <data name="ExcludedCoinsViewModelTitle" xml:space="preserve">
     <value>排除硬币</value>
   </data>
   <data name="CoinjoinSettings" xml:space="preserve">
@@ -501,11 +501,8 @@
   <data name="AutomaticallyStartCoinjoin" xml:space="preserve">
     <value>自动开始 Coinjoin</value>
   </data>
-  <data name="CoinjoinStrategy" xml:space="preserve">
-    <value>Coinjoin 策略：</value>
-  </data>
   <data name="CoinjoinToThisWallet" xml:space="preserve">
-    <value>Coinjoin 到此钱包：</value>
+    <value>Coinjoin 到此钱包</value>
   </data>
   <data name="CoinjoinToOtherWalletRestrictions1" xml:space="preserve">
     <value>- 仅已加载的钱包可以被选择。</value>
@@ -534,9 +531,6 @@
   <data name="WalletToolsVerifyRecoveryWords" xml:space="preserve">
     <value>验证恢复词</value>
   </data>
-  <data name="Change" xml:space="preserve">
-    <value>更改</value>
-  </data>
   <data name="WalletCoinJoinSettingsViewModelTitle" xml:space="preserve">
     <value>Coinjoin 设置</value>
   </data>
@@ -546,64 +540,34 @@
   <data name="WalletCoinJoinSettingsViewModelKeywords" xml:space="preserve">
     <value>钱包，设置</value>
   </data>
-  <data name="CoinJoinProfilesViewModelTitle" xml:space="preserve">
-    <value>Coinjoin 策略</value>
-  </data>
   <data name="CoinJoinProfilesCaption" xml:space="preserve">
-    <value>Ginger 通过自动 Coinjoin 您所有的资金（固定 0.3% 协调费 + 矿工费）来保护您的财务隐私。选择最适合您的 Coinjoin 策略！</value>
-  </data>
-  <data name="PrivateCoinJoinProfileTitle" xml:space="preserve">
-    <value>最大化隐私</value>
-  </data>
-  <data name="PrivateCoinJoinProfileDescription" xml:space="preserve">
-    <value>偏执者的选择。不惜一切代价优化隐私。</value>
-  </data>
-  <data name="EconomicCoinJoinProfileTitle" xml:space="preserve">
-    <value>最小化成本</value>
-  </data>
-  <data name="EconomicCoinJoinProfileDescription" xml:space="preserve">
-    <value>适合储蓄者。仅在一周中最便宜的时间段参与 Coinjoin。</value>
-  </data>
-  <data name="ManualCoinJoinProfileTitle" xml:space="preserve">
-    <value>自定义</value>
-  </data>
-  <data name="SpeedyCoinJoinProfileTitle" xml:space="preserve">
-    <value>最大化速度</value>
-  </data>
-  <data name="SpeedyCoinJoinProfileDescription" xml:space="preserve">
-    <value>快速完成事务。专注于速度和便利性。</value>
-  </data>
-  <data name="Customize" xml:space="preserve">
-    <value>自定义设置</value>
+    <value>Ginger通过自动将您的所有资金进行Coinjoin，并收取固定的0.3%的协调费用及矿工费用，来保护您的财务隐私。为了方便使用，我们已经预先应用了默认配置。</value>
   </data>
   <data name="Done" xml:space="preserve">
     <value>完成</value>
   </data>
-  <data name="ManualCoinJoinProfileDialogTitle" xml:space="preserve">
-    <value>Coinjoin 策略设置</value>
+  <data name="RedcoinText" xml:space="preserve">
+    <value>单个非隐私币限制</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewRedcoinText" xml:space="preserve">
-    <value>隔离红色硬币</value>
-  </data>
-  <data name="AdvancedCoinjoinOptionsViewRedcoinToolTip" xml:space="preserve">
+  <data name="RedcoinToolTip" xml:space="preserve">
     <value>仅允许匿名评分为 1 的单个硬币进入 Coinjoin 注册。</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewAnonTargetText" xml:space="preserve">
+  <data name="AnonTargetText" xml:space="preserve">
     <value>匿名评分目标</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewAnonTargetTooltip" xml:space="preserve">
+  <data name="AnonTargetTooltip" xml:space="preserve">
     <value>硬币被视为私密所需的最低匿名评分。</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewSafeFeeText" xml:space="preserve">
-    <value>安全费率</value>
+  <data name="SafeFeeText" xml:space="preserve">
+    <value>忽略低于的Coinjoin时间偏好</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewSafeFeeToolTip" xml:space="preserve">
+  <data name="SafeFeeToolTip" xml:space="preserve">
     <value>当费率低于此值时始终进行 Coinjoin（优先于 Coinjoin 时间偏好）。</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewCoinJoinTimePrefText" xml:space="preserve">
+  <data name="CoinJoinTimePrefText" xml:space="preserve">
     <value>Coinjoin 时间偏好</value>
   </data>
-  <data name="AdvancedCoinjoinOptionsViewCoinJoinTimePrefToolTip" xml:space="preserve">
+  <data name="CoinJoinTimePrefToolTip" xml:space="preserve">
     <value>仅当费率低于此时间段的中位数时才进行 Coinjoin。</value>
   </data>
   <data name="Cancel" xml:space="preserve">
@@ -1300,5 +1264,380 @@
   </data>
   <data name="SelfCoinJoinToolTip" xml:space="preserve">
     <value>在此 Coinjoin 中，大多数硬币属于您。这将显著降低您的隐私进度。请考虑使用更少的钱包参与，直到有更多的参与者加入。</value>
+  </data>
+  <data name="AuthCodePrompt" xml:space="preserve">
+    <value>使用您首选的身份验证应用扫描下面的二维码，然后输入验证码。</value>
+  </data>
+  <data name="Verify" xml:space="preserve">
+    <value>验证</value>
+  </data>
+  <data name="TwoFactorSetup" xml:space="preserve">
+    <value>双重身份验证设置</value>
+  </data>
+  <data name="TokenVerificationFailed" xml:space="preserve">
+    <value>无法验证令牌，请查看日志以获取更多信息。</value>
+  </data>
+  <data name="TwoFactorAuthenticationWithCapitals" xml:space="preserve">
+    <value>双重身份验证</value>
+  </data>
+  <data name="TransactionFeeRate" xml:space="preserve">
+    <value>交易费用率：</value>
+  </data>
+  <data name="InvalidFee" xml:space="preserve">
+    <value>输入的费用无效。</value>
+  </data>
+  <data name="MinFeeLimit" xml:space="preserve">
+    <value>不能少于 1 sat/vByte。</value>
+  </data>
+  <data name="FeeTooHigh" xml:space="preserve">
+    <value>输入的费用过高。</value>
+  </data>
+  <data name="ExcludedCoinsViewModelCaption" xml:space="preserve">
+    <value>显示排除的硬币</value>
+  </data>
+  <data name="ExcludedCoinsViewModelKeywords" xml:space="preserve">
+    <value>钱包, 排除, 硬币, Coinjoin, 冻结, UTXO</value>
+  </data>
+  <data name="WalletCoinsViewModelCaption" xml:space="preserve">
+    <value>显示钱包硬币</value>
+  </data>
+  <data name="WalletCoinsViewModelKeywords" xml:space="preserve">
+    <value>钱包, 硬币, UTXO</value>
+  </data>
+  <data name="WalletStatsViewModelCaption" xml:space="preserve">
+    <value>显示钱包统计数据</value>
+  </data>
+  <data name="WalletStatsViewModelKeywords" xml:space="preserve">
+    <value>钱包, 统计数据</value>
+  </data>
+  <data name="WalletInfoViewModelCaption" xml:space="preserve">
+    <value>显示钱包信息</value>
+  </data>
+  <data name="WalletInfoViewModelKeywords" xml:space="preserve">
+    <value>钱包, 信息</value>
+  </data>
+  <data name="ExcludeCoinjoinDescription" xml:space="preserve">
+    <value>选择的硬币将被排除在Coinjoin之外。需要注意的是，这些硬币的隐私不会增加。</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>日期</value>
+  </data>
+  <data name="WalletCoinsDescription" xml:space="preserve">
+    <value>您拥有的硬币列表。</value>
+  </data>
+  <data name="NumberOfCoins" xml:space="preserve">
+    <value>硬币数量（UTXOs）</value>
+  </data>
+  <data name="UnconfirmedBalance" xml:space="preserve">
+    <value>未确认余额</value>
+  </data>
+  <data name="ConfirmedBalance" xml:space="preserve">
+    <value>已确认余额</value>
+  </data>
+  <data name="TotalBalance" xml:space="preserve">
+    <value>总余额</value>
+  </data>
+  <data name="TotalTransactions" xml:space="preserve">
+    <value>交易总数</value>
+  </data>
+  <data name="NonCoinjoinTransactions" xml:space="preserve">
+    <value>非Coinjoin交易数量</value>
+  </data>
+  <data name="CoinjoinTransactions" xml:space="preserve">
+    <value>Coinjoin交易数量</value>
+  </data>
+  <data name="NumberOfAddresses" xml:space="preserve">
+    <value>地址数量</value>
+  </data>
+  <data name="NumberOfCleanAddresses" xml:space="preserve">
+    <value>清洁地址数量</value>
+  </data>
+  <data name="NumberOfLockedAddresses" xml:space="preserve">
+    <value>锁定地址数量</value>
+  </data>
+  <data name="NumberOfUsedAddresses" xml:space="preserve">
+    <value>已使用地址数量</value>
+  </data>
+  <data name="ExtendedMasterPrivateKey" xml:space="preserve">
+    <value>扩展主私钥</value>
+  </data>
+  <data name="ExtendedMasterZprv" xml:space="preserve">
+    <value>扩展主 zprv 私钥</value>
+  </data>
+  <data name="ExtendedMasterFingerprint" xml:space="preserve">
+    <value>扩展主指纹</value>
+  </data>
+  <data name="AccountKeyPathSegWit" xml:space="preserve">
+    <value>账户密钥路径（SegWit）</value>
+  </data>
+  <data name="AccountKeyPathTaproot" xml:space="preserve">
+    <value>账户密钥路径（Taproot）</value>
+  </data>
+  <data name="ExtendedAccountPrivateKeyXpriv" xml:space="preserve">
+    <value>扩展账户私钥 xpriv</value>
+  </data>
+  <data name="PublicExternalOutputDescriptor" xml:space="preserve">
+    <value>公共外部输出描述符</value>
+  </data>
+  <data name="PublicInternalOutputDescriptor" xml:space="preserve">
+    <value>公共内部输出描述符</value>
+  </data>
+  <data name="PrivateExternalOutputDescriptor" xml:space="preserve">
+    <value>私有外部输出描述符</value>
+  </data>
+  <data name="PrivateInternalOutputDescriptor" xml:space="preserve">
+    <value>私有内部输出描述符</value>
+  </data>
+  <data name="ExtendedAccountPublicKeySegWit" xml:space="preserve">
+    <value>扩展账户公钥（SegWit）</value>
+  </data>
+  <data name="ExtendedAccountPublicKeyTaproot" xml:space="preserve">
+    <value>扩展账户公钥（Taproot）</value>
+  </data>
+  <data name="HideSensitiveData" xml:space="preserve">
+    <value>隐藏敏感数据</value>
+  </data>
+  <data name="ShowSensitiveData" xml:space="preserve">
+    <value>显示敏感数据</value>
+  </data>
+  <data name="DateTime" xml:space="preserve">
+    <value>日期 / 时间</value>
+  </data>
+  <data name="DestinationAddresses" xml:space="preserve">
+    <value>目标地址</value>
+  </data>
+  <data name="FeeRate" xml:space="preserve">
+    <value>手续费率</value>
+  </data>
+  <data name="Confirmed" xml:space="preserve">
+    <value>已确认</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>待处理</value>
+  </data>
+  <data name="Confirmations" xml:space="preserve">
+    <value>({0} 次确认)</value>
+  </data>
+  <data name="ConfirmationEstimationDisclaimer" xml:space="preserve">
+    <value> 这仅仅是基于一些交易和区块数据的估算。确认时间可能会改变。</value>
+  </data>
+  <data name="BlockHash" xml:space="preserve">
+    <value>块哈希</value>
+  </data>
+  <data name="BlockHeight" xml:space="preserve">
+    <value>块高度</value>
+  </data>
+  <data name="TransactionDetails" xml:space="preserve">
+    <value>交易详情</value>
+  </data>
+  <data name="AmountSent" xml:space="preserve">
+    <value>发送金额</value>
+  </data>
+  <data name="AmountReceived" xml:space="preserve">
+    <value>收到金额</value>
+  </data>
+  <data name="Fees" xml:space="preserve">
+    <value>手续费</value>
+  </data>
+  <data name="CoinjoinDetails" xml:space="preserve">
+    <value>Coinjoin 详情</value>
+  </data>
+  <data name="NumberOfTransactions" xml:space="preserve">
+    <value>交易数量</value>
+  </data>
+  <data name="TransactionIDs" xml:space="preserve">
+    <value>交易ID</value>
+  </data>
+  <data name="Incoming" xml:space="preserve">
+    <value>传入</value>
+  </data>
+  <data name="Outgoing" xml:space="preserve">
+    <value>外发</value>
+  </data>
+  <data name="SelfTransfer" xml:space="preserve">
+    <value>自我转账</value>
+  </data>
+  <data name="Coinjoins" xml:space="preserve">
+    <value>Coinjoin</value>
+  </data>
+  <data name="Cancellation" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Accelerator" xml:space="preserve">
+    <value>加速器</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>今天</value>
+  </data>
+  <data name="Yesterday" xml:space="preserve">
+    <value>昨天</value>
+  </data>
+  <data name="PendingConfirmingIn" xml:space="preserve">
+    <value>待处理（大约 {0} 后确认）</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>未知</value>
+  </data>
+  <data name="ConfirmedWithConfirmationCount" xml:space="preserve">
+    <value>已确认（{0} 次确认{1}）</value>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>小于</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>更多</value>
+  </data>
+  <data name="Less" xml:space="preserve">
+    <value>更少</value>
+  </data>
+  <data name="TheSameAmount" xml:space="preserve">
+    <value>相同数量</value>
+  </data>
+  <data name="EditLabels" xml:space="preserve">
+    <value>编辑标签</value>
+  </data>
+  <data name="UnknownPeople" xml:space="preserve">
+    <value>未知人物</value>
+  </data>
+  <data name="PrivateCoins" xml:space="preserve">
+    <value>私人币</value>
+  </data>
+  <data name="SemiPrivateCoins" xml:space="preserve">
+    <value>半私人币</value>
+  </data>
+  <data name="Coinjoining" xml:space="preserve">
+    <value>Coinjoining</value>
+  </data>
+  <data name="NotCoinjoining" xml:space="preserve">
+    <value>Not coinjoining</value>
+  </data>
+  <data name="ExcludedFromCoinjoins" xml:space="preserve">
+    <value> 排除在 Coinjoin 之外</value>
+  </data>
+  <data name="ConfirmationCount" xml:space="preserve">
+    <value>{0} 次确认{1}</value>
+  </data>
+  <data name="CantParticipateInCoinjoinUntil" xml:space="preserve">
+    <value>无法参与 Coinjoin，直到: {0}</value>
+  </data>
+  <data name="AnonymityScore" xml:space="preserve">
+    <value>匿名评分</value>
+  </data>
+  <data name="PersonOrCompanyExample" xml:space="preserve">
+    <value>个人或公司，例如 Alice、Bob、Pizza Inc</value>
+  </data>
+  <data name="EstimatedConfirmationTimeWithValue" xml:space="preserve">
+    <value>预计确认时间：{0}</value>
+  </data>
+  <data name="FeeRateFormatted" xml:space="preserve">
+    <value>手续费率：{0:0} sat/vByte</value>
+  </data>
+  <data name="Fastest" xml:space="preserve">
+    <value>最快的</value>
+  </data>
+  <data name="min" xml:space="preserve">
+    <value>分钟</value>
+  </data>
+  <data name="DisabledEnum" xml:space="preserve">
+    <value>已禁用</value>
+  </data>
+  <data name="EnabledEnum" xml:space="preserve">
+    <value>已启用</value>
+  </data>
+  <data name="EnabledOnlyRunningEnum" xml:space="preserve">
+    <value>已启用（仅连接模式）</value>
+  </data>
+  <data name="WouldYouLikeToPersonalizeIt" xml:space="preserve">
+    <value>您想个性化设置吗？</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>已禁用</value>
+  </data>
+  <data name="Weeks" xml:space="preserve">
+    <value>周</value>
+  </data>
+  <data name="Minimal" xml:space="preserve">
+    <value>最小的</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>隐私</value>
+  </data>
+  <data name="CostEfficiency" xml:space="preserve">
+    <value>成本效益</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>其他</value>
+  </data>
+  <data name="RandomSkip" xml:space="preserve">
+    <value>随机跳过</value>
+  </data>
+  <data name="Months" xml:space="preserve">
+    <value>月份</value>
+  </data>
+  <data name="Often" xml:space="preserve">
+    <value>经常</value>
+  </data>
+  <data name="Sometimes" xml:space="preserve">
+    <value>有时</value>
+  </data>
+  <data name="Rarely" xml:space="preserve">
+    <value>很少</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>天</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>小时</value>
+  </data>
+  <data name="Announcements" xml:space="preserve">
+    <value>公告</value>
+  </data>
+  <data name="MarkAllAsRead" xml:space="preserve">
+    <value>标记全部为已读</value>    
+  </data>
+  <data name="LabelsWatermarkText" xml:space="preserve">
+    <value>个人或公司，例如 Alice、Bob、Pizza Inc</value>
+  </data>
+  <data name="ValidationErrorNotNumber" xml:space="preserve">
+    <value>不是一个数字。</value>
+  </data>
+  <data name="ValidationErrorNotInRange" xml:space="preserve">
+    <value>值必须在 {0} 和 {1} 之间。</value>
+  </data>
+  <data name="CoinJoinCoinSelection" xml:space="preserve">
+    <value>硬币选择</value>
+  </data>
+  <data name="ExperimentalCoinJoinCoinSelector" xml:space="preserve">
+    <value>实验性）改进的币选择</value>
+  </data>
+  <data name="ForceUsingLowPrivacyCoinsInCoinJoinCoinSelector" xml:space="preserve">
+    <value>强制使用低隐私硬币</value>
+  </data>
+  <data name="ForceUsingLowPrivacyCoinsInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>选择中应至少包含一枚隐私度最低的硬币。</value>
+  </data>
+  <data name="WeightedAnonymityLossNormalInCoinJoinCoinSelector" xml:space="preserve">
+    <value>硬币隐私差异的标准化用于分数计算</value>
+  </data>
+  <data name="WeightedAnonymityLossNormalInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>值较低时，硬币选择器会偏好隐私分数差异较小的硬币。</value>
+  </data>
+  <data name="ValueLossRateNormalInCoinJoinCoinSelector" xml:space="preserve">
+    <value>金额损失的标准化用于分数计算</value>
+  </data>
+  <data name="ValueLossRateNormalInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>值较低时，硬币选择器会偏好金额损失比例较低的选择。</value>
+  </data>
+  <data name="TargetCoinCountPerBucketInCoinJoinCoinSelector" xml:space="preserve">
+    <value>每个钱包分组的目标硬币数量</value>
+  </data>
+  <data name="TargetCoinCountPerBucketInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>币选择器会优先选择来自过多硬币分组的硬币（如 10k、20k、40k satoshi 范围的硬币）。</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>配置</value>
   </data>
 </root>

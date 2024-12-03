@@ -11,14 +11,14 @@
              xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.Wallets.Advanced.WalletCoinsView">
   <ContentArea Title="{Binding Title}"
-               Caption="A list of coins that you own, optionally you can send them without change."
+               Caption="{x:Static lang:Resources.WalletCoinsDescription}"
                EnableNext="True" NextContent="{x:Static lang:Resources.Done}"
                EnableCancel="{Binding EnableCancel}"
                EnableBack="{Binding EnableBack}"
                ScrollViewer.VerticalScrollBarVisibility="Disabled"
                ScrollViewer.HorizontalScrollBarVisibility="Disabled">
     <ContentArea.TopContent>
-      <Button DockPanel.Dock="Right" Theme="{StaticResource DialogSortButton}"  ToolTip.Tip="Sorting">
+      <Button DockPanel.Dock="Right" Theme="{StaticResource DialogSortButton}"  ToolTip.Tip="{x:Static lang:Resources.Sorting}">
         <Button.Flyout>
           <Flyout Placement="BottomEdgeAlignedRight">
             <sorting:SortControl Sortables="{Binding CoinList.Sortables}" />

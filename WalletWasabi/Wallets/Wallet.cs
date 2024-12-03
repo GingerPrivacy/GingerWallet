@@ -25,6 +25,7 @@ using WalletWasabi.Stores;
 using WalletWasabi.Userfacing;
 using WalletWasabi.WabiSabi.Client;
 using WalletWasabi.WabiSabi.Client.Batching;
+using WalletWasabi.WabiSabi.Client.CoinJoin.Client;
 
 namespace WalletWasabi.Wallets;
 
@@ -103,6 +104,8 @@ public class Wallet : BackgroundService, IWallet
 
 	public bool RedCoinIsolation => KeyManager.RedCoinIsolation;
 	public CoinjoinSkipFactors CoinjoinSkipFactors => KeyManager.CoinjoinSkipFactors;
+
+	public CoinJoinCoinSelectionSettings CoinJoinCoinSelectionSettings => KeyManager.Attributes.CoinJoinCoinSelectionSettings;
 
 	public Network Network { get; }
 	public TransactionProcessor TransactionProcessor { get; }

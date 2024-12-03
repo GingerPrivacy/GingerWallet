@@ -20,6 +20,7 @@
         WindowState="{Binding WindowState, Mode=TwoWay}"
         Focusable="True"
         Icon="/Assets/WasabiLogo.ico"
+        FontFamily="{StaticResource PoppinsFont}"
         RenderOptions.BitmapInterpolationMode="HighQuality"
         RenderOptions.TextRenderingMode="SubpixelAntialias"
         RenderOptions.RequiresFullOpacityHandling="True">

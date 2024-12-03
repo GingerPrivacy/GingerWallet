@@ -3,6 +3,7 @@ using System.Collections;
 using System.ComponentModel;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Validation;
+using WalletWasabi.Models;
 
 namespace WalletWasabi.Fluent.ViewModels;
 
@@ -50,6 +51,11 @@ public class ViewModelBase : ReactiveObject, INotifyDataErrorInfo, IRegisterVali
 	IEnumerable INotifyDataErrorInfo.GetErrors(string? propertyName)
 	{
 		return _validations.GetErrors(propertyName);
+	}
+
+	public bool HasError(string? propertyName)
+	{
+		return !Equals(_validations.GetErrors(propertyName), ErrorDescriptors.Empty);
 	}
 
 	void IRegisterValidationMethod.RegisterValidationMethod(string propertyName, ValidateMethod validateMethod)

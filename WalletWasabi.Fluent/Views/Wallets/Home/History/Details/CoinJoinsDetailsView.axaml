@@ -11,14 +11,14 @@
              x:Class="WalletWasabi.Fluent.Views.Wallets.Home.History.Details.CoinJoinsDetailsView"
              Name="CoinJoinDetails">
   <ContentArea Title="{Binding Title}"
-                 NextContent="{x:Static lang:Resources.Done}" EnableNext="True"
-                 EnableCancel="{Binding EnableCancel}">
+               NextContent="{x:Static lang:Resources.Done}" EnableNext="True"
+               EnableCancel="{Binding EnableCancel}">
     <StackPanel Spacing="15">
 
       <!-- Date -->
       <PreviewItem Icon="{StaticResource timer_regular}"
-                     Label="Date"
-                     CopyableContent="{Binding Date}">
+                   Label="{x:Static lang:Resources.Date}"
+                   CopyableContent="{Binding Date}">
         <TextBlock Text="{Binding Date}" />
       </PreviewItem>
 
@@ -26,7 +26,7 @@
 
       <!-- Status -->
       <PreviewItem Icon="{StaticResource status_regular}"
-                     Label="Status">
+                   Label="{x:Static lang:Resources.Status}">
         <TextBlock Text="{Binding Status}" />
       </PreviewItem>
 
@@ -34,8 +34,8 @@
 
       <!-- TX Count  -->
       <PreviewItem Icon="{StaticResource info_regular}"
-                     Label="Number of transactions"
-                     CopyableContent="{Binding TxCount}">
+                   Label="{x:Static lang:Resources.NumberOfTransactions}"
+                   CopyableContent="{Binding TxCount}">
         <TextBlock Text="{Binding TxCount, Mode=OneWay}" />
       </PreviewItem>
 
@@ -43,8 +43,8 @@
 
       <!-- CJ fee  -->
       <PreviewItem Icon="{StaticResource btc_logo}"
-                     Label="Fees"
-                     CopyableContent="{Binding CoinJoinFeeAmount.Btc, Converter={x:Static conv:MoneyConverters.ToFeeWithoutUnit}}">
+                   Label="{x:Static lang:Resources.Fees}"
+                   CopyableContent="{Binding CoinJoinFeeAmount.Btc, Converter={x:Static conv:MoneyConverters.ToFeeWithoutUnit}}">
         <AmountControl Classes="Fee" Amount="{Binding CoinJoinFeeAmount}" />
       </PreviewItem>
 
@@ -52,11 +52,13 @@
 
       <!-- Confirmation Time -->
       <PreviewItem IsVisible="{Binding IsConfirmationTimeVisible}"
-                     Icon="{StaticResource timer_regular}"
-                     Label="Expected confirmation time"
-                     ToolTip.Tip="This is just an estimation based on some data for transactions and blocks. The confirmation time might change.">
+                   Icon="{StaticResource timer_regular}"
+                   Label="{x:Static lang:Resources.ExpectedConfirmationTime}"
+                   ToolTip.Tip="{x:Static lang:Resources.ConfirmationEstimationDisclaimer}">
         <PrivacyContentControl>
-          <TextBlock Text="{Binding ConfirmationTime, Converter={x:Static conv:TimeSpanConverter.ToEstimatedConfirmationTime}}" Classes="monoSpaced" />
+          <TextBlock
+            Text="{Binding ConfirmationTime, Converter={x:Static conv:TimeSpanConverter.ToEstimatedConfirmationTime}}"
+            Classes="monoSpaced" />
         </PrivacyContentControl>
       </PreviewItem>
 
@@ -64,7 +66,7 @@
 
       <!-- Transaction IDs -->
       <PreviewItem Icon="{StaticResource transaction_id}"
-                     Label="Transaction IDs">
+                   Label="{x:Static lang:Resources.TransactionIDs}">
         <ItemsControl ItemsSource="{Binding TransactionIds}">
           <ItemsControl.ItemTemplate>
             <DataTemplate>

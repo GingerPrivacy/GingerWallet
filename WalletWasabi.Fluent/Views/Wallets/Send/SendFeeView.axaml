@@ -222,9 +222,9 @@
                 <Setter Property="FontSize" Value="{StaticResource FontSizeH8}" />
               </Style>
             </StackPanel.Styles>
-            <TextBlock Text="{Binding CurrentSatoshiPerByte, Mode=OneWay, StringFormat='Fee Rate: \{0:0\} sat/vByte'}" />
+            <TextBlock Text="{Binding CurrentSatoshiPerByte, Mode=OneWay, StringFormat={x:Static lang:Resources.EstimatedConfirmationTimeWithValue}}" />
             <TextBlock
-              Text="{Binding CurrentConfirmationTargetString, Mode=OneWay, StringFormat='Estimated Confirmation Time: \{0\}'}" />
+              Text="{Binding CurrentConfirmationTargetString, Mode=OneWay, StringFormat={x:Static lang:Resources.EstimatedConfirmationTimeWithValue}}" />
           </StackPanel>
         </Panel>
       </DockPanel>

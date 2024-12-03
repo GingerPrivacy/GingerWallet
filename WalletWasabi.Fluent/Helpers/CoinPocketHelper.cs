@@ -4,15 +4,16 @@ using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Fluent.Models;
 using WalletWasabi.Helpers;
+using WalletWasabi.Lang;
 using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.Helpers;
 
 public static class CoinPocketHelper
 {
-	public static readonly LabelsArray UnlabelledFundsText = new("Unknown People");
-	public static readonly LabelsArray PrivateFundsText = new("Private Coins");
-	public static readonly LabelsArray SemiPrivateFundsText = new("Semi-private Coins");
+	public static readonly LabelsArray UnlabelledFundsText = new(Resources.UnknownPeople);
+	public static readonly LabelsArray PrivateFundsText = new(Resources.PrivateCoins);
+	public static readonly LabelsArray SemiPrivateFundsText = new(Resources.SemiPrivateCoins);
 
 	public static IEnumerable<(LabelsArray Labels, ICoinsView Coins)> GetPockets(this ICoinsView allCoins, int privateAnonSetThreshold)
 	{

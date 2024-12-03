@@ -137,6 +137,9 @@ public record PersistentConfig : IConfigNg
 	[JsonConverter(typeof(DisplayLanguageJsonConverter))]
 	public int DisplayLanguage { get; init; } = (int)Models.DisplayLanguage.English;
 
+	[JsonPropertyName("ExtraNostrPubKey")]
+	public string ExtraNostrPubKey { get; init; } = "";
+
 	public bool DeepEquals(PersistentConfig other)
 	{
 		bool useTorIsEqual = Config.ObjectToTorMode(UseTor) == Config.ObjectToTorMode(other.UseTor);
