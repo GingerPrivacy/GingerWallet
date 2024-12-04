@@ -36,8 +36,8 @@
     <Setter Property="IsTabStop" Value="False" />
     <Setter Property="Template">
       <ControlTemplate>
-        <DataValidationErrors>
           <DockPanel x:Name="PART_DockPanel">
+            <DataValidationErrors DockPanel.Dock="Bottom" />
             <ItemsControl ItemsSource="{TemplateBinding TopItems}"
                           IsVisible="{TemplateBinding TopItems, Converter={x:Static ObjectConverters.IsNotNull}}"
                           ClipToBounds="False"
@@ -98,11 +98,26 @@
               </Panel>
             </Border>
           </DockPanel>
-        </DataValidationErrors>
       </ControlTemplate>
     </Setter>
 
     <Setter Property="(ScrollViewer.HorizontalScrollBarVisibility)" Value="Disabled" />
+
+    <Style Selector="^/template/ DataValidationErrors">
+      <Setter Property="Margin" Value="0 -16 0 0" />
+      <Setter Property="RenderTransform" Value="scale(1,0)" />
+      <Setter Property="RenderTransformOrigin" Value="0.5,0" />
+      <Setter Property="Transitions">
+        <Transitions>
+          <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1" Delay="0:0:0.1" Easing="{StaticResource FluentEasing}" />
+          <ThicknessTransition Property="Margin" Duration="0:0:0.1" Easing="{StaticResource FluentEasing}" />
+        </Transitions>
+      </Setter>
+    </Style>
+    <Style Selector="^:error /template/ DataValidationErrors">
+      <Setter Property="Margin" Value="0 5 0 0" />
+      <Setter Property="RenderTransform" Value="scale(1,1)" />
+    </Style>
 
     <Style Selector="^:focus-within /template/ Border#PART_Border">
       <Setter Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushFocused}"/>

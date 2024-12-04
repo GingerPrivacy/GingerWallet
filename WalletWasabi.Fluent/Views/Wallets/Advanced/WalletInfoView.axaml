@@ -10,9 +10,9 @@
              xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.Wallets.Advanced.WalletInfoView">
   <ContentArea Title="{Binding Title}"
-                 EnableNext="True" NextContent="{x:Static lang:Resources.Done}"
-                 EnableCancel="{Binding EnableCancel}"
-                 EnableBack="{Binding EnableBack}">
+               EnableNext="True" NextContent="{x:Static lang:Resources.Done}"
+               EnableCancel="{Binding EnableCancel}"
+               EnableBack="{Binding EnableBack}">
     <ContentArea.CancelContent>
       <StackPanel Spacing="10" Orientation="Horizontal">
         <PathIcon Data="{Binding LockIconString, Converter={x:Static conv:NavBarIconConverter.Instance}}" />
@@ -22,95 +22,101 @@
     <StackPanel Spacing="10" Margin="0 0 20 0">
 
       <PreviewItem Icon="{StaticResource private_key_regular}"
-                     Label="Extended Master Private Key"
-                     CopyableContent="{Binding ExtendedMasterPrivateKey}"
-                     IsVisible="{Binding !!ExtendedMasterPrivateKey}"
-                     PrivacyModeEnabled="{Binding !ShowSensitiveData}">
+                   Label="{x:Static lang:Resources.ExtendedMasterPrivateKey}"
+                   CopyableContent="{Binding ExtendedMasterPrivateKey}"
+                   IsVisible="{Binding !!ExtendedMasterPrivateKey}"
+                   PrivacyModeEnabled="{Binding !ShowSensitiveData}">
         <TextBlock Classes="monoSpaced" Text="{Binding ExtendedMasterPrivateKey}" />
       </PreviewItem>
       <Separator IsVisible="{Binding !!ExtendedMasterPrivateKey}" />
 
       <PreviewItem Icon="{StaticResource private_key_regular}"
-                     Label="Extended Master zprv"
-                     CopyableContent="{Binding ExtendedMasterZprv}"
-                     IsVisible="{Binding !!ExtendedMasterZprv}"
-                     PrivacyModeEnabled="{Binding !ShowSensitiveData}">
+                   Label="{x:Static lang:Resources.ExtendedMasterZprv}"
+                   CopyableContent="{Binding ExtendedMasterZprv}"
+                   IsVisible="{Binding !!ExtendedMasterZprv}"
+                   PrivacyModeEnabled="{Binding !ShowSensitiveData}">
         <TextBlock Classes="monoSpaced" Text="{Binding ExtendedMasterZprv}" />
       </PreviewItem>
       <Separator IsVisible="{Binding !!ExtendedMasterZprv}" />
 
       <PreviewItem Icon="{StaticResource fingerprint_regular}"
-                     Label="Extended Master Fingerprint"
-                     CopyableContent="{Binding MasterKeyFingerprint}"
-                     IsVisible="{Binding MasterKeyFingerprint, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                   Label="{x:Static lang:Resources.ExtendedMasterFingerprint}"
+                   CopyableContent="{Binding MasterKeyFingerprint}"
+                   IsVisible="{Binding MasterKeyFingerprint, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
         <TextBlock Classes="monoSpaced" Text="{Binding MasterKeyFingerprint}" />
       </PreviewItem>
       <Separator IsVisible="{Binding MasterKeyFingerprint, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
 
       <PreviewItem Icon="{StaticResource organization_regular}"
-                     Label="Account Key Path (SegWit)"
-                     CopyableContent="{Binding SegWitAccountKeyPath}">
+                   Label="{x:Static lang:Resources.AccountKeyPathSegWit}"
+                   CopyableContent="{Binding SegWitAccountKeyPath}">
         <TextBlock Classes="monoSpaced" Text="{Binding SegWitAccountKeyPath}" />
       </PreviewItem>
       <Separator />
 
       <PreviewItem Icon="{StaticResource organization_regular}"
-                           Label="Account Key Path (Taproot)"
-                           CopyableContent="{Binding TaprootAccountKeyPath}">
+                   Label="{x:Static lang:Resources.AccountKeyPathTaproot}"
+                   CopyableContent="{Binding TaprootAccountKeyPath}">
         <TextBlock Classes="monoSpaced" Text="{Binding TaprootAccountKeyPath}" />
       </PreviewItem>
       <Separator />
 
       <PreviewItem Icon="{StaticResource private_key_regular}"
-                     Label="Extended Account Private Key xpriv"
-                     CopyableContent="{Binding ExtendedAccountPrivateKey}"
-                     IsVisible="{Binding !!ExtendedAccountPrivateKey}"
-                     PrivacyModeEnabled="{Binding !ShowSensitiveData}">
+                   Label="{x:Static lang:Resources.ExtendedAccountPrivateKeyXpriv}"
+                   CopyableContent="{Binding ExtendedAccountPrivateKey}"
+                   IsVisible="{Binding !!ExtendedAccountPrivateKey}"
+                   PrivacyModeEnabled="{Binding !ShowSensitiveData}">
         <TextBlock Classes="monoSpaced" Text="{Binding ExtendedAccountPrivateKey}" />
       </PreviewItem>
       <Separator IsVisible="{Binding !!ExtendedAccountPrivateKey}" />
 
       <StackPanel Spacing="10" IsVisible="{Binding HasOutputDescriptors}">
         <PreviewItem Icon="{StaticResource key_regular}"
-                       Label="Public External Output descriptor"
-                       CopyableContent="{Binding PublicExternalOutputDescriptor}">
-          <PrivacyContentControl Classes="monoSpaced" Content="{Binding PublicExternalOutputDescriptor}" ForceShow="{Binding ShowSensitiveData}" />
+                     Label="{x:Static lang:Resources.PublicExternalOutputDescriptor}"
+                     CopyableContent="{Binding PublicExternalOutputDescriptor}">
+          <PrivacyContentControl Classes="monoSpaced" Content="{Binding PublicExternalOutputDescriptor}"
+                                 ForceShow="{Binding ShowSensitiveData}" />
         </PreviewItem>
         <PreviewItem Icon="{StaticResource key_regular}"
-                       Label="Public Internal Output descriptor"
-                       CopyableContent="{Binding PublicInternalOutputDescriptor}">
-          <PrivacyContentControl Classes="monoSpaced" Content="{Binding PublicInternalOutputDescriptor}" ForceShow="{Binding ShowSensitiveData}" />
+                     Label="{x:Static lang:Resources.PublicInternalOutputDescriptor}"
+                     CopyableContent="{Binding PublicInternalOutputDescriptor}">
+          <PrivacyContentControl Classes="monoSpaced" Content="{Binding PublicInternalOutputDescriptor}"
+                                 ForceShow="{Binding ShowSensitiveData}" />
         </PreviewItem>
 
         <PreviewItem Icon="{StaticResource key_regular}"
-                       Label="Private External Output descriptor"
-                       IsVisible="{Binding !!PrivateExternalOutputDescriptor}"
-                       PrivacyModeEnabled="{Binding !ShowSensitiveData}"
-                       CopyableContent="{Binding PrivateExternalOutputDescriptor}">
-          <PrivacyContentControl Classes="monoSpaced" Content="{Binding PrivateExternalOutputDescriptor}" ForceShow="{Binding ShowSensitiveData}" />
+                     Label="{x:Static lang:Resources.PrivateExternalOutputDescriptor}"
+                     IsVisible="{Binding !!PrivateExternalOutputDescriptor}"
+                     PrivacyModeEnabled="{Binding !ShowSensitiveData}"
+                     CopyableContent="{Binding PrivateExternalOutputDescriptor}">
+          <PrivacyContentControl Classes="monoSpaced" Content="{Binding PrivateExternalOutputDescriptor}"
+                                 ForceShow="{Binding ShowSensitiveData}" />
         </PreviewItem>
         <PreviewItem Icon="{StaticResource key_regular}"
-                       Label="Private Internal Output descriptor"
-                       IsVisible="{Binding !!PrivateInternalOutputDescriptor}"
-                       PrivacyModeEnabled="{Binding !ShowSensitiveData}"
-                       CopyableContent="{Binding PrivateInternalOutputDescriptor}">
-          <PrivacyContentControl Classes="monoSpaced" Content="{Binding PrivateInternalOutputDescriptor}" ForceShow="{Binding ShowSensitiveData}" />
+                     Label="{x:Static lang:Resources.PrivateInternalOutputDescriptor}"
+                     IsVisible="{Binding !!PrivateInternalOutputDescriptor}"
+                     PrivacyModeEnabled="{Binding !ShowSensitiveData}"
+                     CopyableContent="{Binding PrivateInternalOutputDescriptor}">
+          <PrivacyContentControl Classes="monoSpaced" Content="{Binding PrivateInternalOutputDescriptor}"
+                                 ForceShow="{Binding ShowSensitiveData}" />
         </PreviewItem>
       </StackPanel>
       <Separator IsVisible="{Binding HasOutputDescriptors}" />
 
       <PreviewItem Icon="{StaticResource key_regular}"
-                     Label="Extended Account Public Key (SegWit)"
-                     CopyableContent="{Binding SegWitExtendedAccountPublicKey}">
-        <PrivacyContentControl Classes="monoSpaced" Content="{Binding SegWitExtendedAccountPublicKey}" ForceShow="{Binding ShowSensitiveData}" />
+                   Label="{x:Static lang:Resources.ExtendedAccountPublicKeySegWit}"
+                   CopyableContent="{Binding SegWitExtendedAccountPublicKey}">
+        <PrivacyContentControl Classes="monoSpaced" Content="{Binding SegWitExtendedAccountPublicKey}"
+                               ForceShow="{Binding ShowSensitiveData}" />
       </PreviewItem>
       <Separator />
 
       <PreviewItem Icon="{StaticResource key_regular}"
-                     Label="Extended Account Public Key (Taproot)"
-                     CopyableContent="{Binding TaprootExtendedAccountPublicKey}"
-                     IsVisible="{Binding !!TaprootExtendedAccountPublicKey}">
-        <PrivacyContentControl Classes="monoSpaced" Content="{Binding TaprootExtendedAccountPublicKey}" ForceShow="{Binding ShowSensitiveData}" />
+                   Label="{x:Static lang:Resources.ExtendedAccountPublicKeyTaproot}"
+                   CopyableContent="{Binding TaprootExtendedAccountPublicKey}"
+                   IsVisible="{Binding !!TaprootExtendedAccountPublicKey}">
+        <PrivacyContentControl Classes="monoSpaced" Content="{Binding TaprootExtendedAccountPublicKey}"
+                               ForceShow="{Binding ShowSensitiveData}" />
       </PreviewItem>
     </StackPanel>
   </ContentArea>

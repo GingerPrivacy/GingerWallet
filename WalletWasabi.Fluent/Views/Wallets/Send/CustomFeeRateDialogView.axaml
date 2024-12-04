@@ -15,7 +15,7 @@
                  EnableCancel="{Binding EnableCancel}"
                  IsBusy="{Binding IsBusy}">
     <StackPanel Orientation="Horizontal" Spacing="20" VerticalAlignment="Top">
-      <Label Content="_Transaction fee rate:" Target="CustomFee" />
+      <Label Content="{x:Static lang:Resources.TransactionFeeRate}" Target="CustomFee" />
       <CurrencyEntryBox Text="{Binding CustomFee}" CurrencyCode="sat/vByte"
                           Width="220" MaxDecimals="2" Classes="standalone"
                           Watermark="1 sat/vByte" x:Name="CustomFee">

@@ -1,3 +1,5 @@
+using WalletWasabi.Lang;
+
 namespace WalletWasabi.Models;
 
 /// <summary>
@@ -6,12 +8,12 @@ namespace WalletWasabi.Models;
 public enum TorMode
 {
 	/// <summary>Tor is disabled. Clearnet is used instead.</summary>
-	[FriendlyName("Disabled")]
+	[FriendlyName(isLocalized: true)]
 	Disabled,
 
 	/// <summary>Use running Tor or start a new Tor process if it is not running.</summary>
 	/// <remarks>In this mode, Wasabi app is the owner of its Tor process.</remarks>
-	[FriendlyName("Enabled")]
+	[FriendlyName(isLocalized: true)]
 	Enabled,
 
 	/// <summary>Use only running Tor process.</summary>
@@ -19,6 +21,6 @@ public enum TorMode
 	/// In this mode, Wasabi app is not the owner of its Tor process.
 	/// <para>Useful for distributions like Whonix or Tails where starting a new Tor process is not a good option.</para>
 	/// </remarks>
-	[FriendlyName("Enabled (connect-only mode)")]
+	[FriendlyName(isLocalized: true)]
 	EnabledOnlyRunning,
 }

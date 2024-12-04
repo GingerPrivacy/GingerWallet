@@ -106,7 +106,7 @@ public static class NostrExtensions
 				new()
 				{
 					TagIdentifier = NetworkTagIdentifier,
-					Data = [coordinator.Network.ChainName.ToString().ToLower()]
+					Data = [coordinator.Network.ChainName.ToString().ToLowerInvariant()]
 				}
 			]
 		};

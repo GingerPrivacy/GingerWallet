@@ -15,12 +15,16 @@ namespace WalletWasabi.WabiSabi.Client.RoundStateAwaiters;
 
 public class RoundStateUpdater : PeriodicRunner
 {
-	public RoundStateUpdater(TimeSpan requestInterval, IWabiSabiApiRequestHandler arenaRequestHandler, bool verifyRoundState = true) : base(requestInterval)
+	public RoundStateUpdater(TimeSpan requestInterval, string[] allowedCoordinatorIdentifiers, IWabiSabiApiRequestHandler arenaRequestHandler, bool verifyRoundState = true) : base(requestInterval)
 	{
 		ArenaRequestHandler = arenaRequestHandler;
+
+		_allowedCoordinatorIdentifiers = allowedCoordinatorIdentifiers;
 		// To turn off the RoundState verify code for simple tests
 		_verifyRoundState = verifyRoundState;
 	}
+
+	private string[] _allowedCoordinatorIdentifiers;
 
 	private IWabiSabiApiRequestHandler ArenaRequestHandler { get; }
 	private Dictionary<uint256, RoundStateHolder> RoundStates { get; set; } = new();
@@ -103,7 +107,7 @@ public class RoundStateUpdater : PeriodicRunner
 	{
 		if (!RoundStates.TryGetValue(rs.Id, out RoundStateHolder? rsh))
 		{
-			return new(rs);
+			return new(rs, _allowedCoordinatorIdentifiers, _verifyRoundState);
 		}
 
 		rsh.VerifyAndSet(rs, requestFromCheckpointList.ContainsKey(rs.Id), _verifyRoundState);

@@ -1,3 +1,5 @@
+using WalletWasabi.Lang;
+
 namespace WalletWasabi.Fluent.Extensions;
 
 public static class DateTimeExtensions
@@ -11,12 +13,12 @@ public static class DateTimeExtensions
 	{
 		if (value.Date == DateTime.Today)
 		{
-			return "Today";
+			return Resources.Today;
 		}
 
 		if (value.Date == DateTime.Today.AddDays(-1))
 		{
-			return "Yesterday";
+			return Resources.Yesterday;
 		}
 
 		return value.ToString("MMM d, yyyy");

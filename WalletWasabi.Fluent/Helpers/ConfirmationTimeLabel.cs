@@ -1,3 +1,5 @@
+using WalletWasabi.Lang;
+
 namespace WalletWasabi.Fluent.Helpers;
 
 public static class ConfirmationTimeLabel
@@ -6,19 +8,19 @@ public static class ConfirmationTimeLabel
 	{
 		if (timeSpan <= TransactionFeeHelper.CalculateConfirmationTime(WalletWasabi.Helpers.Constants.FastestConfirmationTarget))
 		{
-			return "fastest";
+			return Resources.Fastest;
 		}
 
-		return TimeSpanFormatter.Format(timeSpan, new TimeSpanFormatter.Configuration("day", "hour", "min"));
+		return TimeSpanFormatter.Format(timeSpan, new TimeSpanFormatter.Configuration(Resources.day, Resources.hour, Resources.min));
 	}
 
 	public static string SliderLabel(TimeSpan timeSpan)
 	{
 		if (timeSpan <= TransactionFeeHelper.CalculateConfirmationTime(WalletWasabi.Helpers.Constants.FastestConfirmationTarget))
 		{
-			return "fastest";
+			return Resources.Fastest;
 		}
 
-		return "~" + TimeSpanFormatter.Format(timeSpan, new TimeSpanFormatter.Configuration(" day", " hour", " min"));
+		return "~" + TimeSpanFormatter.Format(timeSpan, new TimeSpanFormatter.Configuration($" {Resources.day}", $" {Resources.hour}", $" {Resources.min}"));
 	}
 }

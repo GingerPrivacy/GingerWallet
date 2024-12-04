@@ -14,6 +14,7 @@ using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.ViewModels.Wallets.Send;
+using WalletWasabi.Lang;
 using WalletWasabi.Logging;
 using WalletWasabi.WabiSabi.Client;
 using WalletWasabi.Wallets;
@@ -433,9 +434,9 @@ public partial class PrivacySuggestionsModel
 	{
 		return btcDifference switch
 		{
-			> 0 => "more",
-			< 0 => "less",
-			_ => "the same amount"
+			> 0 => Resources.More,
+			< 0 => Resources.Less,
+			_ => Resources.TheSameAmount,
 		};
 	}
 

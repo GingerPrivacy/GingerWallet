@@ -4,18 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:settings="using:WalletWasabi.Fluent.ViewModels.Settings"
              xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
-             mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371"
+             mc:Ignorable="d" d:DesignWidth="650"
              x:DataType="settings:BitcoinTabSettingsViewModel"
              x:Class="WalletWasabi.Fluent.Views.Settings.BitcoinTabSettingsView"
              x:CompileBindings="True">
   <StackPanel Classes="settingsLayout">
 
-    <StackPanel>
+    <DockPanel>
       <TextBlock Text="{x:Static lang:Resources.Network}" />
-      <ComboBox HorizontalAlignment="Stretch"
-                ItemsSource="{Binding Networks}"
-                SelectedItem="{Binding Settings.Network}" />
-    </StackPanel>
+      <ComboBox ItemsSource="{Binding Networks}" SelectedItem="{Binding Settings.Network}" />
+    </DockPanel>
 
     <DockPanel>
       <TextBlock Text="{x:Static lang:Resources.RunBitcoinKnotsOnStartup}" />
@@ -32,26 +30,24 @@
       <Label Content="{Binding BitcoinCoreVersion}" />
     </DockPanel>
 
-    <StackPanel IsVisible="{Binding Settings.StartLocalBitcoinCoreOnStartup}">
+    <DockPanel IsVisible="{Binding Settings.StartLocalBitcoinCoreOnStartup}">
       <TextBlock Text="{x:Static lang:Resources.BitcoinCoreKnotsDataFolder}" />
       <TextBox Text="{Binding Settings.LocalBitcoinCoreDataDir}" />
-    </StackPanel>
+    </DockPanel>
 
-    <StackPanel IsVisible="{Binding !Settings.StartLocalBitcoinCoreOnStartup}"
+    <DockPanel IsVisible="{Binding !Settings.StartLocalBitcoinCoreOnStartup}"
                 ToolTip.Tip="{x:Static lang:Resources.WasabiDownloadBlocksFromFullNode}">
       <TextBlock Text="{x:Static lang:Resources.BitcoinP2PEndpoint}" />
-      <PrivacyContentControl PrivacyReplacementMode="Text" UseOpacity="True">
-        <TextBox Text="{Binding BitcoinP2PEndPoint}">
-          <Interaction.Behaviors>
-            <TextBoxAutoSelectTextBehavior />
-          </Interaction.Behaviors>
-        </TextBox>
-      </PrivacyContentControl>
-    </StackPanel>
+      <TextBox Text="{Binding BitcoinP2PEndPoint}">
+        <Interaction.Behaviors>
+          <TextBoxAutoSelectTextBehavior />
+        </Interaction.Behaviors>
+      </TextBox>
+    </DockPanel>
 
-    <StackPanel ToolTip.Tip="{x:Static lang:Resources.CoinsReceivedFromOthers}">
+    <DockPanel ToolTip.Tip="{x:Static lang:Resources.CoinsReceivedFromOthers}">
       <TextBlock Text="{x:Static lang:Resources.DustThreshold}" />
       <CurrencyEntryBox Classes="standalone" Text="{Binding DustThreshold}" CurrencyCode="BTC" />
-    </StackPanel>
+    </DockPanel>
   </StackPanel>
 </UserControl>

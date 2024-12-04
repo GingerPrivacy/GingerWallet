@@ -5,8 +5,6 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using DynamicData;
-using DynamicData.Binding;
 using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Fluent.Extensions;
@@ -17,7 +15,6 @@ using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.ViewModels.Navigation;
 using WalletWasabi.Fluent.ViewModels.SearchBar.SearchItems;
 using WalletWasabi.Fluent.ViewModels.SearchBar.Sources;
-using WalletWasabi.Fluent.ViewModels.Wallets.Buy;
 using WalletWasabi.Fluent.ViewModels.Wallets.Home.History;
 using WalletWasabi.Fluent.ViewModels.Wallets.Home.Tiles;
 using WalletWasabi.Fluent.ViewModels.Wallets.Settings;
@@ -47,8 +44,6 @@ public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
 
 		Settings = new WalletSettingsViewModel(UiContext, WalletModel);
 		History = new HistoryViewModel(UiContext, WalletModel);
-		BuyViewModel = new BuyViewModel(UiContext, WalletModel);
-
 		var searchItems = CreateSearchItems();
 		this.WhenAnyValue(x => x.IsSelected)
 			.Do(shouldDisplay => UiContext.EditableSearchSource.Toggle(searchItems, shouldDisplay))
@@ -83,8 +78,6 @@ public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
 
 		ReceiveCommand = ReactiveCommand.Create(() => Navigate().To().Receive(WalletModel));
 
-		BuyCommand = ReactiveCommand.Create(() => Navigate(NavigationTarget.DialogScreen).To(BuyViewModel));
-
 		WalletInfoCommand = ReactiveCommand.CreateFromTask(async () =>
 		{
 			if (await AuthorizeForPasswordAsync())
@@ -115,27 +108,12 @@ public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
 
 		Tiles = GetTiles().ToList();
 
-		CanBuy =
-			walletModel.HasBalance
-				.CombineLatest(BuyViewModel.HasNonEmptyOrder)
-				.Select(x => GetIsBuyButtonVisible(x.First, x.Second));
-
-		HasUnreadConversations = BuyViewModel.Orders
-			.ToObservableChangeSet(x => x.OrderNumber)
-			.AutoRefresh(x => x.HasUnreadMessages)
-			.Filter(model => model.HasUnreadMessages)
-			.AsObservableCache()
-			.CountChanged
-			.Select(x => x > 0);
-
 		this.WhenAnyValue(x => x.Settings.PreferPsbtWorkflow)
 			.Do(x => this.RaisePropertyChanged(nameof(PreferPsbtWorkflow)))
 			.Subscribe();
 
 		this.WhenAnyValue(x => x.WalletModel.Name).BindTo(this, x => x.Title);
 	}
-
-	public ICommand BuyCommand { get; set; }
 
 	// TODO: Remove this
 	public Wallet Wallet { get; }
@@ -156,10 +134,6 @@ public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
 
 	public HistoryViewModel History { get; }
 
-	public BuyViewModel BuyViewModel { get; }
-
-	public IObservable<bool> CanBuy { get; }
-
 	public IEnumerable<ActivatableViewModel> Tiles { get; }
 
 	public ICommand SendCommand { get; private set; }
@@ -179,8 +153,6 @@ public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
 	public ICommand WalletCoinsCommand { get; private set; }
 
 	public ICommand CoinJoinSettingsCommand { get; private set; }
-
-	public IObservable<bool> HasUnreadConversations { get; }
 
 	public void SelectTransaction(uint256 txid)
 	{
@@ -210,20 +182,11 @@ public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
 		WalletModel.State
 			.BindTo(this, x => x.WalletState)
 			.DisposeWith(disposables);
-	}
 
-	private bool GetIsBuyButtonVisible(bool hasBalance, bool hasNonEmptyOrder)
-	{
-#if DEBUG
-		return true;
-#endif
-
-		if (hasBalance || hasNonEmptyOrder)
+		if (!IsWatchOnly && !Settings.WalletCoinJoinSettings.IsCoinjoinProfileSelected)
 		{
-			return true;
+			UiContext.Navigate().To().ConfirmCoinjoinSettings(Settings);
 		}
-
-		return false;
 	}
 
 	private ISearchItem[] CreateSearchItems()
@@ -231,18 +194,18 @@ public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
 		return new ISearchItem[]
 		{
 			new ActionableItem(Resources.ReceiveViewModelTitle, Resources.ReceiveViewModelCaption, () => { ReceiveCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, Resources.ReceiveViewModelKeywords.Replace(" ","").Split(',')) { Icon = "wallet_action_receive", IsDefault = true, Priority = 2 },
-			new ActionableItem("Coinjoin Settings", "Display wallet coinjoin settings", () => { CoinJoinSettingsCommand.ExecuteIfCan(); return Task.CompletedTask; }, "Wallet", new[] { "Wallet", "Settings", }) { Icon = "wallet_action_coinjoin", IsDefault = true, Priority = 3 },
-			new ActionableItem("Wallet Settings", "Display wallet settings", () => { WalletSettingsCommand.ExecuteIfCan(); return Task.CompletedTask; }, "Wallet", new[] { "Wallet", "Settings", }) { Icon = "settings_wallet_regular", IsDefault = true, Priority = 4 },
-			new ActionableItem("Exclude Coins", "Display exclude coins", () => { CoinJoinStateViewModel.NavigateToExcludedCoinsCommand.ExecuteIfCan(); return Task.CompletedTask; }, "Wallet", new[] { "Wallet", "Exclude", "Coins", "Coinjoin", "Freeze", "UTXO", }) { Icon = "exclude_coins", IsDefault = true, Priority = 5 },
-			new ActionableItem("Wallet Coins", "Display wallet coins", () => { WalletCoinsCommand.ExecuteIfCan(); return Task.CompletedTask; }, "Wallet", new[] { "Wallet", "Coins", "UTXO", }) { Icon = "wallet_coins", IsDefault = true, Priority = 6 },
-			new ActionableItem("Wallet Stats", "Display wallet stats", () => { WalletStatsCommand.ExecuteIfCan(); return Task.CompletedTask; }, "Wallet", new[] { "Wallet", "Stats", }) { Icon = "stats_wallet_regular", IsDefault = true, Priority = 7 },
-			new ActionableItem("Wallet Info", "Display wallet info", () => { WalletInfoCommand.ExecuteIfCan(); return Task.CompletedTask; }, "Wallet", new[] { "Wallet", "Info", }) { Icon = "info_regular", IsDefault = true, Priority = 8 },
+			new ActionableItem(Resources.CoinjoinSettings, Resources.WalletCoinJoinSettingsViewModelCaption, () => { CoinJoinSettingsCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, new[] { "Wallet", "Settings", }) { Icon = "wallet_action_coinjoin", IsDefault = true, Priority = 3 },
+			new ActionableItem(Resources.WalletSettings, Resources.WalletSettingsViewModelCaption, () => { WalletSettingsCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, new[] { "Wallet", "Settings", }) { Icon = "settings_wallet_regular", IsDefault = true, Priority = 4 },
+			new ActionableItem(Resources.ExcludedCoinsViewModelTitle, Resources.ExcludedCoinsViewModelCaption, () => { CoinJoinStateViewModel.NavigateToExcludedCoinsCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, Resources.ExcludedCoinsViewModelKeywords.Replace(" ","").Split(',')) { Icon = "exclude_coins", IsDefault = true, Priority = 5 },
+			new ActionableItem(Resources.WalletCoinsViewModelTitle, Resources.WalletCoinsViewModelCaption, () => { WalletCoinsCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, Resources.WalletCoinsViewModelKeywords.Replace(" ","").Split(',')) { Icon = "wallet_coins", IsDefault = true, Priority = 6 },
+			new ActionableItem(Resources.WalletStatsViewModelTitle, Resources.WalletStatsViewModelCaption, () => { WalletStatsCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, Resources.WalletStatsViewModelKeywords.Replace(" ","").Split(',')) { Icon = "stats_wallet_regular", IsDefault = true, Priority = 7 },
+			new ActionableItem(Resources.WalletInfoViewModelTitle, Resources.WalletInfoViewModelCaption, () => { WalletInfoCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, Resources.WalletInfoViewModelKeywords.Replace(" ","").Split(',')) { Icon = "info_regular", IsDefault = true, Priority = 8 },
 		};
 	}
 
 	private ISearchItem CreateSendItem()
 	{
-		return new ActionableItem(Resources.SendViewModelTitle, Resources.SendViewModelCaption, () => { SendCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, Resources.AboutViewModelKeywords.Replace(" ","").Split(',')) { Icon = "wallet_action_send", IsDefault = true, Priority = 1 };
+		return new ActionableItem(Resources.SendViewModelTitle, Resources.SendViewModelCaption, () => { SendCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, Resources.AboutViewModelKeywords.Replace(" ", "").Split(',')) { Icon = "wallet_action_send", IsDefault = true, Priority = 1 };
 	}
 
 	private IEnumerable<ActivatableViewModel> GetTiles()

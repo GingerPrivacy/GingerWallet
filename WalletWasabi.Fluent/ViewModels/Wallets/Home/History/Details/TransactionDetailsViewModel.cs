@@ -8,6 +8,7 @@ using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.ViewModels.Navigation;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.ViewModels.Wallets.Home.History.Details;
 
@@ -31,7 +32,7 @@ public partial class TransactionDetailsViewModel : RoutableViewModel
 
 	public TransactionDetailsViewModel(UiContext uiContext, IWalletModel wallet, TransactionModel model)
 	{
-		Title = "Transaction Details";
+		Title = Resources.TransactionDetails;
 		UiContext = uiContext;
 		_wallet = wallet;
 
@@ -77,12 +78,12 @@ public partial class TransactionDetailsViewModel : RoutableViewModel
 		if (model.Amount < Money.Zero)
 		{
 			Amount = _wallet.AmountProvider.Create(-model.Amount - (model.Fee ?? Money.Zero));
-			AmountText = "Amount sent";
+			AmountText = Resources.AmountSent;
 		}
 		else
 		{
 			Amount = _wallet.AmountProvider.Create(model.Amount);
-			AmountText = "Amount received";
+			AmountText = Resources.AmountReceived;
 		}
 
 		BlockHash = model.BlockHash?.ToString();

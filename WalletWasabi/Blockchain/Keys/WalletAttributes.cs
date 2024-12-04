@@ -7,6 +7,7 @@ using WalletWasabi.Models;
 using WalletWasabi.JsonConverters;
 using System.Runtime.Serialization;
 using System.Linq;
+using WalletWasabi.WabiSabi.Client.CoinJoin.Client;
 
 namespace WalletWasabi.Blockchain.Keys;
 
@@ -14,11 +15,11 @@ namespace WalletWasabi.Blockchain.Keys;
 public class WalletAttributes
 {
 	public const bool DefaultAutoCoinjoin = false;
-	public const int DefaultAnonScoreTarget = 5;
+	public const int DefaultAnonScoreTarget = 20;
 	public const bool DefaultRedCoinIsolation = false;
 	public const int DefaultSafeMiningFeeRate = 10;
 	public const int DefaultFeeRateMedianTimeFrameHours = 0;
-	public static readonly Money DefaultPlebStopThreshold = Money.Coins(0.01m);
+	public static readonly Money DefaultPlebStopThreshold = Money.Coins(0.003m);
 
 	public WalletAttributes()
 	{
@@ -68,7 +69,10 @@ public class WalletAttributes
 	public bool RedCoinIsolation { get; set; } = DefaultRedCoinIsolation;
 
 	[JsonProperty(PropertyName = "CoinjoinSkipFactors")]
-	public CoinjoinSkipFactors CoinjoinSkipFactors { get; set; } = CoinjoinSkipFactors.SpeedMaximizing;
+	public CoinjoinSkipFactors CoinjoinSkipFactors { get; set; } = CoinjoinSkipFactors.NoSkip;
+
+	[JsonProperty]
+	public CoinJoinCoinSelectionSettings CoinJoinCoinSelectionSettings { get; set; } = new();
 
 	[JsonProperty(ItemConverterType = typeof(Uint256JsonConverter), PropertyName = "CoinJoinTransactions")]
 	public List<uint256> CoinJoinTransactions { get; internal set; } = new();

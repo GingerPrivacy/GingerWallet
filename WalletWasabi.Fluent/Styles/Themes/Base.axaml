@@ -98,6 +98,7 @@
   <!-- BuyAnything -->
   <SolidColorBrush x:Key="ChatInputBackground" Color="{StaticResource Layer1BackgroundBrush}" />
   <SolidColorBrush x:Key="UnreadBadgeColor" Color="#DCA63E" />
+  <SolidColorBrush x:Key="ImportantUnreadBadgeColor" Color="#FF6D00" />
 
   <!-- BoxShadows -->
   <BoxShadows x:Key="DialogAlertStartBoxShadow">0 0 10 5 #DDA73E</BoxShadows>

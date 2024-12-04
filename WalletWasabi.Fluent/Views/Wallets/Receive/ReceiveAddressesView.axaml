@@ -15,7 +15,7 @@
                EnableBack="{Binding EnableBack}"
                ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <ContentArea.TopContent>
-      <Button DockPanel.Dock="Right" Theme="{StaticResource DialogSortButton}" ToolTip.Tip="Sorting">
+      <Button DockPanel.Dock="Right" Theme="{StaticResource DialogSortButton}" ToolTip.Tip="{x:Static lang:Resources.Sorting}">
         <Button.Flyout>
           <Flyout Placement="BottomEdgeAlignedRight">
             <sorting:SortControl Sortables="{Binding Sortables}" />

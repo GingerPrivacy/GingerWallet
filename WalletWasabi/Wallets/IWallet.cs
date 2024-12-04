@@ -6,6 +6,7 @@ using WalletWasabi.Blockchain.Transactions;
 using WalletWasabi.Models;
 using WalletWasabi.WabiSabi.Client;
 using WalletWasabi.WabiSabi.Client.Batching;
+using WalletWasabi.WabiSabi.Client.CoinJoin.Client;
 
 namespace WalletWasabi.Wallets;
 
@@ -31,6 +32,8 @@ public interface IWallet
 	TimeSpan FeeRateMedianTimeFrame { get; }
 	bool RedCoinIsolation { get; }
 	CoinjoinSkipFactors CoinjoinSkipFactors { get; }
+
+	CoinJoinCoinSelectionSettings CoinJoinCoinSelectionSettings { get; }
 
 	Task<bool> IsWalletPrivateAsync();
 

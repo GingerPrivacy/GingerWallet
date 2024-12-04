@@ -39,7 +39,7 @@ public partial class SearchBarViewModel : ReactiveObject
 					SearchText = "";
 				}
 			});
-		
+
 		ActivateFirstItemCommand = activateFirstItemCommand;
 		CommandActivated = activateFirstItemCommand.ToSignal();
 		ResetCommand = ReactiveCommand.Create(() => SearchText = "");

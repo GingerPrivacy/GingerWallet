@@ -74,7 +74,7 @@ internal class Participant
 		}
 
 		var apiClient = new WabiSabiHttpApiClient(HttpClientFactory.NewHttpClientWithDefaultCircuit());
-		using var roundStateUpdater = new RoundStateUpdater(TimeSpan.FromSeconds(3), apiClient);
+		using var roundStateUpdater = new RoundStateUpdater(TimeSpan.FromSeconds(3), ["CoinJoinCoordinatorIdentifier"], apiClient);
 		await roundStateUpdater.StartAsync(cancellationToken).ConfigureAwait(false);
 
 		var outputProvider = new OutputProvider(Wallet);

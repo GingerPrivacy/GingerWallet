@@ -4,6 +4,7 @@ using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Fluent.Validation;
 using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
+using WalletWasabi.Lang;
 using WalletWasabi.Models;
 
 namespace WalletWasabi.Fluent.ViewModels.Wallets.Send;
@@ -17,7 +18,7 @@ public partial class CustomFeeRateDialogViewModel : DialogViewModelBase<FeeRate>
 
 	public CustomFeeRateDialogViewModel(TransactionInfo transactionInfo)
 	{
-		Title = "Advanced";
+		Title = Resources.Advanced;
 
 		_transactionInfo = transactionInfo;
 
@@ -68,13 +69,13 @@ public partial class CustomFeeRateDialogViewModel : DialogViewModelBase<FeeRate>
 
 		if (!decimal.TryParse(customFeeString, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var value))
 		{
-			errors.Add(ErrorSeverity.Error, "The entered fee is not valid.");
+			errors.Add(ErrorSeverity.Error, Resources.InvalidFee);
 			return;
 		}
 
 		if (value < decimal.One)
 		{
-			errors.Add(ErrorSeverity.Error, "Cannot be less than 1 sat/vByte.");
+			errors.Add(ErrorSeverity.Error, Resources.MinFeeLimit);
 			return;
 		}
 
@@ -84,7 +85,7 @@ public partial class CustomFeeRateDialogViewModel : DialogViewModelBase<FeeRate>
 		}
 		catch (OverflowException)
 		{
-			errors.Add(ErrorSeverity.Error, "The entered fee is too high.");
+			errors.Add(ErrorSeverity.Error, Resources.FeeTooHigh);
 			return;
 		}
 	}

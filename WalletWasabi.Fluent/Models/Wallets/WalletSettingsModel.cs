@@ -29,6 +29,12 @@ public partial class WalletSettingsModel : ReactiveObject
 	[AutoNotify] private int _feeRateMedianTimeFrameHours;
 	[AutoNotify] private WalletId? _outputWalletId;
 
+	[AutoNotify] private bool _useExperimentalCoinSelector;
+	[AutoNotify] private bool _forceUsingLowPrivacyCoins;
+	[AutoNotify] private double _weightedAnonymityLossNormal;
+	[AutoNotify] private double _valueLossRateNormal;
+	[AutoNotify] private double _targetCoinCountPerBucket;
+
 	public WalletSettingsModel(KeyManager keyManager, bool isNewWallet = false, bool isCoinJoinPaused = false)
 	{
 		_keyManager = keyManager;
@@ -46,6 +52,13 @@ public partial class WalletSettingsModel : ReactiveObject
 		_coinjoinSkipFactors = _keyManager.CoinjoinSkipFactors;
 		_safeMiningFeeRate = _keyManager.SafeMiningFeeRate;
 		_feeRateMedianTimeFrameHours = _keyManager.FeeRateMedianTimeFrameHours;
+
+		var coinJoinSelectionSettings = _keyManager.Attributes.CoinJoinCoinSelectionSettings;
+		_useExperimentalCoinSelector = coinJoinSelectionSettings.UseExperimentalCoinSelector;
+		_forceUsingLowPrivacyCoins = coinJoinSelectionSettings.ForceUsingLowPrivacyCoins;
+		_weightedAnonymityLossNormal = coinJoinSelectionSettings.WeightedAnonymityLossNormal;
+		_valueLossRateNormal = coinJoinSelectionSettings.ValueLossRateNormal;
+		_targetCoinCountPerBucket = coinJoinSelectionSettings.TargetCoinCountPerBucket;
 
 		if (!isNewWallet)
 		{
@@ -68,7 +81,13 @@ public partial class WalletSettingsModel : ReactiveObject
 
 		// This should go to the previous WhenAnyValue, it's just that it's not working for some reason.
 		this.WhenAnyValue(
-			x => x.CoinjoinSkipFactors)
+				x => x.CoinjoinSkipFactors,
+				x => x.SafeMiningFeeRate,
+				x => x.UseExperimentalCoinSelector,
+				x => x.ForceUsingLowPrivacyCoins,
+				x => x.WeightedAnonymityLossNormal,
+				x => x.ValueLossRateNormal,
+				x => x.TargetCoinCountPerBucket)
 			.Skip(1)
 			.Do(_ => SetValues())
 			.Subscribe();
@@ -110,7 +129,13 @@ public partial class WalletSettingsModel : ReactiveObject
 		_keyManager.AnonScoreTarget = AnonScoreTarget;
 		_keyManager.RedCoinIsolation = RedCoinIsolation;
 		_keyManager.CoinjoinSkipFactors = CoinjoinSkipFactors;
+		_keyManager.SafeMiningFeeRate = SafeMiningFeeRate;
 		_keyManager.SetFeeRateMedianTimeFrame(FeeRateMedianTimeFrameHours);
+		_keyManager.Attributes.CoinJoinCoinSelectionSettings.UseExperimentalCoinSelector = UseExperimentalCoinSelector;
+		_keyManager.Attributes.CoinJoinCoinSelectionSettings.ForceUsingLowPrivacyCoins = ForceUsingLowPrivacyCoins;
+		_keyManager.Attributes.CoinJoinCoinSelectionSettings.WeightedAnonymityLossNormal = WeightedAnonymityLossNormal;
+		_keyManager.Attributes.CoinJoinCoinSelectionSettings.ValueLossRateNormal = ValueLossRateNormal;
+		_keyManager.Attributes.CoinJoinCoinSelectionSettings.TargetCoinCountPerBucket = TargetCoinCountPerBucket;
 		_isDirty = true;
 	}
 

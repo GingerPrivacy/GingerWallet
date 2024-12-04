@@ -42,7 +42,7 @@
       <AdorningContentControl HorizontalAlignment="Center" VerticalAlignment="Center" ClipToBounds="False">
         <AdorningContentControl.Adornment>
           <Panel Margin="5 0 -5 20">
-            <Button Command="{Binding #QrCode.SaveCommand}" CommandParameter="{Binding Address}" ToolTip.Tip="Save"
+            <Button Command="{Binding #QrCode.SaveCommand}" CommandParameter="{Binding Address}" ToolTip.Tip="{x:Static lang:Resources.Save}"
                     Classes="plain icon"
                     HorizontalAlignment="Right" VerticalAlignment="Bottom">
               <PathIcon Data="{StaticResource save_regular}" />

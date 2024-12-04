@@ -15,17 +15,14 @@ namespace WalletWasabi.Fluent.ViewModels.Wallets.Advanced;
 	Category = SearchCategory.Wallet,
 	NavBarPosition = NavBarPosition.None,
 	NavigationTarget = NavigationTarget.DialogScreen,
-	Searchable = false)]
+	Searchable = false,
+	IsLocalized = true)]
 public partial class WalletCoinsViewModel : RoutableViewModel
 {
 	private readonly IWalletModel _wallet;
 
 	public WalletCoinsViewModel(UiContext uiContext, IWalletModel wallet)
 	{
-		Title = "Wallet Coins";
-		Caption = "Display wallet coins";
-		Keywords = ["Wallet", "Coins", "UTXO"];
-
 		UiContext = uiContext;
 		_wallet = wallet;
 		SetupCancel(enableCancel: false, enableCancelOnEscape: true, enableCancelOnPressed: true);
