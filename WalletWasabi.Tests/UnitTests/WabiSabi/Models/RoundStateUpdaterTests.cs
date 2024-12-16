@@ -22,8 +22,8 @@ public class RoundStateUpdaterTests
 	[Fact]
 	public async Task RoundStateUpdaterTestsAsync()
 	{
-		var roundState1 = RoundState.FromRound(WabiSabiFactory.CreateRound(cfg: new()));
-		var roundState2 = RoundState.FromRound(WabiSabiFactory.CreateRound(cfg: new()));
+		var roundState1 = RoundState.FromRound(WabiSabiTestFactory.CreateRound(cfg: WabiSabiTestFactory.CreateDefaultWabiSabiConfig()));
+		var roundState2 = RoundState.FromRound(WabiSabiTestFactory.CreateRound(cfg: WabiSabiTestFactory.CreateDefaultWabiSabiConfig()));
 
 		using CancellationTokenSource cancellationTokenSource = new(TestTimeOut);
 		var cancellationToken = cancellationTokenSource.Token;
@@ -99,7 +99,7 @@ public class RoundStateUpdaterTests
 	[Fact]
 	public async Task RoundStateUpdaterFailureRecoveryTestsAsync()
 	{
-		var roundState = RoundState.FromRound(WabiSabiFactory.CreateRound(cfg: new()));
+		var roundState = RoundState.FromRound(WabiSabiTestFactory.CreateRound(cfg: WabiSabiTestFactory.CreateDefaultWabiSabiConfig()));
 
 		using var cancellationTokenSource = new CancellationTokenSource();
 		var cancellationToken = cancellationTokenSource.Token;
@@ -147,7 +147,7 @@ public class RoundStateUpdaterTests
 	[Fact]
 	public async Task FailOnUnexpectedAsync()
 	{
-		var roundState = RoundState.FromRound(WabiSabiFactory.CreateRound(cfg: new()));
+		var roundState = RoundState.FromRound(WabiSabiTestFactory.CreateRound(cfg: WabiSabiTestFactory.CreateDefaultWabiSabiConfig()));
 
 		using var cancellationTokenSource = new CancellationTokenSource();
 		var cancellationToken = cancellationTokenSource.Token;
@@ -193,7 +193,7 @@ public class RoundStateUpdaterTests
 	[Fact]
 	public async Task CancelAsync()
 	{
-		var roundState = RoundState.FromRound(WabiSabiFactory.CreateRound(cfg: new()));
+		var roundState = RoundState.FromRound(WabiSabiTestFactory.CreateRound(cfg: WabiSabiTestFactory.CreateDefaultWabiSabiConfig()));
 
 		var mockHttpClient = CreateMockHttpClient(
 			RoundStateResponseBuilder(roundState with { Phase = Phase.InputRegistration }));

@@ -30,14 +30,13 @@ public class ConfigManager
 	/// <summary>
 	/// Check if the config file differs from the config if the file path of the config file is set, otherwise throw exception.
 	/// </summary>
-	public static bool CheckFileChange<T>(string filePath, T current)
-		where T : IConfig, new()
+	public static bool CheckFileChange(string filePath, IConfig current)
 	{
-		T diskVersion = LoadFile<T>(filePath);
+		object diskVersion = LoadFile(filePath, current.GetType());
 		return !AreDeepEqual(diskVersion, current);
 	}
 
-	private static TResponse LoadFile<TResponse>(string filePath)
+	private static object LoadFile(string filePath, Type type)
 	{
 		if (!File.Exists(filePath))
 		{
@@ -46,45 +45,44 @@ public class ConfigManager
 
 		string jsonString = File.ReadAllText(filePath, Encoding.UTF8);
 
-		TResponse? result = JsonConvert.DeserializeObject<TResponse>(jsonString, JsonSerializationOptions.Default.Settings);
+		object? result = JsonConvert.DeserializeObject(jsonString, type, JsonSerializationOptions.Default.Settings);
 
-		return result is not null
-			? result
-			: throw new JsonException("Unexpected null value.");
+		return result is not null ? result : throw new JsonException("Unexpected null value.");
 	}
 
-	public static TResponse LoadFile<TResponse>(string filePath, bool createIfMissing = false)
-		where TResponse : IConfigNg, new()
+	public static object LoadFile(string filePath, Type type, bool createIfMissing = false)
 	{
-		TResponse result;
-
 		if (!createIfMissing)
 		{
-			return LoadFile<TResponse>(filePath);
+			return LoadFile(filePath, type);
 		}
 
+		object? result;
 		if (!File.Exists(filePath))
 		{
 			Logger.LogInfo($"File did not exist. Created at path: '{filePath}'.");
-			result = new();
+			result = Activator.CreateInstance(type);
 			ToFile(filePath, result);
 		}
 		else
 		{
 			try
 			{
-				return LoadFile<TResponse>(filePath);
+				return LoadFile(filePath, type);
 			}
 			catch (Exception ex)
 			{
-				result = new();
+				result = Activator.CreateInstance(type);
 				ToFile(filePath, result);
 
 				Logger.LogInfo($"File has been deleted because it was corrupted. Recreated default version at path: '{filePath}'.");
 				Logger.LogWarning(ex);
 			}
 		}
-
+		if (result is null)
+		{
+			throw new ArgumentException($"{type} has no default constructor");
+		}
 		return result;
 	}
 }

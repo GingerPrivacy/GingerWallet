@@ -68,8 +68,8 @@ public class AffiliateDataUpdaterTests
 			Assert.Empty(requestsUpdater.GetAffiliateData());
 
 			// Notify about a new built coinjoin
-			var wasabiCoin = WabiSabiFactory.CreateCoin();
-			var affiliateCoin = WabiSabiFactory.CreateCoin();
+			var wasabiCoin = WabiSabiTestFactory.CreateCoin();
+			var affiliateCoin = WabiSabiTestFactory.CreateCoin();
 			var destination = BitcoinFactory.CreateScript();
 			var coinjoinData = new BuiltTransactionData(
 				new[]

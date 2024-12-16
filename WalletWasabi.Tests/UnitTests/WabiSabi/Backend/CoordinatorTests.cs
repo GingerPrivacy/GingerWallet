@@ -78,7 +78,7 @@ public class CoordinatorTests
 		DoSConfiguration dosConfig = cfg.GetDoSConfiguration() with { MinTimeInPrison = TimeSpan.Zero };
 		var coinJoinIdStore = new InMemoryCoinJoinIdStore();
 		var mockRpcClient = new MockRpcClient { Network = Network.Main };
-		using WabiSabiCoordinator coordinator = new(coordinatorParameters, mockRpcClient, coinJoinIdStore, new CoinJoinScriptStore(), new MockHttpClientFactory());
+		using WabiSabiCoordinator coordinator = WabiSabiBackendFactory.Instance.CreateCoordinator(coordinatorParameters, mockRpcClient, coinJoinIdStore, new CoinJoinScriptStore(), new MockHttpClientFactory(), null, null, null);
 
 		// Receive a tx that is not spending coins registered in any round.
 		{
@@ -92,12 +92,12 @@ public class CoordinatorTests
 
 		// Receive a tx that is spending coins registered in a round.
 		{
-			var round = WabiSabiFactory.CreateRound(cfg);
+			var round = WabiSabiTestFactory.CreateRound(cfg);
 			using Key key = new();
-			Alice alice = WabiSabiFactory.CreateAlice(key: key, round: round);
+			Alice alice = WabiSabiTestFactory.CreateAlice(key: key, round: round);
 
 			// Register our coin..
-			round.CoinjoinState = round.AddInput(alice.Coin, alice.OwnershipProof, WabiSabiFactory.CreateCommitmentData(round.Id));
+			round.CoinjoinState = round.AddInput(alice.Coin, alice.OwnershipProof, WabiSabiTestFactory.CreateCommitmentData(round.Id));
 			round.SetPhase(Phase.ConnectionConfirmation);
 			coordinator.Arena.Rounds.Add(round);
 
@@ -155,5 +155,7 @@ public class CoordinatorTests
 	}
 
 	private static WabiSabiCoordinator CreateWabiSabiCoordinator(CoordinatorParameters coordinatorParameters)
-		=> new(coordinatorParameters, NewMockRpcClient(), new CoinJoinIdStore(), new CoinJoinScriptStore(), new MockHttpClientFactory());
+	{
+		return WabiSabiBackendFactory.Instance.CreateCoordinator(coordinatorParameters, NewMockRpcClient(), new CoinJoinIdStore(), new CoinJoinScriptStore(), new MockHttpClientFactory(), null, null, null);
+	}
 }

@@ -19,20 +19,21 @@ public class MultipartyTransactionTests
 {
 	private static readonly MoneyRange DefaultAllowedAmounts = new(Money.Zero, Money.Coins(1));
 
-	private static readonly RoundParameters DefaultParameters = WabiSabiFactory.CreateRoundParameters(new()
-	{
-		MinRegistrableAmount = DefaultAllowedAmounts.Min,
-		MaxRegistrableAmount = DefaultAllowedAmounts.Max,
-		MaxSuggestedAmountBase = Money.Coins(Constants.MaximumNumberOfBitcoins)
-	}) with
-	{
-		MiningFeeRate = new FeeRate(0m)
-	};
+	private static readonly RoundParameters DefaultParameters = CreateDefaultParameters();
 
-	private static readonly CoinJoinInputCommitmentData CommitmentData = WabiSabiFactory.CreateCommitmentData();
+	private static readonly CoinJoinInputCommitmentData CommitmentData = WabiSabiTestFactory.CreateCommitmentData();
 
 	private static void ThrowsProtocolException(WabiSabiProtocolErrorCode expectedError, Action action) =>
 		Assert.Equal(expectedError, Assert.Throws<WabiSabiProtocolException>(action).ErrorCode);
+
+	private static RoundParameters CreateDefaultParameters()
+	{
+		var cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		cfg.MinRegistrableAmount = DefaultAllowedAmounts.Min;
+		cfg.MaxRegistrableAmount = DefaultAllowedAmounts.Max;
+		cfg.MaxSuggestedAmountBase = Money.Coins(Constants.MaximumNumberOfBitcoins);
+		return WabiSabiTestFactory.CreateRoundParameters(cfg) with { MiningFeeRate = new FeeRate(0m) };
+	}
 
 	[Fact]
 	public void TwoPartiesNoFees()
@@ -40,8 +41,8 @@ public class MultipartyTransactionTests
 		using Key key1 = new();
 		using Key key2 = new();
 
-		(var alice1Coin, var alice1OwnershipProof) = WabiSabiFactory.CreateCoinWithOwnershipProof(key1);
-		(var alice2Coin, var alice2OwnershipProof) = WabiSabiFactory.CreateCoinWithOwnershipProof(key2);
+		(var alice1Coin, var alice1OwnershipProof) = WabiSabiTestFactory.CreateCoinWithOwnershipProof(key1);
+		(var alice2Coin, var alice2OwnershipProof) = WabiSabiTestFactory.CreateCoinWithOwnershipProof(key2);
 
 		var state = new ConstructionState(DefaultParameters);
 
@@ -116,7 +117,7 @@ public class MultipartyTransactionTests
 	[Fact]
 	public void AddWithOptimize()
 	{
-		(var coin, var ownershipProof) = WabiSabiFactory.CreateCoinWithOwnershipProof();
+		(var coin, var ownershipProof) = WabiSabiTestFactory.CreateCoinWithOwnershipProof();
 
 		var state = new ConstructionState(DefaultParameters).AddInput(coin, ownershipProof, CommitmentData);
 
@@ -137,8 +138,8 @@ public class MultipartyTransactionTests
 		using Key key1 = new();
 		using Key key2 = new();
 
-		(var alice1Coin, var alice1OwnershipProof) = WabiSabiFactory.CreateCoinWithOwnershipProof(key1);
-		(var alice2Coin, var alice2OwnershipProof) = WabiSabiFactory.CreateCoinWithOwnershipProof(key2);
+		(var alice1Coin, var alice1OwnershipProof) = WabiSabiTestFactory.CreateCoinWithOwnershipProof(key1);
+		(var alice2Coin, var alice2OwnershipProof) = WabiSabiTestFactory.CreateCoinWithOwnershipProof(key2);
 
 		var state = new ConstructionState(DefaultParameters).AddInput(alice1Coin, alice1OwnershipProof, CommitmentData).AddInput(alice2Coin, alice2OwnershipProof, CommitmentData);
 
@@ -189,8 +190,8 @@ public class MultipartyTransactionTests
 		using Key key1 = new();
 		using Key key2 = new();
 
-		(var alice1Coin, var alice1OwnershipProof) = WabiSabiFactory.CreateCoinWithOwnershipProof(key1);
-		(var alice2Coin, var alice2OwnershipProof) = WabiSabiFactory.CreateCoinWithOwnershipProof(key2);
+		(var alice1Coin, var alice1OwnershipProof) = WabiSabiTestFactory.CreateCoinWithOwnershipProof(key1);
+		(var alice2Coin, var alice2OwnershipProof) = WabiSabiTestFactory.CreateCoinWithOwnershipProof(key2);
 		var bob1 = new TxOut(Money.Coins(1), alice1Coin.ScriptPubKey);
 		var bob2 = new TxOut(Money.Coins(1), alice2Coin.ScriptPubKey);
 
@@ -253,8 +254,8 @@ public class MultipartyTransactionTests
 		using Key key1 = new();
 		using Key key2 = new();
 
-		(var alice1Coin, var alice1OwnershipProof) = WabiSabiFactory.CreateCoinWithOwnershipProof(key1);
-		(var alice2Coin, var alice2OwnershipProof) = WabiSabiFactory.CreateCoinWithOwnershipProof(key2);
+		(var alice1Coin, var alice1OwnershipProof) = WabiSabiTestFactory.CreateCoinWithOwnershipProof(key1);
+		(var alice2Coin, var alice2OwnershipProof) = WabiSabiTestFactory.CreateCoinWithOwnershipProof(key2);
 
 		var state = new ConstructionState(DefaultParameters with { MiningFeeRate = feeRate })
 			.AddInput(alice1Coin, alice1OwnershipProof, CommitmentData)
@@ -309,7 +310,7 @@ public class MultipartyTransactionTests
 	[Fact]
 	public void NoDuplicateInputs()
 	{
-		(var coin, var ownershipProof) = WabiSabiFactory.CreateCoinWithOwnershipProof();
+		(var coin, var ownershipProof) = WabiSabiTestFactory.CreateCoinWithOwnershipProof();
 		var state = new ConstructionState(DefaultParameters).AddInput(coin, ownershipProof, CommitmentData);
 		ThrowsProtocolException(WabiSabiProtocolErrorCode.NonUniqueInputs, () => state.AddInput(coin, ownershipProof, CommitmentData));
 		Assert.Single(state.Inputs);
@@ -321,14 +322,14 @@ public class MultipartyTransactionTests
 	public void OnlyAllowedInputTypes()
 	{
 		var legacyOnly = new ConstructionState(DefaultParameters with { AllowedInputTypes = ImmutableSortedSet.Create(ScriptType.P2PKH) });
-		(var coin, var ownershipProof) = WabiSabiFactory.CreateCoinWithOwnershipProof();
+		(var coin, var ownershipProof) = WabiSabiTestFactory.CreateCoinWithOwnershipProof();
 		ThrowsProtocolException(WabiSabiProtocolErrorCode.ScriptNotAllowed, () => legacyOnly.AddInput(coin, ownershipProof, CommitmentData));
 	}
 
 	[Fact]
 	public void InputAmountRanges()
 	{
-		(var coin, var ownershipProof) = WabiSabiFactory.CreateCoinWithOwnershipProof();
+		(var coin, var ownershipProof) = WabiSabiTestFactory.CreateCoinWithOwnershipProof();
 
 		var exact = new ConstructionState(DefaultParameters with { AllowedInputAmounts = new MoneyRange(coin.Amount, coin.Amount) });
 		var above = new ConstructionState(DefaultParameters with { AllowedInputAmounts = new MoneyRange(2 * coin.Amount, 3 * coin.Amount) });
@@ -344,8 +345,8 @@ public class MultipartyTransactionTests
 	[Fact]
 	public void UneconomicalInputs()
 	{
-		(var alice1Coin, var alice1OwnershipProof) = WabiSabiFactory.CreateCoinWithOwnershipProof(amount: new Money(1000L));
-		(var alice2Coin, var alice2OwnershipProof) = WabiSabiFactory.CreateCoinWithOwnershipProof(amount: new Money(2000L));
+		(var alice1Coin, var alice1OwnershipProof) = WabiSabiTestFactory.CreateCoinWithOwnershipProof(amount: new Money(1000L));
+		(var alice2Coin, var alice2OwnershipProof) = WabiSabiTestFactory.CreateCoinWithOwnershipProof(amount: new Money(2000L));
 
 		// requires 1k sats per input in sat/vKB
 		var inputVsize = alice1Coin.ScriptPubKey.EstimateInputVsize();
@@ -420,22 +421,19 @@ public class MultipartyTransactionTests
 		FeeRate feeRate = new(satoshiPerByte: decimal.Parse(feeRateString));
 		CoordinationFeeRate coordinatorFeeRate = new(0m, Money.Zero);
 
-		var parameters = WabiSabiFactory.CreateRoundParameters(new()
-		{
-			MinRegistrableAmount = Money.Zero,
-			MaxRegistrableAmount = Money.Satoshis(ProtocolConstants.MaxAmountCredentialValue),
-			MaxSuggestedAmountBase = Money.Coins(Constants.MaximumNumberOfBitcoins)
-		}) with
-		{
-			MiningFeeRate = feeRate
-		};
+		var cfg1 = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		cfg1.MinRegistrableAmount = Money.Zero;
+		cfg1.MaxRegistrableAmount = Money.Satoshis(ProtocolConstants.MaxAmountCredentialValue);
+		cfg1.MaxSuggestedAmountBase = Money.Coins(Constants.MaximumNumberOfBitcoins);
+
+		var parameters = WabiSabiTestFactory.CreateRoundParameters(cfg1) with { MiningFeeRate = feeRate };
 
 		var coinjoin = new ConstructionState(parameters);
 
 		for (int i = 0; i < inputCount; i++)
 		{
 			using Key key = new();
-			(var aliceCoin, var aliceOwnershipProof) = WabiSabiFactory.CreateCoinWithOwnershipProof(key);
+			(var aliceCoin, var aliceOwnershipProof) = WabiSabiTestFactory.CreateCoinWithOwnershipProof(key);
 			coinjoin = coinjoin.AddInput(aliceCoin, aliceOwnershipProof, CommitmentData);
 		}
 
@@ -457,11 +455,11 @@ public class MultipartyTransactionTests
 		while (coinjoin.Balance > tenPercent);
 
 		var coordinatorScript = BitcoinFactory.CreateScript();
-		var round = WabiSabiFactory.CreateRound(parameters);
+		var round = WabiSabiTestFactory.CreateRound(parameters);
 
 		// Make sure the highest fee rate is low, so coordinator script will be added.
-		WabiSabiConfig cfg = new();
-		using Arena arena = ArenaBuilder.From(cfg).Create([round]);
+		WabiSabiConfig cfg2 = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		using Arena arena = ArenaTestFactory.From(cfg2).Create([round]);
 
 		var coinjoinWithCoordinatorScript = arena.AddCoordinationFee(round, coinjoin, coordinatorScript);
 		coinjoinWithCoordinatorScript.Finalize();

@@ -18,6 +18,11 @@ namespace WalletWasabi.Tests.UnitTests.WabiSabi.Backend;
 
 public class ConfigTests
 {
+	public WabiSabiConfig CreateConfig(string filePath)
+	{
+		return WabiSabiBackendFactory.Instance.CreateWabiSabiConfig(filePath);
+	}
+
 	[Fact]
 	public async Task CreatesConfigAsync()
 	{
@@ -46,7 +51,7 @@ public class ConfigTests
 
 		// Change the file.
 		var configPath = Path.Combine(workDir, "WabiSabiConfig.json");
-		WabiSabiConfig configChanger = new(configPath);
+		WabiSabiConfig configChanger = CreateConfig(configPath);
 		configChanger.LoadFile(createIfMissing: true);
 		var newTarget = 729u;
 		configChanger.ConfirmationTarget = newTarget;
@@ -96,7 +101,7 @@ public class ConfigTests
 	[Fact]
 	public void LoadConfigFile()
 	{
-		WabiSabiConfig configChanger = new("./conf.txt");
+		WabiSabiConfig configChanger = CreateConfig("./conf.txt");
 		configChanger.LoadFile(createIfMissing: true);
 		configChanger.LoadFile();
 	}
@@ -112,7 +117,7 @@ public class ConfigTests
 		await coordinator.StartAsync(CancellationToken.None);
 
 		var configPath = Path.Combine(workDir, "WabiSabiConfig.json");
-		WabiSabiConfig configChanger = new(configPath);
+		WabiSabiConfig configChanger = CreateConfig(configPath);
 		configChanger.LoadFile(createIfMissing: true);
 		var newTarget = 729u;
 		configChanger.ConfirmationTarget = newTarget;
@@ -144,5 +149,7 @@ public class ConfigTests
 	}
 
 	private static WabiSabiCoordinator CreateWabiSabiCoordinator(CoordinatorParameters coordinatorParameters)
-		=> new(coordinatorParameters, NewMockRpcClient(), new CoinJoinIdStore(), new CoinJoinScriptStore(), new MockHttpClientFactory());
+	{
+		return WabiSabiBackendFactory.Instance.CreateCoordinator(coordinatorParameters, NewMockRpcClient(), new CoinJoinIdStore(), new CoinJoinScriptStore(), new MockHttpClientFactory(), null, null, null);
+	}
 }

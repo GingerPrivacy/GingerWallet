@@ -15,15 +15,15 @@ public class CredentialReissuanceTest
 	[Fact]
 	public async Task ReissueExactDeltaAmountAsync()
 	{
-		WabiSabiConfig cfg = new();
-		var round = WabiSabiFactory.CreateRound(cfg);
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		var round = WabiSabiTestFactory.CreateRound(cfg);
 		round.SetPhase(Phase.OutputRegistration);
-		var alice = WabiSabiFactory.CreateAlice(round);
+		var alice = WabiSabiTestFactory.CreateAlice(round);
 		round.Alices.Add(alice);
-		using Arena arena = await ArenaBuilder.From(cfg).CreateAndStartAsync(round);
+		using Arena arena = await ArenaTestFactory.From(cfg).CreateAndStartAsync(round);
 
 		// Step 1. Create credentials
-		var (amClient, vsClient, amIssuer, vsIssuer, amZeroCredentials, vsZeroCredentials) = WabiSabiFactory.CreateWabiSabiClientsAndIssuers(round);
+		var (amClient, vsClient, amIssuer, vsIssuer, amZeroCredentials, vsZeroCredentials) = WabiSabiTestFactory.CreateWabiSabiClientsAndIssuers(round);
 
 		var amountsToRequest = new[] { alice.CalculateRemainingAmountCredentials(round.Parameters.MiningFeeRate, round.Parameters.CoordinationFeeRate).Satoshi };
 		var (amCredentialRequest, amValid) = amClient.CreateRequest(
@@ -71,7 +71,7 @@ public class CredentialReissuanceTest
 		Assert.Equal(WabiSabiProtocolErrorCode.DeltaNotZero, ex.ErrorCode);
 
 		// Step 2a. Now we verify the client also implements the same verifications.
-		var arenaClient = WabiSabiFactory.CreateArenaClient(arena);
+		var arenaClient = WabiSabiTestFactory.CreateArenaClient(arena);
 		await Assert.ThrowsAsync<InvalidOperationException>(async () =>
 			await arenaClient.ReissueCredentialAsync(
 				round.Id,

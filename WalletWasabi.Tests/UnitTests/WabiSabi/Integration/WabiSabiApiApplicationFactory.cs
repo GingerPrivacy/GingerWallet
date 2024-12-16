@@ -58,7 +58,7 @@ public class WabiSabiApiApplicationFactory<TStartup> : WebApplicationFactory<TSt
 			services.AddSingleton<Arena>();
 			services.AddSingleton(_ => Network.RegTest);
 			services.AddScoped<IRPCClient>(_ => BitcoinFactory.GetMockMinimalRpc());
-			services.AddScoped<Prison>(_ => WabiSabiFactory.CreatePrison());
+			services.AddScoped<Prison>(_ => WabiSabiTestFactory.CreatePrison());
 			services.AddScoped<WabiSabiConfig>();
 			services.AddScoped<RoundParameterFactory>();
 			services.AddScoped(typeof(TimeSpan), _ => TimeSpan.FromSeconds(2));

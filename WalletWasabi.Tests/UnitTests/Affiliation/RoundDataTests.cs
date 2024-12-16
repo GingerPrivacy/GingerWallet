@@ -12,9 +12,9 @@ public class RoundDataTests
 	[Fact]
 	public void DoNotShareAffiliationOfRemixes()
 	{
-		var roundData = new RoundData(WabiSabiFactory.CreateRoundParameters(new WabiSabiConfig()));
-		var unmixedCoin = WabiSabiFactory.CreateCoin(amount: Money.Coins(1));
-		var mixedCoin = WabiSabiFactory.CreateCoin(amount: Money.Coins(3));
+		var roundData = new RoundData(WabiSabiTestFactory.CreateRoundParameters(WabiSabiTestFactory.CreateDefaultWabiSabiConfig()));
+		var unmixedCoin = WabiSabiTestFactory.CreateCoin(amount: Money.Coins(1));
+		var mixedCoin = WabiSabiTestFactory.CreateCoin(amount: Money.Coins(3));
 
 		roundData.AddInputCoin(unmixedCoin, isCoordinationFeeExempted: false);
 		roundData.AddInputCoin(mixedCoin, isCoordinationFeeExempted: true);

@@ -18,7 +18,7 @@ public class PrisonTests
 	{
 		using CancellationTokenSource ctsTimeout = new(TimeSpan.FromMinutes(1));
 
-		var (prison, reader) = WabiSabiFactory.CreateObservablePrison();
+		var (prison, reader) = WabiSabiTestFactory.CreateObservablePrison();
 
 		var outpoint = BitcoinFactory.CreateOutPoint();
 		var roundId = BitcoinFactory.CreateUint256();
@@ -93,8 +93,8 @@ public class PrisonTests
 	[Fact]
 	public void BanningTime()
 	{
-		var (prison, _) = WabiSabiFactory.CreateObservablePrison();
-		var cfg = WabiSabiFactory.CreateWabiSabiConfig().GetDoSConfiguration();
+		var (prison, _) = WabiSabiTestFactory.CreateObservablePrison();
+		var cfg = WabiSabiTestFactory.CreateWabiSabiConfig().GetDoSConfiguration();
 
 		var roundId = BitcoinFactory.CreateUint256();
 

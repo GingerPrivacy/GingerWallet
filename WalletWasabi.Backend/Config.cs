@@ -16,10 +16,7 @@ public class Config : ConfigBase
 	{
 	}
 
-	public Config(string filePath) : base(filePath)
-	{
-	}
-
+	// For RegTest only
 	public Config(
 		Network network,
 		string bitcoinRpcConnectionString,

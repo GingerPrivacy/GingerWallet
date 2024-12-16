@@ -24,7 +24,7 @@ public class ConfigManagerTests
 		string configPath = Path.Combine(workDirectory, $"{nameof(CheckFileChangeTestAsync)}.json");
 
 		// Create config and store it.
-		WabiSabiConfig config = new();
+		WabiSabiConfig config = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
 		config.SetFilePath(configPath);
 		config.ToFile();
 

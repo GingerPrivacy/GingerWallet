@@ -14,11 +14,6 @@ public abstract class ConfigBase : NotifyPropertyChangedBase, IConfig
 	{
 	}
 
-	protected ConfigBase(string filePath)
-	{
-		SetFilePath(filePath);
-	}
-
 	/// <remarks>
 	/// Guards both storing to <see cref="FilePath"/> and retrieving contents of <see cref="FilePath"/>.
 	/// <para>Otherwise, we risk concurrent read and write operations on <see cref="FilePath"/>.</para>

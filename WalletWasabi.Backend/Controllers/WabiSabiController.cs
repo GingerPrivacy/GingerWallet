@@ -31,9 +31,9 @@ public class WabiSabiController : ControllerBase, IWabiSabiApiRequestHandler
 		CoinJoinMempoolManager = coinJoinMempoolManager;
 	}
 
-	private static TimeSpan RequestTimeout { get; } = TimeSpan.FromMinutes(5);
-	private IdempotencyRequestCache IdempotencyRequestCache { get; }
-	private Arena Arena { get; }
+	protected static TimeSpan RequestTimeout { get; } = TimeSpan.FromMinutes(5);
+	protected IdempotencyRequestCache IdempotencyRequestCache { get; }
+	protected Arena Arena { get; }
 	private CoinJoinFeeRateStatStore CoinJoinFeeRateStatStore { get; }
 	private AffiliationManager AffiliationManager { get; }
 	public CoinJoinMempoolManager CoinJoinMempoolManager { get; }
@@ -102,9 +102,9 @@ public class WabiSabiController : ControllerBase, IWabiSabiApiRequestHandler
 	}
 
 	[HttpPost("recommendation")]
-	public async Task<RoundRecommendationResponse> GetRecommendationAsync(RoundRecommendationRequest request, CancellationToken cancellableToken)
+	public virtual async Task<RoundRecommendationResponse> GetRecommendationAsync(RoundRecommendationRequest request, CancellationToken cancellationToken)
 	{
-		return await Arena.GetRecommendationAsync(request, cancellableToken);
+		return await Arena.GetRecommendationAsync(request, cancellationToken);
 	}
 
 	/// <summary>

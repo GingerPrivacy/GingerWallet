@@ -1,4 +1,5 @@
 using NBitcoin;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -70,7 +71,7 @@ public class Global : IDisposable
 	public IndexBuilderService IndexBuilderService { get; }
 
 	private HttpClient CoinVerifierHttpClient { get; }
-	private IHttpClientFactory HttpClientFactory { get; }
+	protected IHttpClientFactory HttpClientFactory { get; }
 
 	private CoinVerifierApiClient? CoinVerifierApiClient { get; set; }
 	public CoinVerifier? CoinVerifier { get; private set; }
@@ -79,10 +80,10 @@ public class Global : IDisposable
 
 	private NostrKeyManager NostrKeyManager { get; }
 
-	private CoordinatorParameters CoordinatorParameters { get; }
+	protected CoordinatorParameters CoordinatorParameters { get; }
 
 	public CoinJoinIdStore CoinJoinIdStore { get; }
-	public WabiSabiCoordinator? WabiSabiCoordinator { get; private set; }
+	public WabiSabiCoordinator? WabiSabiCoordinator { get; protected set; }
 	private Whitelist? WhiteList { get; set; }
 	public MempoolMirror MempoolMirror { get; }
 	public CoinJoinMempoolManager CoinJoinMempoolManager { get; private set; }
@@ -139,10 +140,8 @@ public class Global : IDisposable
 			}
 		}
 
-		var coinJoinScriptStore = CoinJoinScriptStore.LoadFromFile(CoordinatorParameters.CoinJoinScriptStoreFilePath);
-		var denominationFactory = new DenominationFactory(CoordinatorParameters.RuntimeCoordinatorConfig.MinRegistrableAmount, CoordinatorParameters.RuntimeCoordinatorConfig.MaxRegistrableAmount);
+		CreateWabiSabiCoordinator();
 
-		WabiSabiCoordinator = new WabiSabiCoordinator(CoordinatorParameters, RpcClient, CoinJoinIdStore, coinJoinScriptStore, HttpClientFactory, denominationFactory, wabiSabiConfig.IsCoinVerifierEnabled ? CoinVerifier : null);
 		blockNotifier.OnBlock += WabiSabiCoordinator.BanDescendant;
 		HostedServices.Register<WabiSabiCoordinator>(() => WabiSabiCoordinator, "WabiSabi Coordinator");
 		P2pNode.OnTransactionArrived += WabiSabiCoordinator.BanDoubleSpenders;
@@ -151,6 +150,15 @@ public class Global : IDisposable
 
 		IndexBuilderService.Synchronize();
 		Logger.LogInfo($"{nameof(IndexBuilderService)} is successfully initialized and started synchronization.");
+	}
+
+	[MemberNotNull(nameof(WabiSabiCoordinator))]
+	protected virtual void CreateWabiSabiCoordinator()
+	{
+		var wabiSabiConfig = CoordinatorParameters.RuntimeCoordinatorConfig;
+		var coinJoinScriptStore = CoinJoinScriptStore.LoadFromFile(CoordinatorParameters.CoinJoinScriptStoreFilePath);
+		var denominationFactory = new DenominationFactory(wabiSabiConfig.MinRegistrableAmount, wabiSabiConfig.MaxRegistrableAmount);
+		WabiSabiCoordinator = WabiSabiBackendFactory.Instance.CreateCoordinator(CoordinatorParameters, RpcClient, CoinJoinIdStore, coinJoinScriptStore, HttpClientFactory, denominationFactory, wabiSabiConfig.IsCoinVerifierEnabled ? CoinVerifier : null, null);
 	}
 
 	private async Task AssertRpcNodeFullyInitializedAsync(CancellationToken cancellationToken)

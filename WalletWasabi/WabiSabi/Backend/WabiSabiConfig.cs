@@ -22,10 +22,6 @@ public class WabiSabiConfig : ConfigBase
 	{
 	}
 
-	public WabiSabiConfig(string filePath) : base(filePath)
-	{
-	}
-
 	[DefaultValue(108)]
 	[JsonProperty(PropertyName = "ConfirmationTarget", DefaultValueHandling = DefaultValueHandling.Populate)]
 	public uint ConfirmationTarget { get; set; } = 108;

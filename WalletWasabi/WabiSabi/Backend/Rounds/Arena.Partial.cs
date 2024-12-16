@@ -173,6 +173,28 @@ public partial class Arena : IWabiSabiApiRequestHandler
 		}
 	}
 
+	protected virtual void ConfirmConnectionAliceCheckNoLock(ConnectionConfirmationRequest request, Round round, Alice alice)
+	{
+		var realAmountCredentialRequests = request.RealAmountCredentialRequests;
+		var realVsizeCredentialRequests = request.RealVsizeCredentialRequests;
+
+		if (alice.ConfirmedConnection)
+		{
+			throw new WabiSabiProtocolException(WabiSabiProtocolErrorCode.AliceAlreadyConfirmedConnection, $"Round ({request.RoundId}): Alice ({request.AliceId}) already confirmed connection.");
+		}
+
+		if (realVsizeCredentialRequests.Delta != alice.CalculateRemainingVsizeCredentials(round.Parameters.MaxVsizeAllocationPerAlice))
+		{
+			throw new WabiSabiProtocolException(WabiSabiProtocolErrorCode.IncorrectRequestedVsizeCredentials, $"Round ({request.RoundId}): Incorrect requested vsize credentials.");
+		}
+
+		var remaining = alice.CalculateRemainingAmountCredentials(round.Parameters.MiningFeeRate, round.Parameters.CoordinationFeeRate);
+		if (realAmountCredentialRequests.Delta != remaining)
+		{
+			throw new WabiSabiProtocolException(WabiSabiProtocolErrorCode.IncorrectRequestedAmountCredentials, $"Round ({request.RoundId}): Incorrect requested amount credentials.");
+		}
+	}
+
 	private async Task<ConnectionConfirmationResponse> ConfirmConnectionCoreAsync(ConnectionConfirmationRequest request, CancellationToken cancellationToken)
 	{
 		Round round;
@@ -183,24 +205,8 @@ public partial class Arena : IWabiSabiApiRequestHandler
 		using (await AsyncLock.LockAsync(cancellationToken).ConfigureAwait(false))
 		{
 			round = GetRound(request.RoundId, Phase.InputRegistration, Phase.ConnectionConfirmation);
-
 			alice = GetAlice(request.AliceId, round);
-
-			if (alice.ConfirmedConnection)
-			{
-				throw new WabiSabiProtocolException(WabiSabiProtocolErrorCode.AliceAlreadyConfirmedConnection, $"Round ({request.RoundId}): Alice ({request.AliceId}) already confirmed connection.");
-			}
-
-			if (realVsizeCredentialRequests.Delta != alice.CalculateRemainingVsizeCredentials(round.Parameters.MaxVsizeAllocationPerAlice))
-			{
-				throw new WabiSabiProtocolException(WabiSabiProtocolErrorCode.IncorrectRequestedVsizeCredentials, $"Round ({request.RoundId}): Incorrect requested vsize credentials.");
-			}
-
-			var remaining = alice.CalculateRemainingAmountCredentials(round.Parameters.MiningFeeRate, round.Parameters.CoordinationFeeRate);
-			if (realAmountCredentialRequests.Delta != remaining)
-			{
-				throw new WabiSabiProtocolException(WabiSabiProtocolErrorCode.IncorrectRequestedAmountCredentials, $"Round ({request.RoundId}): Incorrect requested amount credentials.");
-			}
+			ConfirmConnectionAliceCheckNoLock(request, round, alice);
 		}
 
 		var amountZeroCredentialTask = round.AmountCredentialIssuer.HandleRequestAsync(request.ZeroAmountCredentialRequests, cancellationToken);

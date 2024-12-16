@@ -1,4 +1,5 @@
 using NBitcoin;
+using WalletWasabi.Extensions;
 using WalletWasabi.Helpers;
 using WalletWasabi.Tests.Helpers;
 using WalletWasabi.WabiSabi.Backend;
@@ -14,7 +15,7 @@ public class ConstructionStateTests
 	public void ConstructionStateFeeRateCalculation()
 	{
 		var miningFeeRate = new FeeRate(8m);
-		var cfg = new WabiSabiConfig();
+		var cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
 		var roundParameters = RoundParameters.Create(
 				cfg,
 				Network.Main,
@@ -22,13 +23,13 @@ public class ConstructionStateTests
 				cfg.CoordinationFeeRate,
 				Money.Coins(10));
 
-		var round = WabiSabiFactory.CreateRound(roundParameters);
+		var round = WabiSabiTestFactory.CreateRound(roundParameters);
 		var state = round.Assert<ConstructionState>();
 
-		var (coin, ownershipProof) = WabiSabiFactory.CreateCoinWithOwnershipProof(
+		var (coin, ownershipProof) = WabiSabiTestFactory.CreateCoinWithOwnershipProof(
 			amount: roundParameters.AllowedInputAmounts.Min + miningFeeRate.GetFee(Constants.P2wpkhInputVirtualSize + Constants.P2wpkhOutputVirtualSize),
 			roundId: round.Id);
-		state = state.AddInput(coin, ownershipProof, WabiSabiFactory.CreateCommitmentData(round.Id));
+		state = state.AddInput(coin, ownershipProof, WabiSabiTestFactory.CreateCommitmentData(round.Id));
 		state = state.AddOutput(new TxOut(roundParameters.AllowedInputAmounts.Min, new Script("0 bf3593d140d512eb607b3ddb5c5ee085f1e3a210")));
 
 		var signingState = state.Finalize();
