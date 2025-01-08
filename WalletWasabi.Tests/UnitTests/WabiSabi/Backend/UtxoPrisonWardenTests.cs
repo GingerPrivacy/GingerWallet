@@ -21,7 +21,7 @@ public class UtxoPrisonWardenTests
 		CoordinatorParameters coordinatorParameters = new(workDir);
 		using var w = new Warden(
 			coordinatorParameters.PrisonFilePath,
-			WabiSabiFactory.CreateCoinJoinIdStore(),
+			WabiSabiTestFactory.CreateCoinJoinIdStore(),
 			coordinatorParameters.RuntimeCoordinatorConfig);
 		await w.StartAsync(CancellationToken.None);
 		await w.StopAsync(CancellationToken.None);
@@ -37,7 +37,7 @@ public class UtxoPrisonWardenTests
 		CoordinatorParameters coordinatorParameters = new(workDir);
 		using var w = new Warden(
 			coordinatorParameters.PrisonFilePath,
-			WabiSabiFactory.CreateCoinJoinIdStore(),
+			WabiSabiTestFactory.CreateCoinJoinIdStore(),
 			coordinatorParameters.RuntimeCoordinatorConfig);
 		await w.StartAsync(CancellationToken.None);
 		var now = DateTimeOffset.FromUnixTimeSeconds(DateTimeOffset.UtcNow.ToUnixTimeSeconds());

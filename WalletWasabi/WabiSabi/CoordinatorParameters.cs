@@ -12,7 +12,7 @@ public class CoordinatorParameters
 		IoHelpers.EnsureDirectoryExists(CoordinatorDataDir);
 
 		var runtimeConfigurationFilePath = Path.Combine(ApplicationDataDir, "WabiSabiConfig.json");
-		RuntimeCoordinatorConfig = new(runtimeConfigurationFilePath);
+		RuntimeCoordinatorConfig = WabiSabiBackendFactory.Instance.CreateWabiSabiConfig(runtimeConfigurationFilePath);
 		RuntimeCoordinatorConfig.LoadFile(createIfMissing: true);
 	}
 

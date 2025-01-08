@@ -14,12 +14,15 @@ public class StepConnectionConfirmationTests
 	[Fact]
 	public async Task AllConfirmedStepsAsync()
 	{
-		WabiSabiConfig cfg = new() { MaxInputCountByRound = 4, MinInputCountByRoundMultiplier = 0.5 };
-		var round = WabiSabiFactory.CreateRound(cfg);
-		var a1 = WabiSabiFactory.CreateAlice(round);
-		var a2 = WabiSabiFactory.CreateAlice(round);
-		var a3 = WabiSabiFactory.CreateAlice(round);
-		var a4 = WabiSabiFactory.CreateAlice(round);
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		cfg.MaxInputCountByRound = 4;
+		cfg.MinInputCountByRoundMultiplier = 0.5;
+
+		var round = WabiSabiTestFactory.CreateRound(cfg);
+		var a1 = WabiSabiTestFactory.CreateAlice(round);
+		var a2 = WabiSabiTestFactory.CreateAlice(round);
+		var a3 = WabiSabiTestFactory.CreateAlice(round);
+		var a4 = WabiSabiTestFactory.CreateAlice(round);
 		a1.ConfirmedConnection = true;
 		a2.ConfirmedConnection = true;
 		a3.ConfirmedConnection = true;
@@ -29,7 +32,7 @@ public class StepConnectionConfirmationTests
 		round.Alices.Add(a3);
 		round.Alices.Add(a4);
 		round.SetPhase(Phase.ConnectionConfirmation);
-		using Arena arena = await ArenaBuilder.From(cfg).CreateAndStartAsync(round);
+		using Arena arena = await ArenaTestFactory.From(cfg).CreateAndStartAsync(round);
 
 		await arena.TriggerAndWaitRoundAsync(TimeSpan.FromSeconds(21));
 		Assert.Equal(Phase.OutputRegistration, round.Phase);
@@ -40,12 +43,15 @@ public class StepConnectionConfirmationTests
 	[Fact]
 	public async Task NotAllConfirmedStaysAsync()
 	{
-		WabiSabiConfig cfg = new() { MaxInputCountByRound = 4, MinInputCountByRoundMultiplier = 0.5 };
-		var round = WabiSabiFactory.CreateRound(cfg);
-		var a1 = WabiSabiFactory.CreateAlice(round);
-		var a2 = WabiSabiFactory.CreateAlice(round);
-		var a3 = WabiSabiFactory.CreateAlice(round);
-		var a4 = WabiSabiFactory.CreateAlice(round);
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		cfg.MaxInputCountByRound = 4;
+		cfg.MinInputCountByRoundMultiplier = 0.5;
+
+		var round = WabiSabiTestFactory.CreateRound(cfg);
+		var a1 = WabiSabiTestFactory.CreateAlice(round);
+		var a2 = WabiSabiTestFactory.CreateAlice(round);
+		var a3 = WabiSabiTestFactory.CreateAlice(round);
+		var a4 = WabiSabiTestFactory.CreateAlice(round);
 		a1.ConfirmedConnection = true;
 		a2.ConfirmedConnection = true;
 		a3.ConfirmedConnection = true;
@@ -56,8 +62,8 @@ public class StepConnectionConfirmationTests
 		round.Alices.Add(a4);
 		round.SetPhase(Phase.ConnectionConfirmation);
 
-		Prison prison = WabiSabiFactory.CreatePrison();
-		using Arena arena = await ArenaBuilder.From(cfg, prison).CreateAndStartAsync(round);
+		Prison prison = WabiSabiTestFactory.CreatePrison();
+		using Arena arena = await ArenaTestFactory.From(cfg, prison).CreateAndStartAsync(round);
 
 		await arena.TriggerAndWaitRoundAsync(TimeSpan.FromSeconds(21));
 		Assert.Equal(Phase.ConnectionConfirmation, round.Phase);
@@ -69,15 +75,15 @@ public class StepConnectionConfirmationTests
 	[Fact]
 	public async Task EnoughConfirmedTimedoutStepsAsync()
 	{
-		WabiSabiConfig cfg = WabiSabiFactory.CreateWabiSabiConfig();
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateWabiSabiConfig();
 		cfg.MaxInputCountByRound = 4;
 		cfg.ConnectionConfirmationTimeout = TimeSpan.Zero;
 
-		var round = WabiSabiFactory.CreateRound(cfg);
-		var a1 = WabiSabiFactory.CreateAlice(round);
-		var a2 = WabiSabiFactory.CreateAlice(round);
-		var a3 = WabiSabiFactory.CreateAlice(round);
-		var a4 = WabiSabiFactory.CreateAlice(round);
+		var round = WabiSabiTestFactory.CreateRound(cfg);
+		var a1 = WabiSabiTestFactory.CreateAlice(round);
+		var a2 = WabiSabiTestFactory.CreateAlice(round);
+		var a3 = WabiSabiTestFactory.CreateAlice(round);
+		var a4 = WabiSabiTestFactory.CreateAlice(round);
 		a1.ConfirmedConnection = true;
 		a2.ConfirmedConnection = true;
 		a3.ConfirmedConnection = false;
@@ -88,8 +94,8 @@ public class StepConnectionConfirmationTests
 		round.Alices.Add(a4);
 		round.SetPhase(Phase.ConnectionConfirmation);
 
-		Prison prison = WabiSabiFactory.CreatePrison();
-		using Arena arena = await ArenaBuilder.From(cfg, prison).CreateAndStartAsync(round);
+		Prison prison = WabiSabiTestFactory.CreatePrison();
+		using Arena arena = await ArenaTestFactory.From(cfg, prison).CreateAndStartAsync(round);
 
 		await arena.TriggerAndWaitRoundAsync(TimeSpan.FromSeconds(21));
 
@@ -104,16 +110,16 @@ public class StepConnectionConfirmationTests
 	[Fact]
 	public async Task NotEnoughConfirmedTimedoutDestroysAsync()
 	{
-		WabiSabiConfig cfg = WabiSabiFactory.CreateWabiSabiConfig();
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateWabiSabiConfig();
 		cfg.MaxInputCountByRound = 4;
 		cfg.ConnectionConfirmationTimeout = TimeSpan.Zero;
 		cfg.MinInputCountByRoundMultiplier = 0.9;
 
-		var round = WabiSabiFactory.CreateRound(cfg);
-		var a1 = WabiSabiFactory.CreateAlice(round);
-		var a2 = WabiSabiFactory.CreateAlice(round);
-		var a3 = WabiSabiFactory.CreateAlice(round);
-		var a4 = WabiSabiFactory.CreateAlice(round);
+		var round = WabiSabiTestFactory.CreateRound(cfg);
+		var a1 = WabiSabiTestFactory.CreateAlice(round);
+		var a2 = WabiSabiTestFactory.CreateAlice(round);
+		var a3 = WabiSabiTestFactory.CreateAlice(round);
+		var a4 = WabiSabiTestFactory.CreateAlice(round);
 		a1.ConfirmedConnection = true;
 		a2.ConfirmedConnection = false;
 		a3.ConfirmedConnection = false;
@@ -124,8 +130,8 @@ public class StepConnectionConfirmationTests
 		round.Alices.Add(a4);
 		round.SetPhase(Phase.ConnectionConfirmation);
 
-		Prison prison = WabiSabiFactory.CreatePrison();
-		using Arena arena = await ArenaBuilder.From(cfg, prison).CreateAndStartAsync(round);
+		Prison prison = WabiSabiTestFactory.CreatePrison();
+		using Arena arena = await ArenaTestFactory.From(cfg, prison).CreateAndStartAsync(round);
 
 		await arena.TriggerAndWaitRoundAsync(TimeSpan.FromSeconds(21));
 		Assert.DoesNotContain(round, arena.GetActiveRounds());

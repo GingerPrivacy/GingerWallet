@@ -19,6 +19,14 @@ namespace WalletWasabi.Tests.UnitTests.WabiSabi.Client;
 /// </summary>
 public class CoinJoinCoinSelectionTests
 {
+	public static RoundParameters CreateRoundParameters()
+	{
+		var cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		cfg.MinRegistrableAmount = Money.Coins(0.0001m);
+		cfg.MaxRegistrableAmount = Money.Coins(430);
+		return WabiSabiTestFactory.CreateRoundParameters(cfg);
+	}
+
 	/// <summary>
 	/// This test is to make sure no coins are selected when there are no coins.
 	/// </summary>
@@ -154,11 +162,7 @@ public class CoinJoinCoinSelectionTests
 	{
 		var km = KeyManager.CreateNew(out _, "", Network.Main);
 		var coinsToSelectFrom = new[] { BitcoinFactory.CreateSmartCoin(BitcoinFactory.CreateHdPubKey(km), Money.Coins(0.00017423m), anonymitySet: 1) };
-		var roundParams = WabiSabiFactory.CreateRoundParameters(new()
-		{
-			MinRegistrableAmount = Money.Coins(0.0001m),
-			MaxRegistrableAmount = Money.Coins(430),
-		});
+		var roundParams = CreateRoundParameters();
 
 		CoinJoinCoinSelectorRandomnessGenerator generator = CreateSelectorGenerator(inputTarget: 5);
 
@@ -183,11 +187,7 @@ public class CoinJoinCoinSelectionTests
 			BitcoinFactory.CreateSmartCoin(BitcoinFactory.CreateHdPubKey(km), Money.Coins(0.00008711m + 0.00006900m), anonymitySet: 1),
 			BitcoinFactory.CreateSmartCoin(BitcoinFactory.CreateHdPubKey(km), Money.Coins(0.00008710m + 0.00006900m), anonymitySet: 1)
 		};
-		var roundParams = WabiSabiFactory.CreateRoundParameters(new()
-		{
-			MinRegistrableAmount = Money.Coins(0.0001m),
-			MaxRegistrableAmount = Money.Coins(430),
-		});
+		var roundParams = CreateRoundParameters();
 
 		CoinJoinCoinSelectorRandomnessGenerator generator = CreateSelectorGenerator(inputTarget: 5);
 
@@ -212,11 +212,7 @@ public class CoinJoinCoinSelectionTests
 			BitcoinFactory.CreateSmartCoin(BitcoinFactory.CreateHdPubKey(km), Money.Coins(0.00008711m + 0.00006900m), anonymitySet: 1),
 			BitcoinFactory.CreateSmartCoin(BitcoinFactory.CreateHdPubKey(km), Money.Coins(0.00008711m + 0.00006900m), anonymitySet: 1)
 		};
-		var roundParams = WabiSabiFactory.CreateRoundParameters(new()
-		{
-			MinRegistrableAmount = Money.Coins(0.0001m),
-			MaxRegistrableAmount = Money.Coins(430),
-		});
+		var roundParams = CreateRoundParameters();
 
 		CoinJoinCoinSelectorRandomnessGenerator generator = CreateSelectorGenerator(inputTarget: 5);
 
@@ -388,11 +384,7 @@ public class CoinJoinCoinSelectionTests
 
 	private static RoundParameters CreateMultipartyTransactionParameters()
 	{
-		var roundParams = WabiSabiFactory.CreateRoundParameters(new()
-		{
-			MinRegistrableAmount = Money.Coins(0.0001m),
-			MaxRegistrableAmount = Money.Coins(430)
-		});
+		var roundParams = CreateRoundParameters();
 		return roundParams;
 	}
 

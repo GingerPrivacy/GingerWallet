@@ -14,7 +14,9 @@ using WalletWasabi.Crypto;
 using WalletWasabi.Helpers;
 using WalletWasabi.Logging;
 using WalletWasabi.Models;
+using WalletWasabi.WabiSabi;
 using WalletWasabi.WabiSabi.Models;
+using WalletWasabi.WabiSabi.Models.MultipartyTransaction;
 
 namespace WalletWasabi.Extensions;
 
@@ -125,6 +127,11 @@ public static class NBitcoinExtensions
 			unsignedSmartTransaction.IsSpeedup,
 			unsignedSmartTransaction.IsCancellation,
 			unsignedSmartTransaction.FirstSeen);
+	}
+
+	public static SigningState Finalize(this ConstructionState constructionState)
+	{
+		return WabiSabiBackendFactory.Instance.FinalizeConstructionState(constructionState);
 	}
 
 	public static void SortByAmount(this TxOutList list)

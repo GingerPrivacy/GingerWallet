@@ -24,7 +24,7 @@ namespace WalletWasabi.WabiSabi;
 
 public class WabiSabiCoordinator : BackgroundService
 {
-	public WabiSabiCoordinator(CoordinatorParameters parameters, IRPCClient rpc, ICoinJoinIdStore coinJoinIdStore, CoinJoinScriptStore coinJoinScriptStore, IHttpClientFactory httpClientFactory, DenominationFactory? denominationFactory = null, CoinVerifier? coinVerifier = null)
+	public WabiSabiCoordinator(CoordinatorParameters parameters, IRPCClient rpc, ICoinJoinIdStore coinJoinIdStore, CoinJoinScriptStore coinJoinScriptStore, IHttpClientFactory httpClientFactory, DenominationFactory? denominationFactory = null, CoinVerifier? coinVerifier = null, MiningFeeRateEstimator? miningFeeRateEstimator = null)
 	{
 		Parameters = parameters;
 		RpcClient = rpc;
@@ -41,7 +41,7 @@ public class WabiSabiCoordinator : BackgroundService
 		IoHelpers.EnsureContainingDirectoryExists(Parameters.CoinJoinScriptStoreFilePath);
 
 		RoundParameterFactory roundParameterFactory = new(Config, rpc.Network);
-		Arena = new(
+		Arena = WabiSabiBackendFactory.Instance.CreateArena(
 			parameters.RoundProgressSteppingPeriod,
 			Config,
 			rpc,
@@ -51,7 +51,8 @@ public class WabiSabiCoordinator : BackgroundService
 			denominationFactory,
 			transactionArchiver,
 			coinJoinScriptStore,
-			coinVerifier);
+			coinVerifier,
+			miningFeeRateEstimator);
 		AffiliationManager = new(Arena, Config, httpClientFactory);
 
 		IoHelpers.EnsureContainingDirectoryExists(Parameters.CoinJoinIdStoreFilePath);
@@ -104,6 +105,17 @@ public class WabiSabiCoordinator : BackgroundService
 		}
 	}
 
+	protected virtual bool DescendantCoinJoinCheck(Transaction tx)
+	{
+		return CoinJoinIdStore.Contains(tx.GetHash());
+	}
+
+	protected virtual bool DoubleSpenderCoinJoinCheck(Transaction tx)
+	{
+		var txId = tx.GetHash();
+		return CoinJoinIdStore.Contains(txId) || IsFinishedCoinJoin(txId) || IsWasabiCoinJoinLookingTx(tx);
+	}
+
 	public void BanDescendant(object? sender, Block block)
 	{
 		var now = DateTimeOffset.UtcNow;
@@ -112,7 +124,7 @@ public class WabiSabiCoordinator : BackgroundService
 		OutPoint[] BannedInputs(Transaction tx) => tx.Inputs.Where(IsInputBanned).Select(x => x.PrevOut).ToArray();
 
 		var outpointsToBan = block.Transactions
-			.Where(tx => !CoinJoinIdStore.Contains(tx.GetHash()))  // We don't ban coinjoin outputs
+			.Where(tx => !DescendantCoinJoinCheck(tx))  // We don't ban coinjoin outputs
 			.Select(tx => (Tx: tx, BannedInputs: BannedInputs(tx)))
 			.Where(x => x.BannedInputs.Length != 0)
 			.SelectMany(x => x.Tx.Outputs.Select((_, i) => (new OutPoint(x.Tx, i), x.BannedInputs)));
@@ -127,8 +139,7 @@ public class WabiSabiCoordinator : BackgroundService
 	{
 		try
 		{
-			var txId = tx.GetHash();
-			if (IsWasabiCoinJoin(txId, tx))
+			if (DoubleSpenderCoinJoinCheck(tx))
 			{
 				return;
 			}
@@ -203,21 +214,37 @@ public class WabiSabiCoordinator : BackgroundService
 		}
 	}
 
-	private bool IsWasabiCoinJoin(uint256 txId, Transaction tx) =>
-		CoinJoinIdStore.Contains(txId) || IsFinishedCoinJoin(txId) || IsWasabiCoinJoinLookingTx(tx);
-
-	private bool IsFinishedCoinJoin(uint256 txId) =>
+	protected bool IsFinishedCoinJoin(uint256 txId) =>
 		Arena.RoundStates
 		.Select(x => x.CoinjoinState)
 		.OfType<SigningState>()
 		.Any(x => x.CreateUnsignedTransaction().GetHash() == txId);
 
-	private bool IsWasabiCoinJoinLookingTx(Transaction tx) =>
-		tx.RBF == false
-		&& tx.Inputs.Count >= Config.MinInputCountByBlameRound
-		&& tx.Inputs.Count <= Config.MaxInputCountByRound
-		&& tx.Outputs.All(x => Config.AllowedOutputTypes.Any(y => x.ScriptPubKey.IsScriptType(y)))
-		&& tx.Outputs.Zip(tx.Outputs.Skip(1), (a, b) => (First: a.Value, Second: b.Value)).All(p => p.First >= p.Second);
+	protected bool IsWasabiCoinJoinLookingTx(Transaction tx)
+	{
+		if (tx.RBF
+		|| tx.Inputs.Count < 21
+		|| tx.Inputs.Count > 500
+		|| tx.Outputs.Count < 15
+		|| tx.Outputs.Count > 500)
+		{
+			return false;
+		}
+
+		HashSet<Money> amounts = new();
+		foreach (var output in tx.Outputs)
+		{
+			amounts.Add(output.Value);
+		}
+
+		var anonScore = tx.Outputs.Count / amounts.Count;
+		if (anonScore < 2)
+		{
+			return false;
+		}
+
+		return true;
+	}
 
 	protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 	{

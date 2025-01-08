@@ -137,12 +137,12 @@ public class SerializationTests
 	[Fact]
 	public void RoundStateMessageSerialization()
 	{
-		var round = WabiSabiFactory.CreateRound(new WalletWasabi.WabiSabi.Backend.WabiSabiConfig());
+		var round = WabiSabiTestFactory.CreateRound(WabiSabiTestFactory.CreateDefaultWabiSabiConfig());
 		AssertSerialization(RoundState.FromRound(round));
 
 		var state = round.Assert<ConstructionState>();
-		(var coin, var ownershipProof) = WabiSabiFactory.CreateCoinWithOwnershipProof(roundId: round.Id);
-		state = state.AddInput(coin, ownershipProof, WabiSabiFactory.CreateCommitmentData(round.Id));
+		(var coin, var ownershipProof) = WabiSabiTestFactory.CreateCoinWithOwnershipProof(roundId: round.Id);
+		state = state.AddInput(coin, ownershipProof, WabiSabiTestFactory.CreateCommitmentData(round.Id));
 		round.CoinjoinState = new SigningState(state.Parameters, state.Events);
 		AssertSerialization(RoundState.FromRound(round));
 	}
@@ -176,7 +176,7 @@ public class SerializationTests
 	[Fact]
 	public void RoundStateResponseSerialization()
 	{
-		var round = WabiSabiFactory.CreateRound(new WalletWasabi.WabiSabi.Backend.WabiSabiConfig());
+		var round = WabiSabiTestFactory.CreateRound(WabiSabiTestFactory.CreateDefaultWabiSabiConfig());
 		var roundState = RoundState.FromRound(round);
 		CoinJoinFeeRateMedian median = new(TimeSpan.FromHours(24), new FeeRate(120m));
 		RoundStateResponse response = new(new[] { roundState }, new[] { median }, AffiliateInformation.Empty);

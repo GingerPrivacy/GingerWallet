@@ -36,14 +36,15 @@ public class BobClientTests
 		using CancellationTokenSource silentLeave = new();
 		var silentLeaveToken = silentLeave.Token;
 
-		var config = new WabiSabiConfig { MaxInputCountByRound = 1 };
-		var round = WabiSabiFactory.CreateRound(config);
+		var config = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		config.MaxInputCountByRound = 1;
+		var round = WabiSabiTestFactory.CreateRound(config);
 		var km = ServiceFactory.CreateKeyManager("");
 		var key = BitcoinFactory.CreateHdPubKey(km);
 		SmartCoin coin1 = BitcoinFactory.CreateSmartCoin(key, Money.Coins(2m));
 
-		var mockRpc = WabiSabiFactory.CreatePreconfiguredRpcClient(coin1.Coin);
-		using Arena arena = await ArenaBuilder.From(config).With(mockRpc).CreateAndStartAsync(round);
+		var mockRpc = WabiSabiTestFactory.CreatePreconfiguredRpcClient(coin1.Coin);
+		using Arena arena = await ArenaTestFactory.From(config).With(mockRpc).CreateAndStartAsync(round);
 		await arena.TriggerAndWaitRoundAsync(token);
 
 		using var memoryCache = new MemoryCache(new MemoryCacheOptions());

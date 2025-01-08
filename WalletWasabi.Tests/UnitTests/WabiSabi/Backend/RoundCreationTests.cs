@@ -13,7 +13,7 @@ public class RoundCreationTests
 {
 	private static Arena CreateArena(WabiSabiConfig cfg, IRPCClient rpc)
 	{
-		var arenaBuilder = ArenaBuilder.From(cfg).With(rpc);
+		var arenaBuilder = ArenaTestFactory.From(cfg).With(rpc);
 		arenaBuilder.Period = TimeSpan.FromSeconds(1);
 		return arenaBuilder.Create();
 	}
@@ -21,7 +21,7 @@ public class RoundCreationTests
 	[Fact]
 	public async Task InitializesRoundAsync()
 	{
-		WabiSabiConfig cfg = new();
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
 		var mockRpc = BitcoinFactory.GetMockMinimalRpc();
 
 		using Arena arena = CreateArena(cfg, mockRpc);
@@ -36,7 +36,7 @@ public class RoundCreationTests
 	[Fact]
 	public async Task CreatesRoundIfNoneInputRegistrationAsync()
 	{
-		WabiSabiConfig cfg = new();
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
 		var mockRpc = BitcoinFactory.GetMockMinimalRpc();
 
 		using Arena arena = CreateArena(cfg, mockRpc);
@@ -55,7 +55,7 @@ public class RoundCreationTests
 	[Fact]
 	public async Task CreatesRoundIfInBlameInputRegistrationAsync()
 	{
-		WabiSabiConfig cfg = new();
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
 		var mockRpc = BitcoinFactory.GetMockMinimalRpc();
 
 		using Arena arena = CreateArena(cfg, mockRpc);
@@ -65,8 +65,8 @@ public class RoundCreationTests
 		var round = Assert.Single(arena.Rounds);
 
 		round.SetPhase(Phase.ConnectionConfirmation);
-		round.Alices.Add(WabiSabiFactory.CreateAlice(round));
-		Round blameRound = WabiSabiFactory.CreateBlameRound(round, cfg);
+		round.Alices.Add(WabiSabiTestFactory.CreateAlice(round));
+		Round blameRound = WabiSabiTestFactory.CreateBlameRound(round, cfg);
 		Assert.Equal(Phase.InputRegistration, blameRound.Phase);
 		arena.Rounds.Add(blameRound);
 		await arena.TriggerAndWaitRoundAsync(TimeSpan.FromSeconds(21));

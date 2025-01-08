@@ -28,15 +28,14 @@ public class StepOutputRegistrationTests
 		using CancellationTokenSource cancellationTokenSource = new(TestTimeout);
 		var token = cancellationTokenSource.Token;
 
-		WabiSabiConfig cfg = new()
-		{
-			MaxInputCountByRound = 2,
-			MinInputCountByRoundMultiplier = 0.5,
-		};
-		var (keyChain, coin1, coin2) = WabiSabiFactory.CreateCoinKeyPairs();
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		cfg.MaxInputCountByRound = 2;
+		cfg.MinInputCountByRoundMultiplier = 0.5;
 
-		var mockRpc = WabiSabiFactory.CreatePreconfiguredRpcClient(coin1.Coin, coin2.Coin);
-		using Arena arena = await ArenaBuilder.From(cfg).With(mockRpc).CreateAndStartAsync();
+		var (keyChain, coin1, coin2) = WabiSabiTestFactory.CreateCoinKeyPairs();
+
+		var mockRpc = WabiSabiTestFactory.CreatePreconfiguredRpcClient(coin1.Coin, coin2.Coin);
+		using Arena arena = await ArenaTestFactory.From(cfg).With(mockRpc).CreateAndStartAsync();
 		var (round, arenaClient, alices) = await CreateRoundWithTwoConfirmedConnectionsAsync(arena, keyChain, coin1, coin2);
 		var (amountCredentials1, vsizeCredentials1) = (alices[0].IssuedAmountCredentials, alices[0].IssuedVsizeCredentials);
 		var (amountCredentials2, vsizeCredentials2) = (alices[1].IssuedAmountCredentials, alices[1].IssuedVsizeCredentials);
@@ -77,17 +76,16 @@ public class StepOutputRegistrationTests
 		using CancellationTokenSource cancellationTokenSource = new(TestTimeout);
 		var token = cancellationTokenSource.Token;
 
-		WabiSabiConfig cfg = new()
-		{
-			MaxInputCountByRound = 2,
-			MinInputCountByRoundMultiplier = 0.5,
-			OutputRegistrationTimeout = TimeSpan.Zero,
-			CoordinationFeeRate = CoordinationFeeRate.Zero
-		};
-		var (keyChain, coin1, coin2) = WabiSabiFactory.CreateCoinKeyPairs();
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		cfg.MaxInputCountByRound = 2;
+		cfg.MinInputCountByRoundMultiplier = 0.5;
+		cfg.OutputRegistrationTimeout = TimeSpan.Zero;
+		cfg.CoordinationFeeRate = CoordinationFeeRate.Zero;
 
-		var mockRpc = WabiSabiFactory.CreatePreconfiguredRpcClient(coin1.Coin, coin2.Coin);
-		using Arena arena = await ArenaBuilder.From(cfg).With(mockRpc).CreateAndStartAsync();
+		var (keyChain, coin1, coin2) = WabiSabiTestFactory.CreateCoinKeyPairs();
+
+		var mockRpc = WabiSabiTestFactory.CreatePreconfiguredRpcClient(coin1.Coin, coin2.Coin);
+		using Arena arena = await ArenaTestFactory.From(cfg).With(mockRpc).CreateAndStartAsync();
 		var (round, arenaClient, alices) = await CreateRoundWithTwoConfirmedConnectionsAsync(arena, keyChain, coin1, coin2);
 		var (amountCredentials1, vsizeCredentials1) = (alices[0].IssuedAmountCredentials, alices[0].IssuedVsizeCredentials);
 		var (amountCredentials2, vsizeCredentials2) = (alices[1].IssuedAmountCredentials, alices[1].IssuedVsizeCredentials);
@@ -119,17 +117,16 @@ public class StepOutputRegistrationTests
 		using CancellationTokenSource cancellationTokenSource = new(TestTimeout);
 		var token = cancellationTokenSource.Token;
 
-		WabiSabiConfig cfg = new()
-		{
-			MaxInputCountByRound = 2,
-			MinInputCountByRoundMultiplier = 0.5,
-			OutputRegistrationTimeout = TimeSpan.Zero,
-			CoordinationFeeRate = CoordinationFeeRate.Zero
-		};
-		var (keyChain, coin1, coin2) = WabiSabiFactory.CreateCoinKeyPairs();
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		cfg.MaxInputCountByRound = 2;
+		cfg.MinInputCountByRoundMultiplier = 0.5;
+		cfg.OutputRegistrationTimeout = TimeSpan.Zero;
+		cfg.CoordinationFeeRate = CoordinationFeeRate.Zero;
 
-		var mockRpc = WabiSabiFactory.CreatePreconfiguredRpcClient(coin1.Coin, coin2.Coin);
-		using Arena arena = await ArenaBuilder.From(cfg).With(mockRpc).CreateAndStartAsync();
+		var (keyChain, coin1, coin2) = WabiSabiTestFactory.CreateCoinKeyPairs();
+
+		var mockRpc = WabiSabiTestFactory.CreatePreconfiguredRpcClient(coin1.Coin, coin2.Coin);
+		using Arena arena = await ArenaTestFactory.From(cfg).With(mockRpc).CreateAndStartAsync();
 		var (round, arenaClient, alices) = await CreateRoundWithTwoConfirmedConnectionsAsync(arena, keyChain, coin1, coin2);
 		var (amountCredentials1, vsizeCredentials1) = (alices[0].IssuedAmountCredentials, alices[0].IssuedVsizeCredentials);
 		var (amountCredentials2, vsizeCredentials2) = (alices[1].IssuedAmountCredentials, alices[1].IssuedVsizeCredentials);
@@ -156,10 +153,10 @@ public class StepOutputRegistrationTests
 		// the remaining amount after deducting the fees needs to be less
 		// than the minimum.
 		var txParameters = round.Parameters;
-		var extraAlice = WabiSabiFactory.CreateAlice(round.Parameters.MiningFeeRate.GetFee(Constants.P2wpkhInputVirtualSize) + txParameters.AllowedOutputAmounts.Min - new Money(1L), round);
+		var extraAlice = WabiSabiTestFactory.CreateAlice(round.Parameters.MiningFeeRate.GetFee(Constants.P2wpkhInputVirtualSize) + txParameters.AllowedOutputAmounts.Min - new Money(1L), round);
 		extraAlice.ReadyToSign = true;
 		round.Alices.Add(extraAlice);
-		round.CoinjoinState = round.Assert<ConstructionState>().AddInput(extraAlice.Coin, extraAlice.OwnershipProof, WabiSabiFactory.CreateCommitmentData(round.Id));
+		round.CoinjoinState = round.Assert<ConstructionState>().AddInput(extraAlice.Coin, extraAlice.OwnershipProof, WabiSabiTestFactory.CreateCommitmentData(round.Id));
 
 		await arena.TriggerAndWaitRoundAsync(token);
 		Assert.Equal(Phase.TransactionSigning, round.Phase);
@@ -177,15 +174,14 @@ public class StepOutputRegistrationTests
 		using CancellationTokenSource cancellationTokenSource = new(TestTimeout);
 		var token = cancellationTokenSource.Token;
 
-		WabiSabiConfig cfg = new()
-		{
-			MaxInputCountByRound = 2,
-			MinInputCountByRoundMultiplier = 0.5
-		};
-		var (keyChain, coin1, coin2) = WabiSabiFactory.CreateCoinKeyPairs();
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		cfg.MaxInputCountByRound = 2;
+		cfg.MinInputCountByRoundMultiplier = 0.5;
 
-		var mockRpc = WabiSabiFactory.CreatePreconfiguredRpcClient(coin1.Coin, coin2.Coin);
-		using Arena arena = await ArenaBuilder.From(cfg).With(mockRpc).CreateAndStartAsync();
+		var (keyChain, coin1, coin2) = WabiSabiTestFactory.CreateCoinKeyPairs();
+
+		var mockRpc = WabiSabiTestFactory.CreatePreconfiguredRpcClient(coin1.Coin, coin2.Coin);
+		using Arena arena = await ArenaTestFactory.From(cfg).With(mockRpc).CreateAndStartAsync();
 		var (round, arenaClient, alices) = await CreateRoundWithTwoConfirmedConnectionsAsync(arena, keyChain, coin1, coin2);
 		var (amountCredentials1, vsizeCredentials1) = (alices[0].IssuedAmountCredentials, alices[0].IssuedVsizeCredentials);
 		var (amountCredentials2, vsizeCredentials2) = (alices[1].IssuedAmountCredentials, alices[1].IssuedVsizeCredentials);
@@ -215,7 +211,7 @@ public class StepOutputRegistrationTests
 
 		// Get the round.
 		await arena.TriggerAndWaitRoundAsync(token);
-		var arenaClient = WabiSabiFactory.CreateArenaClient(arena);
+		var arenaClient = WabiSabiTestFactory.CreateArenaClient(arena);
 		var round = Assert.Single(arena.Rounds);
 
 		// Refresh the Arena States because of vsize manipulation.
@@ -257,27 +253,25 @@ public class StepOutputRegistrationTests
 		using CancellationTokenSource silentLeave = new();
 		var silentLeaveToken = silentLeave.Token;
 
-		WabiSabiConfig cfg = new()
-		{
-			MaxInputCountByRound = 2,
-			MinInputCountByRoundMultiplier = 0.5,
-			CoordinationFeeRate = CoordinationFeeRate.Zero
-		};
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		cfg.MaxInputCountByRound = 2;
+		cfg.MinInputCountByRoundMultiplier = 0.5;
+		cfg.CoordinationFeeRate = CoordinationFeeRate.Zero;
 
 		var keyManager1 = ServiceFactory.CreateKeyManager("");
 		var keyManager2 = ServiceFactory.CreateKeyManager("");
 
-		var (keyChain1, coin1a, coin1b) = WabiSabiFactory.CreateCoinKeyPairs(keyManager1);
-		var (keyChain2, coin2a, coin2b) = WabiSabiFactory.CreateCoinKeyPairs(keyManager2);
+		var (keyChain1, coin1a, coin1b) = WabiSabiTestFactory.CreateCoinKeyPairs(keyManager1);
+		var (keyChain2, coin2a, coin2b) = WabiSabiTestFactory.CreateCoinKeyPairs(keyManager2);
 
-		var mockRpc = WabiSabiFactory.CreatePreconfiguredRpcClient(coin1a.Coin, coin1b.Coin, coin2a.Coin, coin2b.Coin);
-		using Arena arena = await ArenaBuilder.From(cfg).With(mockRpc).CreateAndStartAsync();
+		var mockRpc = WabiSabiTestFactory.CreatePreconfiguredRpcClient(coin1a.Coin, coin1b.Coin, coin2a.Coin, coin2b.Coin);
+		using Arena arena = await ArenaTestFactory.From(cfg).With(mockRpc).CreateAndStartAsync();
 
 		// Get the round.
 		await arena.TriggerAndWaitRoundAsync(token);
 		var round1 = Assert.Single(arena.Rounds);
-		var arenaClient1 = WabiSabiFactory.CreateArenaClient(arena);
-		var round2 = WabiSabiFactory.CreateRound(WabiSabiFactory.CreateRoundParameters(cfg));
+		var arenaClient1 = WabiSabiTestFactory.CreateArenaClient(arena);
+		var round2 = WabiSabiTestFactory.CreateRound(WabiSabiTestFactory.CreateRoundParameters(cfg));
 
 		arena.Rounds.Add(round2);
 
@@ -300,7 +294,7 @@ public class StepOutputRegistrationTests
 		// Arena will create another round - to have at least one in input reg.
 		await arena.TriggerAndWaitRoundAsync(token);
 
-		var arenaClient2 = WabiSabiFactory.CreateArenaClient(arena, round2);
+		var arenaClient2 = WabiSabiTestFactory.CreateArenaClient(arena, round2);
 
 		var task2a = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round2), arenaClient2, coin2a, keyChain2, roundStateUpdater, token, token, token, silentLeaveToken);
 		var task2b = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round2), arenaClient2, coin2b, keyChain2, roundStateUpdater, token, token, token, silentLeaveToken);
@@ -406,16 +400,15 @@ public class StepOutputRegistrationTests
 		using CancellationTokenSource cancellationTokenSource = new(TestTimeout);
 		var token = cancellationTokenSource.Token;
 
-		WabiSabiConfig cfg = new()
-		{
-			MaxInputCountByRound = 2,
-			MinInputCountByRoundMultiplier = 0.5,
-			OutputRegistrationTimeout = TimeSpan.Zero,
-		};
-		var (keyChain, coin1, coin2) = WabiSabiFactory.CreateCoinKeyPairs();
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		cfg.MaxInputCountByRound = 2;
+		cfg.MinInputCountByRoundMultiplier = 0.5;
+		cfg.OutputRegistrationTimeout = TimeSpan.Zero;
 
-		var mockRpc = WabiSabiFactory.CreatePreconfiguredRpcClient(coin1.Coin, coin2.Coin);
-		using Arena arena = await ArenaBuilder.From(cfg).With(mockRpc).CreateAndStartAsync();
+		var (keyChain, coin1, coin2) = WabiSabiTestFactory.CreateCoinKeyPairs();
+
+		var mockRpc = WabiSabiTestFactory.CreatePreconfiguredRpcClient(coin1.Coin, coin2.Coin);
+		using Arena arena = await ArenaTestFactory.From(cfg).With(mockRpc).CreateAndStartAsync();
 		var (round, arenaClient, alices) = await CreateRoundWithTwoConfirmedConnectionsAsync(arena, keyChain, coin1, coin2);
 
 		await alices[0].ReadyToSignAsync(token);

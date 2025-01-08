@@ -12,7 +12,10 @@ public class WhitelistTests
 	[Fact]
 	public async Task WhitelistChangeTrafficAsync()
 	{
-		Whitelist whitelist = new(Enumerable.Empty<Innocent>(), string.Empty, new WabiSabiConfig() { ReleaseFromWhitelistAfter = TimeSpan.FromSeconds(1) });
+		var cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		cfg.ReleaseFromWhitelistAfter = TimeSpan.FromSeconds(1);
+
+		Whitelist whitelist = new(Enumerable.Empty<Innocent>(), string.Empty, cfg);
 		var currentChangeId = whitelist.ChangeId;
 
 		var outpoint = BitcoinFactory.CreateOutPoint();

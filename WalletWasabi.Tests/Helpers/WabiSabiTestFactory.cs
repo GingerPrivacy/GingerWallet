@@ -25,16 +25,20 @@ using WalletWasabi.WabiSabi.Backend.Rounds.CoinJoinStorage;
 using WalletWasabi.WabiSabi.Client;
 using WalletWasabi.WabiSabi.Client.RoundStateAwaiters;
 using WalletWasabi.WabiSabi.Models;
-using WalletWasabi.WabiSabi.Models.MultipartyTransaction;
 using WalletWasabi.Wallets;
 using WalletWasabi.WebClients.Wasabi;
 using WalletWasabi.WabiSabi.Client.CoinJoin.Client;
 
 namespace WalletWasabi.Tests.Helpers;
 
-public static class WabiSabiFactory
+public static class WabiSabiTestFactory
 {
-	private static string CoordinatorIdentifier = new WabiSabiConfig().CoordinatorIdentifier;
+	private static string CoordinatorIdentifier = WabiSabiBackendFactory.Instance.CreateWabiSabiConfig().CoordinatorIdentifier;
+
+	public static WabiSabiConfig CreateDefaultWabiSabiConfig()
+	{
+		return WabiSabiBackendFactory.Instance.CreateWabiSabiConfig();
+	}
 
 	public static Coin CreateCoin(Key? key = null, Money? amount = null, ScriptPubKeyType scriptPubKeyType = ScriptPubKeyType.Segwit)
 	{
@@ -397,22 +401,23 @@ public static class WabiSabiFactory
 
 	internal static WabiSabiConfig CreateWabiSabiConfig()
 	{
-		return new WabiSabiConfig
-		{
-			MaxInputCountByRound = 2,
-			MinInputCountByRoundMultiplier = 0.5,
-			MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountCredentialValue),
-			CreateNewRoundBeforeInputRegEnd = TimeSpan.Zero,
+		WabiSabiConfig config = CreateDefaultWabiSabiConfig();
 
-			DoSSeverity = Money.Coins(1.0m),
-			DoSMinTimeForFailedToVerify = TimeSpan.FromDays(30),
-			DoSMinTimeForCheating = TimeSpan.FromDays(1),
-			DoSMinTimeInPrison = TimeSpan.FromHours(1),
-			DoSPenaltyFactorForDisruptingConfirmation = 1.0d,
-			DoSPenaltyFactorForDisruptingSignalReadyToSign = 1.5d,
-			DoSPenaltyFactorForDisruptingSigning = 1.5d,
-			DoSPenaltyFactorForDisruptingByDoubleSpending = 3.0d
-		};
+		config.MaxInputCountByRound = 2;
+		config.MinInputCountByRoundMultiplier = 0.5;
+		config.MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountCredentialValue);
+		config.CreateNewRoundBeforeInputRegEnd = TimeSpan.Zero;
+
+		config.DoSSeverity = Money.Coins(1.0m);
+		config.DoSMinTimeForFailedToVerify = TimeSpan.FromDays(30);
+		config.DoSMinTimeForCheating = TimeSpan.FromDays(1);
+		config.DoSMinTimeInPrison = TimeSpan.FromHours(1);
+		config.DoSPenaltyFactorForDisruptingConfirmation = 1.0d;
+		config.DoSPenaltyFactorForDisruptingSignalReadyToSign = 1.5d;
+		config.DoSPenaltyFactorForDisruptingSigning = 1.5d;
+		config.DoSPenaltyFactorForDisruptingByDoubleSpending = 3.0;
+
+		return config;
 	}
 
 	internal static ICoinJoinIdStore CreateCoinJoinIdStore()

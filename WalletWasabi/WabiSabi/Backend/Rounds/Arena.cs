@@ -38,7 +38,8 @@ public partial class Arena : PeriodicRunner
 		DenominationFactory? denominationFactory = null,
 		CoinJoinTransactionArchiver? archiver = null,
 		CoinJoinScriptStore? coinJoinScriptStore = null,
-		CoinVerifier? coinVerifier = null) : base(period)
+		CoinVerifier? coinVerifier = null,
+		MiningFeeRateEstimator? miningFeeRateEstimator = null) : base(period)
 	{
 		Config = config;
 		Rpc = rpc;
@@ -46,6 +47,7 @@ public partial class Arena : PeriodicRunner
 		TransactionArchiver = archiver;
 		CoinJoinIdStore = coinJoinIdStore;
 		CoinJoinScriptStore = coinJoinScriptStore;
+		MiningFeeRateEstimator = miningFeeRateEstimator ?? new MiningFeeRateEstimator(config, rpc);
 		RoundParameterFactory = roundParameterFactory;
 		CoinVerifier = coinVerifier;
 		MaxSuggestedAmountProvider = new(Config);
@@ -74,13 +76,14 @@ public partial class Arena : PeriodicRunner
 	public ImmutableList<RoundState> RoundStates { get; private set; } = ImmutableList<RoundState>.Empty;
 	internal ConcurrentQueue<uint256> DisruptedRounds { get; } = new();
 	private AsyncLock AsyncLock { get; } = new();
-	private WabiSabiConfig Config { get; }
+	protected WabiSabiConfig Config { get; }
 	internal IRPCClient Rpc { get; }
 	private Prison Prison { get; }
 	private CoinJoinTransactionArchiver? TransactionArchiver { get; }
 	public CoinJoinScriptStore? CoinJoinScriptStore { get; }
 	public CoinVerifier? CoinVerifier { get; private set; }
 	private ICoinJoinIdStore CoinJoinIdStore { get; set; }
+	private MiningFeeRateEstimator MiningFeeRateEstimator { get; set; }
 	private RoundParameterFactory RoundParameterFactory { get; }
 	public MaxSuggestedAmountProvider MaxSuggestedAmountProvider { get; }
 
@@ -112,6 +115,8 @@ public partial class Arena : PeriodicRunner
 
 			// RoundStates have to contain all states. Do not change stateId=0.
 			SetRoundStates();
+
+			await MiningFeeRateEstimator.LogMiningFeeRates(false, cancel).ConfigureAwait(false);
 		}
 	}
 
@@ -191,15 +196,15 @@ public partial class Arena : PeriodicRunner
 		}
 	}
 
-	private void CreateRecommendations(Round round)
+	protected virtual void CreateRecommendations(Round round)
 	{
 		// We don't leak information about whether an input is exempt from fee or not
 		DateTime time = DateTime.UtcNow;
 		var inputs = round.Alices.Select(x => x.Coin.EffectiveValue(round.Parameters.MiningFeeRate, round.Parameters.CoordinationFeeRate)).ToList();
-		var defaultDenoms = DenominationFactory?.CreateDefaultDenominations(inputs, round.Parameters.MiningFeeRate) ?? [];
-		var denoms = DenominationFactory?.CreatePreferedDenominations(inputs, round.Parameters.MiningFeeRate) ?? [];
 		round.LogInfo($"Inputs for the recommended denominations: [{inputs.ListToString()}]");
+		var defaultDenoms = DenominationFactory?.CreateDefaultDenominations(inputs, round.Parameters.MiningFeeRate) ?? [];
 		round.LogInfo($"Default denomination levels ({defaultDenoms.Count,2}):     [{defaultDenoms.ListToString()}]");
+		var denoms = DenominationFactory?.CreatePreferedDenominations(inputs, round.Parameters.MiningFeeRate) ?? [];
 		round.LogInfo($"Recommended denomination levels ({denoms.Count,2}): [{denoms.ListToString()}]");
 		var freqs = DenominationFactory?.CreateDenominationFrequencies(inputs, round.Parameters.MiningFeeRate, denoms) ?? [];
 		round.LogInfo($"Estimated frequencies for the denomination levels: [{freqs.ListToString("F2")}]");
@@ -369,8 +374,10 @@ public partial class Arena : PeriodicRunner
 
 					round.LogInfo($"Number of inputs: {coinjoin.Inputs.Count}.");
 					round.LogInfo($"Number of outputs: {coinjoin.Outputs.Count}.");
-					round.LogInfo($"Serialized Size: {coinjoin.GetSerializedSize() / 1024.0} KB.");
-					round.LogInfo($"VSize: {coinjoin.GetVirtualSize() / 1024.0} KB.");
+					int size = coinjoin.GetSerializedSize();
+					round.LogInfo($"Serialized Size: {size / 1024.0,7:F3} KB. ({size,6}B)");
+					int vsize = coinjoin.GetVirtualSize();
+					round.LogInfo($"Virtual Size:    {vsize / 1024.0,7:F3} KB. ({vsize,6}vB)");
 					var indistinguishableOutputs = coinjoin.GetIndistinguishableOutputs(includeSingle: true);
 					foreach (var (value, count) in indistinguishableOutputs.Where(x => x.count > 1))
 					{
@@ -533,7 +540,7 @@ public partial class Arena : PeriodicRunner
 		// This indicates to the client that there will be a blame round.
 		EndRound(round, EndRoundState.NotAllAlicesSign);
 
-		var feeRate = (await Rpc.EstimateConservativeSmartFeeAsync((int)Config.ConfirmationTarget, cancellationToken).ConfigureAwait(false)).FeeRate;
+		var feeRate = await MiningFeeRateEstimator.GetRoundFeeRateAsync(cancellationToken).ConfigureAwait(false);
 		var blameWhitelist = round.Alices
 			.Select(x => x.Coin.Outpoint)
 			.Where(x => !Prison.IsBanned(x, Config.GetDoSConfiguration(), DateTimeOffset.UtcNow))
@@ -563,7 +570,7 @@ public partial class Arena : PeriodicRunner
 				&& !x.IsInputRegistrationEnded(x.Parameters.MaxInputCountByRound)
 				&& x.InputCount >= Config.RoundDestroyerThreshold).ToArray())
 			{
-				feeRate = (await Rpc.EstimateConservativeSmartFeeAsync((int)Config.ConfirmationTarget, cancellationToken).ConfigureAwait(false)).FeeRate;
+				feeRate = await MiningFeeRateEstimator.GetRoundFeeRateAsync(cancellationToken).ConfigureAwait(false);
 
 				var allInputs = round.Alices.Select(y => y.Coin.Amount).OrderBy(x => x).ToArray();
 
@@ -622,7 +629,7 @@ public partial class Arena : PeriodicRunner
 		int roundsToCreate = Config.RoundParallelization - registrableRoundCount;
 		for (int i = 0; i < roundsToCreate; i++)
 		{
-			feeRate ??= (await Rpc.EstimateConservativeSmartFeeAsync((int)Config.ConfirmationTarget, cancellationToken).ConfigureAwait(false)).FeeRate;
+			feeRate ??= await MiningFeeRateEstimator.GetRoundFeeRateAsync(cancellationToken).ConfigureAwait(false);
 			RoundParameters parameters = RoundParameterFactory.CreateRoundParameter(feeRate, MaxSuggestedAmountProvider.MaxSuggestedAmount);
 
 			var r = new Round(parameters, SecureRandom.Instance);
@@ -699,7 +706,7 @@ public partial class Arena : PeriodicRunner
 		}
 	}
 
-	public ConstructionState AddCoordinationFee(Round round, ConstructionState coinjoin, Script coordinatorScriptPubKey)
+	public virtual ConstructionState AddCoordinationFee(Round round, ConstructionState coinjoin, Script coordinatorScriptPubKey)
 	{
 		var sizeToPayFor = coinjoin.EstimatedVsize + coordinatorScriptPubKey.EstimateOutputVsize();
 		var miningFee = round.Parameters.MiningFeeRate.GetFee(sizeToPayFor) + Money.Satoshis(1);

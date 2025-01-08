@@ -118,27 +118,6 @@ public record ConstructionState : MultipartyTransactionState
 		return this with { Events = Events.Add(new OutputAdded(output)) };
 	}
 
-	public SigningState Finalize()
-	{
-		if (EstimatedVsize > Parameters.MaxTransactionSize)
-		{
-			throw new WabiSabiProtocolException(WabiSabiProtocolErrorCode.SizeLimitExceeded, $"Transaction size is {EstimatedVsize} bytes, which exceeds the limit of {Parameters.MaxTransactionSize} bytes.");
-		}
-
-		if (EffectiveFeeRate < Parameters.MiningFeeRate)
-		{
-			var state = new SigningState(Parameters, Events);
-			var tx = state.CreateUnsignedTransaction();
-			var txHex = tx.ToHex();
-
-			throw new WabiSabiProtocolException(
-				WabiSabiProtocolErrorCode.InsufficientFees,
-				$"Effective fee rate {EffectiveFeeRate} is less than required {Parameters.MiningFeeRate}. RawTx: {txHex}");
-		}
-
-		return new SigningState(Parameters, Events);
-	}
-
 	public ConstructionState AsPayingForSharedOverhead() =>
 		this with
 		{

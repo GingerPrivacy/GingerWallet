@@ -17,9 +17,16 @@ public class CoinVerifierTests
 	// This can be anything but it needs to be https, otherwise we won't even try to send the request.
 	public const string TestURL = "https://test.com/test/";
 
-	private WabiSabiConfig _wabisabiTestConfig = new() { RiskFlags = new List<int>() { 11 } };
+	private WabiSabiConfig _wabisabiTestConfig = CreateTestConfig();
 
 	private int _mockBlockchainHeight = 733947; // Same as the example JSON report block height, otherwise we kick out the coin.
+
+	private static WabiSabiConfig CreateTestConfig()
+	{
+		var cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		cfg.RiskFlags = [11];
+		return cfg;
+	}
 
 	[Fact]
 	public async Task CanHandleBlacklistedUtxosTestAsync()
@@ -144,8 +151,8 @@ public class CoinVerifierTests
 	{
 		using var key = new Key();
 		var generatedCoins = new[] {
-			WabiSabiFactory.CreateCoin(key, Money.Coins(2m)),
-			WabiSabiFactory.CreateCoin(key, Money.Coins(1m))
+			WabiSabiTestFactory.CreateCoin(key, Money.Coins(2m)),
+			WabiSabiTestFactory.CreateCoin(key, Money.Coins(1m))
 		};
 
 		using MockHttpClient mockHttpClient = new();
@@ -186,7 +193,7 @@ public class CoinVerifierTests
 		List<Coin> naughtyCoins = new();
 		CoinJoinIdStore coinJoinIdStore = new();
 		await using CoinVerifierApiClient apiClient = new(CoinVerifierProvider.CVP1, "token", "secret", mockHttpClient);
-		Whitelist whitelist = new(Enumerable.Empty<Innocent>(), string.Empty, new WabiSabiConfig());
+		Whitelist whitelist = new(Enumerable.Empty<Innocent>(), string.Empty, WabiSabiTestFactory.CreateDefaultWabiSabiConfig());
 		await using CoinVerifier coinVerifier = new(coinJoinIdStore, apiClient, _wabisabiTestConfig, whitelist);
 
 		List<Coin> generatedCoins = GenerateCoins(10);
@@ -221,7 +228,7 @@ public class CoinVerifierTests
 		for (int i = 0; i < numToGen; i++)
 		{
 			using Key key = new();
-			coins.Add(WabiSabiFactory.CreateCoin(key));
+			coins.Add(WabiSabiTestFactory.CreateCoin(key));
 		}
 
 		return coins;

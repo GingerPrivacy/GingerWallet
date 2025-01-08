@@ -13,19 +13,21 @@ public class StepInputRegistrationTests
 	[Fact]
 	public async Task RoundFullAsync()
 	{
-		WabiSabiConfig cfg = new() { MaxInputCountByRound = 3 };
-		var round = WabiSabiFactory.CreateRound(cfg);
-		using Arena arena = await ArenaBuilder.From(cfg).CreateAndStartAsync(round);
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		cfg.MaxInputCountByRound = 3;
 
-		round.Alices.Add(WabiSabiFactory.CreateAlice(round));
+		var round = WabiSabiTestFactory.CreateRound(cfg);
+		using Arena arena = await ArenaTestFactory.From(cfg).CreateAndStartAsync(round);
+
+		round.Alices.Add(WabiSabiTestFactory.CreateAlice(round));
 		await arena.TriggerAndWaitRoundAsync(TimeSpan.FromSeconds(21));
 		Assert.Equal(Phase.InputRegistration, round.Phase);
 
-		round.Alices.Add(WabiSabiFactory.CreateAlice(round));
+		round.Alices.Add(WabiSabiTestFactory.CreateAlice(round));
 		await arena.TriggerAndWaitRoundAsync(TimeSpan.FromSeconds(21));
 		Assert.Equal(Phase.InputRegistration, round.Phase);
 
-		round.Alices.Add(WabiSabiFactory.CreateAlice(round));
+		round.Alices.Add(WabiSabiTestFactory.CreateAlice(round));
 		await arena.TriggerAndWaitRoundAsync(TimeSpan.FromSeconds(21));
 		Assert.Equal(Phase.ConnectionConfirmation, round.Phase);
 
@@ -35,11 +37,13 @@ public class StepInputRegistrationTests
 	[Fact]
 	public async Task DetectSpentTxoBeforeSteppingIntoConnectionConfirmationAsync()
 	{
-		WabiSabiConfig cfg = new() { MaxInputCountByRound = 3 };
-		var round = WabiSabiFactory.CreateRound(cfg);
-		var offendingAlice = WabiSabiFactory.CreateAlice(round); // this Alice spent the coin after registration
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		cfg.MaxInputCountByRound = 3;
 
-		var mockRpc = WabiSabiFactory.CreatePreconfiguredRpcClient();
+		var round = WabiSabiTestFactory.CreateRound(cfg);
+		var offendingAlice = WabiSabiTestFactory.CreateAlice(round); // this Alice spent the coin after registration
+
+		var mockRpc = WabiSabiTestFactory.CreatePreconfiguredRpcClient();
 		var defaultBehavior = mockRpc.OnGetTxOutAsync;
 		mockRpc.OnGetTxOutAsync = (txId, n, b) =>
 		{
@@ -52,16 +56,16 @@ public class StepInputRegistrationTests
 			return defaultBehavior?.Invoke(txId, n, b);
 		};
 
-		using Arena arena = await ArenaBuilder.From(cfg).With(mockRpc).CreateAndStartAsync(round);
+		using Arena arena = await ArenaTestFactory.From(cfg).With(mockRpc).CreateAndStartAsync(round);
 
-		round.Alices.Add(WabiSabiFactory.CreateAlice(round));
+		round.Alices.Add(WabiSabiTestFactory.CreateAlice(round));
 		round.Alices.Add(offendingAlice);
-		round.Alices.Add(WabiSabiFactory.CreateAlice(round));
+		round.Alices.Add(WabiSabiTestFactory.CreateAlice(round));
 		await arena.TriggerAndWaitRoundAsync(TimeSpan.FromSeconds(21));
 		Assert.Equal(Phase.InputRegistration, round.Phase);
 		Assert.Equal(2, round.Alices.Count); // the offending alice was removed
 
-		round.Alices.Add(WabiSabiFactory.CreateAlice(round));
+		round.Alices.Add(WabiSabiTestFactory.CreateAlice(round));
 		await arena.TriggerAndWaitRoundAsync(TimeSpan.FromSeconds(21));
 		Assert.Equal(Phase.ConnectionConfirmation, round.Phase);
 		Assert.Equal(3, round.Alices.Count);
@@ -72,21 +76,20 @@ public class StepInputRegistrationTests
 	[Fact]
 	public async Task BlameRoundFullAsync()
 	{
-		WabiSabiConfig cfg = new()
-		{
-			MaxInputCountByRound = 4,
-			MinInputCountByRoundMultiplier = 0.5
-		};
-		var round = WabiSabiFactory.CreateRound(cfg);
-		var alice1 = WabiSabiFactory.CreateAlice(round);
-		var alice2 = WabiSabiFactory.CreateAlice(round);
-		var alice3 = WabiSabiFactory.CreateAlice(round);
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		cfg.MaxInputCountByRound = 4;
+		cfg.MinInputCountByRoundMultiplier = 0.5;
+
+		var round = WabiSabiTestFactory.CreateRound(cfg);
+		var alice1 = WabiSabiTestFactory.CreateAlice(round);
+		var alice2 = WabiSabiTestFactory.CreateAlice(round);
+		var alice3 = WabiSabiTestFactory.CreateAlice(round);
 		round.Alices.Add(alice1);
 		round.Alices.Add(alice2);
 		round.Alices.Add(alice3);
-		var blameRound = WabiSabiFactory.CreateBlameRound(round, cfg);
+		var blameRound = WabiSabiTestFactory.CreateBlameRound(round, cfg);
 
-		using Arena arena = await ArenaBuilder.From(cfg).CreateAndStartAsync(blameRound);
+		using Arena arena = await ArenaTestFactory.From(cfg).CreateAndStartAsync(blameRound);
 
 		blameRound.Alices.Add(alice1);
 		await arena.TriggerAndWaitRoundAsync(TimeSpan.FromSeconds(21));
@@ -106,17 +109,16 @@ public class StepInputRegistrationTests
 	[Fact]
 	public async Task InputRegistrationTimedoutWithSufficientInputsAsync()
 	{
-		WabiSabiConfig cfg = new()
-		{
-			StandardInputRegistrationTimeout = TimeSpan.Zero,
-			MaxInputCountByRound = 4,
-			MinInputCountByRoundMultiplier = 0.5
-		};
-		var round = WabiSabiFactory.CreateRound(cfg);
-		round.Alices.Add(WabiSabiFactory.CreateAlice(round));
-		round.Alices.Add(WabiSabiFactory.CreateAlice(round));
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		cfg.StandardInputRegistrationTimeout = TimeSpan.Zero;
+		cfg.MaxInputCountByRound = 4;
+		cfg.MinInputCountByRoundMultiplier = 0.5;
 
-		using Arena arena = await ArenaBuilder.From(cfg).CreateAndStartAsync(round);
+		var round = WabiSabiTestFactory.CreateRound(cfg);
+		round.Alices.Add(WabiSabiTestFactory.CreateAlice(round));
+		round.Alices.Add(WabiSabiTestFactory.CreateAlice(round));
+
+		using Arena arena = await ArenaTestFactory.From(cfg).CreateAndStartAsync(round);
 		await arena.TriggerAndWaitRoundAsync(TimeSpan.FromSeconds(21));
 		Assert.Equal(Phase.ConnectionConfirmation, round.Phase);
 
@@ -126,25 +128,24 @@ public class StepInputRegistrationTests
 	[Fact]
 	public async Task BlameRoundTimedoutWithSufficientInputsAsync()
 	{
-		WabiSabiConfig cfg = new()
-		{
-			BlameInputRegistrationTimeout = TimeSpan.Zero,
-			StandardInputRegistrationTimeout = TimeSpan.FromHours(1), // Test that this is disregarded.
-			MaxInputCountByRound = 4,
-			MinInputCountByRoundMultiplier = 0.5
-		};
-		var round = WabiSabiFactory.CreateRound(cfg);
-		var alice1 = WabiSabiFactory.CreateAlice(round);
-		var alice2 = WabiSabiFactory.CreateAlice(round);
-		var alice3 = WabiSabiFactory.CreateAlice(round);
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		cfg.BlameInputRegistrationTimeout = TimeSpan.Zero;
+		cfg.StandardInputRegistrationTimeout = TimeSpan.FromHours(1); // Test that this is disregarded.
+		cfg.MaxInputCountByRound = 4;
+		cfg.MinInputCountByRoundMultiplier = 0.5;
+
+		var round = WabiSabiTestFactory.CreateRound(cfg);
+		var alice1 = WabiSabiTestFactory.CreateAlice(round);
+		var alice2 = WabiSabiTestFactory.CreateAlice(round);
+		var alice3 = WabiSabiTestFactory.CreateAlice(round);
 		round.Alices.Add(alice1);
 		round.Alices.Add(alice2);
 		round.Alices.Add(alice3);
-		var blameRound = WabiSabiFactory.CreateBlameRound(round, cfg);
+		var blameRound = WabiSabiTestFactory.CreateBlameRound(round, cfg);
 		blameRound.Alices.Add(alice1);
 		blameRound.Alices.Add(alice2);
 
-		using Arena arena = await ArenaBuilder.From(cfg).CreateAndStartAsync(blameRound);
+		using Arena arena = await ArenaTestFactory.From(cfg).CreateAndStartAsync(blameRound);
 		await arena.TriggerAndWaitRoundAsync(TimeSpan.FromSeconds(21));
 		Assert.Equal(Phase.ConnectionConfirmation, blameRound.Phase);
 
@@ -154,16 +155,15 @@ public class StepInputRegistrationTests
 	[Fact]
 	public async Task InputRegistrationTimedoutWithoutSufficientInputsAsync()
 	{
-		WabiSabiConfig cfg = new()
-		{
-			StandardInputRegistrationTimeout = TimeSpan.Zero,
-			MaxInputCountByRound = 4,
-			MinInputCountByRoundMultiplier = 0.5
-		};
-		var round = WabiSabiFactory.CreateRound(cfg);
-		using Arena arena = await ArenaBuilder.From(cfg).CreateAndStartAsync(round);
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		cfg.StandardInputRegistrationTimeout = TimeSpan.Zero;
+		cfg.MaxInputCountByRound = 4;
+		cfg.MinInputCountByRoundMultiplier = 0.5;
 
-		round.Alices.Add(WabiSabiFactory.CreateAlice(round));
+		var round = WabiSabiTestFactory.CreateRound(cfg);
+		using Arena arena = await ArenaTestFactory.From(cfg).CreateAndStartAsync(round);
+
+		round.Alices.Add(WabiSabiTestFactory.CreateAlice(round));
 		await arena.TriggerAndWaitRoundAsync(TimeSpan.FromSeconds(21));
 		Assert.Equal(Phase.Ended, round.Phase);
 		Assert.DoesNotContain(round, arena.GetActiveRounds());
@@ -177,31 +177,30 @@ public class StepInputRegistrationTests
 		// This test also tests that the min input count multiplier is applied
 		// against the max input count by round number and not against the
 		// number of inputs awaited by the blame round itself.
-		WabiSabiConfig cfg = new()
-		{
-			BlameInputRegistrationTimeout = TimeSpan.Zero,
-			StandardInputRegistrationTimeout = TimeSpan.FromHours(1), // Test that this is disregarded.
-			MaxInputCountByRound = 10,
-			MinInputCountByRoundMultiplier = 0.5,
-			MinInputCountByBlameRoundMultiplier = 0.4
-		};
-		var round = WabiSabiFactory.CreateRound(cfg);
-		var alice1 = WabiSabiFactory.CreateAlice(round);
-		var alice2 = WabiSabiFactory.CreateAlice(round);
-		var alice3 = WabiSabiFactory.CreateAlice(round);
-		var alice4 = WabiSabiFactory.CreateAlice(round);
-		var alice5 = WabiSabiFactory.CreateAlice(round);
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		cfg.BlameInputRegistrationTimeout = TimeSpan.Zero;
+		cfg.StandardInputRegistrationTimeout = TimeSpan.FromHours(1); // Test that this is disregarded.
+		cfg.MaxInputCountByRound = 10;
+		cfg.MinInputCountByRoundMultiplier = 0.5;
+		cfg.MinInputCountByBlameRoundMultiplier = 0.4;
+
+		var round = WabiSabiTestFactory.CreateRound(cfg);
+		var alice1 = WabiSabiTestFactory.CreateAlice(round);
+		var alice2 = WabiSabiTestFactory.CreateAlice(round);
+		var alice3 = WabiSabiTestFactory.CreateAlice(round);
+		var alice4 = WabiSabiTestFactory.CreateAlice(round);
+		var alice5 = WabiSabiTestFactory.CreateAlice(round);
 		round.Alices.Add(alice1);
 		round.Alices.Add(alice2);
 		round.Alices.Add(alice3);
 		round.Alices.Add(alice4);
 		round.Alices.Add(alice5);
-		var blameRound = WabiSabiFactory.CreateBlameRound(round, cfg);
+		var blameRound = WabiSabiTestFactory.CreateBlameRound(round, cfg);
 		blameRound.Alices.Add(alice1);
 		blameRound.Alices.Add(alice2);
 		blameRound.Alices.Add(alice3);
 
-		using Arena arena = await ArenaBuilder.From(cfg).CreateAndStartAsync(blameRound);
+		using Arena arena = await ArenaTestFactory.From(cfg).CreateAndStartAsync(blameRound);
 		await arena.TriggerAndWaitRoundAsync(TimeSpan.FromSeconds(21));
 		Assert.Equal(Phase.Ended, blameRound.Phase);
 		Assert.DoesNotContain(blameRound, arena.GetActiveRounds());
@@ -212,17 +211,16 @@ public class StepInputRegistrationTests
 	[Fact]
 	public async Task InputRegistrationTimeoutCanBeModifiedRuntimeAsync()
 	{
-		WabiSabiConfig cfg = new()
-		{
-			StandardInputRegistrationTimeout = TimeSpan.FromHours(1),
-			MaxInputCountByRound = 4,
-			MinInputCountByRoundMultiplier = 0.5
-		};
-		var round = WabiSabiFactory.CreateRound(cfg);
-		using Arena arena = await ArenaBuilder.From(cfg).CreateAndStartAsync(round);
+		WabiSabiConfig cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		cfg.StandardInputRegistrationTimeout = TimeSpan.FromHours(1);
+		cfg.MaxInputCountByRound = 4;
+		cfg.MinInputCountByRoundMultiplier = 0.5;
 
-		round.Alices.Add(WabiSabiFactory.CreateAlice(round));
-		round.Alices.Add(WabiSabiFactory.CreateAlice(round));
+		var round = WabiSabiTestFactory.CreateRound(cfg);
+		using Arena arena = await ArenaTestFactory.From(cfg).CreateAndStartAsync(round);
+
+		round.Alices.Add(WabiSabiTestFactory.CreateAlice(round));
+		round.Alices.Add(WabiSabiTestFactory.CreateAlice(round));
 		await arena.TriggerAndWaitRoundAsync(TimeSpan.FromSeconds(21));
 		Assert.Equal(Phase.InputRegistration, round.Phase);
 

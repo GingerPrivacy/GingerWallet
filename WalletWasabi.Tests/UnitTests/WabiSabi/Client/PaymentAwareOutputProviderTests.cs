@@ -21,7 +21,7 @@ public class PaymentAwareOutputProviderTests
 		var paymentBatch = new PaymentBatch();
 		var outputProvider = new PaymentAwareOutputProvider(wallet, paymentBatch);
 
-		var roundParameters = WabiSabiFactory.CreateRoundParameters(new WabiSabiConfig());
+		var roundParameters = WabiSabiTestFactory.CreateRoundParameters(WabiSabiTestFactory.CreateDefaultWabiSabiConfig());
 		using Key key = new();
 		paymentBatch.AddPayment(
 			key.PubKey.GetAddress(ScriptPubKeyType.Segwit, rpc.Network),
@@ -56,7 +56,7 @@ public class PaymentAwareOutputProviderTests
 	[InlineData(new[] { "0.1", "0.05" }, "0.14", 40 + 31, 0)] // Not enough vsize to register the payment and the change.
 	public void BestPaymentSetTest(string[] amountsToPay, string availableAmountStr, int availableVsize, int expectedOutputs)
 	{
-		var roundParameters = WabiSabiFactory.CreateRoundParameters(new WabiSabiConfig());
+		var roundParameters = WabiSabiTestFactory.CreateRoundParameters(WabiSabiTestFactory.CreateDefaultWabiSabiConfig());
 		var paymentBatch = new PaymentBatch();
 
 		var payments = amountsToPay.Select(a => (Destination: GetNewSegwitAddress(), Amount: Money.Coins(decimal.Parse(a))));

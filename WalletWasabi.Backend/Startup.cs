@@ -79,13 +79,8 @@ public class Startup
 		services.AddLogging(logging => logging.AddFilter((s, level) => level >= Microsoft.Extensions.Logging.LogLevel.Warning));
 
 		services.AddSingleton<IExchangeRateProvider>(new ExchangeRateProvider());
-		services.AddSingleton(serviceProvider =>
-		{
-			string configFilePath = Path.Combine(dataDir, "Config.json");
-			Config config = new(configFilePath);
-			config.LoadFile(createIfMissing: true);
-			return config;
-		});
+
+		AddConfigService(services, dataDir);
 
 		services.AddSingleton<IdempotencyRequestCache>();
 		services.AddHttpClient(AffiliationConstants.LogicalHttpClientName).ConfigurePrimaryHttpMessageHandler(() => new SocketsHttpHandler
@@ -93,22 +88,9 @@ public class Startup
 			// See https://github.com/dotnet/runtime/issues/18348#issuecomment-415845645
 			PooledConnectionLifetime = TimeSpan.FromMinutes(5)
 		});
-		services.AddSingleton(serviceProvider =>
-		{
-			Config config = serviceProvider.GetRequiredService<Config>();
-			string host = config.GetBitcoinCoreRpcEndPoint().ToString(config.Network.RPCPort);
-			IHttpClientFactory httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
 
-			RPCClient rpcClient = new(
-					authenticationString: config.BitcoinRpcConnectionString,
-					hostOrUri: host,
-					network: config.Network);
+		AddGlobalService(services, dataDir);
 
-			IMemoryCache memoryCache = serviceProvider.GetRequiredService<IMemoryCache>();
-			CachedRpcClient cachedRpc = new(rpcClient, memoryCache);
-
-			return new Global(dataDir, cachedRpc, config, httpClientFactory);
-		});
 		services.AddSingleton(serviceProvider =>
 		{
 			var global = serviceProvider.GetRequiredService<Global>();
@@ -132,9 +114,48 @@ public class Startup
 			var global = serviceProvider.GetRequiredService<Global>();
 			return global.CoinJoinMempoolManager;
 		});
+
+		AddExtraServices(services, dataDir);
+
 		services.AddStartupTask<InitConfigStartupTask>();
 
 		services.AddResponseCompression();
+	}
+
+	public virtual void AddConfigService(IServiceCollection services, string dataDir)
+	{
+		services.AddSingleton(serviceProvider =>
+		{
+			string configFilePath = Path.Combine(dataDir, "Config.json");
+			Config config = new();
+			config.SetFilePath(configFilePath);
+			config.LoadFile(createIfMissing: true);
+			return config;
+		});
+	}
+
+	public virtual void AddGlobalService(IServiceCollection services, string dataDir)
+	{
+		services.AddSingleton(serviceProvider =>
+		{
+			Config config = serviceProvider.GetRequiredService<Config>();
+			string host = config.GetBitcoinCoreRpcEndPoint().ToString(config.Network.RPCPort);
+			IHttpClientFactory httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
+
+			RPCClient rpcClient = new(
+					authenticationString: config.BitcoinRpcConnectionString,
+					hostOrUri: host,
+					network: config.Network);
+
+			IMemoryCache memoryCache = serviceProvider.GetRequiredService<IMemoryCache>();
+			CachedRpcClient cachedRpc = new(rpcClient, memoryCache);
+
+			return new Global(dataDir, cachedRpc, config, httpClientFactory);
+		});
+	}
+
+	public virtual void AddExtraServices(IServiceCollection services, string dataDir)
+	{
 	}
 
 	[SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "This method gets called by the runtime. Use this method to configure the HTTP request pipeline")]

@@ -34,8 +34,9 @@ public class UiConfig : ConfigBase
 	{
 	}
 
-	public UiConfig(string filePath) : base(filePath)
+	public UiConfig(string filePath)
 	{
+		SetFilePath(filePath);
 		this.WhenAnyValue(
 				x => x.Autocopy,
 				x => x.AutoPaste,

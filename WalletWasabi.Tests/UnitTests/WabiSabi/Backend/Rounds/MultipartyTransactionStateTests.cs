@@ -15,14 +15,14 @@ public class MultipartyTransactionStateTests
 	[Fact]
 	public void CanGetDifferentialStateTest()
 	{
-		var cfg = new WabiSabiConfig();
-		var round = WabiSabiFactory.CreateRound(cfg);
+		var cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		var round = WabiSabiTestFactory.CreateRound(cfg);
 
-		var commitmentData = WabiSabiFactory.CreateCommitmentData(round.Id);
+		var commitmentData = WabiSabiTestFactory.CreateCommitmentData(round.Id);
 
-		(var coin1, var ownershipProof1) = WabiSabiFactory.CreateCoinWithOwnershipProof(roundId: round.Id);
-		(var coin2, var ownershipProof2) = WabiSabiFactory.CreateCoinWithOwnershipProof(roundId: round.Id);
-		(var coin3, var ownershipProof3) = WabiSabiFactory.CreateCoinWithOwnershipProof(roundId: round.Id);
+		(var coin1, var ownershipProof1) = WabiSabiTestFactory.CreateCoinWithOwnershipProof(roundId: round.Id);
+		(var coin2, var ownershipProof2) = WabiSabiTestFactory.CreateCoinWithOwnershipProof(roundId: round.Id);
+		(var coin3, var ownershipProof3) = WabiSabiTestFactory.CreateCoinWithOwnershipProof(roundId: round.Id);
 
 		// Three events / three states
 		var state0 = round.Assert<ConstructionState>();
@@ -77,7 +77,7 @@ public class MultipartyTransactionStateTests
 	[Fact]
 	public void MaxSuggestedSteppingTest()
 	{
-		WabiSabiConfig config = new();
+		WabiSabiConfig config = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
 
 		RoundParameterFactory roundParameterFactory = new(config, Network.Main);
 		MaxSuggestedAmountProvider maxSuggestedAmountProvider = new(config);

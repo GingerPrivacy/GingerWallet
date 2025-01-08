@@ -49,15 +49,15 @@ public class ArenaClientTests
 	[Fact]
 	public async Task RemoveInputAsyncTestAsync()
 	{
-		var config = new WabiSabiConfig();
-		var round = WabiSabiFactory.CreateRound(config);
+		var config = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		var round = WabiSabiTestFactory.CreateRound(config);
 		round.SetPhase(Phase.ConnectionConfirmation);
 		var fundingTx = BitcoinFactory.CreateSmartTransaction(ownOutputCount: 1);
 		var coin = fundingTx.WalletOutputs.First().Coin;
 		var alice = new Alice(coin, new OwnershipProof(), round, Guid.NewGuid(), false);
 		round.Alices.Add(alice);
 
-		using Arena arena = await ArenaBuilder.From(config).CreateAndStartAsync(round);
+		using Arena arena = await ArenaTestFactory.From(config).CreateAndStartAsync(round);
 
 		using var memoryCache = new MemoryCache(new MemoryCacheOptions());
 		var idempotencyRequestCache = new IdempotencyRequestCache(memoryCache);
@@ -77,8 +77,8 @@ public class ArenaClientTests
 	[Fact]
 	public async Task SignTransactionAsync()
 	{
-		WabiSabiConfig config = new();
-		Round round = WabiSabiFactory.CreateRound(config);
+		WabiSabiConfig config = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		Round round = WabiSabiTestFactory.CreateRound(config);
 		var password = "satoshi";
 
 		var km = ServiceFactory.CreateKeyManager(password);
@@ -88,16 +88,16 @@ public class ArenaClientTests
 		var coins = destinationProvider.GetNextDestinations(2, false)
 			.Select(destination => (
 				Coin: new Coin(BitcoinFactory.CreateOutPoint(), new TxOut(Money.Coins(1.0m), destination)),
-				OwnershipProof: keyChain.GetOwnershipProof(destination, WabiSabiFactory.CreateCommitmentData(round.Id))))
+				OwnershipProof: keyChain.GetOwnershipProof(destination, WabiSabiTestFactory.CreateCommitmentData(round.Id))))
 			.ToArray();
 
-		Alice alice1 = WabiSabiFactory.CreateAlice(coins[0].Coin, coins[0].OwnershipProof, round: round);
+		Alice alice1 = WabiSabiTestFactory.CreateAlice(coins[0].Coin, coins[0].OwnershipProof, round: round);
 		round.Alices.Add(alice1);
 
-		Alice alice2 = WabiSabiFactory.CreateAlice(coins[1].Coin, coins[1].OwnershipProof, round: round);
+		Alice alice2 = WabiSabiTestFactory.CreateAlice(coins[1].Coin, coins[1].OwnershipProof, round: round);
 		round.Alices.Add(alice2);
 
-		using Arena arena = await ArenaBuilder.From(config).CreateAndStartAsync(round);
+		using Arena arena = await ArenaTestFactory.From(config).CreateAndStartAsync(round);
 
 		using var memoryCache = new MemoryCache(new MemoryCacheOptions());
 		var idempotencyRequestCache = new IdempotencyRequestCache(memoryCache);
@@ -115,7 +115,7 @@ public class ArenaClientTests
 		round.SetPhase(Phase.TransactionSigning);
 
 		var emptyState = round.Assert<ConstructionState>();
-		var commitmentData = WabiSabiFactory.CreateCommitmentData(round.Id);
+		var commitmentData = WabiSabiTestFactory.CreateCommitmentData(round.Id);
 
 		// We can't use ``emptyState.Finalize()` because this is not a valid transaction so we fake it
 		var finalizedEmptyState = new SigningState(round.Parameters, emptyState.Events);
@@ -154,11 +154,15 @@ public class ArenaClientTests
 
 	private async Task TestFullCoinjoinAsync(ScriptPubKeyType scriptPubKeyType, int inputVirtualSize)
 	{
-		var config = new WabiSabiConfig { MaxInputCountByRound = 1, AllowP2trInputs = true, AllowP2trOutputs = true };
-		var round = WabiSabiFactory.CreateRound(WabiSabiFactory.CreateRoundParameters(config));
+		var config = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		config.MaxInputCountByRound = 1;
+		config.AllowP2trInputs = true;
+		config.AllowP2trOutputs = true;
+
+		var round = WabiSabiTestFactory.CreateRound(WabiSabiTestFactory.CreateRoundParameters(config));
 		using var key = new Key();
 		var outpoint = BitcoinFactory.CreateOutPoint();
-		var mockRpc = WabiSabiFactory.CreatePreconfiguredRpcClient();
+		var mockRpc = WabiSabiTestFactory.CreatePreconfiguredRpcClient();
 		mockRpc.OnGetTxOutAsync = (_, _, _) =>
 			new GetTxOutResponse
 			{
@@ -180,7 +184,7 @@ public class ArenaClientTests
 		mockRpc.OnGetRawTransactionAsync = (_, _) =>
 			Task.FromResult(BitcoinFactory.CreateTransaction());
 
-		using Arena arena = await ArenaBuilder.From(config).With(mockRpc).CreateAndStartAsync(round);
+		using Arena arena = await ArenaTestFactory.From(config).With(mockRpc).CreateAndStartAsync(round);
 		await arena.TriggerAndWaitRoundAsync(TimeSpan.FromMinutes(1));
 
 		using var memoryCache = new MemoryCache(new MemoryCacheOptions());
@@ -197,7 +201,7 @@ public class ArenaClientTests
 			roundState.CreateVsizeCredentialClient(InsecureRandom.Instance),
 			config.CoordinatorIdentifier,
 			wabiSabiApi);
-		var ownershipProof = WabiSabiFactory.CreateOwnershipProof(key, round.Id, scriptPubKeyType);
+		var ownershipProof = WabiSabiTestFactory.CreateOwnershipProof(key, round.Id, scriptPubKeyType);
 
 		var (inputRegistrationResponse, _) = await aliceArenaClient.RegisterInputAsync(round.Id, outpoint, ownershipProof, CancellationToken.None);
 		var aliceId = inputRegistrationResponse.Value;
