@@ -4,6 +4,8 @@
 # GitHub: https://github.com/GingerPrivacy/GingerWallet
 
 Fingerprint: FA0B 017A 3E75 CE65 CBF7 838F A8FF 3767 EDF5 DCE9
+Key ID: A8FF3767EDF5DCE9
+Key Type: RSA 4096-bit
 Email: info@gingerwallet.io
 
 -----BEGIN PGP PUBLIC KEY BLOCK-----
