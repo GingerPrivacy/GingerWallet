@@ -1,3 +1,11 @@
+# PGP Public Key for GingerWallet
+# Purpose: This key is used to sign official releases and verify downloads from GingerWallet.
+# Website: https://gingerwallet.io
+# GitHub: https://github.com/GingerPrivacy/GingerWallet
+
+Fingerprint: FA0B 017A 3E75 CE65 CBF7 838F A8FF 3767 EDF5 DCE9
+Email: info@gingerwallet.io
+
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
 mDMEZlGsNRYJKwYBBAHaRw8BAQdAQKrqxxmL5lvOhgUsDJj7J9XTvqOHPZArLQ6W
