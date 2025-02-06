@@ -11,7 +11,7 @@ namespace WalletWasabi.Tests.UnitTests.JsonConverters;
 public class ByteArrayJsonConverterTests
 {
 	[Fact]
-	public void RoundtripTest()
+	public void ByteArrayJsonConverterTest()
 	{
 		BinaryConverter converter = new();
 		byte[] inputArray = { 0x00, 0x01, 0x02 };
@@ -22,19 +22,13 @@ public class ByteArrayJsonConverterTests
 		byte[]? actualArray = JsonConvert.DeserializeObject<byte[]>(json, converter);
 		Assert.NotNull(actualArray);
 		Assert.Equal(inputArray, actualArray);
-	}
 
-	[Fact]
-	public void NullTest()
-	{
-		BinaryConverter converter = new();
-
-		byte[]? actualArray = JsonConvert.DeserializeObject<byte[]>("null", converter);
+		actualArray = JsonConvert.DeserializeObject<byte[]>("null", converter);
 		Assert.Null(actualArray);
 	}
 
 	[Fact]
-	public void InvalidInputTest()
+	public void ByteArrayJsonConverterInvalidInputTest()
 	{
 		BinaryConverter converter = new();
 

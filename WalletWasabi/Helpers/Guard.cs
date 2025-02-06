@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace WalletWasabi.Helpers;
 
@@ -166,5 +167,17 @@ public static class Guard
 		return string.IsNullOrWhiteSpace(str)
 			? ""
 			: str.Trim();
+	}
+
+	public static T ThrowIfNull<T>(T? value, [CallerArgumentExpression("value")] string? paramName = null) where T : class
+	{
+		return value ?? throw new ArgumentNullException(paramName);
+	}
+
+	public static T ThrowIfNull<T>(T? value, [CallerArgumentExpression("value")] string? paramName = null) where T : struct
+	{
+		return value == null
+			? throw new ArgumentNullException(paramName)
+			: value.Value;
 	}
 }

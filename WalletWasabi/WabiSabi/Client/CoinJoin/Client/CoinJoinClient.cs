@@ -210,7 +210,6 @@ public class CoinJoinClient
 			{
 				excludeRound = currentRoundState.Id;
 				currentRoundState.LogInfo("Skipping the round since it doesn't support P2WPKH inputs and outputs.");
-
 				continue;
 			}
 
@@ -218,7 +217,12 @@ public class CoinJoinClient
 			{
 				excludeRound = currentRoundState.Id;
 				currentRoundState.LogInfo($"Skipping the round for more optimal mixing. Max suggested amount is '{roundParameters.MaxSuggestedAmount}' BTC, biggest coin amount is: '{coins.Select(c => c.Amount).Max()}' BTC.");
+				continue;
+			}
 
+			if (currentRoundState.InputRegistrationEnd - DateTimeOffset.UtcNow < DoNotRegisterInLastMinuteTimeLimit * .75)
+			{
+				currentRoundState.LogInfo("Skipping the round since not enough time left to continue with the input registration.");
 				continue;
 			}
 

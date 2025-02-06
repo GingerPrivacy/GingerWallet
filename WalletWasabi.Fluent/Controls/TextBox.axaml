@@ -1,8 +1,8 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-  <Thickness x:Key="TextControlBorderThemeThickness">0,0,0,2</Thickness>
-  <Thickness x:Key="TextControlBorderThemeThicknessFocused">0,0,0,2</Thickness>
+  <Thickness x:Key="TextControlBorderThemeThickness">2</Thickness>
+  <Thickness x:Key="TextControlBorderThemeThicknessFocused">2</Thickness>
   <Thickness x:Key="TextControlThemePadding">15,10,15,8</Thickness>
 
   <ControlTheme x:Key="TextBoxTheme" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
@@ -95,7 +95,7 @@
     </Setter>
 
     <Style Selector="^/template/ Border#PART_BorderElement">
-      <Setter Property="CornerRadius" Value="4" />
+      <Setter Property="CornerRadius" Value="20" />
     </Style>
 
     <Style Selector="^/template/ DataValidationErrors">
@@ -112,6 +112,25 @@
     <Style Selector="^:error /template/ DataValidationErrors">
       <Setter Property="Margin" Value="0 5 0 0" />
       <Setter Property="RenderTransform" Value="scale(1,1)" />
+    </Style>
+
+    <Style Selector="^.revealPasswordButton[AcceptsReturn=False][IsReadOnly=False]:not(TextBox:empty)">
+      <Setter Property="InnerRightContent">
+        <Template>
+          <ToggleButton Theme="{StaticResource FluentTextBoxToggleButton}"
+                        IsChecked="{Binding $parent[TextBox].RevealPassword, Mode=TwoWay}"
+                        ClipToBounds="True">
+            <Panel>
+              <PathIcon Data="{StaticResource PasswordBoxRevealButtonData}"
+                        Height="8" Width="12"
+                        IsVisible="{Binding !$parent[ToggleButton].IsChecked}"/>
+              <PathIcon Data="{StaticResource PasswordBoxHideButtonData}"
+                        Height="12" Width="12"
+                        IsVisible="{Binding $parent[ToggleButton].IsChecked}"/>
+            </Panel>
+          </ToggleButton>
+        </Template>
+      </Setter>
     </Style>
 
   </ControlTheme>
@@ -161,6 +180,33 @@
         </ControlTemplate>
       </Setter>
 
+  </ControlTheme>
+
+  <ControlTheme x:Key="FluentTextBoxToggleButton"
+                TargetType="ToggleButton"
+                BasedOn="{StaticResource FluentTextBoxButton}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ToggleButton">
+          <ContentPresenter x:Name="PART_ContentPresenter"
+                            Background="{TemplateBinding Background}"
+                            Content="{TemplateBinding Content}"
+                            Padding="{TemplateBinding Padding}">
+          </ContentPresenter>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+
+    <Style Selector="^:checked /template/ ContentPresenter, ^:indeterminate /template/ ContentPresenter">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+      <Setter Property="Foreground" Value="{DynamicResource TextControlButtonForegroundPressed}" />
+    </Style>
+
+    <Style Selector="^:pressed /template/ ContentPresenter">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
   </ControlTheme>
 
 </ResourceDictionary>

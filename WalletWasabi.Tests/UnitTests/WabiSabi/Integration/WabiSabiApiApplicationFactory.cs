@@ -24,6 +24,7 @@ using WalletWasabi.WabiSabi.Models;
 using WalletWasabi.WabiSabi.Models.MultipartyTransaction;
 using WalletWasabi.BitcoinCore.Mempool;
 using WalletWasabi.WabiSabi.Client.CoinJoin.Client;
+using WalletWasabi.WabiSabi;
 
 namespace WalletWasabi.Tests.UnitTests.WabiSabi.Integration;
 
@@ -59,7 +60,7 @@ public class WabiSabiApiApplicationFactory<TStartup> : WebApplicationFactory<TSt
 			services.AddSingleton(_ => Network.RegTest);
 			services.AddScoped<IRPCClient>(_ => BitcoinFactory.GetMockMinimalRpc());
 			services.AddScoped<Prison>(_ => WabiSabiTestFactory.CreatePrison());
-			services.AddScoped<WabiSabiConfig>();
+			services.AddScoped(services => CreateConfig(10));
 			services.AddScoped<RoundParameterFactory>();
 			services.AddScoped(typeof(TimeSpan), _ => TimeSpan.FromSeconds(2));
 			services.AddScoped<ICoinJoinIdStore>(s => new CoinJoinIdStore());
@@ -71,6 +72,20 @@ public class WabiSabiApiApplicationFactory<TStartup> : WebApplicationFactory<TSt
 			services.AddSingleton(s => new MempoolMirror(TimeSpan.Zero, null!, null!));
 		});
 		builder.ConfigureLogging(o => o.SetMinimumLevel(LogLevel.Warning));
+	}
+
+	public static WabiSabiConfig CreateConfig(int maxIputCount)
+	{
+		WabiSabiConfig config = WabiSabiBackendFactory.Instance.CreateWabiSabiConfig();
+		config.MaxInputCountByRound = maxIputCount;
+		config.StandardInputRegistrationTimeout = TimeSpan.FromSeconds(60);
+		config.BlameInputRegistrationTimeout = TimeSpan.FromSeconds(60);
+		config.ConnectionConfirmationTimeout = TimeSpan.FromSeconds(60);
+		config.OutputRegistrationTimeout = TimeSpan.FromSeconds(60);
+		config.TransactionSigningTimeout = TimeSpan.FromSeconds(60);
+		config.MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountCredentialValue);
+		config.CreateNewRoundBeforeInputRegEnd = TimeSpan.Zero;
+		return config;
 	}
 
 	public Task<ArenaClient> CreateArenaClientAsync(HttpClient httpClient) =>

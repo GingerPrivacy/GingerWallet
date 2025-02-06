@@ -3,12 +3,14 @@ using System.Threading.Tasks;
 using Moq;
 using WalletWasabi.Fluent;
 using WalletWasabi.Fluent.Models;
+using WalletWasabi.Fluent.Models.BuySell;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.ViewModels.Dialogs.Base;
 using WalletWasabi.Fluent.ViewModels.Navigation;
 using WalletWasabi.Fluent.ViewModels.SearchBar.Sources;
 using WalletWasabi.Fluent.ViewModels.Wallets;
+using WalletWasabi.Fluent.ViewModels.Wallets.BuySell;
 using WalletWasabi.Tests.UnitTests.ViewModels.UIContext;
 
 namespace WalletWasabi.Tests.UnitTests.ViewModels.TestDoubles;

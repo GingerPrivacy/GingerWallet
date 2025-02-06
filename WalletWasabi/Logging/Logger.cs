@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -31,7 +30,7 @@ public static class Logger
 
 	private static LogLevel MinimumLevel { get; set; } = LogLevel.Critical;
 
-	private static HashSet<LogMode> Modes { get; } = new();
+	private static HashSet<LogMode> Modes { get; set; } = new();
 
 	public static string FilePath { get; private set; } = "Log.txt";
 
@@ -98,20 +97,15 @@ public static class Logger
 
 	public static void SetModes(params LogMode[] modes)
 	{
-		if (Modes.Count != 0)
+		HashSet<LogMode> newModes = new();
+		if (modes is not null)
 		{
-			Modes.Clear();
+			foreach (var mode in modes)
+			{
+				newModes.Add(mode);
+			}
 		}
-
-		if (modes is null)
-		{
-			return;
-		}
-
-		foreach (var mode in modes)
-		{
-			Modes.Add(mode);
-		}
+		Modes = newModes;
 	}
 
 	public static void SetFilePath(string filePath)
@@ -148,7 +142,8 @@ public static class Logger
 	{
 		try
 		{
-			if (Modes.Count == 0 || !IsOn())
+			var modes = Modes;
+			if (modes.Count == 0 || !IsOn())
 			{
 				return;
 			}
@@ -202,38 +197,34 @@ public static class Logger
 
 			lock (Lock)
 			{
-				if (Modes.Contains(LogMode.Console))
+				if (modes.Contains(LogMode.Console))
 				{
-					lock (Console.Out)
+					var origColor = Console.ForegroundColor;
+					var newColor = level switch
 					{
-						var color = Console.ForegroundColor;
-						switch (level)
-						{
-							case LogLevel.Warning:
-								color = ConsoleColor.Yellow;
-								break;
+						LogLevel.Warning => ConsoleColor.Yellow,
+						LogLevel.Error => ConsoleColor.Red,
+						LogLevel.Critical => ConsoleColor.Red,
+						_ => origColor
+					};
 
-							case LogLevel.Error:
-							case LogLevel.Critical:
-								color = ConsoleColor.Red;
-								break;
-
-							default:
-								break; // Keep original color.
-						}
-
-						Console.ForegroundColor = color;
-						Console.Write(finalMessage);
-						Console.ResetColor();
+					if (origColor != newColor)
+					{
+						Console.ForegroundColor = newColor;
+					}
+					Console.Write(finalMessage);
+					if (origColor != newColor)
+					{
+						Console.ForegroundColor = origColor;
 					}
 				}
 
-				if (Modes.Contains(LogMode.Debug))
+				if (modes.Contains(LogMode.Debug))
 				{
 					Debug.Write(finalMessage);
 				}
 
-				if (!Modes.Contains(LogMode.File))
+				if (!modes.Contains(LogMode.File))
 				{
 					return;
 				}

@@ -238,18 +238,6 @@ public class HwiClient
 		return version;
 	}
 
-	public async Task<string> GetHelpAsync(CancellationToken cancel)
-	{
-		string responseString = await SendCommandAsync(
-			options: new[] { HwiOption.Help },
-			command: null,
-			commandArguments: null,
-			openConsole: false,
-			cancel).ConfigureAwait(false);
-
-		return responseString;
-	}
-
 	public async Task<IEnumerable<HwiEnumerateEntry>> EnumerateAsync(CancellationToken cancel, bool isRecursion = false)
 	{
 		string responseString = await SendCommandAsync(

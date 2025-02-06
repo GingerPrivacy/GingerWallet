@@ -98,7 +98,7 @@ public static partial class TextHelpers
 
 	public static string GetConfirmationText(int confirmations)
 	{
-		return  string.Format(CultureInfo.InvariantCulture, Resources.ConfirmedWithConfirmationCount, confirmations, AddSIfPlural(confirmations));
+		return string.Format(CultureInfo.InvariantCulture, Resources.ConfirmedWithConfirmationCount, confirmations, AddSIfPlural(confirmations));
 	}
 
 	public static string FormatPercentageDiff(double n)
@@ -108,14 +108,12 @@ public static partial class TextHelpers
 
 		if (Math.Abs(withFriendlyDecimals) < precision)
 		{
-			var threshold = n > 0 ? "+" + precision : "-" + precision;
-			return $"{Resources.LessThan} " + threshold.ToString(CultureInfo.InvariantCulture) + "%";
+			var num = n >= 0 ? precision : -precision;
+			return $"{Resources.LessThan} {num.ToString("+0.##;-0.##", CultureInfo.InvariantCulture)}%";
 		}
 		else
 		{
-			var diffPart = withFriendlyDecimals.ToString();
-			var numericPart = n > 0 ? "+" + diffPart : diffPart;
-			return numericPart + "%";
+			return $"{withFriendlyDecimals.ToString("+0.##;-0.##", CultureInfo.InvariantCulture)}%";
 		}
 	}
 }

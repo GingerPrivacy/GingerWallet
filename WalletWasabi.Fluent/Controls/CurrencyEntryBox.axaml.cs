@@ -255,7 +255,7 @@ public partial class CurrencyEntryBox : TextBox
 		{
 			// Fiat input restriction is to only allow 2 decimal places max
 			// and also 16 whole number places.
-			if ((whole > 16 && !trailingDecimal) || frac > 2)
+			if ((whole > 16 && !trailingDecimal) || frac > MaxDecimals)
 			{
 				return false;
 			}
@@ -422,6 +422,10 @@ public partial class CurrencyEntryBox : TextBox
 		else if (change.Property == IsFiatProperty)
 		{
 			PseudoClasses.Set(":isfiat", change.GetNewValue<bool>());
+		}
+		else if (change.Property == WatermarkProperty)
+		{
+			PseudoClasses.Set(":approxwatermark", change.GetNewValue<string>().StartsWith('≈'));
 		}
 	}
 }

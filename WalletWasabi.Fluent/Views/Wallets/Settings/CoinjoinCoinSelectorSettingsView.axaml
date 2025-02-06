@@ -37,6 +37,12 @@
         <TextBlock Text="{x:Static lang:Resources.TargetCoinCountPerBucketInCoinJoinCoinSelector}" />
         <TextBox Text="{Binding TargetCoinCountPerBucket}" />
       </DockPanel>
+
+      <DockPanel IsVisible="{Binding UseExperimentalCoinSelector}"
+                 ToolTip.Tip="{x:Static lang:Resources.UseOldCoinSelectorAsFallbackInCoinJoinCoinSelectorToolTip}">
+        <TextBlock Text="{x:Static lang:Resources.UseOldCoinSelectorAsFallbackInCoinJoinCoinSelector}" />
+        <ToggleSwitch IsChecked="{Binding UseOldCoinSelectorAsFallback}" />
+      </DockPanel>
     </StackPanel>
   </ContentArea>
 </UserControl>

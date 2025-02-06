@@ -35,7 +35,7 @@
             Text="{x:Static lang:Resources.LoadingViewProcessLonger}"
             TextAlignment="Center" TextWrapping="Wrap" Opacity="0.6" />
 
-          <ProgressBar Value="{Binding Percent}" IsIndeterminate="{Binding !Percent}" Margin="0 20 0 0" />
+          <ProgressBar Height="6" Value="{Binding Percent}" IsIndeterminate="{Binding !Percent}" Margin="0 20 0 0" />
           <TextBlock Text="{Binding StatusText}" TextAlignment="Center" Opacity="0.6" />
         </StackPanel>
 

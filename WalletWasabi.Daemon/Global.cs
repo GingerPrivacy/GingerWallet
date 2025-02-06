@@ -37,6 +37,9 @@ using WalletWasabi.WebClients.BlockstreamInfo;
 using WalletWasabi.WebClients.Wasabi;
 using WalletWasabi.Wallets.FilterProcessor;
 using WalletWasabi.Models;
+using System.Net.Http;
+using WalletWasabi.BuySell;
+using WalletWasabi.Daemon.BuySell;
 
 namespace WalletWasabi.Daemon;
 
@@ -87,6 +90,7 @@ public class Global
 		LegalChecker = new(DataDir, updateChecker);
 		UpdateManager = new(DataDir, Config.DownloadNewVersion, HttpClientFactory.NewHttpClient(Mode.DefaultCircuit, maximumRedirects: 10), updateChecker);
 		TorStatusChecker = new TorStatusChecker(TimeSpan.FromHours(6), HttpClientFactory.NewHttpClient(Mode.DefaultCircuit), new XmlIssueListParser());
+
 		RoundStateUpdaterCircuit = new PersonCircuit();
 
 		Cache = new MemoryCache(new MemoryCacheOptions
@@ -136,6 +140,7 @@ public class Global
 		TwoFactorAuthenticationService = new TwoFactorAuthenticationService(walletDirectories, HttpClientFactory.SharedWasabiClient);
 		WalletManager = new WalletManager(config.Network, DataDir, walletDirectories, walletFactory, TwoFactorAuthenticationService);
 		TransactionBroadcaster = new TransactionBroadcaster(Network, BitcoinStore, HttpClientFactory, WalletManager);
+		BuysellClient = new BuySellClient(HttpClientFactory);
 
 		CoinPrison = CoinPrison.CreateOrLoadFromFile(DataDir);
 		WalletManager.WalletStateChanged += WalletManager_WalletStateChanged;
@@ -187,6 +192,8 @@ public class Global
 	private IndexStore IndexStore { get; }
 
 	public TwoFactorAuthenticationService TwoFactorAuthenticationService { get; }
+
+	private BuySellClient BuysellClient { get; }
 
 	private WasabiHttpClientFactory BuildHttpClientFactory(Func<Uri> backendUriGetter) =>
 		new(
@@ -248,6 +255,8 @@ public class Global
 				}
 
 				HostedServices.Register<AnnouncementManager>(() => new AnnouncementManager(DataDir, TimeSpan.FromMinutes(.5), (DisplayLanguage)Config.Language, Config.PersistentConfig.ExtraNostrPubKey, HttpClientFactory), nameof(AnnouncementManager));
+
+				HostedServices.Register<BuyManager>(() => new BuyManager(BuysellClient, WalletManager, TimeSpan.FromSeconds(10)), nameof(BuyManager));
 
 				await HostedServices.StartAllAsync(cancel).ConfigureAwait(false);
 

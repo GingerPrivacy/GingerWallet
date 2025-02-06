@@ -5,9 +5,9 @@
   </Design.PreviewWith>
 
   <!-- TextControlBorderThemeThickness -->
-  <Thickness x:Key="CurrencyEntryBoxBorderThemeThickness">0,0,0,2</Thickness>
+  <Thickness x:Key="CurrencyEntryBoxBorderThemeThickness">2</Thickness>
   <!-- TextControlBorderThemeThicknessFocused -->
-  <Thickness x:Key="CurrencyEntryBoxBorderThemeThicknessFocused">0,0,0,2</Thickness>
+  <Thickness x:Key="CurrencyEntryBoxBorderThemeThicknessFocused">2</Thickness>
   <!-- TextControlThemePadding -->
   <Thickness x:Key="CurrencyEntryBoxThemePadding">15,10,15,8</Thickness>
 
@@ -21,12 +21,12 @@
               Header="Copy"
               Command="{Binding $parent[TextBox].Copy}"
               IsEnabled="{Binding $parent[TextBox].CanCopy}"
-              InputGesture="{x:Static TextBox.CopyGesture}"/>
+              InputGesture="{x:Static TextBox.CopyGesture}" />
     <MenuItem x:Name="TextBoxContextFlyoutPasteItem"
               Header="Paste"
               Command="{Binding $parent[CurrencyEntryBox].ModifiedPasteAsync}"
               IsEnabled="{Binding $parent[TextBox].CanPaste}"
-              InputGesture="{x:Static TextBox.PasteGesture}"/>
+              InputGesture="{x:Static TextBox.PasteGesture}" />
   </MenuFlyout>
   <MenuFlyout x:Key="CurrencyEntryBoxHorizontalTextBoxContextFlyout"
               FlyoutPresenterTheme="{StaticResource HorizontalMenuFlyoutPresenter}"
@@ -60,7 +60,8 @@
     <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
     <Setter Property="Padding" Value="{DynamicResource CurrencyEntryBoxThemePadding}" />
     <Setter Property="FocusAdorner" Value="{x:Null}" />
-    <Setter Property="ContextFlyout" Value="{OnFormFactor Desktop={StaticResource CurrencyEntryBoxDefaultTextBoxContextFlyout}, Mobile={StaticResource CurrencyEntryBoxHorizontalTextBoxContextFlyout}}" />
+    <Setter Property="ContextFlyout"
+            Value="{OnFormFactor Desktop={StaticResource CurrencyEntryBoxDefaultTextBoxContextFlyout}, Mobile={StaticResource CurrencyEntryBoxHorizontalTextBoxContextFlyout}}" />
     <Setter Property="Cursor" Value="IBeam" />
     <Setter Property="HorizontalContentAlignment" Value="Left" />
 
@@ -77,7 +78,8 @@
                             IsVisible="False"
                             Margin="{DynamicResource TextBoxTopHeaderMargin}" />
 
-          <Panel IsVisible="{Binding !IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type CurrencyEntryBox}}}">
+          <Panel
+            IsVisible="{Binding !IsReadOnly, RelativeSource={RelativeSource AncestorType={x:Type CurrencyEntryBox}}}">
             <Border
               Name="PART_BorderElement"
               Background="{TemplateBinding Background}"
@@ -167,14 +169,11 @@
                               Margin="{DynamicResource TextBoxTopHeaderMargin}" />
 
             <Panel>
-              <Border
-                BorderThickness="{TemplateBinding BorderThickness}"
-                MinWidth="{TemplateBinding MinWidth}"
-                MinHeight="{TemplateBinding MinHeight}" />
-              <Panel
-                Margin="{TemplateBinding BorderThickness}">
-                <Panel
-                  Margin="{TemplateBinding Padding}">
+              <Border BorderThickness="{TemplateBinding BorderThickness}"
+                      MinWidth="{TemplateBinding MinWidth}"
+                      MinHeight="{TemplateBinding MinHeight}" />
+              <Panel Margin="{TemplateBinding BorderThickness}">
+                <Panel Margin="{TemplateBinding Padding}">
                   <DockPanel>
                     <StackPanel Orientation="Horizontal">
                       <TextBlock Margin="0 0 5 0"
@@ -195,7 +194,7 @@
                                      SelectionForegroundBrush="{TemplateBinding SelectionForegroundBrush}"
                                      CaretBrush="{TemplateBinding CaretBrush}"
                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                       <TextBlock Margin="5 0 0 0"
                                  Text="{TemplateBinding CurrencyCode}"
                                  IsVisible="{TemplateBinding Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
@@ -212,7 +211,7 @@
     </Style>
 
     <Style Selector="^/template/ Border#PART_BorderElement">
-      <Setter Property="CornerRadius" Value="4" />
+      <Setter Property="CornerRadius" Value="20" />
     </Style>
 
     <Style Selector="^/template/ DataValidationErrors">
@@ -221,7 +220,8 @@
       <Setter Property="RenderTransformOrigin" Value="0.5,0" />
       <Setter Property="Transitions">
         <Transitions>
-          <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1" Delay="0:0:0.2" Easing="{StaticResource FluentEasing}" />
+          <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1" Delay="0:0:0.2"
+                                         Easing="{StaticResource FluentEasing}" />
           <ThicknessTransition Property="Margin" Duration="0:0:0.2" Easing="{StaticResource FluentEasing}" />
         </Transitions>
       </Setter>
@@ -276,10 +276,7 @@
     </Style>
 
     <!-- Correct caret offset for empty boxes so that it fits nicely with the different watermarks -->
-    <Style Selector="^:empty /template/ TextPresenter#PART_TextPresenter">
-      <Setter Property="Margin" Value="0 0 0 0" />
-    </Style>
-    <Style Selector="^:empty:isfiat /template/ TextPresenter#PART_TextPresenter">
+    <Style Selector="^:empty:isfiat:approxwatermark /template/ TextPresenter#PART_TextPresenter">
       <Setter Property="Margin" Value="13 0 0 0" />
     </Style>
     <Style Selector="^:empty:isrightside /template/ TextPresenter#PART_TextPresenter">

@@ -23,7 +23,7 @@
       <PathIcon IsVisible="{Binding !IsConfirmed}"
                 Data="{StaticResource clock_regular}"
                 Height="14"
-                Opacity="0.3"
+                Opacity="0.6"
                 ToolTip.Tip="{x:Static lang:Resources.Pending}" />
     </Panel>
 
@@ -37,8 +37,9 @@
       </Panel.IsVisible>
       <PathIcon IsVisible="{Binding IsCoinjoining}"
                 Data="{StaticResource wallet_action_coinjoin}"
-                Foreground="{DynamicResource SystemAccentColor}"
+                Foreground="{DynamicResource SystemAccentCustomColorLight}"
                 Height="15"
+                Opacity="1"
                 ToolTip.Tip="{x:Static lang:Resources.Coinjoining}" />
       <!-- CJ inactive -->
       <PathIcon IsVisible="{Binding !IsCoinjoining}"
@@ -52,6 +53,7 @@
     <PathIcon Data="{StaticResource warning_filled}"
               Foreground="{DynamicResource SystemControlErrorTextForegroundBrush}"
               Height="14"
+              Opacity="1"
               ToolTip.Tip="{Binding BannedUntilUtcToolTip}">
       <PathIcon.IsVisible>
         <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -65,6 +67,7 @@
               Data="{StaticResource forbidden}"
               Foreground="{DynamicResource CoinjoinActiveColor}"
               Height="14"
+              Opacity="1"
               ToolTip.Tip="{x:Static lang:Resources.ExcludedFromCoinjoins}" />
 
     <Border BorderThickness="1"

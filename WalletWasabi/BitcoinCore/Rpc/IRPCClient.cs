@@ -20,6 +20,8 @@ public interface IRPCClient
 
 	Task<BlockHeader> GetBlockHeaderAsync(uint256 blockHash, CancellationToken cancellationToken = default);
 
+	Task<BlockStats> GetBlockStatsAsync(uint256 blockHash, CancellationToken cancellationToken = default);
+
 	Task<uint256[]> GenerateAsync(int blockCount, CancellationToken cancellationToken = default);
 
 	Task StopAsync(CancellationToken cancellationToken = default);

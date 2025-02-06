@@ -42,6 +42,7 @@
   <Color x:Key="SystemAccentColorLight3">#FFCBB899</Color>
   <Color x:Key="SystemAccentCustomColorLight">#FFB29B78</Color>
   <Color x:Key="SystemAccentCustomColorDark">#FF947A52</Color>
+  <Color x:Key="SystemFadedAccentCustom">#17A68D67</Color>
 
   <Color x:Key="ActionForegroundColor">#1F1F1F</Color>
 
@@ -83,9 +84,10 @@
   <Color x:Key="BorderColor">#66757575</Color>
   <Color x:Key="AcrylicTrimForeground">#FFFFFFFF</Color>
 
+  <Color x:Key="OfferBorderColor">#27757575</Color>
+
   <SolidColorBrush x:Key="PrivacyControlWhiteListHeaderForeground" Color="#FFFFFF" />
-  <SolidColorBrush x:Key="PrivacyControlWhiteListBackground" Color="{StaticResource SystemAccentCustomColorDark}"
-                   Opacity="0.5" />
+  <SolidColorBrush x:Key="PrivacyControlWhiteListBackground" Color="{StaticResource SystemAccentCustomColorDark}" Opacity="0.5" />
   <SolidColorBrush x:Key="PrivacyControlBlackListBackground" Color="Transparent" />
   <SolidColorBrush x:Key="PrivacyControlItemBackground" Color="#2FFFFFFF" />
 
@@ -97,7 +99,7 @@
 
   <SolidColorBrush x:Key="LogoBaseColor" Color="#FFFFFF" />
 
-  <SolidColorBrush x:Key="TagsBoxItemBackground" Color="#323232" />
+  <SolidColorBrush x:Key="TagsBoxItemBackground" Color="#2c2c2c" />
 
   <!-- DropShadowEffects -->
   <DropShadowEffect x:Key="TileDropShadowEffect"
@@ -117,7 +119,7 @@
   <SolidColorBrush x:Key="PrivacyLevelNoneBrush" Color="#383838" />
 
   <!-- TreeDataGrid -->
-  <SolidColorBrush x:Key="TreeDataGridChildRowBackground" Color="{StaticResource Layer1BackgroundBrushLight1}" />
+  <SolidColorBrush x:Key="TreeDataGridChildRowBackground" Color="{StaticResource Layer2BackgroundBrush}" />
 
   <!-- Accent button -->
   <Color x:Key="AccentButtonForegroundColor">#FFFFFFFF</Color>

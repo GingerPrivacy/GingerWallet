@@ -47,6 +47,11 @@ public class MockRpcClient : IRPCClient
 		throw new NotImplementedException();
 	}
 
+	public Task<BlockStats> GetBlockStatsAsync(uint256 blockHash, CancellationToken cancellationToken = default)
+	{
+		throw new NotImplementedException();
+	}
+
 	public Task<BlockchainInfo> GetBlockchainInfoAsync(CancellationToken cancellationToken = default)
 	{
 		return OnGetBlockchainInfoAsync?.Invoke() ?? NotImplementedTask<BlockchainInfo>(nameof(GetBlockchainInfoAsync));

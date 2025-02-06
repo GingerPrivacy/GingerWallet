@@ -83,8 +83,8 @@ public partial class Arena : PeriodicRunner
 	public CoinJoinScriptStore? CoinJoinScriptStore { get; }
 	public CoinVerifier? CoinVerifier { get; private set; }
 	private ICoinJoinIdStore CoinJoinIdStore { get; set; }
-	private MiningFeeRateEstimator MiningFeeRateEstimator { get; set; }
-	private RoundParameterFactory RoundParameterFactory { get; }
+	protected MiningFeeRateEstimator MiningFeeRateEstimator { get; set; }
+	protected RoundParameterFactory RoundParameterFactory { get; }
 	public MaxSuggestedAmountProvider MaxSuggestedAmountProvider { get; }
 
 	public DenominationFactory? DenominationFactory { get; }
@@ -116,7 +116,7 @@ public partial class Arena : PeriodicRunner
 			// RoundStates have to contain all states. Do not change stateId=0.
 			SetRoundStates();
 
-			await MiningFeeRateEstimator.LogMiningFeeRates(false, cancel).ConfigureAwait(false);
+			await MiningFeeRateEstimator.LogMiningFeeRatesAsync(false, cancel).ConfigureAwait(false);
 		}
 	}
 
@@ -171,21 +171,9 @@ public partial class Arena : PeriodicRunner
 					}
 				}
 
-				if (round.InputCount < round.Parameters.MinInputCountByRound)
+				if (round.InputRegistrationTimeFrame.HasExpired || round.IsInputRegistrationEnded(round.Parameters.MaxInputCountByRound))
 				{
-					if (!round.InputRegistrationTimeFrame.HasExpired)
-					{
-						continue;
-					}
-
-					MaxSuggestedAmountProvider.StepMaxSuggested(round, false);
-					EndRound(round, EndRoundState.AbortedNotEnoughAlices);
-					round.LogInfo($"Not enough inputs ({round.InputCount}) in {nameof(Phase.InputRegistration)} phase. The minimum is ({round.Parameters.MinInputCountByRound}). {nameof(round.Parameters.MaxSuggestedAmount)} was '{round.Parameters.MaxSuggestedAmount}' BTC.");
-				}
-				else if (round.IsInputRegistrationEnded(round.Parameters.MaxInputCountByRound))
-				{
-					MaxSuggestedAmountProvider.StepMaxSuggested(round, true);
-					SetRoundPhase(round, Phase.ConnectionConfirmation);
+					await EndOfInputRegistrationAsync(round, cancel).ConfigureAwait(false);
 				}
 			}
 			catch (Exception ex)
@@ -194,6 +182,24 @@ public partial class Arena : PeriodicRunner
 				round.LogError(ex.Message);
 			}
 		}
+	}
+
+	// Called at the end of the input registration
+	protected virtual Task EndOfInputRegistrationAsync(Round round, CancellationToken cancel)
+	{
+		if (round.InputCount < round.Parameters.MinInputCountByRound)
+		{
+			MaxSuggestedAmountProvider.StepMaxSuggested(round, false);
+			EndRound(round, EndRoundState.AbortedNotEnoughAlices);
+			round.LogInfo($"Not enough inputs ({round.InputCount}) in {nameof(Phase.InputRegistration)} phase. The minimum is ({round.Parameters.MinInputCountByRound}). {nameof(round.Parameters.MaxSuggestedAmount)} was '{round.Parameters.MaxSuggestedAmount}' BTC.");
+		}
+		else if (round.IsInputRegistrationEnded(round.Parameters.MaxInputCountByRound))
+		{
+			MaxSuggestedAmountProvider.StepMaxSuggested(round, true);
+			SetRoundPhase(round, Phase.ConnectionConfirmation);
+		}
+
+		return Task.CompletedTask;
 	}
 
 	protected virtual void CreateRecommendations(Round round)
@@ -419,8 +425,6 @@ public partial class Arena : PeriodicRunner
 							round.LogError($"Output script pub key reuse detected: {address.ToHex()}");
 						}
 					}
-
-					CoinJoinScriptStore?.AddRange(coinjoin.Outputs.Select(x => x.ScriptPubKey));
 					CoinJoinBroadcast?.Invoke(this, coinjoin);
 				}
 				else if (round.TransactionSigningTimeFrame.HasExpired)
@@ -630,12 +634,18 @@ public partial class Arena : PeriodicRunner
 		for (int i = 0; i < roundsToCreate; i++)
 		{
 			feeRate ??= await MiningFeeRateEstimator.GetRoundFeeRateAsync(cancellationToken).ConfigureAwait(false);
-			RoundParameters parameters = RoundParameterFactory.CreateRoundParameter(feeRate, MaxSuggestedAmountProvider.MaxSuggestedAmount);
-
-			var r = new Round(parameters, SecureRandom.Instance);
+			var r = CreateRoundObject(feeRate);
 			AddRound(r);
 			r.LogInfo($"Created round with parameters: {nameof(r.Parameters.MaxSuggestedAmount)}:'{r.Parameters.MaxSuggestedAmount}' BTC.");
 		}
+	}
+
+	protected virtual Round CreateRoundObject(FeeRate feeRate)
+	{
+		RoundParameters parameters = RoundParameterFactory.CreateRoundParameter(feeRate, MaxSuggestedAmountProvider.MaxSuggestedAmount);
+
+		var round = new Round(parameters, SecureRandom.Instance);
+		return round;
 	}
 
 	private Round? TryMineRound(RoundParameters parameters, Round[] rounds)

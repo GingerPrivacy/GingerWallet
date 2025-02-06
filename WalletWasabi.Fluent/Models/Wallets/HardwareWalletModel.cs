@@ -22,13 +22,13 @@ internal class HardwareWalletModel : WalletModel, IHardwareWalletModel
 		try
 		{
 			var client = new HwiClient(Wallet.Network);
-			
+
 			TimeSpan baseTimeout = TimeSpan.FromMinutes(3);
 
 			// Define the additional timeout increment as a TimeSpan for every 10 inputs.
 			TimeSpan additionalTimeoutPer10Inputs = TimeSpan.FromMinutes(1);
 			int inputCount = transactionAuthorizationInfo.Transaction.WalletInputs.Count;
-			
+
 			TimeSpan totalTimeout = baseTimeout + TimeSpan.FromMinutes((inputCount / 10) * additionalTimeoutPer10Inputs.TotalMinutes);
 			using var cts = new CancellationTokenSource(totalTimeout);
 

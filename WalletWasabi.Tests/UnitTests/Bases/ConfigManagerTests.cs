@@ -59,6 +59,11 @@ public class ConfigManagerTests
 		static string GetVanillaConfigString(decimal coordinationFeeRate = 0.003m)
 				=> $$"""
 			{
+			  "ExtraMiningFeeRate": 0.3,
+			  "MinimumMiningFeeRate": 4.1,
+			  "RecommendationFeatureFlags": 31,
+			  "MiningFeeEstimatorSetting": "[0.500, 0.500][1.200, 0.500, 2.000, 100.000][0.000, 9999.000][0.200, -20.000]",
+			  "UseMiningFeeEstimator": false,
 			  "ConfirmationTarget": 108,
 			  "DoSSeverity": "0.10",
 			  "DoSMinTimeForFailedToVerify": "31d 0h 0m 0s",

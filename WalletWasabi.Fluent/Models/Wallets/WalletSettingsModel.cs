@@ -1,6 +1,6 @@
-using System.Reactive;
 using NBitcoin;
 using ReactiveUI;
+using System.Reactive;
 using System.Reactive.Linq;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Fluent.Helpers;
@@ -34,6 +34,7 @@ public partial class WalletSettingsModel : ReactiveObject
 	[AutoNotify] private double _weightedAnonymityLossNormal;
 	[AutoNotify] private double _valueLossRateNormal;
 	[AutoNotify] private double _targetCoinCountPerBucket;
+	[AutoNotify] private bool _useOldCoinSelectorAsFallback;
 
 	public WalletSettingsModel(KeyManager keyManager, bool isNewWallet = false, bool isCoinJoinPaused = false)
 	{
@@ -59,6 +60,7 @@ public partial class WalletSettingsModel : ReactiveObject
 		_weightedAnonymityLossNormal = coinJoinSelectionSettings.WeightedAnonymityLossNormal;
 		_valueLossRateNormal = coinJoinSelectionSettings.ValueLossRateNormal;
 		_targetCoinCountPerBucket = coinJoinSelectionSettings.TargetCoinCountPerBucket;
+		_useOldCoinSelectorAsFallback = coinJoinSelectionSettings.UseOldCoinSelectorAsFallback;
 
 		if (!isNewWallet)
 		{
@@ -87,7 +89,9 @@ public partial class WalletSettingsModel : ReactiveObject
 				x => x.ForceUsingLowPrivacyCoins,
 				x => x.WeightedAnonymityLossNormal,
 				x => x.ValueLossRateNormal,
-				x => x.TargetCoinCountPerBucket)
+				x => x.TargetCoinCountPerBucket,
+				x => x.UseOldCoinSelectorAsFallback,
+				(_, _, _, _, _, _, _, _) => Unit.Default)
 			.Skip(1)
 			.Do(_ => SetValues())
 			.Subscribe();
@@ -136,6 +140,7 @@ public partial class WalletSettingsModel : ReactiveObject
 		_keyManager.Attributes.CoinJoinCoinSelectionSettings.WeightedAnonymityLossNormal = WeightedAnonymityLossNormal;
 		_keyManager.Attributes.CoinJoinCoinSelectionSettings.ValueLossRateNormal = ValueLossRateNormal;
 		_keyManager.Attributes.CoinJoinCoinSelectionSettings.TargetCoinCountPerBucket = TargetCoinCountPerBucket;
+		_keyManager.Attributes.CoinJoinCoinSelectionSettings.UseOldCoinSelectorAsFallback = UseOldCoinSelectorAsFallback;
 		_isDirty = true;
 	}
 

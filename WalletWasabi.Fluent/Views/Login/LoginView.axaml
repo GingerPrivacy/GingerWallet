@@ -57,16 +57,40 @@
               <Interaction.Behaviors>
                 <FocusOnAttachedBehavior />
               </Interaction.Behaviors>
+              <CopyablePasswordTextBox.InnerRightContent>
+                <StackPanel Orientation="Horizontal" Margin="1 0">
+                  <ToggleButton Classes="plain"
+                                Theme="{StaticResource FluentTextBoxToggleButton}"
+                                IsChecked="{Binding #Password.RevealPassword, Mode=TwoWay}"
+                                ClipToBounds="True"
+                                IsVisible="{Binding #Password.Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                    <Panel>
+                      <PathIcon Data="{StaticResource PasswordBoxRevealButtonData}"
+                                Height="8" Width="12"
+                                IsVisible="{Binding !$parent[ToggleButton].IsChecked}"/>
+                      <PathIcon Data="{StaticResource PasswordBoxHideButtonData}"
+                                Height="12" Width="12"
+                                IsVisible="{Binding $parent[ToggleButton].IsChecked}"/>
+                    </Panel>
+                  </ToggleButton>
+
+                  <Button Content="{x:Static lang:Resources.Open}"
+                          Focusable="False"
+                          Classes="action"
+                          Command="{Binding NextCommand}">
+                    <Button.IsDefault>
+                      <MultiBinding Converter="{x:Static BoolConverters.And}">
+                        <Binding Path="ErrorMessage" Converter="{x:Static StringConverters.IsNullOrEmpty}" />
+                        <Binding Path="IsActive" />
+                      </MultiBinding>
+                    </Button.IsDefault>
+                  </Button>
+
+                </StackPanel>
+              </CopyablePasswordTextBox.InnerRightContent>
             </CopyablePasswordTextBox>
             <Panel Margin="0 5 0 0">
-              <Button Content="{x:Static lang:Resources.Open}" Focusable="False" Classes="action" HorizontalAlignment="Right" Command="{Binding NextCommand}">
-                <Button.IsDefault>
-                  <MultiBinding Converter="{x:Static BoolConverters.And}">
-                    <Binding Path="ErrorMessage" Converter="{x:Static StringConverters.IsNullOrEmpty}" />
-                    <Binding Path="IsActive" />
-                  </MultiBinding>
-                </Button.IsDefault>
-              </Button>
+
             </Panel>
           </DockPanel>
 

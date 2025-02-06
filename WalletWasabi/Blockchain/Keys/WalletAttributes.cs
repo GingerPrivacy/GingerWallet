@@ -71,6 +71,9 @@ public class WalletAttributes
 	[JsonProperty(PropertyName = "CoinjoinSkipFactors")]
 	public CoinjoinSkipFactors CoinjoinSkipFactors { get; set; } = CoinjoinSkipFactors.NoSkip;
 
+	[JsonProperty(PropertyName = "BuySellWalletData")]
+	public BuySellWalletData BuySellWalletData { get; set; } = new();
+
 	[JsonProperty]
 	public CoinJoinCoinSelectionSettings CoinJoinCoinSelectionSettings { get; set; } = new();
 

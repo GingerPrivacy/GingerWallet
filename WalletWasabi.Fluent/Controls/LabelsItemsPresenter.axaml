@@ -3,13 +3,13 @@
                     xmlns:g="clr-namespace:System.Collections.Generic;assembly=System.Collections">
   <ControlTheme x:Key="LabelBorder" TargetType="Border">
     <Setter Property="Margin" Value="0" />
-    <Setter Property="Padding" Value="12,5,12,5" />
+    <Setter Property="Padding" Value="12,2,12,2" />
     <Setter Property="VerticalAlignment" Value="Top" />
     <Setter Property="HorizontalAlignment" Value="Left" />
     <Setter Property="MinHeight" Value="0" />
     <Setter Property="MinWidth" Value="38" />
     <Setter Property="BorderThickness" Value="1" />
-    <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource LabelControlCornerRadius}" />
     <Setter Property="BorderBrush" Value="{DynamicResource TagsBoxBorderBrush}" />
     <Setter Property="Background" Value="{DynamicResource TagsBoxItemBackground}" />
   </ControlTheme>

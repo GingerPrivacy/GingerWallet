@@ -184,7 +184,11 @@ public class ApplicationStateManager : IMainWindowService
 		}
 
 		MainViewModel.Instance.ApplyUiConfigWindowState();
-		_activatable?.TryLeaveBackground();
+
+		if (_lifetime is IActivatableApplicationLifetime activatable)
+		{
+			activatable.TryLeaveBackground();
+		}
 
 		var result = new MainWindow
 		{

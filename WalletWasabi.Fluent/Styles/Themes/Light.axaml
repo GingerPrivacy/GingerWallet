@@ -42,6 +42,7 @@
   <Color x:Key="SystemAccentColorDark3">#FF715529</Color>
   <Color x:Key="SystemAccentCustomColorLight">#FF947A52</Color>
   <Color x:Key="SystemAccentCustomColorDark">#FFB29B78</Color>
+  <Color x:Key="SystemFadedAccentCustom">#17A68D67</Color>
 
   <Color x:Key="ActionForegroundColor">#FF000000</Color>
 
@@ -82,6 +83,8 @@
   <Color x:Key="TileRegionColor">#EFEFEF</Color>
   <Color x:Key="BorderColor">#66757575</Color>
   <Color x:Key="AcrylicTrimForeground">#FF000000</Color>
+
+  <Color x:Key="OfferBorderColor">#27757575</Color>
 
   <SolidColorBrush x:Key="PrivacyControlWhiteListHeaderForeground" Color="#394A1B" />
   <SolidColorBrush x:Key="PrivacyControlWhiteListBackground" Color="#F5F8EE" Opacity="0.5" />

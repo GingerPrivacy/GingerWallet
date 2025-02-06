@@ -96,9 +96,10 @@ public static class CurrencyExtensions
 		};
 	}
 
-	public static string ToUsd(this decimal n)
+	public static string ToFormattedFiat(this decimal n, string? currencyString = null)
 	{
-		return n.WithFriendlyDecimals() + " USD";
+		var strNum = n.ToString("#,0.##",FormatInfo);
+		return string.IsNullOrEmpty(currencyString) ? strNum : $"{strNum} {currencyString}";
 	}
 
 	public static decimal WithFriendlyDecimals(this double n)

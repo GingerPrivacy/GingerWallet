@@ -9,7 +9,7 @@ namespace WalletWasabi.Tests.UnitTests;
 public class CoinjoinIdStoreTests
 {
 	[Fact]
-	public void CanAdd()
+	public void CoinjoinIdStoreCanAdd()
 	{
 		var cjIdStore = new CoinJoinIdStore();
 
@@ -24,7 +24,7 @@ public class CoinjoinIdStoreTests
 	}
 
 	[Fact]
-	public void CanValidate()
+	public void CoinjoinIdStoreCanValidate()
 	{
 		var listOfCoinjoinHashes = new List<string>
 		{
@@ -42,7 +42,7 @@ public class CoinjoinIdStoreTests
 	}
 
 	[Fact]
-	public void CanTolerateError()
+	public void CoinjoinIdStoreCanTolerateError()
 	{
 		var listOfCoinjoinHashes = new List<string>
 		{

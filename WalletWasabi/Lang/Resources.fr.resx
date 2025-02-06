@@ -574,19 +574,13 @@
     <value>Passer</value>
   </data>
   <data name="CreateNewWallet" xml:space="preserve">
-    <value>Créer un nouveau portfeuille</value>
-  </data>
-  <data name="ConnectHardwareWallet" xml:space="preserve">
-    <value>Se connecter au portefeuille matériel</value>
+    <value>Nouveau</value>
   </data>
   <data name="ImportWallet" xml:space="preserve">
-    <value>Importer un portefeuille</value>
+    <value>Importer un Fichier</value>
   </data>
   <data name="RecoverWallet" xml:space="preserve">
-    <value>Récupérer un portefeuille</value>
-  </data>
-  <data name="or" xml:space="preserve">
-    <value>ou</value>
+    <value>Récupérer</value>
   </data>
   <data name="WalletName" xml:space="preserve">
     <value>Nom du portefeuille</value>
@@ -728,9 +722,6 @@
   </data>
   <data name="AddressesAwaitingPayment" xml:space="preserve">
     <value>Adresses en attente de paiement</value>
-  </data>
-  <data name="SeparateWithCommaOrEnter" xml:space="preserve">
-    <value>Séparer avec , ou en appuyant sur Entrée</value>
   </data>
   <data name="EnterNamesForAddress" xml:space="preserve">
     <value>Entrez les noms des personnes ou entreprises à qui vous souhaitez donner cette adresse</value>
@@ -1637,7 +1628,115 @@ Ce sont des mots de récupération supplémentaires pour plus de sécurité.</va
   <data name="TargetCoinCountPerBucketInCoinJoinCoinSelectorToolTip" xml:space="preserve">
     <value>Le sélecteur de pièces privilégiera les pièces des groupes (plages de pièces de 10k, 20k, 40k satoshis, etc.) qui sont surpeuplés.</value>
   </data>
+  <data name="UseOldCoinSelectorAsFallbackInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Utiliser l'ancien sélecteur de pièces en secours</value>
+  </data>
+  <data name="UseOldCoinSelectorAsFallbackInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>Appeler à la fois l'ancien et le nouveau sélecteur de pièces et choisir le meilleur résultat.</value>
+  </data>
   <data name="Configuration" xml:space="preserve">
     <value>Configuration</value>
+  </data>
+  <data name="Buy" xml:space="preserve">
+    <value>Acheter</value>
+  </data>
+  <data name="Sell" xml:space="preserve">
+    <value>Vendre</value>
+  </data>
+  <data name="Broadcast" xml:space="preserve">
+    <value>Diffuser</value>
+  </data>
+  <data name="CountryOfResidenceRequired" xml:space="preserve">
+    <value>Le pays de votre résidence est nécessaire pour la conformité réglementaire et le traitement des transactions</value>
+  </data>
+  <data name="RegionSelection" xml:space="preserve">
+    <value>Sélection de la région</value>
+  </data>
+  <data name="BuyBitcoin" xml:space="preserve">
+    <value>Acheter du Bitcoin</value>
+  </data>
+  <data name="NoOfferForAmount" xml:space="preserve">
+    <value>Aucune offre n'a été trouvée pour le montant spécifié.</value>
+  </data>
+  <data name="AmountCannotExceed" xml:space="preserve">
+    <value>Le montant ne peut pas dépasser {0}.</value>
+  </data>
+  <data name="AmountMustBeAtLeast" xml:space="preserve">
+    <value>Le montant doit être d'au moins {0}.</value>
+  </data>
+  <data name="ServiceNotAvailable" xml:space="preserve">
+    <value>Le service n'est pas disponible pour le moment. Réessayez plus tard.</value>
+  </data>
+  <data name="EnterAmountForOffers" xml:space="preserve">
+    <value>Entrez le montant, et nous calculerons les meilleures offres pour vous.</value>
+  </data>
+  <data name="BuyAmountWatermark" xml:space="preserve">
+    <value>Tapez le montant ici...</value>
+  </data>
+  <data name="PreviousOrders" xml:space="preserve">
+    <value>Commandes Précédentes</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Tout</value>
+  </data>
+  <data name="Offers" xml:space="preserve">
+    <value>Offres</value>
+  </data>
+  <data name="InvalidBTCAddress" xml:space="preserve">
+    <value>L'adresse n'est pas une adresse BTC valide.</value>
+  </data>
+  <data name="Browser" xml:space="preserve">
+    <value>Navigateur</value>
+  </data>
+  <data name="BrowserError" xml:space="preserve">
+    <value>Ginger Wallet n'a pas pu ouvrir le navigateur, veuillez consulter les journaux pour plus de détails.</value>
+  </data>
+  <data name="AMLKYCNotice" xml:space="preserve">
+    <value>En cliquant sur Accepter, je reconnais que la transaction pourra nécessiter ultérieurement une vérification AML/KYC par le fournisseur tiers.</value>
+  </data>
+  <data name="Accept" xml:space="preserve">
+    <value>Accepter</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>Paiement</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Fournisseur</value>
+  </data>
+  <data name="PastOrdersDetails" xml:space="preserve">
+    <value>Vous pouvez suivre, gérer et voir les détails de vos commandes passées.</value>
+  </data>
+  <data name="Created" xml:space="preserve">
+    <value>Créé</value>
+  </data>
+  <data name="TransactionOnHold" xml:space="preserve">
+    <value>Votre transaction est en attente. Veuillez contacter le support.</value>
+  </data>
+  <data name="Refunded" xml:space="preserve">
+    <value>Remboursé</value>
+  </data>
+  <data name="Expired" xml:space="preserve">
+    <value>Expiré</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>Échoué</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Terminé</value>
+  </data>
+  <data name="OpenLink" xml:space="preserve">
+    <value>Ouvrir le lien</value>
+  </data>
+  <data name="OrderDetails" xml:space="preserve">
+    <value>Détails de la commande</value>
+  </data>
+  <data name="CountryWithColon" xml:space="preserve">
+    <value>Pays :</value>
+  </data>
+  <data name="StateWithColon" xml:space="preserve">
+    <value>État :</value>
+  </data>
+  <data name="TotalCostIncludesFee" xml:space="preserve">
+    <value>Le coût total de {0} inclut des frais de {1}.</value>
   </data>
 </root>

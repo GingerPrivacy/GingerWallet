@@ -1,4 +1,3 @@
-using LinqKit;
 using NBitcoin;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -85,6 +84,8 @@ public class CoinJoinCoinSelector
 
 	private CoinJoinCoinSelectionParameters _coinSelectionParameters = CoinJoinCoinSelectionParameters.Empty;
 
+	private const int SufficeCandidateCountForCoinSelection = 150;
+
 	public List<SmartCoin> SelectCoinsForRoundNew(UtxoSelectionParameters parameters, Money liquidityClue)
 	{
 		// We don't support red/isolated coins
@@ -143,9 +144,11 @@ public class CoinJoinCoinSelector
 		int maxDistance = forceUsingLowPrivacyCoins ? 30 : 20;
 		double valueRateLossMul = 0.025 / maxDistance;
 		double anonymityLossMul = (forceUsingLowPrivacyCoins ? 0.5 : 1.0) * Math.Max(AnonScoreTarget - 1.5, 4.0) / maxDistance;
-		for (int lowestSensitivity = 1; lowestSensitivity >= absLowestSensitivity; lowestSensitivity -= sensitivityDecrement)
+		int totalCandidates = 0;
+		for (int lowestSensitivity = 1; lowestSensitivity >= absLowestSensitivity && totalCandidates < SufficeCandidateCountForCoinSelection; lowestSensitivity -= sensitivityDecrement)
 		{
-			for (int idx = 0; idx < maxDistance; idx++)
+			int distanceIncrement = 1;
+			for (int idx = 0; idx < maxDistance && totalCandidates < SufficeCandidateCountForCoinSelection; idx += distanceIncrement)
 			{
 				for (int jdx = 0; jdx < idx; jdx++)
 				{
@@ -154,6 +157,16 @@ public class CoinJoinCoinSelector
 					_coinSelectionParameters = CreateParameters(parameters, maxWeightedAnonymityLoss, maxValueRateLoss);
 					CollectCandidates(candidatesDict, selectableCoins, inputCount, lowestSensitivity);
 				}
+				int recountedCandidates = candidatesDict.Sum(x => x.Value.Count);
+				if (recountedCandidates > 0 && recountedCandidates - totalCandidates < 2 && idx + 1 < maxDistance)
+				{
+					distanceIncrement = Math.Min(distanceIncrement + 1, maxDistance - idx - 1);
+				}
+				else
+				{
+					distanceIncrement = 1;
+				}
+				totalCandidates = recountedCandidates;
 			}
 		}
 
@@ -194,8 +207,9 @@ public class CoinJoinCoinSelector
 	private void CollectCandidates(Dictionary<SmartCoin, List<CoinSelectionCandidate>> candidates, List<SmartCoin> selectableCoins, int inputCount, double lowestSensitivity)
 	{
 		bool forceUsingLowPrivacyCoins = _settings.ForceUsingLowPrivacyCoins;
-		int triesPerStartingCoin = 3 * (forceUsingLowPrivacyCoins ? 2 : 1);
-		int maxCandidatesPerStartingCoin = 8 * (forceUsingLowPrivacyCoins ? 3 : 1);
+		double coinCheck = SufficeCandidateCountForCoinSelection / (double)candidates.Count;
+		int triesPerStartingCoin = Math.Max(2, Math.Min((int)Math.Round(coinCheck), 6));
+		int maxCandidatesPerStartingCoin = Math.Max(3, Math.Min((int)Math.Round(coinCheck * 2), 20));
 		// These are the starting candidates
 		foreach (var (coin, list) in candidates)
 		{
@@ -209,12 +223,16 @@ public class CoinJoinCoinSelector
 			{
 				continue;
 			}
-			for (int tidx = 0; tidx < triesPerStartingCoin && list.Count < maxCandidatesPerStartingCoin; tidx++)
+			if (list.Count < maxCandidatesPerStartingCoin)
 			{
-				CoinSelectionCandidate csc = new(coinList, _coinSelectionParameters);
-				if (csc.MeetTheRequirements(inputCount, lowestSensitivity) && list.All(x => !x.Equals(csc)))
+				CoinSelectionCandidate cscStart = new(coinList, _coinSelectionParameters);
+				for (int tidx = triesPerStartingCoin; tidx > 0 && list.Count < maxCandidatesPerStartingCoin; tidx--)
 				{
-					list.Add(csc);
+					CoinSelectionCandidate csc = tidx > 1 ? new(cscStart) : cscStart;
+					if (csc.MeetTheRequirements(inputCount, lowestSensitivity) && list.All(x => !x.Equals(csc)))
+					{
+						list.Add(csc);
+					}
 				}
 			}
 		}
@@ -319,8 +337,9 @@ public class CoinJoinCoinSelector
 		DateTime time = DateTime.UtcNow;
 		List<SmartCoin> newResult = settings.UseExperimentalCoinSelector ? SelectCoinsForRoundNew(parameters, liquidityClue) : [];
 		TimeSpan stopperNew = DateTime.UtcNow - time;
+		bool useOldSelector = !settings.UseExperimentalCoinSelector || settings.UseOldCoinSelectorAsFallback;
 		time = DateTime.UtcNow;
-		List<SmartCoin> oldResult = SelectCoinsForRoundOld(parameters, liquidityClue);
+		List<SmartCoin> oldResult = useOldSelector ? SelectCoinsForRoundOld(parameters, liquidityClue) : [];
 		TimeSpan stopperOld = DateTime.UtcNow - time;
 
 		// Only for logging the comparison
@@ -333,8 +352,11 @@ public class CoinJoinCoinSelector
 		{
 			_wallet?.LogInfo($"Coin selection candidate result by the new algorithm ({stopperNew.TotalSeconds:F2}sec): {candidateNew}");
 		}
-		_wallet?.LogInfo($"Coin selection candidate result by the old algorithm ({stopperOld.TotalSeconds:F2}sec): {candidateOld}");
-		if (newResult.Count > 0 && candidateNew.Score <= candidateOld.Score)
+		if (useOldSelector)
+		{
+			_wallet?.LogInfo($"Coin selection candidate result by the old algorithm ({stopperOld.TotalSeconds:F2}sec): {candidateOld}");
+		}
+		if (newResult.Count > 0 && (candidateNew.Score <= candidateOld.Score || candidateNew.CoinCount != candidateOld.CoinCount))
 		{
 			_wallet?.LogInfo("Choosing the candidate given by the new algorithm.");
 			return newResult.ToImmutableList();

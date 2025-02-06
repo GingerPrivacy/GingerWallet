@@ -13,7 +13,7 @@ public class ProgressRing : TemplatedControl
 		AvaloniaProperty.Register<ProgressRing, double>(nameof(Percentage));
 
 	public static readonly StyledProperty<double> StrokeThicknessProperty =
-		AvaloniaProperty.Register<ProgressRing, double>(nameof(StrokeThickness));
+		AvaloniaProperty.Register<ProgressRing, double>(nameof(StrokeThickness), 6);
 
 	public bool IsIndeterminate
 	{

@@ -1,0 +1,63 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="buySell:OrderDetailsViewModel"
+             x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
+             xmlns:buySell="clr-namespace:WalletWasabi.Fluent.ViewModels.Wallets.BuySell"
+             x:Class="WalletWasabi.Fluent.Views.Wallets.BuySell.OrderDetailsView">
+  <ContentArea Title="{Binding Title}"
+               NextContent="{x:Static lang:Resources.Done}" EnableNext="True"
+               EnableCancel="{Binding EnableCancel}">
+
+    <StackPanel Spacing="15">
+
+      <!-- Date -->
+      <PreviewItem Icon="{StaticResource timer_regular}"
+                   Label="{x:Static lang:Resources.DateTime}"
+                   CopyableContent="{Binding Date, Mode=OneWay}">
+        <TextBlock Text="{Binding Date, Mode=OneWay}" Classes="monoSpaced" />
+      </PreviewItem>
+
+      <Separator />
+
+      <!-- Amount -->
+      <PreviewItem Icon="{StaticResource btc_logo}"
+                   Label="{x:Static lang:Resources.Amount}"
+                   CopyableContent="{Binding Amount}">
+        <PrivacyContentControl Content="{Binding Amount}"/>
+      </PreviewItem>
+
+      <Separator />
+
+      <!-- Status -->
+      <PreviewItem Icon="{StaticResource copy_confirmed}"
+                   Label="{x:Static lang:Resources.Status}">
+        <PrivacyContentControl Content="{Binding Status}"/>
+      </PreviewItem>
+
+      <Separator />
+
+      <!-- Order ID -->
+      <PreviewItem Icon="{StaticResource transaction_id}"
+                   Label="Order ID"
+                   CopyableContent="{Binding OrderId}">
+        <PrivacyContentControl>
+          <TextBlock Text="{Binding OrderId}" Classes="monoSpaced" />
+        </PrivacyContentControl>
+      </PreviewItem>
+
+      <Separator />
+
+      <!-- Provider -->
+      <PreviewItem Icon="{StaticResource entities_regular}"
+                   Label="Provider"
+                   CopyableContent="{Binding Provider}">
+        <PrivacyContentControl Content="{Binding Provider}"/>
+      </PreviewItem>
+
+    </StackPanel>
+  </ContentArea>
+</UserControl>

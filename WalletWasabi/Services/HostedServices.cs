@@ -23,7 +23,7 @@ public class HostedServices : IDisposable
 
 	private void Register<T>(IHostedService service, string friendlyName) where T : class, IHostedService
 	{
-		if (typeof(T) != service.GetType())
+		if (typeof(T) != service.GetType() && !service.GetType().IsSubclassOf(typeof(T)))
 		{
 			throw new ArgumentException($"Type mismatch: {nameof(T)} is {typeof(T).Name}, but {nameof(service)} is {service.GetType()}.");
 		}

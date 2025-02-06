@@ -10,7 +10,7 @@ namespace WalletWasabi.Tests.UnitTests.Userfacing.Bip21;
 public class Bip21UriParserTests
 {
 	[Fact]
-	public void TryParseTests()
+	public void Bip21UriParserTryParseTests()
 	{
 		Assert.False(Bip21UriParser.TryParse(input: "", Network.Main, out Bip21UriParser.Result? result, out Bip21UriParser.Error? error));
 		Assert.Null(result);

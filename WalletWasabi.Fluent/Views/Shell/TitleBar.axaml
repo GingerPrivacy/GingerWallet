@@ -8,26 +8,7 @@
              x:Class="WalletWasabi.Fluent.Views.Shell.TitleBar"
              x:Name="UserControl"
              xmlns:lang="using:WalletWasabi.Lang"
-             xmlns:statusIcon="clr-namespace:WalletWasabi.Fluent.Views.StatusIcon"
-             xmlns:converters="clr-namespace:WalletWasabi.Fluent.Converters">
-
-  <UserControl.Styles>
-    <Style Selector="Panel#TitlePanel">
-      <Setter Property="Transitions">
-        <Transitions>
-          <DoubleTransition Property="Opacity" Duration="0:0:0.100" />
-          <TransformOperationsTransition Duration="0:0:0.175" Property="RenderTransform"
-                                         Easing="{StaticResource FluentEasing}" />
-        </Transitions>
-      </Setter>
-      <Setter Property="Opacity" Value="1" />
-      <Setter Property="RenderTransform" Value="translateX(0px)" />
-    </Style>
-    <Style Selector="Panel#TitlePanel.minWidth">
-      <Setter Property="Opacity" Value="0" />
-      <Setter Property="RenderTransform" Value="translateX(-20px)" />
-    </Style>
-  </UserControl.Styles>
+             xmlns:statusIcon="clr-namespace:WalletWasabi.Fluent.Views.StatusIcon">
 
   <UserControl.Resources>
 
@@ -36,7 +17,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="WasabiLogo">
-      <StackPanel Orientation="Horizontal" Spacing="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+      <StackPanel Orientation="Horizontal" Spacing="3" VerticalAlignment="Center" HorizontalAlignment="Center" IsHitTestVisible="False">
         <Viewbox Height="18" Width="18" IsHitTestVisible="False" Margin="0 -2 4 0">
           <ThemeImage Source="{DynamicResource GingerWalletLogo}" />
         </Viewbox>
