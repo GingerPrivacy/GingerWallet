@@ -5,6 +5,7 @@ using NBitcoin;
 using WalletWasabi.Backend.Models.Responses;
 using WalletWasabi.Daemon;
 using WalletWasabi.Fluent.Models;
+using WalletWasabi.Fluent.Models.BuySell;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Models;
 
@@ -39,6 +40,7 @@ public class NullApplicationSettings : IApplicationSettings
 	public WindowState WindowState { get; set; }
 	public bool ForceRestartNeeded { get; set; }
 	public bool DoUpdateOnClose { get; set; }
+	public BuySellConfiguration BuySellConfiguration { get; set; } = new();
 	public BrowserTypeDropdownListEnum SelectedBrowser { get; set; }
 	public string BrowserPath { get; set; } = "";
 	public DisplayLanguage SelectedDisplayLanguage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -49,6 +51,26 @@ public class NullApplicationSettings : IApplicationSettings
 	}
 
 	public TorMode GetTorStartupMode()
+	{
+		throw new NotImplementedException();
+	}
+
+	public void SetBuyCountry(CountrySelection country)
+	{
+		throw new NotImplementedException();
+	}
+
+	public CountrySelection? GetCurrentBuyCountry()
+	{
+		throw new NotImplementedException();
+	}
+
+	public CurrencyModel? GetCurrentBuyCurrency()
+	{
+		throw new NotImplementedException();
+	}
+
+	public void SetBuyCurrency(CurrencyModel currency)
 	{
 		throw new NotImplementedException();
 	}

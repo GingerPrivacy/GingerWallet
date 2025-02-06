@@ -1,3 +1,4 @@
+using LinqKit;
 using NBitcoin;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -41,6 +42,31 @@ public class CoinSelectionCandidate : CoinSelectionStatistics
 		Refresh();
 	}
 
+	public CoinSelectionCandidate(CoinSelectionCandidate src)
+	{
+		Coins = new(src.Coins);
+		RemovedCoins = new(src.RemovedCoins);
+		_coinSelectionParameters = src._coinSelectionParameters;
+		_amount = src._amount;
+		_vsize = src._vsize;
+		_weightedAnonymitySet = src._weightedAnonymitySet;
+		_transactions = new(src._transactions);
+		_zeroCoin = src._zeroCoin;
+		_selectionBuckets = new();
+		foreach (var elem in src._selectionBuckets)
+		{
+			_selectionBuckets.Add(elem.Key, new(elem.Value));
+		}
+
+		MinimumAnonymitySet = src.MinimumAnonymitySet;
+		MinimumAnonymityCount = src.MinimumAnonymityCount;
+
+		AnonymityLoss = src.AnonymityLoss;
+		ValueLossRate = src.ValueLossRate;
+		BucketScore = src.BucketScore;
+		Score = src.Score;
+	}
+
 	public override string ToString()
 	{
 		return $"{base.ToString()}, {MinimumAnonymitySet,5:F2}";
@@ -53,9 +79,9 @@ public class CoinSelectionCandidate : CoinSelectionStatistics
 			return false;
 		}
 
-		for (int idx = 0, len = CoinCount; idx < len; idx++)
+		foreach (var coin in Coins)
 		{
-			if (!other.Coins.Contains(Coins[idx]))
+			if (!other.Coins.Contains(coin))
 			{
 				return false;
 			}
@@ -75,11 +101,21 @@ public class CoinSelectionCandidate : CoinSelectionStatistics
 		_zeroCoin = Coins.FirstOrDefault();
 		_selectionBuckets.Clear();
 		MinimumAnonymitySet = double.PositiveInfinity;
+		MinimumAnonymityCount = 0;
 
 		foreach (var coin in Coins)
 		{
 			_amount += coin.Amount;
-			MinimumAnonymitySet = Math.Min(coin.AnonymitySet, MinimumAnonymitySet);
+			if (coin.AnonymitySet < MinimumAnonymitySet)
+			{
+				MinimumAnonymitySet = coin.AnonymitySet;
+				MinimumAnonymityCount = 1;
+			}
+			else if (coin.AnonymitySet == MinimumAnonymitySet)
+			{
+				MinimumAnonymityCount++;
+			}
+
 			_weightedAnonymitySet += coin.AnonymitySet * coin.Amount.Satoshi;
 			_vsize += coin.ScriptPubKey.EstimateInputVsize();
 			_transactions.AddValue(coin.TransactionId, 1);
@@ -89,10 +125,14 @@ public class CoinSelectionCandidate : CoinSelectionStatistics
 			list.Add(coin);
 		}
 
+		CalculateScores();
+	}
+
+	private void CalculateScores()
+	{
 		AnonymityLoss = Amount.Satoshi > 0 ? _weightedAnonymitySet / Amount.Satoshi - MinimumAnonymitySet : double.PositiveInfinity;
 		ValueLossRate = (_coinSelectionParameters.MiningFeeRate.GetFee(_vsize).Satoshi + _coinSelectionParameters.CoinJoinLoss) / (double)Amount.Satoshi;
 		BucketScore = CalculateBucketScore(-1);
-
 		_coinSelectionParameters.Comparer.GetScore(this);
 	}
 
@@ -113,7 +153,7 @@ public class CoinSelectionCandidate : CoinSelectionStatistics
 		return bucketScore;
 	}
 
-	public bool MeetTheRequirements(int maxCoinNumer, double lowestSensitivity)
+	public bool MeetTheRequirements(int maxCoinNumber, double lowestSensitivity)
 	{
 		// Goals (both direct and indirect):
 		// 1) Meet the AnonymityLoss, ValueLoss and maxCoinNumber requirements
@@ -125,7 +165,7 @@ public class CoinSelectionCandidate : CoinSelectionStatistics
 		double sensitivity = 5.0;
 		List<CoinRemovalStatistics> removable = new();
 		int coinNumber;
-		for (; (coinNumber = _selectionBuckets.Values.Sum(x => x.Count)) > 2 && (coinNumber > maxCoinNumer || sensitivity > 1.1);)
+		for (; (coinNumber = _selectionBuckets.Values.Sum(x => x.Count)) > 2 && (coinNumber > maxCoinNumber || sensitivity > 1.1);)
 		{
 			removable.Clear();
 			if (CollectRemovableCoins(removable, _selectionBuckets, sensitivity))
@@ -143,21 +183,39 @@ public class CoinSelectionCandidate : CoinSelectionStatistics
 				continue;
 			}
 
+			const int RemoveFromFirstCount = 8;
 			removable.Sort(_coinSelectionParameters.Comparer);
-			var toRemove = removable.Take(8).RandomElement(_coinSelectionParameters.Random);
-			if (toRemove is not null)
+			if (coinNumber - maxCoinNumber > RemoveFromFirstCount)
 			{
-				int bucketIndex = CoinJoinCoinSelector.GetBucketIndex(toRemove.Coin);
-				var removeBucket = _selectionBuckets.GetOrCreate(bucketIndex);
-				RemoveCoinIfPossible(removeBucket, removeBucket.IndexOf(toRemove.Coin));
-				if (removeBucket.Count == 0)
+				// We will need to remove first coinNumber - maxCoinNumber - RemoveFromFirstCount coins in one go
+				foreach (var toRemove in removable.Take(coinNumber - maxCoinNumber - RemoveFromFirstCount))
 				{
-					_selectionBuckets.Remove(bucketIndex);
+					int bucketIndex = CoinJoinCoinSelector.GetBucketIndex(toRemove.Coin);
+					var removeBucket = _selectionBuckets.GetOrCreate(bucketIndex);
+					RemoveCoinIfPossible(removeBucket, removeBucket.IndexOf(toRemove.Coin));
+					if (removeBucket.Count == 0)
+					{
+						_selectionBuckets.Remove(bucketIndex);
+					}
+				}
+			}
+			else
+			{
+				var toRemoveSingle = removable.Take(RemoveFromFirstCount).RandomElement(_coinSelectionParameters.Random);
+				if (toRemoveSingle is not null)
+				{
+					int bucketIndex = CoinJoinCoinSelector.GetBucketIndex(toRemoveSingle.Coin);
+					var removeBucket = _selectionBuckets.GetOrCreate(bucketIndex);
+					RemoveCoinIfPossible(removeBucket, removeBucket.IndexOf(toRemoveSingle.Coin));
+					if (removeBucket.Count == 0)
+					{
+						_selectionBuckets.Remove(bucketIndex);
+					}
 				}
 			}
 		}
 
-		return GoodCandidate && coinNumber <= maxCoinNumer;
+		return GoodCandidate && coinNumber <= maxCoinNumber;
 	}
 
 	private bool CollectRemovableCoins(List<CoinRemovalStatistics> removable, Dictionary<int, List<SmartCoin>> localBucket, double sensitivity)
@@ -190,6 +248,8 @@ public class CoinSelectionCandidate : CoinSelectionStatistics
 			{
 				// We should remove a Coin from this list
 				var all = bucket.Select(GetCoinRemovalResult).Where(IsRemovable);
+				// We postpone this calculation as it's expensive and not needed for the removal check
+				all.ForEach(CalculateBucketScoreForRemovalStatistics);
 
 				removable.AddRange(all);
 			}
@@ -218,7 +278,28 @@ public class CoinSelectionCandidate : CoinSelectionStatistics
 		if (Coins.Remove(coin))
 		{
 			RemovedCoins.Add(coin);
-			Refresh();
+			if (coin.AnonymitySet > MinimumAnonymitySet || MinimumAnonymityCount > 0)
+			{
+				if (coin.AnonymitySet == MinimumAnonymitySet)
+				{
+					MinimumAnonymityCount--;
+				}
+
+				_amount -= coin.Amount;
+				_weightedAnonymitySet -= coin.AnonymitySet * coin.Amount.Satoshi;
+				_vsize -= coin.ScriptPubKey.EstimateInputVsize();
+				_transactions.AddValue(coin.TransactionId, -1);
+
+				int bucketIndex = CoinJoinCoinSelector.GetBucketIndex(coin);
+				var list = _selectionBuckets.GetOrCreate(bucketIndex);
+				list.Remove(coin);
+
+				CalculateScores();
+			}
+			else
+			{
+				Refresh();
+			}
 		}
 	}
 
@@ -246,19 +327,23 @@ public class CoinSelectionCandidate : CoinSelectionStatistics
 		return true;
 	}
 
-	private CoinRemovalStatistics GetCoinRemovalResult(SmartCoin coin)
+	private CoinRemovalStatistics GetCoinRemovalResult(SmartCoin removedCoin)
 	{
-		var newAmount = Amount - coin.Amount;
-		var newWeightedAnonymitySet = _weightedAnonymitySet - coin.AnonymitySet * coin.Amount.Satoshi;
-		var newVSize = _vsize - coin.ScriptPubKey.EstimateInputVsize();
+		var newAmount = Amount - removedCoin.Amount;
+		var newWeightedAnonymitySet = _weightedAnonymitySet - removedCoin.AnonymitySet * removedCoin.Amount.Satoshi;
+		var newVSize = _vsize - removedCoin.ScriptPubKey.EstimateInputVsize();
 
 		var newAnonymityLoss = newWeightedAnonymitySet / newAmount.Satoshi - MinimumAnonymitySet;
 		var newValueLossRate = (_coinSelectionParameters.MiningFeeRate.GetFee(newVSize).Satoshi + _coinSelectionParameters.CoinJoinLoss) / (double)newAmount.Satoshi;
 
-		int bucketIndex = CoinJoinCoinSelector.GetBucketIndex(coin);
-		double newBucketScore = CalculateBucketScore(bucketIndex);
+		return new(removedCoin, CoinCount - 1, TransactionCount - (_transactions.GetValueOrDefault(removedCoin.TransactionId, 0) == 1 ? 1 : 0), newAnonymityLoss, newValueLossRate, 0);
+	}
 
-		return new(coin, CoinCount - 1, TransactionCount - (_transactions.GetValueOrDefault(coin.TransactionId, 0) == 1 ? 1 : 0), newAnonymityLoss, newValueLossRate, newBucketScore);
+	private void CalculateBucketScoreForRemovalStatistics(CoinRemovalStatistics statistics)
+	{
+		int bucketIndex = CoinJoinCoinSelector.GetBucketIndex(statistics.Coin);
+		double newBucketScore = CalculateBucketScore(bucketIndex);
+		statistics.BucketScore = newBucketScore;
 	}
 
 	public bool GoodCandidate => AnonymityLoss <= _coinSelectionParameters.MaxWeightedAnonymityLoss && ValueLossRate <= _coinSelectionParameters.MaxValueLossRate;
@@ -269,8 +354,9 @@ public class CoinSelectionCandidate : CoinSelectionStatistics
 	public override int TransactionCount => _transactions.Count;
 
 	public double MinimumAnonymitySet { get; set; }
+	public int MinimumAnonymityCount { get; set; }
 
-	public List<SmartCoin> Coins { get; }
+	public HashSet<SmartCoin> Coins { get; }
 	public List<SmartCoin> RemovedCoins { get; }
 
 	private SmartCoin? _zeroCoin;

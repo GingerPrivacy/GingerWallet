@@ -5,7 +5,7 @@
              xmlns:wallets="clr-namespace:WalletWasabi.Fluent.ViewModels.Wallets"
              xmlns:home="using:WalletWasabi.Fluent.Views.Wallets.Home"
              xmlns:history="using:WalletWasabi.Fluent.Views.Wallets.Home.History"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="850"
+             mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="850"
              x:DataType="wallets:WalletViewModel"
              x:CompileBindings="True"
              ClipToBounds="False"
@@ -16,86 +16,142 @@
   </Interaction.Behaviors>
   <ContentArea ScrollViewer.VerticalScrollBarVisibility="Disabled" ClipToBounds="False" Classes="StretchTopContent">
     <ContentArea.Title>
-      <TextBlock TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding $self.Text}" Text="{Binding Title, FallbackValue=My Wallet with a very long name}" />
+      <DockPanel HorizontalAlignment="Left">
+
+        <Button Classes="transparentFunction" VerticalAlignment="Center" DockPanel.Dock="Right" Margin="5 0 0 0">
+          <Button.Flyout>
+            <MenuFlyout Placement="Bottom">
+              <MenuItem Header="{x:Static lang:Resources.WalletSettings}" Command="{Binding WalletSettingsCommand}">
+                <MenuItem.Icon>
+                  <PathIcon Data="{StaticResource settings_wallet_regular}" />
+                </MenuItem.Icon>
+              </MenuItem>
+              <MenuItem Header="{x:Static lang:Resources.WalletCoinsViewModelTitle}"
+                        Command="{Binding WalletCoinsCommand}">
+                <MenuItem.Icon>
+                  <PathIcon Data="{StaticResource wallet_coins}" />
+                </MenuItem.Icon>
+              </MenuItem>
+              <MenuItem Header="{x:Static lang:Resources.WalletStatsViewModelTitle}"
+                        Command="{Binding WalletStatsCommand}">
+                <MenuItem.Icon>
+                  <PathIcon Data="{StaticResource stats_wallet_regular}" />
+                </MenuItem.Icon>
+              </MenuItem>
+              <MenuItem Header="{x:Static lang:Resources.WalletInfoViewModelTitle}"
+                        Command="{Binding WalletInfoCommand}">
+                <MenuItem.Icon>
+                  <PathIcon Data="{StaticResource info_regular}" />
+                </MenuItem.Icon>
+              </MenuItem>
+            </MenuFlyout>
+          </Button.Flyout>
+          <PathIcon Data="{StaticResource more_regular}" Opacity="0.6" />
+        </Button>
+
+        <TextBlock TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding $self.Text}"
+                   Text="{Binding Title, FallbackValue=My Wallet with a very long name}" />
+      </DockPanel>
     </ContentArea.Title>
     <ContentArea.TopContent>
-      <StackPanel>
-        <DockPanel>
+      <StackPanel Spacing="20" Orientation="Horizontal" VerticalAlignment="Top">
 
-          <!-- Buttons -->
-          <StackPanel HorizontalAlignment="Right" Margin="0 -5 0 0" DockPanel.Dock="Right" Orientation="Horizontal" Spacing="10" TextElement.FontSize="{DynamicResource ControlContentThemeFontSize}">
-            <Button Classes="function"
-                    Command="{Binding BroadcastPsbtCommand}">
-              <Button.IsVisible>
-                <MultiBinding Converter="{x:Static BoolConverters.And}">
-                  <Binding Path="PreferPsbtWorkflow" />
-                  <Binding Path="IsWalletBalanceZero" Converter="{x:Static BoolConverters.Not}" />
-                </MultiBinding>
-              </Button.IsVisible>
-              <StackPanel Orientation="Horizontal">
-                <PathIcon Data="{StaticResource live_regular}" />
-                <TextBlock Text="Broadcast" />
-              </StackPanel>
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+
+          <!-- Sell -->
+                  <!-- IsVisible="{Binding IsSendButtonVisible}" -->
+          <Button Theme="{StaticResource SecondarFunctionButton}"
+                  CornerRadius="20 0 0 20"
+                  IsVisible="false"
+                  Command="{Binding SellCommand}">
+            <TextBlock Text="{x:Static lang:Resources.Sell}" />
+          </Button>
+
+          <!-- Buy -->
+                  <!-- Classes.single="{Binding !IsSendButtonVisible}" -->
+          <Panel>
+
+            <Button Theme="{StaticResource SecondarFunctionButton}"
+                    Classes.single="true"
+                    Command="{Binding BuyCommand}">
+              <Button.Styles>
+                <Style Selector="Button">
+                  <Setter Property="CornerRadius" Value="0 20 20 0" />
+                </Style>
+                <Style Selector="Button.single">
+                  <Setter Property="CornerRadius" Value="20" />
+                </Style>
+              </Button.Styles>
+              <TextBlock Text="{x:Static lang:Resources.Buy}" />
             </Button>
 
-            <SubActionButton Content="{x:Static lang:Resources.WalletSend}"
-                             Icon="{StaticResource wallet_action_send}"
-                             Command="{Binding SendCommand}"
-                             IsVisible="{Binding IsSendButtonVisible}">
-              <SubActionButton.SubCommands>
-                <UICommandCollection>
-                  <UICommand Name="{x:Static lang:Resources.WalletAutomatic}" Command="{Binding SendCommand}" IsDefault="True">
-                    <UICommand.Icon>
-                      <PathIcon Data="{StaticResource automatic_control}"
-                                Classes="Icon" />
-                    </UICommand.Icon>
-                  </UICommand>
-                  <UICommand Name="{x:Static lang:Resources.WalletManualControl}" Command="{Binding SendManualControlCommand}">
-                    <UICommand.Icon>
-                      <PathIcon Data="{StaticResource manual_control}"
-                                Classes="Icon" />
-                    </UICommand.Icon>
-                  </UICommand>
-                </UICommandCollection>
-              </SubActionButton.SubCommands>
-            </SubActionButton>
+            <Ellipse IsHitTestVisible="False"
+                     IsVisible="{Binding HasHeldOrder}"
+                     VerticalAlignment="Top" HorizontalAlignment="Right"
+                     Width="11" Height="11"
+                     Stroke="{DynamicResource RegionBrush}" StrokeThickness="2"
+                     Fill="{DynamicResource WarningMessageForeground}"/>
 
-            <Button Classes="function"
-                    Command="{Binding ReceiveCommand}">
-              <StackPanel Orientation="Horizontal">
-                <PathIcon Data="{StaticResource wallet_action_receive}" />
-                <TextBlock Text="{x:Static lang:Resources.WalletReceive}" />
-              </StackPanel>
-            </Button>
-            <Button Classes="transparentFunction">
-              <Button.Flyout>
-                <MenuFlyout Placement="Bottom">
-                  <MenuItem Header="{x:Static lang:Resources.WalletSettings}" Command="{Binding WalletSettingsCommand}">
-                    <MenuItem.Icon>
-                      <PathIcon Data="{StaticResource settings_wallet_regular}" />
-                    </MenuItem.Icon>
-                  </MenuItem>
-                  <MenuItem Header="{x:Static lang:Resources.WalletCoinsViewModelTitle}" Command="{Binding WalletCoinsCommand}">
-                    <MenuItem.Icon>
-                      <PathIcon Data="{StaticResource wallet_coins}" />
-                    </MenuItem.Icon>
-                  </MenuItem>
-                  <MenuItem Header="{x:Static lang:Resources.WalletStatsViewModelTitle}" Command="{Binding WalletStatsCommand}">
-                    <MenuItem.Icon>
-                      <PathIcon Data="{StaticResource stats_wallet_regular}" />
-                    </MenuItem.Icon>
-                  </MenuItem>
-                  <MenuItem Header="{x:Static lang:Resources.WalletInfoViewModelTitle}" Command="{Binding WalletInfoCommand}">
-                    <MenuItem.Icon>
-                      <PathIcon Data="{StaticResource info_regular}" />
-                    </MenuItem.Icon>
-                  </MenuItem>
-                </MenuFlyout>
-              </Button.Flyout>
-              <PathIcon Data="{StaticResource more_regular}" Opacity="0.6" />
-            </Button>
-          </StackPanel>
-        </DockPanel>
+          </Panel>
+        </StackPanel>
+
+        <!-- Broadcast -->
+        <Button Theme="{StaticResource FunctionButton}"
+                Command="{Binding BroadcastPsbtCommand}">
+          <Button.IsVisible>
+            <MultiBinding Converter="{x:Static BoolConverters.And}">
+              <Binding Path="PreferPsbtWorkflow" />
+              <Binding Path="IsWalletBalanceZero" Converter="{x:Static BoolConverters.Not}" />
+            </MultiBinding>
+          </Button.IsVisible>
+          <TextBlock Text="{x:Static lang:Resources.Broadcast}" />
+        </Button>
+
+        <StackPanel HorizontalAlignment="Center" Spacing="1" Orientation="Horizontal">
+
+          <!-- Send -->
+          <SubActionButton Content="{x:Static lang:Resources.WalletSend}"
+                           CornerRadius="20 0 0 20"
+                           HorizontalContentAlignment="Center"
+                           Command="{Binding SendCommand}"
+                           IsVisible="{Binding IsSendButtonVisible}">
+            <SubActionButton.SubCommands>
+              <UICommandCollection>
+                <UICommand Name="{x:Static lang:Resources.WalletAutomatic}" Command="{Binding SendCommand}"
+                           IsDefault="True">
+                  <UICommand.Icon>
+                    <PathIcon Data="{StaticResource automatic_control}"
+                              Classes="Icon" />
+                  </UICommand.Icon>
+                </UICommand>
+                <UICommand Name="{x:Static lang:Resources.WalletManualControl}"
+                           Command="{Binding SendManualControlCommand}">
+                  <UICommand.Icon>
+                    <PathIcon Data="{StaticResource manual_control}"
+                              Classes="Icon" />
+                  </UICommand.Icon>
+                </UICommand>
+              </UICommandCollection>
+            </SubActionButton.SubCommands>
+          </SubActionButton>
+
+          <!-- Receive -->
+          <Button Theme="{StaticResource FunctionButton}"
+                  Classes.single="{Binding !IsSendButtonVisible}"
+                  Command="{Binding ReceiveCommand}">
+            <Button.Styles>
+              <Style Selector="Button">
+                <Setter Property="CornerRadius" Value="0 20 20 0" />
+              </Style>
+              <Style Selector="Button.single">
+                <Setter Property="CornerRadius" Value="20" />
+              </Style>
+            </Button.Styles>
+            <TextBlock Text="{x:Static lang:Resources.WalletReceive}" />
+          </Button>
+        </StackPanel>
+
+
       </StackPanel>
     </ContentArea.TopContent>
     <DockPanel Name="Panel" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">

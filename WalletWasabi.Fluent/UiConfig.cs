@@ -7,6 +7,7 @@ using WalletWasabi.Bases;
 using WalletWasabi.Fluent.Converters;
 using System.Runtime.Serialization;
 using System.Runtime.InteropServices;
+using WalletWasabi.Fluent.Models.BuySell;
 
 namespace WalletWasabi.Fluent;
 
@@ -29,6 +30,7 @@ public class UiConfig : ConfigBase
 	private double? _windowWidth;
 	private double? _windowHeight;
 	private string _selectedBrowser = "";
+	private BuySellConfiguration _buySellConfiguration = new ();
 
 	public UiConfig() : base()
 	{
@@ -57,19 +59,14 @@ public class UiConfig : ConfigBase
 			.Subscribe(_ => ToFile());
 
 		this.WhenAnyValue(
-			x => x.SendAmountConversionReversed,
-			x => x.SelectedBrowser)
+				x => x.SendAmountConversionReversed,
+				x => x.SelectedBrowser,
+				x => x.WindowWidth,
+				x => x.WindowHeight,
+				x => x.BuySellConfiguration)
 			.Throttle(TimeSpan.FromMilliseconds(500))
 			.Skip(1) // Won't save on UiConfig creation.
 			.ObserveOn(RxApp.MainThreadScheduler)
-			.Subscribe(_ => ToFile());
-
-		this.WhenAnyValue(
-				x => x.WindowWidth,
-				x => x.WindowHeight)
-			.Throttle(TimeSpan.FromMilliseconds(500))
-			.Skip(1) // Won't save on UiConfig creation.
-			.ObserveOn(RxApp.TaskpoolScheduler)
 			.Subscribe(_ => ToFile());
 	}
 
@@ -198,6 +195,13 @@ public class UiConfig : ConfigBase
 	{
 		get => _windowHeight;
 		internal set => RaiseAndSetIfChanged(ref _windowHeight, value);
+	}
+
+	[JsonProperty(PropertyName = "BuySellConfiguration")]
+	public BuySellConfiguration BuySellConfiguration
+	{
+		get => _buySellConfiguration;
+		internal set => RaiseAndSetIfChanged(ref _buySellConfiguration, value);
 	}
 
 	[OnDeserialized]

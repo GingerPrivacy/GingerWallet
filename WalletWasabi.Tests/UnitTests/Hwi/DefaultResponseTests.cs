@@ -53,15 +53,6 @@ public class DefaultResponseTests
 
 	[Theory]
 	[MemberData(nameof(GetHwiClientConfigurationCombinationValues))]
-	public async Task GetHelpTestsAsync(HwiClient client)
-	{
-		using var cts = new CancellationTokenSource(ReasonableRequestTimeout);
-		string help = await client.GetHelpAsync(cts.Token);
-		Assert.NotEmpty(help);
-	}
-
-	[Theory]
-	[MemberData(nameof(GetHwiClientConfigurationCombinationValues))]
 	public async Task CanEnumerateAsync(HwiClient client)
 	{
 		using var cts = new CancellationTokenSource(ReasonableRequestTimeout);
@@ -76,7 +67,6 @@ public class DefaultResponseTests
 		using var cts = new CancellationTokenSource();
 		cts.Cancel();
 		await Assert.ThrowsAsync<OperationCanceledException>(async () => await client.GetVersionAsync(cts.Token));
-		await Assert.ThrowsAsync<OperationCanceledException>(async () => await client.GetHelpAsync(cts.Token));
 		await Assert.ThrowsAsync<OperationCanceledException>(async () => await client.EnumerateAsync(cts.Token));
 	}
 
@@ -107,8 +97,6 @@ public class DefaultResponseTests
 				{
 					client.GetVersionAsync(cts.Token),
 					client.GetVersionAsync(cts.Token),
-					client.GetHelpAsync(cts.Token),
-					client.GetHelpAsync(cts.Token),
 					client.EnumerateAsync(cts.Token),
 					client.EnumerateAsync(cts.Token)
 				};
@@ -218,18 +206,5 @@ public class DefaultResponseTests
 		result = await pb.SendCommandAsync("--version", openConsole: false, cts.Token, (sw) => stdInputActionCalled = true);
 		Assert.Contains(Constants.HwiVersion.ToString(), result.response);
 		Assert.True(stdInputActionCalled);
-	}
-
-	/// <summary>Verify that <c>--help</c> returns output as expected.</summary>
-	[Fact]
-	public async void HwiHelpTestAsync()
-	{
-		using var cts = new CancellationTokenSource(ReasonableRequestTimeout);
-
-		HwiProcessBridge processBridge = new();
-		(string response, int exitCode) result = await processBridge.SendCommandAsync("--help", openConsole: false, cts.Token);
-
-		Assert.Equal(0, result.exitCode);
-		Assert.Equal(@"{""error"": ""Help text requested"", ""code"": -17}" + Environment.NewLine, result.response);
 	}
 }

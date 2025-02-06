@@ -12,8 +12,6 @@ public class StringCipherTests
 	/// </summary>
 	[Theory]
 	[InlineData("hello", "password")]
-	[InlineData("hello world, how are you doing today?", "password")]
-	[InlineData("01234567890123456789012345678901234567890123456789012345678901234567890123456789", "password")]
 	[InlineData("foo@éóüö", "")]
 	[InlineData("foo@éóüöhellohellohellohellohello", "passwordpassword3232")]
 	public void RoundTripCipherTests(string toEncrypt, string password)

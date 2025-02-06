@@ -24,7 +24,7 @@ public class MiningFeeRateEstimator
 		return feeRate;
 	}
 
-	public virtual Task LogMiningFeeRates(bool force, CancellationToken cancel)
+	public virtual Task LogMiningFeeRatesAsync(bool force, CancellationToken cancel)
 	{
 		return Task.CompletedTask;
 	}

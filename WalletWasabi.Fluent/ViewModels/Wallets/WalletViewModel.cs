@@ -31,6 +31,7 @@ public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
 	[AutoNotify(SetterModifier = AccessModifier.Protected)] private bool _isLoading;
 	[AutoNotify] private bool _isPointerOver;
 	[AutoNotify] private bool _isSelected;
+	[AutoNotify] private bool _hasHeldOrder;
 	[AutoNotify(SetterModifier = AccessModifier.Private)] private bool _isSendButtonVisible;
 
 	[AutoNotify(SetterModifier = AccessModifier.Private)] private bool _isWalletBalanceZero;
@@ -72,6 +73,9 @@ public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
 					var (isSelected, isWalletBalanceZero, areAllCoinsPrivate, pointerOver) = tuple;
 					return (isSelected && !isWalletBalanceZero && (!areAllCoinsPrivate || pointerOver)) && !WalletModel.IsWatchOnlyWallet;
 				});
+
+		BuyCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().Buy(walletModel));
+		SellCommand = ReactiveCommand.Create(() => { });
 
 		SendCommand = ReactiveCommand.Create(() => Navigate().To().Send(walletModel, new SendFlowModel(wallet, walletModel)));
 		SendManualControlCommand = ReactiveCommand.Create(() => Navigate().To().ManualControlDialog(walletModel, wallet));
@@ -136,6 +140,10 @@ public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
 
 	public IEnumerable<ActivatableViewModel> Tiles { get; }
 
+	public ICommand BuyCommand { get; private set; }
+
+	public ICommand SellCommand { get; private set; }
+
 	public ICommand SendCommand { get; private set; }
 
 	public ICommand SendManualControlCommand { get; }
@@ -178,6 +186,10 @@ public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
 		{
 			tile.Activate(disposables);
 		}
+
+		this.WhenAnyObservable(x => x.WalletModel.BuyModel.HasHeldOrder)
+			.BindTo(this, x => x.HasHeldOrder)
+			.DisposeWith(disposables);
 
 		WalletModel.State
 			.BindTo(this, x => x.WalletState)

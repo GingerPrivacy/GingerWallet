@@ -5,6 +5,7 @@
   <Thickness x:Key="MenuFlyoutItemThemePaddingNarrow">15 7</Thickness>
   <Thickness x:Key="MenuFlyoutScrollerMargin">5</Thickness>
   <CornerRadius x:Key="ControlCornerRadius">5</CornerRadius>
+  <CornerRadius x:Key="LabelControlCornerRadius">8</CornerRadius>
   <CornerRadius x:Key="OverlayCornerRadius">10</CornerRadius>
   <Thickness x:Key="ComboBoxDropdownBorderPadding">5</Thickness>
 

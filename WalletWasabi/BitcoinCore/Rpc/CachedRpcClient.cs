@@ -22,6 +22,7 @@ public class CachedRpcClient : RpcClientBase
 	private static MemoryCacheEntryOptions GetBlockCacheOptions { get; } = CacheOptions(size: 10, expireInSeconds: 300);
 	private static MemoryCacheEntryOptions GetVerboseBlockCacheOptions { get; } = CacheOptions(size: 20, expireInSeconds: 300);
 	private static MemoryCacheEntryOptions GetBlockHeaderCacheOptions { get; } = CacheOptions(size: 2, expireInSeconds: 300);
+	private static MemoryCacheEntryOptions GetBlockStatsCacheOptions { get; } = CacheOptions(size: 4, expireInSeconds: 1200);
 	private static MemoryCacheEntryOptions GetPeersInfoCacheOptions { get; } = CacheOptions(size: 2, expireInSeconds: 0.5);
 	private static MemoryCacheEntryOptions GetMempoolInfoCacheOptions { get; } = CacheOptions(size: 1, expireInSeconds: 10);
 
@@ -97,6 +98,17 @@ public class CachedRpcClient : RpcClientBase
 			cacheKey,
 			action: (string request, CancellationToken cancellationToken) => base.GetBlockHeaderAsync(blockHash, cancellationToken),
 			options: GetBlockHeaderCacheOptions,
+			cancellationToken).ConfigureAwait(false);
+	}
+
+	public override async Task<BlockStats> GetBlockStatsAsync(uint256 blockHash, CancellationToken cancellationToken = default)
+	{
+		string cacheKey = $"{nameof(GetBlockStatsAsync)}:{blockHash}";
+
+		return await IdempotencyRequestCache.GetCachedResponseAsync(
+			cacheKey,
+			action: (string request, CancellationToken cancellationToken) => base.GetBlockStatsAsync(blockHash, cancellationToken),
+			options: GetBlockStatsCacheOptions,
 			cancellationToken).ConfigureAwait(false);
 	}
 

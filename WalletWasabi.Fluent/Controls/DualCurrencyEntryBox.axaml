@@ -2,9 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
   <!-- TextControlBoxBorderThemeThickness -->
-  <Thickness x:Key="DualCurrencyEntryBoxBorderThemeThickness">0,0,0,2</Thickness>
+  <Thickness x:Key="DualCurrencyEntryBoxBorderThemeThickness">2</Thickness>
   <!-- TextControlBorderThemeThicknessFocused -->
-  <Thickness x:Key="DualCurrencyEntryBoxBorderThemeThicknessFocused">0,0,0,2</Thickness>
+  <Thickness x:Key="DualCurrencyEntryBoxBorderThemeThicknessFocused">2</Thickness>
   <!-- TextControlThemePadding -->
   <Thickness x:Key="DualCurrencyEntryBoxThemePadding">15,10,15,8</Thickness>
 
@@ -73,6 +73,7 @@
                                       CurrencyCode="{TemplateBinding ConversionCurrencyCode}"
                                       ConversionRate="{TemplateBinding ConversionRate}"
                                       IsFiat="True"
+                                      MaxDecimals="2"
                                       Watermark="{TemplateBinding ConversionWatermark}"
                                       IsApproximate="{TemplateBinding IsConversionApproximate}"
                                       Grid.Column="{TemplateBinding RightColumn}"
@@ -155,7 +156,7 @@
     </Style>
 
     <Style Selector="^/template/ Border#PART_BorderElement">
-      <Setter Property="CornerRadius" Value="4" />
+      <Setter Property="CornerRadius" Value="20" />
     </Style>
 
     <Style Selector="^:noexchangerate /template/ Button#PART_SwapButton">
@@ -180,7 +181,7 @@
     </Style>
 
     <Style Selector="^ /template/ Border#PART_BorderElement">
-      <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
+      <Setter Property="CornerRadius" Value="20" />
     </Style>
 
     <!-- Disabled State -->

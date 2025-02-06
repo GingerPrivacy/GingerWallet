@@ -20,6 +20,7 @@ public partial class CoinjoinCoinSelectorSettingsViewModel : DialogViewModelBase
 	[AutoNotify] private string _weightedAnonymityLossNormal;
 	[AutoNotify] private string _valueLossRateNormal;
 	[AutoNotify] private string _targetCoinCountPerBucket;
+	[AutoNotify] private bool _useOldCoinSelectorAsFallback;
 
 	public CoinjoinCoinSelectorSettingsViewModel(UiContext uiContext, IWalletModel wallet)
 	{
@@ -39,6 +40,7 @@ public partial class CoinjoinCoinSelectorSettingsViewModel : DialogViewModelBase
 		_weightedAnonymityLossNormal = _wallet.Settings.WeightedAnonymityLossNormal.ToString(CultureInfo.InvariantCulture);
 		_valueLossRateNormal = _wallet.Settings.ValueLossRateNormal.ToString(CultureInfo.InvariantCulture);
 		_targetCoinCountPerBucket = _wallet.Settings.TargetCoinCountPerBucket.ToString(CultureInfo.InvariantCulture);
+		_useOldCoinSelectorAsFallback = _wallet.Settings.UseOldCoinSelectorAsFallback;
 
 		this.WhenAnyValue(x => x.ForceUsingLowPrivacyCoins)
 			.Skip(1)
@@ -86,6 +88,15 @@ public partial class CoinjoinCoinSelectorSettingsViewModel : DialogViewModelBase
 					_wallet.Settings.TargetCoinCountPerBucket = result;
 					_wallet.Settings.Save();
 				}
+			});
+
+		this.WhenAnyValue(x => x.UseOldCoinSelectorAsFallback)
+			.Skip(1)
+			.ObserveOn(RxApp.TaskpoolScheduler)
+			.Subscribe(x =>
+			{
+				_wallet.Settings.UseOldCoinSelectorAsFallback = x;
+				_wallet.Settings.Save();
 			});
 	}
 

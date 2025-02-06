@@ -31,6 +31,7 @@ public class WabiSabiCoordinator : BackgroundService
 		Warden = new(parameters.PrisonFilePath, coinJoinIdStore, Config);
 		ConfigWatcher = new(parameters.ConfigChangeMonitoringPeriod, Config, () => Logger.LogInfo("WabiSabi configuration has changed."));
 		CoinJoinIdStore = coinJoinIdStore;
+		CoinJoinScriptStore = coinJoinScriptStore;
 		CoinVerifier = coinVerifier;
 		CoinJoinTransactionArchiver transactionArchiver = new(Path.Combine(parameters.CoordinatorDataDir, "CoinJoinTransactions"));
 
@@ -61,6 +62,7 @@ public class WabiSabiCoordinator : BackgroundService
 
 	public ConfigWatcher ConfigWatcher { get; }
 	public ICoinJoinIdStore CoinJoinIdStore { get; private set; }
+	public CoinJoinScriptStore CoinJoinScriptStore { get; private set; }
 	public CoinVerifier? CoinVerifier { get; private set; }
 	public Warden Warden { get; }
 
@@ -80,6 +82,7 @@ public class WabiSabiCoordinator : BackgroundService
 		LastSuccessfulCoinJoinTime = DateTimeOffset.UtcNow;
 
 		CoinJoinIdStore.TryAdd(transaction.GetHash());
+		CoinJoinScriptStore.AddRange(transaction.Outputs.Select(x => x.ScriptPubKey));
 
 		var coinJoinScriptStoreFilePath = Parameters.CoinJoinScriptStoreFilePath;
 		try

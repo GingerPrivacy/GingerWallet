@@ -7,7 +7,6 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Security;
 using System.Text;
-using System.Xml.Linq;
 using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Extensions;
@@ -19,6 +18,7 @@ using WalletWasabi.Logging;
 using WalletWasabi.Models;
 using WalletWasabi.Wallets;
 using static WalletWasabi.Blockchain.Keys.WpkhOutputDescriptorHelper;
+using static WalletWasabi.BuySell.BuySellClientModels;
 
 namespace WalletWasabi.Blockchain.Keys;
 
@@ -36,7 +36,7 @@ public class KeyManager
 		new ExtPubKeyJsonConverter(),
 		new KeyPathJsonConverter(),
 		new MoneyBtcJsonConverter(),
-		new CoinjoinSkipFactorsJsonConverter()
+		new CoinjoinSkipFactorsJsonConverter(),
 	};
 
 	[JsonConstructor]
@@ -216,6 +216,9 @@ public class KeyManager
 
 	[JsonProperty(ItemConverterType = typeof(OutPointJsonConverter), PropertyName = "ExcludedCoinsFromCoinJoin")]
 	public List<OutPoint> ExcludedCoinsFromCoinJoin { get => Attributes.ExcludedCoinsFromCoinJoin; private set => Attributes.ExcludedCoinsFromCoinJoin = value; }
+
+	[JsonProperty(PropertyName = "BuySellWalletData")]
+	public BuySellWalletData BuySellWalletData { get => Attributes.BuySellWalletData; set => Attributes.BuySellWalletData = value; }
 
 	public string? FilePath { get; private set; }
 

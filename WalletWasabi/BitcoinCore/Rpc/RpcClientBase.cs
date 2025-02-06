@@ -44,6 +44,11 @@ public class RpcClientBase : IRPCClient
 		return await Rpc.GetBlockHeaderAsync(blockHash, cancellationToken).ConfigureAwait(false);
 	}
 
+	public virtual async Task<BlockStats> GetBlockStatsAsync(uint256 blockHash, CancellationToken cancellationToken = default)
+	{
+		return await Rpc.GetBlockStatsAsync(blockHash, cancellationToken).ConfigureAwait(false);
+	}
+
 	public virtual async Task<BlockchainInfo> GetBlockchainInfoAsync(CancellationToken cancellationToken = default)
 	{
 		return await Rpc.GetBlockchainInfoAsync(cancellationToken).ConfigureAwait(false);
@@ -86,16 +91,16 @@ public class RpcClientBase : IRPCClient
 
 			return new MemPoolInfo()
 			{
-				Size = int.Parse((string) response.Result["size"]!, CultureInfo.InvariantCulture),
-				Bytes = int.Parse((string) response.Result["bytes"]!, CultureInfo.InvariantCulture),
-				Usage = int.Parse((string) response.Result["usage"]!, CultureInfo.InvariantCulture),
+				Size = int.Parse((string)response.Result["size"]!, CultureInfo.InvariantCulture),
+				Bytes = int.Parse((string)response.Result["bytes"]!, CultureInfo.InvariantCulture),
+				Usage = int.Parse((string)response.Result["usage"]!, CultureInfo.InvariantCulture),
 				MaxMemPool =
-					double.Parse((string) response.Result["maxmempool"]!, CultureInfo.InvariantCulture),
+					double.Parse((string)response.Result["maxmempool"]!, CultureInfo.InvariantCulture),
 				MemPoolMinFee = double.Parse(
-					(string) response.Result["mempoolminfee"]!,
+					(string)response.Result["mempoolminfee"]!,
 					CultureInfo.InvariantCulture),
 				MinRelayTxFee = double.Parse(
-					(string) response.Result["minrelaytxfee"]!,
+					(string)response.Result["minrelaytxfee"]!,
 					CultureInfo.InvariantCulture),
 				Histogram = ExtractFeeRateGroups(response.Result["fee_histogram"]!).ToArray()
 			};

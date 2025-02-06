@@ -42,20 +42,6 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 		_output = output;
 	}
 
-	public WabiSabiConfig CreateConfig(int maxIputCount)
-	{
-		WabiSabiConfig config = WabiSabiBackendFactory.Instance.CreateWabiSabiConfig();
-		config.MaxInputCountByRound = maxIputCount;
-		config.StandardInputRegistrationTimeout = TimeSpan.FromSeconds(60);
-		config.BlameInputRegistrationTimeout = TimeSpan.FromSeconds(60);
-		config.ConnectionConfirmationTimeout = TimeSpan.FromSeconds(60);
-		config.OutputRegistrationTimeout = TimeSpan.FromSeconds(60);
-		config.TransactionSigningTimeout = TimeSpan.FromSeconds(60);
-		config.MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountCredentialValue);
-		config.CreateNewRoundBeforeInputRegEnd = TimeSpan.Zero;
-		return config;
-	}
-
 	[Fact]
 	public async Task RegisterSpentOrInNonExistentCoinAsync()
 	{
@@ -158,7 +144,7 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 			{
 				// Instruct the coordinator DI container to use these two scoped
 				// services to build everything (WabiSabi controller, arena, etc)
-				services.AddScoped(s => CreateConfig(inputCount - 1)); // Make sure that at least one IR fails for WrongPhase
+				services.AddScoped(s => WabiSabiApiApplicationFactory<Startup>.CreateConfig(inputCount - 1)); // Make sure that at least one IR fails for WrongPhase
 
 				// Emulate that the first coin is coming from a coinjoin.
 				services.AddScoped(s => new InMemoryCoinJoinIdStore(new[] { coins[0].Coin.Outpoint.Hash }));
@@ -224,7 +210,7 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 			{
 				// Instruct the coordinator DI container to use this scoped
 				// services to build everything (WabiSabi controller, arena, etc)
-				services.AddScoped(s => CreateConfig(inputCount));
+				services.AddScoped(s => WabiSabiApiApplicationFactory<Startup>.CreateConfig(inputCount));
 
 				// Emulate that all our outputs had been already used in the past.
 				// the server will prevent the registration and fail with a WabiSabiProtocolError.
@@ -330,7 +316,7 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 			// services to build everything (WabiSabi controller, arena, etc)
 			services.AddScoped(s =>
 			{
-				WabiSabiConfig config = CreateConfig(2 * inputCount);
+				WabiSabiConfig config = WabiSabiApiApplicationFactory<Startup>.CreateConfig(2 * inputCount);
 				config.AllowP2trInputs = true;
 				config.AllowP2trOutputs = true;
 				config.TransactionSigningTimeout = TimeSpan.FromSeconds(5 * inputCount);
@@ -579,6 +565,7 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 					return Task.FromResult(tx);
 				};
 				services.AddScoped<IRPCClient>(s => rpc);
+				services.AddScoped(_ => WabiSabiApiApplicationFactory<Startup>.CreateConfig(10));
 			})).CreateClient();
 
 		ArenaClient apiClient = await _apiApplicationFactory.CreateArenaClientAsync(new StuttererHttpClient(httpClient));

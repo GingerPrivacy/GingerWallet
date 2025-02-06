@@ -4,82 +4,95 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:WalletWasabi.Fluent.ViewModels.AddWallet"
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
-             mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
              x:DataType="vm:AddWalletPageViewModel"
              x:CompileBindings="True"
              xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.Views.AddWallet.AddWalletPageView">
   <ContentArea Title="{Binding Title}"
-                 EnableCancel="{Binding EnableCancel}"
-                 EnableBack="{Binding EnableBack}"
-                 IsBusy="{Binding IsBusy}"
-                 EnableNext="False">
-    <Grid Width="530" MaxHeight="350" ColumnDefinitions="*,*,*" RowDefinitions="*,Auto,*">
+               EnableCancel="{Binding EnableCancel}"
+               EnableBack="{Binding EnableBack}"
+               IsBusy="{Binding IsBusy}"
+               EnableNext="False">
+    <Grid VerticalAlignment="Stretch" MaxHeight="320">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" MaxHeight="80" MinHeight="60"/>
+        <RowDefinition Height="*" MaxHeight="80" MinHeight="60"/>
+        <RowDefinition Height="*" MaxHeight="80" MinHeight="60"/>
+        <RowDefinition Height="*" MaxHeight="80" MinHeight="60"/>
+      </Grid.RowDefinitions>
       <Grid.Styles>
         <Style Selector="TileButton">
           <Setter Property="Cursor" Value="Hand" />
-          <Setter Property="Width">
-            <Setter.Value>
-              <system:Double>NaN</system:Double>
-            </Setter.Value>
-          </Setter>
+          <Setter Property="Margin" Value="0 5 0 5" />
+          <Setter Property="Width" Value="400"/>
           <Setter Property="Height">
             <Setter.Value>
               <system:Double>NaN</system:Double>
             </Setter.Value>
           </Setter>
-          <Setter Property="Margin" Value="10" />
+          <Setter Property="FontWeight" Value="Bold" />
+          <Setter Property="IconSize" Value="35" />
+          <Setter Property="FontSize" Value="18" />
           <Setter Property="Template">
             <ControlTemplate>
               <Border x:Name="PART_Border"
                       BorderThickness="{TemplateBinding BorderThickness}"
                       BorderBrush="{TemplateBinding BorderBrush}"
                       Background="{TemplateBinding Background}"
-                      CornerRadius="10">
-                <Grid RowDefinitions="5* 4*">
-                  <Panel Grid.Row="0">
+                      CornerRadius="100">
+                <DockPanel>
+                  <Panel DockPanel.Dock="Left" Width="100">
                     <PathIcon x:Name="PART_Icon"
                               Data="{TemplateBinding Icon}"
                               Width="{TemplateBinding IconSize}"
-                              Height="{TemplateBinding IconSize}" />
+                              Height="{TemplateBinding IconSize}"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Margin="0"/>
                   </Panel>
-                  <TextBlock Grid.Row="1" x:Name="PART_Text"
-                             DockPanel.Dock="Bottom"
+                  <TextBlock x:Name="PART_Text"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Left"
                              Text="{TemplateBinding Text}"
-                             Foreground="{TemplateBinding Foreground}" />
-                </Grid>
+                             Foreground="{TemplateBinding Foreground}"
+                             Margin="0"/>
+                </DockPanel>
+
               </Border>
             </ControlTemplate>
           </Setter>
         </Style>
-        <Style Selector="TileButton /template/ PathIcon#PART_Icon">
-          <Setter Property="Margin" Value="0" />
+        <Style Selector="TileButton.action /template/ PathIcon#PART_Icon">
+          <Setter Property="Foreground" Value="{DynamicResource ActionForegroundColor}" />
+        </Style>
+        <Style Selector="TileButton.action">
+          <Setter Property="Foreground" Value="{DynamicResource ActionForegroundColor}" />
         </Style>
       </Grid.Styles>
 
       <TileButton Text="{x:Static lang:Resources.CreateNewWallet}"
-                    Grid.ColumnSpan="3"
-                    Classes="action bottomtext"
-                    Icon="{StaticResource add_regular}"
-                    IsDefault="True"
-                    Command="{Binding CreateWalletCommand}" />
+                  Classes="action"
+                  Icon="{StaticResource add_regular}"
+                  IsDefault="True"
+                  Grid.Row="0"
+                  Command="{Binding CreateWalletCommand}" />
 
-      <TextBlock Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="1" TextAlignment="Center" Text="{x:Static lang:Resources.or}" />
+      <TileButton Text="{x:Static lang:Resources.RecoverWallet}"
+                  Icon="{StaticResource recover_arrow_right_regular}"
+                  Grid.Row="1"
+                  Command="{Binding RecoverWalletCommand}" />
 
-      <TileButton Grid.Row="2" Grid.Column="0" Text="{x:Static lang:Resources.ConnectHardwareWallet}"
-                    Icon="{StaticResource calculator_regular}"
-                    Classes="bottomtext"
-                    Command="{Binding ConnectHardwareWalletCommand}" />
+      <TileButton Text="{x:Static lang:Resources.HardwareWallet}"
+                  Icon="{StaticResource calculator_regular}"
+                  Grid.Row="2"
+                  Command="{Binding ConnectHardwareWalletCommand}" />
 
-      <TileButton Grid.Row="2" Grid.Column="1" Text="{x:Static lang:Resources.ImportWallet}"
-                    Icon="{StaticResource import_regular}"
-                    Classes="bottomtext"
-                    Command="{Binding ImportWalletCommand}" />
+      <TileButton Text="{x:Static lang:Resources.ImportWallet}"
+                  Icon="{StaticResource import_regular}"
+                  Grid.Row="3"
+                  Command="{Binding ImportWalletCommand}" />
 
-      <TileButton Grid.Row="2" Grid.Column="2" Text="{x:Static lang:Resources.RecoverWallet}"
-                    Icon="{StaticResource recover_arrow_right_regular}"
-                    Classes="bottomtext"
-                    Command="{Binding RecoverWalletCommand}" />
     </Grid>
   </ContentArea>
 </UserControl>

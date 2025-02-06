@@ -21,4 +21,7 @@ public class CoinJoinCoinSelectionSettings
 
 	// The target of coin count in each "bucket" (10k.., 20k.., 40k satoshi.., etc. buckets)
 	public double TargetCoinCountPerBucket { get; set; } = 10.0;
+
+	// Call the old coin selector and use the better from the two results
+	public bool UseOldCoinSelectorAsFallback { get; set; } = true;
 }

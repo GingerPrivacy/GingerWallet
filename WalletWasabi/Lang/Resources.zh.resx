@@ -580,19 +580,13 @@
     <value>跳过</value>
   </data>
   <data name="CreateNewWallet" xml:space="preserve">
-    <value>创建新钱包</value>
-  </data>
-  <data name="ConnectHardwareWallet" xml:space="preserve">
-    <value>连接硬件钱包</value>
+    <value>新</value>
   </data>
   <data name="ImportWallet" xml:space="preserve">
-    <value>导入钱包</value>
+    <value>导入文件</value>
   </data>
   <data name="RecoverWallet" xml:space="preserve">
-    <value>恢复钱包</value>
-  </data>
-  <data name="or" xml:space="preserve">
-    <value>或者</value>
+    <value>恢复</value>
   </data>
   <data name="WalletName" xml:space="preserve">
     <value>钱包名称</value>
@@ -734,9 +728,6 @@
   </data>
   <data name="AddressesAwaitingPayment" xml:space="preserve">
     <value>等待付款的地址</value>
-  </data>
-  <data name="SeparateWithCommaOrEnter" xml:space="preserve">
-    <value>用 , 或按 Enter 分隔</value>
   </data>
   <data name="EnterNamesForAddress" xml:space="preserve">
     <value>输入您将提供此地址的人员或公司的名称</value>
@@ -1637,7 +1628,115 @@
   <data name="TargetCoinCountPerBucketInCoinJoinCoinSelectorToolTip" xml:space="preserve">
     <value>币选择器会优先选择来自过多硬币分组的硬币（如 10k、20k、40k satoshi 范围的硬币）。</value>
   </data>
+  <data name="UseOldCoinSelectorAsFallbackInCoinJoinCoinSelector" xml:space="preserve">
+    <value>使用舊版選幣器作為後備</value>
+  </data>
+  <data name="UseOldCoinSelectorAsFallbackInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>同時調用舊版同新版選幣器，然後揀選較好嘅結果。</value>
+  </data>
   <data name="Configuration" xml:space="preserve">
     <value>配置</value>
+  </data>
+  <data name="Sell" xml:space="preserve">
+    <value>出售</value>
+  </data>
+  <data name="CountryOfResidenceRequired" xml:space="preserve">
+    <value>您的居住国家是监管合规和交易处理所需的</value>
+  </data>
+  <data name="RegionSelection" xml:space="preserve">
+    <value>区域选择</value>
+  </data>
+  <data name="BuyBitcoin" xml:space="preserve">
+    <value>购买比特币</value>
+  </data>
+  <data name="Broadcast" xml:space="preserve">
+    <value>广播</value>
+  </data>
+  <data name="Buy" xml:space="preserve">
+    <value>购买</value>
+  </data>
+  <data name="NoOfferForAmount" xml:space="preserve">
+    <value>找不到指定金额的任何优惠。</value>
+  </data>
+  <data name="AmountCannotExceed" xml:space="preserve">
+    <value>金额不能超过 {0}。</value>
+  </data>
+  <data name="AmountMustBeAtLeast" xml:space="preserve">
+    <value>金额必须至少为 {0}。</value>
+  </data>
+  <data name="ServiceNotAvailable" xml:space="preserve">
+    <value>服务目前不可用。稍后再试。</value>
+  </data>
+  <data name="EnterAmountForOffers" xml:space="preserve">
+    <value>输入金额，我们将为您计算最佳优惠。</value>
+  </data>
+  <data name="BuyAmountWatermark" xml:space="preserve">
+    <value>在此输入金额...</value>
+  </data>
+  <data name="PreviousOrders" xml:space="preserve">
+    <value>之前的订单</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>所有</value>
+  </data>
+  <data name="Offers" xml:space="preserve">
+    <value>提供</value>
+  </data>
+  <data name="InvalidBTCAddress" xml:space="preserve">
+    <value>地址不是有效的BTC地址。</value>
+  </data>
+  <data name="Browser" xml:space="preserve">
+    <value>浏览器</value>
+  </data>
+  <data name="BrowserError" xml:space="preserve">
+    <value>Ginger Wallet 无法打开浏览器，请检查日志以获取更多详细信息。</value>
+  </data>
+  <data name="AMLKYCNotice" xml:space="preserve">
+    <value>点击接受，我承认该交易以后可能需要第三方提供商进行AML/KYC验证。</value>
+  </data>
+  <data name="Accept" xml:space="preserve">
+    <value>接受</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>支付</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>提供商</value>
+  </data>
+  <data name="PastOrdersDetails" xml:space="preserve">
+    <value>您可以跟踪、管理并查看过去订单的详细信息。</value>
+  </data>
+  <data name="Created" xml:space="preserve">
+    <value>已创建</value>
+  </data>
+  <data name="TransactionOnHold" xml:space="preserve">
+    <value>您的交易正在处理中，请联系支持。</value>
+  </data>
+  <data name="Refunded" xml:space="preserve">
+    <value>已退款</value>
+  </data>
+  <data name="Expired" xml:space="preserve">
+    <value>已过期</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>失败</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="OpenLink" xml:space="preserve">
+    <value>打开链接</value>
+  </data>
+  <data name="OrderDetails" xml:space="preserve">
+    <value>订单详情</value>
+  </data>
+  <data name="CountryWithColon" xml:space="preserve">
+    <value>国家:</value>
+  </data>
+  <data name="StateWithColon" xml:space="preserve">
+    <value>州:</value>
+  </data>
+  <data name="TotalCostIncludesFee" xml:space="preserve">
+    <value>{0} 的总费用包括 {1} 的手续费。</value>
   </data>
 </root>

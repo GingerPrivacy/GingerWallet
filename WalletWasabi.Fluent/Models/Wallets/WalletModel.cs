@@ -5,6 +5,7 @@ using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Infrastructure;
+using WalletWasabi.Fluent.Models.BuySell;
 using WalletWasabi.Fluent.Models.Transactions;
 using WalletWasabi.Fluent.ViewModels.Wallets.Labels;
 using WalletWasabi.Wallets;
@@ -19,6 +20,7 @@ public partial class WalletModel : ReactiveObject
 {
 	private readonly Lazy<IWalletCoinjoinModel> _coinjoin;
 	private readonly Lazy<IWalletCoinsModel> _coins;
+	private readonly Lazy<BuyModel> _buyModel;
 
 	[AutoNotify] private bool _isLoggedIn;
 	[AutoNotify] private bool _isLoaded;
@@ -35,6 +37,7 @@ public partial class WalletModel : ReactiveObject
 
 		_coinjoin = new(() => new WalletCoinjoinModel(Wallet, Settings));
 		_coins = new(() => new WalletCoinsModel(wallet, this));
+		_buyModel = new(() => new BuyModel(wallet));
 
 		Transactions = new WalletTransactionsModel(this, wallet);
 
@@ -89,8 +92,6 @@ public partial class WalletModel : ReactiveObject
 
 	public IObservable<bool> HasBalance { get; }
 
-	public IWalletCoinsModel Coins => _coins.Value;
-
 	public IWalletAuthModel Auth { get; }
 
 	public IWalletLoadWorkflow Loader { get; }
@@ -99,11 +100,15 @@ public partial class WalletModel : ReactiveObject
 
 	public IWalletPrivacyModel Privacy { get; }
 
-	public IWalletCoinjoinModel Coinjoin => _coinjoin.Value;
-
 	public IObservable<WalletState> State { get; }
 
 	public IAmountProvider AmountProvider { get; }
+
+	public IWalletCoinjoinModel Coinjoin => _coinjoin.Value;
+
+	public IWalletCoinsModel Coins => _coins.Value;
+
+	public IBuyModel BuyModel => _buyModel.Value;
 
 	public bool IsHardwareWallet => Wallet.KeyManager.IsHardwareWallet;
 

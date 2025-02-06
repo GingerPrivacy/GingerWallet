@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reactive.Disposables;
 using NBitcoin;
+using WalletWasabi.Fluent.Models.BuySell;
 using WalletWasabi.Fluent.Models.Transactions;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.ViewModels.Wallets.Labels;
@@ -188,6 +189,7 @@ public class SuggestionLabelsViewModelTests
 		}
 
 		public IObservable<WalletState> State => throw new NotSupportedException();
+		public IBuyModel BuyModel => throw new NotSupportedException();
 		bool IWalletModel.IsHardwareWallet => throw new NotSupportedException();
 		public bool IsWatchOnlyWallet => throw new NotSupportedException();
 		public IWalletAuthModel Auth => throw new NotSupportedException();

@@ -19,7 +19,7 @@ public class ProgressRingArc : TemplatedControl
 		AvaloniaProperty.Register<ProgressRingArc, IBrush>(nameof(SegmentColor));
 
 	public static readonly StyledProperty<int> StrokeThicknessProperty =
-		AvaloniaProperty.Register<ProgressRingArc, int>(nameof(StrokeThickness), 5);
+		AvaloniaProperty.Register<ProgressRingArc, int>(nameof(StrokeThickness), 6);
 
 	public static readonly StyledProperty<double> PercentageProperty =
 		AvaloniaProperty.Register<ProgressRingArc, double>(
