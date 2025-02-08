@@ -368,7 +368,7 @@ Subject to the “Arbitration” section above, the arbitration of Próspera sha
     To access this service, You must agree to the Service Provider’s Terms of Use, available at https://changelly.com/terms-of-use.
 
 
-10.2 TRANSACTION
+10.3 TRANSACTION
 
     During the purchase or sale transaction, InvisibleBit LLC. will process the following information and transmit it to the service provider:
  
@@ -399,7 +399,7 @@ Subject to the “Arbitration” section above, the arbitration of Próspera sha
     During the process You will need to acknowledge that the transaction may later require AML/KYC verification by the third-party provider.
 
 
-10.3 RESPONSIBILITY
+10.4 RESPONSIBILITY
 
     InvisibleBit LLC. disclaims any responsibility or liability for the service.
 
