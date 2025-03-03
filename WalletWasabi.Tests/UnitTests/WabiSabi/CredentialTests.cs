@@ -1,5 +1,5 @@
 using WabiSabi.Crypto;
-using WalletWasabi.Tests.TestCommon;
+using WalletWasabi.Crypto.Randomness;
 using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests.WabiSabi;
@@ -10,15 +10,16 @@ public class CredentialTests
 	[Trait("UnitTest", "UnitTest")]
 	public void CorrectRangeProof()
 	{
-		var sk = new CredentialIssuerSecretKey(TestRandom.Wasabi(1));
+		SecureRandom rnd = SecureRandom.Instance;
+		var sk = new CredentialIssuerSecretKey(rnd);
 
-		var client = new WabiSabiClient(sk.ComputeCredentialIssuerParameters(), TestRandom.Wasabi(2), 4300000000000);
-		var issuer = new CredentialIssuer(sk, TestRandom.Wasabi(3), 4300000000000);
+		var client = new WabiSabiClient(sk.ComputeCredentialIssuerParameters(), rnd, 4300000000000);
+		var issuer = new CredentialIssuer(sk, rnd, 4300000000000);
 		Assert.Equal(42, client.RangeProofWidth);
 		Assert.Equal(42, issuer.RangeProofWidth);
 
-		client = new WabiSabiClient(sk.ComputeCredentialIssuerParameters(), TestRandom.Wasabi(4), 4400000000001);
-		issuer = new CredentialIssuer(sk, TestRandom.Wasabi(5), 4400000000001);
+		client = new WabiSabiClient(sk.ComputeCredentialIssuerParameters(), rnd, 4400000000001);
+		issuer = new CredentialIssuer(sk, rnd, 4400000000001);
 		Assert.Equal(43, client.RangeProofWidth);
 		Assert.Equal(43, issuer.RangeProofWidth);
 	}

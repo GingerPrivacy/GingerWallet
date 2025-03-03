@@ -4,9 +4,8 @@ using Avalonia.Controls;
 using Avalonia.Controls.Documents;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
-using WalletWasabi.Fluent.HelpAndSupport.ViewModels;
 using WalletWasabi.Fluent.Models.UI;
-
+using WalletWasabi.Fluent.ViewModels.HelpAndSupport;
 
 namespace WalletWasabi.Fluent.Converters;
 

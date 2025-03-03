@@ -1,8 +1,24 @@
-using GingerSecureRandom = GingerCommon.Crypto.Random.SecureRandom;
+using System.Security.Cryptography;
+using WabiSabi.Crypto.Randomness;
 
 namespace WalletWasabi.Crypto.Randomness;
 
-public static class SecureRandom
+public class SecureRandom : WasabiRandom
 {
-	public static readonly GingerRandomBridge Instance = new(GingerSecureRandom.Instance);
+	public static readonly SecureRandom Instance = new();
+
+	public override void GetBytes(byte[] buffer)
+	{
+		RandomNumberGenerator.Fill(buffer);
+	}
+
+	public override void GetBytes(Span<byte> buffer)
+	{
+		RandomNumberGenerator.Fill(buffer);
+	}
+
+	public override int GetInt(int fromInclusive, int toExclusive)
+	{
+		return RandomNumberGenerator.GetInt32(fromInclusive, toExclusive);
+	}
 }

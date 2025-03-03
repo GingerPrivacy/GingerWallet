@@ -1,10 +1,9 @@
-using WalletWasabi.Fluent.Common.ViewModels;
 using WalletWasabi.Fluent.Models.ClientConfig;
 using WalletWasabi.Fluent.Models.FileSystem;
 using WalletWasabi.Fluent.Models.Wallets;
-using WalletWasabi.Fluent.Navigation.Interfaces;
-using WalletWasabi.Fluent.Navigation.ViewModels;
-using WalletWasabi.Fluent.SearchBar.ViewModels.Sources;
+using WalletWasabi.Fluent.ViewModels;
+using WalletWasabi.Fluent.ViewModels.Navigation;
+using WalletWasabi.Fluent.ViewModels.SearchBar.Sources;
 
 namespace WalletWasabi.Fluent.Models.UI;
 

@@ -1,16 +1,15 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
-        xmlns:system="clr-namespace:System;assembly=System.Runtime"
-        >
+        xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
   <Design.PreviewWith>
-    <StackPanel Spacing="4" Width="300">
-      <TagsBox Watermark="test">
+    <StackPanel Spacing="4">
+      <TagsBox>
         <TagsBox.Items>
           <generic:List x:TypeArguments="system:String">
-            <!-- <system:String>Label1</system:String> -->
-            <!-- <system:String>Label2</system:String> -->
+            <system:String>Label1</system:String>
+            <system:String>Label2</system:String>
             <system:String>Label3</system:String>
           </generic:List>
         </TagsBox.Items>
@@ -23,7 +22,7 @@
     </StackPanel>
   </Design.PreviewWith>
 
-  <Thickness x:Key="TagsBoxBorderPadding">15,0,0,0</Thickness>
+  <Thickness x:Key="TagsBoxBorderPadding">15,1,0,0</Thickness>
 
   <ControlTheme x:Key="{x:Type TagsBox}" TargetType="TagsBox">
     <Setter Property="Background" Value="{DynamicResource TextControlBackground}" />
@@ -74,7 +73,7 @@
                 <TextBlock Name="PART_Watermark"
                            Opacity="0.5"
                            VerticalAlignment="Center"
-                           Margin="0"
+                           Margin="0 -2 0 0"
                            Text="{TemplateBinding Watermark}" />
                 <ItemsControl Name="PART_ItemsPresenter"
                               ItemsSource="{TemplateBinding Items}"
@@ -82,13 +81,12 @@
                               Focusable="False">
                   <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                      <ConcatenatingWrapPanel Focusable="False" VerticalAlignment="Center"
-                                              Margin="0 3 0 0">
+                      <ConcatenatingWrapPanel Focusable="False" VerticalAlignment="Center">
                         <ConcatenatingWrapPanel.ConcatenatedChildren>
                           <TagsBoxAutoCompleteBox x:Name="PART_AutoCompleteBox"
                                                     ItemsSource="{Binding $parent[TagsBox].Suggestions}"
                                                     FilterMode="StartsWith" Theme="{StaticResource TagsBoxAutoCompleteBox}"
-                                                    Margin="0 -4 0 -3"
+                                                    Margin="0 -2 0 0"
                                                     Padding="0 10 0 8"/>
                         </ConcatenatingWrapPanel.ConcatenatedChildren>
                       </ConcatenatingWrapPanel>
@@ -128,13 +126,6 @@
 
     <Style Selector="^:pointerover /template/ Border#PART_Border">
       <Setter Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushPointerOver}"/>
-    </Style>
-
-    <Style Selector="^:pointerover /template/ TextBlock#PART_Watermark">
-      <Setter Property="Opacity" Value="0.3"/>
-    </Style>
-    <Style Selector="^:focus-within /template/ TextBlock#PART_Watermark">
-      <Setter Property="Opacity" Value="0.2"/>
     </Style>
 
     <Style Selector="^:focus-within /template/ Border#PART_Border">

@@ -40,7 +40,7 @@ public class WasabiClient
 	/// </remarks>
 	public async Task<SynchronizeResponse> GetSynchronizeAsync(uint256 bestKnownBlockHash, int count, EstimateSmartFeeMode? estimateMode = null, CancellationToken cancel = default)
 	{
-		string relativeUri = $"api/v{ApiVersion}/btc/batch/synchronize?bestKnownBlockHash={bestKnownBlockHash}&maxNumberOfFilters={count}&gingerSignature=Ginger";
+		string relativeUri = $"api/v{ApiVersion}/btc/batch/synchronize?bestKnownBlockHash={bestKnownBlockHash}&maxNumberOfFilters={count}";
 		if (estimateMode is { })
 		{
 			relativeUri = $"{relativeUri}&estimateSmartFeeMode={estimateMode}";
@@ -70,8 +70,8 @@ public class WasabiClient
 	{
 		using HttpResponseMessage response = await HttpClient.SendAsync(
 			HttpMethod.Get,
-			$"api/v{ApiVersion}/btc/blockchain/filters?bestKnownBlockHash={bestKnownBlockHash}&count={count}&gingerSignature=Ginger",
-	cancellationToken: cancel).ConfigureAwait(false);
+			$"api/v{ApiVersion}/btc/blockchain/filters?bestKnownBlockHash={bestKnownBlockHash}&count={count}",
+			cancellationToken: cancel).ConfigureAwait(false);
 
 		if (response.StatusCode == HttpStatusCode.NoContent)
 		{

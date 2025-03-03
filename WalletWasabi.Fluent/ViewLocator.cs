@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using WalletWasabi.Fluent.Common.ViewModels;
+using WalletWasabi.Fluent.ViewModels;
 
 namespace WalletWasabi.Fluent;
 

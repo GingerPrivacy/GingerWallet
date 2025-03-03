@@ -4,10 +4,10 @@ using System.Reactive.Linq;
 using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Fluent.Helpers;
-using WalletWasabi.Fluent.HomeScreen.BuySell.Models;
-using WalletWasabi.Fluent.HomeScreen.Labels.Models;
 using WalletWasabi.Fluent.Infrastructure;
+using WalletWasabi.Fluent.Models.BuySell;
 using WalletWasabi.Fluent.Models.Transactions;
+using WalletWasabi.Fluent.ViewModels.Wallets.Labels;
 using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
@@ -20,7 +20,7 @@ public partial class WalletModel : ReactiveObject
 {
 	private readonly Lazy<IWalletCoinjoinModel> _coinjoin;
 	private readonly Lazy<IWalletCoinsModel> _coins;
-	private readonly Lazy<BuySellModel> _buySellModel;
+	private readonly Lazy<BuyModel> _buyModel;
 
 	[AutoNotify] private bool _isLoggedIn;
 	[AutoNotify] private bool _isLoaded;
@@ -37,7 +37,7 @@ public partial class WalletModel : ReactiveObject
 
 		_coinjoin = new(() => new WalletCoinjoinModel(Wallet, Settings));
 		_coins = new(() => new WalletCoinsModel(wallet, this));
-		_buySellModel = new(() => new BuySellModel(wallet));
+		_buyModel = new(() => new BuyModel(wallet));
 
 		Transactions = new WalletTransactionsModel(this, wallet);
 
@@ -78,8 +78,7 @@ public partial class WalletModel : ReactiveObject
 
 	public IAddressesModel Addresses { get; }
 
-	// TODO: Make this internal after Send refactoring
-	public Wallet Wallet { get; }
+	internal Wallet Wallet { get; }
 
 	public WalletId Id => Wallet.WalletId;
 
@@ -109,7 +108,7 @@ public partial class WalletModel : ReactiveObject
 
 	public IWalletCoinsModel Coins => _coins.Value;
 
-	public BuySellModel BuySellModel => _buySellModel.Value; // TODO: Source gen is idiot, investigate what's its problem if interfaces is used.
+	public IBuyModel BuyModel => _buyModel.Value;
 
 	public bool IsHardwareWallet => Wallet.KeyManager.IsHardwareWallet;
 

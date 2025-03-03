@@ -5,10 +5,11 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.LogicalTree;
 using Avalonia.Xaml.Interactions.Custom;
+using WalletWasabi.Fluent.Views.SearchBar;
 
 namespace WalletWasabi.Fluent.Behaviors;
 
-public class SearchBarWidthBehavior : AttachedToVisualTreeBehavior<SearchBar.Views.SearchBar>
+public class SearchBarWidthBehavior : AttachedToVisualTreeBehavior<SearchBar>
 {
 	protected override void OnAttachedToVisualTree(CompositeDisposable disposable)
 	{

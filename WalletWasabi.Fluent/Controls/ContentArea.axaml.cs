@@ -52,8 +52,6 @@ public class ContentArea : ContentControl
 	public static readonly StyledProperty<IBrush> HeaderBackgroundProperty =
 		AvaloniaProperty.Register<ContentArea, IBrush>(nameof(HeaderBackground));
 
-	public static readonly StyledProperty<UICommandCollection?> NextSubCommandsProperty = AvaloniaProperty.Register<ContentArea, UICommandCollection?>(nameof(NextSubCommands));
-
 	private ContentPresenter? _titlePresenter;
 	private ContentPresenter? _captionPresenter;
 
@@ -145,12 +143,6 @@ public class ContentArea : ContentControl
 	{
 		get => GetValue(HeaderBackgroundProperty);
 		set => SetValue(HeaderBackgroundProperty, value);
-	}
-
-	public UICommandCollection? NextSubCommands
-	{
-		get => GetValue(NextSubCommandsProperty);
-		set => SetValue(NextSubCommandsProperty, value);
 	}
 
 	protected override bool RegisterContentPresenter(ContentPresenter presenter)

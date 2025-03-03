@@ -13,7 +13,7 @@ using WalletWasabi.Blockchain.TransactionBuilding;
 using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
-using WalletWasabi.Fluent.HomeScreen.Send.Models;
+using WalletWasabi.Fluent.ViewModels.Wallets.Send;
 using WalletWasabi.Lang;
 using WalletWasabi.Logging;
 using WalletWasabi.WabiSabi.Client;

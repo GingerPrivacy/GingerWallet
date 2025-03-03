@@ -1,0 +1,194 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:WalletWasabi.Fluent.ViewModels.Wallets.Send"
+             xmlns:converters="clr-namespace:WalletWasabi.Fluent.Converters"
+             xmlns:models="clr-namespace:WalletWasabi.Fluent.Models"
+             xmlns:helpers="clr-namespace:WalletWasabi.Fluent.Helpers"
+             mc:Ignorable="d"
+             x:DataType="vm:SendViewModel"
+             x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
+             x:Class="WalletWasabi.Fluent.Views.Wallets.Send.SendView">
+
+  <UserControl.DataTemplates>
+
+    <DataTemplate DataType="models:Suggestion">
+      <Button Classes="invisible" HorizontalAlignment="Center" DockPanel.Dock="Right" Command="{Binding AcceptCommand}"
+              Focusable="False" Cursor="Hand">
+        <DockPanel HorizontalAlignment="Center">
+          <PathIcon Data="{StaticResource paste_regular}" Width="20" DockPanel.Dock="Left" />
+          <TextBlock Margin="4 0 0 0" Text="{Binding Text}" VerticalAlignment="Center" />
+        </DockPanel>
+      </Button>
+    </DataTemplate>
+  </UserControl.DataTemplates>
+
+  <UserControl.Styles>
+
+    <Style Selector="FlyoutPresenter">
+      <Setter Property="Padding" Value="4" />
+      <Setter Property="MinWidth" Value="0" />
+    </Style>
+
+    <Style Selector="FlyoutPresenter TextBlock">
+      <Setter Property="Foreground" Value="{DynamicResource AcrylicTrimForeground}" />
+    </Style>
+
+    <Style Selector="FlyoutPresenter PathIcon">
+      <Setter Property="Foreground" Value="{DynamicResource AcrylicTrimForeground}" />
+    </Style>
+  </UserControl.Styles>
+
+  <ContentArea EnableBack="{Binding EnableBack}"
+               EnableNext="True"
+               NextContent="{x:Static lang:Resources.Continue}"
+               EnableCancel="{Binding EnableCancel}"
+               IsBusy="{Binding IsBusy}"
+               Title="{x:Static lang:Resources.WalletSend}"
+               ScrollViewer.VerticalScrollBarVisibility="Auto">
+    <Interaction.Behaviors>
+      <KeyDownTrigger Key="Enter" EventRoutingStrategy="Bubble" MarkAsHandled="False">
+        <InvokeCommandAction Command="{Binding NextCommand}" />
+      </KeyDownTrigger>
+    </Interaction.Behaviors>
+    <ContentArea.TopContent>
+      <!-- Balance -->
+      <PrivacyContentControl PrivacyReplacementMode="Text" DockPanel.Dock="Top" HorizontalAlignment="Center"
+                             Classes="h8" Opacity="0.6">
+        <StackPanel Orientation="Horizontal" Spacing="5">
+          <TextBlock Text="{x:Static lang:Resources.Max}" Margin="0 1 0 0" />
+          <Button Focusable="False" Classes="plainHyperlink h8" Command="{Binding InsertMaxCommand}">
+            <Interaction.Behaviors>
+              <EventTriggerBehavior EventName="Click">
+                <InvokeCommandAction Command="{Binding #amountTb.FocusCommand}" />
+              </EventTriggerBehavior>
+            </Interaction.Behaviors>
+            <AmountControl Amount="{Binding Balance^}" />
+          </Button>
+        </StackPanel>
+      </PrivacyContentControl>
+    </ContentArea.TopContent>
+    <StackPanel Spacing="25">
+      <StackPanel.Styles>
+        <Style Selector="DockPanel > Label">
+          <Setter Property="MinWidth" Value="80" />
+        </Style>
+        <Style Selector="AnimatedButton.flash">
+          <Setter Property="InitialOpacity" Value="0.8" />
+        </Style>
+        <Style Selector="AnimatedButton.flash /template/ PathIcon#PART_IconNormal">
+          <Setter Property="Foreground" Value="{DynamicResource SystemAccentColor}" />
+          <Style.Animations>
+            <Animation Duration="0.25" IterationCount="6"
+                       PlaybackDirection="AlternateReverse"
+                       Easing="{StaticResource FluentEasing}">
+              <KeyFrame KeyTime="0:0:0.0">
+                <Setter Property="Opacity" Value="0.1" />
+              </KeyFrame>
+              <KeyFrame KeyTime="0:0:0.25">
+                <Setter Property="Opacity" Value="1" />
+              </KeyFrame>
+            </Animation>
+          </Style.Animations>
+        </Style>
+      </StackPanel.Styles>
+
+      <!-- To -->
+      <DockPanel >
+        <Label DockPanel.Dock="Left" Content="{x:Static lang:Resources.To}" Target="toTb" />
+        <TextBox x:Name="toTb" VerticalAlignment="Top" MaxLength="250" Text="{Binding To}" Classes="monoSpaced"
+                 Watermark="{x:Static lang:Resources.ExampleBitcoinAddressOrPayjoinURI}"
+                 ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                 AcceptsReturn="False">
+          <Interaction.Behaviors>
+            <FocusOnAttachedBehavior />
+            <ExecuteCommandOnActivatedBehavior Command="{Binding AutoPasteCommand}" />
+            <FocusNextWhenValidBehavior />
+            <KeyDownTrigger Key="Enter" EventRoutingStrategy="Tunnel" MarkAsHandled="False">
+              <InvokeCommandAction Command="{Binding #amountTb.FocusCommand}" />
+            </KeyDownTrigger>
+          </Interaction.Behaviors>
+          <TextBox.InnerRightContent>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10" Margin="10 0">
+              <AnimatedButton KeyboardNavigation.IsTabStop="False"
+                              Focusable="False"
+                              Command="{Binding PasteCommand}"
+                              ToolTip.Tip="{x:Static lang:Resources.Paste}"
+                              NormalIcon="{StaticResource paste_regular}"
+                              ClickIcon="{StaticResource copy_confirmed}">
+                <Interaction.Behaviors>
+                  <PasteButtonFlashBehavior FlashAnimation="flash" CurrentAddress="{Binding To}" />
+                </Interaction.Behaviors>
+              </AnimatedButton>
+              <AnimatedButton IsVisible="{Binding IsQrButtonVisible}"
+                              KeyboardNavigation.IsTabStop="False"
+                              Focusable="False"
+                              Command="{Binding QrCommand}"
+                              ToolTip.Tip="{x:Static lang:Resources.ScanQRCode}"
+                              NormalIcon="{StaticResource qr_code_regular}" />
+            </StackPanel>
+          </TextBox.InnerRightContent>
+        </TextBox>
+      </DockPanel>
+      <!-- Amount -->
+      <DockPanel>
+        <Label DockPanel.Dock="Left"  Content="{x:Static lang:Resources.AmountWithColom}" Target="amountTb" />
+        <DockPanel>
+          <Image Width="120" Source="avares://WalletWasabi.Fluent/Assets/TechnologyLogos/payjoin.png"
+                 DockPanel.Dock="Right" IsVisible="{Binding IsPayJoin}" Margin="0 8 8 0" VerticalAlignment="Top" />
+          <DualCurrencyEntryBox x:Name="amountTb"
+                                KeyboardNavigation.IsTabStop="{Binding !IsFixedAmount}"
+                                IsReadOnly="{Binding IsFixedAmount}"
+                                AmountBtc="{Binding AmountBtc}"
+                                ConversionRate="{Binding ExchangeRate}"
+                                CurrencyCode="BTC"
+                                ConversionCurrencyCode="USD"
+                                IsConversionReversed="{Binding ConversionReversed, Mode=TwoWay}"
+                                BalanceBtc="{Binding Balance^.Btc}"
+                                BalanceUsd="{Binding Balance^.Usd^}"
+                                ValidatePasteBalance="False"
+                                VerticalAlignment="Top">
+            <DualCurrencyEntryBox.Resources>
+
+              <converters:BooleanConverter x:Key="SuggestionPlacementConverter"
+                                           TrueValue="{x:Static PlacementMode.BottomEdgeAlignedRight}"
+                                           FalseValue="{x:Static PlacementMode.BottomEdgeAlignedLeft}" />
+            </DualCurrencyEntryBox.Resources>
+            <Interaction.Behaviors>
+              <FlyoutSuggestionBehavior Target="{Binding #amountTb.LeftEntryBox}" Content="{Binding BitcoinContent^}"
+                                        EqualityComparer="{x:Static helpers:AmountStringComparer.Instance}"
+                                        PlacementMode="{Binding ConversionReversed, Converter={StaticResource SuggestionPlacementConverter}}" />
+              <FlyoutSuggestionBehavior Target="{Binding #amountTb.RightEntryBox}" Content="{Binding UsdContent^}"
+                                        EqualityComparer="{x:Static helpers:AmountStringComparer.Instance}"
+                                        PlacementMode="{Binding !ConversionReversed, Converter={StaticResource SuggestionPlacementConverter}}" />
+              <KeyDownTrigger Key="Enter" EventRoutingStrategy="Tunnel" MarkAsHandled="False">
+                <FocusControlActionCustom TargetControl="LabelTagBox" />
+              </KeyDownTrigger>
+            </Interaction.Behaviors>
+          </DualCurrencyEntryBox>
+        </DockPanel>
+      </DockPanel>
+
+      <!-- Recipient -->
+      <DockPanel>
+        <Label DockPanel.Dock="Left" Content="{x:Static lang:Resources.RecipientWithColon}" Target="LabelTagBox"
+               Margin="0,10,0,10" />
+        <TagsBox x:Name="LabelTagBox"
+                 VerticalAlignment="Top"
+                 Watermark="{x:Static lang:Resources.PersonOrCompanyExample}"
+                 TagSeparator=","
+                 SuggestionsAreCaseSensitive="True"
+                 RestrictInputToSuggestions="False"
+                 Items="{Binding SuggestionLabels.Labels}"
+                 TopItems="{Binding SuggestionLabels.TopSuggestions}"
+                 Suggestions="{Binding SuggestionLabels.Suggestions}"
+                 MaxTextLength="{StaticResource MaxLabelLength}"
+                 IsCurrentTextValid="{Binding SuggestionLabels.IsCurrentTextValid, Mode=OneWayToSource}"
+                 ForceAdd="{Binding SuggestionLabels.ForceAdd, Mode=TwoWay}" />
+      </DockPanel>
+    </StackPanel>
+  </ContentArea>
+</UserControl>

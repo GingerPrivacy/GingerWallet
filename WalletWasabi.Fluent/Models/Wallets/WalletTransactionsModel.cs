@@ -15,7 +15,7 @@ using WalletWasabi.Blockchain.Transactions;
 using WalletWasabi.Blockchain.Transactions.Summary;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
-using WalletWasabi.Fluent.HomeScreen.Send.Models;
+using WalletWasabi.Fluent.ViewModels.Wallets.Send;
 using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.Models.Wallets;

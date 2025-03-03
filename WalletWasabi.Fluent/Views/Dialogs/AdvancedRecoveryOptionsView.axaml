@@ -1,0 +1,34 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:dialogs="using:WalletWasabi.Fluent.ViewModels.Dialogs"
+             x:Class="WalletWasabi.Fluent.Views.Dialogs.AdvancedRecoveryOptionsView"
+             x:DataType="dialogs:AdvancedRecoveryOptionsViewModel"
+             x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
+             mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371">
+  <UserControl.Styles>
+    <Style Selector="TextBox /template/ DataValidationErrors">
+      <Setter Property="MinHeight" Value="25" />
+    </Style>
+  </UserControl.Styles>
+  <ContentArea Title="{Binding Title}"
+                 CancelContent="{x:Static lang:Resources.Cancel}"
+                 EnableCancel="{Binding EnableCancel}"
+                 EnableBack="{Binding EnableBack}"
+                 EnableNext="True" NextContent="OK">
+    <StackPanel HorizontalAlignment="Center" Spacing="20" MinWidth="380">
+      <Label Content="{x:Static lang:Resources.AdvancedRecoveryOptionsViewModelMinimumGapLimit}" Target="TbGapLimit" />
+      <TextBox Name="TbGapLimit" Watermark="e.g., 63"
+               Text="{Binding MinGapLimit}"
+               DockPanel.Dock="Top"
+               Width="350"
+               Classes="hasCheckMark">
+        <Interaction.Behaviors>
+          <FocusOnAttachedBehavior />
+        </Interaction.Behaviors>
+      </TextBox>
+    </StackPanel>
+  </ContentArea>
+</UserControl>

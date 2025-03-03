@@ -1,9 +1,8 @@
-using GingerCommon.Crypto.Random;
 using NBitcoin;
 using System.Collections.Generic;
 using System.Linq;
+using WalletWasabi.Crypto.Randomness;
 using WalletWasabi.Extensions;
-using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.WabiSabi.Client.CoinJoin.Client.Decomposer;
 using WalletWasabi.WabiSabi.Models;
 using WalletWasabi.WabiSabi.Recommendation;
@@ -78,7 +77,7 @@ public class DenominationTests
 		int withChange = 0, withoutChange = 0;
 		for (int inputNum = 5; inputNum < Math.Min(20, inputs.Length / 2); inputNum++)
 		{
-			var decomposer = new AmountDecomposer(feeRate, minOutputAmount, 100_0000_0000, inputNum * maxOutputs * outputSize, allowedOutputTypes, TestRandom.Wasabi(0x4886be225bd42405L));
+			var decomposer = new AmountDecomposer(feeRate, minOutputAmount, 100_0000_0000, inputNum * maxOutputs * outputSize, allowedOutputTypes, new DeterministicRandom(0x4886be225bd42405L));
 			for (int tests = 0; tests < Math.Min(inputNum + 2, 10); tests++)
 			{
 				effectiveInput.Shuffle(random);

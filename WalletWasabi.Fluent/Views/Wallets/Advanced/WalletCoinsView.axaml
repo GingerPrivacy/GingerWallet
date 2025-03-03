@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:coins="clr-namespace:WalletWasabi.Fluent.Views.Wallets.Coins"
+             xmlns:advanced="clr-namespace:WalletWasabi.Fluent.ViewModels.Wallets.Advanced"
+             xmlns:sorting="clr-namespace:WalletWasabi.Fluent.Controls.Sorting"
+             x:DataType="advanced:WalletCoinsViewModel"
+             x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
+             x:Class="WalletWasabi.Fluent.Views.Wallets.Advanced.WalletCoinsView">
+  <ContentArea Title="{Binding Title}"
+               Caption="{x:Static lang:Resources.WalletCoinsDescription}"
+               EnableNext="True" NextContent="{x:Static lang:Resources.Done}"
+               EnableCancel="{Binding EnableCancel}"
+               EnableBack="{Binding EnableBack}"
+               ScrollViewer.VerticalScrollBarVisibility="Disabled"
+               ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+    <ContentArea.TopContent>
+      <Button DockPanel.Dock="Right" Theme="{StaticResource DialogSortButton}"  ToolTip.Tip="{x:Static lang:Resources.Sorting}">
+        <Button.Flyout>
+          <Flyout Placement="BottomEdgeAlignedRight">
+            <sorting:SortControl Sortables="{Binding CoinList.Sortables}" />
+          </Flyout>
+        </Button.Flyout>
+      </Button>
+    </ContentArea.TopContent>
+    <coins:CoinListView DataContext="{Binding CoinList}" />
+  </ContentArea>
+</UserControl>

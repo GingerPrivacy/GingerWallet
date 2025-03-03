@@ -13,6 +13,7 @@ using WabiSabi.Crypto.ZeroKnowledge;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Crypto;
+using WalletWasabi.Crypto.Randomness;
 using WalletWasabi.Helpers;
 using WalletWasabi.Tests.UnitTests;
 using WalletWasabi.WabiSabi;
@@ -27,9 +28,6 @@ using WalletWasabi.WabiSabi.Models;
 using WalletWasabi.Wallets;
 using WalletWasabi.WebClients.Wasabi;
 using WalletWasabi.WabiSabi.Client.CoinJoin.Client;
-using WabiSabi.Crypto.Randomness;
-using System.Runtime.CompilerServices;
-using WalletWasabi.Tests.TestCommon;
 
 namespace WalletWasabi.Tests.Helpers;
 
@@ -84,14 +82,15 @@ public static class WabiSabiTestFactory
 			cfg.CoordinationFeeRate,
 			Money.Coins(Constants.MaximumNumberOfBitcoins));
 
-	public static Round CreateRound(RoundParameters parameters, ulong seed = 0, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "") => new(parameters, TestRandom.Wasabi(seed, callerFilePath, callerMemberName));
+	public static Round CreateRound(RoundParameters parameters) =>
+		new(parameters, InsecureRandom.Instance);
 
-	public static Round CreateRound(WabiSabiConfig cfg, ulong seed = 0, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "") =>
+	public static Round CreateRound(WabiSabiConfig cfg) =>
 		CreateRound(CreateRoundParameters(cfg) with
 		{
 			MaxVsizeAllocationPerAlice =
 				Constants.P2wpkhInputVirtualSize + Constants.P2wpkhOutputVirtualSize // enough vsize for one input and one output
-		}, seed, callerFilePath, callerMemberName);
+		});
 
 	public static MockRpcClient CreatePreconfiguredRpcClient(params Coin[] coins)
 	{

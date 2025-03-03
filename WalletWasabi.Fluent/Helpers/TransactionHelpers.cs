@@ -9,7 +9,7 @@ using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Blockchain.Transactions;
 using WalletWasabi.Exceptions;
 using WalletWasabi.Extensions;
-using WalletWasabi.Fluent.HomeScreen.Send.Models;
+using WalletWasabi.Fluent.ViewModels.Wallets.Send;
 using WalletWasabi.Logging;
 using WalletWasabi.Models;
 using WalletWasabi.Wallets;

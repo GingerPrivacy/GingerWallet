@@ -1,11 +1,10 @@
-using GingerCommon.Logging;
-using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using WalletWasabi.Helpers;
+using WalletWasabi.Logging;
 using WalletWasabi.Tor;
 
 namespace WalletWasabi.Tests.Helpers;
@@ -14,7 +13,9 @@ public static class Common
 {
 	static Common()
 	{
-		Logger.CreateLogger(LogLevel.None, LogLevel.Information, LogLevel.Information, Path.Combine(DataDir, "Logs.txt"));
+		Logger.SetFilePath(Path.Combine(DataDir, "Logs.txt"));
+		Logger.SetMinimumLevel(LogLevel.Info);
+		Logger.SetModes(LogMode.Debug, LogMode.File);
 	}
 
 	public static EndPoint TorSocks5Endpoint => new IPEndPoint(IPAddress.Loopback, 37150);

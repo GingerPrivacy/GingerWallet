@@ -38,7 +38,6 @@ public class BatchController : ControllerBase
 	[ResponseCache(Duration = 60)]
 	public async Task<IActionResult> GetSynchronizeAsync(
 		[FromQuery, Required] string bestKnownBlockHash,
-		[FromQuery] string gingerSignature = "",
 		CancellationToken cancellationToken = default)
 	{
 		if (!uint256.TryParse(bestKnownBlockHash, out var knownHash))

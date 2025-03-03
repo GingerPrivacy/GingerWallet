@@ -132,10 +132,7 @@ public class WalletFilterProcessor : BackgroundService
 						{
 							lock (Lock)
 							{
-								if (!request.Tcs.Task.IsCompleted)
-								{
-									request.Tcs.TrySetResult();
-								}
+								request.Tcs.SetResult();
 								SynchronizationRequests.Dequeue();
 							}
 							continue;
@@ -155,10 +152,7 @@ public class WalletFilterProcessor : BackgroundService
 					{
 						lock (Lock)
 						{
-							if (!request.Tcs.Task.IsCompleted)
-							{
-								request.Tcs.TrySetResult();
-							}
+							request.Tcs.SetResult();
 							SynchronizationRequests.Dequeue();
 						}
 					}

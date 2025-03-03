@@ -335,7 +335,7 @@ public class BlockchainController : ControllerBase
 	[ProducesResponseType(400)]
 	[ProducesResponseType(404)]
 	[ResponseCache(Duration = 60)]
-	public IActionResult GetFilters([FromQuery, Required] string bestKnownBlockHash, [FromQuery, Required] int count, [FromQuery] string gingerSignature = "")
+	public IActionResult GetFilters([FromQuery, Required] string bestKnownBlockHash, [FromQuery, Required] int count)
 	{
 		if (count <= 0)
 		{
@@ -519,7 +519,7 @@ public class BlockchainController : ControllerBase
 		{
 			parentTxs = await FetchTransactionsAsync(txsToFetch, cancellationToken).ConfigureAwait(false);
 		}
-		catch (AggregateException ex)
+		catch(AggregateException ex)
 		{
 			throw new InvalidOperationException($"Some transactions part of the chain were not found: {ex}");
 		}

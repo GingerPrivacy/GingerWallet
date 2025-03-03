@@ -1,0 +1,53 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:receive="clr-namespace:WalletWasabi.Fluent.ViewModels.Wallets.Receive"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="receive:AddressViewModel"
+             x:CompileBindings="True"
+             x:Class="WalletWasabi.Fluent.Views.Wallets.Receive.Columns.ActionsColumnView">
+  <Border CornerRadius="30" HorizontalAlignment="Right" Margin="0 0 2 0" Background="{DynamicResource Layer2BackgroundBrush}">
+    <Border.Styles>
+      <Style Selector="AnimatedButton /template/ PathIcon">
+        <Setter Property="Height" Value="15" />
+      </Style>
+      <Style Selector="Button > PathIcon">
+        <Setter Property="Height" Value="15" />
+      </Style>
+    </Border.Styles>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5" Margin="15 0">
+
+      <!-- Hide -->
+      <Button Classes="plain"
+              Command="{Binding HideAddressCommand}"
+              ToolTip.Tip="{x:Static lang:Resources.HideAddress}">
+        <PathIcon Data="{StaticResource dismiss_light}" Height="14" />
+      </Button>
+
+      <!-- Edit -->
+      <Button Classes="plain"
+              ToolTip.Tip="{x:Static lang:Resources.Edit}"
+              Command="{Binding EditLabelCommand}">
+        <PathIcon Data="{StaticResource edit_regular}" />
+      </Button>
+
+      <!-- Open -->
+      <Button Classes="plain"
+              Command="{Binding NavigateCommand}"
+              ToolTip.Tip="{x:Static lang:Resources.QRCode}">
+        <PathIcon Data="{StaticResource qr_code_regular}" />
+      </Button>
+
+      <!-- Copy -->
+      <AnimatedButton Classes="plain"
+                      ToolTip.Tip="{x:Static lang:Resources.Copy}"
+                      Command="{Binding CopyAddressCommand}"
+                      NormalIcon="{StaticResource copy_regular}"
+                      ClickIcon="{StaticResource copy_confirmed}"
+                      InitialOpacity="1.0" />
+
+    </StackPanel>
+  </Border>
+</UserControl>

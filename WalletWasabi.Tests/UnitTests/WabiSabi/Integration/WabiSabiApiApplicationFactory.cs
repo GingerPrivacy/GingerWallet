@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NBitcoin;
 using WalletWasabi.BitcoinCore.Rpc;
+using WalletWasabi.Crypto.Randomness;
 using WalletWasabi.Tests.Helpers;
 using WalletWasabi.Tor.Http;
 using WalletWasabi.Affiliation;
@@ -24,7 +25,6 @@ using WalletWasabi.WabiSabi.Models.MultipartyTransaction;
 using WalletWasabi.BitcoinCore.Mempool;
 using WalletWasabi.WabiSabi.Client.CoinJoin.Client;
 using WalletWasabi.WabiSabi;
-using WalletWasabi.Tests.TestCommon;
 
 namespace WalletWasabi.Tests.UnitTests.WabiSabi.Integration;
 
@@ -99,8 +99,8 @@ public class WabiSabiApiApplicationFactory<TStartup> : WebApplicationFactory<TSt
 		var rounds = (await wabiSabiHttpApiClient.GetStatusAsync(RoundStateRequest.Empty, CancellationToken.None)).RoundStates;
 		var round = rounds.First(x => x.CoinjoinState is ConstructionState);
 		var arenaClient = new ArenaClient(
-			round.CreateAmountCredentialClient(TestRandom.Wasabi(1)),
-			round.CreateVsizeCredentialClient(TestRandom.Wasabi(2)),
+			round.CreateAmountCredentialClient(InsecureRandom.Instance),
+			round.CreateVsizeCredentialClient(InsecureRandom.Instance),
 			round.CoinjoinState.Parameters.CoordinationIdentifier,
 			wabiSabiHttpApiClient);
 		return arenaClient;
