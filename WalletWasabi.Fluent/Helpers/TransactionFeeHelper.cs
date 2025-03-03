@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using NBitcoin;
 using WalletWasabi.Blockchain.Analysis.FeesEstimation;
 using WalletWasabi.Blockchain.Transactions;
-using WalletWasabi.Fluent.ViewModels.Wallets.Send;
+using WalletWasabi.Fluent.HomeScreen.Send.Models;
+using WalletWasabi.Fluent.HomeScreen.Send.ViewModels;
 using WalletWasabi.Helpers;
 using WalletWasabi.Wallets;
 

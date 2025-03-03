@@ -1,12 +1,31 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+  <Design.PreviewWith>
+    <StackPanel Spacing="4" Width="500">
+
+      <TextBox Text="{Binding $self.Bounds.Height}"/>
+      <TextBox Watermark="{Binding $self.Bounds.Height}" />
+
+      <DualCurrencyEntryBox Watermark="{Binding $self.Bounds.Height}"/>
+
+      <DualCurrencyEntryBox IsReadOnly="false"
+                            AmountBtc="{Binding $self.Bounds.Height}"
+                            ConversionRate="1000"
+                            CurrencyCode="BTC"
+                            ConversionCurrencyCode="USD"
+                            IsConversionReversed="False"
+                            ValidatePasteBalance="False" />
+
+    </StackPanel>
+  </Design.PreviewWith>
+
   <!-- TextControlBoxBorderThemeThickness -->
   <Thickness x:Key="DualCurrencyEntryBoxBorderThemeThickness">2</Thickness>
   <!-- TextControlBorderThemeThicknessFocused -->
   <Thickness x:Key="DualCurrencyEntryBoxBorderThemeThicknessFocused">2</Thickness>
   <!-- TextControlThemePadding -->
-  <Thickness x:Key="DualCurrencyEntryBoxThemePadding">15,10,15,8</Thickness>
+  <Thickness x:Key="DualCurrencyEntryBoxThemePadding">15,8,15,8</Thickness>
 
   <ControlTheme x:Key="{x:Type DualCurrencyEntryBox}" TargetType="DualCurrencyEntryBox">
 
@@ -20,7 +39,6 @@
     <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
     <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
     <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
-    <Setter Property="Padding" Value="0 1 0 0" />
     <Setter Property="FocusAdorner" Value="{x:Null}" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
 
@@ -36,8 +54,7 @@
                     BorderThickness="{TemplateBinding BorderThickness}"
                     MinWidth="{TemplateBinding MinWidth}"
                     MinHeight="{TemplateBinding MinHeight}" />
-            <Panel Margin="{TemplateBinding BorderThickness}">
-              <Panel Margin="{TemplateBinding Padding}">
+            <Panel Margin="{TemplateBinding Padding}">
                 <Grid ColumnDefinitions="Auto,*,Auto,*,Auto">
                   <CurrencyEntryBox x:Name="PART_LeftEntryBox"
                                       Text="{TemplateBinding Text, Mode=TwoWay}"
@@ -86,7 +103,6 @@
                 </Grid>
               </Panel>
             </Panel>
-          </Panel>
         </DockPanel>
       </ControlTemplate>
     </Setter>
@@ -157,6 +173,10 @@
 
     <Style Selector="^/template/ Border#PART_BorderElement">
       <Setter Property="CornerRadius" Value="20" />
+    </Style>
+
+    <Style Selector="^ /template/ CurrencyEntryBox">
+      <Setter Property="Padding" Value="15,10,15,8" />
     </Style>
 
     <Style Selector="^:noexchangerate /template/ Button#PART_SwapButton">

@@ -1739,4 +1739,31 @@ Ce sont des mots de récupération supplémentaires pour plus de sécurité.</va
   <data name="TotalCostIncludesFee" xml:space="preserve">
     <value>Le coût total de {0} inclut des frais de {1}.</value>
   </data>
+  <data name="SellBitcoin" xml:space="preserve">
+    <value>Vendre du Bitcoin</value>
+  </data>
+  <data name="ReceiveInWithColom" xml:space="preserve">
+    <value>Recevoir dans :</value>
+  </data>
+  <data name="SellSuccessText1" xml:space="preserve">
+    <value>Suivez les instructions sur la page du fournisseur. À un certain moment, vous recevrez un</value>
+  </data>
+  <data name="SellSuccessText2" xml:space="preserve">
+    <value>adresse</value>
+  </data>
+  <data name="SellSuccessText3" xml:space="preserve">
+    <value>et le</value>
+  </data>
+  <data name="SellSuccessText4" xml:space="preserve">
+    <value>montant exact</value>
+  </data>
+  <data name="SellSuccessText5" xml:space="preserve">
+    <value>à envoyer. Revenez ici une fois que vous avez les deux.</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Generate" xml:space="preserve">
+    <value>Générer</value>
+  </data>
 </root>

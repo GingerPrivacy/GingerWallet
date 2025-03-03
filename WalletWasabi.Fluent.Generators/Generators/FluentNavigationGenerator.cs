@@ -168,8 +168,10 @@ internal class FluentNavigationGenerator: GeneratorStep
 			#nullable enable
 
 			{{usingsString}}
+			using WalletWasabi.Fluent.Navigation.Models;
+			using WalletWasabi.Fluent.Navigation.Interfaces;
 
-			namespace WalletWasabi.Fluent.ViewModels.Navigation;
+			namespace WalletWasabi.Fluent.Navigation.ViewModels;
 
 			public partial class FluentNavigate
 			{

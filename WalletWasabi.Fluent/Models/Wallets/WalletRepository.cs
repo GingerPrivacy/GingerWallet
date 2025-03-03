@@ -8,6 +8,7 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WalletWasabi.Blockchain.Keys;
+using WalletWasabi.Fluent.AddWallet.Models;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Helpers;
 using WalletWasabi.Hwi.Models;

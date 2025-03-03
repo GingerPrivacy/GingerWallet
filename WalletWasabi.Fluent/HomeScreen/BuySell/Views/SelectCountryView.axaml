@@ -1,0 +1,56 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
+             xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.HomeScreen.BuySell.ViewModels"
+             xmlns:buySell2="clr-namespace:WalletWasabi.Fluent.HomeScreen.BuySell.Models"
+             mc:Ignorable="d"
+             x:DataType="viewModels:SelectCountryViewModel"
+             x:CompileBindings="True"
+             x:Class="WalletWasabi.Fluent.HomeScreen.BuySell.Views.SelectCountryView">
+  <ContentArea Title="{Binding Title}"
+               Caption="{x:Static lang:Resources.CountryOfResidenceRequired}"
+               ScrollViewer.VerticalScrollBarVisibility="Disabled"
+               NextContent="{x:Static lang:Resources.Continue}" EnableNext="True"
+               EnableCancel="{Binding EnableCancel}"
+               EnableBack="{Binding EnableBack}"
+               IsBusy="{Binding IsBusy}"
+               Width="500"
+               Height="290">
+    <StackPanel Spacing="15" VerticalAlignment="Center">
+      <StackPanel.Styles>
+        <Style Selector="DockPanel > TextBlock">
+          <Setter Property="MinWidth" Value="80"/>
+        </Style>
+      </StackPanel.Styles>
+
+      <DockPanel>
+        <TextBlock DockPanel.Dock="Left" Text="{x:Static lang:Resources.CountryWithColon}" VerticalAlignment="Center" />
+        <ComboBox DockPanel.Dock="Right" HorizontalAlignment="Stretch"
+                  ItemsSource="{Binding Countries}"
+                  SelectedItem="{Binding SelectedCountry}">
+          <ComboBox.ItemTemplate>
+            <DataTemplate x:DataType="buySell2:CountryModel">
+              <TextBlock Text="{Binding Name}" />
+            </DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+      </DockPanel>
+
+      <DockPanel IsVisible="{Binding States, Converter={x:Static ObjectConverters.IsNotNull}}">
+        <TextBlock DockPanel.Dock="Left" Text="{x:Static lang:Resources.StateWithColon}" VerticalAlignment="Center" />
+        <ComboBox DockPanel.Dock="Right" HorizontalAlignment="Stretch"
+                  ItemsSource="{Binding States}"
+                  SelectedItem="{Binding SelectedState}">
+          <ComboBox.ItemTemplate>
+            <DataTemplate x:DataType="buySell2:StateModel">
+              <TextBlock Text="{Binding Name}" />
+            </DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+      </DockPanel>
+
+    </StackPanel>
+  </ContentArea>
+</UserControl>

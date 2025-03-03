@@ -10,8 +10,8 @@ using WalletWasabi.Daemon;
 using WalletWasabi.Exceptions;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
+using WalletWasabi.Fluent.HomeScreen.BuySell.Models;
 using WalletWasabi.Fluent.Infrastructure;
-using WalletWasabi.Fluent.Models.BuySell;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Helpers;
 using WalletWasabi.Logging;
@@ -390,9 +390,28 @@ public partial class ApplicationSettings : ReactiveObject
 		BuySellConfiguration = current;
 	}
 
+	public void SetSellCountry(CountrySelection country)
+	{
+		var current = BuySellConfiguration;
+
+		current = current with { SellCountry = country };
+
+		if (current.BuyCountry is null)
+		{
+			current = current with { BuyCountry = country };
+		}
+
+		BuySellConfiguration = current;
+	}
+
 	public CountrySelection? GetCurrentBuyCountry()
 	{
 		return BuySellConfiguration.BuyCountry;
+	}
+
+	public CountrySelection? GetCurrentSellCountry()
+	{
+		return BuySellConfiguration.SellCountry;
 	}
 
 	public CurrencyModel? GetCurrentBuyCurrency()
@@ -400,10 +419,23 @@ public partial class ApplicationSettings : ReactiveObject
 		return BuySellConfiguration.BuyCurrency;
 	}
 
+	public CurrencyModel? GetCurrentSellCurrency()
+	{
+		return BuySellConfiguration.SellCurrency;
+	}
+
 	public void SetBuyCurrency(CurrencyModel currency)
 	{
 		var current = BuySellConfiguration;
 		current = current with { BuyCurrency = currency };
+
+		BuySellConfiguration = current;
+	}
+
+	public void SetSellCurrency(CurrencyModel currency)
+	{
+		var current = BuySellConfiguration;
+		current = current with { SellCurrency = currency };
 
 		BuySellConfiguration = current;
 	}

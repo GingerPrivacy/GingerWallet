@@ -1,0 +1,25 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.HomeScreen.Receive.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="viewModels:AddressViewModel"
+             x:CompileBindings="True"
+             x:Class="WalletWasabi.Fluent.HomeScreen.Receive.Views.Columns.TypeColumnView">
+  <DockPanel LastChildFill="True" Margin="10 0 0 0">
+    <!-- NOTE: We use UseOpacity=true so we do not trigger layout update in the TreeDataGrid -->
+    <PrivacyContentControl PrivacyReplacementMode="Icon"
+                           VerticalAlignment="Center"
+                           UseOpacity="True">
+      <Border BorderThickness="1"
+              VerticalAlignment="Center"
+              BorderBrush="{DynamicResource TextControlForeground}" Opacity="0.6" CornerRadius="4" Padding="2">
+        <TextBlock FontSize="9"
+                   HorizontalAlignment="Center"
+                   Text="{Binding ShortType}"
+                   ToolTip.Tip="{Binding Type}"/>
+      </Border>
+    </PrivacyContentControl>
+  </DockPanel>
+</UserControl>

@@ -1,0 +1,84 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:conv="clr-namespace:WalletWasabi.Fluent.Converters"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="actions:CoinJoinsDetailsViewModel"
+             x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
+             xmlns:actions="clr-namespace:WalletWasabi.Fluent.HomeScreen.History.ViewModels.Actions"
+             x:Class="WalletWasabi.Fluent.HomeScreen.History.Views.Actions.CoinJoinsDetailsView"
+             Name="CoinJoinDetails">
+  <ContentArea Title="{Binding Title}"
+               NextContent="{x:Static lang:Resources.Done}" EnableNext="True"
+               EnableCancel="{Binding EnableCancel}">
+    <StackPanel Spacing="15">
+
+      <!-- Date -->
+      <PreviewItem Icon="{StaticResource timer_regular}"
+                   Label="{x:Static lang:Resources.Date}"
+                   CopyableContent="{Binding Date}">
+        <TextBlock Text="{Binding Date}" />
+      </PreviewItem>
+
+      <Separator />
+
+      <!-- Status -->
+      <PreviewItem Icon="{StaticResource status_regular}"
+                   Label="{x:Static lang:Resources.Status}">
+        <TextBlock Text="{Binding Status}" />
+      </PreviewItem>
+
+      <Separator />
+
+      <!-- TX Count  -->
+      <PreviewItem Icon="{StaticResource info_regular}"
+                   Label="{x:Static lang:Resources.NumberOfTransactions}"
+                   CopyableContent="{Binding TxCount}">
+        <TextBlock Text="{Binding TxCount, Mode=OneWay}" />
+      </PreviewItem>
+
+      <Separator />
+
+      <!-- CJ fee  -->
+      <PreviewItem Icon="{StaticResource btc_logo}"
+                   Label="{x:Static lang:Resources.Fees}"
+                   CopyableContent="{Binding CoinJoinFeeAmount.Btc, Converter={x:Static conv:MoneyConverters.ToFeeWithoutUnit}}">
+        <AmountControl Classes="Fee" Amount="{Binding CoinJoinFeeAmount}" />
+      </PreviewItem>
+
+      <Separator />
+
+      <!-- Confirmation Time -->
+      <PreviewItem IsVisible="{Binding IsConfirmationTimeVisible}"
+                   Icon="{StaticResource timer_regular}"
+                   Label="{x:Static lang:Resources.ExpectedConfirmationTime}"
+                   ToolTip.Tip="{x:Static lang:Resources.ConfirmationEstimationDisclaimer}">
+        <PrivacyContentControl>
+          <TextBlock
+            Text="{Binding ConfirmationTime, Converter={x:Static conv:TimeSpanConverter.ToEstimatedConfirmationTime}}"
+            Classes="monoSpaced" />
+        </PrivacyContentControl>
+      </PreviewItem>
+
+      <Separator IsVisible="{Binding IsConfirmationTimeVisible}" />
+
+      <!-- Transaction IDs -->
+      <PreviewItem Icon="{StaticResource transaction_id}"
+                   Label="{x:Static lang:Resources.TransactionIDs}">
+        <ItemsControl ItemsSource="{Binding TransactionIds}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <PreviewItem CopyableContent="{Binding }">
+                <PrivacyContentControl>
+                  <TextBlock Text="{Binding }" Classes="monoSpaced" />
+                </PrivacyContentControl>
+              </PreviewItem>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </PreviewItem>
+    </StackPanel>
+  </ContentArea>
+</UserControl>

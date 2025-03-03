@@ -1,0 +1,12 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.HomeScreen.BuySell.ViewModels"
+             xmlns:controls="clr-namespace:WalletWasabi.Fluent.HomeScreen.BuySell.Controls"
+             mc:Ignorable="d"
+             x:DataType="viewModels:SellOffersViewModel"
+             x:CompileBindings="True"
+             x:Class="WalletWasabi.Fluent.HomeScreen.BuySell.Views.SellOffersView">
+  <controls:OffersView />
+</UserControl>

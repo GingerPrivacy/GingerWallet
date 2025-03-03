@@ -28,6 +28,13 @@ public class Amount
 		HasUsdBalance = Usd.Select(x => x != 0m);
 	}
 
+	public Amount(decimal amount)
+	{
+		Btc = Money.Coins(amount);
+		Usd = Observable.Return(0m);
+		HasUsdBalance = Observable.Return(false);
+	}
+
 	public Money Btc { get; }
 
 	public IObservable<decimal> Usd { get; }
@@ -37,4 +44,5 @@ public class Amount
 	public IObservable<bool> HasUsdBalance { get; }
 
 	public string FormattedBtc => Btc.ToFormattedString();
+	public string FormattedBtcWithUnit => Btc.ToBtcWithUnit();
 }

@@ -43,6 +43,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\GingerCommon\GingerCommon.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Update="Legal\Assets\LegalDocumentsGingerWallet.txt">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
