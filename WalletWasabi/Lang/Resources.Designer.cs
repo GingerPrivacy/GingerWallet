@@ -1979,6 +1979,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Generate.
+        /// </summary>
+        public static string Generate {
+            get {
+                return ResourceManager.GetString("Generate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Get Started.
         /// </summary>
         public static string GetStarted {
@@ -3176,6 +3185,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Receive in:.
+        /// </summary>
+        public static string ReceiveInWithColom {
+            get {
+                return ResourceManager.GetString("ReceiveInWithColom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Display wallet receive dialog.
         /// </summary>
         public static string ReceiveViewModelCaption {
@@ -3532,6 +3550,60 @@ namespace WalletWasabi.Lang {
         public static string Sell {
             get {
                 return ResourceManager.GetString("Sell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sell Bitcoin.
+        /// </summary>
+        public static string SellBitcoin {
+            get {
+                return ResourceManager.GetString("SellBitcoin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Follow the instructions on the provider&apos;s page. At a certain point, you&apos;ll receive an.
+        /// </summary>
+        public static string SellSuccessText1 {
+            get {
+                return ResourceManager.GetString("SellSuccessText1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to address.
+        /// </summary>
+        public static string SellSuccessText2 {
+            get {
+                return ResourceManager.GetString("SellSuccessText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to and the.
+        /// </summary>
+        public static string SellSuccessText3 {
+            get {
+                return ResourceManager.GetString("SellSuccessText3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to exact amount.
+        /// </summary>
+        public static string SellSuccessText4 {
+            get {
+                return ResourceManager.GetString("SellSuccessText4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to to send. Return here once you have both..
+        /// </summary>
+        public static string SellSuccessText5 {
+            get {
+                return ResourceManager.GetString("SellSuccessText5", resourceCulture);
             }
         }
         
@@ -4216,6 +4288,15 @@ namespace WalletWasabi.Lang {
         public static string TwoFactorSetup {
             get {
                 return ResourceManager.GetString("TwoFactorSetup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
             }
         }
         

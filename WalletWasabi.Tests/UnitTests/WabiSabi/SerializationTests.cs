@@ -8,9 +8,9 @@ using WabiSabi.CredentialRequesting;
 using WabiSabi.Crypto;
 using WabiSabi.Crypto.Groups;
 using WabiSabi.Crypto.ZeroKnowledge;
-using WalletWasabi.Crypto.Randomness;
 using WalletWasabi.Helpers;
 using WalletWasabi.JsonConverters.Bitcoin;
+using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.WabiSabi.Crypto.Serialization;
 using Xunit;
 
@@ -108,15 +108,15 @@ public class SerializationTests
 			new ProofJsonConverter()
 		};
 
-		var rnd = new InsecureRandom(1234);
+		var rnd = TestRandom.Wasabi(1234);
 		var points = Enumerable.Range(0, int.MaxValue).Select(i => Generators.FromText($"T{i}"));
 		var scalars = Enumerable.Range(1, int.MaxValue).Select(i => new Scalar((uint)i));
 		var issuerKey = new CredentialIssuerSecretKey(rnd);
 
 		var credentialRespose =
 			new CredentialsResponse(
-				new[] { MAC.ComputeMAC(issuerKey, points.First(), scalars.First()) },
-				new[] { new Proof(new GroupElementVector(points.Take(2)), new ScalarVector(scalars.Take(2))) });
+				[MAC.ComputeMAC(issuerKey, points.First(), scalars.First())],
+				[new Proof(new GroupElementVector(points.Take(2)), new ScalarVector(scalars.Take(2)))]);
 
 		var serializedCredentialsResponse = JsonConvert.SerializeObject(credentialRespose, converters);
 
@@ -125,7 +125,7 @@ public class SerializationTests
 		Assert.Equal(credentialRespose.Proofs, deserializedCredentialsResponse.Proofs);
 
 		string serializedAsPreviousVersion =
-			"{\"IssuedCredentials\":[{\"T\":\"0000000000000000000000000000000000000000000000000000000000000001\",\"V\":\"02CE327D741569B1296A6C8BCD428508E86E365881F940BEE86EDC30B7C1C7A6F6\"}],\"Proofs\":[{\"PublicNonces\":[\"03330CFC201A4AC78F9A0D2BC5FD78E22882D5769AE9939502F32A6408FDD08FC7\",\"021F93603DB53BFAD5C92390F735D0CBB8617B4AB8214AE91C5664A3D1E9B009C8\"],\"Responses\":[\"0000000000000000000000000000000000000000000000000000000000000001\",\"0000000000000000000000000000000000000000000000000000000000000002\"]}]}";
+			"""{"IssuedCredentials":[{"T":"0000000000000000000000000000000000000000000000000000000000000001","V":"0340913DEB87344177BA3F27E39ABD4A977E5D46FFFE56809EC6E1821C660B5EB1"}],"Proofs":[{"PublicNonces":["03330CFC201A4AC78F9A0D2BC5FD78E22882D5769AE9939502F32A6408FDD08FC7","021F93603DB53BFAD5C92390F735D0CBB8617B4AB8214AE91C5664A3D1E9B009C8"],"Responses":["0000000000000000000000000000000000000000000000000000000000000001","0000000000000000000000000000000000000000000000000000000000000002"]}]}""";
 		Assert.Equal(serializedAsPreviousVersion, serializedCredentialsResponse);
 	}
 
@@ -234,15 +234,13 @@ public class SerializationTests
 				new MacJsonConverter()
 		};
 
-		SecureRandom rnd = SecureRandom.Instance;
-		var sk = new CredentialIssuerSecretKey(rnd);
-
-		var issuer = new CredentialIssuer(sk, rnd, 4_300_000_000_000);
-		var client = new WabiSabiClient(sk.ComputeCredentialIssuerParameters(), rnd, 4_300_000_000_000);
+		var sk = new CredentialIssuerSecretKey(TestRandom.Wasabi(1));
+		var issuer = new CredentialIssuer(sk, TestRandom.Wasabi(2), 4_300_000_000_000);
+		var client = new WabiSabiClient(sk.ComputeCredentialIssuerParameters(), TestRandom.Wasabi(3), 4_300_000_000_000);
 		(ICredentialsRequest credentialRequest, CredentialsResponseValidation validationData) = client.CreateRequestForZeroAmount();
 		var credentialResponse = issuer.HandleRequest(credentialRequest);
 		var present = client.HandleResponse(credentialResponse, validationData);
-		(credentialRequest, _) = client.CreateRequest(new[] { 1L }, present, CancellationToken.None);
+		(credentialRequest, _) = client.CreateRequest([1L], present, CancellationToken.None);
 
 		// Registration request message.
 		var serializedRequestMessage = JsonConvert.SerializeObject(credentialRequest, converters);

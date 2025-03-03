@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -79,4 +80,13 @@ public class BuySellClient
 
 	public Task<GetLimitsResponse[]> GetOrderLimitsAsync(GetLimitsRequest getLimitsRequest, CancellationToken cancellationToken) =>
 		SendRequestAsync<GetLimitsResponse[]>("buysell/get-limits", HttpMethod.Post, getLimitsRequest, cancellationToken);
+
+	public Task<GetSellOffersResponse[]> GetSellOffersAsync(GetSellOffersRequest getSellOffersRequest, CancellationToken cancellationToken) =>
+		SendRequestAsync<GetSellOffersResponse[]>("buysell/sell-offers", HttpMethod.Post, getSellOffersRequest, cancellationToken);
+
+	public Task<GetLimitsResponse[]> GetSellOrderLimitsAsync(GetLimitsRequest getSellLimitsRequest, CancellationToken cancellationToken) =>
+		SendRequestAsync<GetLimitsResponse[]>("buysell/sell-limits", HttpMethod.Post, getSellLimitsRequest, cancellationToken);
+
+	public Task<CreateSellOrderResponse> CreateSellOrderAsync(CreateSellOrderRequest createSellOrderRequest, CancellationToken cancellationToken) =>
+		SendRequestAsync<CreateSellOrderResponse>("buysell/sell-orders", HttpMethod.Post, createSellOrderRequest, cancellationToken);
 }

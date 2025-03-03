@@ -10,6 +10,8 @@ namespace WalletWasabi.Fluent.Generators;
 
 public static class AnalyzerExtensions
 {
+	private static readonly string RoutableViewModelPath = "WalletWasabi.Fluent.Navigation.ViewModels.RoutableViewModel";
+
 	public static List<IdentifierNameSyntax> GetUiContextReferences(this SyntaxNode node, SemanticModel semanticModel)
 	{
 		var directReferences =
@@ -79,7 +81,7 @@ public static class AnalyzerExtensions
 
 	public static bool IsRoutableViewModel(this SyntaxNode node, SemanticModel model)
 	{
-		return node.IsSubTypeOf(model, "WalletWasabi.Fluent.ViewModels.Navigation.RoutableViewModel");
+		return node.IsSubTypeOf(model, RoutableViewModelPath);
 	}
 
 	public static (string? TypeName, IEnumerable<string> Namespaces) GetDialogResultType(this SyntaxNode node, SemanticModel model)

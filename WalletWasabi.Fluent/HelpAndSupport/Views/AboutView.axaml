@@ -1,0 +1,90 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.HelpAndSupport.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371"
+             x:DataType="viewModels:AboutViewModel"
+             x:CompileBindings="True"
+             x:Class="WalletWasabi.Fluent.HelpAndSupport.Views.AboutView">
+  <Panel>
+    <ContentArea EnableNext="{Binding !EnableBack}"
+                          NextContent="Close"
+                          EnableBack="{Binding EnableBack}">
+      <DockPanel LastChildFill="True">
+        <Viewbox DockPanel.Dock="Top" Margin="25,25,25,50" Width="112" VerticalAlignment="Center"
+                 HorizontalAlignment="Center">
+          <Image Source="{DynamicResource GingerWalletLogo}" />
+        </Viewbox>
+        <Viewbox ClipToBounds="False" DockPanel.Dock="Top" Width="220" VerticalAlignment="Center"
+                 HorizontalAlignment="Center">
+          <ContentControl Template="{DynamicResource wasabi_logo_text_dynamic}"
+                          VerticalAlignment="Center" ClipToBounds="False" />
+        </Viewbox>
+        <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Text="{Binding ClientVersion}" Margin="0,5,0,50" Opacity="0.5" />
+        <DockPanel>
+          <StackPanel Spacing="10" DockPanel.Dock="Top" HorizontalAlignment="Stretch" Orientation="Vertical">
+            <!-- Links -->
+            <ItemsControl ItemsSource="{Binding Links}"
+                          Margin="0 0 0 25"
+                          HorizontalAlignment="Stretch">
+              <Interaction.Behaviors>
+                <AdaptiveBehavior>
+                  <AdaptiveClassSetter MinWidth="0" MaxWidth="500" ClassName="narrow" />
+                </AdaptiveBehavior>
+              </Interaction.Behaviors>
+              <ItemsControl.Styles>
+                <Style Selector="ItemsControl">
+                  <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                      <ItemsPanelTemplate>
+                        <WrapPanel />
+                      </ItemsPanelTemplate>
+                    </Setter.Value>
+                  </Setter>
+                </Style>
+                <Style Selector="ItemsControl > ContentPresenter">
+                  <Setter Property="HorizontalAlignment" Value="Center" />
+                  <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+                <Style Selector="ItemsControl /template/ #PART_ItemsPresenter > WrapPanel">
+                  <Setter Property="HorizontalAlignment" Value="Center" />
+                </Style>
+                <Style Selector="ItemsControl.narrow /template/ #PART_ItemsPresenter > WrapPanel">
+                  <Setter Property="HorizontalAlignment" Value="Center" />
+                  <Setter Property="Orientation" Value="Vertical" />
+                </Style>
+              </ItemsControl.Styles>
+              <ItemsControl.DataTemplates>
+                <DataTemplate DataType="viewModels:SeparatorViewModel">
+                  <TextBlock VerticalAlignment="Center"
+                             Margin="5 -0.5"
+                             Text="-"
+                             IsVisible="True" />
+                </DataTemplate>
+              </ItemsControl.DataTemplates>
+            </ItemsControl>
+          </StackPanel>
+          <!-- License -->
+          <DockPanel HorizontalAlignment="Center" DockPanel.Dock="Top">
+            <TextBlock Margin=" 0 0 0 -0.5"
+                       VerticalAlignment="Center"
+                       Text="This open source software is licensed with " />
+            <ContentControl Content="{Binding License}" />
+          </DockPanel>
+          <!-- Advanced -->
+          <Button DockPanel.Dock="Bottom"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Bottom"
+                  Classes="plain obscured"
+                  Command="{Binding AboutAdvancedInfoDialogCommand}">
+            <StackPanel Orientation="Horizontal" Spacing="5" Margin="2">
+              <PathIcon Data="{StaticResource info_regular}" />
+              <TextBlock Text="Advanced Information" Classes="Hyperlink" />
+            </StackPanel>
+          </Button>
+        </DockPanel>
+      </DockPanel>
+    </ContentArea>
+  </Panel>
+</UserControl>

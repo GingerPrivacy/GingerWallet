@@ -1,0 +1,108 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
+             xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.HomeScreen.BuySell.ViewModels"
+             xmlns:buySell1="clr-namespace:WalletWasabi.Fluent.HomeScreen.BuySell.Models"
+             mc:Ignorable="d"
+             x:DataType="viewModels:BuyViewModel"
+             x:CompileBindings="True"
+             x:Class="WalletWasabi.Fluent.HomeScreen.BuySell.Views.BuyView">
+  <ContentArea Title="{Binding Title}"
+               Caption="{x:Static lang:Resources.EnterAmountForOffers}"
+               ScrollViewer.VerticalScrollBarVisibility="Disabled"
+               NextContent="{x:Static lang:Resources.Continue}" EnableNext="True"
+               EnableCancel="{Binding EnableCancel}"
+               EnableBack="{Binding EnableBack}"
+               IsBusy="{Binding IsBusy}">
+    <ContentArea.Styles>
+      <Style Selector="DockPanel > Label">
+        <Setter Property="MinWidth" Value="80" />
+      </Style>
+    </ContentArea.Styles>
+
+    <ContentArea.TopContent>
+      <!-- Country -->
+      <Button DockPanel.Dock="Bottom"
+              Command="{Binding SelectCountryCommand}"
+              Theme="{StaticResource OutlineButton}">
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Opacity="0.8" FontSize="12" Text="{Binding SelectedCountry.StateName, StringFormat='{}{0}, '}"
+                     IsVisible="{Binding SelectedCountry.StateName, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+          <TextBlock Opacity="0.8" FontSize="12" Text="{Binding SelectedCountry.CountryName}" />
+        </StackPanel>
+      </Button>
+    </ContentArea.TopContent>
+
+    <DockPanel>
+
+      <!-- Amount -->
+      <DockPanel DockPanel.Dock="Top">
+        <Label DockPanel.Dock="Left" VerticalAlignment="Top" Content="{x:Static lang:Resources.AmountWithColom}"
+               Target="amountTb" />
+        <Panel VerticalAlignment="Top">
+          <CurrencyEntryBox x:Name="amountTb"
+                            Classes="standalone"
+                            Text="{Binding Amount}"
+                            CurrencyCode="{Binding SelectedCurrency.Ticker}"
+                            MaxDecimals="{Binding SelectedCurrency.Precision}"
+                            IsFiat="True"
+                            Watermark="{x:Static lang:Resources.BuyAmountWatermark}"
+                            ValidatePasteBalance="False">
+            <CurrencyEntryBox.InnerRightContent>
+              <Viewbox Height="25" IsVisible="{Binding FetchingLimits}">
+                <ProgressRing Height="46" Width="46" Margin="10 0" IsIndeterminate="{Binding FetchingLimits}" />
+              </Viewbox>
+            </CurrencyEntryBox.InnerRightContent>
+            <Interaction.Behaviors>
+              <FocusOnAttachedBehavior />
+            </Interaction.Behaviors>
+          </CurrencyEntryBox>
+
+          <!-- Should be in CurrencyEntryBox inner right conent, it doesn't work, might be an Avalonia bug -->
+          <ComboBox Name="CurrencyComboBox"
+                    IsVisible="{Binding !FetchingLimits}"
+                    ItemsSource="{Binding Currencies}"
+                    SelectedItem="{Binding SelectedCurrency}"
+                    VerticalAlignment="Top" HorizontalAlignment="Right"
+                    Margin="0 2 2 0"
+                    BorderThickness="0"
+                    Cursor="Hand"
+                    VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                    Height="38"
+                    MinWidth="80">
+            <ComboBox.ItemTemplate>
+              <DataTemplate x:DataType="buySell1:CurrencyModel">
+                <TextBlock Text="{Binding Ticker}" ToolTip.Tip="{Binding Name}" />
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+        </Panel>
+
+      </DockPanel>
+
+      <Panel DockPanel.Dock="Bottom" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+             IsVisible="{Binding HasPreviousOrders, FallbackValue=False}"
+             Margin="0 0 0 20">
+
+        <Button Content="Previous Orders"
+                Command="{Binding PreviousOrdersCommand}"
+                Classes="plain activeHyperLink"
+                Cursor="Hand"
+                Focusable="False" />
+
+        <Ellipse IsHitTestVisible="False"
+                 IsVisible="{Binding HasOrderOnHold}"
+                 VerticalAlignment="Center" HorizontalAlignment="Right"
+                 Margin="0 0 -15 0"
+                 Width="11" Height="11"
+                 Stroke="{DynamicResource RegionBrush}" StrokeThickness="2"
+                 Fill="{DynamicResource WarningMessageForeground}" />
+      </Panel>
+
+    </DockPanel>
+
+
+  </ContentArea>
+</UserControl>

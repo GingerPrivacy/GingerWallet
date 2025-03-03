@@ -7,13 +7,13 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using NBitcoin;
 using ReactiveUI;
+using WalletWasabi.Fluent.Common.ViewModels;
 using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.Models.ClientConfig;
 using WalletWasabi.Fluent.Models.FileSystem;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
-using WalletWasabi.Fluent.ViewModels;
-using WalletWasabi.Fluent.ViewModels.SearchBar.Sources;
+using WalletWasabi.Fluent.SearchBar.ViewModels.Sources;
 using WalletWasabi.Services;
 
 namespace WalletWasabi.Fluent;

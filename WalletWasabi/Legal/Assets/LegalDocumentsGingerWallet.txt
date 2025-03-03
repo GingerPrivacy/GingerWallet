@@ -1,7 +1,7 @@
-Last Updated: Feb 08, 2025
+Last Updated: Mar 03, 2025
 
 
-Version Number: 6
+Version Number: 7
 
 
 =========================================
@@ -47,6 +47,8 @@ SUMMARY
 
      - A transaction fee is only charged by the Service Provider for CoinJoin transactions.
 
+     - CoinJoin is for privacy only and cannot be used to send BTC to others.
+
      - We only provide written support, and NEVER ask for recovery words, passwords, or similar security critical information.
 
 
@@ -62,6 +64,8 @@ CHAPTER I. TERMS AND CONDITIONS
 
 =========================================
 
+
+    English Language. You acknowledge that you are sufficiently proficient in English, or have consulted with an advisor who is sufficiently proficient in English, so as to allow You to understand the terms and conditions of this Agreement. If You have received this Agreement or any other documents related to the Scope of this Agreement translated into a language other than English, and if the meaning of the translated version is different than the English version, the English version shall control.
 
     If You are accepting these Terms and Conditions on behalf of an entity, You confirm that You are authorized on behalf of the said entity to agree to be bound by these Terms and Conditions (“Terms”) and all terms incorporated by reference.
 
@@ -140,7 +144,6 @@ The Software and Our Services are therefore not a bank, a custodian, an exchange
 Ginger Wallet does not store, send, or receive Bitcoins. Bitcoins exist only by the ownership record maintained in the Bitcoin network. Any transfer of title in Bitcoins occurs within the decentralized Bitcoin network and not in the Ginger Wallet.
 
 
-
   The CoinJoin Coordinator Service is an online service that implements trustless CoinJoin to prevent third parties from spying on the Blockchain. Throughout the process, the Service does not initiate or process any standalone transactions towards third parties (i.e. non-users of the Service) and, therefore, does not store or transmit value belonging to others. For further information on how it works please visit Our GitHub page: https://github.com/GingerPrivacy. You acknowledge that the CoinJoin Service runs in the background by default while using the Client Application. To avoid fees, You may turn automatic CoinJoin Services off in the settings of the Client Application.
 
     The UTXO is an unspent transaction output, the technical term for the amount of digital currency that remains after a cryptocurrency transaction.
@@ -185,6 +188,9 @@ Ginger Wallet does not store, send, or receive Bitcoins. Bitcoins exist only by 
 ========================================
 
 
+    The CoinJoin service is intended solely for enhancing the privacy of Bitcoin holdings and must not be used as a means of sending BTC to another party. You are strictly prohibited from utilizing the CoinJoin service for payments, remittances, or any form of value transfer to third parties.
+
+
     You agree that You will not use the Services to perform any type of illegal activity of any sort or to take any action that adversely affects the performance of or the provision of the Services by the Service.
 
 
@@ -214,7 +220,7 @@ Furthermore, You agree that You will not use the Services on Bitcoin that is cre
     COIN FILTERING
 
 
-    We may execute illicit activity checking and control via a contracted third party solely in its Coinjoin coordination services. We may suspend Your UTXOs’ access to the Coinjoin services, with immediate effect for any reason including, but not limited to, illicit or prohibited activities, applicable sanctions programs, or any crime or money-laundering activity, at Our sole discretion, We are under no obligation to disclose the details of Our decision to take such action with You. In this case, You are not permitted to use the relevant/high-risk Bitcoin UTXO to reach the CoinJoin services.
+    We may execute illicit activity checking and control via a contracted third party solely in its CoinJoin coordination services. We may suspend Your UTXOs’ access to the CoinJoin services, with immediate effect for any reason including, but not limited to, illicit or prohibited activities, applicable sanctions programs, or any crime or money-laundering activity, at Our sole discretion, We are under no obligation to disclose the details of Our decision to take such action with You. In this case, You are not permitted to use the relevant/high-risk Bitcoin UTXO to reach the CoinJoin services.
 
 
     You acknowledge that Our decision to take certain actions, including suspension for any reason is at Our sole discretion, and may be based on confidential criteria essential to Our risk management and security protocols. You agree that We are under no obligation to disclose the details of Our risk management and security procedures to You. Moreover, We reserve the right to permanently suspend Your access to the relevant Bitcoin UTXOs to the CoinJoin services.

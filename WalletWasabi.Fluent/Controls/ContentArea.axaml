@@ -4,13 +4,13 @@
   <Design.PreviewWith>
     <Panel Background="{DynamicResource RegionColor}">
       <ContentArea Width="500" Height="300"
-                     IsBusy="False"
-                     Title="Add a Wallet"
-                     TopContent="This is the top content"
-                     EnableBack="True"
-                     EnableCancel="True" CancelContent="{x:Static lang:Resources.Cancel}" FocusCancel="False"
-                     EnableNext="True" NextContent="{x:Static lang:Resources.Continue}" FocusNext="True"
-                     Caption="Type in your Wallet's name and select an option below:">
+                   IsBusy="False"
+                   Title="Add a Wallet"
+                   TopContent="This is the top content"
+                   EnableBack="True"
+                   EnableCancel="True" CancelContent="{x:Static lang:Resources.Cancel}" FocusCancel="False"
+                   EnableNext="True" NextContent="{x:Static lang:Resources.Continue}" FocusNext="True"
+                   Caption="Type in your Wallet's name and select an option below:">
         This is the content.
       </ContentArea>
     </Panel>
@@ -48,15 +48,55 @@
                         Classes="activeHyperLink skip"
                         VerticalAlignment="Center" />
                 <Button Name="PART_NextButton" Classes="action"
-                        IsVisible="{TemplateBinding EnableNext}"
                         Content="{TemplateBinding NextContent}"
                         Command="{Binding NextCommand}"
                         IsDefault="{Binding IsActive}">
+                  <Button.IsVisible>
+                    <MultiBinding Converter="{x:Static BoolConverters.And}">
+                      <Binding Path="EnableNext" RelativeSource="{RelativeSource TemplatedParent}" />
+                      <Binding Path="NextSubCommands" Converter="{x:Static ObjectConverters.IsNull}"
+                               RelativeSource="{RelativeSource TemplatedParent}" />
+                    </MultiBinding>
+                  </Button.IsVisible>
                   <Interaction.Behaviors>
-                    <FocusOnAttachedBehavior
-                      IsEnabled="{Binding FocusNext, RelativeSource={RelativeSource TemplatedParent}}" />
+                    <FocusOnAttachedBehavior>
+                      <FocusOnAttachedBehavior.IsEnabled>
+                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                          <Binding Path="FocusNext" RelativeSource="{RelativeSource TemplatedParent}" />
+                          <Binding Path="NextSubCommands" Converter="{x:Static ObjectConverters.IsNull}"
+                                   RelativeSource="{RelativeSource TemplatedParent}" />
+                        </MultiBinding>
+                      </FocusOnAttachedBehavior.IsEnabled>
+                    </FocusOnAttachedBehavior>
                   </Interaction.Behaviors>
                 </Button>
+
+                <SubActionButton Name="PART_NextSubButton"
+                                 Content="{TemplateBinding NextContent}"
+                                 SubCommands="{TemplateBinding NextSubCommands}"
+                                 Command="{Binding NextCommand}"
+                                 CornerRadius="20 20 20 20">
+                  <SubActionButton.IsVisible>
+                    <MultiBinding Converter="{x:Static BoolConverters.And}">
+                      <Binding Path="EnableNext" RelativeSource="{RelativeSource TemplatedParent}" />
+                      <Binding Path="NextSubCommands" Converter="{x:Static ObjectConverters.IsNotNull}"
+                               RelativeSource="{RelativeSource TemplatedParent}" />
+                    </MultiBinding>
+                  </SubActionButton.IsVisible>
+                  <Interaction.Behaviors>
+                    <FocusOnAttachedBehavior>
+                      <FocusOnAttachedBehavior.IsEnabled>
+                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                          <Binding Path="FocusNext" RelativeSource="{RelativeSource TemplatedParent}" />
+                          <Binding Path="NextSubCommands" Converter="{x:Static ObjectConverters.IsNotNull}"
+                                   RelativeSource="{RelativeSource TemplatedParent}" />
+                        </MultiBinding>
+                      </FocusOnAttachedBehavior.IsEnabled>
+                    </FocusOnAttachedBehavior>
+                    <ExecuteCommandOnKeyDownBehavior Key="Enter" Command="{Binding NextCommand}"
+                                                     IsEnabled="{Binding IsActive}" />
+                  </Interaction.Behaviors>
+                </SubActionButton>
               </StackPanel>
               <ContentPresenter Content="{TemplateBinding BottomContent}"
                                 x:Name="PART_BottomContentPresenter" />
@@ -77,7 +117,8 @@
                     <PathIcon Data="{StaticResource arrow_left_regular}" Width="16" />
                   </Button>
                   <DockPanel>
-                    <ContentPresenter DockPanel.Dock="Right" Name="PART_TopContentPresenter" Content="{TemplateBinding TopContent}" />
+                    <ContentPresenter DockPanel.Dock="Right" Name="PART_TopContentPresenter"
+                                      Content="{TemplateBinding TopContent}" />
                     <ContentPresenter Name="PART_TitlePresenter" Content="{TemplateBinding Title}" />
                   </DockPanel>
                 </DockPanel>
@@ -95,14 +136,14 @@
                 </Style>
               </ScrollViewer.Styles>
               <ContentPresenter Name="PART_ContentPresenter"
-                              ClipToBounds="{TemplateBinding ClipToBounds}"
-                              BorderBrush="{TemplateBinding BorderBrush}"
-                              BorderThickness="{TemplateBinding BorderThickness}"
-                              ContentTemplate="{TemplateBinding ContentTemplate}"
-                              Content="{TemplateBinding Content}"
-                              Padding="{TemplateBinding Padding}"
-                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                                ClipToBounds="{TemplateBinding ClipToBounds}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Content="{TemplateBinding Content}"
+                                Padding="{TemplateBinding Padding}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" />
             </ScrollViewer>
           </DockPanel>
         </Panel>

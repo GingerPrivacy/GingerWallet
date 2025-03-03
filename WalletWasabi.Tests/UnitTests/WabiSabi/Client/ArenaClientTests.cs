@@ -10,7 +10,6 @@ using WabiSabi.Crypto.ZeroKnowledge;
 using WalletWasabi.Backend.Controllers;
 using WalletWasabi.Cache;
 using WalletWasabi.Crypto;
-using WalletWasabi.Crypto.Randomness;
 using WalletWasabi.Extensions;
 using WalletWasabi.Helpers;
 using WalletWasabi.Tests.Helpers;
@@ -27,6 +26,7 @@ using Xunit;
 using WalletWasabi.WabiSabi.Backend.Rounds.CoinJoinStorage;
 using WalletWasabi.BitcoinCore.Mempool;
 using WalletWasabi.WabiSabi.Client.CoinJoin.Client;
+using WalletWasabi.Tests.TestCommon;
 
 namespace WalletWasabi.Tests.UnitTests.WabiSabi.Client;
 
@@ -107,9 +107,8 @@ public class ArenaClientTests
 		using CoinJoinMempoolManager coinJoinMempoolManager = new(new CoinJoinIdStore(), DummyMempoolMirror);
 		var wabiSabiApi = new WabiSabiController(idempotencyRequestCache, arena, coinJoinFeeRateStatStore, affiliationManager, coinJoinMempoolManager);
 
-		InsecureRandom rnd = InsecureRandom.Instance;
-		var amountClient = new WabiSabiClient(round.AmountCredentialIssuerParameters, rnd, ProtocolConstants.MaxAmountCredentialValue);
-		var vsizeClient = new WabiSabiClient(round.VsizeCredentialIssuerParameters, rnd, 2000L);
+		var amountClient = new WabiSabiClient(round.AmountCredentialIssuerParameters, TestRandom.Wasabi(1), ProtocolConstants.MaxAmountCredentialValue);
+		var vsizeClient = new WabiSabiClient(round.VsizeCredentialIssuerParameters, TestRandom.Wasabi(2), 2000L);
 		var apiClient = new ArenaClient(amountClient, vsizeClient, config.CoordinatorIdentifier, wabiSabiApi);
 
 		round.SetPhase(Phase.TransactionSigning);
@@ -197,8 +196,8 @@ public class ArenaClientTests
 
 		var roundState = RoundState.FromRound(round);
 		var aliceArenaClient = new ArenaClient(
-			roundState.CreateAmountCredentialClient(InsecureRandom.Instance),
-			roundState.CreateVsizeCredentialClient(InsecureRandom.Instance),
+			roundState.CreateAmountCredentialClient(TestRandom.Wasabi(1)),
+			roundState.CreateVsizeCredentialClient(TestRandom.Wasabi(2)),
 			config.CoordinatorIdentifier,
 			wabiSabiApi);
 		var ownershipProof = WabiSabiTestFactory.CreateOwnershipProof(key, round.Id, scriptPubKeyType);
@@ -249,8 +248,8 @@ public class ArenaClientTests
 		Assert.Equal(Phase.OutputRegistration, round.Phase);
 
 		var bobArenaClient = new ArenaClient(
-			roundState.CreateAmountCredentialClient(InsecureRandom.Instance),
-			roundState.CreateVsizeCredentialClient(InsecureRandom.Instance),
+			roundState.CreateAmountCredentialClient(TestRandom.Wasabi(3)),
+			roundState.CreateVsizeCredentialClient(TestRandom.Wasabi(4)),
 			config.CoordinatorIdentifier,
 			wabiSabiApi);
 

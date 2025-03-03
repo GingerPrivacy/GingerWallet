@@ -1,8 +1,8 @@
 using NBitcoin;
 using System.Linq;
 using WalletWasabi.Blockchain.BlockFilters;
-using WalletWasabi.Crypto.Randomness;
 using WalletWasabi.Filter;
+using WalletWasabi.Tests.TestCommon;
 using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests.Filters;
@@ -12,7 +12,7 @@ public class IndexBuilderTests
 	[Fact]
 	public void DummyFilterMatchesToFalse()
 	{
-		var rnd = new DeterministicRandom(123456);
+		var rnd = TestRandom.Get(123456);
 		var blockHash = new byte[32];
 		rnd.GetBytes(blockHash);
 
