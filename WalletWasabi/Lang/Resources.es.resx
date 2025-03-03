@@ -1760,27 +1760,6 @@ Es una extensión de las palabras de recuperación para mayor seguridad.</value>
   <data name="SellSuccessText5" xml:space="preserve">
     <value>para enviar. Regresa aquí una vez que tengas ambos.</value>
   </data>
-  <data name="SellBitcoin" xml:space="preserve">
-    <value>Vender Bitcoin</value>
-  </data>
-  <data name="ReceiveInWithColom" xml:space="preserve">
-    <value>Recibir en:</value>
-  </data>
-  <data name="SellSuccessText1" xml:space="preserve">
-    <value>Sigue las instrucciones en la página del proveedor. En cierto momento, recibirás un</value>
-  </data>
-  <data name="SellSuccessText2" xml:space="preserve">
-    <value>dirección</value>
-  </data>
-  <data name="SellSuccessText3" xml:space="preserve">
-    <value>y e</value>
-  </data>
-  <data name="SellSuccessText4" xml:space="preserve">
-    <value>cantidad exacta</value>
-  </data>
-  <data name="SellSuccessText5" xml:space="preserve">
-    <value>para enviar. Regresa aquí una vez que tengas ambos.</value>
-  </data>
   <data name="Type" xml:space="preserve">
     <value>Tipo</value>
   </data>

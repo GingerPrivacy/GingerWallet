@@ -1763,27 +1763,6 @@ It's a recovery words extension for more security.</value>
   <data name="SellSuccessText5" xml:space="preserve">
     <value>to send. Return here once you have both.</value>
   </data>
-  <data name="SellBitcoin" xml:space="preserve">
-    <value>Sell Bitcoin</value>
-  </data>
-  <data name="ReceiveInWithColom" xml:space="preserve">
-    <value>Receive in:</value>
-  </data>
-  <data name="SellSuccessText1" xml:space="preserve">
-    <value>Follow the instructions on the provider's page. At a certain point, you'll receive an</value>
-  </data>
-  <data name="SellSuccessText2" xml:space="preserve">
-    <value>address</value>
-  </data>
-  <data name="SellSuccessText3" xml:space="preserve">
-    <value>and the</value>
-  </data>
-  <data name="SellSuccessText4" xml:space="preserve">
-    <value>exact amount</value>
-  </data>
-  <data name="SellSuccessText5" xml:space="preserve">
-    <value>to send. Return here once you have both.</value>
-  </data>
   <data name="Type" xml:space="preserve">
     <value>Type</value>
   </data>

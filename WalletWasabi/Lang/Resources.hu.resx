@@ -1760,27 +1760,6 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
   <data name="SellSuccessText5" xml:space="preserve">
     <value>küldeni. Térj vissza ide, miután mindkettőt megvan.</value>
   </data>
-  <data name="SellBitcoin" xml:space="preserve">
-    <value>Bitcoin eladása</value>
-  </data>
-  <data name="ReceiveInWithColom" xml:space="preserve">
-    <value>Fogadás ebben:</value>
-  </data>
-  <data name="SellSuccessText1" xml:space="preserve">
-    <value>Kövesd a szolgáltató oldalán található utasításokat. Egy ponton kapsz egy</value>
-  </data>
-  <data name="SellSuccessText2" xml:space="preserve">
-    <value>címet</value>
-  </data>
-  <data name="SellSuccessText3" xml:space="preserve">
-    <value>és a</value>
-  </data>
-  <data name="SellSuccessText4" xml:space="preserve">
-    <value>pontos összeget</value>
-  </data>
-  <data name="SellSuccessText5" xml:space="preserve">
-    <value>küldeni. Térj vissza ide, miután mindkettőt megvan.</value>
-  </data>
   <data name="Type" xml:space="preserve">
     <value>Típus</value>
   </data>
