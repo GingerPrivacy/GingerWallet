@@ -3,6 +3,7 @@ using System.Threading;
 using WalletWasabi.Hwi;
 using WalletWasabi.Wallets;
 using WalletWasabi.Extensions;
+using WalletWasabi.Fluent.Authorization.Models;
 using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.Models.Wallets;

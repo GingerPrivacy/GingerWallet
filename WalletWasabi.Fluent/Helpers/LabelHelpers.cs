@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using WalletWasabi.Fluent.ViewModels.Wallets.Labels;
+using WalletWasabi.Fluent.HomeScreen.Labels.Models;
 using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.Helpers;

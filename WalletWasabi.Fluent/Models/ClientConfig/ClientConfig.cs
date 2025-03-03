@@ -1,4 +1,4 @@
-using WalletWasabi.Logging;
+using GingerCommon.Logging;
 
 namespace WalletWasabi.Fluent.Models.ClientConfig;
 

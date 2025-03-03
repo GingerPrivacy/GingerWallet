@@ -86,8 +86,6 @@ public class SelectingItemsControlBehavior
         var offset = isVerticalOffset ? selectionOffset.Y : selectionOffset.X;
         var compositor = pipeVisual.Compositor;
 
-        // This is required
-        var quadraticEaseIn = new SpringEasing();
 
         // Create new offset animation between old selection position to the current position
         var offsetAnimation = compositor.CreateVector3KeyFrameAnimation();
@@ -102,6 +100,7 @@ public class SelectingItemsControlBehavior
         offsetAnimation.Duration = TimeSpan.FromMilliseconds(250);
 
         // Create small scale animation so the pipe will "stretch" while it's moving
+        var quadraticEaseIn = new QuadraticEaseOut();
         var scaleAnimation = compositor.CreateVector3KeyFrameAnimation();
         scaleAnimation.Target = "Scale";
         scaleAnimation.InsertKeyFrame(0f, Vector3.One, quadraticEaseIn);

@@ -1,0 +1,82 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="viewModels:WalletStatsViewModel"
+             x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
+             xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.HomeScreen.Others.ViewModels"
+             x:Class="WalletWasabi.Fluent.HomeScreen.Others.Views.WalletStatsView">
+  <ContentArea Title="{Binding Title}"
+               EnableNext="True" NextContent="{x:Static lang:Resources.Done}">
+    <StackPanel Spacing="10" Margin="0 20 20 0">
+      <PreviewItem Label="{x:Static lang:Resources.NumberOfCoins}"
+                   CopyableContent="{Binding Model.CoinCount}">
+        <PrivacyContentControl Classes="monoSpaced"
+                               Content="{Binding Model.CoinCount}" />
+      </PreviewItem>
+      <Separator />
+      <PreviewItem Label="{x:Static lang:Resources.UnconfirmedBalance}"
+                   CopyableContent="{Binding Model.UnconfirmedBalance.FormattedBtc}">
+        <PrivacyContentControl>
+          <AmountControl Amount="{Binding Model.UnconfirmedBalance}" />
+        </PrivacyContentControl>
+      </PreviewItem>
+      <Separator />
+      <PreviewItem Label="{x:Static lang:Resources.ConfirmedBalance}"
+                   CopyableContent="{Binding Model.ConfirmedBalance.FormattedBtc}">
+        <PrivacyContentControl>
+          <AmountControl Amount="{Binding Model.ConfirmedBalance}" />
+        </PrivacyContentControl>
+      </PreviewItem>
+      <Separator />
+      <PreviewItem Label="{x:Static lang:Resources.TotalBalance}"
+                   CopyableContent="{Binding Model.Balance.FormattedBtc}">
+        <PrivacyContentControl>
+          <AmountControl Amount="{Binding Model.Balance}" />
+        </PrivacyContentControl>
+      </PreviewItem>
+      <Separator />
+      <PreviewItem Label="{x:Static lang:Resources.TotalTransactions}"
+                   CopyableContent="{Binding Model.TotalTransactionCount}">
+        <PrivacyContentControl Content="{Binding Model.TotalTransactionCount, Mode=OneWay}" Classes="monoSpaced" />
+      </PreviewItem>
+      <Separator />
+      <PreviewItem Label="{x:Static lang:Resources.NonCoinjoinTransactions}"
+                   CopyableContent="{Binding Model.NonCoinjointransactionCount}">
+        <PrivacyContentControl Content="{Binding Model.NonCoinjointransactionCount, Mode=OneWay}" Classes="monoSpaced" />
+      </PreviewItem>
+      <Separator />
+      <PreviewItem Label="{x:Static lang:Resources.CoinjoinTransactions}"
+                   CopyableContent="{Binding Model.CoinjoinTransactionCount}">
+        <PrivacyContentControl Content="{Binding Model.CoinjoinTransactionCount, Mode=OneWay}" Classes="monoSpaced" />
+      </PreviewItem>
+      <Separator />
+
+      <PreviewItem Label="{x:Static lang:Resources.NumberOfAddresses}"
+                   CopyableContent="{Binding Model.GeneratedKeyCount}">
+        <PrivacyContentControl Classes="monoSpaced"
+                               Content="{Binding Model.GeneratedKeyCount}" />
+      </PreviewItem>
+      <Separator />
+      <PreviewItem Label="{x:Static lang:Resources.NumberOfCleanAddresses}"
+                   CopyableContent="{Binding Model.GeneratedCleanKeyCount}">
+        <PrivacyContentControl Classes="monoSpaced"
+                               Content="{Binding Model.GeneratedCleanKeyCount}" />
+      </PreviewItem>
+      <Separator />
+      <PreviewItem Label="{x:Static lang:Resources.NumberOfLockedAddresses}"
+                   CopyableContent="{Binding Model.GeneratedLockedKeyCount}">
+        <PrivacyContentControl Classes="monoSpaced"
+                               Content="{Binding Model.GeneratedLockedKeyCount}" />
+      </PreviewItem>
+      <Separator />
+      <PreviewItem Label="{x:Static lang:Resources.NumberOfUsedAddresses}"
+                   CopyableContent="{Binding Model.GeneratedUsedKeyCount}">
+        <PrivacyContentControl Classes="monoSpaced"
+                               Content="{Binding Model.GeneratedUsedKeyCount}" />
+      </PreviewItem>
+    </StackPanel>
+  </ContentArea>
+</UserControl>

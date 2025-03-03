@@ -15,7 +15,7 @@ public class NavigationMetaDataGenerator : ISourceGenerator
 
 	private const string NavigationMetaDataDisplayString = "WalletWasabi.Fluent.NavigationMetaData";
 
-	private const string RoutableViewModelDisplayString = "WalletWasabi.Fluent.ViewModels.Navigation.RoutableViewModel";
+	private const string RoutableViewModelDisplayString = "WalletWasabi.Fluent.Navigation.ViewModels.RoutableViewModel";
 
 	private const string LangResourceDisplayString = "WalletWasabi.Lang.Resources";
 
@@ -103,7 +103,7 @@ public class NavigationMetaDataGenerator : ISourceGenerator
 			#nullable enable
 			using System;
 			using System.Threading.Tasks;
-			using WalletWasabi.Fluent.ViewModels.Navigation;
+			using WalletWasabi.Fluent.Navigation.ViewModels;
 			using WalletWasabi.Lang;
 
 			namespace {{namespaceName}};

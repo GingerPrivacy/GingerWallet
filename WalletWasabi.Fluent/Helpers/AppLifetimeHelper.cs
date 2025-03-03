@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using WalletWasabi.Fluent.ViewModels;
+using WalletWasabi.Fluent.Common.ViewModels;
 using WalletWasabi.Microservices;
 
 namespace WalletWasabi.Fluent.Helpers;

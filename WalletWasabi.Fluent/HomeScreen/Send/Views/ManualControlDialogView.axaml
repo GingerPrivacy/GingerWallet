@@ -1,0 +1,39 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sorting="clr-namespace:WalletWasabi.Fluent.Controls.Sorting"
+             x:DataType="viewModels:ManualControlDialogViewModel"
+             x:CompileBindings="True"
+             xmlns:lang="using:WalletWasabi.Lang"
+             xmlns:views="clr-namespace:WalletWasabi.Fluent.CoinList.Views"
+             xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.HomeScreen.Send.ViewModels"
+             x:Class="WalletWasabi.Fluent.HomeScreen.Send.Views.ManualControlDialogView">
+
+  <ContentArea Title="{Binding Title}"
+               Caption="Select the coins that are allowed for the transaction to use"
+               EnableNext="True" NextContent="{x:Static lang:Resources.Continue}"
+               EnableCancel="{Binding EnableCancel}"
+               EnableBack="{Binding EnableBack}"
+               ScrollViewer.VerticalScrollBarVisibility="Disabled"
+               ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+    <ContentArea.TopContent>
+      <StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Right">
+        <Button Theme="{StaticResource DialogSortButton}"  ToolTip.Tip="Sorting">
+          <Button.Flyout>
+            <Flyout Placement="BottomEdgeAlignedRight">
+              <sorting:SortControl Sortables="{Binding CoinList.Sortables}" />
+            </Flyout>
+          </Button.Flyout>
+        </Button>
+
+        <ToggleButton Theme="{StaticResource DialogSelectAllButton}"
+                      Command="{Binding ToggleSelectionCommand}"
+                      IsChecked="{Binding HasSelection}" />
+      </StackPanel>
+    </ContentArea.TopContent>
+    <ContentArea.BottomContent>
+      <!-- Selected Amount -->
+      <AmountControl Amount="{Binding SelectedAmount^}" Classes="Material" HorizontalAlignment="Center" />
+    </ContentArea.BottomContent>
+    <views:CoinListView DataContext="{Binding CoinList}" />
+  </ContentArea>
+</UserControl>

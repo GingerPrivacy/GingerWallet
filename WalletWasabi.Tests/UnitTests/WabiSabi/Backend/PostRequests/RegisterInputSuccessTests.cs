@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 using WalletWasabi.Crypto;
-using WalletWasabi.Crypto.Randomness;
 using WalletWasabi.Tests.Helpers;
 using WalletWasabi.WabiSabi.Backend;
 using WalletWasabi.WabiSabi.Backend.Models;
@@ -12,6 +11,7 @@ using WalletWasabi.WabiSabi.Backend.Rounds.CoinJoinStorage;
 using WalletWasabi.WabiSabi.Models;
 using Xunit;
 using WalletWasabi.WabiSabi.Client.CoinJoin.Client;
+using WalletWasabi.Tests.TestCommon;
 
 namespace WalletWasabi.Tests.UnitTests.WabiSabi.Backend.PostRequests;
 
@@ -52,7 +52,7 @@ public class RegisterInputSuccessTests
 	{
 		WabiSabiConfig cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
 		cfg.CoordinatorIdentifier = "test";
-		var round = WabiSabiTestFactory.CreateRound(cfg);
+		var round = WabiSabiTestFactory.CreateRound(cfg, 1);
 
 		using Key key = new();
 		var coin = WabiSabiTestFactory.CreateCoin(key);
@@ -63,8 +63,8 @@ public class RegisterInputSuccessTests
 
 		var roundState = RoundState.FromRound(arena.Rounds.First());
 		var arenaClient = new ArenaClient(
-			roundState.CreateAmountCredentialClient(InsecureRandom.Instance),
-			roundState.CreateVsizeCredentialClient(InsecureRandom.Instance),
+			roundState.CreateAmountCredentialClient(TestRandom.Wasabi(2)),
+			roundState.CreateVsizeCredentialClient(TestRandom.Wasabi(3)),
 			"test",
 			arena);
 		var ownershipProof = OwnershipProof.GenerateCoinJoinInputProof(key, new OwnershipIdentifier(key, key.PubKey.GetScriptPubKey(ScriptPubKeyType.Segwit)), new CoinJoinInputCommitmentData("test", round.Id), ScriptPubKeyType.Segwit);

@@ -3,10 +3,17 @@
 
   <Thickness x:Key="TextControlBorderThemeThickness">2</Thickness>
   <Thickness x:Key="TextControlBorderThemeThicknessFocused">2</Thickness>
-  <Thickness x:Key="TextControlThemePadding">15,10,15,8</Thickness>
+  <Thickness x:Key="TextControlThemePadding">15,8,15,8</Thickness>
+
+  <Design.PreviewWith>
+    <StackPanel Spacing="4" Width="300">
+
+      <TextBox Text="{Binding $self.Bounds.Height}"/>
+      <TextBox Watermark="{Binding $self.Bounds.Height}" />
+    </StackPanel>
+  </Design.PreviewWith>
 
   <ControlTheme x:Key="TextBoxTheme" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
-
     <Setter Property="Template">
       <ControlTemplate>
         <DockPanel>
@@ -31,8 +38,7 @@
               MinWidth="{TemplateBinding MinWidth}"
               MinHeight="{TemplateBinding MinHeight}" />
 
-            <Border
-              Margin="{TemplateBinding BorderThickness}">
+            <Border Margin="{TemplateBinding BorderThickness}">
               <Grid ColumnDefinitions="Auto,*,Auto">
                 <ContentPresenter Grid.Column="0" Grid.ColumnSpan="1" Content="{TemplateBinding InnerLeftContent}" />
                 <DockPanel x:Name="PART_InnerDockPanel" Grid.Column="1" Grid.ColumnSpan="1" Margin="{TemplateBinding Padding}">
@@ -93,6 +99,10 @@
         </DockPanel>
       </ControlTemplate>
     </Setter>
+
+    <Style Selector="^">
+      <Setter Property="MinHeight" Value="42" />
+    </Style>
 
     <Style Selector="^/template/ Border#PART_BorderElement">
       <Setter Property="CornerRadius" Value="20" />

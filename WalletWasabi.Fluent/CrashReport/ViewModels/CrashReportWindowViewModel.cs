@@ -1,8 +1,8 @@
 using ReactiveUI;
 using System.Windows.Input;
+using WalletWasabi.Fluent.Common.ViewModels;
+using WalletWasabi.Fluent.HelpAndSupport.ViewModels;
 using WalletWasabi.Fluent.Helpers;
-using WalletWasabi.Fluent.ViewModels;
-using WalletWasabi.Fluent.ViewModels.HelpAndSupport;
 using WalletWasabi.Models;
 
 namespace WalletWasabi.Fluent.CrashReport.ViewModels;
