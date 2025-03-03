@@ -8,7 +8,7 @@ using WalletWasabi.Backend.Controllers;
 using WalletWasabi.BitcoinCore.Mempool;
 using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Cache;
-using WalletWasabi.Tests.TestCommon;
+using WalletWasabi.Crypto.Randomness;
 using WalletWasabi.Tests.Helpers;
 using WalletWasabi.WabiSabi;
 using WalletWasabi.WabiSabi.Backend;
@@ -56,15 +56,16 @@ public class BobClientTests
 		using CoinJoinMempoolManager coinJoinMempoolManager = new(new CoinJoinIdStore(), mempoolMirror);
 		var wabiSabiApi = new WabiSabiController(idempotencyRequestCache, arena, coinJoinFeeRateStatStore, affiliationManager, coinJoinMempoolManager);
 
+		InsecureRandom insecureRandom = InsecureRandom.Instance;
 		var roundState = RoundState.FromRound(round);
 		var aliceArenaClient = new ArenaClient(
-			roundState.CreateAmountCredentialClient(TestRandom.Wasabi(1)),
-			roundState.CreateVsizeCredentialClient(TestRandom.Wasabi(2)),
+			roundState.CreateAmountCredentialClient(insecureRandom),
+			roundState.CreateVsizeCredentialClient(insecureRandom),
 			config.CoordinatorIdentifier,
 			wabiSabiApi);
 		var bobArenaClient = new ArenaClient(
-			roundState.CreateAmountCredentialClient(TestRandom.Wasabi(3)),
-			roundState.CreateVsizeCredentialClient(TestRandom.Wasabi(4)),
+			roundState.CreateAmountCredentialClient(insecureRandom),
+			roundState.CreateVsizeCredentialClient(insecureRandom),
 			config.CoordinatorIdentifier,
 			wabiSabiApi);
 		Assert.Equal(Phase.InputRegistration, round.Phase);

@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using WalletWasabi.Fluent.Authorization.Models;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
 

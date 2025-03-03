@@ -4,17 +4,15 @@ using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Blockchain.Keys;
-using WalletWasabi.Extensions;
 using WalletWasabi.Hwi;
 using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
 
-[AutoInterface]
-public partial class Address : ReactiveObject
+public class Address : ReactiveObject, IAddress
 {
 	private readonly Action<Address> _onHide;
-
+	
 	public Address(KeyManager keyManager, HdPubKey hdPubKey, Action<Address> onHide)
 	{
 		KeyManager = keyManager;
@@ -22,7 +20,6 @@ public partial class Address : ReactiveObject
 		Network = keyManager.GetNetwork();
 		HdFingerprint = KeyManager.MasterFingerprint;
 		BitcoinAddress = HdPubKey.GetAddress(Network);
-		Type = ScriptType.FromEnum(BitcoinAddress.ScriptPubKey.GetScriptType());
 		_onHide = onHide;
 	}
 
@@ -31,7 +28,6 @@ public partial class Address : ReactiveObject
 	public Network Network { get; }
 	public HDFingerprint? HdFingerprint { get; }
 	public BitcoinAddress BitcoinAddress { get; }
-	public ScriptType Type { get; }
 	public LabelsArray Labels => HdPubKey.Labels;
 	public PubKey PubKey => HdPubKey.PubKey;
 	public KeyPath FullKeyPath => HdPubKey.FullKeyPath;
@@ -84,6 +80,6 @@ public partial class Address : ReactiveObject
 	{
 		return obj is IAddress address && Equals(address);
 	}
-
+	
 	protected bool Equals(IAddress other) => Text.Equals(other.Text);
 }

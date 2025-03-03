@@ -256,7 +256,7 @@ public class Global
 
 				HostedServices.Register<AnnouncementManager>(() => new AnnouncementManager(DataDir, TimeSpan.FromMinutes(.5), (DisplayLanguage)Config.Language, Config.PersistentConfig.ExtraNostrPubKey, HttpClientFactory), nameof(AnnouncementManager));
 
-				HostedServices.Register<BuySellManager>(() => new BuySellManager(BuysellClient, WalletManager, TimeSpan.FromSeconds(10)), nameof(BuySellManager));
+				HostedServices.Register<BuyManager>(() => new BuyManager(BuysellClient, WalletManager, TimeSpan.FromSeconds(10)), nameof(BuyManager));
 
 				await HostedServices.StartAllAsync(cancel).ConfigureAwait(false);
 

@@ -1,7 +1,11 @@
-using GingerLogger = GingerCommon.Logging.Logger;
-using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
-using System.Linq;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading;
+using WalletWasabi.Helpers;
 
 namespace WalletWasabi.Logging;
 
@@ -16,13 +20,50 @@ namespace WalletWasabi.Logging;
 /// </summary>
 public static class Logger
 {
+	#region PropertiesAndMembers
+
+	private static readonly object Lock = new();
+
+	private static long On = 1;
+
+	private static int LoggingFailedCount = 0;
+
+	private static LogLevel MinimumLevel { get; set; } = LogLevel.Critical;
+
+	private static HashSet<LogMode> Modes { get; set; } = new();
+
+	public static string FilePath { get; private set; } = "Log.txt";
+
+	public static string EntrySeparator { get; } = Environment.NewLine;
+
+	/// <summary>
+	/// Gets the GUID instance.
+	/// <para>You can use it to identify which software instance created a log entry. It gets created automatically, but you have to use it manually.</para>
+	/// </summary>
+	private static Guid InstanceGuid { get; } = Guid.NewGuid();
+
+	/// <summary>Gets or sets the maximum log file size in bytes.</summary>
+	/// <remarks>
+	/// Default value is approximately 10 MB. If set to <c>0</c>, then there is no maximum log file size.
+	/// <para>Guarded by <see cref="Lock"/>.</para>
+	/// </remarks>
+	private static long MaximumLogFileSizeBytes { get; set; } = 10_000_000;
+
+	/// <summary>Gets or sets current log file size in bytes.</summary>
+	/// <remarks>Guarded by <see cref="Lock"/>.</remarks>
+	private static long LogFileSizeBytes { get; set; }
+
+	#endregion PropertiesAndMembers
+
+	#region Initializers
+
 	/// <summary>
 	/// Initializes the logger with default values.
 	/// <para>
 	/// Default values are set as follows:
 	/// <list type="bullet">
-	/// <item>For RELEASE mode: MinimumLevel is set to <see cref="LogLevel.Info"/>, and logs only to file.</item>
-	/// <item>For DEBUG mode: MinimumLevel is set to <see cref="LogLevel.Debug"/>, and logs to file, debug and console.</item>
+	/// <item>For RELEASE mode: <see cref="MinimumLevel"/> is set to <see cref="LogLevel.Info"/>, and logs only to file.</item>
+	/// <item>For DEBUG mode: <see cref="MinimumLevel"/> is set to <see cref="LogLevel.Debug"/>, and logs to file, debug and console.</item>
 	/// </list>
 	/// </para>
 	/// </summary>
@@ -30,6 +71,8 @@ public static class Logger
 	/// <param name="logModes">Use <c>null</c> to use default <see cref="LogMode">logging modes</see> or custom values to force non-default logging modes.</param>
 	public static void InitializeDefaults(string filePath, LogLevel? logLevel = null, LogMode[]? logModes = null)
 	{
+		SetFilePath(filePath);
+
 #if RELEASE
 		logLevel ??= LogLevel.Info;
 		logModes ??= [LogMode.Console, LogMode.File];
@@ -38,30 +81,223 @@ public static class Logger
 		logModes ??= [LogMode.Debug, LogMode.Console, LogMode.File];
 #endif
 
-		long maximumLogFileSizeBytes = 10_000_000;
-		if (logLevel == LogLevel.Trace)
+		SetMinimumLevel(logLevel.Value);
+		SetModes(logModes);
+
+		lock (Lock)
 		{
-			maximumLogFileSizeBytes = 0;
+			if (MinimumLevel == LogLevel.Trace)
+			{
+				MaximumLogFileSizeBytes = 0;
+			}
 		}
-
-		MSLogLevel msLogLevel = logLevel?.ToMSLogLevel() ?? MSLogLevel.None;
-
-		var consoleLogLevel = logModes.Contains(LogMode.Console) ? msLogLevel : MSLogLevel.None;
-		var debugLogLevel = logModes.Contains(LogMode.Debug) ? msLogLevel : MSLogLevel.None;
-		var fileLogLevel = logModes.Contains(LogMode.File) ? msLogLevel : MSLogLevel.None;
-		GingerLogger.CreateLogger(consoleLogLevel, debugLogLevel, fileLogLevel, filePath, maximumLogFileSizeBytes);
 	}
 
-	private static MSLogLevel ToMSLogLevel(this LogLevel logLevel) => (MSLogLevel)logLevel;
+	public static void SetMinimumLevel(LogLevel level) => MinimumLevel = level;
 
-	public static void TurnOff() => GingerLogger.On = false;
+	public static void SetModes(params LogMode[] modes)
+	{
+		HashSet<LogMode> newModes = new();
+		if (modes is not null)
+		{
+			foreach (var mode in modes)
+			{
+				newModes.Add(mode);
+			}
+		}
+		Modes = newModes;
+	}
 
-	public static void TurnOn() => GingerLogger.On = true;
+	public static void SetFilePath(string filePath)
+	{
+		FilePath = Guard.NotNullOrEmptyOrWhitespace(nameof(filePath), filePath, trim: true);
+		IoHelpers.EnsureContainingDirectoryExists(FilePath);
 
-	public static bool IsOn() => GingerLogger.On;
+		if (File.Exists(FilePath))
+		{
+			lock (Lock)
+			{
+				LogFileSizeBytes = new FileInfo(FilePath).Length;
+			}
+		}
+	}
 
-	public static void Log(LogLevel level, string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) =>
-		GingerLogger.Log(level.ToMSLogLevel(), message, callerFilePath, callerMemberName, callerLineNumber);
+	#endregion Initializers
+
+	#region Methods
+
+	public static void TurnOff() => Interlocked.Exchange(ref On, 0);
+
+	public static void TurnOn() => Interlocked.Exchange(ref On, 1);
+
+	public static bool IsOn() => Interlocked.Read(ref On) == 1;
+
+	#endregion Methods
+
+	#region LoggingMethods
+
+	#region GeneralLoggingMethods
+
+	public static void Log(LogLevel level, string message, int additionalEntrySeparators = 0, bool additionalEntrySeparatorsLogFileOnlyMode = true, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1)
+	{
+		try
+		{
+			var modes = Modes;
+			if (modes.Count == 0 || !IsOn())
+			{
+				return;
+			}
+
+			if (level < MinimumLevel)
+			{
+				return;
+			}
+
+			message = Guard.Correct(message);
+			var category = string.IsNullOrWhiteSpace(callerFilePath) ? "" : $"{EnvironmentHelpers.ExtractFileName(callerFilePath)}.{callerMemberName} ({callerLineNumber})";
+
+			var messageBuilder = new StringBuilder();
+			messageBuilder.Append($"{DateTime.UtcNow.ToLocalTime():yyyy-MM-dd HH:mm:ss.fff} [{Environment.CurrentManagedThreadId}] {level.ToString().ToUpperInvariant()}\t");
+
+			if (message.Length == 0)
+			{
+				if (category.Length == 0) // If both empty. It probably never happens though.
+				{
+					messageBuilder.Append($"{EntrySeparator}");
+				}
+				else // If only the message is empty.
+				{
+					messageBuilder.Append($"{category}{EntrySeparator}");
+				}
+			}
+			else
+			{
+				if (category.Length == 0) // If only the category is empty.
+				{
+					messageBuilder.Append($"{message}{EntrySeparator}");
+				}
+				else // If none of them empty.
+				{
+					messageBuilder.Append($"{category}\t{message}{EntrySeparator}");
+				}
+			}
+
+			var finalMessage = messageBuilder.ToString();
+
+			for (int i = 0; i < additionalEntrySeparators; i++)
+			{
+				messageBuilder.Insert(0, EntrySeparator);
+			}
+
+			var finalFileMessage = messageBuilder.ToString();
+			if (!additionalEntrySeparatorsLogFileOnlyMode)
+			{
+				finalMessage = finalFileMessage;
+			}
+
+			lock (Lock)
+			{
+				if (modes.Contains(LogMode.Console))
+				{
+					var origColor = Console.ForegroundColor;
+					var newColor = level switch
+					{
+						LogLevel.Warning => ConsoleColor.Yellow,
+						LogLevel.Error => ConsoleColor.Red,
+						LogLevel.Critical => ConsoleColor.Red,
+						_ => origColor
+					};
+
+					if (origColor != newColor)
+					{
+						Console.ForegroundColor = newColor;
+					}
+					Console.Write(finalMessage);
+					if (origColor != newColor)
+					{
+						Console.ForegroundColor = origColor;
+					}
+				}
+
+				if (modes.Contains(LogMode.Debug))
+				{
+					Debug.Write(finalMessage);
+				}
+
+				if (!modes.Contains(LogMode.File))
+				{
+					return;
+				}
+
+				if (MaximumLogFileSizeBytes > 0)
+				{
+					// Simplification here is that: 1 character ~ 1 byte.
+					LogFileSizeBytes += finalFileMessage.Length;
+
+					if (LogFileSizeBytes > MaximumLogFileSizeBytes)
+					{
+						LogFileSizeBytes = 0;
+						File.Delete(FilePath);
+					}
+				}
+
+				File.AppendAllText(FilePath, finalFileMessage);
+			}
+		}
+		catch (Exception ex)
+		{
+			if (Interlocked.Increment(ref LoggingFailedCount) == 1) // If it only failed the first time, try log the failure.
+			{
+				LogDebug($"Logging failed: {GetEnglishExceptionString(ex)}");
+			}
+
+			// If logging the failure is successful then clear the failure counter.
+			// If it's not the first time the logging failed, then we do not try to log logging failure, so clear the failure counter.
+			Interlocked.Exchange(ref LoggingFailedCount, 0);
+		}
+	}
+
+	#endregion GeneralLoggingMethods
+
+	#region ExceptionLoggingMethods
+
+	/// <summary>
+	/// Logs user message concatenated with exception string.
+	/// </summary>
+	private static void Log(string message, Exception ex, LogLevel level, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1)
+	{
+		Log(level, message: $"{message} Exception: {GetEnglishExceptionString(ex)}", callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+	}
+
+	/// <summary>
+	/// Logs exception string without any user message.
+	/// </summary>
+	private static void Log(Exception exception, LogLevel level, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1)
+	{
+		Log(level, GetEnglishExceptionString(exception), callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+	}
+
+	private static readonly CultureInfo EnglishCulture = CultureInfo.GetCultureInfo("en-US");
+
+	private static string GetEnglishExceptionString(Exception ex)
+	{
+		var originalCulture = Thread.CurrentThread.CurrentUICulture;
+		try
+		{
+			// Set the culture to English for logging
+			Thread.CurrentThread.CurrentUICulture = EnglishCulture;
+			return ex.ToString();
+		}
+		finally
+		{
+			// Ensure the original culture is always restored
+			Thread.CurrentThread.CurrentUICulture = originalCulture;
+		}
+	}
+
+	#endregion ExceptionLoggingMethods
+
+	#region TraceLoggingMethods
 
 	/// <summary>
 	/// Logs a string message at <see cref="LogLevel.Trace"/> level.
@@ -70,7 +306,7 @@ public static class Logger
 	/// </summary>
 	/// <remarks>These messages may contain sensitive application data and so should not be enabled in a production environment.</remarks>
 	/// <example>For example: <c>Credentials: {"User":"SomeUser", "Password":"P@ssword"}</c></example>
-	public static void LogTrace(string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => GingerLogger.Log(MSLogLevel.Trace, message, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+	public static void LogTrace(string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => Log(LogLevel.Trace, message, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
 
 	/// <summary>
 	/// Logs the <paramref name="exception"/> using <see cref="Exception.ToString()"/> at <see cref="LogLevel.Trace"/> level.
@@ -79,7 +315,7 @@ public static class Logger
 	/// </summary>
 	/// <remarks>These messages may contain sensitive application data and so should not be enabled in a production environment.</remarks>
 	/// <example>For example: <c>Credentials: {"User":"SomeUser", "Password":"P@ssword"}</c></example>
-	public static void LogTrace(Exception exception, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => GingerLogger.Log(exception, MSLogLevel.Trace, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+	public static void LogTrace(Exception exception, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => Log(exception, LogLevel.Trace, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
 
 	/// <summary>
 	/// Logs <paramref name="message"/> with <paramref name="exception"/> using <see cref="Exception.ToString()"/> concatenated to it at <see cref="LogLevel.Trace"/> level.
@@ -89,7 +325,11 @@ public static class Logger
 	/// <remarks>These messages may contain sensitive application data and so should not be enabled in a production environment.</remarks>
 	/// <example>For example: <c>Credentials: {"User":"SomeUser", "Password":"P@ssword"}</c></example>
 	public static void LogTrace(string message, Exception exception, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1)
-		=> GingerLogger.Log(message, exception, MSLogLevel.Trace, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+		=> Log(message, exception, LogLevel.Trace, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+
+	#endregion TraceLoggingMethods
+
+	#region DebugLoggingMethods
 
 	/// <summary>
 	/// Logs a string message at <see cref="LogLevel.Debug"/> level.
@@ -98,7 +338,7 @@ public static class Logger
 	/// </summary>
 	/// <remarks>You typically would not enable <see cref="LogLevel.Debug"/> level in production unless you are troubleshooting, due to the high volume of generated logs.</remarks>
 	/// <example>For example: <c>Entering method Configure with flag set to true.</c></example>
-	public static void LogDebug(string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => GingerLogger.Log(MSLogLevel.Debug, message, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+	public static void LogDebug(string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => Log(LogLevel.Debug, message, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
 
 	/// <summary>
 	/// Logs the <paramref name="exception"/> using <see cref="Exception.ToString()"/> at <see cref="LogLevel.Debug"/> level.
@@ -107,7 +347,7 @@ public static class Logger
 	/// </summary>
 	/// <remarks>These messages may contain sensitive application data and so should not be enabled in a production environment.</remarks>
 	/// <example>For example: <c>Credentials: {"User":"SomeUser", "Password":"P@ssword"}</c></example>
-	public static void LogDebug(Exception exception, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => GingerLogger.Log(exception, MSLogLevel.Debug, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+	public static void LogDebug(Exception exception, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => Log(exception, LogLevel.Debug, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
 
 	/// <summary>
 	/// Logs <paramref name="message"/> with <paramref name="exception"/> using <see cref="Exception.ToString()"/> concatenated to it at <see cref="LogLevel.Debug"/> level.
@@ -116,21 +356,25 @@ public static class Logger
 	/// </summary>
 	/// <remarks>You typically would not enable <see cref="LogLevel.Debug"/> level in production unless you are troubleshooting, due to the high volume of generated logs.</remarks>
 	public static void LogDebug(string message, Exception exception, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1)
-		=> GingerLogger.Log(message, exception, MSLogLevel.Debug, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+		=> Log(message, exception, LogLevel.Debug, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+
+	#endregion DebugLoggingMethods
+
+	#region InfoLoggingMethods
 
 	/// <summary>
 	/// Logs special event: Software has started. Add also <see cref="InstanceGuid"/> identifier and insert three newlines to increase log readability.
 	/// </summary>
 	/// <param name="appName">Name of the application.</param>
 	public static void LogSoftwareStarted(string appName, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1)
-		=> GingerLogger.LogSoftwareStarted(appName, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+		=> Log(LogLevel.Info, $"{appName} started ({InstanceGuid}).", additionalEntrySeparators: 3, additionalEntrySeparatorsLogFileOnlyMode: true, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
 
 	/// <summary>
 	/// Logs special event: Software has stopped. Add also <see cref="InstanceGuid"/> identifier.
 	/// </summary>
 	/// <param name="appName">Name of the application.</param>
 	public static void LogSoftwareStopped(string appName, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1)
-		=> GingerLogger.LogSoftwareStopped(appName, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+		=> Log(LogLevel.Info, $"{appName} stopped gracefully ({InstanceGuid}).", callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
 
 	/// <summary>
 	/// Logs a string message at <see cref="LogLevel.Info"/> level.
@@ -139,7 +383,7 @@ public static class Logger
 	/// <remarks>These logs typically have some long-term value.</remarks>
 	/// <example>"Request received for path /api/my-controller"</example>
 	/// </summary>
-	public static void LogInfo(string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => GingerLogger.Log(MSLogLevel.Information, message, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+	public static void LogInfo(string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => Log(LogLevel.Info, message, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
 
 	/// <summary>
 	/// Logs the <paramref name="exception"/> using <see cref="Exception.ToString()"/> at <see cref="LogLevel.Info"/> level.
@@ -148,7 +392,7 @@ public static class Logger
 	/// These logs typically have some long-term value.
 	/// Example: "Request received for path /api/my-controller"
 	/// </summary>
-	public static void LogInfo(Exception exception, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => GingerLogger.Log(exception, MSLogLevel.Information, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+	public static void LogInfo(Exception exception, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => Log(exception, LogLevel.Info, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
 
 	/// <summary>
 	/// Logs <paramref name="message"/> with <paramref name="exception"/> using <see cref="Exception.ToString()"/> concatenated to it at <see cref="LogLevel.Info"/> level.
@@ -158,7 +402,11 @@ public static class Logger
 	/// Example: "Request received for path /api/my-controller"
 	/// </summary>
 	public static void LogInfo(string message, Exception exception, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1)
-		=> GingerLogger.Log(message, exception, MSLogLevel.Information, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+		=> Log(message, exception, LogLevel.Info, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+
+	#endregion InfoLoggingMethods
+
+	#region WarningLoggingMethods
 
 	/// <summary>
 	/// Logs a string message at <see cref="LogLevel.Warning"/> level.
@@ -170,7 +418,7 @@ public static class Logger
 	/// </remarks>
 	/// <example>"FileNotFoundException for file quotes.txt."</example>
 	/// </summary>
-	public static void LogWarning(string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => GingerLogger.Log(MSLogLevel.Warning, message, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+	public static void LogWarning(string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => Log(LogLevel.Warning, message, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
 
 	/// <summary>
 	/// Logs the <paramref name="exception"/> using <see cref="Exception.ToString()"/> at <see cref="LogLevel.Warning"/> level.
@@ -182,7 +430,11 @@ public static class Logger
 	/// <para>Handled exceptions are a common place to use the <see cref="LogLevel.Warning"/> log level.</para>
 	/// </remarks>
 	/// <example>For example: <c>FileNotFoundException for file quotes.txt.</c></example>
-	public static void LogWarning(Exception exception, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => GingerLogger.Log(exception, MSLogLevel.Warning, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+	public static void LogWarning(Exception exception, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => Log(exception, LogLevel.Warning, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+
+	#endregion WarningLoggingMethods
+
+	#region ErrorLoggingMethods
 
 	/// <summary>
 	/// Logs a string message at <see cref="LogLevel.Error"/> level.
@@ -191,7 +443,7 @@ public static class Logger
 	/// </summary>
 	/// <remarks>These messages indicate a failure in the current activity or operation (such as the current HTTP request), not an application-wide failure.</remarks>
 	/// <example>Log message such as: "Cannot insert record due to duplicate key violation."</example>
-	public static void LogError(string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => GingerLogger.Log(MSLogLevel.Error, message, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+	public static void LogError(string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => Log(LogLevel.Error, message, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
 
 	/// <summary>
 	/// Logs <paramref name="message"/> with <paramref name="exception"/> using <see cref="Exception.ToString()"/> concatenated to it at <see cref="LogLevel.Error"/> level.
@@ -201,7 +453,7 @@ public static class Logger
 	/// <remarks>These messages indicate a failure in the current activity or operation (such as the current HTTP request), not an application-wide failure.</remarks>
 	/// <example>Log message such as: "Cannot insert record due to duplicate key violation."</example>
 	public static void LogError(string message, Exception exception, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1)
-		=> GingerLogger.Log(message, exception, MSLogLevel.Error, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+		=> Log(message, exception, LogLevel.Error, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
 
 	/// <summary>
 	/// Logs the <paramref name="exception"/> using <see cref="Exception.ToString()"/> at <see cref="LogLevel.Error"/> level.
@@ -210,7 +462,11 @@ public static class Logger
 	/// </summary>
 	/// <remarks>These messages indicate a failure in the current activity or operation (such as the current HTTP request), not an application-wide failure.</remarks>
 	/// <example>Log message such as: "Cannot insert record due to duplicate key violation."</example>
-	public static void LogError(Exception exception, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => GingerLogger.Log(exception, MSLogLevel.Error, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+	public static void LogError(Exception exception, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => Log(exception, LogLevel.Error, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+
+	#endregion ErrorLoggingMethods
+
+	#region CriticalLoggingMethods
 
 	/// <summary>
 	/// Logs a string message at <see cref="LogLevel.Critical"/> level.
@@ -218,7 +474,7 @@ public static class Logger
 	/// <para>For failures that require immediate attention.</para>
 	/// </summary>
 	/// <example>Data loss scenarios, out of disk space.</example>
-	public static void LogCritical(string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => GingerLogger.Log(MSLogLevel.Critical, message, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+	public static void LogCritical(string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => Log(LogLevel.Critical, message, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
 
 	/// <summary>
 	/// Logs the <paramref name="exception"/> using <see cref="Exception.ToString()"/> at <see cref="LogLevel.Critical"/> level.
@@ -226,5 +482,9 @@ public static class Logger
 	/// <para>For failures that require immediate attention.</para>
 	/// </summary>
 	/// <example>Examples: Data loss scenarios, out of disk space, etc.</example>
-	public static void LogCritical(Exception exception, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => GingerLogger.Log(exception, MSLogLevel.Critical, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+	public static void LogCritical(Exception exception, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1) => Log(exception, LogLevel.Critical, callerFilePath: callerFilePath, callerMemberName: callerMemberName, callerLineNumber: callerLineNumber);
+
+	#endregion CriticalLoggingMethods
+
+	#endregion LoggingMethods
 }

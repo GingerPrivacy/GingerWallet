@@ -1,13 +1,7 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <Design.PreviewWith>
-    <StackPanel Spacing="4" Width="300">
-
-      <CurrencyEntryBox Text="{Binding $self.Bounds.Height}"/>
-      <CurrencyEntryBox Watermark="{Binding $self.Bounds.Height}" />
-      <CurrencyEntryBox Classes="standalone" Text="{Binding $self.Bounds.Height}" CurrencyCode="BTC" />
-
-    </StackPanel>
+    <CurrencyEntryBox IsReadOnly="True" />
   </Design.PreviewWith>
 
   <!-- TextControlBorderThemeThickness -->
@@ -15,7 +9,7 @@
   <!-- TextControlBorderThemeThicknessFocused -->
   <Thickness x:Key="CurrencyEntryBoxBorderThemeThicknessFocused">2</Thickness>
   <!-- TextControlThemePadding -->
-  <Thickness x:Key="CurrencyEntryBoxThemePadding">15,8,15,8</Thickness>
+  <Thickness x:Key="CurrencyEntryBoxThemePadding">15,10,15,8</Thickness>
 
   <MenuFlyout x:Key="CurrencyEntryBoxDefaultTextBoxContextFlyout">
     <MenuItem x:Name="TextBoxContextFlyoutCutItem"
@@ -214,10 +208,6 @@
           </DockPanel>
         </ControlTemplate>
       </Setter>
-    </Style>
-
-    <Style Selector="^">
-      <Setter Property="MinHeight" Value="42" />
     </Style>
 
     <Style Selector="^/template/ Border#PART_BorderElement">

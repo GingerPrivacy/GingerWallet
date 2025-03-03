@@ -1,22 +1,20 @@
 using System.ComponentModel;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Platform;
 using ReactiveUI;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models.UI;
+using WalletWasabi.Fluent.Providers;
+using WalletWasabi.Fluent.State;
+using WalletWasabi.Fluent.ViewModels;
+using WalletWasabi.Fluent.Views;
 using WalletWasabi.Logging;
 using WalletWasabi.Services;
 using Avalonia.Threading;
-using WalletWasabi.Fluent.Common.ViewModels;
-using WalletWasabi.Fluent.Common.Views;
-using WalletWasabi.Fluent.Providers;
-using WalletWasabi.Fluent.State;
 
 namespace WalletWasabi.Fluent;
 
@@ -29,14 +27,14 @@ public class ApplicationStateManager : IMainWindowService
 	private bool _hideRequest;
 	private bool _isShuttingDown;
 	private bool _restartRequest;
-	private IActivatableLifetime? _activatable;
+	private IActivatableApplicationLifetime? _activatable;
 
 	internal ApplicationStateManager(IClassicDesktopStyleApplicationLifetime lifetime, UiContext uiContext, bool startInBg)
 	{
 		_lifetime = lifetime;
 		_stateMachine = new StateMachine<State, Trigger>(State.InitialState);
 
-		if (Application.Current?.TryGetFeature<IActivatableLifetime>() is { } activatableLifetime)
+		if (_lifetime is IActivatableApplicationLifetime activatableLifetime)
 		{
 			if (startInBg)
 			{
@@ -187,7 +185,7 @@ public class ApplicationStateManager : IMainWindowService
 
 		MainViewModel.Instance.ApplyUiConfigWindowState();
 
-		if (_activatable is { } activatable)
+		if (_lifetime is IActivatableApplicationLifetime activatable)
 		{
 			activatable.TryLeaveBackground();
 		}

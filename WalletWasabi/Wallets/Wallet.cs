@@ -232,9 +232,9 @@ public class Wallet : BackgroundService, IWallet
 		}
 	}
 
-	public HdPubKey GetNextReceiveAddress(IEnumerable<string> destinationLabels, ScriptPubKeyType type)
+	public HdPubKey GetNextReceiveAddress(IEnumerable<string> destinationLabels)
 	{
-		return KeyManager.GetNextReceiveKey(new LabelsArray(destinationLabels), type);
+		return KeyManager.GetNextReceiveKey(new LabelsArray(destinationLabels));
 	}
 
 	public int GetPrivacyPercentage()

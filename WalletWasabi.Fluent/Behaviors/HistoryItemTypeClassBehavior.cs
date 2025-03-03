@@ -4,7 +4,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using NBitcoin;
 using Avalonia.Xaml.Interactions.Custom;
-using WalletWasabi.Fluent.HomeScreen.History.ViewModels.HistoryItems;
+using WalletWasabi.Fluent.ViewModels.Wallets.Home.History.HistoryItems;
 
 namespace WalletWasabi.Fluent.Behaviors;
 

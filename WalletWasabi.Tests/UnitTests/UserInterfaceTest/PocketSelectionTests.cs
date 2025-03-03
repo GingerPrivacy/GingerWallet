@@ -6,9 +6,8 @@ using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Fluent.Helpers;
-using WalletWasabi.Fluent.HomeScreen.Send.Models;
-using WalletWasabi.Fluent.HomeScreen.Send.ViewModels;
 using WalletWasabi.Fluent.Models;
+using WalletWasabi.Fluent.ViewModels.Wallets.Send;
 using WalletWasabi.Tests.Helpers;
 using Xunit;
 

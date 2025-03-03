@@ -1,10 +1,9 @@
-using GingerCommon.Crypto.Random;
 using NBitcoin;
 using System.Collections.Generic;
 using System.Linq;
+using WalletWasabi.Crypto.Randomness;
 using WalletWasabi.Extensions;
 using WalletWasabi.Helpers;
-using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.Tests.Helpers;
 using WalletWasabi.WabiSabi;
 using WalletWasabi.WabiSabi.Client.CoinJoin.Client.Decomposer;
@@ -16,6 +15,8 @@ namespace WalletWasabi.Tests.UnitTests.WabiSabi.Client;
 
 public class AmountDecomposerTests
 {
+	private static readonly InsecureRandom Random = new(seed: 0);
+
 	[Theory]
 	[InlineData(0, 0, 8)]
 	[InlineData(0, 0, 1)]
@@ -43,18 +44,17 @@ public class AmountDecomposerTests
 	[InlineData(5000, 0, 8, true)]
 	public void DecompositionsInvariantTest(decimal feeRateDecimal, long minOutputAmount, int maxAvailableOutputs, bool isTaprootEnabled = false)
 	{
-		var random = TestRandom.Get();
 		var outputVirtualSize = isTaprootEnabled ? Constants.P2trOutputVirtualSize : Constants.P2wpkhOutputVirtualSize;
 		var availableVsize = maxAvailableOutputs * outputVirtualSize;
 		var feeRate = new FeeRate(feeRateDecimal);
 		var feePerOutput = feeRate.GetFee(outputVirtualSize);
-		var registeredCoinEffectiveValues = GenerateRandomCoins(random).Take(3).Select(c => c.EffectiveValue(feeRate, CoordinationFeeRate.Zero)).ToList();
-		var theirCoinEffectiveValues = GenerateRandomCoins(random).Take(30).Select(c => c.EffectiveValue(feeRate, CoordinationFeeRate.Zero)).ToList();
+		var registeredCoinEffectiveValues = GenerateRandomCoins().Take(3).Select(c => c.EffectiveValue(feeRate, CoordinationFeeRate.Zero)).ToList();
+		var theirCoinEffectiveValues = GenerateRandomCoins().Take(30).Select(c => c.EffectiveValue(feeRate, CoordinationFeeRate.Zero)).ToList();
 		var allowedOutputAmountRange = new MoneyRange(Money.Satoshis(minOutputAmount), Money.Satoshis(ProtocolConstants.MaxAmountCredentialValue));
 		var allowedOutputTypes = isTaprootEnabled ? new List<ScriptType>() { ScriptType.Taproot, ScriptType.P2WPKH } : new List<ScriptType>() { ScriptType.P2WPKH };
 
 		var totalEffectiveValue = registeredCoinEffectiveValues.Sum(x => x);
-		var amountDecomposer = new AmountDecomposer(feeRate, allowedOutputAmountRange.Min, allowedOutputAmountRange.Max, availableVsize, allowedOutputTypes, TestRandom.Wasabi());
+		var amountDecomposer = new AmountDecomposer(feeRate, allowedOutputAmountRange.Min, allowedOutputAmountRange.Max, availableVsize, allowedOutputTypes, InsecureRandom.Instance);
 
 		var denominations = new DenominationFactory(allowedOutputAmountRange.Min, allowedOutputAmountRange.Max);
 		var denoms = denominations.CreatePreferedDenominations(registeredCoinEffectiveValues.Concat(theirCoinEffectiveValues).ToList(), feeRate);
@@ -84,13 +84,13 @@ public class AmountDecomposerTests
 		}
 	}
 
-	private static IEnumerable<Coin> GenerateRandomCoins(GingerRandom random)
+	private static IEnumerable<Coin> GenerateRandomCoins()
 	{
 		using var key = new Key();
 		var script = key.GetScriptPubKey(ScriptPubKeyType.Segwit);
 		while (true)
 		{
-			var amount = random.GetInt64(100_000, ProtocolConstants.MaxAmountCredentialValue);
+			var amount = Random.GetInt64(100_000, ProtocolConstants.MaxAmountCredentialValue);
 			yield return CreateCoin(script, amount);
 		}
 	}

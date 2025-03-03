@@ -1,8 +1,7 @@
 using WalletWasabi.Blockchain.TransactionBuilding;
-using WalletWasabi.Fluent.Authorization.Models;
-using WalletWasabi.Fluent.Authorization.ViewModels;
+using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.Models.Wallets;
-
+using WalletWasabi.Fluent.ViewModels.Dialogs.Authorization;
 
 namespace WalletWasabi.Fluent.Helpers;
 

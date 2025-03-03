@@ -11,12 +11,12 @@ using WabiSabi.Crypto;
 using WabiSabi.Crypto.Groups;
 using WabiSabi.Crypto.ZeroKnowledge;
 using WalletWasabi.Crypto;
+using WalletWasabi.Crypto.Randomness;
 using WalletWasabi.Tests.Helpers;
 using WalletWasabi.WabiSabi.Models;
 using WalletWasabi.WabiSabi.Models.MultipartyTransaction;
 using WalletWasabi.WabiSabi.Models.Serialization;
 using Xunit;
-using WalletWasabi.Tests.TestCommon;
 
 namespace WalletWasabi.Tests.UnitTests.WabiSabi.Models;
 
@@ -24,7 +24,7 @@ public class SerializationTests
 {
 	private static IEnumerable<GroupElement> Points = Enumerable.Range(0, int.MaxValue).Select(i => Generators.FromText($"T{i}"));
 	private static IEnumerable<Scalar> Scalars = Enumerable.Range(1, int.MaxValue).Select(i => new Scalar((uint)i));
-	private static CredentialIssuerSecretKey IssuerKey = new(TestRandom.Wasabi(1));
+	private static CredentialIssuerSecretKey IssuerKey = new(InsecureRandom.Instance);
 
 	[Fact]
 	public void InputRegistrationRequestMessageSerialization()

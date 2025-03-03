@@ -7,7 +7,7 @@ using WalletWasabi.Bases;
 using WalletWasabi.Fluent.Converters;
 using System.Runtime.Serialization;
 using System.Runtime.InteropServices;
-using WalletWasabi.Fluent.HomeScreen.BuySell.Models;
+using WalletWasabi.Fluent.Models.BuySell;
 
 namespace WalletWasabi.Fluent;
 

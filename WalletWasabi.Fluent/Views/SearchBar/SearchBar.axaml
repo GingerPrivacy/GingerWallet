@@ -1,0 +1,176 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:s="clr-namespace:WalletWasabi.Fluent.Views.SearchBar"
+             mc:Ignorable="d"
+             xmlns:searchBar="clr-namespace:WalletWasabi.Fluent.ViewModels.SearchBar"
+             xmlns:helpers="clr-namespace:WalletWasabi.Fluent.Helpers"
+             x:CompileBindings="True"
+             x:DataType="searchBar:SearchBarViewModel"
+             x:Class="WalletWasabi.Fluent.Views.SearchBar.SearchBar"
+             x:Name="UserControl"
+             xmlns:lang="using:WalletWasabi.Lang">
+  <Design.DataContext>
+    <searchBar:SearchBarDesignViewModel />
+  </Design.DataContext>
+
+  <UserControl.Styles>
+
+    <Style Selector="TextBox#SearchBox">
+      <Setter Property="Background" Value="{DynamicResource RegionColor}" />
+      <Setter Property="CaretBrush" Value="{DynamicResource AcrylicTrimForeground}" />
+      <Setter Property="Margin" Value="0" />
+      <Setter Property="FontSize" Value="12" />
+      <Setter Property="MaxWidth" Value="32" />
+      <Setter Property="MinWidth" Value="32" />
+      <Setter Property="Padding" Value="6 3 20 3" />
+      <Setter Property="Foreground" Value="{DynamicResource AcrylicTrimForeground}" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="BorderBrush">
+        <SolidColorBrush Opacity="0.6" Color="{DynamicResource BorderColor}" />
+      </Setter>
+    </Style>
+    <Style Selector="TextBox#SearchBox:focus">
+      <Setter Property="MaxWidth" Value="273" />
+    </Style>
+
+    <Style Selector="TextBox#SearchBox /template/ Border#PART_BorderElement">
+      <Setter Property="Transitions">
+        <Transitions>
+          <BrushTransition Property="BorderBrush"
+                           Duration="0:0:0.2"
+                           Easing="{StaticResource FluentEasing}" />
+        </Transitions>
+      </Setter>
+      <Setter Property="CornerRadius" Value="20" />
+    </Style>
+    <Style Selector="TextBox#SearchBox:focus-within /template/ Border#PART_BorderElement">
+      <Setter Property="Background" Value="{DynamicResource RegionColor}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="BorderBrush">
+        <SolidColorBrush Opacity="1" Color="{DynamicResource BorderColor}" />
+      </Setter>
+    </Style>
+    <Style Selector="TextBox#SearchBox:pointerover /template/ Border#PART_BorderElement">
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="BorderBrush">
+        <SolidColorBrush Opacity="0.8" Color="{DynamicResource BorderColor}" />
+      </Setter>
+      <Setter Property="Background" Value="{DynamicResource RegionColor}" />
+    </Style>
+
+    <Style Selector="TextBox#SearchBox PathIcon">
+      <Setter Property="Opacity" Value="0.4" />
+      <Setter Property="Transitions">
+        <Transitions>
+          <DoubleTransition Property="Opacity"
+                            Duration="0:0:0.2"
+                            Easing="{StaticResource FluentEasing}" />
+        </Transitions>
+      </Setter>
+    </Style>
+    <Style Selector="TextBox#SearchBox:pointerover PathIcon">
+      <Setter Property="Opacity" Value="0.6" />
+    </Style>
+    <Style Selector="TextBox#SearchBox:focus-within PathIcon">
+      <Setter Property="Opacity" Value="0.8" />
+    </Style>
+
+    <Style Selector="TextBox#SearchBox PathIcon#LeftIcon">
+      <Setter Property="Margin" Value=" 4 0 10 0" />
+      <Setter Property="Height" Value="13" />
+    </Style>
+    <Style Selector="TextBox#SearchBox:focus-within PathIcon#LeftIcon">
+      <Setter Property="Height" Value="16" />
+      <Setter Property="Margin" Value="10 0 10 0" />
+    </Style>
+
+    <Style Selector="TextBox#SearchBox /template/ DataValidationErrors">
+      <Setter Property="IsVisible" Value="False" />
+    </Style>
+
+    <Style Selector="TextBox#SearchBox:disabled /template/ Border#PART_BorderElement">
+      <Setter Property="Background" Value="{DynamicResource TextControlBackground}" />
+    </Style>
+
+    <Style Selector="TextBox:pointerover">
+      <Setter Property="Cursor" Value="Hand" />
+    </Style>
+
+    <Style
+      Selector="TextBox:pointerover /template/ TextBlock#PART_Watermark, TextBox:pointerover /template/ TextBlock#PART_FloatingWatermark">
+      <Setter Property="Foreground">
+        <SolidColorBrush Opacity="0.7" Color="{DynamicResource AcrylicTrimForeground}" />
+      </Setter>
+    </Style>
+
+    <!-- Focused State -->
+    <Style Selector="TextBox:focus-within">
+      <Setter Property="Foreground" Value="{DynamicResource AcrylicTrimForeground}" />
+      <Setter Property="Cursor" Value="Arrow" />
+    </Style>
+
+    <Style
+      Selector="TextBox:focus-within /template/ TextBlock#PART_Watermark,
+       TextBox:focus-within /template/ TextBlock#PART_FloatingWatermark">
+      <Setter Property="Foreground">
+        <SolidColorBrush Opacity="0.5" Color="{DynamicResource AcrylicTrimForeground}" />
+      </Setter>
+    </Style>
+
+    <Style Selector="ContentControl#DropDownRoot">
+      <Setter Property="MinHeight" Value="{DynamicResource FlyoutThemeMinHeight}" />
+    </Style>
+  </UserControl.Styles>
+
+  <Panel>
+    <TextBox x:Name="SearchBox" Watermark="{x:Static lang:Resources.SearchBoxWatermark}" MaxLength="100"
+             HorizontalAlignment="Left"
+             Text="{Binding SearchText, Mode=TwoWay}" VerticalAlignment="Center">
+
+      <TextBox.Transitions>
+        <Transitions>
+          <DoubleTransition Property="MaxWidth" Duration="0:0:0.2" Easing="CubicEaseOut"/>
+        </Transitions>
+      </TextBox.Transitions>
+
+      <Interaction.Behaviors>
+        <TextBoxAutoSelectTextBehavior />
+        <KeyDownTrigger Key="Enter" EventRoutingStrategy="Tunnel" MarkAsHandled="True">
+          <InvokeCommandAction Command="{Binding ActivateFirstItemCommand}" />
+        </KeyDownTrigger>
+        <OnSignalTriggerBehavior Trigger="{Binding CommandActivated}">
+          <CallMethodAction TargetObject="UserControl" MethodName="Unfocus" />
+        </OnSignalTriggerBehavior>
+      </Interaction.Behaviors>
+
+      <TextBox.InnerLeftContent>
+        <PathIcon Name="LeftIcon" Data="{DynamicResource search_regular}" />
+      </TextBox.InnerLeftContent>
+    </TextBox>
+    <SearchBarPopup x:Name="SearchResultsPopup" PlacementTarget="SearchBox" Placement="BottomEdgeAlignedLeft" VerticalOffset="-13">
+      <SearchBarPopup.IsCustomOpen>
+        <MultiBinding Converter="{x:Static BoolConverters.And}">
+          <MultiBinding Converter="{x:Static BoolConverters.Or}">
+            <Binding Path="#SearchResultsPopup.IsPointerOver" />
+            <Binding Path="#SearchBox.IsFocused" />
+          </MultiBinding>
+          <Binding Source="{x:Static helpers:ApplicationHelper.Instance}" Path="MainWindowActivated^" />
+        </MultiBinding>
+      </SearchBarPopup.IsCustomOpen>
+      <ContentControl x:Name="DropDownRoot" Theme="{StaticResource PopupPanel}">
+        <ScrollViewer>
+          <s:SearchBarDropdown />
+        </ScrollViewer>
+      </ContentControl>
+    </SearchBarPopup>
+  </Panel>
+
+  <Interaction.Behaviors>
+    <KeyDownTrigger EventRoutingStrategy="Tunnel" Key="Escape">
+      <CallMethodAction MethodName="Unfocus" />
+    </KeyDownTrigger>
+  </Interaction.Behaviors>
+</UserControl>
