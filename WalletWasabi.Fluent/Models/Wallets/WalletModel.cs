@@ -115,6 +115,8 @@ public partial class WalletModel : ReactiveObject
 
 	public bool IsWatchOnlyWallet => Wallet.KeyManager.IsWatchOnly;
 
+	public bool IsTaprootSupported => Wallet.KeyManager.TaprootExtPubKey is not null;
+
 	public IEnumerable<(string Label, int Score)> GetMostUsedLabels(Intent intent)
 	{
 		return Wallet.GetLabelsWithRanking(intent);
