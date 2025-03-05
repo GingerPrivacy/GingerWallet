@@ -9,37 +9,42 @@
              xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.HomeScreen.Receive.ViewModels"
              xmlns:wallets="clr-namespace:WalletWasabi.Fluent.Models.Wallets"
              x:Class="WalletWasabi.Fluent.HomeScreen.Receive.Views.ReceiveView">
+  <UserControl.Styles>
+    <Style Selector="ContentArea.taprootSupported">
+      <Setter Property="NextSubCommands">
+        <UICommandCollection>
+          <UICommand Name="SegWit" Command="{Binding NextCommand}" IsDefault="True">
+            <UICommand.Icon>
+              <Border BorderThickness="1"
+                      VerticalAlignment="Center"
+                      BorderBrush="{DynamicResource TextControlForeground}" Opacity="0.6" CornerRadius="4" Padding="2 3">
+                <TextBlock FontSize="9"
+                           Text="{Binding ShortName, Source={x:Static wallets:ScriptType.SegWit}}"
+                           ToolTip.Tip="{Binding Name, Source={x:Static wallets:ScriptType.SegWit}}"/>
+              </Border>
+            </UICommand.Icon>
+          </UICommand>
+          <UICommand Name="Taproot" Command="{Binding NextWithTaprootCommand}">
+            <UICommand.Icon>
+              <Border BorderThickness="1"
+                      VerticalAlignment="Center"
+                      BorderBrush="{DynamicResource TextControlForeground}" Opacity="0.6" CornerRadius="4" Padding="2">
+                <TextBlock FontSize="9"
+                           Text="{Binding ShortName, Source={x:Static wallets:ScriptType.Taproot}}"
+                           ToolTip.Tip="{Binding Name, Source={x:Static wallets:ScriptType.Taproot}}"/>
+              </Border>
+            </UICommand.Icon>
+          </UICommand>
+        </UICommandCollection>
+      </Setter>
+    </Style>
+  </UserControl.Styles>
   <ContentArea Title="{Binding Title}"
                Caption="{x:Static lang:Resources.EnterNamesForAddress}"
                EnableNext="True" NextContent="{x:Static lang:Resources.Generate}"
                EnableCancel="{Binding EnableCancel}"
-               EnableBack="{Binding EnableBack}">
-    <ContentArea.NextSubCommands>
-      <UICommandCollection>
-        <UICommand Name="SegWit" Command="{Binding NextCommand}" IsDefault="True">
-          <UICommand.Icon>
-            <Border BorderThickness="1"
-                    VerticalAlignment="Center"
-                    BorderBrush="{DynamicResource TextControlForeground}" Opacity="0.6" CornerRadius="4" Padding="2 3">
-              <TextBlock FontSize="9"
-                         Text="{Binding ShortName, Source={x:Static wallets:ScriptType.SegWit}}"
-                         ToolTip.Tip="{Binding Name, Source={x:Static wallets:ScriptType.SegWit}}"/>
-            </Border>
-          </UICommand.Icon>
-        </UICommand>
-        <UICommand Name="Taproot" Command="{Binding NextWithTaprootCommand}">
-          <UICommand.Icon>
-            <Border BorderThickness="1"
-                    VerticalAlignment="Center"
-                    BorderBrush="{DynamicResource TextControlForeground}" Opacity="0.6" CornerRadius="4" Padding="2">
-              <TextBlock FontSize="9"
-                         Text="{Binding ShortName, Source={x:Static wallets:ScriptType.Taproot}}"
-                         ToolTip.Tip="{Binding Name, Source={x:Static wallets:ScriptType.Taproot}}"/>
-            </Border>
-          </UICommand.Icon>
-        </UICommand>
-      </UICommandCollection>
-    </ContentArea.NextSubCommands>
+               EnableBack="{Binding EnableBack}"
+               Classes.taprootSupported="{Binding IsTaprootSupported}">
     <DockPanel>
       <Button DockPanel.Dock="Bottom" Focusable="False" Content="{x:Static lang:Resources.AddressesAwaitingPayment}"
               IsVisible="{Binding HasUnusedAddresses^, FallbackValue=False}"

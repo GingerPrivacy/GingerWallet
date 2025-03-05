@@ -55,9 +55,12 @@ public partial class ReceiveViewModel : RoutableViewModel, IDisposable
 	public SuggestionLabelsViewModel SuggestionLabels { get; }
 
 	public ICommand ShowExistingAddressesCommand { get; }
+
 	public ICommand NextWithTaprootCommand { get; }
 
 	public IObservable<bool> HasUnusedAddresses => _wallet.Addresses.Unused.ToObservableChangeSet().Count().Select(i => i > 0);
+
+	public bool IsTaprootSupported => _wallet.IsTaprootSupported;
 
 	protected override void OnNavigatedTo(bool isInHistory, CompositeDisposable disposables)
 	{
