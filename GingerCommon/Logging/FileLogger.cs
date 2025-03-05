@@ -67,7 +67,13 @@ public class FileLogger : ILogger, IDisposable
 	private void OpenFileLockless()
 	{
 		IOHelpers.EnsureFileExists(_fileName);
-		_logFileWriter = new StreamWriter(_fileName, true);
+		FileStreamOptions options = new()
+		{
+			Mode = FileMode.Append,
+			Share = FileShare.ReadWrite,
+			Access = FileAccess.Write,
+		};
+		_logFileWriter = new StreamWriter(_fileName, options);
 		_logFileWriter.AutoFlush = true;
 		_logFileSizeBytes = new FileInfo(_fileName).Length;
 	}
