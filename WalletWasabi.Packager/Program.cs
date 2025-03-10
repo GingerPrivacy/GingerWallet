@@ -29,8 +29,10 @@ public static class Program
 	public const string DaemonExecutableName = Constants.DaemonExecutableName;
 	public const string ExecutableName = Constants.ExecutableName;
 
-	private const string WasabiPrivateKeyFilePath = @"C:\ginger\Ginger.privkey";
-	private const string WasabiPublicKeyFilePath = @"C:\ginger\Ginger.pubkey";
+	private static readonly string GingerFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Documents", "ginger");
+	private static readonly string WasabiPrivateKeyFilePath = Path.Combine(GingerFolderPath, "Ginger.privkey");
+	private static readonly string WasabiPublicKeyFilePath = Path.Combine(GingerFolderPath, "Ginger.pubkey");
+
 
 	/// <remarks>Only 64-bit platforms are supported for now.</remarks>
 	/// <seealso href="https://docs.microsoft.com/en-us/dotnet/articles/core/rid-catalog"/>
@@ -59,6 +61,7 @@ public static class Program
 	/// </summary>
 	private static async Task Main(string[] args)
 	{
+
 		var argsProcessor = new ArgsProcessor(args);
 
 		// For now this is enough. If you run it on macOS you want to sign.
@@ -140,12 +143,17 @@ public static class Program
 
 				if (!File.Exists(msiPath))
 				{
-					throw new Exception(".msi does not exist. Expected path: Ginger.msi.");
+					throw new Exception($".msi does not exist. Expected path: {msiPath}.");
 				}
 
 				File.Move(msiPath, newMsiPath);
-				// You might need to: set PATH="C:\Program Files (x86)\Microsoft SDKs\ClickOnce\SignTool".
-				StartProcessAndWaitForExit("cmd", BinDistDirectory, $"signtool sign /sha1 \"1ea07c6629c5b0b23a4a108e542d77fea9ad3840\" /tr http://time.certum.pl /td sha256 /fd sha256 /v \"{newMsiPath}\" && exit");
+
+				StartProcessAndWaitForExit(
+					"cmd.exe",
+					@"C:\Program Files (x86)\Microsoft SDKs\ClickOnce\SignTool",  // Set the working directory
+					null,
+					$"/c \"signtool.exe sign /sha1 \"1ea07c6629c5b0b23a4a108e542d77fea9ad3840\" /tr http://time.certum.pl /td sha256 /fd sha256 /v \"{newMsiPath}\" && exit\""
+				);
 
 				await IoHelpers.TryDeleteDirectoryAsync(publishedFolder).ConfigureAwait(false);
 				Console.WriteLine($"Deleted {publishedFolder}");
@@ -620,7 +628,7 @@ public static class Program
 
 		process.WaitForExit();
 
-		if (process.ExitCode is not 0)
+		if (process.ExitCode != 0)
 		{
 			Console.WriteLine($"Process failed:");
 			Console.WriteLine($"* Command: '{command} {arguments}'");
@@ -638,6 +646,7 @@ public static class Program
 
 		return output;
 	}
+
 
 	private static bool TryStartProcessAndWaitForExit(string command, string workingDirectory, [NotNullWhen(true)] out string? result, string? writeToStandardInput = null, string? arguments = null, bool redirectStandardOutput = false)
 	{

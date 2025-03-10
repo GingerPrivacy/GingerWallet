@@ -21,7 +21,7 @@ $host.UI.RawUI.BackgroundColor = "Black"
 Read-Host -Prompt 'Remove and plug the pendrive to macOS and run the packager to notarize the files.'
 
 # Arguments for Visual Studio
-$arguments = "$installerPath /Build 'Release|x64'"
+$arguments = @("$installerPath", "/Build", "Release|x64")
 
 # Start Visual Studio with the specified arguments
 Start-Process -FilePath $visualStudioPath -ArgumentList $arguments # If -Wait -NoNewWindow added devenv will hang forever at the end of the build.
