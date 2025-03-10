@@ -6,15 +6,25 @@ $host.UI.RawUI.BackgroundColor = "Black"
 Read-Host -Prompt 'Releasing Wasabi Wallet - Insert a pendrive to store macOS notarization candidate files [Press ENTER]'
 Read-Host -Prompt 'Start Kleopatra!'
 
-cd C:\ginger/GingerWallet/WalletWasabi.Packager
+# Making the paths user-independent
+$basePath = Join-Path $env:USERPROFILE "Documents\GitHub\GingerWallet"
+$walletWasabiPath = Join-Path $basePath "WalletWasabi.Packager"
+$installerPath = Join-Path $basePath "WalletWasabi.WindowsInstaller\WalletWasabi.WindowsInstaller.wixproj"
+$visualStudioPath = "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\devenv.com"
+
+# Change directory to the wallet wasabi packager folder
+cd $walletWasabiPath
 dotnet run -- publish
 
 $host.UI.RawUI.ForegroundColor = "Green"
 $host.UI.RawUI.BackgroundColor = "Black"
 Read-Host -Prompt 'Remove and plug the pendrive to macOS and run the packager to notarize the files.'
 
-$arguments = 'C:\ginger/GingerWallet\WalletWasabi.WindowsInstaller\WalletWasabi.WindowsInstaller.wixproj /Build "Release|x64"'
-Start-Process -FilePath 'C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\devenv.com' -ArgumentList $arguments # If -Wait -NoNewWindow added devenv will hang forever at the end of the build.
+# Arguments for Visual Studio
+$arguments = @("$installerPath", "/Build", "Release|x64")
+
+# Start Visual Studio with the specified arguments
+Start-Process -FilePath $visualStudioPath -ArgumentList $arguments # If -Wait -NoNewWindow added devenv will hang forever at the end of the build.
 
 $host.UI.RawUI.ForegroundColor = "Green"
 $host.UI.RawUI.BackgroundColor = "Black"
