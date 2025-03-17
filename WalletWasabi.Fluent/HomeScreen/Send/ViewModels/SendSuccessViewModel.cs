@@ -11,19 +11,14 @@ public partial class SendSuccessViewModel : RoutableViewModel
 {
 	private readonly SmartTransaction _finalTransaction;
 
-	private SendSuccessViewModel(SmartTransaction finalTransaction, string? title = null, string? caption = null)
+	private SendSuccessViewModel(SmartTransaction finalTransaction)
 	{
 		_finalTransaction = finalTransaction;
-		Title = title ?? "Payment successful";
-
-		Caption = caption ?? "Your transaction has been successfully sent.";
 
 		NextCommand = ReactiveCommand.CreateFromTask(OnNextAsync);
 
 		SetupCancel(enableCancel: false, enableCancelOnEscape: true, enableCancelOnPressed: true);
 	}
-
-	public string? Caption { get; }
 
 	private async Task OnNextAsync()
 	{

@@ -1,5 +1,6 @@
 using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
 using WalletWasabi.Helpers;
+using WalletWasabi.Lang;
 using WalletWasabi.WebClients.Wasabi;
 
 namespace WalletWasabi.Fluent.HelpAndSupport.ViewModels;
@@ -9,7 +10,7 @@ public partial class AboutAdvancedInfoViewModel : DialogViewModelBase<System.Rea
 {
 	public AboutAdvancedInfoViewModel()
 	{
-		Title = "About";
+		Title = Resources.AdvancedInformation;
 
 		SetupCancel(enableCancel: false, enableCancelOnEscape: true, enableCancelOnPressed: true);
 

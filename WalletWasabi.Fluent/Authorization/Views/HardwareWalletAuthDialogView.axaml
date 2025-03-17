@@ -9,14 +9,14 @@
              xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.Authorization.ViewModels"
              x:Class="WalletWasabi.Fluent.Authorization.Views.HardwareWalletAuthDialogView">
   <ContentArea Title="{Binding Title}"
-                 Caption="{x:Static lang:Resources.HardwareWalletAuthDialogViewModelCaption}"
-                 MaxWidth="500"
-                 CancelContent="{x:Static lang:Resources.Cancel}"
-                 EnableCancel="{Binding EnableCancel}"
-                 EnableBack="{Binding EnableBack}"
-                 EnableNext="True" NextContent="{x:Static lang:Resources.Continue}"
-                 IsBusy="{Binding IsBusy}"
-                 ScrollViewer.VerticalScrollBarVisibility="Disabled">
+               Caption="{x:Static lang:Resources.HardwareWalletAuthDialogViewModelCaption}"
+               MaxWidth="500"
+               CancelContent="{x:Static lang:Resources.Cancel}"
+               EnableCancel="{Binding EnableCancel}"
+               EnableBack="{Binding EnableBack}"
+               EnableNext="True" NextContent="{x:Static lang:Resources.Continue}"
+               IsBusy="{Binding IsBusy}"
+               ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <StackPanel>
       <Viewbox MaxHeight="100">
         <WalletIconControl WalletType="{Binding WalletType}" />

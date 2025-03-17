@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using ReactiveUI;
 using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.Authorization.ViewModels;
 
@@ -9,7 +10,7 @@ public abstract partial class AuthorizationDialogBase : DialogViewModelBase<bool
 	[AutoNotify] private bool _hasAuthorizationFailed;
 
 	[AutoNotify(SetterModifier = AccessModifier.Protected)]
-	private string _authorizationFailedMessage = "The Authorization has failed, please try again.";
+	private string _authorizationFailedMessage = Resources.AuthorizationFailed;
 
 	protected AuthorizationDialogBase()
 	{

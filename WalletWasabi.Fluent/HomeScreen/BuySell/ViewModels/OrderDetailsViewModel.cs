@@ -29,7 +29,7 @@ public partial class OrderDetailsViewModel : RoutableViewModel
 		NextCommand = ReactiveCommand.Create(OnNext);
 
 		SetupCancel(enableCancel: false, enableCancelOnEscape: true, enableCancelOnPressed: true);
-		EnableBack = false;
+		EnableBack = true;
 
 		UpdateValues(model);
 	}

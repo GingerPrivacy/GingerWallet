@@ -1,4 +1,5 @@
 using WalletWasabi.Fluent.Models;
+using WalletWasabi.Lang;
 
 // Namespace does not match folder structure (see https://github.com/zkSNACKs/WalletWasabi/pull/10576#issuecomment-1552750543)
 #pragma warning disable IDE0130
@@ -20,7 +21,7 @@ public sealed record NavigationMetaData(
 	NavigationTarget NavigationTarget = default
 )
 {
-	public string[]? GetKeywords() => Keywords?.Replace(" ","").Split(',');
+	public string[]? GetKeywords() => Keywords?.ToKeywords();
 
 	public string GetCategoryString()
 	{

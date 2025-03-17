@@ -135,7 +135,7 @@
             <DockPanel>
               <PathIcon />
               <TextBlock Text="{x:Static lang:Resources.TransactionInterlinksLabels}" Margin="0 0 5 0"
-                         ToolTip.Tip="{x:Static lang:Resources.EntitiesKnowTransaction}" />
+                         ToolTip.Tip="{x:Static lang:Resources.EntitiesKnowThisIsYourTransaction}" />
               <LabelsItemsPresenter ItemsSource="{Binding Labels}" />
             </DockPanel>
           </Border>
@@ -255,7 +255,7 @@
                   <TextBlock Text="{x:Static lang:Resources.SendSuggestion}" />
                   <TextBlock Text="{Binding DifferenceText}"
                              Foreground="{DynamicResource SystemAccentColor}" />
-                  <TextBlock Text="{Binding DifferenceAmountText, StringFormat='by {0}'}" />
+                  <TextBlock Text="{Binding DifferenceAmountText, StringFormat={x:Static lang:Resources.ByAmount}}" />
                 </StackPanel>
               </StackPanel>
             </DockPanel>
@@ -273,7 +273,7 @@
                   <TextBlock Text="{x:Static lang:Resources.SendSuggestion}" />
                   <TextBlock Text="{Binding DifferenceText}"
                              Foreground="{DynamicResource SystemAccentColor}" />
-                  <TextBlock Text="{Binding DifferenceAmountText, StringFormat='by {0}'}" />
+                  <TextBlock Text="{Binding DifferenceAmountText, StringFormat={x:Static lang:Resources.ByAmount}}" />
                 </StackPanel>
               </StackPanel>
             </DockPanel>
@@ -303,7 +303,7 @@
                   <TextBlock Text="{x:Static lang:Resources.SendSuggestion}" />
                   <TextBlock Text="{Binding DifferenceText}"
                              Foreground="{DynamicResource SystemAccentColor}" />
-                  <TextBlock Text="{Binding DifferenceAmountText, StringFormat='by {0}'}" IsVisible="{Binding !IsSameAmount}" />
+                  <TextBlock Text="{Binding DifferenceAmountText, StringFormat={x:Static lang:Resources.ByAmount}}" IsVisible="{Binding !IsSameAmount}" />
                 </StackPanel>
               </StackPanel>
             </DockPanel>

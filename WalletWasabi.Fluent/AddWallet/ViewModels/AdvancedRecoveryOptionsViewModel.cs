@@ -1,8 +1,10 @@
+using System.Globalization;
 using System.Reactive.Linq;
 using ReactiveUI;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
 using WalletWasabi.Fluent.Validation;
+using WalletWasabi.Lang;
 using WalletWasabi.Models;
 
 namespace WalletWasabi.Fluent.AddWallet.ViewModels;
@@ -35,7 +37,7 @@ public partial class AdvancedRecoveryOptionsViewModel : DialogViewModelBase<int?
 		{
 			errors.Add(
 				ErrorSeverity.Error,
-				$"Must be a number between {KeyManager.AbsoluteMinGapLimit} and {KeyManager.MaxGapLimit}.");
+				string.Format(CultureInfo.InvariantCulture, Resources.MustBeNumberBetween, KeyManager.AbsoluteMinGapLimit, KeyManager.MaxGapLimit));
 		}
 	}
 }

@@ -26,7 +26,10 @@ public class CoinbaseExchangeRateProvider : IExchangeRateProvider
 
 		var exchangeRates = new List<ExchangeRate>
 		{
-			new ExchangeRate { Rate = wrapper.Data.Rates.USD, Ticker = "USD" }
+			new ExchangeRate { Rate = wrapper.Data.Rates.USD, Ticker = "USD" },
+			new ExchangeRate { Rate = wrapper.Data.Rates.EUR, Ticker = "EUR" },
+			new ExchangeRate { Rate = wrapper.Data.Rates.CNY, Ticker = "CNY" },
+			new ExchangeRate { Rate = wrapper.Data.Rates.HUF, Ticker = "HUF" },
 		};
 
 		return exchangeRates;
@@ -43,6 +46,9 @@ public class CoinbaseExchangeRateProvider : IExchangeRateProvider
 			public class ExchangeRates
 			{
 				public decimal USD { get; init; }
+				public decimal EUR { get; init; }
+				public decimal CNY { get; init; }
+				public decimal HUF { get; init; }
 			}
 		}
 	}

@@ -47,13 +47,16 @@ public partial class ApplicationSettings : ReactiveObject
 	[AutoNotify] private string _coordinatorUri;
 	[AutoNotify] private string _dustThreshold;
 
-	// General
+	// Appearance
 	[AutoNotify] private bool _darkModeEnabled;
+	[AutoNotify] private DisplayLanguage _selectedDisplayLanguage;
+	[AutoNotify] private string _selectedExchangeCurrency;
+	[AutoNotify] private FeeDisplayUnit _selectedFeeDisplayUnit;
 
+	// General
 	[AutoNotify] private bool _autoCopy;
 	[AutoNotify] private bool _autoPaste;
 	[AutoNotify] private bool _customChangeAddress;
-	[AutoNotify] private FeeDisplayUnit _selectedFeeDisplayUnit;
 	[AutoNotify] private bool _runOnSystemStartup;
 	[AutoNotify] private bool _hideOnClose;
 	[AutoNotify] private TorMode _useTor;
@@ -61,7 +64,6 @@ public partial class ApplicationSettings : ReactiveObject
 	[AutoNotify] private bool _downloadNewVersion;
 	[AutoNotify] private BrowserTypeDropdownListEnum _selectedBrowser;
 	[AutoNotify] private string _browserPath;
-	[AutoNotify] private DisplayLanguage _selectedDisplayLanguage;
 
 	// Privacy Mode
 	[AutoNotify] private bool _privacyMode;
@@ -74,7 +76,6 @@ public partial class ApplicationSettings : ReactiveObject
 
 	//Buy Sell
 	[AutoNotify] private BuySellConfiguration _buySellConfiguration;
-
 
 	public ApplicationSettings(string persistentConfigFilePath, PersistentConfig persistentConfig, Config config, UiConfig uiConfig, ITwoFactorAuthentication twoFactorAuthentication)
 	{
@@ -97,14 +98,18 @@ public partial class ApplicationSettings : ReactiveObject
 		_coordinatorUri = _startupConfig.GetCoordinatorUri();
 		_dustThreshold = _startupConfig.DustThreshold.ToString();
 
-		// General
+		// Appearance
 		_darkModeEnabled = _uiConfig.DarkModeEnabled;
-		_autoCopy = _uiConfig.Autocopy;
-		_autoPaste = _uiConfig.AutoPaste;
-		_customChangeAddress = _uiConfig.IsCustomChangeAddress;
+		_selectedDisplayLanguage = (DisplayLanguage)_startupConfig.DisplayLanguage;
+		_selectedExchangeCurrency = _startupConfig.ExchangeCurrency;
 		_selectedFeeDisplayUnit = Enum.IsDefined(typeof(FeeDisplayUnit), _uiConfig.FeeDisplayUnit)
 			? (FeeDisplayUnit)_uiConfig.FeeDisplayUnit
 			: FeeDisplayUnit.Satoshis;
+
+		// General
+		_autoCopy = _uiConfig.Autocopy;
+		_autoPaste = _uiConfig.AutoPaste;
+		_customChangeAddress = _uiConfig.IsCustomChangeAddress;
 		_browserPath = _uiConfig.SelectedBrowser;
 		_selectedBrowser = GetSelectedBrowser();
 		_runOnSystemStartup = _uiConfig.RunOnSystemStartup;
@@ -112,7 +117,6 @@ public partial class ApplicationSettings : ReactiveObject
 		_useTor = Config.ObjectToTorMode(_config.UseTor);
 		_terminateTorOnExit = _startupConfig.TerminateTorOnExit;
 		_downloadNewVersion = _startupConfig.DownloadNewVersion;
-		_selectedDisplayLanguage = (DisplayLanguage)_startupConfig.DisplayLanguage;
 
 		// Privacy Mode
 		_privacyMode = _uiConfig.PrivacyMode;
@@ -123,26 +127,33 @@ public partial class ApplicationSettings : ReactiveObject
 		_oobe = _uiConfig.Oobe;
 		_windowState = (WindowState)Enum.Parse(typeof(WindowState), _uiConfig.WindowState);
 
-
 		// Save on change
 		this.WhenAnyValue(
-			x => x.EnableGpu,
-			x => x.Network,
-			x => x.StartLocalBitcoinCoreOnStartup,
-			x => x.LocalBitcoinCoreDataDir,
-			x => x.StopLocalBitcoinCoreOnShutdown,
-			x => x.BitcoinP2PEndPoint,
-			x => x.CoordinatorUri,
-			x => x.DustThreshold,
-			x => x.UseTor,
-			x => x.TerminateTorOnExit,
-			x => x.DownloadNewVersion,
-			(_, _, _, _, _, _, _, _, _, _, _) => Unit.Default)
+				x => x.EnableGpu,
+				x => x.Network,
+				x => x.StartLocalBitcoinCoreOnStartup,
+				x => x.LocalBitcoinCoreDataDir,
+				x => x.StopLocalBitcoinCoreOnShutdown,
+				x => x.BitcoinP2PEndPoint,
+				x => x.CoordinatorUri,
+				x => x.DustThreshold,
+				x => x.UseTor,
+				x => x.TerminateTorOnExit,
+				x => x.DownloadNewVersion,
+				(_, _, _, _, _, _, _, _, _, _, _) => Unit.Default)
 			.Skip(1)
 			.ObserveOn(RxApp.MainThreadScheduler)
 			.Throttle(TimeSpan.FromMilliseconds(ThrottleTime))
 			.Do(_ => Save())
 			.Subscribe();
+
+		this.WhenAnyValue(
+				x => x.SelectedDisplayLanguage,
+				x => x.SelectedExchangeCurrency)
+			.Skip(1)
+			.ObserveOn(RxApp.MainThreadScheduler)
+			.Throttle(TimeSpan.FromMilliseconds(ThrottleTime))
+			.Subscribe(_ => Save());
 
 		// Save UiConfig on change
 		this.WhenAnyValue(
@@ -163,10 +174,6 @@ public partial class ApplicationSettings : ReactiveObject
 
 		// Saving is not necessary; this call is only for evaluating if a restart is needed.
 		this.WhenAnyValue(x => x._twoFactorAuthentication.TwoFactorEnabled)
-			.Subscribe(_ => Save());
-
-		// Saving is not necessary; this call is only for evaluating if a restart is needed.
-		this.WhenAnyValue(x => x.SelectedDisplayLanguage)
 			.Subscribe(_ => Save());
 
 		// Save UiConfig on change without throttling
@@ -348,15 +355,27 @@ public partial class ApplicationSettings : ReactiveObject
 
 			BitcoinP2PEndPoint = result.GetBitcoinP2pEndPoint().ToString(defaultPort: -1);
 			CoordinatorUri = result.GetCoordinatorUri();
+			UseTor = Network != Network.RegTest ? Config.ObjectToTorMode(config.UseTor) : TorMode.Disabled;
 		}
+
+		// At RegTest, we don't override the original settings
+		if (Network != Network.RegTest)
+		{
+			result = result with { UseTor = UseTor.ToString() };
+		}
+
+		// Appearance
+		result = result with
+		{
+			DisplayLanguage = (int)SelectedDisplayLanguage,
+			ExchangeCurrency = SelectedExchangeCurrency
+		};
 
 		// General
 		result = result with
 		{
-			UseTor = UseTor.ToString(),
 			TerminateTorOnExit = TerminateTorOnExit,
 			DownloadNewVersion = DownloadNewVersion,
-			DisplayLanguage = (int)SelectedDisplayLanguage,
 		};
 
 		return result;

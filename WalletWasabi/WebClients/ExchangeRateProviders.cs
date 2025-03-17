@@ -19,20 +19,37 @@ public class ExchangeRateProvider : IExchangeRateProvider
 	private readonly IExchangeRateProvider[] _exchangeRateProviders =
 	{
 		new BlockchainInfoExchangeRateProvider(),
-		new BitstampExchangeRateProvider(),
 		new CoinGeckoExchangeRateProvider(),
 		new CoinbaseExchangeRateProvider(),
+		new CoingateExchangeRateProvider(),
+		new BitstampExchangeRateProvider(),
 		new GeminiExchangeRateProvider(),
-		new CoingateExchangeRateProvider()
 	};
 
 	public async Task<IEnumerable<ExchangeRate>> GetExchangeRateAsync(CancellationToken cancellationToken)
 	{
+		IEnumerable<ExchangeRate> bestSoFar = [];
+
 		foreach (var provider in _exchangeRateProviders)
 		{
 			try
 			{
-				return await provider.GetExchangeRateAsync(cancellationToken).ConfigureAwait(false);
+				var result = await provider.GetExchangeRateAsync(cancellationToken).ConfigureAwait(false);
+
+				// Backward compatibility!
+				// Always the USD one has to be the first in the list.
+				IOrderedEnumerable<ExchangeRate> ordered = result.OrderBy(x => x.Ticker != "USD");
+
+				// We are interested about 4 currencies.
+				if (ordered.Count() < 4)
+				{
+					bestSoFar = ordered;
+
+					// Try the next one;
+					continue;
+				}
+
+				return ordered.ToArray();
 			}
 			catch (Exception ex)
 			{
@@ -40,6 +57,6 @@ public class ExchangeRateProvider : IExchangeRateProvider
 				Logger.LogTrace(ex);
 			}
 		}
-		return Enumerable.Empty<ExchangeRate>();
+		return bestSoFar.ToArray();
 	}
 }

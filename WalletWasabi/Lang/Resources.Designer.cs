@@ -114,6 +114,24 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accepting an offer will redirect you to the provider&apos;s page to complete the process..
+        /// </summary>
+        public static string AcceptingOfferRedirect {
+            get {
+                return ResourceManager.GetString("AcceptingOfferRedirect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must accept the Terms and Conditions!.
+        /// </summary>
+        public static string AcceptTermsAndConditions {
+            get {
+                return ResourceManager.GetString("AcceptTermsAndConditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account Key Path (SegWit).
         /// </summary>
         public static string AccountKeyPathSegWit {
@@ -204,7 +222,16 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minimum _Gap Limit:.
+        ///   Looks up a localized string similar to Version Information.
+        /// </summary>
+        public static string AdvancedInformation {
+            get {
+                return ResourceManager.GetString("AdvancedInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum Gap Limit:.
         /// </summary>
         public static string AdvancedRecoveryOptionsViewModelMinimumGapLimit {
             get {
@@ -249,11 +276,29 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to After deducting the {0} fee, you will receive {1} — no further charges apply..
+        /// </summary>
+        public static string AfterDeductingFee {
+            get {
+                return ResourceManager.GetString("AfterDeductingFee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All.
         /// </summary>
         public static string All {
             get {
                 return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All coins are confirmed..
+        /// </summary>
+        public static string AllCoinsConfirmed {
+            get {
+                return ResourceManager.GetString("AllCoinsConfirmed", resourceCulture);
             }
         }
         
@@ -393,6 +438,51 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Appearance.
+        /// </summary>
+        public static string Appearance {
+            get {
+                return ResourceManager.GetString("Appearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage appearance settings.
+        /// </summary>
+        public static string AppearanceSettingsTabViewModelCaption {
+            get {
+                return ResourceManager.GetString("AppearanceSettingsTabViewModelCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings, Appearance, Bitcoin, Dark, Mode, Fee, Display, Format, BTC, sats, Exchange, Currency.
+        /// </summary>
+        public static string AppearanceSettingsTabViewModelKeywords {
+            get {
+                return ResourceManager.GetString("AppearanceSettingsTabViewModelKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Appearance.
+        /// </summary>
+        public static string AppearanceSettingsTabViewModelTitle {
+            get {
+                return ResourceManager.GetString("AppearanceSettingsTabViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Black, White, Theme, Dark, Light.
+        /// </summary>
+        public static string AppearanceThemeKeywords {
+            get {
+                return ResourceManager.GetString("AppearanceThemeKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to After pressing Continue, the application will restart to apply changes..
         /// </summary>
         public static string ApplicationRestartApplyChanges {
@@ -434,6 +524,33 @@ namespace WalletWasabi.Lang {
         public static string AuthCodePrompt {
             get {
                 return ResourceManager.GetString("AuthCodePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Authorization has failed, please try again..
+        /// </summary>
+        public static string AuthorizationFailed {
+            get {
+                return ResourceManager.GetString("AuthorizationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authorization failed.{0}Please, check your device and try again..
+        /// </summary>
+        public static string AuthorizationFailedWithDeviceCheck {
+            get {
+                return ResourceManager.GetString("AuthorizationFailedWithDeviceCheck", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authorize with Hardware Wallet.
+        /// </summary>
+        public static string AuthorizeWithHardwareWallet {
+            get {
+                return ResourceManager.GetString("AuthorizeWithHardwareWallet", resourceCulture);
             }
         }
         
@@ -600,11 +717,20 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Broadcaster.
+        ///   Looks up a localized string similar to Broadcast.
         /// </summary>
         public static string BroadcasterViewModelTitle {
             get {
                 return ResourceManager.GetString("BroadcasterViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Broadcast Transaction.
+        /// </summary>
+        public static string BroadcastTransaction {
+            get {
+                return ResourceManager.GetString("BroadcastTransaction", resourceCulture);
             }
         }
         
@@ -623,6 +749,15 @@ namespace WalletWasabi.Lang {
         public static string BrowserError {
             get {
                 return ResourceManager.GetString("BrowserError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bug Report.
+        /// </summary>
+        public static string BugReport {
+            get {
+                return ResourceManager.GetString("BugReport", resourceCulture);
             }
         }
         
@@ -681,6 +816,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to by {0}.
+        /// </summary>
+        public static string ByAmount {
+            get {
+                return ResourceManager.GetString("ByAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Camera.
         /// </summary>
         public static string Camera {
@@ -704,6 +848,24 @@ namespace WalletWasabi.Lang {
         public static string Cancellation {
             get {
                 return ResourceManager.GetString("Cancellation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancellation Failed.
+        /// </summary>
+        public static string CancellationFailed {
+            get {
+                return ResourceManager.GetString("CancellationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancelling this transaction will cost you.
+        /// </summary>
+        public static string CancellingThisTransactionWillCostYou {
+            get {
+                return ResourceManager.GetString("CancellingThisTransactionWillCostYou", resourceCulture);
             }
         }
         
@@ -780,6 +942,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check your device and finish the initialization..
+        /// </summary>
+        public static string CheckDeviceAndFinishInitialization {
+            get {
+                return ResourceManager.GetString("CheckDeviceAndFinishInitialization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You can choose to hide, modify, or display the addresses listed below.
         /// </summary>
         public static string ChooseHideModifyDisplayAddresses {
@@ -803,6 +974,24 @@ namespace WalletWasabi.Lang {
         public static string ChooseTransactionVisibility {
             get {
                 return ResourceManager.GetString("ChooseTransactionVisibility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click this icon for details.
+        /// </summary>
+        public static string ClickIconForDetails {
+            get {
+                return ResourceManager.GetString("ClickIconForDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The clipboard is empty!.
+        /// </summary>
+        public static string ClipboardEmpty {
+            get {
+                return ResourceManager.GetString("ClipboardEmpty", resourceCulture);
             }
         }
         
@@ -996,6 +1185,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Some coins can&apos;t participate in Coinjoin..
+        /// </summary>
+        public static string CoinsCantParticipateCoinJoin {
+            get {
+                return ResourceManager.GetString("CoinsCantParticipateCoinJoin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Coins received from others to already used addresses won&apos;t appear below this amount. To prevent potential dust attacks..
         /// </summary>
         public static string CoinsReceivedFromOthers {
@@ -1010,6 +1208,51 @@ namespace WalletWasabi.Lang {
         public static string CoinsRejectedMessage {
             get {
                 return ResourceManager.GetString("CoinsRejectedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} coins are waiting for confirmation..
+        /// </summary>
+        public static string CoinsWaitingForConfirmation {
+            get {
+                return ResourceManager.GetString("CoinsWaitingForConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compatibility passphrase was used! Please consider generating a new wallet to ensure recoverability!.
+        /// </summary>
+        public static string CompatibilityPassphraseUsed {
+            get {
+                return ResourceManager.GetString("CompatibilityPassphraseUsed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compatible Bitcoin Core and Bitcoin Knots Version.
+        /// </summary>
+        public static string CompatibleBitcoinCoreKnotsVersion {
+            get {
+                return ResourceManager.GetString("CompatibleBitcoinCoreKnotsVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compatible Coordinator Versions.
+        /// </summary>
+        public static string CompatibleCoordinatorVersions {
+            get {
+                return ResourceManager.GetString("CompatibleCoordinatorVersions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compatible HWI Version.
+        /// </summary>
+        public static string CompatibleHardwareWalletInterfaceVersion {
+            get {
+                return ResourceManager.GetString("CompatibleHardwareWalletInterfaceVersion", resourceCulture);
             }
         }
         
@@ -1046,15 +1289,6 @@ namespace WalletWasabi.Lang {
         public static string ConfirmationCount {
             get {
                 return ResourceManager.GetString("ConfirmationCount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This is just an estimation based on some data for transactions and blocks. The confirmation time might change..
-        /// </summary>
-        public static string ConfirmationEstimationDisclaimer {
-            get {
-                return ResourceManager.GetString("ConfirmationEstimationDisclaimer", resourceCulture);
             }
         }
         
@@ -1122,9 +1356,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Store your passphrase safely, it cannot be reset if lost.
-        ///It&apos;s needed to open and to recover your wallet.
-        ///It&apos;s a recovery words extension for more security..
+        ///   Looks up a localized string similar to Store your passphrase securely; it cannot be recovered if lost. It’s needed to open and restore your wallet and provides extra protection by extending the recovery words..
         /// </summary>
         public static string ConfirmRecoveryWordsViewModelStoreSafely {
             get {
@@ -1259,6 +1491,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy link.
+        /// </summary>
+        public static string CopyLink {
+            get {
+                return ResourceManager.GetString("CopyLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy Transaction ID.
         /// </summary>
         public static string CopyTransactionId {
@@ -1358,6 +1599,24 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Critical update required.
+        /// </summary>
+        public static string CriticalUpdateRequired {
+            get {
+                return ResourceManager.GetString("CriticalUpdateRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Coordinator Version.
+        /// </summary>
+        public static string CurrentCoordinatorVersion {
+            get {
+                return ResourceManager.GetString("CurrentCoordinatorVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Custom browser path.
         /// </summary>
         public static string CustomBrowserPath {
@@ -1372,6 +1631,24 @@ namespace WalletWasabi.Lang {
         public static string CustomEnum {
             get {
                 return ResourceManager.GetString("CustomEnum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom Fee Rate.
+        /// </summary>
+        public static string CustomFeeRate {
+            get {
+                return ResourceManager.GetString("CustomFeeRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cut.
+        /// </summary>
+        public static string Cut {
+            get {
+                return ResourceManager.GetString("Cut", resourceCulture);
             }
         }
         
@@ -1421,11 +1698,29 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default.
+        /// </summary>
+        public static string Default {
+            get {
+                return ResourceManager.GetString("Default", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Destination addresses.
         /// </summary>
         public static string DestinationAddresses {
             get {
                 return ResourceManager.GetString("DestinationAddresses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} was detected. Is this correct?.
+        /// </summary>
+        public static string DetectedConfirmation {
+            get {
+                return ResourceManager.GetString("DetectedConfirmation", resourceCulture);
             }
         }
         
@@ -1583,11 +1878,20 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter the correct passphrase.
+        ///   Looks up a localized string similar to Enter Passphrase.
         /// </summary>
         public static string EnterPassphrase {
             get {
                 return ResourceManager.GetString("EnterPassphrase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your passphrase.
+        /// </summary>
+        public static string EnterPassphraseAuth {
+            get {
+                return ResourceManager.GetString("EnterPassphraseAuth", resourceCulture);
             }
         }
         
@@ -1610,11 +1914,20 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Those entities know this is your transaction. Coinjoin more or use the label management tool to carefully select who would know that this transaction is yours..
+        ///   Looks up a localized string similar to Error.
         /// </summary>
-        public static string EntitiesKnowTransaction {
+        public static string Error {
             get {
-                return ResourceManager.GetString("EntitiesKnowTransaction", resourceCulture);
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error occurred during adding your wallet..
+        /// </summary>
+        public static string ErrorAddingWallet {
+            get {
+                return ResourceManager.GetString("ErrorAddingWallet", resourceCulture);
             }
         }
         
@@ -1642,6 +1955,15 @@ namespace WalletWasabi.Lang {
         public static string ExampleBitcoinAddressOrPayjoinURI {
             get {
                 return ResourceManager.GetString("ExampleBitcoinAddressOrPayjoinURI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exchange currency.
+        /// </summary>
+        public static string ExchangeCurrency {
+            get {
+                return ResourceManager.GetString("ExchangeCurrency", resourceCulture);
             }
         }
         
@@ -1718,6 +2040,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export transaction.
+        /// </summary>
+        public static string ExportTransaction {
+            get {
+                return ResourceManager.GetString("ExportTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Extended Account Private Key xpriv.
         /// </summary>
         public static string ExtendedAccountPrivateKeyXpriv {
@@ -1777,6 +2108,24 @@ namespace WalletWasabi.Lang {
         public static string Failed {
             get {
                 return ResourceManager.GetString("Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to get legal documents..
+        /// </summary>
+        public static string FailedToGetLegalDocuments {
+            get {
+                return ResourceManager.GetString("FailedToGetLegalDocuments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FAQ.
+        /// </summary>
+        public static string FAQ {
+            get {
+                return ResourceManager.GetString("FAQ", resourceCulture);
             }
         }
         
@@ -1871,6 +2220,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Found in \&quot;{0}\&quot;.
+        /// </summary>
+        public static string FoundIn {
+            get {
+                return ResourceManager.GetString("FoundIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Friends Don&apos;t Pay.
         /// </summary>
         public static string FriendsDontPay {
@@ -1961,7 +2319,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Settings, General, Bitcoin, Dark, Mode, Run, Ginger, Computer, System, Start, Background, Close, Auto, Copy, Paste, Addresses, Custom, Change, Address, Fee, Display, Format, BTC, sats, browser.
+        ///   Looks up a localized string similar to Settings, General, Bitcoin, Run, Ginger, Computer, System, Start, Background, Close, Auto, Copy, Paste, Addresses, Custom, Change, Address, browser.
         /// </summary>
         public static string GeneralSettingsTabViewModelKeywords {
             get {
@@ -1993,6 +2351,42 @@ namespace WalletWasabi.Lang {
         public static string GetStarted {
             get {
                 return ResourceManager.GetString("GetStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ginger is unable to close right now. Coinjoin in progress..
+        /// </summary>
+        public static string GingerUnableToCloseCoinJoinInProgress {
+            get {
+                return ResourceManager.GetString("GingerUnableToCloseCoinJoinInProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ginger Wallet was unable to cancel your transaction..
+        /// </summary>
+        public static string GingerWalletUnableToCancelTransaction {
+            get {
+                return ResourceManager.GetString("GingerWalletUnableToCancelTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ginger Wallet was unable to open the file..
+        /// </summary>
+        public static string GingerWalletUnableToOpenFile {
+            get {
+                return ResourceManager.GetString("GingerWalletUnableToOpenFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ginger Wallet was unable to speed up your transaction..
+        /// </summary>
+        public static string GingerWalletUnableToSpeedUpTransaction {
+            get {
+                return ResourceManager.GetString("GingerWalletUnableToSpeedUpTransaction", resourceCulture);
             }
         }
         
@@ -2033,6 +2427,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hide.
+        /// </summary>
+        public static string Hide {
+            get {
+                return ResourceManager.GetString("Hide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hide address.
         /// </summary>
         public static string HideAddress {
@@ -2069,6 +2472,42 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hover over the ring segments to see coin details.
+        /// </summary>
+        public static string HoverOverRingSegments {
+            get {
+                return ResourceManager.GetString("HoverOverRingSegments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import or paste the transaction hex and broadcast it to the network..
+        /// </summary>
+        public static string ImportOrPasteTransactionHex {
+            get {
+                return ResourceManager.GetString("ImportOrPasteTransactionHex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import Transaction.
+        /// </summary>
+        public static string ImportTransaction {
+            get {
+                return ResourceManager.GetString("ImportTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import Transaction.
+        /// </summary>
+        public static string ImportTransactionFileDialogTitle {
+            get {
+                return ResourceManager.GetString("ImportTransactionFileDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Import File.
         /// </summary>
         public static string ImportWallet {
@@ -2096,11 +2535,38 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The passphrase is incorrect.{0}Please try again..
+        /// </summary>
+        public static string IncorrectPassphrase {
+            get {
+                return ResourceManager.GetString("IncorrectPassphrase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The passphrase is incorrect! Please try again..
+        /// </summary>
+        public static string IncorrectPassphraseRetry {
+            get {
+                return ResourceManager.GetString("IncorrectPassphraseRetry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Index.
         /// </summary>
         public static string Index {
             get {
                 return ResourceManager.GetString("Index", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initialize your device first..
+        /// </summary>
+        public static string InitializeDeviceFirst {
+            get {
+                return ResourceManager.GetString("InitializeDeviceFirst", resourceCulture);
             }
         }
         
@@ -2200,6 +2666,24 @@ namespace WalletWasabi.Lang {
         public static string InvalidInputLength {
             get {
                 return ResourceManager.GetString("InvalidInputLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recovery Words are not valid..
+        /// </summary>
+        public static string InvalidRecoveryWords {
+            get {
+                return ResourceManager.GetString("InvalidRecoveryWords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid set. Make sure you typed all your recovery words in the correct order..
+        /// </summary>
+        public static string InvalidSetRecoveryWords {
+            get {
+                return ResourceManager.GetString("InvalidSetRecoveryWords", resourceCulture);
             }
         }
         
@@ -2438,15 +2922,6 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minimal.
-        /// </summary>
-        public static string Minimal {
-            get {
-                return ResourceManager.GetString("Minimal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Mining fee rate was too high.
         /// </summary>
         public static string MiningFeeRateTooHighMessage {
@@ -2474,6 +2949,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MIT License.
+        /// </summary>
+        public static string MITLicense {
+            get {
+                return ResourceManager.GetString("MITLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Modifying settings is not possible, as certain parameters have been overridden during startup..
         /// </summary>
         public static string ModifyingSettingsNotPossible {
@@ -2497,6 +2981,15 @@ namespace WalletWasabi.Lang {
         public static string More {
             get {
                 return ResourceManager.GetString("More", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Must be a number between {0} and {1}..
+        /// </summary>
+        public static string MustBeNumberBetween {
+            get {
+                return ResourceManager.GetString("MustBeNumberBetween", resourceCulture);
             }
         }
         
@@ -2582,11 +3075,38 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Non-private.
+        /// </summary>
+        public static string NonPrivate {
+            get {
+                return ResourceManager.GetString("NonPrivate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non-private funds.
+        /// </summary>
+        public static string NonPrivateFunds {
+            get {
+                return ResourceManager.GetString("NonPrivateFunds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Couldn&apos;t find any offer for the specified amount..
         /// </summary>
         public static string NoOfferForAmount {
             get {
                 return ResourceManager.GetString("NoOfferForAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No results.
+        /// </summary>
+        public static string NoResults {
+            get {
+                return ResourceManager.GetString("NoResults", resourceCulture);
             }
         }
         
@@ -2672,6 +3192,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string Ok {
+            get {
+                return ResourceManager.GetString("Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Only available when Tor is enabled..
         /// </summary>
         public static string OnlyAvailableWhenTorEnabled {
@@ -2744,7 +3273,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open in browser.
+        ///   Looks up a localized string similar to Browser used by Ginger.
         /// </summary>
         public static string OpenInBrowser {
             get {
@@ -2879,11 +3408,39 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Passphrase is too long..
+        /// </summary>
+        public static string PassphraseTooLong {
+            get {
+                return ResourceManager.GetString("PassphraseTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Paste.
         /// </summary>
         public static string Paste {
             get {
                 return ResourceManager.GetString("Paste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paste BTC Address:
+        ///{0}}.
+        /// </summary>
+        public static string PasteBTCAddress {
+            get {
+                return ResourceManager.GetString("PasteBTCAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paste from clipboard.
+        /// </summary>
+        public static string PasteFromClipboard {
+            get {
+                return ResourceManager.GetString("PasteFromClipboard", resourceCulture);
             }
         }
         
@@ -2924,6 +3481,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Peers.
+        /// </summary>
+        public static string Peers {
+            get {
+                return ResourceManager.GetString("Peers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} connected.
         /// </summary>
         public static string PeersConnected {
@@ -2960,11 +3526,11 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Person or Company i.e. Alice, Bob, Pizza Inc.
+        ///   Looks up a localized string similar to Shutting down in progress.
         /// </summary>
-        public static string PersonOrCompanyExample {
+        public static string PleaseWaitToShutDown {
             get {
-                return ResourceManager.GetString("PersonOrCompanyExample", resourceCulture);
+                return ResourceManager.GetString("PleaseWaitToShutDown", resourceCulture);
             }
         }
         
@@ -3068,11 +3634,29 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Privacy Progress.
+        /// </summary>
+        public static string PrivacyProgress {
+            get {
+                return ResourceManager.GetString("PrivacyProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your privacy is being protected with payjoin..
         /// </summary>
         public static string PrivacyProtectedWithPayjoin {
             get {
                 return ResourceManager.GetString("PrivacyProtectedWithPayjoin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Private.
+        /// </summary>
+        public static string Private {
+            get {
+                return ResourceManager.GetString("Private", resourceCulture);
             }
         }
         
@@ -3091,6 +3675,15 @@ namespace WalletWasabi.Lang {
         public static string PrivateExternalOutputDescriptor {
             get {
                 return ResourceManager.GetString("PrivateExternalOutputDescriptor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Private funds.
+        /// </summary>
+        public static string PrivateFunds {
+            get {
+                return ResourceManager.GetString("PrivateFunds", resourceCulture);
             }
         }
         
@@ -3154,6 +3747,15 @@ namespace WalletWasabi.Lang {
         public static string QRCode {
             get {
                 return ResourceManager.GetString("QRCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quit.
+        /// </summary>
+        public static string Quit {
+            get {
+                return ResourceManager.GetString("Quit", resourceCulture);
             }
         }
         
@@ -3338,6 +3940,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rename Wallet.
+        /// </summary>
+        public static string RenameWallet {
+            get {
+                return ResourceManager.GetString("RenameWallet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rescan.
         /// </summary>
         public static string Rescan {
@@ -3401,11 +4012,29 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to startup, boot.
+        /// </summary>
+        public static string RunAtStartupKeywords {
+            get {
+                return ResourceManager.GetString("RunAtStartupKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (EXPERIMENTAL) Run Bitcoin Knots on startup.
         /// </summary>
         public static string RunBitcoinKnotsOnStartup {
             get {
                 return ResourceManager.GetString("RunBitcoinKnotsOnStartup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to hide, tray.
+        /// </summary>
+        public static string RunInBackgroundKeywords {
+            get {
+                return ResourceManager.GetString("RunInBackgroundKeywords", resourceCulture);
             }
         }
         
@@ -3451,6 +4080,15 @@ namespace WalletWasabi.Lang {
         public static string SavePSBTFile {
             get {
                 return ResourceManager.GetString("SavePSBTFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save QR Code.
+        /// </summary>
+        public static string SaveQRCode {
+            get {
+                return ResourceManager.GetString("SaveQRCode", resourceCulture);
             }
         }
         
@@ -3514,6 +4152,24 @@ namespace WalletWasabi.Lang {
         public static string SecuritySettingsTabViewModelTitle {
             get {
                 return ResourceManager.GetString("SecuritySettingsTabViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select all.
+        /// </summary>
+        public static string SelectAll {
+            get {
+                return ResourceManager.GetString("SelectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the coins that are allowed for the transaction to use.
+        /// </summary>
+        public static string SelectAllowedCoins {
+            get {
+                return ResourceManager.GetString("SelectAllowedCoins", resourceCulture);
             }
         }
         
@@ -3608,11 +4264,29 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Semi-private.
+        /// </summary>
+        public static string SemiPrivate {
+            get {
+                return ResourceManager.GetString("SemiPrivate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Semi-private Coins.
         /// </summary>
         public static string SemiPrivateCoins {
             get {
                 return ResourceManager.GetString("SemiPrivateCoins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Semi-private funds.
+        /// </summary>
+        public static string SemiPrivateFunds {
+            get {
+                return ResourceManager.GetString("SemiPrivateFunds", resourceCulture);
             }
         }
         
@@ -3698,7 +4372,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage appearance, privacy and other settings.
+        ///   Looks up a localized string similar to Manage general, advanced and other settings.
         /// </summary>
         public static string SettingsPageViewModelCaption {
             get {
@@ -3730,6 +4404,15 @@ namespace WalletWasabi.Lang {
         public static string SetTransactionConfirmationPreference {
             get {
                 return ResourceManager.GetString("SetTransactionConfirmationPreference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show.
+        /// </summary>
+        public static string Show {
+            get {
+                return ResourceManager.GetString("Show", resourceCulture);
             }
         }
         
@@ -3770,6 +4453,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Something happened with your device, unlock it with your PIN/Passphrase or reconnect to the PC..
+        /// </summary>
+        public static string SomethingHappenedWithDevice {
+            get {
+                return ResourceManager.GetString("SomethingHappenedWithDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Something went wrong. Please try again..
         /// </summary>
         public static string SomethingWrong {
@@ -3793,6 +4485,42 @@ namespace WalletWasabi.Lang {
         public static string Sorting {
             get {
                 return ResourceManager.GetString("Sorting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source Code (GitHub).
+        /// </summary>
+        public static string SourceCodeGitHub {
+            get {
+                return ResourceManager.GetString("SourceCodeGitHub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speeding up this transaction will cost you.
+        /// </summary>
+        public static string SpeedingUpTransactionCostAmount {
+            get {
+                return ResourceManager.GetString("SpeedingUpTransactionCostAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speeding up this transaction will deduct from the recipient&apos;s amount.
+        /// </summary>
+        public static string SpeedingUpTransactionDeductFromRecipient {
+            get {
+                return ResourceManager.GetString("SpeedingUpTransactionDeductFromRecipient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speed Up Failed.
+        /// </summary>
+        public static string SpeedUpFailed {
+            get {
+                return ResourceManager.GetString("SpeedUpFailed", resourceCulture);
             }
         }
         
@@ -3887,6 +4615,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Terms and conditions.
+        /// </summary>
+        public static string TermsAndConditions {
+            get {
+                return ResourceManager.GetString("TermsAndConditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To continue using Ginger, please accept the terms and conditions.
         /// </summary>
         public static string TermsAndConditionsViewCaption {
@@ -3923,11 +4660,29 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This can not be undone.
+        ///   Looks up a localized string similar to This can not be undone..
         /// </summary>
         public static string ThisCannotBeUndone {
             get {
                 return ResourceManager.GetString("ThisCannotBeUndone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This may take a few minutes. Ginger will close automatically when finished..
+        /// </summary>
+        public static string ThisMayTakeAFewMinutes {
+            get {
+                return ResourceManager.GetString("ThisMayTakeAFewMinutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This open source software is licensed with .
+        /// </summary>
+        public static string ThisOpenSourceSoftwareIsLicensedWith {
+            get {
+                return ResourceManager.GetString("ThisOpenSourceSoftwareIsLicensedWith", resourceCulture);
             }
         }
         
@@ -3968,6 +4723,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tor network is having issues:.
+        /// </summary>
+        public static string TorNetworkIssues {
+            get {
+                return ResourceManager.GetString("TorNetworkIssues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total balance.
         /// </summary>
         public static string TotalBalance {
@@ -4004,6 +4768,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The transaction is already confirmed..
+        /// </summary>
+        public static string TransactionAlreadyConfirmed {
+            get {
+                return ResourceManager.GetString("TransactionAlreadyConfirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Transaction Building.
         /// </summary>
         public static string TransactionBuilding {
@@ -4013,7 +4786,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The transaction was canceled on the device..
+        ///   Looks up a localized string similar to The operation was canceled on the device..
         /// </summary>
         public static string TransactionCanceledOnDevice {
             get {
@@ -4319,6 +5092,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to It was not possible to broadcast the transaction..
+        /// </summary>
+        public static string UnableToBroadcastTransaction {
+            get {
+                return ResourceManager.GetString("UnableToBroadcastTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ginger Wallet was unable to create your transaction..
         /// </summary>
         public static string UnableToCreateTransaction {
@@ -4337,6 +5119,33 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to It was not possible to load the transaction..
+        /// </summary>
+        public static string UnableToLoadTransaction {
+            get {
+                return ResourceManager.GetString("UnableToLoadTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to It was not possible to paste the transaction..
+        /// </summary>
+        public static string UnableToPasteTransaction {
+            get {
+                return ResourceManager.GetString("UnableToPasteTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ginger Wallet was unable to recover the wallet..
+        /// </summary>
+        public static string UnableToRecoverWallet {
+            get {
+                return ResourceManager.GetString("UnableToRecoverWallet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to send the address to the device.
         /// </summary>
         public static string UnableToSendAddressToDevice {
@@ -4351,6 +5160,15 @@ namespace WalletWasabi.Lang {
         public static string UnableToSendTransaction {
             get {
                 return ResourceManager.GetString("UnableToSendTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ginger Wallet was unable to verify the recovery words..
+        /// </summary>
+        public static string UnableToVerifyRecoveryWords {
+            get {
+                return ResourceManager.GetString("UnableToVerifyRecoveryWords", resourceCulture);
             }
         }
         
@@ -4427,6 +5245,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unselect all.
+        /// </summary>
+        public static string UnselectAll {
+            get {
+                return ResourceManager.GetString("UnselectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update.
         /// </summary>
         public static string Update {
@@ -4463,7 +5290,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Call both the old and the new coin selector and choose the better result..
+        ///   Looks up a localized string similar to Both the old and the new coin selector will be used, and the better result will be chosen..
         /// </summary>
         public static string UseOldCoinSelectorAsFallbackInCoinJoinCoinSelectorToolTip {
             get {
@@ -4562,6 +5389,42 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Recovery Words you entered were incorrect..
+        /// </summary>
+        public static string VerifyRecoveryWordsErrorCaption {
+            get {
+                return ResourceManager.GetString("VerifyRecoveryWordsErrorCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Try again, but if you are unable to verify your Recovery Words, you MUST move your funds to a new wallet as soon as possible..
+        /// </summary>
+        public static string VerifyRecoveryWordsErrorMessage {
+            get {
+                return ResourceManager.GetString("VerifyRecoveryWordsErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version {0} is now available.
+        /// </summary>
+        public static string VersionAvailable {
+            get {
+                return ResourceManager.GetString("VersionAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version {0} is now ready to install.
+        /// </summary>
+        public static string VersionReadyToInstall {
+            get {
+                return ResourceManager.GetString("VersionReadyToInstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Awaiting the blame round.
         /// </summary>
         public static string WaitingForBlameRoundMessage {
@@ -4630,6 +5493,15 @@ namespace WalletWasabi.Lang {
         public static string WalletBalance {
             get {
                 return ResourceManager.GetString("WalletBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The wallet cannot be renamed to {0}.
+        /// </summary>
+        public static string WalletCannotBeRenamed {
+            get {
+                return ResourceManager.GetString("WalletCannotBeRenamed", resourceCulture);
             }
         }
         
@@ -4706,6 +5578,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ginger Wallet was unable to import your wallet..
+        /// </summary>
+        public static string WalletImportFailed {
+            get {
+                return ResourceManager.GetString("WalletImportFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Display wallet info.
         /// </summary>
         public static string WalletInfoViewModelCaption {
@@ -4747,6 +5628,33 @@ namespace WalletWasabi.Lang {
         public static string WalletName {
             get {
                 return ResourceManager.GetString("WalletName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A wallet named {0} already exists. Please try a different name..
+        /// </summary>
+        public static string WalletNameAlreadyExists {
+            get {
+                return ResourceManager.GetString("WalletNameAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The wallet name cannot be empty..
+        /// </summary>
+        public static string WalletNameCannotBeEmpty {
+            get {
+                return ResourceManager.GetString("WalletNameCannotBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected wallet name is not valid. Please try a different name..
+        /// </summary>
+        public static string WalletNameInvalid {
+            get {
+                return ResourceManager.GetString("WalletNameInvalid", resourceCulture);
             }
         }
         
@@ -4805,6 +5713,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wallet, Settings.
+        /// </summary>
+        public static string WalletSettingsKeywords {
+            get {
+                return ResourceManager.GetString("WalletSettingsKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Display wallet settings.
         /// </summary>
         public static string WalletSettingsViewModelCaption {
@@ -4859,15 +5776,6 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Have you checked your wallet backup?.
-        /// </summary>
-        public static string WalletToolsCheckBackup {
-            get {
-                return ResourceManager.GetString("WalletToolsCheckBackup", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Your passphrase is also required to restore your wallet, do not forget it..
         /// </summary>
         public static string WalletToolsDoNotForget {
@@ -4904,11 +5812,20 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wasabi will download blocks from a full node you control..
+        ///   Looks up a localized string similar to Ginger will download blocks from a full node you control..
         /// </summary>
         public static string WasabiDownloadBlocksFromFullNode {
             get {
                 return ResourceManager.GetString("WasabiDownloadBlocksFromFullNode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Website (Clearnet).
+        /// </summary>
+        public static string WebsiteClearnet {
+            get {
+                return ResourceManager.GetString("WebsiteClearnet", resourceCulture);
             }
         }
         

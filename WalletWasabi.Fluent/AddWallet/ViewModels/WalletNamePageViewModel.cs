@@ -81,7 +81,7 @@ public partial class WalletNamePageViewModel : RoutableViewModel
 		}
 		catch (Exception ex)
 		{
-			await ShowErrorAsync("Import wallet", ex.ToUserFriendlyString(), "Ginger Wallet was unable to import your wallet.");
+			await ShowErrorAsync(Resources.ImportWallet, ex.ToUserFriendlyString(), Resources.WalletImportFailed);
 			BackCommand.Execute(null);
 		}
 	}

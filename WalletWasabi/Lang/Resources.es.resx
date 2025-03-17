@@ -154,7 +154,7 @@
     <value>Administrar la configuración general</value>
   </data>
   <data name="GeneralSettingsTabViewModelKeywords" xml:space="preserve">
-    <value>Configuración, General, Bitcoin, Oscuro, Modo, Ejecutar, Ginger, Computadora, Sistema, Inicio, Fondo, Cerrar, Automático, Copiar, Pegar, Direcciones, Personalizado, Cambiar, Dirección, Tarifa, Pantalla, Formato, BTC, sats, navegador</value>
+    <value>Configuración, General, Bitcoin, Ejecutar, Ginger, Computadora, Sistema, Iniciar, Fondo, Cerrar, Automático, Copiar, Pegar, Direcciones, Personalizado, Cambiar, Dirección, navegador</value>
   </data>
   <data name="BitcoinTabSettingsViewModelTitle" xml:space="preserve">
     <value>Bitcoin</value>
@@ -193,7 +193,7 @@
     <value>Software, Versión, Fuente, Código, Github, Sitio web, Coordinador, Estadísticas, Tor, Onion, Usuario, Soporte, Informe de errores, Preguntas frecuentes, Preguntas, Documentos, Documentación, Licencia, Avanzado, Información, Hardware, Cartera</value>
   </data>
   <data name="BroadcasterViewModelTitle" xml:space="preserve">
-    <value>Publicación de la transacción</value>
+    <value>Transmitir</value>
   </data>
   <data name="BroadcasterViewModelCaption" xml:space="preserve">
     <value>Transmita su transacción aquí</value>
@@ -280,7 +280,7 @@
     <value>Configuración, General, Usuario, Interfaz, Avanzado</value>
   </data>
   <data name="SettingsPageViewModelCaption" xml:space="preserve">
-    <value>Administra la apariencia, la privacidad y otros ajustes</value>
+    <value>Administrar configuraciones generales, avanzadas y otras</value>
   </data>
   <data name="SettingsPageViewModelTitle" xml:space="preserve">
     <value>Configuración</value>
@@ -519,9 +519,6 @@
   <data name="PlebStopThreshold" xml:space="preserve">
     <value>Umbral para detener el Coinjoin</value>
   </data>
-  <data name="WalletToolsCheckBackup" xml:space="preserve">
-    <value>¿Has verificado la copia de seguridad de tu cartera?</value>
-  </data>
   <data name="WalletToolsRecommend" xml:space="preserve">
     <value>Se recomienda que verifiques las Palabras de Recuperación de tu cartera de vez en cuando.</value>
   </data>
@@ -616,7 +613,7 @@
     <value>No se pudo encontrar la billetera de hardware. Asegúrese de que esté conectada.</value>
   </data>
   <data name="TransactionCanceledOnDevice" xml:space="preserve">
-    <value>La transacción fue cancelada en el dispositivo.</value>
+    <value>La operación fue cancelada en el dispositivo.</value>
   </data>
   <data name="UnknownErrorDeviceCheck" xml:space="preserve">
     <value>Error desconocido. Asegúrese de que el dispositivo esté conectado y no esté ocupado, luego inténtelo de nuevo.</value>
@@ -775,7 +772,7 @@
     <value>¿Deseas ocultar la dirección con las siguientes etiquetas?</value>
   </data>
   <data name="ThisCannotBeUndone" xml:space="preserve">
-    <value>Esto no se puede deshacer</value>
+    <value>Esto no se puede deshacer.</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Sí</value>
@@ -844,7 +841,7 @@
     <value>Ruta del navegador personalizada</value>
   </data>
   <data name="OpenInBrowser" xml:space="preserve">
-    <value>Abrir en el navegador</value>
+    <value>Navegador utilizado por Ginger</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Idioma</value>
@@ -868,7 +865,7 @@
     <value>Carpeta de datos de Bitcoin Core/Knots</value>
   </data>
   <data name="WasabiDownloadBlocksFromFullNode" xml:space="preserve">
-    <value>Wasabi descargará bloques de un nodo completo que controlas.</value>
+    <value>Ginger descargará bloques de un nodo completo que controlas.</value>
   </data>
   <data name="BitcoinP2PEndpoint" xml:space="preserve">
     <value>Punto final P2P de Bitcoin</value>
@@ -950,9 +947,6 @@
   </data>
   <data name="TransactionInterlinksLabels" xml:space="preserve">
     <value>Etiquetas de interconexión de transacciones:</value>
-  </data>
-  <data name="EntitiesKnowTransaction" xml:space="preserve">
-    <value>Esas entidades saben que esta es tu transacción. Realiza más Coinjoin o usa la herramienta de gestión de etiquetas para seleccionar cuidadosamente quién sabría que esta transacción es tuya.</value>
   </data>
   <data name="TransactionKnownAsYoursBy" xml:space="preserve">
     <value>Transacción conocida como tuya por:</value>
@@ -1129,9 +1123,7 @@
     <value>Confirmar Palabras de Recuperación</value>
   </data>
   <data name="ConfirmRecoveryWordsViewModelStoreSafely" xml:space="preserve">
-    <value>Guarda tu frase de contraseña en un lugar seguro, no se puede restablecer si se pierde.
-Es necesaria para abrir y recuperar tu cartera.
-Es una extensión de las palabras de recuperación para mayor seguridad.</value>
+    <value>Guarda tu frase de contraseña de forma segura; no se puede recuperar si se pierde. Es necesaria para abrir y restaurar tu billetera y proporciona protección adicional al extender las palabras de recuperación.</value>
   </data>
   <data name="ConfirmRecoveryWordsViewModelClickRecovery" xml:space="preserve">
     <value>Haz clic en la palabra de recuperación #{0}</value>
@@ -1197,7 +1189,7 @@ Es una extensión de las palabras de recuperación para mayor seguridad.</value>
     <value>Escribe tus palabras de recuperación en el orden correcto</value>
   </data>
   <data name="EnterPassphrase" xml:space="preserve">
-    <value>Introduce la frase de contraseña correcta</value>
+    <value>Introducir frase de contraseña</value>
   </data>
   <data name="RecoverWalletViewModelPassphraseMessage" xml:space="preserve">
     <value>Si usaste una frase de contraseña cuando creaste tu cartera, debes escribirla abajo, de lo contrario, déjalo en blanco.</value>
@@ -1206,7 +1198,7 @@ Es una extensión de las palabras de recuperación para mayor seguridad.</value>
     <value>Opciones avanzadas de recuperación</value>
   </data>
   <data name="AdvancedRecoveryOptionsViewModelMinimumGapLimit" xml:space="preserve">
-    <value>Límite de _Espacio mínimo:</value>
+    <value>Límite de Espacio mínimo:</value>
   </data>
   <data name="PeersConnected" xml:space="preserve">
     <value>{0} conectado</value>
@@ -1412,9 +1404,6 @@ Es una extensión de las palabras de recuperación para mayor seguridad.</value>
   <data name="Confirmations" xml:space="preserve">
     <value>({0} confirmaciones)</value>
   </data>
-  <data name="ConfirmationEstimationDisclaimer" xml:space="preserve">
-    <value>Esto es solo una estimación basada en algunos datos de transacciones y bloques. El tiempo de confirmación podría cambiar.</value>
-  </data>
   <data name="BlockHash" xml:space="preserve">
     <value>Hash del bloque</value>
   </data>
@@ -1517,9 +1506,6 @@ Es una extensión de las palabras de recuperación para mayor seguridad.</value>
   <data name="AnonymityScore" xml:space="preserve">
     <value>Puntuación de anonimato</value>
   </data>
-  <data name="PersonOrCompanyExample" xml:space="preserve">
-    <value>Persona o empresa, es decir, Alice, Bob, Pizza Inc</value>
-  </data>
   <data name="EstimatedConfirmationTimeWithValue" xml:space="preserve">
     <value>Tiempo estimado de confirmación: {0}</value>
   </data>
@@ -1549,9 +1535,6 @@ Es una extensión de las palabras de recuperación para mayor seguridad.</value>
   </data>
   <data name="Weeks" xml:space="preserve">
     <value>Semanas</value>
-  </data>
-  <data name="Minimal" xml:space="preserve">
-    <value>Mínimo</value>
   </data>
   <data name="Privacy" xml:space="preserve">
     <value>Privacidad</value>
@@ -1632,7 +1615,7 @@ Es una extensión de las palabras de recuperación para mayor seguridad.</value>
     <value>Usar el Selector de Monedas Antiguo como respaldo</value>
   </data>
   <data name="UseOldCoinSelectorAsFallbackInCoinJoinCoinSelectorToolTip" xml:space="preserve">
-    <value>Llamar tanto al selector de monedas antiguo como al nuevo y elegir el mejor resultado.</value>
+    <value>Se utilizarán tanto el selector de monedas antiguo como el nuevo, y se elegirá el mejor resultado.</value>
   </data>
   <data name="Configuration" xml:space="preserve">
     <value>Configuración</value>
@@ -1765,5 +1748,327 @@ Es una extensión de las palabras de recuperación para mayor seguridad.</value>
   </data>
   <data name="Generate" xml:space="preserve">
     <value>Generar</value>
+  </data>
+  <data name="ErrorAddingWallet" xml:space="preserve">
+    <value>Se produjo un error al agregar tu monedero.</value>
+  </data>
+  <data name="DetectedConfirmation" xml:space="preserve">
+    <value>Se detectó {0}. ¿Es correcto?</value>
+  </data>
+  <data name="TermsAndConditions" xml:space="preserve">
+    <value>Términos y condiciones</value>
+  </data>
+  <data name="WalletImportFailed" xml:space="preserve">
+    <value>Ginger Wallet no pudo importar tu monedero.</value>
+  </data>
+  <data name="AllCoinsConfirmed" xml:space="preserve">
+    <value>Todas las monedas están confirmadas.</value>
+  </data>
+  <data name="CoinsWaitingForConfirmation" xml:space="preserve">
+    <value>{0} monedas están esperando confirmación.</value>
+  </data>
+  <data name="CoinsCantParticipateCoinJoin" xml:space="preserve">
+    <value>Algunas monedas no pueden participar en Coinjoin.</value>
+  </data>
+  <data name="SourceCodeGitHub" xml:space="preserve">
+    <value>Código fuente (GitHub)</value>
+  </data>
+  <data name="WebsiteClearnet" xml:space="preserve">
+    <value>Sitio web (Clearnet)</value>
+  </data>
+  <data name="BugReport" xml:space="preserve">
+    <value>Informe de errores</value>
+  </data>
+  <data name="FAQ" xml:space="preserve">
+    <value>Preguntas frecuentes</value>
+  </data>
+  <data name="MITLicense" xml:space="preserve">
+    <value>Licencia MIT</value>
+  </data>
+  <data name="AdvancedInformation" xml:space="preserve">
+    <value>Información de la versión</value>
+  </data>
+  <data name="CompatibleCoordinatorVersions" xml:space="preserve">
+    <value>Versiones de coordinador compatibles</value>
+  </data>
+  <data name="CurrentCoordinatorVersion" xml:space="preserve">
+    <value>Versión actual del coordinador</value>
+  </data>
+  <data name="CompatibleBitcoinCoreKnotsVersion" xml:space="preserve">
+    <value>Versión compatible de Bitcoin Core y Bitcoin Knots</value>
+  </data>
+  <data name="CompatibleHardwareWalletInterfaceVersion" xml:space="preserve">
+    <value>Versión compatible de la interfaz de monedero hardware</value>
+  </data>
+  <data name="PrivacyProgress" xml:space="preserve">
+    <value>Progreso de privacidad</value>
+  </data>
+  <data name="HoverOverRingSegments" xml:space="preserve">
+    <value>Pasa el cursor sobre los segmentos del anillo para ver los detalles de la moneda</value>
+  </data>
+  <data name="Private" xml:space="preserve">
+    <value>Privado</value>
+  </data>
+  <data name="SemiPrivate" xml:space="preserve">
+    <value>Semi-privado</value>
+  </data>
+  <data name="NonPrivate" xml:space="preserve">
+    <value>No privado</value>
+  </data>
+  <data name="PleaseWaitToShutDown" xml:space="preserve">
+    <value>Apagado en progreso</value>
+  </data>
+  <data name="GingerUnableToCloseCoinJoinInProgress" xml:space="preserve">
+    <value>Ginger no puede cerrarse ahora mismo. Coinjoin en progreso.</value>
+  </data>
+  <data name="ThisMayTakeAFewMinutes" xml:space="preserve">
+    <value>Esto puede tardar unos minutos. Ginger se cerrará automáticamente cuando termine.</value>
+  </data>
+  <data name="TransactionAlreadyConfirmed" xml:space="preserve">
+    <value>La transacción ya está confirmada.</value>
+  </data>
+  <data name="GingerWalletUnableToSpeedUpTransaction" xml:space="preserve">
+    <value>Ginger Wallet no pudo acelerar tu transacción.</value>
+  </data>
+  <data name="SpeedingUpTransactionCostAmount" xml:space="preserve">
+    <value>Acelerar esta transacción te costará</value>
+  </data>
+  <data name="SpeedingUpTransactionDeductFromRecipient" xml:space="preserve">
+    <value>Acelerar esta transacción deducirá del monto del destinatario</value>
+  </data>
+  <data name="Appearance" xml:space="preserve">
+    <value>Apariencia</value>
+  </data>
+  <data name="AppearanceThemeKeywords" xml:space="preserve">
+    <value>Negro, Blanco, Tema, Oscuro, Claro</value>
+  </data>
+  <data name="RunInBackgroundKeywords" xml:space="preserve">
+    <value>ocultar, bandeja</value>
+  </data>
+  <data name="RunAtStartupKeywords" xml:space="preserve">
+    <value>inicio, arranque</value>
+  </data>
+  <data name="NoResults" xml:space="preserve">
+    <value>Sin resultados</value>
+  </data>
+  <data name="CriticalUpdateRequired" xml:space="preserve">
+    <value>Se requiere una actualización crítica</value>
+  </data>
+  <data name="VersionReadyToInstall" xml:space="preserve">
+    <value>La versión {0} ya está lista para instalar</value>
+  </data>
+  <data name="VersionAvailable" xml:space="preserve">
+    <value>La versión {0} ya está disponible</value>
+  </data>
+  <data name="Peers" xml:space="preserve">
+    <value>Pares</value>
+  </data>
+  <data name="BroadcastTransaction" xml:space="preserve">
+    <value>Transacción de difusión</value>
+  </data>
+  <data name="UnableToBroadcastTransaction" xml:space="preserve">
+    <value>No fue posible difundir la transacción.</value>
+  </data>
+  <data name="ImportTransactionFileDialogTitle" xml:space="preserve">
+    <value>Importar transacción</value>
+  </data>
+  <data name="UnableToLoadTransaction" xml:space="preserve">
+    <value>No fue posible cargar la transacción.</value>
+  </data>
+  <data name="ClipboardEmpty" xml:space="preserve">
+    <value>¡El portapapeles está vacío!</value>
+  </data>
+  <data name="UnableToPasteTransaction" xml:space="preserve">
+    <value>No fue posible pegar la transacción.</value>
+  </data>
+  <data name="CancellationFailed" xml:space="preserve">
+    <value>Cancelación fallida</value>
+  </data>
+  <data name="GingerWalletUnableToCancelTransaction" xml:space="preserve">
+    <value>Ginger Wallet no pudo cancelar tu transacción.</value>
+  </data>
+  <data name="SpeedUpFailed" xml:space="preserve">
+    <value>Aceleración fallida</value>
+  </data>
+  <data name="AuthorizationFailed" xml:space="preserve">
+    <value>La autorización ha fallado, por favor intente nuevamente.</value>
+  </data>
+  <data name="AuthorizeWithHardwareWallet" xml:space="preserve">
+    <value>Autorizar con cartera hardware</value>
+  </data>
+  <data name="AuthorizationFailedWithDeviceCheck" xml:space="preserve">
+    <value>La autorización ha fallado.{0}Por favor, verifica tu dispositivo e inténtalo de nuevo.</value>
+  </data>
+  <data name="EnterPassphraseAuth" xml:space="preserve">
+    <value>Ingresa tu frase de contraseña</value>
+  </data>
+  <data name="IncorrectPassphrase" xml:space="preserve">
+    <value>La frase de contraseña es incorrecta.{0}Por favor, inténtalo de nuevo.</value>
+  </data>
+  <data name="SelectAllowedCoins" xml:space="preserve">
+    <value>Selecciona las monedas que están permitidas para usar en la transacción</value>
+  </data>
+  <data name="RenameWallet" xml:space="preserve">
+    <value>Renombrar billetera</value>
+  </data>
+  <data name="WalletCannotBeRenamed" xml:space="preserve">
+    <value>La billetera no puede ser renombrada a {0}</value>
+  </data>
+  <data name="GingerWalletUnableToOpenFile" xml:space="preserve">
+    <value>Ginger Wallet no pudo abrir el archivo.</value>
+  </data>
+  <data name="FoundIn" xml:space="preserve">
+    <value>Encontrado en \"{0}\"</value>
+  </data>
+  <data name="IncorrectPassphraseRetry" xml:space="preserve">
+    <value>¡La frase de contraseña es incorrecta! Por favor, inténtalo de nuevo.</value>
+  </data>
+  <data name="AcceptTermsAndConditions" xml:space="preserve">
+    <value>¡Debes aceptar los Términos y Condiciones!</value>
+  </data>
+  <data name="CompatibilityPassphraseUsed" xml:space="preserve">
+    <value>¡Se utilizó una frase de contraseña de compatibilidad! Por favor, considere generar una nueva billetera para asegurar la recuperabilidad.</value>
+  </data>
+  <data name="PassphraseTooLong" xml:space="preserve">
+    <value>La frase de contraseña es demasiado larga.</value>
+  </data>
+  <data name="WalletSettingsKeywords" xml:space="preserve">
+    <value>Billetera, Configuración</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="VerifyRecoveryWordsErrorMessage" xml:space="preserve">
+    <value>Intenta de nuevo, pero si no puedes verificar tus Palabras de Recuperación, DEBES mover tus fondos a una nueva billetera lo antes posible.</value>
+  </data>
+  <data name="VerifyRecoveryWordsErrorCaption" xml:space="preserve">
+    <value>Las Palabras de Recuperación que ingresaste son incorrectas.</value>
+  </data>
+  <data name="InvalidRecoveryWords" xml:space="preserve">
+    <value>Las Palabras de Recuperación no son válidas.</value>
+  </data>
+  <data name="UnableToVerifyRecoveryWords" xml:space="preserve">
+    <value>Ginger Wallet no pudo verificar las palabras de recuperación.</value>
+  </data>
+  <data name="AfterDeductingFee" xml:space="preserve">
+    <value>Después de deducir la tarifa de {0}, recibirás {1} — no se aplicarán cargos adicionales.</value>
+  </data>
+  <data name="UnableToRecoverWallet" xml:space="preserve">
+    <value>Ginger Wallet no pudo recuperar la billetera.</value>
+  </data>
+  <data name="InvalidSetRecoveryWords" xml:space="preserve">
+    <value>Conjunto inválido. Asegúrate de haber escrito todas tus palabras de recuperación en el orden correcto.</value>
+  </data>
+  <data name="FailedToGetLegalDocuments" xml:space="preserve">
+    <value>No se pudieron obtener los documentos legales.</value>
+  </data>
+  <data name="MustBeNumberBetween" xml:space="preserve">
+    <value>Debe ser un número entre {0} y {1}.</value>
+  </data>
+  <data name="InitializeDeviceFirst" xml:space="preserve">
+    <value>Inicializa tu dispositivo primero.</value>
+  </data>
+  <data name="CheckDeviceAndFinishInitialization" xml:space="preserve">
+    <value>Verifica tu dispositivo y termina la inicialización.</value>
+  </data>
+  <data name="SomethingHappenedWithDevice" xml:space="preserve">
+    <value>Algo ocurrió con tu dispositivo, desbloquéalo con tu PIN/Frase de recuperación o reconéctalo al PC.</value>
+  </data>
+  <data name="ExportTransaction" xml:space="preserve">
+    <value>Exportar transacción</value>
+  </data>
+  <data name="SaveQRCode" xml:space="preserve">
+    <value>Guardar código QR</value>
+  </data>
+  <data name="ByAmount" xml:space="preserve">
+    <value>en {0}</value>
+  </data>
+  <data name="AppearanceSettingsTabViewModelTitle" xml:space="preserve">
+    <value>Apariencia</value>
+  </data>
+  <data name="AppearanceSettingsTabViewModelCaption" xml:space="preserve">
+    <value>Administrar la configuración de apariencia</value>
+  </data>
+  <data name="AppearanceSettingsTabViewModelKeywords" xml:space="preserve">
+    <value>Configuración, Apariencia, Bitcoin, Oscuro, Modo, Tarifa, Mostrar, Formato, BTC, sats, Intercambio, Moneda</value>
+  </data>
+  <data name="ExchangeCurrency" xml:space="preserve">
+    <value>Cambiar moneda</value>
+  </data>
+  <data name="Cut" xml:space="preserve">
+    <value>Cortar</value>
+  </data>
+  <data name="ThisOpenSourceSoftwareIsLicensedWith" xml:space="preserve">
+    <value>Este software de código abierto está licenciado con </value>
+  </data>
+  <data name="CancellingThisTransactionWillCostYou" xml:space="preserve">
+    <value>Cancelar esta transacción le costará</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Aceptar</value>
+  </data>
+  <data name="TorNetworkIssues" xml:space="preserve">
+    <value>La red Tor tiene problemas:</value>
+  </data>
+  <data name="ClickIconForDetails" xml:space="preserve">
+    <value>Haz clic en este icono para ver los detalles</value>
+  </data>
+  <data name="PasteFromClipboard" xml:space="preserve">
+    <value>Pegar desde el portapapeles</value>
+  </data>
+  <data name="ImportTransaction" xml:space="preserve">
+    <value>Importar transacción</value>
+  </data>
+  <data name="Quit" xml:space="preserve">
+    <value>Salir</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Ocultar</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Mostrar</value>
+  </data>
+  <data name="Default" xml:space="preserve">
+    <value>Predeterminado</value>
+  </data>
+  <data name="CopyLink" xml:space="preserve">
+    <value>Copiar enlace</value>
+  </data>
+  <data name="NonPrivateFunds" xml:space="preserve">
+    <value>Fondos no privados</value>
+  </data>
+  <data name="SemiPrivateFunds" xml:space="preserve">
+    <value>Fondos semiprivados</value>
+  </data>
+  <data name="PrivateFunds" xml:space="preserve">
+    <value>Fondos privados</value>
+  </data>
+  <data name="CustomFeeRate" xml:space="preserve">
+    <value>Tarifa de comisión personalizada</value>
+  </data>
+  <data name="WalletNameCannotBeEmpty" xml:space="preserve">
+    <value>El nombre de la cartera no puede estar vacío.</value>
+  </data>
+  <data name="WalletNameAlreadyExists" xml:space="preserve">
+    <value>Ya existe una cartera llamada {0}. Por favor, prueba con otro nombre.</value>
+  </data>
+  <data name="WalletNameInvalid" xml:space="preserve">
+    <value>El nombre de la cartera seleccionado no es válido. Por favor, prueba con otro nombre.</value>
+  </data>
+  <data name="AcceptingOfferRedirect" xml:space="preserve">
+    <value>Aceptar una oferta te redirigirá a la página del proveedor para completar el proceso.</value>
+  </data>
+  <data name="ImportOrPasteTransactionHex" xml:space="preserve">
+    <value>Importa o pega el hex de la transacción y emítelo a la red.</value>
+  </data>
+  <data name="UnselectAll" xml:space="preserve">
+    <value>Deseleccionar todo</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Seleccionar todo</value>
+  </data>
+  <data name="PasteBTCAddress" xml:space="preserve">
+    <value>Pegar dirección BTC:
+{0}}</value>
   </data>
 </root>

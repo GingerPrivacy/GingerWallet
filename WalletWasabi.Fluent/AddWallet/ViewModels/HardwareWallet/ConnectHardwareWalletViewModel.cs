@@ -8,6 +8,7 @@ using WalletWasabi.Fluent.AddWallet.Models;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Hwi.Models;
+using WalletWasabi.Lang;
 using WalletWasabi.Logging;
 using WalletWasabi.Nito.AsyncEx;
 using WalletWasabi.Wallets;
@@ -147,11 +148,11 @@ public partial class ConnectHardwareWalletViewModel : RoutableViewModel
 		{
 			if (device.Model == HardwareWalletModels.Coldcard)
 			{
-				Message = "Initialize your device first.";
+				Message = Resources.InitializeDeviceFirst;
 			}
 			else
 			{
-				Message = "Check your device and finish the initialization.";
+				Message = Resources.CheckDeviceAndFinishInitialization;
 				AbandonedTasks.AddAndClearCompleted(UiContext.HardwareWalletInterface.InitHardwareWalletAsync(device, cancel));
 			}
 
@@ -160,7 +161,7 @@ public partial class ConnectHardwareWalletViewModel : RoutableViewModel
 
 		if (device.Code is { })
 		{
-			Message = "Something happened with your device, unlock it with your PIN/Passphrase or reconnect to the PC.";
+			Message = Resources.SomethingHappenedWithDevice;
 			return;
 		}
 

@@ -4,6 +4,7 @@ using ReactiveUI;
 using WalletWasabi.Fluent.AddWallet.ViewModels;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.ViewModels;
+using WalletWasabi.Lang;
 using WalletWasabi.Userfacing;
 using WalletWasabi.Wallets;
 
@@ -42,13 +43,13 @@ public partial class LoginViewModel : RoutableViewModel
 
 		if (!success)
 		{
-			ErrorMessage = "The passphrase is incorrect! Please try again.";
+			ErrorMessage = Resources.IncorrectPassphraseRetry;
 			return;
 		}
 
 		if (compatibilityPasswordUsed)
 		{
-			await ShowErrorAsync(Title, PasswordHelper.CompatibilityPasswordWarnMessage, "Compatibility password was used");
+			await ShowErrorAsync(Title, PasswordHelper.CompatibilityPasswordWarnMessage, "");
 		}
 
 		var termsAndConditionsAccepted = await TermsAndConditionsViewModel.TryShowAsync(UiContext, walletModel);
@@ -59,7 +60,7 @@ public partial class LoginViewModel : RoutableViewModel
 		else
 		{
 			walletModel.Auth.Logout();
-			ErrorMessage = "You must accept the Terms and Conditions!";
+			ErrorMessage = Resources.AcceptTermsAndConditions;
 		}
 	}
 

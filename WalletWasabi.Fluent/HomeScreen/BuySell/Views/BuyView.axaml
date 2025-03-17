@@ -86,7 +86,7 @@
              IsVisible="{Binding HasPreviousOrders, FallbackValue=False}"
              Margin="0 0 0 20">
 
-        <Button Content="Previous Orders"
+        <Button Content="{x:Static lang:Resources.PreviousOrders}"
                 Command="{Binding PreviousOrdersCommand}"
                 Classes="plain activeHyperLink"
                 Cursor="Hand"

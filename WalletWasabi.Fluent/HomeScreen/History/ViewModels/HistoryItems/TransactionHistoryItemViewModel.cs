@@ -2,11 +2,12 @@ using System.Reactive.Linq;
 using ReactiveUI;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Models.Wallets;
+using WalletWasabi.Lang;
 using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.HomeScreen.History.ViewModels.HistoryItems;
 
-public partial class TransactionHistoryItemViewModel : HomeScreen.History.ViewModels.HistoryItems.HistoryItemViewModelBase
+public partial class TransactionHistoryItemViewModel : HistoryItemViewModelBase
 {
 	private IWalletModel _wallet;
 
@@ -34,7 +35,7 @@ public partial class TransactionHistoryItemViewModel : HomeScreen.History.ViewMo
 		catch (Exception ex)
 		{
 			Logger.LogError(ex);
-			UiContext.Navigate().To().ShowErrorDialog(ex.ToUserFriendlyString(), "Speed Up failed", "Ginger Wallet could not initiate the transaction speed up process.");
+			UiContext.Navigate().To().ShowErrorDialog(ex.ToUserFriendlyString(), Resources.SpeedUpFailed, Resources.GingerWalletUnableToSpeedUpTransaction);
 		}
 	}
 
@@ -48,7 +49,7 @@ public partial class TransactionHistoryItemViewModel : HomeScreen.History.ViewMo
 		catch (Exception ex)
 		{
 			Logger.LogError(ex);
-			UiContext.Navigate().To().ShowErrorDialog(ex.ToUserFriendlyString(), "Cancel failed", "Ginger Wallet could not initiate the cancelling process.");
+			UiContext.Navigate().To().ShowErrorDialog(ex.ToUserFriendlyString(), Resources.CancellationFailed, Resources.GingerWalletUnableToCancelTransaction);
 		}
 	}
 }

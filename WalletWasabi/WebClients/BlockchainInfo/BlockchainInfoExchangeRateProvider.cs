@@ -26,7 +26,10 @@ public class BlockchainInfoExchangeRateProvider : IExchangeRateProvider
 
 		var exchangeRates = new List<ExchangeRate>
 		{
-			new ExchangeRate { Rate = rates.USD.Sell, Ticker = "USD" }
+			new ExchangeRate { Rate = rates.USD.Sell, Ticker = "USD" },
+			new ExchangeRate { Rate = rates.EUR.Sell, Ticker = "EUR" },
+			new ExchangeRate { Rate = rates.CNY.Sell, Ticker = "CNY" },
+			new ExchangeRate { Rate = rates.HUF.Sell, Ticker = "HUF" },
 		};
 
 		return exchangeRates;
@@ -42,5 +45,8 @@ public class BlockchainInfoExchangeRateProvider : IExchangeRateProvider
 	private class BlockchainInfoExchangeRates
 	{
 		public required BlockchainInfoExchangeRate USD { get; init; }
+		public required BlockchainInfoExchangeRate EUR { get; init; }
+		public required BlockchainInfoExchangeRate CNY { get; init; }
+		public required BlockchainInfoExchangeRate HUF { get; init; }
 	}
 }

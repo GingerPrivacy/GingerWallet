@@ -46,7 +46,13 @@
           </ScrollViewer>
         </TabItem>
 
-        <TabItem Header="Bitcoin">
+        <TabItem Header="{x:Static lang:Resources.AppearanceSettingsTabViewModelTitle}">
+          <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <views:AppearanceSettingsTabView DataContext="{Binding AppearanceSettingsTab}" IsEnabled="{Binding !IsReadOnly}" />
+          </ScrollViewer>
+        </TabItem>
+
+        <TabItem Header="{x:Static lang:Resources.BitcoinTabSettingsViewModelTitle}">
           <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
             <views:BitcoinTabSettingsView DataContext="{Binding BitcoinTabSettings}" IsEnabled="{Binding !IsReadOnly}" />
           </ScrollViewer>

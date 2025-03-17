@@ -42,8 +42,9 @@ public partial class SellViewModel : RoutableViewModel
 		_wallet = wallet;
 		Title = Resources.SellBitcoin;
 		_selectedCountry = UiContext.ApplicationSettings.GetCurrentSellCountry();
-		ExchangeRate = wallet.AmountProvider.UsdExchangeRate;
+		ExchangeRate = wallet.AmountProvider.ExchangeRate;
 		_conversionReversed = Services.UiConfig.SendAmountConversionReversed; // must be fixed
+		FiatTicker = _wallet.AmountProvider.Ticker;
 
 		var nextCanExecute =
 			this.WhenAnyValue(x => x.Amount, x => x.FetchingLimits, x => x.MinAmount, x => x.MaxAmount)
@@ -120,6 +121,8 @@ public partial class SellViewModel : RoutableViewModel
 
 	public ICommand SelectCountryCommand { get; }
 	public ICommand PreviousOrdersCommand { get; }
+
+	public string FiatTicker { get; }
 
 	private void ValidateAmount(IValidationErrors errors)
 	{

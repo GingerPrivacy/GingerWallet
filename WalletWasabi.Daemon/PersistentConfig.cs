@@ -137,6 +137,9 @@ public record PersistentConfig : IConfigNg
 	[JsonConverter(typeof(DisplayLanguageJsonConverter))]
 	public int DisplayLanguage { get; init; } = (int)Models.DisplayLanguage.English;
 
+	[JsonPropertyName("ExchangeCurrency")]
+	public string ExchangeCurrency { get; init; } = "USD";
+
 	[JsonPropertyName("ExtraNostrPubKey")]
 	public string ExtraNostrPubKey { get; init; } = "";
 
@@ -171,7 +174,8 @@ public record PersistentConfig : IConfigNg
 			MaxCoordinationFeeRate == other.MaxCoordinationFeeRate &&
 			MaxCoinJoinMiningFeeRate == other.MaxCoinJoinMiningFeeRate &&
 			AbsoluteMinInputCount == other.AbsoluteMinInputCount &&
-			DisplayLanguage == other.DisplayLanguage;
+			DisplayLanguage == other.DisplayLanguage &&
+			ExchangeCurrency == other.ExchangeCurrency;
 	}
 
 	public EndPoint GetBitcoinP2pEndPoint()

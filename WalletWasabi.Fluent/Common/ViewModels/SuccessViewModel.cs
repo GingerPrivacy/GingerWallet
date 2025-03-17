@@ -2,6 +2,7 @@ using System.Reactive.Disposables;
 using System.Threading.Tasks;
 using ReactiveUI;
 using WalletWasabi.Fluent.Navigation.ViewModels;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.Common.ViewModels;
 
@@ -9,7 +10,7 @@ public partial class SuccessViewModel : RoutableViewModel
 {
 	private SuccessViewModel()
 	{
-		Title = "Success";
+		Title = Resources.Success;
 
 		NextCommand = ReactiveCommand.CreateFromTask(OnNextAsync);
 

@@ -16,12 +16,6 @@
                EnableCancel="{Binding EnableCancel}"
                EnableBack="{Binding EnableBack}"
                IsBusy="{Binding IsBusy}">
-    <ContentArea.Styles>
-      <Style Selector="DockPanel > Label">
-        <Setter Property="MinWidth" Value="100" />
-      </Style>
-    </ContentArea.Styles>
-
     <ContentArea.TopContent>
       <!-- Country -->
       <Button DockPanel.Dock="Bottom"
@@ -37,58 +31,11 @@
 
     <DockPanel>
 
-      <!-- Amount -->
-      <DockPanel DockPanel.Dock="Top">
-        <Label DockPanel.Dock="Left" Margin="0 8 5 0" VerticalAlignment="Top" Content="{x:Static lang:Resources.AmountWithColom}" Target="amountTb" />
-        <DualCurrencyEntryBox x:Name="amountTb"
-                              AmountBtc="{Binding Amount}"
-                              ConversionRate="{Binding ExchangeRate}"
-                              CurrencyCode="BTC"
-                              ConversionCurrencyCode="USD"
-                              IsConversionReversed="{Binding ConversionReversed, Mode=TwoWay}"
-                              ValidatePasteBalance="False"
-                              VerticalAlignment="Top">
-          <Interaction.Behaviors>
-            <EventTriggerBehavior EventName="Loaded">
-              <InvokeCommandAction Command="{Binding #amountTb.FocusCommand}" />
-            </EventTriggerBehavior>
-          </Interaction.Behaviors>
-        </DualCurrencyEntryBox>
-
-      </DockPanel>
-
-      <!-- Receive in -->
-      <DockPanel DockPanel.Dock="Top" Margin="0 20 0 0">
-        <Label DockPanel.Dock="Left" Margin="0 0 5 0" VerticalAlignment="Center" Content="{x:Static lang:Resources.ReceiveInWithColom}" Target="amountTb" />
-
-        <ComboBox Name="CurrencyComboBox"
-                  MinWidth="250"
-                  IsEnabled="{Binding !FetchingLimits}"
-                  ItemsSource="{Binding Currencies}"
-                  SelectedItem="{Binding SelectedCurrency}"
-                  VerticalAlignment="Top" DockPanel.Dock="Left"
-                  VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
-          <ComboBox.ItemTemplate>
-            <DataTemplate x:DataType="buySell1:CurrencyModel">
-              <StackPanel Orientation="Horizontal" Spacing="15">
-                <TextBlock FontWeight="Bold" TextAlignment="Right" Text="{Binding Ticker}" Width="40" />
-                <TextBlock Opacity="0.6" Margin="0 0 5 0" Text="{Binding Name}" />
-              </StackPanel>
-            </DataTemplate>
-          </ComboBox.ItemTemplate>
-        </ComboBox>
-
-        <Viewbox Margin="5 2 0 0" DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Center" Height="25" IsVisible="{Binding FetchingLimits}">
-          <ProgressRing Height="46" Width="46" Margin="10 0" IsIndeterminate="{Binding FetchingLimits}" />
-        </Viewbox>
-
-      </DockPanel>
-
       <Panel DockPanel.Dock="Bottom" HorizontalAlignment="Center" VerticalAlignment="Bottom"
              IsVisible="{Binding HasPreviousOrders, FallbackValue=False}"
              Margin="0 0 0 20">
 
-        <Button Content="Previous Orders"
+        <Button Content="{x:Static lang:Resources.PreviousOrders}"
                 Command="{Binding PreviousOrdersCommand}"
                 Classes="plain activeHyperLink"
                 Cursor="Hand"
@@ -102,6 +49,60 @@
                  Stroke="{DynamicResource RegionBrush}" StrokeThickness="2"
                  Fill="{DynamicResource WarningMessageForeground}" />
       </Panel>
+
+      <Grid ColumnDefinitions="Auto,10,*" RowDefinitions="Auto,20,Auto"
+            VerticalAlignment="Top" HorizontalAlignment="Stretch">
+
+        <!-- Amount -->
+        <Label Grid.Row="0" Grid.Column="0"
+               Margin="0 8 0 0" VerticalAlignment="Top" Content="{x:Static lang:Resources.AmountWithColom}" Target="amountTb" />
+        <DualCurrencyEntryBox Grid.Row="0" Grid.Column="2"
+                              x:Name="amountTb"
+                              AmountBtc="{Binding Amount}"
+                              ConversionRate="{Binding ExchangeRate}"
+                              CurrencyCode="BTC"
+                              ConversionCurrencyCode="{Binding FiatTicker, Mode=OneWay}"
+                              IsConversionReversed="{Binding ConversionReversed, Mode=TwoWay}"
+                              ValidatePasteBalance="False"
+                              VerticalAlignment="Top">
+          <Interaction.Behaviors>
+            <EventTriggerBehavior EventName="Loaded">
+              <InvokeCommandAction Command="{Binding #amountTb.FocusCommand}" />
+            </EventTriggerBehavior>
+          </Interaction.Behaviors>
+        </DualCurrencyEntryBox>
+
+        <!-- Receive in -->
+        <Label Grid.Row="2" Grid.Column="0"
+               Margin="0 3 0 0"
+               VerticalAlignment="Top" Content="{x:Static lang:Resources.ReceiveInWithColom}" Target="amountTb" />
+
+        <DockPanel Grid.Row="2" Grid.Column="2" VerticalAlignment="Top">
+
+          <ComboBox Name="CurrencyComboBox"
+                    MinWidth="250"
+                    IsEnabled="{Binding !FetchingLimits}"
+                    ItemsSource="{Binding Currencies}"
+                    SelectedItem="{Binding SelectedCurrency}"
+                    VerticalAlignment="Top" DockPanel.Dock="Left"
+                    VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+            <ComboBox.ItemTemplate>
+              <DataTemplate x:DataType="buySell1:CurrencyModel">
+                <StackPanel Orientation="Horizontal" Spacing="15">
+                  <TextBlock FontWeight="Bold" TextAlignment="Right" Text="{Binding Ticker}" Width="40" />
+                  <TextBlock Opacity="0.6" Margin="0 0 5 0" Text="{Binding Name}" />
+                </StackPanel>
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+
+          <Viewbox Margin="5 0 0 0" DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Center" Height="25" IsVisible="{Binding FetchingLimits}">
+            <ProgressRing Height="46" Width="46" Margin="10 0" IsIndeterminate="{Binding FetchingLimits}" />
+          </Viewbox>
+
+        </DockPanel>
+
+      </Grid>
 
     </DockPanel>
 

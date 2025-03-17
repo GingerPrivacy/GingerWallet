@@ -76,7 +76,8 @@ public partial class SendViewModel : RoutableViewModel
 
 		_conversionReversed = Services.UiConfig.SendAmountConversionReversed;
 
-		ExchangeRate = _walletModel.AmountProvider.UsdExchangeRate;
+		ExchangeRate = _walletModel.AmountProvider.ExchangeRate;
+		FiatTicker = _walletModel.AmountProvider.Ticker;
 
 		Balance =
 			_parameters.IsManual
@@ -130,7 +131,9 @@ public partial class SendViewModel : RoutableViewModel
 
 	public IObservable<Amount> Balance { get; }
 
-	public IObservable<string?> UsdContent => _clipboardObserver.ClipboardUsdContentChanged(RxApp.MainThreadScheduler);
+	public string FiatTicker { get; }
+
+	public IObservable<string?> FiatContent => _clipboardObserver.ClipboardFiatContentChanged(RxApp.MainThreadScheduler);
 
 	public IObservable<string?> BitcoinContent => _clipboardObserver.ClipboardBtcContentChanged(RxApp.MainThreadScheduler);
 
@@ -352,7 +355,7 @@ public partial class SendViewModel : RoutableViewModel
 
 		_suggestionLabels.Activate(disposables);
 
-		_walletModel.AmountProvider.BtcToUsdExchangeRates
+		_walletModel.AmountProvider.ExchangeRateObservable
 								   .BindTo(this, x => x.ExchangeRate)
 								   .DisposeWith(disposables);
 

@@ -77,8 +77,8 @@ public class DualCurrencyEntryBox : TemplatedControl
 	public static readonly StyledProperty<Money> BalanceBtcProperty =
 		AvaloniaProperty.Register<DualCurrencyEntryBox, Money>(nameof(BalanceBtc));
 
-	public static readonly StyledProperty<decimal> BalanceUsdProperty =
-		AvaloniaProperty.Register<DualCurrencyEntryBox, decimal>(nameof(BalanceUsd));
+	public static readonly StyledProperty<decimal> BalanceFiatProperty =
+		AvaloniaProperty.Register<DualCurrencyEntryBox, decimal>(nameof(BalanceFiat));
 
 	public static readonly StyledProperty<bool> ValidatePasteBalanceProperty =
 		AvaloniaProperty.Register<DualCurrencyEntryBox, bool>(nameof(ValidatePasteBalance));
@@ -215,10 +215,10 @@ public class DualCurrencyEntryBox : TemplatedControl
 		set => SetValue(BalanceBtcProperty, value);
 	}
 
-	public decimal BalanceUsd
+	public decimal BalanceFiat
 	{
-		get => GetValue(BalanceUsdProperty);
-		set => SetValue(BalanceUsdProperty, value);
+		get => GetValue(BalanceFiatProperty);
+		set => SetValue(BalanceFiatProperty, value);
 	}
 
 	public bool ValidatePasteBalance
@@ -318,11 +318,11 @@ public class DualCurrencyEntryBox : TemplatedControl
 		var text = RightEntryBox?.Text ?? "";
 		if (_isConversationTextFocused)
 		{
-			text = insertValue ? RemoveFormat(conversion?.FormattedFiat() ?? "") : RemoveFormat(text);
+			text = insertValue ? RemoveFormat(conversion?.FormattedFiat(format: "0.##") ?? "") : RemoveFormat(text);
 		}
 		else
 		{
-			text = AmountBtc > 0 ? conversion?.FormattedFiat() ?? string.Empty : string.Empty;
+			text = AmountBtc > 0 ? conversion?.FormattedFiat(format: "0.##") ?? string.Empty : string.Empty;
 		}
 
 		SetCurrentValue(ConversionTextProperty, text);
@@ -353,7 +353,7 @@ public class DualCurrencyEntryBox : TemplatedControl
 	private static string FullFormatFiat(decimal value, string currencyCode, bool approximate)
 	{
 		var part1 = approximate ? "≈ " : "";
-		var part2 = value.FormattedFiat();
+		var part2 = value.FormattedFiat(format: "0.##");
 		var part3 =
 			!string.IsNullOrWhiteSpace(currencyCode)
 				? $" {currencyCode}"

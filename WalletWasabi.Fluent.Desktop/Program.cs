@@ -1,29 +1,30 @@
-using System.Diagnostics;
 using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.ReactiveUI;
+using Avalonia.Threading;
+using GingerCommon.Logging;
+using Microsoft.Extensions.Logging;
+using ReactiveUI;
+using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Net.Sockets;
 using System.Reactive;
 using System.Reactive.Concurrency;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Threading;
-using ReactiveUI;
-using System.Linq;
-using WalletWasabi.Fluent.CrashReport;
-using WalletWasabi.Fluent.Helpers;
-using WalletWasabi.Logging;
-using WalletWasabi.Models;
-using System.Diagnostics.CodeAnalysis;
-using WalletWasabi.Fluent.Desktop.Extensions;
-using System.Net.Sockets;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using WalletWasabi.Daemon;
-using LogLevel = WalletWasabi.Logging.LogLevel;
-using System.Threading;
 using System.Reactive.Linq;
+using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
+using WalletWasabi.Daemon;
 using WalletWasabi.Extensions;
+using WalletWasabi.Fluent.CrashReport;
+using WalletWasabi.Fluent.Desktop.Extensions;
+using WalletWasabi.Fluent.Helpers;
+using WalletWasabi.Models;
+using WalletWasabi.Services.Terminate;
 
 namespace WalletWasabi.Fluent.Desktop;
 
@@ -35,7 +36,7 @@ public class Program
 	public static async Task<int> Main(string[] args)
 	{
 		// Crash reporting must be before the "single instance checking".
-		Logger.InitializeDefaults(Path.Combine(Config.DataDir, "Logs.txt"), LogLevel.Info);
+		Logger.CreateLogger(LogLevel.Information, LogLevel.Information, LogLevel.Information, Path.Combine(Config.DataDir, "Logs.txt"));
 		try
 		{
 			if (CrashReporter.TryGetExceptionFromCliArgs(args, out var exceptionToShow))
@@ -55,7 +56,7 @@ public class Program
 		try
 		{
 			var app = WasabiAppBuilder
-				.Create("Wasabi GUI", args)
+				.Create("Ginger GUI", args)
 				.EnsureSingleInstance()
 				.OnUnhandledExceptions(LogUnhandledException)
 				.OnUnobservedTaskExceptions(LogUnobservedTaskException)
@@ -81,6 +82,21 @@ public class Program
 			CrashReporter.Invoke(ex);
 			Logger.LogCritical(ex);
 			return 1;
+		}
+		finally
+		{
+			try
+			{
+				Logger.FinishFileLogging();
+				if (TerminateService.Instance?.RestartRequest ?? false)
+				{
+					AppLifetimeHelper.StartAppWithArgs();
+				}
+			}
+			catch (Exception ex)
+			{
+				Logger.LogCritical(ex);
+			}
 		}
 	}
 

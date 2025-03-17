@@ -5,6 +5,7 @@ using WalletWasabi.Blockchain.Transactions;
 using WalletWasabi.Extensions;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
+using WalletWasabi.Lang;
 using WalletWasabi.Models;
 
 namespace WalletWasabi.Fluent.Models;
@@ -74,7 +75,7 @@ public partial class TransactionBroadcasterModel
 
 		var inputAmountString =
 			totalInputValue is null
-			? "Unknown"
+			? Resources.Unknown
 			: $"{totalInputValue.ToFormattedString()} BTC";
 
 		var outputCount = outputAddressAmount.Length;
@@ -86,7 +87,7 @@ public partial class TransactionBroadcasterModel
 
 		var outputAmountString =
 			totalOutputValue is null
-			? "Unknown"
+			? Resources.Unknown
 			: $"{totalOutputValue.ToFormattedString()} BTC";
 
 		var networkFee = totalInputValue is null || totalOutputValue is null

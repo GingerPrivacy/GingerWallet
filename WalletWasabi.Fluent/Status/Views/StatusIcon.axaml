@@ -77,22 +77,25 @@
           <!-- Status -->
           <StackPanel Spacing="16">
 
-            <StatusItem Title="Tor" StatusText="{Binding HealthMonitor.TorStatus, Converter={x:Static converters:StatusConverters.TorStatusToString}}">
+            <StatusItem Title="Tor"
+                        StatusText="{Binding HealthMonitor.TorStatus, Converter={x:Static converters:StatusConverters.TorStatusToString}}">
               <StatusItem.Icon>
                 <Panel>
-                  <PathIcon Data="{StaticResource tor_icon}" IsVisible="{Binding !HealthMonitor.TorIssues.Count, FallbackValue=True}" />
+                  <PathIcon Data="{StaticResource tor_icon}"
+                            IsVisible="{Binding !HealthMonitor.TorIssues.Count, FallbackValue=True}" />
                   <views:TorIssues IsVisible="{Binding HealthMonitor.TorIssues.Count, FallbackValue=False}" />
                 </Panel>
               </StatusItem.Icon>
             </StatusItem>
 
             <StatusItem Title="Backend"
-                          StatusText="{Binding HealthMonitor.BackendStatus, Converter={x:Static converters:StatusConverters.BackendStatusToString}}">
+                        StatusText="{Binding HealthMonitor.BackendStatus, Converter={x:Static converters:StatusConverters.BackendStatusToString}}">
               <StatusItem.Icon>
                 <PathIcon Data="{StaticResource connector_regular}" />
               </StatusItem.Icon>
             </StatusItem>
-            <StatusItem Title="Peers" StatusText="{Binding HealthMonitor.Peers, Mode=OneWay, Converter={x:Static converters:StatusConverters.PeerStatusStringConverter}}">
+            <StatusItem Title="{x:Static lang:Resources.Peers}"
+                        StatusText="{Binding HealthMonitor.Peers, Mode=OneWay, Converter={x:Static converters:StatusConverters.PeerStatusStringConverter}}">
               <StatusItem.Icon>
                 <PathIcon Data="{StaticResource entities_regular}" />
               </StatusItem.Icon>
@@ -122,18 +125,20 @@
             <Separator Margin="-12 0 -12 6" />
 
             <StatusItem Title="{x:Static lang:Resources.UpdateAvailable}"
-                          StatusText="{Binding VersionText}">
+                        StatusText="{Binding VersionText}">
               <StatusItem.Icon>
                 <PathIcon Data="{StaticResource arrow_clockwise_regular}" />
               </StatusItem.Icon>
             </StatusItem>
-            <Button IsVisible="{Binding HealthMonitor.IsReadyToInstall}" Classes="activeHyperLink" Command="{Binding UpdateCommand}">
+            <Button IsVisible="{Binding HealthMonitor.IsReadyToInstall}" Classes="activeHyperLink"
+                    Command="{Binding UpdateCommand}">
               <StackPanel Spacing="5" Orientation="Horizontal">
                 <PathIcon Data="{StaticResource arrow_download_regular}" Height="13" />
                 <AccessText Text="{x:Static lang:Resources.CloseAndUpdate}" />
               </StackPanel>
             </Button>
-            <Button IsVisible="{Binding !HealthMonitor.IsReadyToInstall}" Classes="activeHyperLink" Command="{Binding ManualUpdateCommand}">
+            <Button IsVisible="{Binding !HealthMonitor.IsReadyToInstall}" Classes="activeHyperLink"
+                    Command="{Binding ManualUpdateCommand}">
               <StackPanel Spacing="5" Orientation="Horizontal">
                 <PathIcon Data="{StaticResource arrow_download_regular}" Height="13" />
                 <AccessText Text="{x:Static lang:Resources.Update}" />

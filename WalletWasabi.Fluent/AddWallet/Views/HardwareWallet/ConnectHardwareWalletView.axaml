@@ -10,14 +10,15 @@
              x:Class="WalletWasabi.Fluent.AddWallet.Views.HardwareWallet.ConnectHardwareWalletView">
 
   <ContentArea Title="{Binding Title}"
-                 Caption="{x:Static lang:Resources.ConnectHardwareWalletViewModelCaption}"
-                 CancelContent="{x:Static lang:Resources.Cancel}"
-                 EnableCancel="{Binding EnableCancel}"
-                 EnableBack="{Binding EnableBack}"
-                 EnableNext="{Binding ConfirmationRequired}" NextContent="{x:Static lang:Resources.Rescan}"
-                 ScrollViewer.VerticalScrollBarVisibility="Disabled">
+               Caption="{x:Static lang:Resources.ConnectHardwareWalletViewModelCaption}"
+               CancelContent="{x:Static lang:Resources.Cancel}"
+               EnableCancel="{Binding EnableCancel}"
+               EnableBack="{Binding EnableBack}"
+               EnableNext="{Binding ConfirmationRequired}" NextContent="{x:Static lang:Resources.Rescan}"
+               ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <DockPanel>
-      <Viewbox MaxHeight="150" DockPanel.Dock="Top" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 30 0 0">
+      <Viewbox MaxHeight="150" DockPanel.Dock="Top" VerticalAlignment="Top" HorizontalAlignment="Center"
+               Margin="0 30 0 0">
         <Interaction.Behaviors>
           <DynamicHeightBehavior HeightMultiplier="0.3" HideThresholdHeight="50" />
         </Interaction.Behaviors>
@@ -32,14 +33,18 @@
 
         <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center">
           <TextBlock Text="{Binding Message}" TextWrapping="Wrap" TextAlignment="Center" DockPanel.Dock="Top" />
-          <Button IsVisible="{Binding ExistingWalletFound}" Margin="0 5 0 0" Command="{Binding NavigateToExistingWalletLoginCommand}" Content="{x:Static lang:Resources.OpenWallet}" Classes="h7 plain activeHyperLink" HorizontalAlignment="Center" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" />
+          <Button IsVisible="{Binding ExistingWalletFound}" Margin="0 5 0 0"
+                  Command="{Binding NavigateToExistingWalletLoginCommand}"
+                  Content="{x:Static lang:Resources.OpenWallet}" Classes="h7 plain activeHyperLink"
+                  HorizontalAlignment="Center" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" />
         </DockPanel>
 
         <Panel IsVisible="{Binding !ConfirmationRequired}">
           <Viewbox MaxHeight="100" HorizontalAlignment="Center" VerticalAlignment="Center">
             <ProgressRing IsIndeterminate="True" Height="100" Width="100" />
           </Viewbox>
-          <InfoMessage Content="{x:Static lang:Resources.ConnectHardwareWalletViewModelEnterPassphrase}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Opacity="0.6" />
+          <InfoMessage Content="{x:Static lang:Resources.ConnectHardwareWalletViewModelEnterPassphrase}"
+                       HorizontalAlignment="Center" VerticalAlignment="Bottom" Opacity="0.6" />
         </Panel>
       </Panel>
     </DockPanel>

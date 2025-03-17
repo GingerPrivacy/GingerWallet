@@ -3,14 +3,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.TransactionBroadcasting.ViewModels"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371"
              x:DataType="viewModels:LoadTransactionViewModel"
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.TransactionBroadcasting.Views.LoadTransactionView">
   <ContentArea Title="{Binding Title}"
-                 Caption="Import or paste the transaction hex and broadcast it to the network."
-                 EnableCancel="{Binding EnableCancel}"
-                 EnableBack="{Binding EnableBack}">
+               Caption="{x:Static lang:Resources.ImportOrPasteTransactionHex}"
+               EnableCancel="{Binding EnableCancel}"
+               EnableBack="{Binding EnableBack}">
     <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
       <WrapPanel.Styles>
         <Style Selector="TileButton">
@@ -20,12 +21,12 @@
           <Setter Property="IconSize" Value="60" />
         </Style>
       </WrapPanel.Styles>
-      <TileButton Text="Import transaction"
-                    Icon="{StaticResource folder_move_regular}"
-                    Command="{Binding ImportTransactionCommand}" />
-      <TileButton Text="Paste from clipboard"
-                    Icon="{StaticResource clipboard_text_regular}"
-                    Command="{Binding PasteCommand}" />
+      <TileButton Text="{x:Static lang:Resources.ImportTransaction}"
+                  Icon="{StaticResource folder_move_regular}"
+                  Command="{Binding ImportTransactionCommand}" />
+      <TileButton Text="{x:Static lang:Resources.PasteFromClipboard}"
+                  Icon="{StaticResource clipboard_text_regular}"
+                  Command="{Binding PasteCommand}" />
     </WrapPanel>
   </ContentArea>
 </UserControl>

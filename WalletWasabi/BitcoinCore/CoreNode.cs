@@ -231,9 +231,9 @@ public class CoreNode
 			desiredConfigLines.Insert(0, sectionComment);
 		}
 
-		if (coreNode.Config.RemoveAll("mempoolreplacement") != 0 // We remove the line, so it will use the default - that is full-RBF.
-			|| coreNode.Config.AddOrUpdate(string.Join(Environment.NewLine, desiredConfigLines))
-			|| !File.Exists(configPath))
+		bool removedReplacement = coreNode.Config.RemoveAll("mempoolreplacement") != 0; // We remove the line, so it will use the default - that is full-RBF
+		bool updated = coreNode.Config.AddOrUpdate(string.Join(Environment.NewLine, desiredConfigLines)); // We always need to check AddOrUpdate
+		if (removedReplacement || updated || !File.Exists(configPath))
 		{
 			IoHelpers.EnsureContainingDirectoryExists(configPath);
 			await File.WriteAllTextAsync(configPath, coreNode.Config.ToString(), CancellationToken.None).ConfigureAwait(false);

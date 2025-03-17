@@ -51,7 +51,7 @@ public static class AppLifetimeHelper
 				break;
 
 			case (false, true):
-				StartAppWithArgs();
+				Services.TerminateService.ScheduleRestart();
 				(Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.Shutdown();
 				break;
 

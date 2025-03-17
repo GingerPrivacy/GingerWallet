@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using WalletWasabi.Fluent.SearchBar.ViewModels.SearchItems;
 
 namespace WalletWasabi.Fluent.SearchBar.ViewModels;
 
+[Localizable(false)]
 public class SearchBarDesignViewModel : ReactiveObject
 {
 	private readonly IEnumerable<ISearchItem> _items;

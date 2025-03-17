@@ -73,7 +73,7 @@ public class QrCode : Control
 		}
 
 		var file = await FileDialogHelper.SaveFileAsync(
-			"Save QR Code...",
+			Lang.Resources.SaveQRCode,
 			new[] { "png" },
 			$"{address}.png",
 			Environment.GetFolderPath(Environment.SpecialFolder.MyPictures));

@@ -139,6 +139,9 @@ public class Config
 			[nameof(Language)] = (
 				"Display language of the application",
 				GetLongValue("Language", PersistentConfig.DisplayLanguage, cliArgs)),
+			[nameof(ExchangeCurrency)] = (
+				"Exchange currency for BTC",
+				GetStringValue("ExchangeCurrency", PersistentConfig.ExchangeCurrency, cliArgs)),
 		};
 
 		// Check if any config value is overridden (either by an environment value, or by a CLI argument).
@@ -194,6 +197,7 @@ public class Config
 	public string LogLevel => GetEffectiveValue<StringValue, string>(nameof(LogLevel));
 	public LogMode[] LogModes => GetEffectiveValue<LogModeArrayValue, LogMode[]>(nameof(LogModes));
 	public int Language => GetEffectiveValue<IntValue, int>(nameof(Language));
+	public string ExchangeCurrency => GetEffectiveValue<StringValue, string>(nameof(ExchangeCurrency));
 
 	public bool EnableGpu => GetEffectiveValue<BoolValue, bool>(nameof(EnableGpu));
 	public string CoordinatorIdentifier => GetEffectiveValue<StringValue, string>(nameof(CoordinatorIdentifier));

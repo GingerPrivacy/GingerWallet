@@ -1,6 +1,8 @@
+using System.Globalization;
 using System.Threading.Tasks;
 using WalletWasabi.Fluent.Authorization.Models;
 using WalletWasabi.Fluent.Models.Wallets;
+using WalletWasabi.Lang;
 using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.Authorization.ViewModels;
@@ -13,7 +15,7 @@ public partial class HardwareWalletAuthDialogViewModel : AuthorizationDialogBase
 
 	public HardwareWalletAuthDialogViewModel(IHardwareWalletModel wallet, TransactionAuthorizationInfo transactionAuthorizationInfo)
 	{
-		Title = "Authorize with Hardware Wallet";
+		Title = Resources.AuthorizeWithHardwareWallet;
 
 		_wallet = wallet;
 		_transactionAuthorizationInfo = transactionAuthorizationInfo;
@@ -23,7 +25,7 @@ public partial class HardwareWalletAuthDialogViewModel : AuthorizationDialogBase
 
 		EnableBack = false;
 
-		AuthorizationFailedMessage = $"Authorization failed.{Environment.NewLine}Please, check your device and try again.";
+		AuthorizationFailedMessage = string.Format(CultureInfo.InvariantCulture, Resources.AuthorizationFailedWithDeviceCheck, Environment.NewLine);
 	}
 
 	public WalletType WalletType { get; }

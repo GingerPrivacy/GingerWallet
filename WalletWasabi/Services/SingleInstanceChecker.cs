@@ -46,6 +46,15 @@ public class SingleInstanceChecker : BackgroundService, IAsyncDisposable
 
 	public event EventHandler? OtherInstanceStarted;
 
+	public async Task StopCheckingAsync()
+	{
+		DisposeCts.Cancel();
+		if (ExecuteTask is not null)
+		{
+			await ExecuteTask.ConfigureAwait(false);
+		}
+	}
+
 	private int Port { get; }
 
 	private CancellationTokenSource DisposeCts { get; } = new();

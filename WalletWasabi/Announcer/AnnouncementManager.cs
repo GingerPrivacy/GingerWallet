@@ -19,7 +19,7 @@ namespace WalletWasabi.Announcer;
 
 public class AnnouncementManager : PeriodicRunner
 {
-	public event EventHandler<EventArgs>? AnnouncementsUpdated;
+	public event EventHandler<List<Announcement>>? AnnouncementsUpdated;
 
 	public AnnouncementManager(string dataDir, TimeSpan period, DisplayLanguage local, string extraNostrKey, WasabiHttpClientFactory httpClientFactory) : base(period)
 	{
@@ -62,7 +62,7 @@ public class AnnouncementManager : PeriodicRunner
 	private bool _announcementsChanged = false;
 	private Dictionary<string, Announcement> _announcementDictionary = new();
 
-	public List<Announcement> Announcements { get; } = new();
+	private List<Announcement> Announcements { get; } = new();
 
 	public string AnnouncementsPath { get; }
 
@@ -113,9 +113,10 @@ public class AnnouncementManager : PeriodicRunner
 				}
 			}
 		}
+
 		if (fireUpdate)
 		{
-			AnnouncementsUpdated.SafeInvoke(this, EventArgs.Empty);
+			AnnouncementsUpdated.SafeInvoke(this, Announcements.ToList());
 		}
 	}
 
@@ -135,6 +136,14 @@ public class AnnouncementManager : PeriodicRunner
 			_nostrClient = null;
 		}
 		return base.StopAsync(cancellationToken);
+	}
+
+	public List<Announcement> GetAnnouncement()
+	{
+		lock (_announcementDictionary)
+		{
+			return Announcements.ToList();
+		}
 	}
 
 	private void LoadAnnouncements()

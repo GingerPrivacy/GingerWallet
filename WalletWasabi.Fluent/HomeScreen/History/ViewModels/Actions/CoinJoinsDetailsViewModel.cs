@@ -6,6 +6,7 @@ using NBitcoin;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.ViewModels;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.HomeScreen.History.ViewModels.Actions;
 
@@ -26,7 +27,7 @@ public partial class CoinJoinsDetailsViewModel : RoutableViewModel
 
 	public CoinJoinsDetailsViewModel(UiContext uiContext, IWalletModel wallet, TransactionModel transaction)
 	{
-		Title = "Coinjoins";
+		Title = Resources.Coinjoins;
 		_wallet = wallet;
 		_transaction = transaction;
 
@@ -59,7 +60,7 @@ public partial class CoinJoinsDetailsViewModel : RoutableViewModel
 		if (_wallet.Transactions.TryGetById(_transaction.Id, _transaction.IsChild, out var transaction))
 		{
 			Date = transaction.DateToolTipString;
-			Status = transaction.IsConfirmed ? "Confirmed" : "Pending";
+			Status = transaction.IsConfirmed ? Resources.Confirmed : Resources.Pending;
 			CoinJoinFeeAmount = _wallet.AmountProvider.Create(Math.Abs(transaction.DisplayAmount));
 			TransactionId = transaction.Id;
 			TransactionIds = new ObservableCollection<uint256>(transaction.Children.Select(x => x.Id));

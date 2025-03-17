@@ -38,7 +38,7 @@ public partial class OrderViewModel : ViewModelBase
 		}
 		catch (Exception ex)
 		{
-			Logger.LogError($"Failed to open browser!", ex);
+			Logger.LogError(ex);
 			UiContext.Navigate().To().ShowErrorDialog(ex.ToUserFriendlyString(), Resources.Browser, Resources.BrowserError);
 		}
 	}

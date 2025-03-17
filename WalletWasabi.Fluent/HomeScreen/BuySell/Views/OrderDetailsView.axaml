@@ -10,7 +10,8 @@
              x:Class="WalletWasabi.Fluent.HomeScreen.BuySell.Views.OrderDetailsView">
   <ContentArea Title="{Binding Title}"
                NextContent="{x:Static lang:Resources.Done}" EnableNext="True"
-               EnableCancel="{Binding EnableCancel}">
+               EnableCancel="{Binding EnableCancel}"
+               EnableBack="{Binding EnableBack}">
 
     <StackPanel Spacing="15">
 

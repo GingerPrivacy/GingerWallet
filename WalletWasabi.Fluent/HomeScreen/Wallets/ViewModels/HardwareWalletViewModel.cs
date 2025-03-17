@@ -3,6 +3,7 @@ using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
+using WalletWasabi.Lang;
 using WalletWasabi.Logging;
 using WalletWasabi.Wallets;
 
@@ -16,7 +17,7 @@ public class HardwareWalletViewModel : WalletViewModel
 		{
 			try
 			{
-				var file = await FileDialogHelper.OpenFileAsync("Import Transaction", new[] { "psbt", "txn", "*" });
+				var file = await FileDialogHelper.OpenFileAsync(Resources.ImportTransactionFileDialogTitle, new[] { "psbt", "txn", "*" });
 				if (file is { })
 				{
 					var path = file.Path.AbsolutePath;
@@ -27,7 +28,7 @@ public class HardwareWalletViewModel : WalletViewModel
 			catch (Exception ex)
 			{
 				Logger.LogError(ex);
-				await ShowErrorAsync(Title, ex.ToUserFriendlyString(), "It was not possible to load the transaction.");
+				await ShowErrorAsync(Title, ex.ToUserFriendlyString(), Resources.UnableToLoadTransaction);
 			}
 		});
 	}

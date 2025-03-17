@@ -94,7 +94,7 @@ public abstract partial class OffersViewModel : RoutableViewModel
 		}
 		catch (Exception ex)
 		{
-			Logger.LogError($"Failed to open browser!", ex);
+			Logger.LogError(ex);
 			await ShowErrorAsync(Resources.Browser, ex.ToUserFriendlyString(), Resources.BrowserError);
 		}
 	}

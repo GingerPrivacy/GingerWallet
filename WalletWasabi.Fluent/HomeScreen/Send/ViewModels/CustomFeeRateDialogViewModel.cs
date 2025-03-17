@@ -19,7 +19,7 @@ public partial class CustomFeeRateDialogViewModel : DialogViewModelBase<FeeRate>
 
 	public CustomFeeRateDialogViewModel(TransactionInfo transactionInfo)
 	{
-		Title = Resources.Advanced;
+		Title = Resources.CustomFeeRate;
 
 		_transactionInfo = transactionInfo;
 

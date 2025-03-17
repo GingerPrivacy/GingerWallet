@@ -201,6 +201,7 @@ public class WasabiApplication
 		{
 			await global.DisposeAsync().ConfigureAwait(false);
 		}
+		await SingleInstanceChecker.StopCheckingAsync();
 	}
 
 	private void SetupLogger()

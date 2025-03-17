@@ -43,7 +43,14 @@ public class TerminateService
 	/// <remarks>Assigned once so that there are no issues with <see cref="TerminationCts"/> being disposed.</remarks>
 	public CancellationToken CancellationToken { get; }
 
+	public bool RestartRequest { get; private set; } = false;
+
 	private bool IsSystemEventsSubscribed { get; set; }
+
+	public void ScheduleRestart()
+	{
+		RestartRequest = true;
+	}
 
 	/// <summary>In case of an unrecoverable exception, SignalGracefulCrash will store here the exception to pass down to the CrashReporter.</summary>
 	public Exception? GracefulCrashException { get; private set; }

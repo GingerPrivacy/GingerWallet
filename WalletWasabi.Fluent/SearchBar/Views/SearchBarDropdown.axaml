@@ -12,7 +12,8 @@
              xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.SearchBar.ViewModels"
              xmlns:views="clr-namespace:WalletWasabi.Fluent.SearchBar.Views"
              xmlns:settings="clr-namespace:WalletWasabi.Fluent.SearchBar.Models.Settings"
-             xmlns:searchItems="clr-namespace:WalletWasabi.Fluent.SearchBar.ViewModels.SearchItems">
+             xmlns:searchItems="clr-namespace:WalletWasabi.Fluent.SearchBar.ViewModels.SearchItems"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi">
   <Design.DataContext>
     <viewModels:SearchBarDesignViewModel />
   </Design.DataContext>
@@ -120,7 +121,8 @@
   </UserControl.DataTemplates>
 
   <Panel VerticalAlignment="Center">
-    <TextBlock IsVisible="{Binding !#Items.IsVisible, FallbackValue=False}" Margin="10">No results</TextBlock>
+    <TextBlock IsVisible="{Binding !#Items.IsVisible, FallbackValue=False}" Margin="10"
+               Text="{x:Static lang:Resources.NoResults}"/>
     <ItemsControl x:Name="Items" IsVisible="{Binding !!Groups.Count}" ItemsSource="{Binding Groups}">
       <ItemsControl.ItemTemplate>
         <DataTemplate DataType="{x:Type viewModels:SearchItemGroup}">

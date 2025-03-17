@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 
 namespace WalletWasabi.Fluent.SearchBar.Models.Settings;
 
+[Localizable(false)]
 public class SettingSelector : IDataTemplate
 {
 	public List<IDataTemplate> DataTemplates { get; set; } = new();

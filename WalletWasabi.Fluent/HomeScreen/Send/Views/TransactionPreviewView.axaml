@@ -41,6 +41,7 @@
             <Style Selector="FlyoutPresenter">
               <Setter Property="MaxHeight" Value="1200" />
               <Setter Property="MinWidth" Value="400" />
+              <Setter Property="MaxWidth" Value="600" />
               <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
             </Style>
             <Style Selector="FlyoutPresenter /template/ Panel#RootPanel">

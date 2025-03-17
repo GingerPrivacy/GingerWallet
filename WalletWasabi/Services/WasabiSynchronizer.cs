@@ -1,5 +1,6 @@
 using NBitcoin.RPC;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
@@ -22,10 +23,8 @@ namespace WalletWasabi.Services;
 
 public class WasabiSynchronizer : PeriodicRunner, INotifyPropertyChanged, IThirdPartyFeeProvider, IWasabiBackendStatusProvider
 {
-	private decimal _usdExchangeRate;
-
+	private ImmutableArray<ExchangeRate> _exchangeRates;
 	private TorStatus _torStatus;
-
 	private BackendStatus _backendStatus;
 
 	public WasabiSynchronizer(TimeSpan period, int maxFiltersToSync, BitcoinStore bitcoinStore, WasabiHttpClientFactory httpClientFactory) : base(period)
@@ -37,6 +36,7 @@ public class WasabiSynchronizer : PeriodicRunner, INotifyPropertyChanged, IThird
 		FilterProcessor = new FilterProcessor(bitcoinStore);
 		HttpClientFactory = httpClientFactory;
 		WasabiClient = httpClientFactory.SharedWasabiClient;
+		_exchangeRates = GetDefaultRates();
 	}
 
 	#region EventsPropertiesMembers
@@ -57,10 +57,10 @@ public class WasabiSynchronizer : PeriodicRunner, INotifyPropertyChanged, IThird
 	private WasabiClient WasabiClient { get; }
 
 	/// <summary>Gets the Bitcoin price in USD.</summary>
-	public decimal UsdExchangeRate
+	public ImmutableArray<ExchangeRate> ExchangeRates
 	{
-		get => _usdExchangeRate;
-		private set => RaiseAndSetIfChanged(ref _usdExchangeRate, value);
+		get => _exchangeRates;
+		private set => RaiseAndSetIfChanged(ref _exchangeRates, value);
 	}
 
 	public TorStatus TorStatus
@@ -92,6 +92,19 @@ public class WasabiSynchronizer : PeriodicRunner, INotifyPropertyChanged, IThird
 	public bool InError => BackendStatus != BackendStatus.Connected;
 
 	#endregion EventsPropertiesMembers
+
+	/*
+	 * TODO
+	 * Temporarily here.
+	 */
+
+	public string[] SupportedCurrencies { get; } = new[]
+	{
+		"USD",
+		"EUR",
+		"CNY",
+		"HUF",
+	};
 
 	protected override async Task ActionAsync(CancellationToken cancel)
 	{
@@ -157,10 +170,9 @@ public class WasabiSynchronizer : PeriodicRunner, INotifyPropertyChanged, IThird
 				TriggerRound();
 			}
 
-			ExchangeRate? exchangeRate = response.ExchangeRates.FirstOrDefault();
-			if (exchangeRate is { Rate: > 0 })
+			if (response.ExchangeRates.Any(x => x.Rate > 0))
 			{
-				UsdExchangeRate = exchangeRate.Rate;
+				ExchangeRates = response.ExchangeRates.ToImmutableArray();
 			}
 
 			await FilterProcessor.ProcessAsync((uint)response.BestHeight, response.FiltersResponseState, response.Filters).ConfigureAwait(false);
@@ -200,5 +212,10 @@ public class WasabiSynchronizer : PeriodicRunner, INotifyPropertyChanged, IThird
 		field = value;
 		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		return true;
+	}
+
+	private ImmutableArray<ExchangeRate> GetDefaultRates()
+	{
+		return SupportedCurrencies.Select(currency => new ExchangeRate { Rate = 0, Ticker = currency }).ToImmutableArray();
 	}
 }

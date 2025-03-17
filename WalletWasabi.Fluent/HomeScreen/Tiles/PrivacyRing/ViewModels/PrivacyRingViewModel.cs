@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
@@ -14,6 +15,7 @@ using WalletWasabi.Fluent.HomeScreen.Tiles.ViewModels;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.ViewModels;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.HomeScreen.Tiles.PrivacyRing.ViewModels;
 
@@ -30,7 +32,7 @@ public partial class PrivacyRingViewModel : RoutableViewModel
 
 	public PrivacyRingViewModel(UiContext uiContext, IWalletModel wallet)
 	{
-		Title = "Privacy Progress";
+		Title = Resources.PrivacyProgress;
 		UiContext = uiContext;
 		_wallet = wallet;
 

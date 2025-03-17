@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Input;
 using ReactiveUI;
 using WalletWasabi.Fluent.Common.ViewModels;
@@ -6,6 +7,7 @@ using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Helpers;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.HelpAndSupport.ViewModels;
 
@@ -29,14 +31,14 @@ public partial class AboutViewModel : RoutableViewModel
 				new LinkViewModel(UiContext)
 				{
 					Link = SourceCodeLink,
-					Description = "Source Code (GitHub)",
+					Description = Resources.SourceCodeGitHub,
 					IsClickable = true
 				},
 				new SeparatorViewModel(),
 				new LinkViewModel(UiContext)
 				{
 					Link = ClearnetLink,
-					Description = "Website (Clearnet)",
+					Description = Resources.WebsiteClearnet,
 					IsClickable = true
 				},
 				// Remove for now
@@ -51,21 +53,21 @@ public partial class AboutViewModel : RoutableViewModel
 				new LinkViewModel(UiContext)
 				{
 					Link = UserSupportLink,
-					Description = "User Support",
+					Description = Resources.UserSupportViewModelTitle,
 					IsClickable = true
 				},
 				new SeparatorViewModel(),
 				new LinkViewModel(UiContext)
 				{
 					Link = BugReportLink,
-					Description = "Bug Report",
+					Description = Resources.BugReport,
 					IsClickable = true
 				},
 				new SeparatorViewModel(),
 				new LinkViewModel(UiContext)
 				{
 					Link = FAQLink,
-					Description = "FAQ",
+					Description = Resources.FAQ,
 					IsClickable = true
 				},
 			};
@@ -73,7 +75,7 @@ public partial class AboutViewModel : RoutableViewModel
 		License = new LinkViewModel(UiContext)
 		{
 			Link = LicenseLink,
-			Description = "MIT License",
+			Description = Resources.MITLicense,
 			IsClickable = true
 		};
 
@@ -100,17 +102,25 @@ public partial class AboutViewModel : RoutableViewModel
 
 	public Version ClientVersion => Constants.ClientVersion;
 
+	[Localizable(false)]
 	public static string ClearnetLink => "https://gingerwallet.io/";
 
+	[Localizable(false)]
 	public static string TorLink => "http://wasabiukrxmkdgve5kynjztuovbg43uxcbcxn6y2okcrsg7gb6jdmbad.onion";
 
+	[Localizable(false)]
 	public static string SourceCodeLink => "https://github.com/GingerPrivacy/GingerWallet";
 
+	[Localizable(false)]
 	public static string UserSupportLink => "https://github.com/GingerPrivacy/GingerWallet/discussions";
+
+	[Localizable(false)]
 
 	public static string BugReportLink => "https://github.com/GingerPrivacy/GingerWallet/issues/new?template=bug-report.md";
 
+	[Localizable(false)]
 	public static string FAQLink => "https://gingerwallet.io/#help";
 
+	[Localizable(false)]
 	public static string LicenseLink => "https://github.com/GingerPrivacy/GingerWallet/blob/master/LICENSE.md";
 }

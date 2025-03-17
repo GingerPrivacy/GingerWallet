@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -12,6 +13,7 @@ using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.HomeScreen.Tiles.PrivacyBar.ViewModels;
 using WalletWasabi.Fluent.HomeScreen.Tiles.PrivacyRing.Interfaces;
 using WalletWasabi.Fluent.Models.Wallets;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.HomeScreen.Tiles.ViewModels;
 
@@ -26,7 +28,7 @@ public partial class PrivacyControlTileViewModel : ActivatableViewModel, IPrivac
 	private PrivacyControlTileViewModel(IWalletModel wallet)
 	{
 		_wallet = wallet;
-
+		PrivateText = Resources.Private.ToUpper(CultureInfo.InvariantCulture);
 		var canShowDetails = _wallet.HasBalance;
 
 		ShowDetailsCommand = ReactiveCommand.Create(ShowDetails, canShowDetails);
@@ -56,6 +58,8 @@ public partial class PrivacyControlTileViewModel : ActivatableViewModel, IPrivac
 	public IObservable<decimal> PrivateAmount { get; }
 
 	public IObservable<decimal> TotalAmount { get; }
+
+	public string PrivateText { get; }
 
 	protected override void OnActivated(CompositeDisposable disposables)
 	{

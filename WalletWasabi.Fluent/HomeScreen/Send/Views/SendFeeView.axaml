@@ -146,7 +146,8 @@
               DockPanel.Dock="Bottom"
               HorizontalAlignment="Center"
               VerticalAlignment="Bottom"
-              Content="{x:Static lang:Resources.Advanced}" />
+              Content="{x:Static lang:Resources.CustomFeeRate}" />
+
       <DockPanel MinHeight="80" DataContext="{Binding FeeChart}">
         <DockPanel.Resources>
         </DockPanel.Resources>
@@ -222,7 +223,7 @@
                 <Setter Property="FontSize" Value="{StaticResource FontSizeH8}" />
               </Style>
             </StackPanel.Styles>
-            <TextBlock Text="{Binding CurrentSatoshiPerByte, Mode=OneWay, StringFormat={x:Static lang:Resources.EstimatedConfirmationTimeWithValue}}" />
+            <TextBlock Text="{Binding CurrentSatoshiPerByte, Mode=OneWay, StringFormat={x:Static lang:Resources.FeeRateFormatted}}" />
             <TextBlock
               Text="{Binding CurrentConfirmationTargetString, Mode=OneWay, StringFormat={x:Static lang:Resources.EstimatedConfirmationTimeWithValue}}" />
           </StackPanel>

@@ -1,12 +1,15 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
 using WalletWasabi.Announcer;
+using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Infrastructure;
 
 namespace WalletWasabi.Fluent.Announcement.Models;
@@ -70,11 +73,13 @@ public partial class AnnouncementsModel
 		_announcementManager = Services.HostedServices.Get<AnnouncementManager>();
 
 		Observable
-			.FromEventPattern(_announcementManager, nameof(_announcementManager.AnnouncementsUpdated))
-			.Do(_ =>
+			.FromEventPattern<List<Announcer.Announcement>>(_announcementManager, nameof(_announcementManager.AnnouncementsUpdated))
+			.Select(x => x.EventArgs)
+			.StartWith(_announcementManager.GetAnnouncement())
+			.Do(announcements =>
 			{
 				_listCache.Clear();
-				_listCache.AddOrUpdate(_announcementManager.Announcements.Select(x => new AnnouncementModel(x)));
+				_listCache.AddOrUpdate(announcements.Select(x => new AnnouncementModel(x)));
 			})
 			.Subscribe();
 
@@ -85,7 +90,6 @@ public partial class AnnouncementsModel
 			.Do(x => _announcementManager.MarkAsRead(x.Announcement))
 			.Subscribe();
 
-		_listCache.AddOrUpdate(_announcementManager.Announcements.Select(x => new AnnouncementModel(x)));
 		InitializedTcs.TrySetResult();
 	}
 }

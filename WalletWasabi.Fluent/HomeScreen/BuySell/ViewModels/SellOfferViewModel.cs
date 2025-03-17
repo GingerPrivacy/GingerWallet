@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Threading.Tasks;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.HomeScreen.BuySell.Models;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.HomeScreen.BuySell.ViewModels;
 
@@ -11,6 +12,6 @@ public class SellOfferViewModel : OfferViewModel
 	{
 		Amount = offer.AmountTo.ToFormattedFiat(offer.CurrencyTo);
 		Fee = offer.Fee.ToFormattedFiat(offer.CurrencyTo);
-		FeeToolTip = string.Format(CultureInfo.InvariantCulture, "After deducting the {0} fee, you will receive {1} — no further charges apply.", Fee, offer.AmountTo.ToFormattedFiat(offer.CurrencyTo));
+		FeeToolTip = string.Format(CultureInfo.InvariantCulture, Resources.AfterDeductingFee, Fee, offer.AmountTo.ToFormattedFiat(offer.CurrencyTo));
 	}
 }

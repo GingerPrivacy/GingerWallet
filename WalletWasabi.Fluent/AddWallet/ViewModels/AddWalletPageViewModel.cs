@@ -10,6 +10,7 @@ using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Models;
+using WalletWasabi.Lang;
 using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.AddWallet.ViewModels;
@@ -59,7 +60,7 @@ public partial class AddWalletPageViewModel : DialogViewModelBase<Unit>
 	{
 		try
 		{
-			var file = await FileDialogHelper.OpenFileAsync("Import wallet file", new[] { "json" });
+			var file = await FileDialogHelper.OpenFileAsync(Resources.ImportWallet, new[] { "json" });
 
 			if (file is null)
 			{
@@ -85,7 +86,7 @@ public partial class AddWalletPageViewModel : DialogViewModelBase<Unit>
 		catch (Exception ex)
 		{
 			Logger.LogError(ex);
-			await ShowErrorAsync("Import wallet", ex.ToUserFriendlyString(), "Ginger Wallet was unable to import your wallet.");
+			await ShowErrorAsync(Resources.ImportWallet, ex.ToUserFriendlyString(), Resources.WalletImportFailed);
 		}
 	}
 

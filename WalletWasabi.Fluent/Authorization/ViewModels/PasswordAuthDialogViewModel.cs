@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Threading.Tasks;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Lang;
@@ -19,7 +20,7 @@ public partial class PasswordAuthDialogViewModel : AuthorizationDialogBase
 			throw new InvalidOperationException("Passphrase authorization is not possible on hardware wallets.");
 		}
 
-		Title = "Enter your passphrase";
+		Title = Resources.EnterPassphraseAuth;
 
 		ContinueText = continueText;
 
@@ -30,7 +31,7 @@ public partial class PasswordAuthDialogViewModel : AuthorizationDialogBase
 
 		EnableBack = false;
 
-		AuthorizationFailedMessage = $"The passphrase is incorrect.{Environment.NewLine}Please try again.";
+		AuthorizationFailedMessage = string.Format(CultureInfo.InvariantCulture, Resources.IncorrectPassphrase, Environment.NewLine);
 	}
 
 	public string ContinueText { get; init; }

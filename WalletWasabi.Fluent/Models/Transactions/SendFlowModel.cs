@@ -24,15 +24,19 @@ public record SendFlowModel
 	public SendFlowModel(Wallet wallet, IWalletModel walletModel):
 		this(wallet, wallet.Coins, walletModel.Coins)
 	{
+		WalletModel = walletModel;
 	}
 
 	/// <summary>Manual Control Send Flow. Uses only the specified coins.</summary>
 	public SendFlowModel(Wallet wallet, IWalletModel walletModel, IEnumerable<SmartCoin> coins):
 		this(wallet, new CoinsView(coins), new UserSelectionCoinListModel(wallet, walletModel, coins.ToArray()))
 	{
+		WalletModel = walletModel;
 	}
 
 	public Wallet Wallet { get; }
+
+	public IWalletModel WalletModel { get; }
 
 	public ICoinsView AvailableCoins { get; }
 

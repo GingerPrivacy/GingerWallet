@@ -9,6 +9,7 @@ using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.TreeDataGrid;
+using WalletWasabi.Lang;
 using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.HomeScreen.History.ViewModels.HistoryItems;
@@ -162,8 +163,8 @@ public abstract partial class HistoryItemViewModelBase : ViewModelBase, ITreeDat
 		}
 		catch (Exception ex)
 		{
-			Logger.LogError($"Failed to open browser!", ex);
-			UiContext.Navigate().To().ShowErrorDialog(ex.ToUserFriendlyString(), "Open in browser failed", "Ginger Wallet could not open the browser, please check the logs for more details.");
+			Logger.LogError(ex);
+			UiContext.Navigate().To().ShowErrorDialog(ex.ToUserFriendlyString(), Resources.Browser, Resources.BrowserError);
 		}
 	}
 }

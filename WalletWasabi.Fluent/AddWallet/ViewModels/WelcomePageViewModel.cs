@@ -7,6 +7,7 @@ using ReactiveUI;
 using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Models.UI;
+using WalletWasabi.Fluent.Settings.Models;
 using WalletWasabi.Lang;
 using WalletWasabi.Models;
 
@@ -19,6 +20,7 @@ public partial class WelcomePageViewModel : DialogViewModelBase<Unit>
 	[AutoNotify] private string? _nextLabel;
 	[AutoNotify] private bool _enableNextKey = true;
 	[AutoNotify] private bool _isRestartNeeded;
+	[AutoNotify] private DisplayLanguage _selectedDisplayLanguage;
 
 	private WelcomePageViewModel()
 	{
@@ -28,6 +30,7 @@ public partial class WelcomePageViewModel : DialogViewModelBase<Unit>
 		NextCommand = ReactiveCommand.Create(OnNext);
 		CanGoBack = this.WhenAnyValue(x => x.SelectedIndex, i => i > 0);
 		BackCommand = ReactiveCommand.Create(() => SelectedIndex--, CanGoBack);
+		_selectedDisplayLanguage = Settings.SelectedDisplayLanguage;
 
 		this.WhenAnyValue(x => x.SelectedIndex)
 			.Subscribe(
@@ -41,6 +44,16 @@ public partial class WelcomePageViewModel : DialogViewModelBase<Unit>
 			.Skip(1)
 			.Where(x => !x)
 			.Subscribe(x => EnableNextKey = false);
+
+		this.WhenAnyValue(x => x.SelectedDisplayLanguage)
+			.Skip(1)
+			.Subscribe(lang =>
+			{
+				var preset = LocalizationPreset.GetPreset(lang);
+
+				Settings.SelectedDisplayLanguage = preset.Language;
+				Settings.SelectedExchangeCurrency = preset.ExchangeCurrency;
+			});
 	}
 
 	public IObservable<bool> CanGoBack { get; }

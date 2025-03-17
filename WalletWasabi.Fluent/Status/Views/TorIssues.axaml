@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:tor="clr-namespace:WalletWasabi.Tor.StatusChecker;assembly=WalletWasabi"
              xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.Status.ViewModels"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="WalletWasabi.Fluent.Status.Views.TorIssues"
              x:CompileBindings="True"
@@ -15,8 +16,8 @@
     </Button.Content>
     <ToolTip.Tip>
       <DockPanel>
-        <TextBlock DockPanel.Dock="Top" Text="Tor network is having issues:" />
-        <TextBlock DockPanel.Dock="Bottom" Text="Click this icon for details" />
+        <TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Resources.TorNetworkIssues}" />
+        <TextBlock DockPanel.Dock="Bottom" Text="{x:Static lang:Resources.ClickIconForDetails}" />
         <ItemsControl Margin="8" ItemsSource="{Binding HealthMonitor.TorIssues}">
           <ItemsControl.ItemTemplate>
             <DataTemplate x:DataType="tor:Issue">
