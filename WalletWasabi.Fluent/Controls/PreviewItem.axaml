@@ -1,6 +1,7 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:conv="using:WalletWasabi.Fluent.Converters">
+                    xmlns:conv="using:WalletWasabi.Fluent.Converters"
+                    xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi">
 
   <Design.PreviewWith>
     <Border Width="200">
@@ -25,7 +26,7 @@
                        IsVisible="{Binding !!$self.Text}"/>
             <DockPanel HorizontalAlignment="Left" DockPanel.Dock="Bottom">
               <ClipboardCopyButton x:Name="PART_ClipboardCopyButton"
-                                     ToolTip.Tip="Copy"
+                                     ToolTip.Tip="{x:Static lang:Resources.Copy}"
                                      DockPanel.Dock="Right" Width="30"
                                      Text="{Binding Path=CopyableContent, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static conv:StringConverters.AsString}}"
                                      IsVisible="{TemplateBinding IsCopyButtonVisible}" />

@@ -6,6 +6,7 @@ using ReactiveUI;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.ViewModels;
+using WalletWasabi.Lang;
 using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.HomeScreen.History.ViewModels.Actions;
@@ -18,7 +19,7 @@ public partial class SpeedUpTransactionDialogViewModel : RoutableViewModel
 
 	private SpeedUpTransactionDialogViewModel(IWalletModel wallet, SpeedupTransaction speedupTransaction)
 	{
-		Title = "Speed Up Transaction";
+		Title = Resources.SpeedUpTransaction;
 
 		_wallet = wallet;
 		_speedupTransaction = speedupTransaction;
@@ -60,16 +61,14 @@ public partial class SpeedUpTransactionDialogViewModel : RoutableViewModel
 			if (isAuthorized)
 			{
 				await _wallet.Transactions.SendAsync(speedupTransaction);
-				var (title, caption) = ("Success", "Your transaction has been successfully accelerated.");
-
-				UiContext.Navigate().To().SendSuccess(speedupTransaction.BoostingTransaction.Transaction, title, caption, NavigationTarget.CompactDialogScreen);
+				UiContext.Navigate().To().SendSuccess(speedupTransaction.BoostingTransaction.Transaction, NavigationTarget.CompactDialogScreen);
 			}
 		}
 		catch (Exception ex)
 		{
 			Logger.LogError(ex);
-			var msg = speedupTransaction.TargetTransaction.Confirmed ? "The transaction is already confirmed." : ex.ToUserFriendlyString();
-			UiContext.Navigate().To().ShowErrorDialog(msg, "Speed Up Failed", "Ginger Wallet was unable to speed up your transaction.", NavigationTarget.CompactDialogScreen);
+			var msg = speedupTransaction.TargetTransaction.Confirmed ? Resources.TransactionAlreadyConfirmed : ex.ToUserFriendlyString();
+			UiContext.Navigate().To().ShowErrorDialog(msg, Resources.SpeedUpFailed, Resources.GingerWalletUnableToSpeedUpTransaction, NavigationTarget.CompactDialogScreen);
 		}
 
 		IsBusy = false;
@@ -79,7 +78,7 @@ public partial class SpeedUpTransactionDialogViewModel : RoutableViewModel
 	{
 		if (_wallet.Auth.HasPassword)
 		{
-			return await Navigate().To().PasswordAuthDialog(_wallet, "Send").GetResultAsync();
+			return await Navigate().To().PasswordAuthDialog(_wallet, Resources.WalletSend).GetResultAsync();
 		}
 
 		return true;

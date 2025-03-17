@@ -9,7 +9,7 @@
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.HomeScreen.BuySell.Controls.OffersView">
   <ContentArea Title="{Binding Title}"
-               Caption="Accepting an offer will redirect you to the provider's page to complete the process."
+               Caption="{x:Static lang:Resources.AcceptingOfferRedirect}"
                EnableNext="False"
                EnableCancel="{Binding EnableCancel}"
                EnableBack="{Binding EnableBack}"

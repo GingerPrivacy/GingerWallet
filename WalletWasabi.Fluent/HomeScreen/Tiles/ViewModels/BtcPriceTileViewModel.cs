@@ -7,8 +7,8 @@ public class BtcPriceTileViewModel : ActivatableViewModel
 {
 	public BtcPriceTileViewModel(IAmountProvider amountProvider)
 	{
-		UsdPerBtc = amountProvider.BtcToUsdExchangeRates;
+		FiatPerBtc = amountProvider.ExchangeRateObservable;
 	}
 
-	public IObservable<decimal> UsdPerBtc { get; }
+	public IObservable<decimal> FiatPerBtc { get; }
 }

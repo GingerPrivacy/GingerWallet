@@ -3,14 +3,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.HelpAndSupport.ViewModels"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371"
              x:DataType="viewModels:AboutViewModel"
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.HelpAndSupport.Views.AboutView">
   <Panel>
     <ContentArea EnableNext="{Binding !EnableBack}"
-                          NextContent="Close"
-                          EnableBack="{Binding EnableBack}">
+                 NextContent="Close"
+                 EnableBack="{Binding EnableBack}">
       <DockPanel LastChildFill="True">
         <Viewbox DockPanel.Dock="Top" Margin="25,25,25,50" Width="112" VerticalAlignment="Center"
                  HorizontalAlignment="Center">
@@ -21,7 +22,8 @@
           <ContentControl Template="{DynamicResource wasabi_logo_text_dynamic}"
                           VerticalAlignment="Center" ClipToBounds="False" />
         </Viewbox>
-        <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Text="{Binding ClientVersion}" Margin="0,5,0,50" Opacity="0.5" />
+        <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Text="{Binding ClientVersion}" Margin="0,5,0,50"
+                   Opacity="0.5" />
         <DockPanel>
           <StackPanel Spacing="10" DockPanel.Dock="Top" HorizontalAlignment="Stretch" Orientation="Vertical">
             <!-- Links -->
@@ -69,7 +71,7 @@
           <DockPanel HorizontalAlignment="Center" DockPanel.Dock="Top">
             <TextBlock Margin=" 0 0 0 -0.5"
                        VerticalAlignment="Center"
-                       Text="This open source software is licensed with " />
+                       Text="{x:Static lang:Resources.ThisOpenSourceSoftwareIsLicensedWith}" />
             <ContentControl Content="{Binding License}" />
           </DockPanel>
           <!-- Advanced -->
@@ -80,7 +82,7 @@
                   Command="{Binding AboutAdvancedInfoDialogCommand}">
             <StackPanel Orientation="Horizontal" Spacing="5" Margin="2">
               <PathIcon Data="{StaticResource info_regular}" />
-              <TextBlock Text="Advanced Information" Classes="Hyperlink" />
+              <TextBlock Text="{x:Static lang:Resources.AdvancedInformation}" Classes="Hyperlink" />
             </StackPanel>
           </Button>
         </DockPanel>

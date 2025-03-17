@@ -12,6 +12,7 @@ using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.Models;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Fluent.Validation;
+using WalletWasabi.Lang;
 using WalletWasabi.Logging;
 using WalletWasabi.Models;
 
@@ -53,9 +54,9 @@ public partial class WalletVerifyRecoveryWordsViewModel : RoutableViewModel
 	private async Task ShowErrorAsync()
 	{
 		await ShowErrorAsync(
-			"Error",
-			"Try again, but if you are unable to verify your Recovery Words, you MUST move your funds to a new wallet as soon as possible.",
-			"The Recovery Words you entered were incorrect.");
+			Resources.Error,
+			Resources.VerifyRecoveryWordsErrorMessage,
+			Resources.VerifyRecoveryWordsErrorCaption);
 	}
 
 	private async Task OnNextAsync(IWalletModel wallet)
@@ -84,7 +85,7 @@ public partial class WalletVerifyRecoveryWordsViewModel : RoutableViewModel
 		catch (Exception ex)
 		{
 			Logger.LogError(ex);
-			await ShowErrorAsync(Title, ex.ToUserFriendlyString(), "Ginger Wallet was unable to verify the recovery words.");
+			await ShowErrorAsync(Title, ex.ToUserFriendlyString(), Resources.UnableToVerifyRecoveryWords);
 		}
 	}
 
@@ -100,7 +101,7 @@ public partial class WalletVerifyRecoveryWordsViewModel : RoutableViewModel
 			return;
 		}
 
-		errors.Add(ErrorSeverity.Error, "Recovery Words are not valid.");
+		errors.Add(ErrorSeverity.Error, Resources.InvalidRecoveryWords);
 	}
 
 	private string GetTagsAsConcatString()

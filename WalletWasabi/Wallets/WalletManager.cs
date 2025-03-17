@@ -1,6 +1,7 @@
 using NBitcoin;
 using Nito.AsyncEx;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
@@ -11,6 +12,7 @@ using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Blockchain.Transactions;
 using WalletWasabi.Extensions;
 using WalletWasabi.Helpers;
+using WalletWasabi.Lang;
 using WalletWasabi.Logging;
 using WalletWasabi.Models;
 using WalletWasabi.Services;
@@ -147,22 +149,22 @@ public class WalletManager : IWalletProvider
 
 		if (string.IsNullOrEmpty(walletName))
 		{
-			return (ErrorSeverity.Error, "The name cannot be empty");
+			return (ErrorSeverity.Error, Resources.WalletNameCannotBeEmpty);
 		}
 
 		if (walletName.IsTrimmable())
 		{
-			return (ErrorSeverity.Error, "Leading and trailing white spaces are not allowed!");
+			return (ErrorSeverity.Error, Resources.WhitespaceMessage);
 		}
 
 		if (File.Exists(walletFilePath))
 		{
-			return (ErrorSeverity.Error, $"A wallet named {walletName} already exists. Please try a different name.");
+			return (ErrorSeverity.Error, string.Format(CultureInfo.InvariantCulture, Resources.WalletNameAlreadyExists, walletName));
 		}
 
 		if (!WalletGenerator.ValidateWalletName(walletName))
 		{
-			return (ErrorSeverity.Error, "Selected wallet name is not valid. Please try a different name.");
+			return (ErrorSeverity.Error, Resources.WalletNameInvalid);
 		}
 
 		return null;

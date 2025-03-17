@@ -1,5 +1,6 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi">
 
   <Thickness x:Key="FunctionButtonPadding">13,7</Thickness>
 
@@ -69,7 +70,7 @@
 
   <ControlTheme x:Key="DialogSelectAllButton" TargetType="ToggleButton" BasedOn="{StaticResource DialogButton}">
     <Style Selector="^[IsChecked=True]">
-      <Setter Property="ToolTip.Tip" Value="Unselect all" />
+      <Setter Property="ToolTip.Tip" Value="{x:Static lang:Resources.UnselectAll}" />
       <Setter Property="ContentTemplate">
         <Setter.Value>
           <DataTemplate>
@@ -79,7 +80,7 @@
       </Setter>
     </Style>
     <Style Selector="^[IsChecked=False]">
-      <Setter Property="ToolTip.Tip" Value="Select all" />
+      <Setter Property="ToolTip.Tip" Value="{x:Static lang:Resources.SelectAll}" />
       <Setter Property="ContentTemplate">
         <Setter.Value>
           <DataTemplate>

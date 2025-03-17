@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:hardwareWallet="clr-namespace:WalletWasabi.Fluent.AddWallet.ViewModels.HardwareWallet"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              mc:Ignorable="d" d:DesignWidth="428" d:DesignHeight="371"
              x:DataType="hardwareWallet:DetectedHardwareWalletViewModel"
              x:CompileBindings="True"
@@ -14,7 +15,7 @@
                EnableNext="False"
                ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
-    <QuestionControl Content="{Binding TypeName, StringFormat={}{0} was detected. Is this correct?}"
+    <QuestionControl Content="{Binding TypeName, StringFormat={x:Static lang:Resources.DetectedConfirmation}}"
                      YesCommand="{Binding NextCommand}"
                      NoCommand="{Binding NoCommand}"
                      HighlightButton="YesButton">

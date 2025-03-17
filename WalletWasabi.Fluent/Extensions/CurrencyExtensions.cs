@@ -5,6 +5,7 @@ using WalletWasabi.Blockchain.TransactionBuilding;
 using WalletWasabi.Extensions;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Models;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.Extensions;
 
@@ -72,21 +73,21 @@ public static class CurrencyExtensions
 		return amount.ToString(format, FormatInfo).Trim();
 	}
 
-	public static decimal BtcToUsd(this Money money, decimal exchangeRate)
+	public static decimal BtcToFiat(this Money money, decimal exchangeRate)
 	{
 		return money.ToDecimal(MoneyUnit.BTC) * exchangeRate;
 	}
 
-	public static string ToUsdAprox(this decimal n) => n != decimal.Zero ? $"≈{ToUsdFormatted(n)}" : "";
+	public static string ToFiatAprox(this decimal n, string ticker) => n != decimal.Zero ? $"≈{ToFiatFormatted(n, ticker)}" : "";
 
-	public static string ToUsdAproxBetweenParens(this decimal n) => n != decimal.Zero ? $"({ToUsdAprox(n)})" : "";
+	public static string ToFiatAproxBetweenParens(this decimal n, string ticker) => n != decimal.Zero ? $"({ToFiatAprox(n, ticker)})" : "";
 
-	public static string ToUsdFormatted(this decimal n)
+	public static string ToFiatFormatted(this decimal n, string ticker)
 	{
-		return ToUsdAmountFormatted(n) + " USD";
+		return ToFiatAmountFormatted(n) + " " + ticker;
 	}
 
-	public static string ToUsdAmountFormatted(this decimal n)
+	public static string ToFiatAmountFormatted(this decimal n)
 	{
 		return n switch
 		{
@@ -121,7 +122,7 @@ public static class CurrencyExtensions
 	{
 		if (fee is null)
 		{
-			return "Unknown";
+			return Resources.Unknown;
 		}
 
 		var displayUnit = Services.UiConfig.FeeDisplayUnit.GetEnumValueOrDefault(FeeDisplayUnit.BTC);
@@ -137,7 +138,7 @@ public static class CurrencyExtensions
 	{
 		if (fee is null)
 		{
-			return "Unknown";
+			return Resources.Unknown;
 		}
 
 		var displayUnit = Services.UiConfig.FeeDisplayUnit.GetEnumValueOrDefault(FeeDisplayUnit.BTC);

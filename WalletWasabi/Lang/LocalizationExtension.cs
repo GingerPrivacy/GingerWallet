@@ -24,4 +24,9 @@ public static class LocalizationExtension
 			_ => language.ToString()
 		};
 	}
+
+	public static string[] ToKeywords(this string words)
+	{
+		return words.Replace(" ", "").Split(',');
+	}
 }

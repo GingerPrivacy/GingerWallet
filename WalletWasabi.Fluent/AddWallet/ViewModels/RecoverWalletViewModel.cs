@@ -13,6 +13,7 @@ using WalletWasabi.Fluent.AddWallet.Models;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Fluent.Validation;
+using WalletWasabi.Lang;
 using WalletWasabi.Logging;
 using WalletWasabi.Models;
 
@@ -78,7 +79,7 @@ public partial class RecoverWalletViewModel : RoutableViewModel
 		catch (Exception ex)
 		{
 			Logger.LogError(ex);
-			await ShowErrorAsync(Title, ex.ToUserFriendlyString(), "Ginger Wallet was unable to recover the wallet.");
+			await ShowErrorAsync(Title, ex.ToUserFriendlyString(), Resources.UnableToRecoverWallet);
 		}
 
 		IsBusy = false;
@@ -111,7 +112,7 @@ public partial class RecoverWalletViewModel : RoutableViewModel
 			return;
 		}
 
-		errors.Add(ErrorSeverity.Error, "Invalid set. Make sure you typed all your recovery words in the correct order.");
+		errors.Add(ErrorSeverity.Error, Resources.InvalidSetRecoveryWords);
 	}
 
 	private string GetTagsAsConcatString()

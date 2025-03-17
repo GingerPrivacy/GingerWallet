@@ -9,7 +9,7 @@
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.Common.Views.SuccessView">
   <ContentArea EnableNext="False"
-                 ScrollViewer.VerticalScrollBarVisibility="Disabled">
+               ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <views1:SuccessAnimationView VerticalAlignment="Center" />
   </ContentArea>
 </UserControl>

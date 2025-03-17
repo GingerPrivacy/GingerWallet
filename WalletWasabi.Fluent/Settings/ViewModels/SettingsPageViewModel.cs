@@ -41,6 +41,7 @@ public partial class SettingsPageViewModel : DialogViewModelBase<Unit>
 		SetupCancel(enableCancel: false, enableCancelOnEscape: true, enableCancelOnPressed: true);
 
 		GeneralSettingsTab = new GeneralSettingsTabViewModel(UiContext, UiContext.ApplicationSettings);
+		AppearanceSettingsTab = new AppearanceSettingsTabViewModel(UiContext, UiContext.ApplicationSettings);
 		BitcoinTabSettings = new BitcoinTabSettingsViewModel(UiContext.ApplicationSettings);
 		AdvancedSettingsTab = new AdvancedSettingsTabViewModel(UiContext.ApplicationSettings);
 		SecuritySettingsTab = new SecuritySettingsTabViewModel(UiContext, UiContext.ApplicationSettings);
@@ -64,7 +65,7 @@ public partial class SettingsPageViewModel : DialogViewModelBase<Unit>
 
 		OpenSecurityTabCommand = ReactiveCommand.CreateFromTask(async () =>
 		{
-			SelectedTab = 3;
+			SelectedTab = 4;
 			await Activate();
 		});
 	}
@@ -76,9 +77,9 @@ public partial class SettingsPageViewModel : DialogViewModelBase<Unit>
 	public ICommand RestartCommand { get; }
 
 	public GeneralSettingsTabViewModel GeneralSettingsTab { get; }
+	public AppearanceSettingsTabViewModel AppearanceSettingsTab { get; }
 	public BitcoinTabSettingsViewModel BitcoinTabSettings { get; }
 	public AdvancedSettingsTabViewModel AdvancedSettingsTab { get; }
-
 	public SecuritySettingsTabViewModel SecuritySettingsTab { get; }
 
 	public async Task Activate()

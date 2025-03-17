@@ -1,6 +1,9 @@
+using System.Linq;
 using NBitcoin;
 using ReactiveUI;
 using System.Reactive.Linq;
+using WalletWasabi.Fluent.Converters;
+using WalletWasabi.Models;
 using WalletWasabi.Services;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
@@ -9,19 +12,25 @@ namespace WalletWasabi.Fluent.Models.Wallets;
 public partial class AmountProvider : ReactiveObject
 {
 	private readonly WasabiSynchronizer _synchronizer;
-	[AutoNotify] private decimal _usdExchangeRate;
+	[AutoNotify] private decimal _exchangeRate;
 
-	public AmountProvider(WasabiSynchronizer synchronizer)
+	public AmountProvider(WasabiSynchronizer synchronizer, string ticker)
 	{
 		_synchronizer = synchronizer;
-		BtcToUsdExchangeRates =
-			this.WhenAnyValue(provider => provider._synchronizer.UsdExchangeRate)
+		Ticker = ticker;
+		ExchangeRateObservable =
+			this.WhenAnyValue(provider => provider._synchronizer.ExchangeRates)
+				.Select(x => x.FirstOrDefault(y => y.Ticker == Ticker)?.Rate ?? 0)
 				.ObserveOn(RxApp.MainThreadScheduler);
 
-		BtcToUsdExchangeRates.BindTo(this, x => x.UsdExchangeRate);
+		ExchangeRateObservable.BindTo(this, x => x.ExchangeRate);
 	}
 
-	public IObservable<decimal> BtcToUsdExchangeRates { get; }
+	public IObservable<decimal> ExchangeRateObservable { get; }
+
+	public string Ticker { get; }
+
+	public string[] SupportedCurrencies => _synchronizer.SupportedCurrencies;
 
 	public Amount Create(Money? money)
 	{

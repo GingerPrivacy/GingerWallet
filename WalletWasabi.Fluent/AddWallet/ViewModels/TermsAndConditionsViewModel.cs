@@ -5,6 +5,7 @@ using ReactiveUI;
 using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.AddWallet.ViewModels;
 
@@ -14,7 +15,7 @@ public partial class TermsAndConditionsViewModel : DialogViewModelBase<bool>
 
 	private TermsAndConditionsViewModel()
 	{
-		Title = "Terms and conditions";
+		Title = Resources.TermsAndConditions;
 
 		ViewTermsCommand = ReactiveCommand.Create(() => Navigate().To().LegalDocuments());
 

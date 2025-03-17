@@ -56,12 +56,12 @@
     </Style>
   </UserControl.Styles>
   <ContentArea Title="{Binding Title}"
-                 EnableNext="True" NextContent="{x:Static lang:Resources.Done}"
-                 EnableCancel="False"
-                 EnableBack="False"
-                 Caption="Hover over the ring segments to see coin details"
-                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+               EnableNext="True" NextContent="{x:Static lang:Resources.Done}"
+               EnableCancel="False"
+               EnableBack="False"
+               Caption="{x:Static lang:Resources.HoverOverRingSegments}"
+               ScrollViewer.VerticalScrollBarVisibility="Disabled"
+               ScrollViewer.HorizontalScrollBarVisibility="Disabled">
     <DockPanel>
 
       <ItemsControl ItemsSource="{Binding References}"
@@ -93,10 +93,11 @@
       <Panel x:Name="Panel">
         <Interaction.Behaviors>
           <BoundsObserverBehavior Bounds="{Binding #Panel.Bounds, Mode=OneWay}"
-                                            Width="{Binding Width, Mode=TwoWay}"
-                                            Height="{Binding Height, Mode=TwoWay}" />
+                                  Width="{Binding Width, Mode=TwoWay}"
+                                  Height="{Binding Height, Mode=TwoWay}" />
           <AdaptiveBehavior>
-            <AdaptiveClassSetter MinHeight="0" MaxHeight="290" ClassName="small" TargetControl="{Binding #SelectedItem}" />
+            <AdaptiveClassSetter MinHeight="0" MaxHeight="290" ClassName="small"
+                                 TargetControl="{Binding #SelectedItem}" />
           </AdaptiveBehavior>
         </Interaction.Behaviors>
 

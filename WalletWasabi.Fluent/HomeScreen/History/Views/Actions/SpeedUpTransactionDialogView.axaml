@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converters="clr-namespace:WalletWasabi.Fluent.Converters"
              xmlns:actions="clr-namespace:WalletWasabi.Fluent.HomeScreen.History.ViewModels.Actions"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
              x:DataType="actions:SpeedUpTransactionDialogViewModel"
              x:CompileBindings="True"
@@ -13,14 +14,15 @@
     <Style Selector="AmountControl" x:CompileBindings="False">
       <Setter Property="Template">
         <ControlTemplate TargetType="AmountControl">
-          <StackPanel DataContext="{Binding Path=Amount, RelativeSource={RelativeSource TemplatedParent}}" Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center">
+          <StackPanel DataContext="{Binding Path=Amount, RelativeSource={RelativeSource TemplatedParent}}"
+                      Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center">
             <TextBlock TextAlignment="Center"
                        FontWeight="Bold"
                        Text="{Binding Btc, Converter={x:Static converters:MoneyConverters.ToFeeWithUnit}, FallbackValue='0.0000 0232 BTC'}"
                        Classes="h5" VerticalAlignment="Bottom" />
             <TextBlock
               FontWeight="Bold"
-              Text="{Binding Usd^, Converter={x:Static converters:MoneyConverters.ToUsdApprox}, FallbackValue='≈3.5 USD'}"
+              Text="{Binding Fiat^, Converter={x:Static converters:MoneyConverters.ToFiatApprox}, FallbackValue='≈3.5 USD'}"
               Opacity="0.6" VerticalAlignment="Bottom" Margin="0 0 0 3" Classes="h8" />
           </StackPanel>
         </ControlTemplate>
@@ -28,19 +30,19 @@
     </Style>
   </UserControl.Styles>
 
-  <ContentArea Title="Speed Up Transaction"
-                 EnableCancel="{Binding EnableCancel}"
-                 EnableBack="{Binding EnableBack}"
-                 EnableNext="True" NextContent="Confirm"
-                 IsBusy="{Binding IsBusy}"
-                 MinWidth="500">
+  <ContentArea Title="{Binding Title}"
+               EnableCancel="{Binding EnableCancel}"
+               EnableBack="{Binding EnableBack}"
+               EnableNext="True" NextContent="Confirm"
+               IsBusy="{Binding IsBusy}"
+               MinWidth="500">
     <Panel>
       <DockPanel IsVisible="{Binding AreWePayingTheFee}">
         <Viewbox MaxHeight="120" Margin="40" DockPanel.Dock="Top">
           <PathIcon Data="{StaticResource rocket_regular}" Opacity="0.6" />
         </Viewbox>
         <StackPanel Spacing="10" HorizontalAlignment="Center">
-          <TextBlock Text="Speeding up this transaction will cost you" />
+          <TextBlock Text="{x:Static lang:Resources.SpeedingUpTransactionCostAmount}" />
           <AmountControl Amount="{Binding Fee}" />
         </StackPanel>
       </DockPanel>
@@ -56,7 +58,7 @@
         </Panel>
         <StackPanel Spacing="10" HorizontalAlignment="Center">
           <StackPanel Spacing="10">
-            <TextBlock Text="Speeding up this transaction will deduct from the recipient's amount" />
+            <TextBlock Text="{x:Static lang:Resources.SpeedingUpTransactionDeductFromRecipient}" />
             <AmountControl Amount="{Binding Fee}" />
           </StackPanel>
         </StackPanel>

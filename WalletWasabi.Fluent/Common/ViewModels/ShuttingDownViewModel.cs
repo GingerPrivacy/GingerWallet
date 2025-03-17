@@ -3,6 +3,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ReactiveUI;
 using WalletWasabi.Fluent.Navigation.ViewModels;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.Common.ViewModels;
 
@@ -14,7 +15,7 @@ public partial class ShuttingDownViewModel : RoutableViewModel
 
 	private ShuttingDownViewModel(ApplicationViewModel applicationViewModel, bool restart)
 	{
-		Title = "Please wait to shut down...";
+		Title = Resources.PleaseWaitToShutDown;
 
 		_applicationViewModel = applicationViewModel;
 		_restart = restart;

@@ -3,6 +3,7 @@ using ReactiveUI;
 using WalletWasabi.Fluent.Common.ViewModels;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Models.UI;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.OpenDirectory.ViewModels;
 
@@ -24,7 +25,7 @@ public abstract class OpenFileViewModel : TriggerCommandViewModel
 			}
 			catch (Exception ex)
 			{
-				await ShowErrorAsync("Open", ex.ToUserFriendlyString(), "Ginger Wallet was unable to open the file");
+				await ShowErrorAsync(Resources.Open, ex.ToUserFriendlyString(), Resources.GingerWalletUnableToOpenFile);
 			}
 		});
 }

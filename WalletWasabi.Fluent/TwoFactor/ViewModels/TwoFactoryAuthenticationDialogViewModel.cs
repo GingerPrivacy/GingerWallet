@@ -31,7 +31,7 @@ public partial class TwoFactoryAuthenticationDialogViewModel : DialogViewModelBa
 			catch (Exception ex)
 			{
 				Logger.LogError(ex);
-				await ShowErrorAsync(Title, Resources.TokenVerificationFailed, $"{ex.Message}");
+				await ShowErrorAsync(Title, Resources.TokenVerificationFailed, "");
 			}
 			finally
 			{

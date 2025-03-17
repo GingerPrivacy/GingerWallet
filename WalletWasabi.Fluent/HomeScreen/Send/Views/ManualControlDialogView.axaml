@@ -9,7 +9,7 @@
              x:Class="WalletWasabi.Fluent.HomeScreen.Send.Views.ManualControlDialogView">
 
   <ContentArea Title="{Binding Title}"
-               Caption="Select the coins that are allowed for the transaction to use"
+               Caption="{x:Static lang:Resources.SelectAllowedCoins}"
                EnableNext="True" NextContent="{x:Static lang:Resources.Continue}"
                EnableCancel="{Binding EnableCancel}"
                EnableBack="{Binding EnableBack}"
@@ -17,7 +17,7 @@
                ScrollViewer.HorizontalScrollBarVisibility="Disabled">
     <ContentArea.TopContent>
       <StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Right">
-        <Button Theme="{StaticResource DialogSortButton}"  ToolTip.Tip="Sorting">
+        <Button Theme="{StaticResource DialogSortButton}"  ToolTip.Tip="{x:Static lang:Resources.Sorting}">
           <Button.Flyout>
             <Flyout Placement="BottomEdgeAlignedRight">
               <sorting:SortControl Sortables="{Binding CoinList.Sortables}" />

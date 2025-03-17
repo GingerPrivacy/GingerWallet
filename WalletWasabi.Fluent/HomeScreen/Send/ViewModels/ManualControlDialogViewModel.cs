@@ -13,6 +13,7 @@ using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
 using WalletWasabi.Fluent.Models.Transactions;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
+using WalletWasabi.Lang;
 using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.HomeScreen.Send.ViewModels;
@@ -34,7 +35,7 @@ public partial class ManualControlDialogViewModel : DialogViewModelBase<IEnumera
 	public ManualControlDialogViewModel(UiContext uiContext, IWalletModel walletModel, Wallet wallet, LabelsArray? preLabel = null, bool continueWithFixedAmount = false)
 	{
 		UiContext = uiContext;
-		Title = "Manual Control";
+		Title = Resources.WalletManualControl;
 
 		CoinList = new CoinListViewModel(UiContext, walletModel.Coins, [], allowCoinjoiningCoinSelection: true, ignorePrivacyMode: true, allowSelection: true);
 

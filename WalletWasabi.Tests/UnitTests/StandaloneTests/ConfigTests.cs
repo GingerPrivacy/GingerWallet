@@ -1,36 +1,32 @@
 using NBitcoin;
 using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WalletWasabi.Bases;
+using WalletWasabi.Daemon;
 using WalletWasabi.Tests.Helpers;
 using WalletWasabi.WabiSabi.Backend;
 using WalletWasabi.WabiSabi.Models;
 using Xunit;
 
-namespace WalletWasabi.Tests.UnitTests.Bases;
+namespace WalletWasabi.Tests.UnitTests.StandaloneTests;
 
-/// <summary>
-/// Tests for <see cref="ConfigManager"/>
-/// </summary>
-public class ConfigManagerTests
+public class ConfigTests
 {
-	/// <summary>
-	/// Tests <see cref="ConfigManager.CheckFileChange{T}(string, T)"/>.
-	/// </summary>
 	[Fact]
-	public async Task CheckFileChangeTestAsync()
+	public async Task CheckConfigFileChangeTestAsync()
 	{
 		string workDirectory = await Common.GetEmptyWorkDirAsync();
-		string configPath = Path.Combine(workDirectory, $"{nameof(CheckFileChangeTestAsync)}.json");
+		string configPath = Path.Combine(workDirectory, $"{nameof(CheckConfigFileChangeTestAsync)}.json");
 
 		// Create config and store it.
-		WabiSabiConfig config = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
+		WabiSabiConfig config = new WabiSabiConfig();
 		config.SetFilePath(configPath);
 		config.ToFile();
 
-		// Check that the stored config corresponds to the expected "vanilla" config.
+		// Check that the stored config corresponds to the expected default config.
 		{
-			string expectedFileContents = GetVanillaConfigString();
+			string expectedFileContents = GetWasabiConfigString();
 			string actualFileContents = ReadAllTextAndNormalize(configPath);
 
 			Assert.Equal(expectedFileContents, actualFileContents);
@@ -38,10 +34,8 @@ public class ConfigManagerTests
 			// No change was done.
 			Assert.False(ConfigManager.CheckFileChange(configPath, config));
 		}
-
-		// Change coordination fee rate.
 		{
-			// Double coordination fee rate.
+			// Change coordination fee rate.
 			config.CoordinationFeeRate = new CoordinationFeeRate(rate: 0.006m, plebsDontPayThreshold: Money.Coins(0.01m));
 
 			// Change should be detected.
@@ -50,20 +44,40 @@ public class ConfigManagerTests
 			// Now store and check that JSON is as expected.
 			config.ToFile();
 
-			string expectedFileContents = GetVanillaConfigString(coordinationFeeRate: 0.006m);
+			string expectedFileContents = GetWasabiConfigString(coordinationFeeRate: 0.006m);
 			string actualFileContents = ReadAllTextAndNormalize(configPath);
 
 			Assert.Equal(expectedFileContents, actualFileContents);
 		}
+	}
 
-		static string GetVanillaConfigString(decimal coordinationFeeRate = 0.003m)
-				=> $$"""
+	public static string ReadAllTextAndNormalize(string configPath) => File.ReadAllText(configPath).ReplaceLineEndings("\n");
+
+	[Fact]
+	public async Task ToFileAndLoadFileTestAsync()
+	{
+		string workDirectory = await Common.GetEmptyWorkDirAsync();
+		string configPath = Path.Combine(workDirectory, $"{nameof(ToFileAndLoadFileTestAsync)}.json");
+
+		string expected = GetPersistentConfigString();
+
+		PersistentConfig config = new() { LocalBitcoinCoreDataDir = TestLocalBitcoinCoreDataDir };
+
+		string storedJson = ConfigManagerNg.ToFile(configPath, config);
+		Assert.Equal(expected, storedJson.ReplaceLineEndings("\n"));
+
+		PersistentConfig readConfig = ConfigManagerNg.LoadFile<PersistentConfig>(configPath);
+
+		Assert.Equal(TestLocalBitcoinCoreDataDir, readConfig.LocalBitcoinCoreDataDir);
+		Assert.True(config.DeepEquals(readConfig));
+
+		string reserialized = JsonSerializer.Serialize(readConfig, ConfigManagerNg.DefaultOptions);
+		Assert.Equal(expected, reserialized.ReplaceLineEndings("\n"));
+	}
+
+	public static string GetWasabiConfigString(decimal coordinationFeeRate = 0.003m)
+		=> $$"""
 			{
-			  "ExtraMiningFeeRate": 0.3,
-			  "MinimumMiningFeeRate": 4.1,
-			  "RecommendationFeatureFlags": 31,
-			  "MiningFeeEstimatorSetting": "[0.500, 0.500][1.200, 0.500, 2.000, 100.000][0.000, 9999.000][0.200, -20.000]",
-			  "UseMiningFeeEstimator": false,
 			  "ConfirmationTarget": 108,
 			  "DoSSeverity": "0.10",
 			  "DoSMinTimeForFailedToVerify": "31d 0h 0m 0s",
@@ -125,8 +139,46 @@ public class ConfigManagerTests
 			  "IsCoordinationEnabled": true
 			}
 			""".ReplaceLineEndings("\n");
-	}
 
-	private static string ReadAllTextAndNormalize(string configPath)
-		=> File.ReadAllText(configPath).ReplaceLineEndings("\n");
+	private static string TestLocalBitcoinCoreDataDir = "LocalBitcoinCoreDataDir";
+
+	public static string GetPersistentConfigString()
+	=> $$"""
+			{
+			  "Network": "Main",
+			  "MainNetBackendUri": "https://api.gingerwallet.io/",
+			  "TestNetClearnetBackendUri": "https://api.gingerwallet.co/",
+			  "RegTestBackendUri": "http://localhost:37127/",
+			  "MainNetCoordinatorUri": "https://api.gingerwallet.io/",
+			  "TestNetCoordinatorUri": "https://api.gingerwallet.co/",
+			  "RegTestCoordinatorUri": "http://localhost:37127/",
+			  "UseTor": "Enabled",
+			  "TerminateTorOnExit": false,
+			  "TorBridges": [],
+			  "DownloadNewVersion": true,
+			  "StartLocalBitcoinCoreOnStartup": false,
+			  "StopLocalBitcoinCoreOnShutdown": true,
+			  "LocalBitcoinCoreDataDir": "{{TestLocalBitcoinCoreDataDir}}",
+			  "MainNetBitcoinP2pEndPoint": "127.0.0.1:8333",
+			  "TestNetBitcoinP2pEndPoint": "127.0.0.1:18333",
+			  "RegTestBitcoinP2pEndPoint": "127.0.0.1:18444",
+			  "JsonRpcServerEnabled": false,
+			  "JsonRpcUser": "",
+			  "JsonRpcPassword": "",
+			  "JsonRpcServerPrefixes": [
+			    "http://127.0.0.1:37128/",
+			    "http://localhost:37128/"
+			  ],
+			  "DustThreshold": "0.00005",
+			  "EnableGpu": true,
+			  "CoordinatorIdentifier": "CoinJoinCoordinatorIdentifier",
+			  "MaxCoordinationFeeRate": 0.003,
+			  "MaxCoinJoinMiningFeeRate": 300.0,
+			  "AbsoluteMinInputCount": 6,
+			  "MaxBlockRepositorySize": 1000,
+			  "Language": 1,
+			  "ExchangeCurrency": "USD",
+			  "ExtraNostrPubKey": ""
+			}
+			""".ReplaceLineEndings("\n");
 }

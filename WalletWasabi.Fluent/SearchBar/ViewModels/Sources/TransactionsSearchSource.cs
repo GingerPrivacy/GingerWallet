@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -14,6 +15,7 @@ using WalletWasabi.Fluent.SearchBar.Interfaces;
 using WalletWasabi.Fluent.SearchBar.Models;
 using WalletWasabi.Fluent.SearchBar.ViewModels.SearchItems;
 using WalletWasabi.Helpers;
+using WalletWasabi.Lang;
 using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.SearchBar.ViewModels.Sources;
@@ -89,9 +91,9 @@ public class TransactionsSearchSource : ReactiveObject, ISearchSource, IDisposab
 	{
 		return new ActionableItem(
 			item.Transaction.Id.ToString(),
-			@$"Found in ""{wallet.WalletModel.Name}""",
+			string.Format(CultureInfo.InvariantCulture, Resources.FoundIn, wallet.WalletModel.Name),
 			() => NavigateTo(wallet, item),
-			"Transactions",
+			Resources.WalletTransactions,
 			new List<string>())
 		{
 			Icon = GetIcon(item)

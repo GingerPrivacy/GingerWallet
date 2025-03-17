@@ -151,7 +151,7 @@
     <value>管理常规设置</value>
   </data>
   <data name="GeneralSettingsTabViewModelKeywords" xml:space="preserve">
-    <value>设置，常规，比特币，深色，模式，运行，Ginger，电脑，系统，启动，后台，关闭，自动，复制，粘贴，地址，自定义，更改，地址，费用，显示，格式，BTC，sats，浏览器</value>
+    <value>设置，常规，比特币，运行，Ginger，计算机，系统，开始，背景，关闭，自动，复制，粘贴，地址，自定义，改变，地址，浏览器</value>
   </data>
   <data name="BitcoinTabSettingsViewModelCaption" xml:space="preserve">
     <value>管理比特币设置</value>
@@ -193,7 +193,7 @@
     <value>关于，软件，版本，源代码，Github，网站，协调器，统计，Tor，洋葱，用户，支持，错误，报告，FAQ，问题，文档，文档，许可，高级，信息，硬件，钱包</value>
   </data>
   <data name="BroadcasterViewModelTitle" xml:space="preserve">
-    <value>广播器</value>
+    <value>广播</value>
   </data>
   <data name="BroadcasterViewModelCaption" xml:space="preserve">
     <value>在这里广播您的交易</value>
@@ -280,7 +280,7 @@
     <value>设置，常规，用户，界面，高级</value>
   </data>
   <data name="SettingsPageViewModelCaption" xml:space="preserve">
-    <value>管理外观、隐私和其他设置</value>
+    <value>管理常规、高级和其他设置</value>
   </data>
   <data name="SettingsPageViewModelTitle" xml:space="preserve">
     <value>设置</value>
@@ -519,9 +519,6 @@
   <data name="PlebStopThreshold" xml:space="preserve">
     <value>停止 Coinjoin 的阈值</value>
   </data>
-  <data name="WalletToolsCheckBackup" xml:space="preserve">
-    <value>您检查了钱包备份了吗？</value>
-  </data>
   <data name="WalletToolsRecommend" xml:space="preserve">
     <value>建议您不时验证钱包恢复词。</value>
   </data>
@@ -616,7 +613,7 @@
     <value>找不到硬件钱包。请确保它已连接。</value>
   </data>
   <data name="TransactionCanceledOnDevice" xml:space="preserve">
-    <value>交易已在设备上取消。</value>
+    <value>操作在设备上被取消。</value>
   </data>
   <data name="UnknownErrorDeviceCheck" xml:space="preserve">
     <value>未知错误。请确保设备已连接且未繁忙，然后重试。</value>
@@ -775,7 +772,7 @@
     <value>您是否希望隐藏以下标签的地址？</value>
   </data>
   <data name="ThisCannotBeUndone" xml:space="preserve">
-    <value>此操作无法撤销</value>
+    <value>此操作无法撤销。</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>是</value>
@@ -844,7 +841,7 @@
     <value>自定义浏览器路径</value>
   </data>
   <data name="OpenInBrowser" xml:space="preserve">
-    <value>在浏览器中打开</value>
+    <value>Ginger 使用的浏览器</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>语言</value>
@@ -868,7 +865,7 @@
     <value>Bitcoin Core/Knots 数据文件夹</value>
   </data>
   <data name="WasabiDownloadBlocksFromFullNode" xml:space="preserve">
-    <value>Wasabi 将从您控制的完整节点下载区块。</value>
+    <value>Ginger 将从您控制的完整节点下载区块。</value>
   </data>
   <data name="BitcoinP2PEndpoint" xml:space="preserve">
     <value>Bitcoin P2P 端点</value>
@@ -950,9 +947,6 @@
   </data>
   <data name="TransactionInterlinksLabels" xml:space="preserve">
     <value>交易链接标签：</value>
-  </data>
-  <data name="EntitiesKnowTransaction" xml:space="preserve">
-    <value>这些实体知道这是您的交易。请多次进行 Coinjoin，或使用标签管理工具仔细选择谁会知道这笔交易属于您。</value>
   </data>
   <data name="TransactionKnownAsYoursBy" xml:space="preserve">
     <value>已知这是您的交易的实体：</value>
@@ -1129,9 +1123,7 @@
     <value>确认恢复词</value>
   </data>
   <data name="ConfirmRecoveryWordsViewModelStoreSafely" xml:space="preserve">
-    <value>妥善存储您的密码，如果丢失将无法重置。
-它用于打开和恢复您的钱包。
-它是恢复词的扩展，提供更高的安全性。</value>
+    <value>请安全存储您的密码短语；如果丢失，将无法恢复。它用于打开和恢复您的钱包，并通过扩展恢复词提供额外保护。</value>
   </data>
   <data name="ConfirmRecoveryWordsViewModelClickRecovery" xml:space="preserve">
     <value>点击恢复词 #{0}</value>
@@ -1197,7 +1189,7 @@
     <value>按正确顺序输入恢复词</value>
   </data>
   <data name="EnterPassphrase" xml:space="preserve">
-    <value>输入正确的密码</value>
+    <value> 输入密码短语</value>
   </data>
   <data name="RecoverWalletViewModelPassphraseMessage" xml:space="preserve">
     <value>如果您在创建钱包时使用了密码，则必须在下方输入，否则请留空。</value>
@@ -1206,7 +1198,7 @@
     <value>高级恢复选项</value>
   </data>
   <data name="AdvancedRecoveryOptionsViewModelMinimumGapLimit" xml:space="preserve">
-    <value>最小 _间隙限制：</value>
+    <value>最小 间隙限制：</value>
   </data>
   <data name="PeersConnected" xml:space="preserve">
     <value>{0} 已连接</value>
@@ -1412,9 +1404,6 @@
   <data name="Confirmations" xml:space="preserve">
     <value>({0} 次确认)</value>
   </data>
-  <data name="ConfirmationEstimationDisclaimer" xml:space="preserve">
-    <value> 这仅仅是基于一些交易和区块数据的估算。确认时间可能会改变。</value>
-  </data>
   <data name="BlockHash" xml:space="preserve">
     <value>块哈希</value>
   </data>
@@ -1517,9 +1506,6 @@
   <data name="AnonymityScore" xml:space="preserve">
     <value>匿名评分</value>
   </data>
-  <data name="PersonOrCompanyExample" xml:space="preserve">
-    <value>个人或公司，例如 Alice、Bob、Pizza Inc</value>
-  </data>
   <data name="EstimatedConfirmationTimeWithValue" xml:space="preserve">
     <value>预计确认时间：{0}</value>
   </data>
@@ -1549,9 +1535,6 @@
   </data>
   <data name="Weeks" xml:space="preserve">
     <value>周</value>
-  </data>
-  <data name="Minimal" xml:space="preserve">
-    <value>最小的</value>
   </data>
   <data name="Privacy" xml:space="preserve">
     <value>隐私</value>
@@ -1632,7 +1615,7 @@
     <value>使用舊版選幣器作為後備</value>
   </data>
   <data name="UseOldCoinSelectorAsFallbackInCoinJoinCoinSelectorToolTip" xml:space="preserve">
-    <value>同時調用舊版同新版選幣器，然後揀選較好嘅結果。</value>
+    <value>将同时使用旧的和新的币选择器，并选择更好的结果。</value>
   </data>
   <data name="Configuration" xml:space="preserve">
     <value>配置</value>
@@ -1765,5 +1748,324 @@
   </data>
   <data name="Generate" xml:space="preserve">
     <value>生成</value>
+  </data>
+  <data name="ErrorAddingWallet" xml:space="preserve">
+    <value>添加您的钱包时发生错误。</value>
+  </data>
+  <data name="DetectedConfirmation" xml:space="preserve">
+    <value>检测到 {0}。这是正确的吗？</value>
+  </data>
+  <data name="TermsAndConditions" xml:space="preserve">
+    <value>条款和条件</value>
+  </data>
+  <data name="WalletImportFailed" xml:space="preserve">
+    <value>Ginger Wallet 无法导入您的钱包。</value>
+  </data>
+  <data name="AllCoinsConfirmed" xml:space="preserve">
+    <value>所有币均已确认。</value>
+  </data>
+  <data name="CoinsWaitingForConfirmation" xml:space="preserve">
+    <value>{0} 枚币正在等待确认。</value>
+  </data>
+  <data name="CoinsCantParticipateCoinJoin" xml:space="preserve">
+    <value>部分币无法参与 Coinjoin。</value>
+  </data>
+  <data name="SourceCodeGitHub" xml:space="preserve">
+    <value>源代码（GitHub）</value>
+  </data>
+  <data name="WebsiteClearnet" xml:space="preserve">
+    <value>网站（Clearnet）</value>
+  </data>
+  <data name="BugReport" xml:space="preserve">
+    <value>错误报告</value>
+  </data>
+  <data name="FAQ" xml:space="preserve">
+    <value>常见问题</value>
+  </data>
+  <data name="MITLicense" xml:space="preserve">
+    <value>MIT 许可证</value>
+  </data>
+  <data name="AdvancedInformation" xml:space="preserve">
+    <value>版本信息</value>
+  </data>
+  <data name="CompatibleCoordinatorVersions" xml:space="preserve">
+    <value>兼容的协调器版本</value>
+  </data>
+  <data name="CurrentCoordinatorVersion" xml:space="preserve">
+    <value>当前协调器版本</value>
+  </data>
+  <data name="CompatibleBitcoinCoreKnotsVersion" xml:space="preserve">
+    <value>兼容的 Bitcoin Core 和 Bitcoin Knots 版本</value>
+  </data>
+  <data name="CompatibleHardwareWalletInterfaceVersion" xml:space="preserve">
+    <value>兼容的硬件钱包接口版本</value>
+  </data>
+  <data name="PrivacyProgress" xml:space="preserve">
+    <value>隐私进展</value>
+  </data>
+  <data name="HoverOverRingSegments" xml:space="preserve">
+    <value>将鼠标悬停在环形段上以查看币的详细信息</value>
+  </data>
+  <data name="Private" xml:space="preserve">
+    <value>私密</value>
+  </data>
+  <data name="SemiPrivate" xml:space="preserve">
+    <value>半私密</value>
+  </data>
+  <data name="NonPrivate" xml:space="preserve">
+    <value>非私密</value>
+  </data>
+  <data name="PleaseWaitToShutDown" xml:space="preserve">
+    <value>关机进行中</value>
+  </data>
+  <data name="GingerUnableToCloseCoinJoinInProgress" xml:space="preserve">
+    <value>Ginger 现在无法关闭。CoinJoin 正在进行中。</value>
+  </data>
+  <data name="ThisMayTakeAFewMinutes" xml:space="preserve">
+    <value> 这可能需要几分钟。完成后，Ginger 将自动关闭。</value>
+  </data>
+  <data name="TransactionAlreadyConfirmed" xml:space="preserve">
+    <value>交易已经确认。</value>
+  </data>
+  <data name="GingerWalletUnableToSpeedUpTransaction" xml:space="preserve">
+    <value>Ginger Wallet 无法加速您的交易。</value>
+  </data>
+  <data name="SpeedingUpTransactionCostAmount" xml:space="preserve">
+    <value>加速此交易将收费</value>
+  </data>
+  <data name="SpeedingUpTransactionDeductFromRecipient" xml:space="preserve">
+    <value>加速此交易将从收款人的金额中扣除</value>
+  </data>
+  <data name="Appearance" xml:space="preserve">
+    <value>外观</value>
+  </data>
+  <data name="AppearanceThemeKeywords" xml:space="preserve">
+    <value>黑色, 白色, 主题, 黑暗, 明亮</value>
+  </data>
+  <data name="RunInBackgroundKeywords" xml:space="preserve">
+    <value>隐藏, 托盘</value>
+  </data>
+  <data name="RunAtStartupKeywords" xml:space="preserve">
+    <value>启动, 启动</value>
+  </data>
+  <data name="NoResults" xml:space="preserve">
+    <value>没有结果</value>
+  </data>
+  <data name="CriticalUpdateRequired" xml:space="preserve">
+    <value>需要关键更新</value>
+  </data>
+  <data name="VersionReadyToInstall" xml:space="preserve">
+    <value>{0} 版本现在可以安装</value>
+  </data>
+  <data name="VersionAvailable" xml:space="preserve">
+    <value>{0} 版本现已可用</value>
+  </data>
+  <data name="Peers" xml:space="preserve">
+    <value>对等节点</value>
+  </data>
+  <data name="BroadcastTransaction" xml:space="preserve">
+    <value> 广播交易</value>
+  </data>
+  <data name="UnableToBroadcastTransaction" xml:space="preserve">
+    <value>无法广播交易。</value>
+  </data>
+  <data name="ImportTransactionFileDialogTitle" xml:space="preserve">
+    <value>导入交易</value>
+  </data>
+  <data name="UnableToLoadTransaction" xml:space="preserve">
+    <value>无法加载交易。</value>
+  </data>
+  <data name="ClipboardEmpty" xml:space="preserve">
+    <value>剪贴板为空！</value>
+  </data>
+  <data name="UnableToPasteTransaction" xml:space="preserve">
+    <value>无法粘贴交易。</value>
+  </data>
+  <data name="CancellationFailed" xml:space="preserve">
+    <value>取消失败</value>
+  </data>
+  <data name="GingerWalletUnableToCancelTransaction" xml:space="preserve">
+    <value>Ginger Wallet 无法取消您的交易。</value>
+  </data>
+  <data name="SpeedUpFailed" xml:space="preserve">
+    <value>加速失败</value>
+  </data>
+  <data name="AuthorizationFailed" xml:space="preserve">
+    <value>授权失败，请重试。</value>
+  </data>
+  <data name="AuthorizeWithHardwareWallet" xml:space="preserve">
+    <value>使用硬件钱包授权</value>
+  </data>
+  <data name="AuthorizationFailedWithDeviceCheck" xml:space="preserve">
+    <value>授权失败。{0}请检查您的设备并重试。</value>
+  </data>
+  <data name="EnterPassphraseAuth" xml:space="preserve">
+    <value>输入您的密码短语</value>
+  </data>
+  <data name="IncorrectPassphrase" xml:space="preserve">
+    <value>密码短语不正确。{0}请重试。</value>
+  </data>
+  <data name="SelectAllowedCoins" xml:space="preserve">
+    <value>选择允许用于交易的币种</value>
+  </data>
+  <data name="RenameWallet" xml:space="preserve">
+    <value>重命名钱包</value>
+  </data>
+  <data name="WalletCannotBeRenamed" xml:space="preserve">
+    <value>钱包无法重命名为 {0}</value>
+  </data>
+  <data name="GingerWalletUnableToOpenFile" xml:space="preserve">
+    <value>Ginger Wallet 无法打开文件。</value>
+  </data>
+  <data name="FoundIn" xml:space="preserve">
+    <value>在 \"{0}\" 中找到</value>
+  </data>
+  <data name="IncorrectPassphraseRetry" xml:space="preserve">
+    <value>密码短语不正确！请重试。</value>
+  </data>
+  <data name="AcceptTermsAndConditions" xml:space="preserve">
+    <value>您必须接受条款和条件！</value>
+  </data>
+  <data name="CompatibilityPassphraseUsed" xml:space="preserve">
+    <value>使用了兼容性密码短语！请考虑生成一个新钱包以确保可恢复性！</value>
+  </data>
+  <data name="PassphraseTooLong" xml:space="preserve">
+    <value>密码短语太长。</value>
+  </data>
+  <data name="WalletSettingsKeywords" xml:space="preserve">
+    <value>钱包, 设置</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>错误</value>
+  </data>
+  <data name="VerifyRecoveryWordsErrorMessage" xml:space="preserve">
+    <value>请再试一次，但如果您无法验证恢复词，您必须尽快将资金转移到一个新钱包中。</value>
+  </data>
+  <data name="VerifyRecoveryWordsErrorCaption" xml:space="preserve">
+    <value>您输入的恢复词不正确。</value>
+  </data>
+  <data name="InvalidRecoveryWords" xml:space="preserve">
+    <value>恢复词无效。</value>
+  </data>
+  <data name="UnableToVerifyRecoveryWords" xml:space="preserve">
+    <value>Ginger Wallet 无法验证恢复词。</value>
+  </data>
+  <data name="AfterDeductingFee" xml:space="preserve">
+    <value>扣除 {0} 手续费后，您将收到 {1} — 不会产生其他费用。</value>
+  </data>
+  <data name="UnableToRecoverWallet" xml:space="preserve">
+    <value>Ginger Wallet 无法恢复钱包。</value>
+  </data>
+  <data name="InvalidSetRecoveryWords" xml:space="preserve">
+    <value>无效的恢复词组。确保您按正确的顺序输入了所有恢复词。</value>
+  </data>
+  <data name="FailedToGetLegalDocuments" xml:space="preserve">
+    <value>获取法律文件失败。</value>
+  </data>
+  <data name="MustBeNumberBetween" xml:space="preserve">
+    <value>必须是介于 {0} 和 {1} 之间的数字。</value>
+  </data>
+  <data name="InitializeDeviceFirst" xml:space="preserve">
+    <value>请先初始化您的设备。</value>
+  </data>
+  <data name="CheckDeviceAndFinishInitialization" xml:space="preserve">
+    <value>检查您的设备并完成初始化。</value>
+  </data>
+  <data name="SomethingHappenedWithDevice" xml:space="preserve">
+    <value>设备出现问题，请使用您的PIN码/密码解锁，或重新连接到PC。</value>
+  </data>
+  <data name="ExportTransaction" xml:space="preserve">
+    <value>导出交易</value>
+  </data>
+  <data name="SaveQRCode" xml:space="preserve">
+    <value>保存二维码</value>
+  </data>
+  <data name="ByAmount" xml:space="preserve">
+    <value>增加 {0}</value>
+  </data>
+  <data name="AppearanceSettingsTabViewModelTitle" xml:space="preserve">
+    <value>外观</value>
+  </data>
+  <data name="AppearanceSettingsTabViewModelCaption" xml:space="preserve">
+    <value>管理外观设置</value>
+  </data>
+  <data name="AppearanceSettingsTabViewModelKeywords" xml:space="preserve">
+    <value>设置，外观，比特币，暗，模式，费用，显示，格式，BTC，sats，交换，货币</value>
+  </data>
+  <data name="ExchangeCurrency" xml:space="preserve">
+    <value>兑换货币</value>
+  </data>
+  <data name="Cut" xml:space="preserve">
+    <value>剪切</value>
+  </data>
+  <data name="ThisOpenSourceSoftwareIsLicensedWith" xml:space="preserve">
+    <value>此开源软件的许可为 </value>
+  </data>
+  <data name="CancellingThisTransactionWillCostYou" xml:space="preserve">
+    <value>取消此交易将花费您</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="TorNetworkIssues" xml:space="preserve">
+    <value>Tor 网络出现问题：</value>
+  </data>
+  <data name="ClickIconForDetails" xml:space="preserve">
+    <value>点击此图标查看详细信息</value>
+  </data>
+  <data name="PasteFromClipboard" xml:space="preserve">
+    <value>从剪贴板粘贴</value>
+  </data>
+  <data name="ImportTransaction" xml:space="preserve">
+    <value>Importar transacción</value>
+  </data>
+  <data name="Quit" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>显示</value>
+  </data>
+  <data name="Default" xml:space="preserve">
+    <value>默认</value>
+  </data>
+  <data name="CopyLink" xml:space="preserve">
+    <value>复制链接</value>
+  </data>
+  <data name="NonPrivateFunds" xml:space="preserve">
+    <value>非私密资金</value>
+  </data>
+  <data name="SemiPrivateFunds" xml:space="preserve">
+    <value>半私密资金</value>
+  </data>
+  <data name="PrivateFunds" xml:space="preserve">
+    <value>私密资金</value>
+  </data>
+  <data name="CustomFeeRate" xml:space="preserve">
+    <value>自定义费率</value>
+  </data>
+  <data name="WalletNameCannotBeEmpty" xml:space="preserve">
+    <value>钱包名称不能为空。</value>
+  </data>
+  <data name="WalletNameAlreadyExists" xml:space="preserve">
+    <value>名为 {0} 的钱包已存在。请尝试使用其他名称。</value>
+  </data>
+  <data name="WalletNameInvalid" xml:space="preserve">
+    <value>选定的钱包名称无效。请尝试使用其他名称。</value>
+  </data>
+  <data name="AcceptingOfferRedirect" xml:space="preserve">
+    <value>接受报价将把您重定向到提供商页面以完成流程。</value>
+  </data>
+  <data name="ImportOrPasteTransactionHex" xml:space="preserve">
+    <value>导入或粘贴交易十六进制并将其广播到网络。</value>
+  </data>
+  <data name="UnselectAll" xml:space="preserve">
+    <value>取消全选</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>全选</value>
+  </data>
+  <data name="PasteBTCAddress" xml:space="preserve">
+    <value>粘贴 BTC 地址：
+{0}</value>
   </data>
 </root>

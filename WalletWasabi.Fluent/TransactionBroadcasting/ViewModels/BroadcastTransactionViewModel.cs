@@ -4,6 +4,7 @@ using WalletWasabi.Blockchain.Transactions;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Navigation.ViewModels;
+using WalletWasabi.Lang;
 using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.TransactionBroadcasting.ViewModels;
@@ -12,7 +13,7 @@ public partial class BroadcastTransactionViewModel : RoutableViewModel
 {
 	public BroadcastTransactionViewModel(UiContext uiContext, SmartTransaction transaction)
 	{
-		Title = "Broadcast Transaction";
+		Title = Resources.BroadcastTransaction;
 
 		UiContext = uiContext;
 
@@ -39,7 +40,7 @@ public partial class BroadcastTransactionViewModel : RoutableViewModel
 
 	public string? InputAmountString { get; set; }
 
-	public string FeeString { get; set; } = "Unknown";
+	public string FeeString { get; set; }
 
 	public int InputCount { get; set; }
 
@@ -55,7 +56,7 @@ public partial class BroadcastTransactionViewModel : RoutableViewModel
 		catch (Exception ex)
 		{
 			Logger.LogError(ex);
-			await ShowErrorAsync("Broadcast Transaction", ex.ToUserFriendlyString(), "It was not possible to broadcast the transaction.");
+			await ShowErrorAsync(Title, ex.ToUserFriendlyString(), Resources.UnableToBroadcastTransaction);
 		}
 	}
 }

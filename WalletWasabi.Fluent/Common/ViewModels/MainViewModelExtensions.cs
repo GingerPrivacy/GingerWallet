@@ -21,21 +21,27 @@ public static class MainViewModelExtensions
 			return mainViewModel.SettingsPage;
 		});
 
-		BitcoinTabSettingsViewModel.RegisterLazy(() =>
+		AppearanceSettingsTabViewModel.RegisterLazy(() =>
 		{
 			mainViewModel.SettingsPage.SelectedTab = 1;
 			return mainViewModel.SettingsPage;
 		});
 
-		AdvancedSettingsTabViewModel.RegisterLazy(() =>
+		BitcoinTabSettingsViewModel.RegisterLazy(() =>
 		{
 			mainViewModel.SettingsPage.SelectedTab = 2;
 			return mainViewModel.SettingsPage;
 		});
 
-		SecuritySettingsTabViewModel.RegisterLazy(() =>
+		AdvancedSettingsTabViewModel.RegisterLazy(() =>
 		{
 			mainViewModel.SettingsPage.SelectedTab = 3;
+			return mainViewModel.SettingsPage;
+		});
+
+		SecuritySettingsTabViewModel.RegisterLazy(() =>
+		{
+			mainViewModel.SettingsPage.SelectedTab = 4;
 			return mainViewModel.SettingsPage;
 		});
 

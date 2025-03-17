@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -10,6 +11,7 @@ using ReactiveUI;
 using WalletWasabi.Fluent.Controls;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
+using WalletWasabi.Lang;
 using WalletWasabi.Userfacing;
 
 namespace WalletWasabi.Fluent.Behaviors;
@@ -105,11 +107,11 @@ public class PasteButtonFlashBehavior : AttachedToVisualTreeBehavior<AnimatedBut
 		{
 			AssociatedObject.Classes.Add(FlashAnimation);
 			_lastFlashedOn = clipboardValue;
-			ToolTip.SetTip(AssociatedObject, $"Paste BTC Address:\r\n{clipboardValue}");
+			ToolTip.SetTip(AssociatedObject, string.Format(CultureInfo.InvariantCulture, Resources.PasteBTCAddress, clipboardValue));
 		}
 		else
 		{
-			ToolTip.SetTip(AssociatedObject, "Paste");
+			ToolTip.SetTip(AssociatedObject, Resources.Paste);
 		}
 	}
 }

@@ -59,6 +59,17 @@ public class FileLogger : ILogger, IDisposable
 		}
 	}
 
+	public void CloseFile()
+	{
+		lock (_lock)
+		{
+			if (_logFileWriter is not null)
+			{
+				CloseFileLockless();
+			}
+		}
+	}
+
 	public void Dispose()
 	{
 		CloseFileLockless();
@@ -118,5 +129,16 @@ public class FileLoggerProvider : ILoggerProvider
 
 	public void Dispose()
 	{
+	}
+
+	public static void CloseFiles()
+	{
+		lock (LoggersLock)
+		{
+			foreach (var logger in Loggers.Values)
+			{
+				logger.CloseFile();
+			}
+		}
 	}
 }

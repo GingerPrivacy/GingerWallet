@@ -10,6 +10,7 @@ using WalletWasabi.Blockchain.Transactions;
 using WalletWasabi.Exceptions;
 using WalletWasabi.Extensions;
 using WalletWasabi.Fluent.HomeScreen.Send.Models;
+using WalletWasabi.Lang;
 using WalletWasabi.Logging;
 using WalletWasabi.Models;
 using WalletWasabi.Wallets;
@@ -134,7 +135,7 @@ public static class TransactionHelpers
 	{
 		var psbtExtension = "psbt";
 		string initialFileName = transaction.Transaction.GetHash().ToString();
-		var file = await FileDialogHelper.SaveFileAsync("Export transaction", new[] { psbtExtension }, initialFileName);
+		var file = await FileDialogHelper.SaveFileAsync(Resources.ExportTransaction, new[] { psbtExtension }, initialFileName);
 		if (file is null)
 		{
 			return false;

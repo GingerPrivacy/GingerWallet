@@ -16,9 +16,9 @@
     </ContentArea.Title>
     <DockPanel VerticalAlignment="Center">
       <StackPanel DockPanel.Dock="Bottom" Margin="20 0" MaxWidth="500" Spacing="5">
-        <TextBlock Text="Wasabi is unable to close right now. Coinjoin in progress."
+        <TextBlock Text="{x:Static lang:Resources.GingerUnableToCloseCoinJoinInProgress}"
                    TextAlignment="Center" TextWrapping="Wrap" />
-        <TextBlock Text="This may take a few minutes. Ginger will close automatically when finished."
+        <TextBlock Text="{x:Static lang:Resources.ThisMayTakeAFewMinutes}"
                    TextAlignment="Center" TextWrapping="Wrap" MaxWidth="500" />
       </StackPanel>
 

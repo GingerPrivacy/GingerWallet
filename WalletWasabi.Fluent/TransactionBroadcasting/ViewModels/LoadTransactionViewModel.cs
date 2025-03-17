@@ -8,6 +8,7 @@ using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Models.UI;
+using WalletWasabi.Lang;
 using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.TransactionBroadcasting.ViewModels;
@@ -18,7 +19,7 @@ public partial class LoadTransactionViewModel : DialogViewModelBase<SmartTransac
 
 	public LoadTransactionViewModel(UiContext uiContext)
 	{
-		Title = "Transaction Broadcaster";
+		Title = Resources.BroadcastTransaction;
 
 		UiContext = uiContext;
 
@@ -44,7 +45,7 @@ public partial class LoadTransactionViewModel : DialogViewModelBase<SmartTransac
 	{
 		try
 		{
-			var file = await FileDialogHelper.OpenFileAsync("Import Transaction", new[] { "psbt", "txn", "*" });
+			var file = await FileDialogHelper.OpenFileAsync(Resources.ImportTransactionFileDialogTitle, new[] { "psbt", "txn", "*" });
 			if (file is { })
 			{
 				var filePath = file.Path.AbsolutePath;
@@ -54,7 +55,7 @@ public partial class LoadTransactionViewModel : DialogViewModelBase<SmartTransac
 		catch (Exception ex)
 		{
 			Logger.LogError(ex);
-			await ShowErrorAsync(Title, ex.ToUserFriendlyString(), "It was not possible to load the transaction.");
+			await ShowErrorAsync(Title, ex.ToUserFriendlyString(), Resources.UnableToLoadTransaction);
 		}
 	}
 
@@ -66,7 +67,7 @@ public partial class LoadTransactionViewModel : DialogViewModelBase<SmartTransac
 
 			if (string.IsNullOrWhiteSpace(textToPaste))
 			{
-				throw new InvalidDataException("The clipboard is empty!");
+				throw new InvalidDataException(Resources.ClipboardEmpty);
 			}
 
 			FinalTransaction = UiContext.TransactionBroadcaster.Parse(textToPaste);
@@ -74,7 +75,7 @@ public partial class LoadTransactionViewModel : DialogViewModelBase<SmartTransac
 		catch (Exception ex)
 		{
 			Logger.LogError(ex);
-			await ShowErrorAsync(Title, ex.ToUserFriendlyString(), "It was not possible to paste the transaction.");
+			await ShowErrorAsync(Title, ex.ToUserFriendlyString(), Resources.UnableToPasteTransaction);
 		}
 	}
 }

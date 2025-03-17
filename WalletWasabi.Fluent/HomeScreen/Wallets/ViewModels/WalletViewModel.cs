@@ -215,19 +215,19 @@ public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
 	{
 		return new ISearchItem[]
 		{
-			new ActionableItem(Resources.ReceiveViewModelTitle, Resources.ReceiveViewModelCaption, () => { ReceiveCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, Resources.ReceiveViewModelKeywords.Replace(" ","").Split(',')) { Icon = "wallet_action_receive", IsDefault = true, Priority = 2 },
-			new ActionableItem(Resources.CoinjoinSettings, Resources.WalletCoinJoinSettingsViewModelCaption, () => { CoinJoinSettingsCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, new[] { "Wallet", "Settings", }) { Icon = "wallet_action_coinjoin", IsDefault = true, Priority = 3 },
-			new ActionableItem(Resources.WalletSettings, Resources.WalletSettingsViewModelCaption, () => { WalletSettingsCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, new[] { "Wallet", "Settings", }) { Icon = "settings_wallet_regular", IsDefault = true, Priority = 4 },
-			new ActionableItem(Resources.ExcludedCoinsViewModelTitle, Resources.ExcludedCoinsViewModelCaption, () => { CoinjoinPlayerViewModel.NavigateToExcludedCoinsCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, Resources.ExcludedCoinsViewModelKeywords.Replace(" ","").Split(',')) { Icon = "exclude_coins", IsDefault = true, Priority = 5 },
-			new ActionableItem(Resources.WalletCoinsViewModelTitle, Resources.WalletCoinsViewModelCaption, () => { WalletCoinsCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, Resources.WalletCoinsViewModelKeywords.Replace(" ","").Split(',')) { Icon = "wallet_coins", IsDefault = true, Priority = 6 },
-			new ActionableItem(Resources.WalletStatsViewModelTitle, Resources.WalletStatsViewModelCaption, () => { WalletStatsCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, Resources.WalletStatsViewModelKeywords.Replace(" ","").Split(',')) { Icon = "stats_wallet_regular", IsDefault = true, Priority = 7 },
-			new ActionableItem(Resources.WalletInfoViewModelTitle, Resources.WalletInfoViewModelCaption, () => { WalletInfoCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, Resources.WalletInfoViewModelKeywords.Replace(" ","").Split(',')) { Icon = "info_regular", IsDefault = true, Priority = 8 },
+			new ActionableItem(Resources.ReceiveViewModelTitle, Resources.ReceiveViewModelCaption, () => { ReceiveCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, Resources.ReceiveViewModelKeywords.ToKeywords()) { Icon = "wallet_action_receive", IsDefault = true, Priority = 2 },
+			new ActionableItem(Resources.CoinjoinSettings, Resources.WalletCoinJoinSettingsViewModelCaption, () => { CoinJoinSettingsCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, Resources.WalletSettingsKeywords.ToKeywords()) { Icon = "wallet_action_coinjoin", IsDefault = true, Priority = 3 },
+			new ActionableItem(Resources.WalletSettings, Resources.WalletSettingsViewModelCaption, () => { WalletSettingsCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, Resources.WalletSettingsKeywords.ToKeywords()) { Icon = "settings_wallet_regular", IsDefault = true, Priority = 4 },
+			new ActionableItem(Resources.ExcludedCoinsViewModelTitle, Resources.ExcludedCoinsViewModelCaption, () => { CoinjoinPlayerViewModel.NavigateToExcludedCoinsCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, Resources.ExcludedCoinsViewModelKeywords.ToKeywords()) { Icon = "exclude_coins", IsDefault = true, Priority = 5 },
+			new ActionableItem(Resources.WalletCoinsViewModelTitle, Resources.WalletCoinsViewModelCaption, () => { WalletCoinsCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, Resources.WalletCoinsViewModelKeywords.ToKeywords()) { Icon = "wallet_coins", IsDefault = true, Priority = 6 },
+			new ActionableItem(Resources.WalletStatsViewModelTitle, Resources.WalletStatsViewModelCaption, () => { WalletStatsCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, Resources.WalletStatsViewModelKeywords.ToKeywords()) { Icon = "stats_wallet_regular", IsDefault = true, Priority = 7 },
+			new ActionableItem(Resources.WalletInfoViewModelTitle, Resources.WalletInfoViewModelCaption, () => { WalletInfoCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, Resources.WalletInfoViewModelKeywords.ToKeywords()) { Icon = "info_regular", IsDefault = true, Priority = 8 },
 		};
 	}
 
 	private ISearchItem CreateSendItem()
 	{
-		return new ActionableItem(Resources.SendViewModelTitle, Resources.SendViewModelCaption, () => { SendCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, Resources.AboutViewModelKeywords.Replace(" ", "").Split(',')) { Icon = "wallet_action_send", IsDefault = true, Priority = 1 };
+		return new ActionableItem(Resources.SendViewModelTitle, Resources.SendViewModelCaption, () => { SendCommand.ExecuteIfCan(); return Task.CompletedTask; }, Resources.Wallet, Resources.AboutViewModelKeywords.ToKeywords()) { Icon = "wallet_action_send", IsDefault = true, Priority = 1 };
 	}
 
 	private IEnumerable<ActivatableViewModel> GetTiles()

@@ -6,7 +6,7 @@ public static class DateTimeExtensions
 {
 	public static string ToUserFacingString(this DateTime value, bool withTime = true)
 	{
-		return value.ToString(withTime ? "HH:mm on MMMM d, yyyy" : "MMMM d, yyyy");
+		return value.ToString(withTime ? "HH:mm MMMM d, yyyy" : "MMMM d, yyyy", Resources.Culture);
 	}
 
 	public static string ToUserFacingFriendlyString(this DateTime value)
@@ -21,6 +21,6 @@ public static class DateTimeExtensions
 			return Resources.Yesterday;
 		}
 
-		return value.ToString("MMM d, yyyy");
+		return value.ToString("MMM d, yyyy", Resources.Culture);
 	}
 }

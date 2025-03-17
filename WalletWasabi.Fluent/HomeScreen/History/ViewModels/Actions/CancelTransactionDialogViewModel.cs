@@ -7,6 +7,7 @@ using WalletWasabi.Fluent.Common.ViewModels;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.ViewModels;
+using WalletWasabi.Lang;
 using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.HomeScreen.History.ViewModels.Actions;
@@ -19,7 +20,7 @@ public partial class CancelTransactionDialogViewModel : RoutableViewModel
 
 	private CancelTransactionDialogViewModel(IWalletModel wallet, CancellingTransaction cancellingTransaction)
 	{
-		Title = "Cancel Transaction";
+		Title = Resources.CancelTransaction;
 		_wallet = wallet;
 		_cancellingTransaction = cancellingTransaction;
 		SetupCancel(enableCancel: true, enableCancelOnEscape: true, enableCancelOnPressed: true);
@@ -55,19 +56,14 @@ public partial class CancelTransactionDialogViewModel : RoutableViewModel
 			if (isAuthorized)
 			{
 				await _wallet.Transactions.SendAsync(cancellingTransaction);
-				var (title, caption) = ("Success", "Your transaction has been successfully cancelled.");
-
-				// TODO: Remove this after SendSuccessViewModel is decoupled
-				var wallet = MainViewModel.Instance.NavBar.Wallets.First(x => x.Wallet.WalletName == _wallet.Name).Wallet;
-
-				UiContext.Navigate().To().SendSuccess(cancellingTransaction.CancelTransaction.Transaction, title, caption, NavigationTarget.CompactDialogScreen);
+				UiContext.Navigate().To().SendSuccess(cancellingTransaction.CancelTransaction.Transaction, NavigationTarget.CompactDialogScreen);
 			}
 		}
 		catch (Exception ex)
 		{
 			Logger.LogError(ex);
-			var msg = cancellingTransaction.TargetTransaction.IsConfirmed ? "The transaction is already confirmed." : ex.ToUserFriendlyString();
-			UiContext.Navigate().To().ShowErrorDialog(msg, "Cancellation Failed", "Ginger Wallet was unable to cancel your transaction.", NavigationTarget.CompactDialogScreen);
+			var msg = cancellingTransaction.TargetTransaction.IsConfirmed ? Resources.TransactionAlreadyConfirmed : ex.ToUserFriendlyString();
+			UiContext.Navigate().To().ShowErrorDialog(msg, Resources.CancellationFailed, Resources.GingerWalletUnableToCancelTransaction, NavigationTarget.CompactDialogScreen);
 		}
 
 		IsBusy = false;
@@ -77,7 +73,7 @@ public partial class CancelTransactionDialogViewModel : RoutableViewModel
 	{
 		if (_wallet.Auth.HasPassword)
 		{
-			return await Navigate().To().PasswordAuthDialog(_wallet, "Send").GetResultAsync();
+			return await Navigate().To().PasswordAuthDialog(_wallet, Resources.WalletSend).GetResultAsync();
 		}
 
 		return true;

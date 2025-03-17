@@ -1,8 +1,10 @@
+using System.Globalization;
 using System.Reactive;
 using ReactiveUI;
 using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Validation;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.HomeScreen.WalletSettings.ViewModels;
 
@@ -13,7 +15,7 @@ public partial class WalletRenameViewModel : DialogViewModelBase<Unit>
 
 	private WalletRenameViewModel(IWalletModel wallet)
 	{
-		Title = "Rename Wallet";
+		Title = Resources.RenameWallet;
 
 		_newWalletName = wallet.Name;
 
@@ -46,7 +48,7 @@ public partial class WalletRenameViewModel : DialogViewModelBase<Unit>
 		}
 		catch
 		{
-			UiContext.Navigate().To().ShowErrorDialog($"The wallet cannot be renamed to {NewWalletName}", "Invalid name", "Cannot rename the wallet", NavigationTarget.CompactDialogScreen);
+			UiContext.Navigate().To().ShowErrorDialog(string.Format(CultureInfo.InvariantCulture, Resources.WalletCannotBeRenamed, NewWalletName), Resources.InvalidWalletName, "", NavigationTarget.CompactDialogScreen);
 		}
 	}
 }

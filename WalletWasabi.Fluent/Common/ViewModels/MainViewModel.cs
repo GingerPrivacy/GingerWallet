@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -24,7 +25,7 @@ namespace WalletWasabi.Fluent.Common.ViewModels;
 [AppLifetime]
 public partial class MainViewModel : ViewModelBase
 {
-	[AutoNotify] private string _title = "Ginger Wallet";
+	[Localizable(false)] [AutoNotify] private string _title = "Ginger Wallet";
 	[AutoNotify] private WindowState _windowState;
 	[AutoNotify] private bool _isOobeBackgroundVisible;
 	[AutoNotify] private bool _isCoinJoinActive;

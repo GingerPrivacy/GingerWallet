@@ -1,5 +1,6 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi">
   <Design.PreviewWith>
     <StackPanel Spacing="4" Width="300">
 
@@ -17,42 +18,6 @@
   <!-- TextControlThemePadding -->
   <Thickness x:Key="CurrencyEntryBoxThemePadding">15,8,15,8</Thickness>
 
-  <MenuFlyout x:Key="CurrencyEntryBoxDefaultTextBoxContextFlyout">
-    <MenuItem x:Name="TextBoxContextFlyoutCutItem"
-              Header="Cut"
-              Command="{Binding $parent[TextBox].Cut}"
-              IsEnabled="{Binding $parent[TextBox].CanCut}"
-              InputGesture="{x:Static TextBox.CutGesture}" />
-    <MenuItem x:Name="TextBoxContextFlyoutCopyItem"
-              Header="Copy"
-              Command="{Binding $parent[TextBox].Copy}"
-              IsEnabled="{Binding $parent[TextBox].CanCopy}"
-              InputGesture="{x:Static TextBox.CopyGesture}" />
-    <MenuItem x:Name="TextBoxContextFlyoutPasteItem"
-              Header="Paste"
-              Command="{Binding $parent[CurrencyEntryBox].ModifiedPasteAsync}"
-              IsEnabled="{Binding $parent[TextBox].CanPaste}"
-              InputGesture="{x:Static TextBox.PasteGesture}" />
-  </MenuFlyout>
-  <MenuFlyout x:Key="CurrencyEntryBoxHorizontalTextBoxContextFlyout"
-              FlyoutPresenterTheme="{StaticResource HorizontalMenuFlyoutPresenter}"
-              ItemContainerTheme="{StaticResource HorizontalMenuItem}">
-    <MenuItem x:Name="HorizontalTextBoxContextFlyoutCutItem"
-              Header="Cut"
-              Command="{Binding $parent[TextBox].Cut}"
-              IsEnabled="{Binding $parent[TextBox].CanCut}"
-              IsVisible="{Binding $parent[TextBox].CanCut}" />
-    <MenuItem x:Name="HorizontalTextBoxContextFlyoutCopyItem"
-              Header="Copy"
-              Command="{Binding $parent[TextBox].Copy}"
-              IsEnabled="{Binding $parent[TextBox].CanCopy}"
-              IsVisible="{Binding $parent[TextBox].CanCopy}" />
-    <MenuItem x:Name="HorizontalTextBoxContextFlyoutPasteItem"
-              Header="Paste"
-              Command="{Binding $parent[CurrencyEntryBox].ModifiedPasteAsync}"
-              IsEnabled="{Binding $parent[TextBox].CanPaste}" />
-  </MenuFlyout>
-
   <ControlTheme x:Key="{x:Type CurrencyEntryBox}" TargetType="CurrencyEntryBox">
 
     <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
@@ -66,10 +31,16 @@
     <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
     <Setter Property="Padding" Value="{DynamicResource CurrencyEntryBoxThemePadding}" />
     <Setter Property="FocusAdorner" Value="{x:Null}" />
-    <Setter Property="ContextFlyout"
-            Value="{OnFormFactor Desktop={StaticResource CurrencyEntryBoxDefaultTextBoxContextFlyout}, Mobile={StaticResource CurrencyEntryBoxHorizontalTextBoxContextFlyout}}" />
     <Setter Property="Cursor" Value="IBeam" />
     <Setter Property="HorizontalContentAlignment" Value="Left" />
+
+    <Setter Property="ContextFlyout">
+      <MenuFlyout>
+        <MenuItem Header="{x:Static lang:Resources.Cut}" Command="{Binding $parent[TextBox].Cut}" IsEnabled="{Binding $parent[TextBox].CanCut}" InputGesture="{x:Static TextBox.CutGesture}" />
+        <MenuItem Header="{x:Static lang:Resources.Copy}" Command="{Binding $parent[TextBox].Copy}" IsEnabled="{Binding $parent[TextBox].CanCopy}" InputGesture="{x:Static TextBox.CopyGesture}"/>
+        <MenuItem Header="{x:Static lang:Resources.Paste}" Command="{Binding $parent[CurrencyEntryBox].ModifiedPasteAsync}" IsEnabled="{Binding $parent[TextBox].CanPaste}" InputGesture="{x:Static TextBox.PasteGesture}"/>
+      </MenuFlyout>
+    </Setter>
 
     <Setter Property="Template">
       <ControlTemplate>
@@ -293,7 +264,7 @@
       <Setter Property="Margin" Value="0 0 40 0" />
     </Style>
     <Style Selector="^:empty:isrightside:isfiat /template/ TextPresenter#PART_TextPresenter">
-      <Setter Property="Margin" Value="0 0 63 0" />
+      <Setter Property="Margin" Value="0 0 40 0" />
     </Style>
 
     <!-- Hide DataValidationErrors by default -->

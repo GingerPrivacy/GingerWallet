@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -9,6 +10,7 @@ using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.CoinList.ViewModels;
 
@@ -24,9 +26,9 @@ public class PocketViewModel : CoinListItem
 		var unconfirmedCount = pocketCoins.Count(x => !x.Confirmed);
 		IsConfirmed = unconfirmedCount == 0;
 		IgnorePrivacyMode = ignorePrivacyMode;
-		ConfirmationStatus = IsConfirmed ? "All coins are confirmed" : $"{unconfirmedCount} coins are waiting for confirmation";
+		ConfirmationStatus = IsConfirmed ? Resources.AllCoinsConfirmed : string.Format(CultureInfo.InvariantCulture, Resources.CoinsWaitingForConfirmation, unconfirmedCount);
 		IsBanned = pocketCoins.Any(x => x.IsBanned);
-		BannedUntilUtcToolTip = IsBanned ? "Some coins can't participate in coinjoin" : null;
+		BannedUntilUtcToolTip = IsBanned ? Resources.CoinsCantParticipateCoinJoin : null;
 		Amount = pocket.Amount;
 		IsCoinjoining = pocketCoins.Any(x => x.CoinJoinInProgress);
 		AnonymityScore = GetAnonScore(pocketCoins);

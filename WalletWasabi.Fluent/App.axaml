@@ -4,6 +4,7 @@
              xmlns:models="using:WalletWasabi.Models"
              xmlns:converters="clr-namespace:WalletWasabi.Fluent.Converters"
              xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.Common.ViewModels"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              x:DataType="viewModels:ApplicationViewModel"
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.App"
@@ -16,13 +17,17 @@
   </Application.DataTemplates>
 
   <Application.Resources>
+
     <x:Double x:Key="ToggleSwitchThemeMinWidth">0</x:Double>
-    <converters:BoolStringConverter x:Key="ShowHideBoolConverter" True="Hide" False="Show" />
+
+    <converters:BoolStringConverter x:Key="ShowHideBoolConverter" True="{x:Static lang:Resources.Hide}" False="{x:Static lang:Resources.Show}" />
+
     <NativeMenu x:Key="DefaultNativeMenu">
       <NativeMenuItem Header="{Binding IsMainWindowShown, Converter={StaticResource ShowHideBoolConverter}}" Command="{Binding ShowHideCommand}" />
       <NativeMenuItemSeparator />
-      <NativeMenuItem Header="Quit" Command="{Binding QuitCommand}" />
+      <NativeMenuItem Header="{x:Static lang:Resources.Quit}" Command="{Binding QuitCommand}" />
     </NativeMenu>
+
   </Application.Resources>
 
   <Application.Styles>
@@ -32,11 +37,13 @@
     <StyleInclude Source="avares://WalletWasabi.Fluent/Icons/Icons.axaml" />
     <StyleInclude Source="avares://WalletWasabi.Fluent/Styles/Styles.axaml" />
   </Application.Styles>
+
   <NativeMenu.Menu>
     <NativeMenu>
-      <NativeMenuItem Header="About Ginger Wallet" Command="{Binding AboutCommand}" />
+      <NativeMenuItem Header="{x:Static lang:Resources.AboutViewModelTitle}" Command="{Binding AboutCommand}" />
     </NativeMenu>
   </NativeMenu.Menu>
+
   <TrayIcon.Icons>
     <TrayIcons>
       <TrayIcon Icon="/Assets/WasabiLogo.ico" Command="{Binding ShowCommand}" ToolTipText="Ginger Wallet">
@@ -45,7 +52,7 @@
           <NativeMenu>
             <NativeMenuItem Header="{Binding IsMainWindowShown, Converter={StaticResource ShowHideBoolConverter}}" Command="{Binding ShowHideCommand}" />
             <NativeMenuItemSeparator />
-            <NativeMenuItem Header="Quit" Command="{Binding QuitCommand}" />
+            <NativeMenuItem Header="{x:Static lang:Resources.Quit}" Command="{Binding QuitCommand}" />
           </NativeMenu>
         </NativeMenu.Menu>-->
       </TrayIcon>

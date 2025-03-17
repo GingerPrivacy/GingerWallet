@@ -2,6 +2,7 @@ using WalletWasabi.Blockchain.TransactionBuilding;
 using WalletWasabi.Fluent.Authorization.Models;
 using WalletWasabi.Fluent.Authorization.ViewModels;
 using WalletWasabi.Fluent.Models.Wallets;
+using WalletWasabi.Lang;
 
 
 namespace WalletWasabi.Fluent.Helpers;
@@ -23,7 +24,7 @@ public static class AuthorizationHelpers
 		}
 		else
 		{
-			return new PasswordAuthDialogViewModel(wallet, "Send");
+			return new PasswordAuthDialogViewModel(wallet, Resources.WalletSend);
 		}
 	}
 }

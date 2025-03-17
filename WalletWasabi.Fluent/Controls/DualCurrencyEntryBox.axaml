@@ -4,10 +4,10 @@
   <Design.PreviewWith>
     <StackPanel Spacing="4" Width="500">
 
-      <TextBox Text="{Binding $self.Bounds.Height}"/>
+      <TextBox Text="{Binding $self.Bounds.Height}" />
       <TextBox Watermark="{Binding $self.Bounds.Height}" />
 
-      <DualCurrencyEntryBox Watermark="{Binding $self.Bounds.Height}"/>
+      <DualCurrencyEntryBox Watermark="{Binding $self.Bounds.Height}" />
 
       <DualCurrencyEntryBox IsReadOnly="false"
                             AmountBtc="{Binding $self.Bounds.Height}"
@@ -55,54 +55,54 @@
                     MinWidth="{TemplateBinding MinWidth}"
                     MinHeight="{TemplateBinding MinHeight}" />
             <Panel Margin="{TemplateBinding Padding}">
-                <Grid ColumnDefinitions="Auto,*,Auto,*,Auto">
-                  <CurrencyEntryBox x:Name="PART_LeftEntryBox"
-                                      Text="{TemplateBinding Text, Mode=TwoWay}"
-                                      IsReadOnly="{TemplateBinding IsReadOnly}"
-                                      CurrencyCode="{TemplateBinding CurrencyCode}"
-                                      ConversionRate="{TemplateBinding ConversionRate}"
-                                      IsFiat="False"
-                                      Watermark="{TemplateBinding Watermark}"
-                                      IsApproximate="False"
-                                      Grid.Column="{TemplateBinding LeftColumn}"
-                                      Background="Transparent"
-                                      BorderThickness="0"
-                                      IsRightSide="{TemplateBinding IsConversionReversed}"
-                                      BalanceBtc="{TemplateBinding BalanceBtc}"
-                                      BalanceUsd="{TemplateBinding BalanceUsd}"
-                                      ValidatePasteBalance="{TemplateBinding ValidatePasteBalance}" />
+              <Grid ColumnDefinitions="Auto,*,Auto,*,Auto">
+                <CurrencyEntryBox x:Name="PART_LeftEntryBox"
+                                  Text="{TemplateBinding Text, Mode=TwoWay}"
+                                  IsReadOnly="{TemplateBinding IsReadOnly}"
+                                  CurrencyCode="{TemplateBinding CurrencyCode}"
+                                  ConversionRate="{TemplateBinding ConversionRate}"
+                                  IsFiat="False"
+                                  Watermark="{TemplateBinding Watermark}"
+                                  IsApproximate="False"
+                                  Grid.Column="{TemplateBinding LeftColumn}"
+                                  Background="Transparent"
+                                  BorderThickness="0"
+                                  IsRightSide="{TemplateBinding IsConversionReversed}"
+                                  BalanceBtc="{TemplateBinding BalanceBtc}"
+                                  BalanceFiat="{TemplateBinding BalanceFiat}"
+                                  ValidatePasteBalance="{TemplateBinding ValidatePasteBalance}" />
 
-                  <Button x:Name="PART_SwapButton" Focusable="False"
-                          HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent"
-                          BorderBrush="Transparent" BorderThickness="0" Padding="0" Margin="5"
-                          Grid.Column="2">
-                    <Button.Styles>
-                      <Style Selector=":pointerover /template/ ContentPresenter#PART_ContentPresenter">
-                        <Setter Property="Background" Value="Transparent" />
-                      </Style>
-                    </Button.Styles>
-                    <PathIcon Data="{StaticResource arrow_swap}" Width="16" />
-                  </Button>
+                <Button x:Name="PART_SwapButton" Focusable="False"
+                        HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent"
+                        BorderBrush="Transparent" BorderThickness="0" Padding="0" Margin="5"
+                        Grid.Column="2">
+                  <Button.Styles>
+                    <Style Selector=":pointerover /template/ ContentPresenter#PART_ContentPresenter">
+                      <Setter Property="Background" Value="Transparent" />
+                    </Style>
+                  </Button.Styles>
+                  <PathIcon Data="{StaticResource arrow_swap}" Width="16" />
+                </Button>
 
-                  <CurrencyEntryBox x:Name="PART_RightEntryBox"
-                                      Text="{TemplateBinding ConversionText, Mode=TwoWay}"
-                                      IsReadOnly="{TemplateBinding IsReadOnly}"
-                                      CurrencyCode="{TemplateBinding ConversionCurrencyCode}"
-                                      ConversionRate="{TemplateBinding ConversionRate}"
-                                      IsFiat="True"
-                                      MaxDecimals="2"
-                                      Watermark="{TemplateBinding ConversionWatermark}"
-                                      IsApproximate="{TemplateBinding IsConversionApproximate}"
-                                      Grid.Column="{TemplateBinding RightColumn}"
-                                      Background="Transparent"
-                                      BorderThickness="0"
-                                      IsRightSide="{TemplateBinding IsConversionReversed, Converter={x:Static BoolConverters.Not}}"
-                                      BalanceBtc="{TemplateBinding BalanceBtc}"
-                                      BalanceUsd="{TemplateBinding BalanceUsd}"
-                                      ValidatePasteBalance="{TemplateBinding ValidatePasteBalance}" />
-                </Grid>
-              </Panel>
+                <CurrencyEntryBox x:Name="PART_RightEntryBox"
+                                  Text="{TemplateBinding ConversionText, Mode=TwoWay}"
+                                  IsReadOnly="{TemplateBinding IsReadOnly}"
+                                  CurrencyCode="{TemplateBinding ConversionCurrencyCode}"
+                                  ConversionRate="{TemplateBinding ConversionRate}"
+                                  IsFiat="True"
+                                  MaxDecimals="2"
+                                  Watermark="{TemplateBinding ConversionWatermark}"
+                                  IsApproximate="{TemplateBinding IsConversionApproximate}"
+                                  Grid.Column="{TemplateBinding RightColumn}"
+                                  Background="Transparent"
+                                  BorderThickness="0"
+                                  IsRightSide="{TemplateBinding IsConversionReversed, Converter={x:Static BoolConverters.Not}}"
+                                  BalanceBtc="{TemplateBinding BalanceBtc}"
+                                  BalanceFiat="{TemplateBinding BalanceFiat}"
+                                  ValidatePasteBalance="{TemplateBinding ValidatePasteBalance}" />
+              </Grid>
             </Panel>
+          </Panel>
         </DockPanel>
       </ControlTemplate>
     </Setter>
@@ -220,7 +220,8 @@
       <Setter Property="RenderTransformOrigin" Value="0.5,0" />
       <Setter Property="Transitions">
         <Transitions>
-          <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1" Delay="0:0:0.2" Easing="{StaticResource FluentEasing}" />
+          <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1" Delay="0:0:0.2"
+                                         Easing="{StaticResource FluentEasing}" />
           <ThicknessTransition Property="Margin" Duration="0:0:0.2" Easing="{StaticResource FluentEasing}" />
         </Transitions>
       </Setter>

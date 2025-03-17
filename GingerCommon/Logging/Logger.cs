@@ -51,6 +51,11 @@ public static class Logger
 		LoggerInstance = logger;
 	}
 
+	public static void FinishFileLogging()
+	{
+		FileLoggerProvider.CloseFiles();
+	}
+
 	public static string FilePath { get; private set; } = "Logs.txt";
 
 	public static bool On { get; set; } = true;

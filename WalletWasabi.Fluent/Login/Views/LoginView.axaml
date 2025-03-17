@@ -117,7 +117,7 @@
                     VerticalAlignment="Bottom"
                     Classes="fadeAnimation">
           <TextBlock Text="{Binding ErrorMessage}" HorizontalAlignment="Center" />
-          <Button Content="OK" Focusable="False" Classes="action" HorizontalAlignment="Center" Command="{Binding OkCommand}">
+          <Button Content="{x:Static lang:Resources.Ok}" Focusable="False" Classes="action" HorizontalAlignment="Center" Command="{Binding OkCommand}">
             <Button.IsDefault>
               <MultiBinding Converter="{x:Static BoolConverters.And}">
                 <Binding Path="ErrorMessage" Converter="{x:Static StringConverters.IsNotNullOrEmpty}" />

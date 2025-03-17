@@ -3,6 +3,7 @@ using System.Reactive.Disposables;
 using ReactiveUI;
 using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.Navigation.ViewModels;
+using WalletWasabi.Lang;
 using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.AddWallet.ViewModels;
@@ -46,9 +47,8 @@ public partial class LegalDocumentsViewModel : RoutableViewModel
 			}
 			catch (Exception ex)
 			{
-				var caption = "Failed to get Legal documents.";
-				Logger.LogError(caption, ex);
-				await ShowErrorAsync(Title, message: caption, caption: "");
+				Logger.LogError(ex);
+				await ShowErrorAsync(Title, message: Resources.FailedToGetLegalDocuments, caption: "");
 				Navigate().Back();
 			}
 			finally

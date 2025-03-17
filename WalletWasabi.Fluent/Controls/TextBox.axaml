@@ -1,5 +1,6 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi">
 
   <Thickness x:Key="TextControlBorderThemeThickness">2</Thickness>
   <Thickness x:Key="TextControlBorderThemeThicknessFocused">2</Thickness>
@@ -14,6 +15,15 @@
   </Design.PreviewWith>
 
   <ControlTheme x:Key="TextBoxTheme" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+
+    <Setter Property="ContextMenu">
+      <ContextMenu>
+        <MenuItem Header="{x:Static lang:Resources.Cut}" Command="{Binding $parent[TextBox].Cut}" IsEnabled="{Binding $parent[TextBox].CanCut}" InputGesture="{x:Static TextBox.CutGesture}" />
+        <MenuItem Header="{x:Static lang:Resources.Copy}" Command="{Binding $parent[TextBox].Copy}" IsEnabled="{Binding $parent[TextBox].CanCopy}" InputGesture="{x:Static TextBox.CopyGesture}"/>
+        <MenuItem Header="{x:Static lang:Resources.Paste}" Command="{Binding $parent[TextBox].Paste}" IsEnabled="{Binding $parent[TextBox].CanPaste}" InputGesture="{x:Static TextBox.PasteGesture}"/>
+      </ContextMenu>
+    </Setter>
+
     <Setter Property="Template">
       <ControlTemplate>
         <DockPanel>
@@ -159,7 +169,7 @@
 
       <Setter Property="ContextMenu">
         <ContextMenu>
-          <MenuItem Header="Copy" Command="{Binding $parent[TextBox].Copy}" IsEnabled="{Binding $parent[TextBox].CanCopy}" InputGesture="{x:Static TextBox.CopyGesture}" />
+          <MenuItem Header="{x:Static lang:Resources.Copy}" Command="{Binding $parent[TextBox].Copy}" IsEnabled="{Binding $parent[TextBox].CanCopy}" InputGesture="{x:Static TextBox.CopyGesture}" />
         </ContextMenu>
       </Setter>
 

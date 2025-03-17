@@ -121,7 +121,7 @@
     <value>Megnyitás</value>
   </data>
   <data name="TwoFactorDisabledWarnMessage" xml:space="preserve">
-    <value>A kétlépcsős hitelesítés le van tiltva. Engedélyezze a Beállításokban a nagyobb védelem érdekében.</value>
+    <value>A kétlépcsős hitelesítés ki van kapcsolva. Engedélyezd a Beállításokban a fokozott védelem érdekében.</value>
   </data>
   <data name="AddWalletPageViewModelTitle" xml:space="preserve">
     <value>Új tárca</value>
@@ -130,7 +130,7 @@
     <value>Létrehozás, csatlakozás, importálás vagy helyreállítás</value>
   </data>
   <data name="AddWalletPageViewModelKeywords" xml:space="preserve">
-    <value>Pénztárca, Hozzáadás, Létrehozás, Új, Helyreállítás, Importálás, Csatlakozás, Hardver, ColdCard, Trezor, Ledger</value>
+    <value>Tárca, Hozzáadás, Létrehozás, Új, Helyreállítás, Importálás, Csatlakozás, Hardver, ColdCard, Trezor, Ledger</value>
   </data>
   <data name="NoCategory" xml:space="preserve">
     <value>Nincs kategória</value>
@@ -142,7 +142,7 @@
     <value>Tárca</value>
   </data>
   <data name="HelpAndSupport" xml:space="preserve">
-    <value>Segítség &amp; támogatás</value>
+    <value>Segítség &amp; Támogatás</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Beállítások</value>
@@ -154,7 +154,7 @@
     <value>Általános beállítások kezelése</value>
   </data>
   <data name="GeneralSettingsTabViewModelKeywords" xml:space="preserve">
-    <value>Beállítások, Általános, Bitcoin, Sötét, Mód, Futtatás, Ginger, Számítógép, Rendszer, Indítás, Háttér, Bezárás, Automatikus, Másolás, Beillesztés, Címek, Egyéni, Módosítás, Cím, Díj, Kijelző, Formátum, BTC, sats, böngésző</value>
+    <value>Beállítások, Általános, Bitcoin, Futtatás, Ginger, Számítógép, Rendszer, Indítás, Háttér, Bezárás, Automatikus, Másolás, Beillesztés, Címek, Egyedi, Változtatás, Cím, böngésző</value>
   </data>
   <data name="BitcoinTabSettingsViewModelTitle" xml:space="preserve">
     <value>Bitcoin</value>
@@ -184,46 +184,46 @@
     <value>Biztonság, Beállítások, 2FA, Kétfaktoros, Hitelesítés, Két, Faktor</value>
   </data>
   <data name="AboutViewModelCaption" xml:space="preserve">
-    <value>A Ginger Wallet aktuális információinak megjelenítése</value>
+    <value>A Ginger Wallet adatainak megjelenítése</value>
   </data>
   <data name="AboutViewModelTitle" xml:space="preserve">
     <value>Névjegy</value>
   </data>
   <data name="AboutViewModelKeywords" xml:space="preserve">
-    <value>Szoftver, Verzió, Forrás, Kód, Github, Weboldal, Koordinátor, Statisztika, Tor, Onion, Felhasználó, Támogatás, Hiba, Jelentés, GYIK, Kérdések, Dokumentumok, Dokumentáció, Licenc, Fejlett, Információ, Hardver, Pénztárca</value>
+    <value>Szoftver, Verzió, Forrás, Kód, Github, Weboldal, Koordinátor, Statisztika, Tor, Onion, Felhasználó, Támogatás, Hiba, Jelentés, GYIK, Kérdések, Dokumentumok, Dokumentáció, Licenc, Fejlett, Információ, Hardver, Tárca</value>
   </data>
   <data name="BroadcasterViewModelTitle" xml:space="preserve">
-    <value>Tranzakció közzététele</value>
+    <value>Kiküldés</value>
   </data>
   <data name="BroadcasterViewModelCaption" xml:space="preserve">
-    <value>Küldje el a tranzakcióját itt</value>
+    <value>Küldd ki a tranzakciódat itt</value>
   </data>
   <data name="BroadcasterViewModelKeywords" xml:space="preserve">
-    <value>Tranzakció azonosító, Bemenet, Kimenet, Összeg, Hálózat, Díj, Szám, BTC, Aláírt, Beillesztés, Importálás, Közvetítés, Tranzakció</value>
+    <value>Tranzakció azonosító, Bemenet, Kimenet, Összeg, Hálózat, Díj, Szám, BTC, Aláírt, Beillesztés, Importálás, Kiküldés, Tranzakció</value>
   </data>
   <data name="LegalDocumentsViewModelTitle" xml:space="preserve">
     <value>Jogi dokumentum</value>
   </data>
   <data name="LegalDocumentsViewModelCaption" xml:space="preserve">
-    <value>Szerződési feltételek megjelenítése</value>
+    <value>Felhasználási feltételek megjelenítése</value>
   </data>
   <data name="LegalDocumentsViewModelKeywords" xml:space="preserve">
     <value>Nézet, Jogi, Dokumentum, Feltételek, Kikötések, Adatvédelmi, Politika, Nyilatkozat</value>
   </data>
   <data name="UserSupportViewModelTitle" xml:space="preserve">
-    <value>Felhasználói támogatás</value>
+    <value>Ügyfélszolgálat</value>
   </data>
   <data name="UserSupportViewModelCaption" xml:space="preserve">
-    <value>Nyissa meg a Ginger Wallet felhasználói támogatási oldalát</value>
+    <value>Ginger Wallet ügyfélszolgálati oldalának megnyitása</value>
   </data>
   <data name="UserSupportViewModelKeywords" xml:space="preserve">
-    <value>Felhasználó, Támogatás, Weboldal</value>
+    <value>Felhasználó, Támogatás, Weboldal, Ügyfélszolgálat</value>
   </data>
   <data name="BugReportLinkViewModelTitle" xml:space="preserve">
     <value>Hiba jelentése</value>
   </data>
   <data name="BugReportLinkViewModelCaption" xml:space="preserve">
-    <value>Nyissa meg a Ginger Wallet GitHub oldalát</value>
+    <value>Ginger Wallet hibajelentő oldalának megnyitása.</value>
   </data>
   <data name="BugReportLinkViewModelKeywords" xml:space="preserve">
     <value>Támogatás, Weboldal, Hiba, Jelentés</value>
@@ -232,37 +232,37 @@
     <value>Felhasználói útmutató/GYIK</value>
   </data>
   <data name="DocsLinkViewModelCaption" xml:space="preserve">
-    <value>Nyissa meg a Ginger Wallet GYIK weboldalát</value>
+    <value>Ginger Wallet GYIK weboldalának megnyitása</value>
   </data>
   <data name="DocsLinkViewModelKeywords" xml:space="preserve">
     <value>Felhasználó, Támogatás, Weboldal, Dokumentumok, Dokumentáció, Útmutató</value>
   </data>
   <data name="OpenDataFolderViewModelTitle" xml:space="preserve">
-    <value>Adatmappa</value>
+    <value>Ginger könyvtár</value>
   </data>
   <data name="OpenDataFolderViewModelKeywords" xml:space="preserve">
-    <value>Böngészés, Megnyitás, Adatok, Mappa</value>
+    <value>Böngészés, Megnyitás, Adatok, Könyvtár</value>
   </data>
   <data name="OpenWalletsFolderViewModelTitle" xml:space="preserve">
-    <value>Tárca mappa</value>
+    <value>Tárcák könyvtár</value>
   </data>
   <data name="OpenWalletsFolderViewModelKeywords" xml:space="preserve">
-    <value>Böngészés, Megnyitás, Tárca, Mappa</value>
+    <value>Böngészés, Megnyitás, Tárca, Könyvtár</value>
   </data>
   <data name="OpenLogsViewModelTitle" xml:space="preserve">
-    <value>Naplók</value>
+    <value>Naplófájl</value>
   </data>
   <data name="OpenLogsViewModelKeywords" xml:space="preserve">
-    <value>Böngészés, Megnyitás, Naplók, log</value>
+    <value>Böngészés, Megnyitás, Napló, log</value>
   </data>
   <data name="OpenTorLogsViewModelKeywords" xml:space="preserve">
-    <value>Böngészés, Megnyitás, Tor, Naplók, log</value>
+    <value>Böngészés, Megnyitás, Tor, Napló, log</value>
   </data>
   <data name="OpenTorLogsViewModelTitle" xml:space="preserve">
-    <value>Tor naplók</value>
+    <value>Tor naplófájl</value>
   </data>
   <data name="OpenConfigFileViewModelTitle" xml:space="preserve">
-    <value>Beállítási fájl</value>
+    <value>Konfigurációs fájl</value>
   </data>
   <data name="OpenConfigFileViewModelKeywords" xml:space="preserve">
     <value>Böngészés, Megnyitás, Beállítás, Fájl</value>
@@ -271,7 +271,7 @@
     <value>Beállítások keresése / haladó funkciók</value>
   </data>
   <data name="OpenPasswordBoxWatermark" xml:space="preserve">
-    <value>Jelszó</value>
+    <value>Passphrase</value>
   </data>
   <data name="DiscreetMode" xml:space="preserve">
     <value>Diszkrét mód</value>
@@ -280,13 +280,13 @@
     <value>Beállítások, Általános, Felhasználó, Felület, Haladó</value>
   </data>
   <data name="SettingsPageViewModelCaption" xml:space="preserve">
-    <value>Kezelje a megjelenést, az adatvédelmet és egyéb beállításokat</value>
+    <value>Általános, haladó és egyéb beállítások kezelése</value>
   </data>
   <data name="SettingsPageViewModelTitle" xml:space="preserve">
     <value>Beállítások</value>
   </data>
   <data name="TwoFactorDisabledWarnMessageOpenSettings" xml:space="preserve">
-    <value>Nyissa meg a beállításokat</value>
+    <value>Beállítások megnyitása</value>
   </data>
   <data name="LoadingViewModelPercentCompleted" xml:space="preserve">
     <value>{0}% kész</value>
@@ -316,10 +316,10 @@
     <value>Bitcoin-hálózati adatok letöltése és feldolgozása</value>
   </data>
   <data name="LoadingViewThirdparty" xml:space="preserve">
-    <value>A Ginger ezt anélkül teszi, hogy harmadik fél tudomást szerezne az egyenlegedről és pénzügyi tevékenységedről.</value>
+    <value>A Ginger ezt úgy teszi, hogy harmadik fél nem szerez tudomást az egyenlegedről és pénzügyi tevékenységedről.</value>
   </data>
   <data name="LoadingViewProcessLonger" xml:space="preserve">
-    <value>Ez a folyamat hosszabb lesz az első indításkor, nagyobb pénztárcáknál, vagy ha hosszabb idő telt el a szinkronizálások között.</value>
+    <value>Ez a folyamat tovább tarthat az első indításkor, nagyobb tárcáknál vagy ha hosszabb idő telt el az utolsó szinkronizálás óta.</value>
   </data>
   <data name="WalletBalance" xml:space="preserve">
     <value>EGYENLEG</value>
@@ -355,28 +355,28 @@
     <value>Automatikus</value>
   </data>
   <data name="WalletManualControl" xml:space="preserve">
-    <value>Kézi vezérlés</value>
+    <value>Manuális választás</value>
   </data>
   <data name="SpeedUpTransaction" xml:space="preserve">
-    <value>Tranzakció Felgyorsítása</value>
+    <value>Tranzakció felgyorsítása</value>
   </data>
   <data name="CancelTransaction" xml:space="preserve">
-    <value>Tranzakció Visszavonása</value>
+    <value>Tranzakció visszavonása</value>
   </data>
   <data name="OpenInTheBrowser" xml:space="preserve">
     <value>Megnyitás a böngészőben</value>
   </data>
   <data name="WalletSettings" xml:space="preserve">
-    <value>Pénztárca beállítások</value>
+    <value>Tárca beállítások</value>
   </data>
   <data name="WalletCoinsViewModelTitle" xml:space="preserve">
-    <value>Pénztárca érmék</value>
+    <value>Tárca érmék</value>
   </data>
   <data name="WalletStatsViewModelTitle" xml:space="preserve">
-    <value>Pénztárca statisztikák</value>
+    <value>Tárca statisztikák</value>
   </data>
   <data name="WalletInfoViewModelTitle" xml:space="preserve">
-    <value>Pénztárca információ</value>
+    <value>Tárca információ</value>
   </data>
   <data name="WalletReceive" xml:space="preserve">
     <value>Fogadás</value>
@@ -391,19 +391,19 @@
     <value>Coinjoin automatikus indítására várakozik</value>
   </data>
   <data name="WaitingMessage" xml:space="preserve">
-    <value>Coinjoin-ra várakozik</value>
+    <value>Coinjoinra várakozik</value>
   </data>
   <data name="UneconomicalRoundMessage" xml:space="preserve">
-    <value>Olcsóbb Coinjoin-ra várakozik</value>
+    <value>Olcsóbb coinjoinra várakozik</value>
   </data>
   <data name="RandomlySkippedRoundMessage" xml:space="preserve">
     <value>Egy kör kihagyása a jobb anonimitás érdekében</value>
   </data>
   <data name="PauseMessage" xml:space="preserve">
-    <value>A Coinjoin szünetel</value>
+    <value>Coinjoin szüneteltetve</value>
   </data>
   <data name="StoppedMessage" xml:space="preserve">
-    <value>A Coinjoin leállt</value>
+    <value>A coinjoin leállt</value>
   </data>
   <data name="PressPlayToStartMessage" xml:space="preserve">
     <value>Nyomd meg a Play gombot az indításhoz</value>
@@ -430,34 +430,34 @@
     <value>Várakozás egy körre</value>
   </data>
   <data name="PlebStopMessage" xml:space="preserve">
-    <value>A Coinjoin gazdaságtalan lehet</value>
+    <value>A coinjoin jelenleg nem gazdaságos</value>
   </data>
   <data name="PlebStopMessageBelow" xml:space="preserve">
-    <value>Adj hozzá több pénzt, vagy nyomd meg a Play gombot a folytatáshoz</value>
+    <value>Növeld az egyenleged, vagy nyomd meg a Play gombot a folytatáshoz.</value>
   </data>
   <data name="NoCoinsEligibleToMixMessage" xml:space="preserve">
-    <value>Nincs elegendő Coinjoinolható összeg</value>
+    <value>Nincs elegendő coinjoinolható összeg</value>
   </data>
   <data name="UserInSendWorkflowMessage" xml:space="preserve">
-    <value>Várakozás a küldési párbeszédablak bezárására</value>
+    <value>Várakozás a küldési ablak bezárására</value>
   </data>
   <data name="AllPrivateMessage" xml:space="preserve">
-    <value>Hurrá! Minden pénzed anonim!</value>
+    <value>Hurrá! A teljes egyenleged anonim!</value>
   </data>
   <data name="BackendNotConnected" xml:space="preserve">
     <value>Várakozás a kapcsolatra</value>
   </data>
   <data name="GeneralErrorMessage" xml:space="preserve">
-    <value>Érvényes feltételekre várakozik</value>
+    <value>Megfelelő feltételekre várakozik</value>
   </data>
   <data name="WaitingForConfirmedFunds" xml:space="preserve">
-    <value>Várakozás a megerősített érmékre</value>
+    <value>Várakozás az érmék visszaigazolására</value>
   </data>
   <data name="CoinsRejectedMessage" xml:space="preserve">
-    <value>Néhány érmét elutasítottak a Coinjoinból</value>
+    <value>Néhány érmét elutasítottak a coinjoinból</value>
   </data>
   <data name="OnlyImmatureCoinsAvailableMessage" xml:space="preserve">
-    <value>Csak konfirmálatlan érmék állnak rendelkezésre</value>
+    <value>Csak még nem véglegesített érmék állnak rendelkezésre</value>
   </data>
   <data name="OnlyExcludedCoinsAvailableMessage" xml:space="preserve">
     <value>Csak kizárt érmék állnak rendelkezésre</value>
@@ -478,13 +478,13 @@
     <value>Válaszra várakozás</value>
   </data>
   <data name="WalletSettingsViewModelTitle" xml:space="preserve">
-    <value>Pénztárca beállítások</value>
+    <value>Tárca beállítások</value>
   </data>
   <data name="WalletSettingsViewModelCaption" xml:space="preserve">
-    <value>Pénztárca beállítások megjelenítése</value>
+    <value>Tárca beállítások megjelenítése</value>
   </data>
   <data name="WalletSettingsViewModelKeywords" xml:space="preserve">
-    <value>Pénztárca, Beállítások</value>
+    <value>Tárca, Beállítások</value>
   </data>
   <data name="Coinjoin" xml:space="preserve">
     <value>Coinjoin</value>
@@ -496,37 +496,34 @@
     <value>Megnevezés</value>
   </data>
   <data name="PSBTworkflow" xml:space="preserve">
-    <value>PSBT munkafolyamat</value>
+    <value>PSBT aláírási folyamat</value>
   </data>
   <data name="AutomaticallyStartCoinjoin" xml:space="preserve">
     <value>Coinjoin automatikus indítása</value>
   </data>
   <data name="CoinjoinToThisWallet" xml:space="preserve">
-    <value>Coinjoin erre a pénztárcára</value>
+    <value>Coinjoin erre a tárcára</value>
   </data>
   <data name="CoinjoinToOtherWalletRestrictions1" xml:space="preserve">
-    <value>- Csak betöltött pénztárcák választhatók ki.</value>
+    <value>- Csak betöltött tárcák választhatók ki.</value>
   </data>
   <data name="CoinjoinToOtherWalletRestrictions2" xml:space="preserve">
-    <value>- A Coinjoin tranzakcióból származó érméket ez a pénztárca fogja megkapni. Azonban ez a beállítás a Ginger újraindítása után visszaáll.</value>
+    <value>- A coinjoin tranzakcióból származó érméket ez a tárca fogja megkapni. Azonban ez a beállítás a Ginger újraindítása után visszaáll.</value>
   </data>
   <data name="CoinjoinToOtherWalletRestrictions3" xml:space="preserve">
-    <value>- A kiválasztott pénztárca nem változtatható ki, ha egy Coinjoin folyamatban van.</value>
+    <value>- A kiválasztott tárca nem változtatható ki, ha egy coinjoin folyamatban van.</value>
   </data>
   <data name="PlebStopToolTip" xml:space="preserve">
-    <value>A Coinjoin automatikusan leáll, ha a pénztárca egyenlege kevesebb ennél.</value>
+    <value>A coinjoin automatikusan leáll, ha a tárca egyenlege kevesebb ennél.</value>
   </data>
   <data name="PlebStopThreshold" xml:space="preserve">
-    <value>Coinjoin leállításának küszöbértéke</value>
-  </data>
-  <data name="WalletToolsCheckBackup" xml:space="preserve">
-    <value>Ellenőrizted a pénztárca biztonsági mentését?</value>
+    <value>Coinjoin leállítási küszöb</value>
   </data>
   <data name="WalletToolsRecommend" xml:space="preserve">
-    <value>Ajánlott időnként ellenőrizni a pénztárca helyreállítási szavait.</value>
+    <value>Ajánlott időnként ellenőrizni a tárca helyreállítási szavait.</value>
   </data>
   <data name="WalletToolsDoNotForget" xml:space="preserve">
-    <value>A pénztárca visszaállításához szükséges a jelszó is, ne felejtsd el.</value>
+    <value>Ne felejtsd el, hogy a tárca visszaállításához szükséges a passphrase is.</value>
   </data>
   <data name="WalletToolsVerifyRecoveryWords" xml:space="preserve">
     <value>Helyreállítási szavak ellenőrzése</value>
@@ -535,40 +532,40 @@
     <value>Coinjoin beállítások</value>
   </data>
   <data name="WalletCoinJoinSettingsViewModelCaption" xml:space="preserve">
-    <value>Pénztárca Coinjoin beállítások megjelenítése</value>
+    <value>Tárca coinjoin beállítások megjelenítése</value>
   </data>
   <data name="WalletCoinJoinSettingsViewModelKeywords" xml:space="preserve">
-    <value>Pénztárca, Beállítások</value>
+    <value>Tárca, Beállítások</value>
   </data>
   <data name="CoinJoinProfilesCaption" xml:space="preserve">
-    <value>A Ginger automatikusan kezeli pénzügyi adatvédelmét az összes érméje coinjoinolásával, egy fix 0,3%-os koordinációs díjjal és a bányászati díjakkal. A könnyű használat érdekében előre alkalmaztuk az alapértelmezett konfigurációt.</value>
+    <value>A Ginger automatikusan gondoskodik pénzügyi anonimitásodról az összes érméd coinjoinolásával, egy fix 0,3%-os koordinációs díj és a bányászati díjak ellenében. A könnyebb használat érdekében előre beállítottuk az alapértelmezett konfigurációt.</value>
   </data>
   <data name="Done" xml:space="preserve">
     <value>Kész</value>
   </data>
   <data name="RedcoinText" xml:space="preserve">
-    <value>Egyetlen nem privát érme korlátozása</value>
+    <value>Egyetlen nem anonim érme korlátozása</value>
   </data>
   <data name="RedcoinToolTip" xml:space="preserve">
-    <value>Csak egy érmét engedélyezzen, amelynek anonimitási pontszáma 1, a Coinjoin regisztrációban.</value>
+    <value>Csak egy, 1-es anonimitási szinttel rendelkező érmét engedélyez a coinjoin regisztrációban.</value>
   </data>
   <data name="AnonTargetText" xml:space="preserve">
-    <value>Anonimitási pontszám cél</value>
+    <value>Anonimitási célérték</value>
   </data>
   <data name="AnonTargetTooltip" xml:space="preserve">
-    <value>A minimális anonimitási pontszám, amely szükséges ahhoz, hogy egy érme privátnak minősüljön.</value>
+    <value>Egy érme akkor számít anonimnak, ha eléri ezt az értéket.</value>
   </data>
   <data name="SafeFeeText" xml:space="preserve">
     <value>Coinjoin időpreferencia figyelmen kívül hagyása alatta</value>
   </data>
   <data name="SafeFeeToolTip" xml:space="preserve">
-    <value>Mindig végezzen Coinjoint, ha a díj mértéke ez alatti (elsőbbséget élvez a Coinjoin időpreferenciával szemben).</value>
+    <value>Mindig végezzen coinjoint, ha a díjráta ez alatti (elsőbbséget élvez a coinjoin időpreferenciával szemben).</value>
   </data>
   <data name="CoinJoinTimePrefText" xml:space="preserve">
     <value>Coinjoin időpreferencia</value>
   </data>
   <data name="CoinJoinTimePrefToolTip" xml:space="preserve">
-    <value>Csak akkor végezzen Coinjoint, ha a díj mértéke az adott időszak mediánja alatt van.</value>
+    <value>Csak akkor végezzen coinjoint, ha a díj mértéke az adott időszak mediánja alatt van.</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Mégse</value>
@@ -589,10 +586,10 @@
     <value>Helyreállítás</value>
   </data>
   <data name="WalletName" xml:space="preserve">
-    <value>Pénztárca megnevezés</value>
+    <value>Tárca megnevezés</value>
   </data>
   <data name="WalletRenameCaption" xml:space="preserve">
-    <value>Módosíthatod a pénztárcád megnevezését</value>
+    <value>Módosíthatod a tárcád megnevezését</value>
   </data>
   <data name="TypeInWalletName" xml:space="preserve">
     <value>Írd be a tárca megnevezését</value>
@@ -604,28 +601,28 @@
     <value>Sikeres</value>
   </data>
   <data name="UnexpextedError" xml:space="preserve">
-    <value>Váratlan hiba történt. Kérjük, próbálja újra, vagy lépjen kapcsolatba az ügyfélszolgálattal.</value>
+    <value>Váratlan hiba történt. Kérjük, próbáld újra, vagy lépj kapcsolatba az ügyfélszolgálattal.</value>
   </data>
   <data name="SomethingWrong" xml:space="preserve">
-    <value>Valami hiba történt. Kérjük, próbálja újra.</value>
+    <value>Valami hiba történt. Kérjük, próbáld újra.</value>
   </data>
   <data name="PermissionError" xml:space="preserve">
     <value>A Ginger Wallet nem tudta végrehajtani ezt a műveletet a jogosultság hiánya miatt.</value>
   </data>
   <data name="HardwareWalletNotFound" xml:space="preserve">
-    <value>Nem található a hardvertárca. Győződjön meg róla, hogy csatlakoztatva van.</value>
+    <value>Nem található a hardvertárca. Győződj meg róla, hogy csatlakoztatva van.</value>
   </data>
   <data name="TransactionCanceledOnDevice" xml:space="preserve">
-    <value>A tranzakciót a készüléken törölték.</value>
+    <value>A műveletet a készüléken megszakították.</value>
   </data>
   <data name="UnknownErrorDeviceCheck" xml:space="preserve">
-    <value>Ismeretlen hiba. Győződjön meg róla, hogy a készülék csatlakoztatva van, és nem foglalt, majd próbálja újra.</value>
+    <value>Ismeretlen hiba. Győződj meg róla, hogy a készülék csatlakoztatva van és nincs használatban, majd próbáld újra.</value>
   </data>
   <data name="CoinAlreadySpent" xml:space="preserve">
-    <value>Legalább egy érme, amelyet megpróbál elkölteni, már el lett költve.</value>
+    <value>Legalább egy érme, amelyet próbálsz elkölteni, már el lett költve.</value>
   </data>
   <data name="CoinInUnconfirmedChain" xml:space="preserve">
-    <value>Legalább egy érme, amelyet megpróbál elkölteni, egy hosszú vagy terhelt lánc része, amelyben még nem erősítették meg a tranzakciókat. Meg kell várnia, hogy néhány korábbi tranzakció megerősítést nyerjen.</value>
+    <value>Legalább egy érme, amelyet próbálsy elkölteni, egy hosszú vagy terhelt lánc része, amelyben még nem igazolták vissza a tranzakciókat. Meg kell várni, hogy néhány korábbi tranzakció megerősítést nyerjen.</value>
   </data>
   <data name="TransactionDuplicatedInputs" xml:space="preserve">
     <value>A tranzakció duplikált bemeneteket tartalmaz.</value>
@@ -637,16 +634,16 @@
     <value>A tranzakció túl nagy.</value>
   </data>
   <data name="WrongPassphrase" xml:space="preserve">
-    <value>Hibás jelszó.</value>
+    <value>Hibás passphrase.</value>
   </data>
   <data name="InvalidWalletName" xml:space="preserve">
-    <value>Érvénytelen pénztárcanév.</value>
+    <value>Érvénytelen tárcanév.</value>
   </data>
   <data name="WalletNameTaken" xml:space="preserve">
-    <value>A pénztárca neve már foglalt.</value>
+    <value>A tárca neve már foglalt.</value>
   </data>
   <data name="BalanceNotAccurateServerConnection" xml:space="preserve">
-    <value>A megjelenített egyenleg nem biztos, hogy pontos és lehetésges, hogy más funkciók sem állnak rendelkezésre, mert a Ginger nem tudott csatlakozni a szerverhez. Újra próbálkozunk a csatlakozással.</value>
+    <value>A megjelenített egyenleg pontatlan lehet, és egyes funkciók nem működhetnek, mert a Ginger nem tud csatlakozni a szerverhez. Újracsatlakozás folyamatban...</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>Frissítés elérhető.</value>
@@ -658,13 +655,13 @@
     <value>Frissítés</value>
   </data>
   <data name="AskMeLater" xml:space="preserve">
-    <value>Kérdezz meg később</value>
+    <value>Emlékeztess később</value>
   </data>
   <data name="IsRunning" xml:space="preserve">
-    <value>fut</value>
+    <value>aktív</value>
   </data>
   <data name="IsNotRunning" xml:space="preserve">
-    <value>nem fut</value>
+    <value>nem aktív</value>
   </data>
   <data name="IsTurnedOff" xml:space="preserve">
     <value>ki van kapcsolva</value>
@@ -676,25 +673,25 @@
     <value>nincs csatlakoztatva</value>
   </data>
   <data name="FullNodeConnecting" xml:space="preserve">
-    <value>A teljes csomópont csatlakozik...</value>
+    <value>A Full Node csatlakozik...</value>
   </data>
   <data name="FullNodeSynchronized" xml:space="preserve">
-    <value>A teljes csomópont szinkronizálva van</value>
+    <value>A Full Node szinkronizálva van</value>
   </data>
   <data name="FullNodeDownloadingBlocks" xml:space="preserve">
-    <value>A teljes csomópont {0} blokkot tölt le...</value>
+    <value>A Full Node {0} blokkot tölt le...</value>
   </data>
   <data name="FullNodeUnresponsive" xml:space="preserve">
-    <value>A teljes csomópont nem válaszol</value>
+    <value>A Full Node nem válaszol</value>
   </data>
   <data name="ApplicationRestartApplyChanges" xml:space="preserve">
-    <value>A Folytatás megnyomása után az alkalmazás újraindul a változtatások alkalmazásához.</value>
+    <value>A Folytatás megnyomása után az alkalmazás újraindul a változtatások érvényesítéséhez.</value>
   </data>
   <data name="WelcomeToGingerWallet" xml:space="preserve">
     <value>Üdvözöljük a Ginger Walletban</value>
   </data>
   <data name="SelectPreferredLanguage" xml:space="preserve">
-    <value>Válaszd ki a preferált nyelvedet:</value>
+    <value>Válaszd ki a kívánt nyelvet:</value>
   </data>
   <data name="CoinjoinFees" xml:space="preserve">
     <value>Coinjoin díjak</value>
@@ -709,28 +706,28 @@
     <value>Tranzakciós díj</value>
   </data>
   <data name="TransactionFeeInfo" xml:space="preserve">
-    <value>Minden coinjoin után bányászati díjat kell fizetnie.</value>
+    <value>Minden coinjoin után bányászati díjat kell fizetned.</value>
   </data>
   <data name="PlebsDontPay" xml:space="preserve">
-    <value>A plebejusok nem fizetnek</value>
+    <value>Plebek nem fizetnek</value>
   </data>
   <data name="PlebsDontPayInfo" xml:space="preserve">
-    <value>Nem kell koordinációs díjat fizetnie a 0,01 BTC-nél kisebb vagy egyenlő érmék után.</value>
+    <value>Nem kell koordinációs díjat fizetned a 0,01 BTC vagy annál kisebb érmék után.</value>
   </data>
   <data name="FriendsDontPay" xml:space="preserve">
-    <value>A barátok nem fizetnek</value>
+    <value>Barátok nem fizetnek</value>
   </data>
   <data name="FriendsDontPayInfo" xml:space="preserve">
-    <value>Nem kell koordinációs díjat fizetnie a más Ginger coinjoinoktól kapott érmék után.</value>
+    <value>Nem kell koordinációs díjat fizetned a más Ginger coinjoinoktól kapott érmék után.</value>
   </data>
   <data name="GetStarted" xml:space="preserve">
     <value>Kezdés</value>
   </data>
   <data name="AddressesAwaitingPayment" xml:space="preserve">
-    <value>Fizetésre Váró Címek</value>
+    <value>Fizetésre váró tárcacímek</value>
   </data>
   <data name="EnterNamesForAddress" xml:space="preserve">
-    <value>Írd be azoknak a személyeknek vagy cégeknek a neveit, akiknek ezt a címet elküldöd</value>
+    <value>Írd be azoknak a személyeknek vagy cégeknek a neveit, akiknek ezt a tárcacímet elküldöd</value>
   </data>
   <data name="ReceiveViewModelTitle" xml:space="preserve">
     <value>Fogadás</value>
@@ -739,10 +736,10 @@
     <value>Fogadási ablak megjelenítése</value>
   </data>
   <data name="ReceiveViewModelKeywords" xml:space="preserve">
-    <value>Pénztárca, Fogadni, Művelet</value>
+    <value>Tárca, Fogadni, Művelet</value>
   </data>
   <data name="AddressAwaitingPayment" xml:space="preserve">
-    <value>Fizetésre Váró Cím</value>
+    <value>Fizetésre váró tárcacím</value>
   </data>
   <data name="ShowOnHardwareWallet" xml:space="preserve">
     <value>Megjelenítés a hardvertárcán</value>
@@ -751,19 +748,19 @@
     <value>Másolás</value>
   </data>
   <data name="UnableToSendAddressToDevice" xml:space="preserve">
-    <value>Nem lehet elküldeni a címet az eszközre</value>
+    <value>Nem lehet elküldeni a tárcacímet az eszközre</value>
   </data>
   <data name="ChooseHideModifyDisplayAddresses" xml:space="preserve">
-    <value>Választhatsz az alábbi címek elrejtése, módosítása vagy megjelenítése között</value>
+    <value>Választhatsz az alábbi címek elrejtése, módosítása vagy megjelenítése között.</value>
   </data>
   <data name="Address" xml:space="preserve">
-    <value>Cím</value>
+    <value>Tárcacím</value>
   </data>
   <data name="Label" xml:space="preserve">
     <value>Címke</value>
   </data>
   <data name="HideAddress" xml:space="preserve">
-    <value>Cím elrejtése</value>
+    <value>Tárcacím elrejtése</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Szerkesztés</value>
@@ -772,10 +769,10 @@
     <value>QR Kód</value>
   </data>
   <data name="WishToHideAddressWithLabels" xml:space="preserve">
-    <value>Szeretnéd elrejteni a címet a következő címkékkel?</value>
+    <value>Szeretnéd elrejteni a tárcacímet a következő címkékkel?</value>
   </data>
   <data name="ThisCannotBeUndone" xml:space="preserve">
-    <value>Ezt nem lehet visszavonni</value>
+    <value>Ezt nem lehet visszavonni.</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Igen</value>
@@ -784,19 +781,19 @@
     <value>Nem</value>
   </data>
   <data name="EditSelectedAddressLabels" xml:space="preserve">
-    <value>Itt szerkeszd a kiválasztott cím címkéit:</value>
+    <value>Itt szerkesztheted a kiválasztott tárcacím címkéit:</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Mentés</value>
   </data>
   <data name="ChangesAppliedAfterRestart" xml:space="preserve">
-    <value>A változtatások a alkalmazás újraindítása után lépnek életbe.</value>
+    <value>A változtatások az alkalmazás újraindítása után lépnek életbe.</value>
   </data>
   <data name="RestartApplication" xml:space="preserve">
     <value>Alkalmazás újraindítása</value>
   </data>
   <data name="ModifyingSettingsNotPossible" xml:space="preserve">
-    <value>A beállítások módosítása nem lehetséges, mivel bizonyos paramétereket felülírtak a rendszerindítás során.</value>
+    <value>A beállítások módosítása nem lehetséges, mivel bizonyos paramétereket az indításkor felülírták.</value>
   </data>
   <data name="Advanced" xml:space="preserve">
     <value>Haladó</value>
@@ -805,7 +802,7 @@
     <value>Biztonság</value>
   </data>
   <data name="ApplyNewSettingRestart" xml:space="preserve">
-    <value>Az új beállítás alkalmazásához a Ginger Walletot újra kell indítani.</value>
+    <value>Az új beállítás érvényesítéséhez a Ginger Wallet újraindítása szükséges.</value>
   </data>
   <data name="DarkMode" xml:space="preserve">
     <value>Sötét mód</value>
@@ -817,10 +814,10 @@
     <value>Háttérben futtatás az ablak bezárásakor</value>
   </data>
   <data name="AutoCopyAddresses" xml:space="preserve">
-    <value>Címek automatikus másolása</value>
+    <value>Tárcacímek automatikus másolása</value>
   </data>
   <data name="AutoPasteAddresses" xml:space="preserve">
-    <value>Címek automatikus beillesztése</value>
+    <value>Tárcacímek automatikus beillesztése</value>
   </data>
   <data name="NetworkAnonymizationTor" xml:space="preserve">
     <value>Hálózati anonimizálás (Tor)</value>
@@ -844,13 +841,13 @@
     <value>Egyedi böngésző elérési útja</value>
   </data>
   <data name="OpenInBrowser" xml:space="preserve">
-    <value>Megnyitás a böngészőben</value>
+    <value>Ginger által használt böngésző</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Nyelv</value>
   </data>
   <data name="CouldNotSaveChange" xml:space="preserve">
-    <value>Nem lehetett menteni a változtatást, kérjük, nézze meg a naplókat a további információkért.</value>
+    <value>Nem lehetett menteni a módosítást, kérjük, nézd meg a naplófájlt a további információkért.</value>
   </data>
   <data name="Network" xml:space="preserve">
     <value>Hálózat</value>
@@ -859,34 +856,34 @@
     <value>(KÍSÉRLETI) Bitcoin Knots futtatása indításkor</value>
   </data>
   <data name="StopBitcoinKnotsOnShutdown" xml:space="preserve">
-    <value>Bitcoin Knots leállítása leállításkor</value>
+    <value>Bitcoin Knots leállítása a program bezárásakor</value>
   </data>
   <data name="LocalBitcoinCoreKnotsVersion" xml:space="preserve">
     <value>Helyi Bitcoin Core/Knots verzió</value>
   </data>
   <data name="BitcoinCoreKnotsDataFolder" xml:space="preserve">
-    <value>Bitcoin Core/Knots adatkönyvtár</value>
+    <value>Bitcoin Core/Knots könyvtár</value>
   </data>
   <data name="WasabiDownloadBlocksFromFullNode" xml:space="preserve">
-    <value>A Wasabi letölti a blokkokat egy teljes nodtól, amelyet te irányítasz.</value>
+    <value>A Ginger egy Full Node-tól tölt le blokkokat, amelyet te vezérelsz.</value>
   </data>
   <data name="BitcoinP2PEndpoint" xml:space="preserve">
     <value>Bitcoin P2P végpont</value>
   </data>
   <data name="CoinsReceivedFromOthers" xml:space="preserve">
-    <value>A másoktól kapott érmék, amelyek már előzőleg használt címekre érkeznek, nem fognak megjelenni ezen összeg alatt. A potenciális por támadások megakadályozása érdekében.</value>
+    <value>A másoktól kapott érmék, amelyek már előzőleg használt tárcacímekre érkeznek, nem fognak megjelenni ezen összeg alatt. A potenciális Dust Attack megakadályozása érdekében.</value>
   </data>
   <data name="DustThreshold" xml:space="preserve">
-    <value>Por küszöb</value>
+    <value>Dust Attack küszöb</value>
   </data>
   <data name="InvalidEndpoint" xml:space="preserve">
     <value>Érvénytelen végpont.</value>
   </data>
   <data name="UseDecimalPoint" xml:space="preserve">
-    <value>Használjon tizedesvesszőt a vessző helyett.</value>
+    <value>Használj pontot a vessző helyett.</value>
   </data>
   <data name="InvalidDustThreshold" xml:space="preserve">
-    <value>Érvénytelen por küszöb.</value>
+    <value>Érvénytelen Dust Attack küszöb.</value>
   </data>
   <data name="EnableGPURendering" xml:space="preserve">
     <value>Ha engedélyezve van, a rendeszer használja a grafikus kártyát (GPU) a felhasználói felület rendereléséhez. A GPU használata a CPU helyett javíthatja a teljesítményt.</value>
@@ -910,10 +907,10 @@
     <value>Max:</value>
   </data>
   <data name="To" xml:space="preserve">
-    <value>Címzett:</value>
+    <value>Tárcacím:</value>
   </data>
   <data name="ExampleBitcoinAddressOrPayjoinURI" xml:space="preserve">
-    <value>(pl. Bitcoin cím vagy payjoin URI)</value>
+    <value>(pl. Bitcoin-tárcacím vagy payjoin URI)</value>
   </data>
   <data name="Paste" xml:space="preserve">
     <value>Beillesztés</value>
@@ -934,70 +931,67 @@
     <value>Küldési ablak megjelenítése</value>
   </data>
   <data name="SendViewModelKeywords" xml:space="preserve">
-    <value>Pénztárca, Küldés, Művelet</value>
+    <value>Tárca, Küldés, Művelet</value>
   </data>
   <data name="SendNow" xml:space="preserve">
     <value>Küldés most</value>
   </data>
   <data name="PreviewTransaction" xml:space="preserve">
-    <value>Tranzakció előnézete</value>
+    <value>Tranzakció áttekintése</value>
   </data>
   <data name="PrivacyProtectedWithPayjoin" xml:space="preserve">
-    <value>A magánéletedet payjoin védi.</value>
+    <value>A PayJoin gondoskodik az anonimitásodról.</value>
   </data>
   <data name="UndoLastModification" xml:space="preserve">
-    <value>Az utolsó módosítás visszavonása</value>
+    <value>Utolsó módosítás visszavonása</value>
   </data>
   <data name="TransactionInterlinksLabels" xml:space="preserve">
-    <value>Tranzakciók közötti hivatkozások címkéi:</value>
-  </data>
-  <data name="EntitiesKnowTransaction" xml:space="preserve">
-    <value>Ezek a szervezetek tudják, hogy ez a te tranzakciód. Végezzen el több Coinjoint, vagy használja a címke-kezelő eszközt, hogy gondosan válassza ki, ki tudná, hogy ez a tranzakció a tiéd.</value>
+    <value>A tranzakció összekapcsolja ezeket a címkéket:</value>
   </data>
   <data name="TransactionKnownAsYoursBy" xml:space="preserve">
-    <value>A tranzakció, amelyről tudják, hogy a tiéd:</value>
+    <value>Azok, akik ismerik a tranzakciót mint a tiéd:</value>
   </data>
   <data name="EntitiesKnowThisIsYourTransaction" xml:space="preserve">
-    <value>Ezek a szervezetek tudják, hogy ez a te tranzakciód. Végezzen el több Coinjoint, vagy használja a címke-kezelő eszközt, hogy gondosan válassza ki, ki tudná, hogy ez a tranzakció a tiéd.</value>
+    <value>Ezek a szereplők tudják, hogy ez a te tranzakciód. Végezz el több coinjoint, vagy használd a címke-kezelő eszközt, hogy gondosan kiválaszd, ki tudhat róla.</value>
   </data>
   <data name="TransactionUsesNonPrivateCoins" xml:space="preserve">
-    <value>A tranzakció nem privát érméket használ.</value>
+    <value>A tranzakció nem anonim érméket használ.</value>
   </data>
   <data name="EntitiesCanDeanonymizeTransaction" xml:space="preserve">
-    <value>Néhány entitás képes deanonimizálni ezt a tranzakciót, mivel olyan érméket költ, amelyek nem elég privátok. Végezzen el több Coinjoint, hogy elegendő privát érméje legyen ehhez a tranzakcióhoz.</value>
+    <value>Néhány szereplő képes deanonimizálni ezt a tranzakciót, mivel olyan érméket költ, amelyek nem elég anonimok. Végezz el több Coinjoint, hogy elegendő anonim érméd legyen ehhez a tranzakcióhoz.</value>
   </data>
   <data name="TransactionUsesSemiPrivateCoins" xml:space="preserve">
-    <value>A tranzakció félig privát érméket használ.</value>
+    <value>A tranzakció részben anonim érméket használ.</value>
   </data>
   <data name="TransactionNotPrivateEnough" xml:space="preserve">
-    <value>Ez a tranzakció nem elég privát, mivel nem teljesen privát érméket költ. Végezzen több Coinjoint, hogy elegendő privát érméje legyen ehhez a tranzakcióhoz.</value>
+    <value>Ez a tranzakció nem elég anonim, mivel nem teljesen anonim érméket költ. Végezz több coinjoint, hogy elegendő anonim érméd legyen ehhez a tranzakcióhoz.</value>
   </data>
   <data name="TransactionCreatesChange" xml:space="preserve">
     <value>A tranzakció visszajárót generál.</value>
   </data>
   <data name="ChangeCanLinkTransactions" xml:space="preserve">
-    <value>A visszajáró felhasználható ennek a tranzakciónak a következő tranzakcióval való összekapcsolására. Használja a visszajáró kerülése opciót, hogy automatikusan egy kicsit többet vagy kevesebbet küldjön, ha ez rendben van a címzett számára, vagy végezzen Coinjoint a visszajáróval később.</value>
+    <value>A visszajáró felhasználható ennek a tranzakciónak a következő tranzakcióval való összekapcsolására. Használd a visszajáró elkerülése opciót, hogy automatikusan egy kicsit többet vagy kevesebbet küldj, ha ez rendben van a címzett számára, vagy végezz Coinjoint a visszajáróval később.</value>
   </data>
   <data name="TransactionConsolidatesCoins" xml:space="preserve">
     <value>A tranzakció több mint {0} érmét von össze.</value>
   </data>
   <data name="ReducePrivacyOfTransaction" xml:space="preserve">
-    <value>Ez csökkentheti a tranzakciód magánéletét.</value>
+    <value>Ez csökkentheti a tranzakciód anonimitását.</value>
   </data>
   <data name="TransactionUsesUnconfirmedCoins" xml:space="preserve">
-    <value>A tranzakció nem megerősített érméket használ.</value>
+    <value>A tranzakció nem visszaigazolt érméket használ.</value>
   </data>
   <data name="UnconfirmedCoinsMayCauseIssues" xml:space="preserve">
-    <value>Ez a tranzakció elutasításhoz, a megerősítés késlekedéséhez vezethet, vagy többe kerülhet, mint amennyire szükség lenne ahhoz, hogy a kívánt időn belül megerősítsék. Várj egy megerősítésre, hogy csak megerősített érméket használj.</value>
+    <value>Ez a tranzakció elutasításhoz, a visszaigazolás késlekedéséhez vezethet, vagy többe kerülhet, mint amennyire szükség lenne ahhoz, hogy a kívánt időn belül visszaigazolják. Várj egy visszaigazolásra, hogy csak megerősített érméket használj.</value>
   </data>
   <data name="TransactionUsesCoinjoiningCoins" xml:space="preserve">
-    <value>A tranzakció coinjoin érméket használ.</value>
+    <value>A tranzakció éppen coinjoinoló érméket használ.</value>
   </data>
   <data name="TransactionMayBeReplacedByCoinjoin" xml:space="preserve">
     <value>Ez a tranzakciódat a coinjoin helyettesítéséhez vezethet. Fontold meg, hogy megvárod a jelenlegi coinjoint, mielőtt elküldenéd ezt a tranzakciót.</value>
   </data>
   <data name="ImproveThisTransaction" xml:space="preserve">
-    <value>Fejleszd ezt a tranzakciót:</value>
+    <value>Optimalizáld ezt a tranzakciót:</value>
   </data>
   <data name="LabelManagement" xml:space="preserve">
     <value>Címke kezelés</value>
@@ -1006,16 +1000,16 @@
     <value>Válassz címkéket a tranzakció összekapcsolásához.</value>
   </data>
   <data name="FullPrivacy" xml:space="preserve">
-    <value>Teljes Adatvédelem</value>
+    <value>Teljes anonimitás</value>
   </data>
   <data name="SendSuggestion" xml:space="preserve">
     <value>Küldj</value>
   </data>
   <data name="BetterPrivacy" xml:space="preserve">
-    <value>Jobb Adatvédelem</value>
+    <value>Jobb anonimitás</value>
   </data>
   <data name="ChangeAvoidance" xml:space="preserve">
-    <value>Visszajáró Kerülése</value>
+    <value>Visszajáró elkerülése</value>
   </data>
   <data name="TransactionWellOptimized" xml:space="preserve">
     <value>Ez a tranzakció jól optimalizált.</value>
@@ -1030,13 +1024,13 @@
     <value>Címzett</value>
   </data>
   <data name="ChangeTransactionFeeOrConfirmationTime" xml:space="preserve">
-    <value>Változtassa meg a tranzakciós díjat vagy a megerősítési időt</value>
+    <value>Változtasd meg a tranzakciós díjat vagy a visszaigazolási időt</value>
   </data>
   <data name="ExpectedConfirmationTime" xml:space="preserve">
-    <value>Várt megerősítési idő</value>
+    <value>Várt visszaigazolási idő</value>
   </data>
   <data name="ConfirmationTimeEstimation" xml:space="preserve">
-    <value>Ez csak egy becslés, amely néhány tranzakcióra és blokkra vonatkozó adatokon alapul. A megerősítési idő változhat.</value>
+    <value>Ez csak egy becslés, amely néhány tranzakcióra és blokkra vonatkozó adatokon alapul. A visszaigazolási idő változhat.</value>
   </data>
   <data name="Fee" xml:space="preserve">
     <value>Díj</value>
@@ -1048,22 +1042,22 @@
     <value>Megerősít</value>
   </data>
   <data name="TransactionExport" xml:space="preserve">
-    <value>Tranzakció Exportálása</value>
+    <value>Tranzakció exportálása</value>
   </data>
   <data name="UnableToExportPSBT" xml:space="preserve">
     <value>A Ginger Wallet nem tudta exportálni a PSBT-t.</value>
   </data>
   <data name="TransactionBuilding" xml:space="preserve">
-    <value>Tranzakció Építése</value>
+    <value>Tranzakció építés</value>
   </data>
   <data name="TransactionFeeExceedsPaymentAmount" xml:space="preserve">
-    <value>A tranzakciót nem lehet elküldeni, mert a díja meghaladja a kifizetés összegét.</value>
+    <value>A tranzakciót nem lehet elküldeni, mert a díja meghaladja a fizetendő összegét.</value>
   </data>
   <data name="UnableToCreateTransaction" xml:space="preserve">
     <value>A Ginger Wallet nem tudta létrehozni a tranzakciódat.</value>
   </data>
   <data name="InsufficientFundsForTransactionFee" xml:space="preserve">
-    <value>Nincs elegendő pénz a tranzakciós díj fedezésére.</value>
+    <value>Nincs elegendő egyenleg a tranzakciós díjhoz.</value>
   </data>
   <data name="Transaction" xml:space="preserve">
     <value>Tranzakció</value>
@@ -1090,16 +1084,16 @@
     <value>A Bitcoin cím érvényes {0}-ra és nem érvényes {1}-re.</value>
   </data>
   <data name="SetTransactionConfirmationPreference" xml:space="preserve">
-    <value>Állítsa be az előnyben részesített időt, ameddig a tranzakciót meg kell erősíteni.</value>
+    <value>Állítsa be a tranzakció visszaigazolásának preferált sebességét.</value>
   </data>
   <data name="FeeRateSatPerVByte" xml:space="preserve">
-    <value>Díj Mérték (sat/vByte)</value>
+    <value>Díjráta (sat/vByte)</value>
   </data>
   <data name="EstimatedConfirmationTime" xml:space="preserve">
-    <value>Becsült Megerősítési Idő</value>
+    <value>Becsült visszaigazolási idő</value>
   </data>
   <data name="TransactionFeeEstimationsUnavailable" xml:space="preserve">
-    <value>A tranzakciós díjak becslése jelenleg nem elérhető. Kérjük, próbálja meg később, vagy adja meg manuálisan a díjat.</value>
+    <value>A tranzakciós díjak becslése jelenleg nem elérhető. Kérjük, próbáld meg később, vagy add meg manuálisan a díjat.</value>
   </data>
   <data name="ChooseTransactionVisibility" xml:space="preserve">
     <value>Válaszd ki, ki láthatja és ki nem ezt a tranzakciót.</value>
@@ -1111,30 +1105,28 @@
     <value>Nem láthatja ezt a tranzakciót:</value>
   </data>
   <data name="NoInformationAboutPeople" xml:space="preserve">
-    <value>Nincs információ ezekről az emberekről, csak akkor használd, amikor szükséges!</value>
+    <value>Nincs információ ezekről az emberekről. Csak akkor használd, ha szükséges!</value>
   </data>
   <data name="CoinControl" xml:space="preserve">
-    <value>Érme kezelés</value>
+    <value>Érmekezelés</value>
   </data>
   <data name="RecoveryWordsViewCaption" xml:space="preserve">
-    <value>Írd le a helyreállítási szavakat a megfelelő sorrendben, és tárold őket biztonságos helyen. Szükségesek a pénztárca visszaállításához.</value>
+    <value>Írd le a helyreállítási szavakat a megfelelő sorrendben, és tárold őket biztonságos helyen. Szükségesek a tárca visszaállításához.</value>
   </data>
   <data name="RecoveryWordsViewCopyRecoveryWords" xml:space="preserve">
     <value>Helyreállítási szavak másolása</value>
   </data>
   <data name="RecoveryWordsViewNotSeeAfter" xml:space="preserve">
-    <value>A pénztárca létrehozása után nem fogod tudni újra megtekinteni ezeket a szavakat.</value>
+    <value>A tárca létrehozása után már nem fogod tudni megtekinteni ezeket a szavakat.</value>
   </data>
   <data name="ConfirmRecoveryWordsViewModel" xml:space="preserve">
     <value>Helyreállítási szavak megerősítése</value>
   </data>
   <data name="ConfirmRecoveryWordsViewModelStoreSafely" xml:space="preserve">
-    <value>Tárold biztonságosan a jelszavadat, nem állítható vissza, ha elveszik.
-A pénztárcád megnyitásához és visszaállításához szükséges.
-Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</value>
+    <value>Tárold biztonságosan a Passphrase-t, mert elvesztése esetén nem állítható vissza. A tárca megnyitásához és visszaállításához szükséges, valamint plusz védelmet nyújt a helyreállítási szavak kiterjesztésével.</value>
   </data>
   <data name="ConfirmRecoveryWordsViewModelClickRecovery" xml:space="preserve">
-    <value>Kattints a helyreállítási szóra: #{0}</value>
+    <value>Kattints a(z) #{0} helyreállítási szóra.</value>
   </data>
   <data name="RecoveryWords" xml:space="preserve">
     <value>Helyreállítási szavak</value>
@@ -1143,13 +1135,13 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Helyreállítási szavak ellenőrzése</value>
   </data>
   <data name="CreatePasswordDialogTypePassphrase" xml:space="preserve">
-    <value>Írj be egy jelszót</value>
+    <value>Írd be a Passphrase-t</value>
   </data>
   <data name="CreatePasswordDialogConfirmPassphrase" xml:space="preserve">
-    <value>Erősítsd meg a jelszót</value>
+    <value>Erősítsd meg a Passphrase-t</value>
   </data>
   <data name="PassphrasesNotMatch" xml:space="preserve">
-    <value>A jelszavak nem egyeznek.</value>
+    <value>A passphrase-k nem egyeznek.</value>
   </data>
   <data name="TrimWarnMessage" xml:space="preserve">
     <value>A kezdő és a záró szóközök eltávolításra kerülnek!</value>
@@ -1158,7 +1150,7 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Kezdő és záró szóközök nem engedélyezettek!</value>
   </data>
   <data name="AddPassphrase" xml:space="preserve">
-    <value>Jelszó hozzáadása</value>
+    <value>Passphrase hozzáadása</value>
   </data>
   <data name="HardwareWallet" xml:space="preserve">
     <value>Hardvertárca</value>
@@ -1167,16 +1159,16 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Csatlakoztasd a hardvertárcát a számítógéphez</value>
   </data>
   <data name="ConnectHardwareWalletViewModelEnterPassphrase" xml:space="preserve">
-    <value>Add meg a jelszavadat a hardveres pénztárcán, ha szükséges.</value>
+    <value>Add meg a Passphrase-t a hardveres tárcán, ha szükséges.</value>
   </data>
   <data name="HardwareWalletAuthDialogViewModelCaption" xml:space="preserve">
     <value>Csatlakoztasd a hardvertárcádat, nyomd meg a Folytatás gombot, majd kövesd az utasításokat az eszközön.</value>
   </data>
   <data name="Rescan" xml:space="preserve">
-    <value>Újraszkennelés</value>
+    <value>Keresés</value>
   </data>
   <data name="OpenWallet" xml:space="preserve">
-    <value>Pénztárca megnyitása</value>
+    <value>Tárca megnyitása</value>
   </data>
   <data name="ConnectHardwareWalletViewModelConnectPc" xml:space="preserve">
     <value>Csatlakoztasd a hardvertárcát a számítógéphez / Add meg a PIN-kódot az eszközön.</value>
@@ -1188,7 +1180,7 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>A csatlakoztatott hardvertárca már hozzá van adva a szoftverhez, kattints alul a megnyitáshoz, vagy kattints az Újraszkennelésre a kereséshez.</value>
   </data>
   <data name="ConnectHardwareWalletViewModelEnterPassphraseOnDevice" xml:space="preserve">
-    <value>Add meg a jelszavadat az eszközön.</value>
+    <value>Add meg a Passphrase-t az eszközön.</value>
   </data>
   <data name="ConnectHardwareWalletViewModelEnterPin" xml:space="preserve">
     <value>Add meg a PIN-kódodat az eszközön.</value>
@@ -1197,31 +1189,31 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Írd be a helyreállítási szavaidat a megfelelő sorrendben</value>
   </data>
   <data name="EnterPassphrase" xml:space="preserve">
-    <value>Add meg a helyes jelszót</value>
+    <value>Passphrase megadása</value>
   </data>
   <data name="RecoverWalletViewModelPassphraseMessage" xml:space="preserve">
-    <value>Ha használtál jelszót a pénztárca létrehozásakor, akkor azt lent kell megadnod, különben hagyd üresen.</value>
+    <value>Ha használtál passphrase-t a tárca létrehozásakor, akkor azt lent kell megadnod, egyébként hagyd üresen.</value>
   </data>
   <data name="AdvancedRecoveryOptionsViewModelTitle" xml:space="preserve">
-    <value>Speciális helyreállítási lehetőségek</value>
+    <value>Haladó helyreállítási beállítások</value>
   </data>
   <data name="AdvancedRecoveryOptionsViewModelMinimumGapLimit" xml:space="preserve">
-    <value>Minimális _Rés határ:</value>
+    <value>Minimális keresési határ</value>
   </data>
   <data name="PeersConnected" xml:space="preserve">
-    <value>{0} csatlakoztatva</value>
+    <value>{0} csatlakozva</value>
   </data>
   <data name="AmountLessThanTotalSupply" xml:space="preserve">
     <value>Az összegnek kisebbnek kell lennie a BTC teljes készleténél.</value>
   </data>
   <data name="InsufficientFunds" xml:space="preserve">
-    <value>Nincs elegendő fedezet a kért összeghez.</value>
+    <value>A rendelkezésre álló összeg nem elegendő.</value>
   </data>
   <data name="AmountMoreThanZero" xml:space="preserve">
     <value>Az összegnek nagyobbnak kell lennie, mint 0 BTC.</value>
   </data>
   <data name="InvalidBTCAddressOrURI" xml:space="preserve">
-    <value>Adjon meg egy érvényes BTC címet vagy URI-t.</value>
+    <value>Adj meg egy érvényes Bitcoin-tárcacímet vagy URI-t.</value>
   </data>
   <data name="PayjoinNotPossibleWithHardwareWallets" xml:space="preserve">
     <value>Payjoin nem lehetséges hardvertárcákkal.</value>
@@ -1230,10 +1222,10 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>A Ginger használatának folytatásához kérjük, fogadd el a felhasználási feltételeket</value>
   </data>
   <data name="TermsAndConditionsViewTermsAndConditions" xml:space="preserve">
-    <value>Általános szerződési feltételek</value>
+    <value>Felhasználási feltételeket</value>
   </data>
   <data name="TermsAndConditionsViewIAgree" xml:space="preserve">
-    <value>Elfogadom az </value>
+    <value>Elfogadom a</value>
   </data>
   <data name="ResyncWallet" xml:space="preserve">
     <value>Tárca újraszinkronizálása</value>
@@ -1242,7 +1234,7 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Az alkalmazás újraindul, és a tárca megnyitásakor elkezdődik az újraszkennelés. Ez a folyamat eltarthat egy ideig, a tárcában lévő tranzakciók számától függően.</value>
   </data>
   <data name="ProceedConfirmation" xml:space="preserve">
-    <value>Szeretné folytatni?</value>
+    <value>Szeretnéd folytatni?</value>
   </data>
   <data name="TransactionID" xml:space="preserve">
     <value>Tranzakcióazonosító</value>
@@ -1254,25 +1246,25 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Érme részletei</value>
   </data>
   <data name="SelfCoinJoinToolTip" xml:space="preserve">
-    <value>Ebben a Coinjoin-ban az érmék többsége Önhöz tartozik. Ez jelentősen csökkenti az anonimitás előrehaladását. Fontolja meg kevesebb pénztárcával való részvételt, amíg több résztvevő csatlakozik.</value>
+    <value>Ebben a coinjoinban az érmék többsége hozzád tartozik. Ez jelentősen csökkenti az anonimitás előrehaladását. Fontolja meg, hogy kevesebb tárcával vegyen részt, amíg több résztvevő csatlakozik.</value>
   </data>
   <data name="AuthCodePrompt" xml:space="preserve">
     <value>Olvasd be az alábbi QR-kódot a kedvenc hitelesítő alkalmazásoddal, majd add meg a megerősítő kódot.</value>
   </data>
   <data name="Verify" xml:space="preserve">
-    <value>Ellenőriz</value>
+    <value>Ellenőrzés</value>
   </data>
   <data name="TwoFactorSetup" xml:space="preserve">
     <value>Kétfaktoros hitelesítés beállítása</value>
   </data>
   <data name="TokenVerificationFailed" xml:space="preserve">
-    <value>Nem sikerült ellenőrizni a tokent, kérlek, nézd meg a naplókat a további információkért.</value>
+    <value>Nem sikerült ellenőrizni a tokent, kérlek, nézd meg a naplófájlt a további információkért.</value>
   </data>
   <data name="TwoFactorAuthenticationWithCapitals" xml:space="preserve">
-    <value>Kétfaktoros Hitelesítés</value>
+    <value>Kétfaktoros hitelesítés</value>
   </data>
   <data name="TransactionFeeRate" xml:space="preserve">
-    <value>_Tranzakciós díj mértéke:</value>
+    <value>_Tranzakció díjráta:</value>
   </data>
   <data name="InvalidFee" xml:space="preserve">
     <value>A megadott díj nem érvényes.</value>
@@ -1287,28 +1279,28 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Kizárt érmék megjelenítése</value>
   </data>
   <data name="ExcludedCoinsViewModelKeywords" xml:space="preserve">
-    <value>Pénztárca, Kizár, Érmék, Coinjoin, Befagyaszt, UTXO</value>
+    <value>Tárca, Kizár, Érmék, Coinjoin, Befagyaszt, UTXO</value>
   </data>
   <data name="WalletCoinsViewModelCaption" xml:space="preserve">
-    <value>Pénztárca érmék megjelenítése</value>
+    <value>Tárca érmék megjelenítése</value>
   </data>
   <data name="WalletCoinsViewModelKeywords" xml:space="preserve">
-    <value>Pénztárca, Érmék, UTXO</value>
+    <value>Tárca, Érmék, UTXO</value>
   </data>
   <data name="WalletStatsViewModelCaption" xml:space="preserve">
-    <value>Pénztárca statisztikák megjelenítése</value>
+    <value>Tárca statisztikák megjelenítése</value>
   </data>
   <data name="WalletStatsViewModelKeywords" xml:space="preserve">
-    <value>Pénztárca, Statisztikák</value>
+    <value>Tárca, Statisztikák</value>
   </data>
   <data name="WalletInfoViewModelCaption" xml:space="preserve">
-    <value>Pénztárca információk megjelenítése</value>
+    <value>Tárca információk megjelenítése</value>
   </data>
   <data name="WalletInfoViewModelKeywords" xml:space="preserve">
-    <value>Pénztárca, Információk</value>
+    <value>Tárca, Információk</value>
   </data>
   <data name="ExcludeCoinjoinDescription" xml:space="preserve">
-    <value>A kiválasztott érmék ki lesznek zárva a Coinjoinból. Fontos megjegyezni, hogy nem lesz növekedés az privát szintjükben.</value>
+    <value>A kiválasztott érmék ki lesznek zárva a coinjoinból. Fontos megjegyezni, hogy ezek anonimitása nem növekszik.</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Állapot</value>
@@ -1317,58 +1309,58 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Dátum</value>
   </data>
   <data name="WalletCoinsDescription" xml:space="preserve">
-    <value> A birtokolt érmék listája.</value>
+    <value>A birtokolt érmék listája.</value>
   </data>
   <data name="NumberOfCoins" xml:space="preserve">
-    <value>Érmék száma (UTXOs)</value>
+    <value>Érmék száma (UTXO-k)</value>
   </data>
   <data name="UnconfirmedBalance" xml:space="preserve">
-    <value>Meg nem erősített egyenleg</value>
+    <value>Vissza nem igazolt egyenleg</value>
   </data>
   <data name="ConfirmedBalance" xml:space="preserve">
-    <value>Megerősített egyenleg</value>
+    <value>Visszaigazolt egyenleg</value>
   </data>
   <data name="TotalBalance" xml:space="preserve">
     <value>Teljes egyenleg</value>
   </data>
   <data name="TotalTransactions" xml:space="preserve">
-    <value>Tranzakciók teljes száma</value>
+    <value>Összes tranzakciók száma</value>
   </data>
   <data name="NonCoinjoinTransactions" xml:space="preserve">
-    <value>Coinjoin nélküli tranzakciók száma</value>
+    <value>Nem coinjoin tranzakciók száma</value>
   </data>
   <data name="CoinjoinTransactions" xml:space="preserve">
     <value>Coinjoin tranzakciók száma</value>
   </data>
   <data name="NumberOfAddresses" xml:space="preserve">
-    <value>Címek száma</value>
+    <value>Tárcacímek száma</value>
   </data>
   <data name="NumberOfCleanAddresses" xml:space="preserve">
-    <value>Tiszta címek száma</value>
+    <value>Tiszta tárcacímek száma</value>
   </data>
   <data name="NumberOfLockedAddresses" xml:space="preserve">
-    <value>Zárolt címek száma</value>
+    <value>Zárolt tárcacímek száma</value>
   </data>
   <data name="NumberOfUsedAddresses" xml:space="preserve">
-    <value>Használt címek száma</value>
+    <value>Használt tárcacímek száma</value>
   </data>
   <data name="ExtendedMasterPrivateKey" xml:space="preserve">
-    <value>Kiterjesztett fő privát kulcs</value>
+    <value>Kiterjesztett mesterprivát kulcs</value>
   </data>
   <data name="ExtendedMasterZprv" xml:space="preserve">
-    <value>Kiterjesztett fő privát kulcs zprv</value>
+    <value>Kiterjesztett mesterprivát (zprv)</value>
   </data>
   <data name="ExtendedMasterFingerprint" xml:space="preserve">
-    <value>Kiterjesztett fő ujjlenyomat</value>
+    <value>Kiterjesztett mesterlenyomat</value>
   </data>
   <data name="AccountKeyPathSegWit" xml:space="preserve">
-    <value>Fiók kulcs elérés (SegWit)</value>
+    <value>Kulcsútvonal (SegWit)</value>
   </data>
   <data name="AccountKeyPathTaproot" xml:space="preserve">
-    <value>Fiók kulcs elérés (Taproot)</value>
+    <value>Kulcsútvonal (Taproot)</value>
   </data>
   <data name="ExtendedAccountPrivateKeyXpriv" xml:space="preserve">
-    <value>Kiterjesztett fiók privát kulcs xpriv</value>
+    <value>Kiterjesztett tárca privát kulcs (xpriv)</value>
   </data>
   <data name="PublicExternalOutputDescriptor" xml:space="preserve">
     <value>Nyilvános külső kimeneti leíró</value>
@@ -1383,37 +1375,34 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Privát belső kimeneti leíró</value>
   </data>
   <data name="ExtendedAccountPublicKeySegWit" xml:space="preserve">
-    <value>Kiterjesztett fiók nyilvános kulcs (SegWit)</value>
+    <value>Kiterjesztett tárca nyilvános kulcs (SegWit)</value>
   </data>
   <data name="ExtendedAccountPublicKeyTaproot" xml:space="preserve">
-    <value>Kiterjesztett fiók nyilvános kulcs (Taproot)</value>
+    <value>Kiterjesztett tárca nyilvános kulcs (Taproot)</value>
   </data>
   <data name="HideSensitiveData" xml:space="preserve">
-    <value>Érzékeny adatok elrejtése</value>
+    <value>Bizalmas adatok elrejtése</value>
   </data>
   <data name="ShowSensitiveData" xml:space="preserve">
-    <value>Érzékeny adatok megjelenítése</value>
+    <value>Bizalmas adatok megjelenítése</value>
   </data>
   <data name="DateTime" xml:space="preserve">
     <value>Dátum / Idő</value>
   </data>
   <data name="DestinationAddresses" xml:space="preserve">
-    <value>Célcímek</value>
+    <value>Céltárcacímek</value>
   </data>
   <data name="FeeRate" xml:space="preserve">
-    <value>Díj mérték</value>
+    <value>Díjráta</value>
   </data>
   <data name="Confirmed" xml:space="preserve">
-    <value>Megerősített</value>
+    <value>Visszaigazolt</value>
   </data>
   <data name="Pending" xml:space="preserve">
     <value>Függőben</value>
   </data>
   <data name="Confirmations" xml:space="preserve">
-    <value>({0} megerősítés)</value>
-  </data>
-  <data name="ConfirmationEstimationDisclaimer" xml:space="preserve">
-    <value>Ez csupán egy becslés, amely tranzakciók és blokkok adatai alapján készült. A megerősítési idő változhat.</value>
+    <value>({0} visszaigazolás)</value>
   </data>
   <data name="BlockHash" xml:space="preserve">
     <value>Blokk hash</value>
@@ -1422,7 +1411,7 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Blokk magassága</value>
   </data>
   <data name="TransactionDetails" xml:space="preserve">
-    <value>Tranzakciós részletek</value>
+    <value>Tranzakció részletei</value>
   </data>
   <data name="AmountSent" xml:space="preserve">
     <value>Elküldött összeg</value>
@@ -1440,7 +1429,7 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Tranzakciók száma</value>
   </data>
   <data name="TransactionIDs" xml:space="preserve">
-    <value>Tranzakciós azonosítók</value>
+    <value>Tranzakció azonosítók</value>
   </data>
   <data name="Incoming" xml:space="preserve">
     <value>Bejövő</value>
@@ -1449,13 +1438,13 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Kimenő</value>
   </data>
   <data name="SelfTransfer" xml:space="preserve">
-    <value>Saját átutalás</value>
+    <value>Küldés önmagadnak</value>
   </data>
   <data name="Coinjoins" xml:space="preserve">
     <value>Coinjoinok</value>
   </data>
   <data name="Cancellation" xml:space="preserve">
-    <value>Törlés</value>
+    <value>Visszavonás</value>
   </data>
   <data name="Accelerator" xml:space="preserve">
     <value>Gyorsító</value>
@@ -1467,25 +1456,25 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Tegnap</value>
   </data>
   <data name="PendingConfirmingIn" xml:space="preserve">
-    <value>Függőben (megerősítés ≈ {0} múlva)</value>
+    <value>Függőben (visszaigazolás ≈ {0} múlva)</value>
   </data>
   <data name="Unknown" xml:space="preserve">
     <value>Ismeretlen</value>
   </data>
   <data name="ConfirmedWithConfirmationCount" xml:space="preserve">
-    <value>Megerősítve ({0} megerősítés{1})</value>
+    <value>Visszaigazolva ({0} visszaigazolás{1})</value>
   </data>
   <data name="LessThan" xml:space="preserve">
-    <value>Kevesebb mint</value>
+    <value>Kevesebb, mint:</value>
   </data>
   <data name="More" xml:space="preserve">
-    <value>több</value>
+    <value>többet</value>
   </data>
   <data name="Less" xml:space="preserve">
-    <value>kevesebb</value>
+    <value>kevesebbet</value>
   </data>
   <data name="TheSameAmount" xml:space="preserve">
-    <value>ugyanannyi</value>
+    <value>ugyanannyit</value>
   </data>
   <data name="EditLabels" xml:space="preserve">
     <value>Címkék szerkesztése</value>
@@ -1494,37 +1483,34 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Ismeretlen emberek</value>
   </data>
   <data name="PrivateCoins" xml:space="preserve">
-    <value>Privát érmék</value>
+    <value>Anonim érmék</value>
   </data>
   <data name="SemiPrivateCoins" xml:space="preserve">
-    <value>Félig privát érmék</value>
+    <value>Részben anonim érmék</value>
   </data>
   <data name="Coinjoining" xml:space="preserve">
-    <value>Coinjoining</value>
+    <value>Coinjoinol</value>
   </data>
   <data name="NotCoinjoining" xml:space="preserve">
     <value>Nem coinjoinol</value>
   </data>
   <data name="ExcludedFromCoinjoins" xml:space="preserve">
-    <value>Kizárva a Coinjoinból</value>
+    <value>Kizárva a coinjoinból</value>
   </data>
   <data name="ConfirmationCount" xml:space="preserve">
-    <value>{0} megerősítés{1}</value>
+    <value>{0} visszaigazolás{1}</value>
   </data>
   <data name="CantParticipateInCoinjoinUntil" xml:space="preserve">
-    <value>Nem vehet részt a Coinjoinban, eddig: {0}</value>
+    <value>Nem vehet részt a coinjoinban, eddig: {0}</value>
   </data>
   <data name="AnonymityScore" xml:space="preserve">
-    <value>Anonimitás pontszám</value>
-  </data>
-  <data name="PersonOrCompanyExample" xml:space="preserve">
-    <value>Személy vagy cég, például Alice, Bob, Pizza Inc</value>
+    <value>Anonimitási szint</value>
   </data>
   <data name="EstimatedConfirmationTimeWithValue" xml:space="preserve">
-    <value>Becsült megerősítési idő: {0}</value>
+    <value>Becsült visszaigazolási idő: {0}</value>
   </data>
   <data name="FeeRateFormatted" xml:space="preserve">
-    <value>Díj mértéke: {0:0} sat/vByte</value>
+    <value>Díjráta: {0:0} sat/vByte</value>
   </data>
   <data name="Fastest" xml:space="preserve">
     <value>leggyorsabb</value>
@@ -1550,11 +1536,8 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
   <data name="Weeks" xml:space="preserve">
     <value>Hetek</value>
   </data>
-  <data name="Minimal" xml:space="preserve">
-    <value>Minimális</value>
-  </data>
   <data name="Privacy" xml:space="preserve">
-    <value>Adatvédelem</value>
+    <value>Anonimitás</value>
   </data>
   <data name="CostEfficiency" xml:space="preserve">
     <value>Költséghatékonyság</value>
@@ -1584,13 +1567,13 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Órák</value>
   </data>
   <data name="Announcements" xml:space="preserve">
-    <value>Közlemények</value>
+    <value>Értesítések</value>
   </data>
   <data name="MarkAllAsRead" xml:space="preserve">
     <value>Az összes megjelölése olvasottként</value>
   </data>
   <data name="LabelsWatermarkText" xml:space="preserve">
-    <value>Személy vagy Cég, pl. Alice, Bob, Pizza Inc</value>
+    <value>Személy vagy cég, például Alice, Bob, Pizza Kft.</value>
   </data>
   <data name="ValidationErrorNotNumber" xml:space="preserve">
     <value>Nem egy szám.</value>
@@ -1602,7 +1585,7 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Érmeválasztás</value>
   </data>
   <data name="ExperimentalCoinJoinCoinSelector" xml:space="preserve">
-    <value>(KÍSÉRLETI) Fejlesztett Érme Kiválasztás</value>
+    <value>(KÍSÉRLETI) Továbbfejlesztett Érmeválasztás</value>
   </data>
   <data name="ForceUsingLowPrivacyCoinsInCoinJoinCoinSelector" xml:space="preserve">
     <value>Alacsony anonimitású érmék használatának kényszerítése</value>
@@ -1623,16 +1606,16 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Alacsonyabb értéken előnyben részesíti az alacsonyabb arányú értékveszteséggel rendelkező érmeválasztásokat.</value>
   </data>
   <data name="TargetCoinCountPerBucketInCoinJoinCoinSelector" xml:space="preserve">
-    <value>Megcélzott érmeszám pénztárcacsoportonként</value>
+    <value>Megcélzott érmeszám tárcacsoportonként</value>
   </data>
   <data name="TargetCoinCountPerBucketInCoinJoinCoinSelectorToolTip" xml:space="preserve">
     <value>Előnyben részesíti az olyan csoportokból való érmék kiosztását (10k.., 20k.., 40k.. stb. satoshi tartományok), amelyek túltelítettek.</value>
   </data>
   <data name="UseOldCoinSelectorAsFallbackInCoinJoinCoinSelector" xml:space="preserve">
-    <value>Régi érmekiválasztó használata tartalékként</value>
+    <value>Régi érmekiválasztó használata másodlagos opcióként</value>
   </data>
   <data name="UseOldCoinSelectorAsFallbackInCoinJoinCoinSelectorToolTip" xml:space="preserve">
-    <value>Mind a régi, mind az új érmekiválasztót meghívja, és a jobb eredményt választja.</value>
+    <value>Az új és a régi pénzválasztó is használatban lesz, és a jobb eredmény kerül kiválasztásra.</value>
   </data>
   <data name="Configuration" xml:space="preserve">
     <value>Konfiguráció</value>
@@ -1644,7 +1627,7 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Eladás</value>
   </data>
   <data name="Broadcast" xml:space="preserve">
-    <value>Sugárzás</value>
+    <value>Kiküldés</value>
   </data>
   <data name="CountryOfResidenceRequired" xml:space="preserve">
     <value>A lakóhely szerinti ország szükséges a szabályozási megfeleléshez és a tranzakciók feldolgozásához</value>
@@ -1659,22 +1642,22 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Nem található ajánlat a megadott összegre.</value>
   </data>
   <data name="AmountCannotExceed" xml:space="preserve">
-    <value>Az összeg nem haladhatja meg a {0}-t.</value>
+    <value>Az összeg nem lehet nagyobb, mint {0}.</value>
   </data>
   <data name="AmountMustBeAtLeast" xml:space="preserve">
-    <value>Az összegnek legalább {0}-nak kell lennie.</value>
+    <value>Az összeg nem lehet kevesebb, mint {0}.</value>
   </data>
   <data name="ServiceNotAvailable" xml:space="preserve">
-    <value>A szolgáltatás jelenleg nem elérhető. Próbálja újra később.</value>
+    <value>A szolgáltatás jelenleg nem elérhető. Próbáld újra később.</value>
   </data>
   <data name="EnterAmountForOffers" xml:space="preserve">
-    <value>Adja meg az összeget, és kiszámítjuk a legjobb ajánlatokat Önnek.</value>
+    <value>Add meg az összeget, és kiszámítjuk a legjobb ajánlatokat neked.</value>
   </data>
   <data name="BuyAmountWatermark" xml:space="preserve">
-    <value>Írd be az összeget ide...</value>
+    <value>Írd az összeget ide...</value>
   </data>
   <data name="PreviousOrders" xml:space="preserve">
-    <value>Korábbi Rendelések</value>
+    <value>Korábbi rendelések</value>
   </data>
   <data name="All" xml:space="preserve">
     <value>Összes</value>
@@ -1683,16 +1666,16 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Ajánlatok</value>
   </data>
   <data name="InvalidBTCAddress" xml:space="preserve">
-    <value>A cím nem érvényes BTC cím.</value>
+    <value>A tárcacím nem érvényes Bitcoin-tárcacím.</value>
   </data>
   <data name="Browser" xml:space="preserve">
     <value>Böngésző</value>
   </data>
   <data name="BrowserError" xml:space="preserve">
-    <value>A Ginger Wallet nem tudta megnyitni a böngészőt, kérjük, ellenőrizze a naplót további részletekért.</value>
+    <value>A Ginger Wallet nem tudta megnyitni a böngészőt. További részletekért ellenőrid a naplót.</value>
   </data>
   <data name="AMLKYCNotice" xml:space="preserve">
-    <value>Az Elfogadásra kattintva elismerem, hogy a tranzakció később AML/KYC ellenőrzést igényelhet a harmadik fél szolgáltatótól.</value>
+    <value>Az "Elfogadás" gombra kattintva tudomásul veszem, hogy a harmadik fél szolgáltató később AML/KYC ellenőrzést kérhet a tranzakcióhoz.</value>
   </data>
   <data name="Accept" xml:space="preserve">
     <value>Elfogad</value>
@@ -1704,13 +1687,13 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Szolgáltató</value>
   </data>
   <data name="PastOrdersDetails" xml:space="preserve">
-    <value>Nyomon követheti, kezelheti és megtekintheti a múltbeli rendeléseinek részleteit.</value>
+    <value>Nyomon követheted, kezelheted és megtekintheted a múltbeli rendeléseidnek részleteit.</value>
   </data>
   <data name="Created" xml:space="preserve">
     <value>Létrehozva</value>
   </data>
   <data name="TransactionOnHold" xml:space="preserve">
-    <value>A tranzakciója függőben van. Kérjük, lépjen kapcsolatba a Támogatással.</value>
+    <value>A tranzakciód függőben van. Kérjük, lépj kapcsolatba a Ügyfélszolgálattal.</value>
   </data>
   <data name="Refunded" xml:space="preserve">
     <value>Visszatérítve</value>
@@ -1737,10 +1720,10 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Állam:</value>
   </data>
   <data name="TotalCostIncludesFee" xml:space="preserve">
-    <value>A teljes költség {0}, amely tartalmaz egy {1} díjat.</value>
+    <value>A teljes költség {0}, amely tartalmaz egy {1} összegű díjat.</value>
   </data>
   <data name="SellBitcoin" xml:space="preserve">
-    <value>Bitcoin eladása</value>
+    <value>Bitcoin eladás</value>
   </data>
   <data name="ReceiveInWithColom" xml:space="preserve">
     <value>Fogadás ebben:</value>
@@ -1749,7 +1732,7 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>Kövesd a szolgáltató oldalán található utasításokat. Egy ponton kapsz egy</value>
   </data>
   <data name="SellSuccessText2" xml:space="preserve">
-    <value>címet</value>
+    <value>tárcacímet</value>
   </data>
   <data name="SellSuccessText3" xml:space="preserve">
     <value>és a</value>
@@ -1758,12 +1741,334 @@ Ez a helyreállítási szavak kiterjesztése a nagyobb biztonság érdekében.</
     <value>pontos összeget</value>
   </data>
   <data name="SellSuccessText5" xml:space="preserve">
-    <value>küldeni. Térj vissza ide, miután mindkettőt megvan.</value>
+    <value>küldéshez. Térj vissza ide, miután mindkettő megvan.</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>Típus</value>
   </data>
   <data name="Generate" xml:space="preserve">
-    <value>Generál </value>
+    <value>Létrehoz</value>
+  </data>
+  <data name="ErrorAddingWallet" xml:space="preserve">
+    <value>Hiba történt a tárca hozzáadása során.</value>
+  </data>
+  <data name="DetectedConfirmation" xml:space="preserve">
+    <value>{0} észlelve. Ezt szeretnéd?</value>
+  </data>
+  <data name="TermsAndConditions" xml:space="preserve">
+    <value>Felhasználási feltételek</value>
+  </data>
+  <data name="WalletImportFailed" xml:space="preserve">
+    <value>A Ginger Wallet nem tudta importálni a tárcádat.</value>
+  </data>
+  <data name="AllCoinsConfirmed" xml:space="preserve">
+    <value>Minden érme visszaigazolva.</value>
+  </data>
+  <data name="CoinsWaitingForConfirmation" xml:space="preserve">
+    <value>{0} érme vár visszaigazolásra.</value>
+  </data>
+  <data name="CoinsCantParticipateCoinJoin" xml:space="preserve">
+    <value>Bizonyos érmék nem vehetnek részt coinjoinban</value>
+  </data>
+  <data name="SourceCodeGitHub" xml:space="preserve">
+    <value>Forráskód (GitHub)</value>
+  </data>
+  <data name="WebsiteClearnet" xml:space="preserve">
+    <value>Weboldal (Clearnet)</value>
+  </data>
+  <data name="BugReport" xml:space="preserve">
+    <value>Hibajelentés</value>
+  </data>
+  <data name="FAQ" xml:space="preserve">
+    <value>GYIK</value>
+  </data>
+  <data name="MITLicense" xml:space="preserve">
+    <value>MIT Licenc</value>
+  </data>
+  <data name="AdvancedInformation" xml:space="preserve">
+    <value>Verzióinformációk</value>
+  </data>
+  <data name="CompatibleCoordinatorVersions" xml:space="preserve">
+    <value>Kompatibilis koordinátor verziók</value>
+  </data>
+  <data name="CurrentCoordinatorVersion" xml:space="preserve">
+    <value>Jelenlegi koordinátor verzió</value>
+  </data>
+  <data name="CompatibleBitcoinCoreKnotsVersion" xml:space="preserve">
+    <value>Kompatibilis Bitcoin Core és Bitcoin Knots verzió</value>
+  </data>
+  <data name="CompatibleHardwareWalletInterfaceVersion" xml:space="preserve">
+    <value>Kompatibilis HWI verzió</value>
+  </data>
+  <data name="PrivacyProgress" xml:space="preserve">
+    <value>Anonimitás állapota</value>
+  </data>
+  <data name="HoverOverRingSegments" xml:space="preserve">
+    <value>Húzd az egérkurzort a gyűrű szegmensei fölé az érme részleteinek megtekintéséhez</value>
+  </data>
+  <data name="Private" xml:space="preserve">
+    <value>Anonim</value>
+  </data>
+  <data name="SemiPrivate" xml:space="preserve">
+    <value>Részben anonim</value>
+  </data>
+  <data name="NonPrivate" xml:space="preserve">
+    <value>Nem anonim</value>
+  </data>
+  <data name="PleaseWaitToShutDown" xml:space="preserve">
+    <value>Leállítás folyamatban</value>
+  </data>
+  <data name="GingerUnableToCloseCoinJoinInProgress" xml:space="preserve">
+    <value>A Ginger nem tud bezáródni, mert coinjoin van folyamatban.</value>
+  </data>
+  <data name="ThisMayTakeAFewMinutes" xml:space="preserve">
+    <value>Ez néhány percet igénybe vehet. A Ginger automatikusan bezárul, amikor befejeződik.</value>
+  </data>
+  <data name="TransactionAlreadyConfirmed" xml:space="preserve">
+    <value>A tranzakció már vissza van igazolva.</value>
+  </data>
+  <data name="GingerWalletUnableToSpeedUpTransaction" xml:space="preserve">
+    <value>A Ginger Wallet nem tudta felgyorsítani a tranzakciót.</value>
+  </data>
+  <data name="SpeedingUpTransactionCostAmount" xml:space="preserve">
+    <value>A tranzakciónak a felgyorsítása ennyi költséggel jár:</value>
+  </data>
+  <data name="SpeedingUpTransactionDeductFromRecipient" xml:space="preserve">
+    <value>A tranzakciónak a felgyorsítása ennyi levonást eredményez a címzett összegéből:</value>
+  </data>
+  <data name="Appearance" xml:space="preserve">
+    <value>Megjelenés</value>
+  </data>
+  <data name="AppearanceThemeKeywords" xml:space="preserve">
+    <value>Fekete, Fehér, Téma, Sötét, Világos</value>
+  </data>
+  <data name="RunInBackgroundKeywords" xml:space="preserve">
+    <value>elrejt, tálca</value>
+  </data>
+  <data name="RunAtStartupKeywords" xml:space="preserve">
+    <value>indítás, boot</value>
+  </data>
+  <data name="NoResults" xml:space="preserve">
+    <value>Nincs találat</value>
+  </data>
+  <data name="CriticalUpdateRequired" xml:space="preserve">
+    <value>Kritikus frissítés szükséges</value>
+  </data>
+  <data name="VersionReadyToInstall" xml:space="preserve">
+    <value>A {0} verzió készen áll a telepítésre</value>
+  </data>
+  <data name="VersionAvailable" xml:space="preserve">
+    <value>Elérhető a {0} verzió</value>
+  </data>
+  <data name="Peers" xml:space="preserve">
+    <value>Partnerek</value>
+  </data>
+  <data name="BroadcastTransaction" xml:space="preserve">
+    <value>Tranzakció kiküldése</value>
+  </data>
+  <data name="UnableToBroadcastTransaction" xml:space="preserve">
+    <value>Nem volt lehetséges a tranzakció kiküldése.</value>
+  </data>
+  <data name="ImportTransactionFileDialogTitle" xml:space="preserve">
+    <value>Tranzakció importálása</value>
+  </data>
+  <data name="UnableToLoadTransaction" xml:space="preserve">
+    <value>Nem volt lehetséges a tranzakció betöltése.</value>
+  </data>
+  <data name="ClipboardEmpty" xml:space="preserve">
+    <value>A vágólap üres!</value>
+  </data>
+  <data name="UnableToPasteTransaction" xml:space="preserve">
+    <value>Nem volt lehetséges a tranzakció beillesztése.</value>
+  </data>
+  <data name="CancellationFailed" xml:space="preserve">
+    <value>A visszavonás nem sikerült</value>
+  </data>
+  <data name="GingerWalletUnableToCancelTransaction" xml:space="preserve">
+    <value>A Ginger Wallet nem tudta visszavonni a tranzakciót.</value>
+  </data>
+  <data name="SpeedUpFailed" xml:space="preserve">
+    <value>Sikertelen felgyorsítás</value>
+  </data>
+  <data name="AuthorizationFailed" xml:space="preserve">
+    <value>A jóváhagyás nem sikerült, kérjük, próbáld újra.</value>
+  </data>
+  <data name="AuthorizeWithHardwareWallet" xml:space="preserve">
+    <value>Jóváhagyás hardveres tárcával</value>
+  </data>
+  <data name="AuthorizationFailedWithDeviceCheck" xml:space="preserve">
+    <value>A jóváhagyás nem sikerült.{0}Ellenőrizd az eszközt, majd próbáld újra.</value>
+  </data>
+  <data name="EnterPassphraseAuth" xml:space="preserve">
+    <value>Add meg a Passphrase-t</value>
+  </data>
+  <data name="IncorrectPassphrase" xml:space="preserve">
+    <value>A passphrase helytelen.{0}Kérjük, próbáld újra.</value>
+  </data>
+  <data name="SelectAllowedCoins" xml:space="preserve">
+    <value>Válaszd ki azokat az érméket, amelyek engedélyezettek a tranzakcióhoz</value>
+  </data>
+  <data name="RenameWallet" xml:space="preserve">
+    <value>Tárca átnevezése</value>
+  </data>
+  <data name="WalletCannotBeRenamed" xml:space="preserve">
+    <value>A tárca nem nevezhető át {0}-ra</value>
+  </data>
+  <data name="GingerWalletUnableToOpenFile" xml:space="preserve">
+    <value>A Ginger Wallet nem tudta megnyitni a fájlt.</value>
+  </data>
+  <data name="FoundIn" xml:space="preserve">
+    <value>Megtalálva ebben: \"{0}\"</value>
+  </data>
+  <data name="IncorrectPassphraseRetry" xml:space="preserve">
+    <value>A passphrase helytelen! Kérjük, próbáld újra.</value>
+  </data>
+  <data name="AcceptTermsAndConditions" xml:space="preserve">
+    <value>A folytatáshoz el kell fogadnod a felhasználási feltételeket!</value>
+  </data>
+  <data name="CompatibilityPassphraseUsed" xml:space="preserve">
+    <value>Kompatibilitási jelszót használtak! Kérjük, fontold meg egy új tárca létrehozását a helyreállíthatóság biztosítása érdekében!</value>
+  </data>
+  <data name="PassphraseTooLong" xml:space="preserve">
+    <value>A passphrase túl hosszú.</value>
+  </data>
+  <data name="WalletSettingsKeywords" xml:space="preserve">
+    <value>Tárca, Beállítások</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Hiba</value>
+  </data>
+  <data name="VerifyRecoveryWordsErrorMessage" xml:space="preserve">
+    <value>Próbáld újra, de ha nem tudod ellenőrizni a Helyreállító Szavakat, MINÉL HAMARABB helyezd át az érméidet egy új tárcába.</value>
+  </data>
+  <data name="VerifyRecoveryWordsErrorCaption" xml:space="preserve">
+    <value>A megadott Helyreállító Szavak helytelenek.</value>
+  </data>
+  <data name="InvalidRecoveryWords" xml:space="preserve">
+    <value>A helyreállító szavak érvénytelenek.</value>
+  </data>
+  <data name="UnableToVerifyRecoveryWords" xml:space="preserve">
+    <value>A Ginger Wallet nem tudta ellenőrizni a helyreállító szavakat.</value>
+  </data>
+  <data name="AfterDeductingFee" xml:space="preserve">
+    <value>A {0} díj levonása után {1} összeget kapsz, további díjak nem kerülnek felszámításra.</value>
+  </data>
+  <data name="UnableToRecoverWallet" xml:space="preserve">
+    <value>A Ginger Wallet nem tudta helyreállítani a tárcát.</value>
+  </data>
+  <data name="InvalidSetRecoveryWords" xml:space="preserve">
+    <value>A megadott helyreállító szavak érvénytelenek vagy rossz sorrendben vannak. Kérlek, ellenőrizd őket.</value>
+  </data>
+  <data name="FailedToGetLegalDocuments" xml:space="preserve">
+    <value>Nem sikerült lekérni a jogi dokumentumokat.</value>
+  </data>
+  <data name="MustBeNumberBetween" xml:space="preserve">
+    <value>Egy számnak kell lennie {0} és {1} között.</value>
+  </data>
+  <data name="InitializeDeviceFirst" xml:space="preserve">
+    <value>Először inicializáld az eszközt.</value>
+  </data>
+  <data name="CheckDeviceAndFinishInitialization" xml:space="preserve">
+    <value>Ellenőrizd az eszközt, és fejezd be az inicializálást.</value>
+  </data>
+  <data name="SomethingHappenedWithDevice" xml:space="preserve">
+    <value>Valami történt az eszközzel, oldd fel a PIN-kóddal/jelszóval, vagy csatlakoztasd újra a PC-hez.</value>
+  </data>
+  <data name="ExportTransaction" xml:space="preserve">
+    <value>Tranzakció exportálása</value>
+  </data>
+  <data name="SaveQRCode" xml:space="preserve">
+    <value>QR kód mentése</value>
+  </data>
+  <data name="ByAmount" xml:space="preserve">
+    <value>ennyivel: {0}</value>
+  </data>
+  <data name="AppearanceSettingsTabViewModelTitle" xml:space="preserve">
+    <value>Megjelenés</value>
+  </data>
+  <data name="AppearanceSettingsTabViewModelCaption" xml:space="preserve">
+    <value>Megjelenési beállítások kezelése</value>
+  </data>
+  <data name="AppearanceSettingsTabViewModelKeywords" xml:space="preserve">
+    <value>Beállítások, Megjelenés, Bitcoin, Sötét, Mód, Díj, Megjelenítés, Formátum, BTC, sats, Csere, Pénznem</value>
+  </data>
+  <data name="ExchangeCurrency" xml:space="preserve">
+    <value>Árfolyam valuta</value>
+  </data>
+  <data name="Cut" xml:space="preserve">
+    <value>Kivágás</value>
+  </data>
+  <data name="ThisOpenSourceSoftwareIsLicensedWith" xml:space="preserve">
+    <value>Ez a nyílt forráskódú szoftver a következő licenc alatt áll: </value>
+  </data>
+  <data name="CancellingThisTransactionWillCostYou" xml:space="preserve">
+    <value>Ennek a tranzakciónak a visszavonása ennyi költséggel jár:</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Rendben</value>
+  </data>
+  <data name="TorNetworkIssues" xml:space="preserve">
+    <value>A Tor hálózat problémákba ütközött:</value>
+  </data>
+  <data name="ClickIconForDetails" xml:space="preserve">
+    <value>A részletekért kattintson erre az ikonra</value>
+  </data>
+  <data name="PasteFromClipboard" xml:space="preserve">
+    <value>Beillesztés a vágólapról</value>
+  </data>
+  <data name="ImportTransaction" xml:space="preserve">
+    <value>Importar transacción</value>
+  </data>
+  <data name="Quit" xml:space="preserve">
+    <value>Kilépés</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Elrejt</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Megjelenít</value>
+  </data>
+  <data name="Default" xml:space="preserve">
+    <value>Alapértelmezett</value>
+  </data>
+  <data name="CopyLink" xml:space="preserve">
+    <value>Link másolása</value>
+  </data>
+  <data name="NonPrivateFunds" xml:space="preserve">
+    <value>Nem anonim érmék</value>
+  </data>
+  <data name="SemiPrivateFunds" xml:space="preserve">
+    <value>Részben anonim érmék</value>
+  </data>
+  <data name="PrivateFunds" xml:space="preserve">
+    <value>Anonim érmék</value>
+  </data>
+  <data name="CustomFeeRate" xml:space="preserve">
+    <value>Egyéni díjráta</value>
+  </data>
+  <data name="WalletNameCannotBeEmpty" xml:space="preserve">
+    <value>A tárcanév nem lehet üres.</value>
+  </data>
+  <data name="WalletNameAlreadyExists" xml:space="preserve">
+    <value>Már létezik egy {0} nevű tárca. Kérlek, próbálj meg egy másik nevet.</value>
+  </data>
+  <data name="WalletNameInvalid" xml:space="preserve">
+    <value>A választott tárcanév nem érvényes. Kérlek, próbálj meg egy másik nevet.</value>
+  </data>
+  <data name="AcceptingOfferRedirect" xml:space="preserve">
+    <value>Az ajánlat elfogadása átirányít a szolgáltató oldalára a folyamat befejezéséhez.</value>
+  </data>
+  <data name="ImportOrPasteTransactionHex" xml:space="preserve">
+    <value>Importáld vagy illessz be a tranzakció hexadecimális kódját, majd küldd ki a hálózatra.</value>
+  </data>
+  <data name="UnselectAll" xml:space="preserve">
+    <value>Minden kijelölés törlése</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Összes kijelölése</value>
+  </data>
+  <data name="PasteBTCAddress" xml:space="preserve">
+    <value>Bitcoin tárcacím beillesztése:
+{0}</value>
   </data>
 </root>

@@ -18,10 +18,10 @@ internal class ClipboardObserver
 		_balances = balances;
 	}
 
-	public IObservable<string?> ClipboardUsdContentChanged(IScheduler scheduler)
+	public IObservable<string?> ClipboardFiatContentChanged(IScheduler scheduler)
 	{
 		return ApplicationHelper.ClipboardTextChanged(scheduler)
-			.CombineLatest(_balances.Select(x => x.Usd).Switch(), ParseToUsd)
+			.CombineLatest(_balances.Select(x => x.Fiat).Switch(), ParseToFiat)
 			.Select(money => money?.ToString("0.00"));
 	}
 
@@ -31,7 +31,7 @@ internal class ClipboardObserver
 			.CombineLatest(_balances.Select(x => x.Btc), ParseToMoney);
 	}
 
-	public static decimal? ParseToUsd(string? text)
+	public static decimal? ParseToFiat(string? text)
 	{
 		if (text is null)
 		{
@@ -46,10 +46,10 @@ internal class ClipboardObserver
 		return decimal.TryParse(text, CurrencyInput.InvariantNumberFormat, out var n) ? n : (decimal?)default;
 	}
 
-	public static decimal? ParseToUsd(string? text, decimal balanceUsd)
+	public static decimal? ParseToFiat(string? text, decimal balanceFiat)
 	{
-		return ParseToUsd(text)
-			.Ensure(n => n <= balanceUsd)
+		return ParseToFiat(text)
+			.Ensure(n => n <= balanceFiat)
 			.Ensure(n => n >= 1)
 			.Ensure(n => n.CountDecimalPlaces() <= 2);
 	}
@@ -80,7 +80,7 @@ internal class ClipboardObserver
 		if (CurrencyInput.TryCorrectBitcoinAmount(text, out var corrected))
 		{
 			text = corrected;
-		}	
+		}
 
 		var money = ParseToMoney(text).Ensure(m => m <= balance);
 		return money?.ToDecimal(MoneyUnit.BTC).FormattedBtcExactFractional(text);

@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Reactive.Linq;
 using System.Windows.Input;
 using ReactiveUI;
@@ -7,6 +8,7 @@ using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Helpers;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.Status.ViewModels;
 
@@ -20,7 +22,7 @@ public partial class StatusIconViewModel : ViewModelBase
 		UiContext = uiContext;
 		HealthMonitor = uiContext.HealthMonitor;
 
-		ManualUpdateCommand = ReactiveCommand.CreateFromTask(() => UiContext.FileSystem.OpenBrowserAsync("https://gingerwallet.io/#download"));
+		ManualUpdateCommand = ReactiveCommand.CreateFromTask(() => UiContext.FileSystem.OpenBrowserAsync(UiConstants.DownloadLink));
 		UpdateCommand = ReactiveCommand.Create(
 			() =>
 			{
@@ -30,7 +32,7 @@ public partial class StatusIconViewModel : ViewModelBase
 
 		AskMeLaterCommand = ReactiveCommand.Create(() => HealthMonitor.CheckForUpdates = false);
 
-		OpenTorStatusSiteCommand = ReactiveCommand.CreateFromTask(() => UiContext.FileSystem.OpenBrowserAsync("https://status.torproject.org"));
+		OpenTorStatusSiteCommand = ReactiveCommand.CreateFromTask(() => UiContext.FileSystem.OpenBrowserAsync(UiConstants.TorStatusLink));
 
 		this.WhenAnyValue(
 				x => x.HealthMonitor.UpdateAvailable,
@@ -59,15 +61,15 @@ public partial class StatusIconViewModel : ViewModelBase
 	{
 		if (HealthMonitor.CriticalUpdateAvailable)
 		{
-			return $"Critical update required";
+			return Resources.CriticalUpdateRequired;
 		}
 		else if (HealthMonitor.IsReadyToInstall)
 		{
-			return $"Version {HealthMonitor.ClientVersion} is now ready to install";
+			return string.Format(CultureInfo.InvariantCulture, Resources.VersionReadyToInstall, HealthMonitor.ClientVersion);
 		}
 		else if (HealthMonitor.UpdateAvailable)
 		{
-			return $"Version {HealthMonitor.ClientVersion} is now available";
+			return string.Format(CultureInfo.InvariantCulture, Resources.VersionAvailable, HealthMonitor.ClientVersion);
 		}
 
 		return string.Empty;

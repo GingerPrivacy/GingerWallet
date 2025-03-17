@@ -1,5 +1,6 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi">
 
   <Design.PreviewWith>
     <Border Width="500" Height="500">
@@ -78,7 +79,7 @@
                       <Setter.Value>
                         <DataTemplate DataType="IUICommand">
                           <DockPanel>
-                            <Ellipse IsVisible="{Binding IsDefault}" ToolTip.Tip="Default" DockPanel.Dock="Right" Margin="10 0 0 0" VerticalAlignment="Center" Height="8" Width="8" Fill="{DynamicResource SystemAccentColor}" />
+                            <Ellipse IsVisible="{Binding IsDefault}" ToolTip.Tip="{x:Static lang:Resources.Default}" DockPanel.Dock="Right" Margin="10 0 0 0" VerticalAlignment="Center" Height="8" Width="8" Fill="{DynamicResource SystemAccentColor}" />
                             <TextBlock Text="{Binding Name}" />
                           </DockPanel>
                         </DataTemplate>

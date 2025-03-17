@@ -54,7 +54,7 @@
       <PreviewItem IsVisible="{Binding IsConfirmationTimeVisible}"
                    Icon="{StaticResource timer_regular}"
                    Label="{x:Static lang:Resources.ExpectedConfirmationTime}"
-                   ToolTip.Tip="{x:Static lang:Resources.ConfirmationEstimationDisclaimer}">
+                   ToolTip.Tip="{x:Static lang:Resources.ConfirmationTimeEstimation}">
         <PrivacyContentControl>
           <TextBlock
             Text="{Binding ConfirmationTime, Converter={x:Static conv:TimeSpanConverter.ToEstimatedConfirmationTime}}"

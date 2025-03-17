@@ -14,6 +14,7 @@ using WalletWasabi.Fluent.Models.FileSystem;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.SearchBar.ViewModels.Sources;
+using WalletWasabi.Models;
 using WalletWasabi.Services;
 
 namespace WalletWasabi.Fluent;
@@ -122,16 +123,16 @@ public class App : Application
 		return new TransactionBroadcasterModel(network);
 	}
 
-	private static IAmountProvider CreateAmountProvider()
+	private static IAmountProvider CreateAmountProvider(string exchangeCurrency)
 	{
-		return new AmountProvider(Services.HostedServices.Get<WasabiSynchronizer>());
+		return new AmountProvider(Services.HostedServices.Get<WasabiSynchronizer>(), exchangeCurrency);
 	}
 
 	private UiContext CreateUiContext()
 	{
-		var amountProvider = CreateAmountProvider();
 		var twoFactorAuthentication = new TwoFactorAuthentication();
 		var applicationSettings = CreateApplicationSettings(twoFactorAuthentication);
+		var amountProvider = CreateAmountProvider(applicationSettings.SelectedExchangeCurrency);
 		var torStatusChecker = new TorStatusCheckerModel();
 
 		// This class (App) represents the actual Avalonia Application and it's sole presence means we're in the actual runtime context (as opposed to unit tests)

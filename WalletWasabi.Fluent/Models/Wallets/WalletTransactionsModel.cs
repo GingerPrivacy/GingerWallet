@@ -111,21 +111,6 @@ public partial class WalletTransactionsModel : ReactiveObject, IDisposable
 		return estimate;
 	}
 
-	public TransactionInfo Create(string address, decimal amount, string label) =>
-		Create(address, amount, new LabelsArray(label));
-
-	public TransactionInfo Create(string address, decimal amount, LabelsArray labels)
-	{
-		var transactionInfo = new TransactionInfo(BitcoinAddress.Create(address, _wallet.Network), _walletModel.Settings.AnonScoreTarget)
-		{
-			Amount = new Money(amount, MoneyUnit.BTC),
-			Recipient = new LabelsArray("Buy Anything Agent"),
-			IsFixedAmount = true
-		};
-
-		return transactionInfo;
-	}
-
 	public SpeedupTransaction CreateSpeedUpTransaction(TransactionModel transaction)
 	{
 		if (!_wallet.BitcoinStore.TransactionStore.TryGetTransaction(transaction.Id, out var targetTransaction))

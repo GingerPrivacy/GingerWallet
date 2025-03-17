@@ -1,8 +1,10 @@
+using WalletWasabi.Lang;
+
 namespace WalletWasabi.Fluent.Models.Wallets;
 
 public record ScriptType(string Name, string ShortName)
 {
-	public static readonly ScriptType Unknown = new("Unknown", "?");
+	public static readonly ScriptType Unknown = new(Resources.Unknown, "?");
 	public static ScriptType SegWit = new("SegWit", "SW");
 	public static ScriptType Taproot = new("Taproot", "TR");
 

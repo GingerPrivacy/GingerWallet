@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using System.Globalization;
 using Avalonia;
 using Avalonia.Media;
 using NBitcoin;
@@ -6,6 +8,7 @@ using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.HomeScreen.Tiles.PrivacyRing.Interfaces;
 using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.Models.Wallets;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.HomeScreen.Tiles.PrivacyRing.ViewModels;
 
@@ -35,7 +38,7 @@ public class PrivacyRingItemViewModel : IPrivacyRingPreviewItem
 		Reference = PrivacyLevelText;
 		if (Unconfirmed)
 		{
-			Reference += " (pending)";
+			Reference += $" ({Resources.Pending.ToLower(CultureInfo.InvariantCulture)})";
 		}
 	}
 
@@ -132,9 +135,9 @@ public class PrivacyRingItemViewModel : IPrivacyRingPreviewItem
 	private string GetPrivacyLevelDescription() =>
 		this switch
 		{
-			{ IsPrivate: true } => "Private",
-			{ IsSemiPrivate: true } => "Semi-private",
-			{ IsNonPrivate: true } => "Non-private",
-			_ => "[Unknown]"
+			{ IsPrivate: true } => Resources.Private,
+			{ IsSemiPrivate: true } => Resources.SemiPrivate,
+			{ IsNonPrivate: true } => Resources.NonPrivate,
+			_ => $"[{Resources.Unknown}]",
 		};
 }

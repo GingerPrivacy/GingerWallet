@@ -40,8 +40,8 @@
                    Label="{x:Static lang:Resources.Status}">
         <StackPanel Orientation="Horizontal">
           <Panel>
-            <TextBlock Text="Confirmed" IsVisible="{Binding IsConfirmed}" />
-            <TextBlock Text="Pending" IsVisible="{Binding !IsConfirmed}" />
+            <TextBlock Text="{x:Static lang:Resources.Confirmed}" IsVisible="{Binding IsConfirmed}" />
+            <TextBlock Text="{x:Static lang:Resources.Pending}" IsVisible="{Binding !IsConfirmed}" />
           </Panel>
           <TextBlock IsVisible="{Binding IsConfirmed}" Margin="4 0 0 0 "
                      Text="{Binding Confirmations, StringFormat='({0} confirmations)'}" />
@@ -73,7 +73,7 @@
       <PreviewItem IsVisible="{Binding IsConfirmationTimeVisible}"
                    Icon="{StaticResource timer_regular}"
                    Label="{x:Static lang:Resources.ExpectedConfirmationTime}"
-                   ToolTip.Tip="{x:Static lang:Resources.ConfirmationEstimationDisclaimer}">
+                   ToolTip.Tip="{x:Static lang:Resources.ConfirmationTimeEstimation}">
         <PrivacyContentControl>
           <TextBlock
             Text="{Binding ConfirmationTime, Converter={x:Static conv:TimeSpanConverter.ToEstimatedConfirmationTime}}"

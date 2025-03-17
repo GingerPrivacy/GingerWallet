@@ -11,7 +11,7 @@
           <TextBlock.Text>
             <MultiBinding StringFormat="{}{0} {1}">
               <Binding Path="Btc" Converter="{x:Static converters:MoneyConverters.ToBtc}" />
-              <Binding Path="Usd^" Converter="{x:Static converters:MoneyConverters.ToUsdApproxBetweenParens}" />
+              <Binding Path="Fiat^" Converter="{x:Static converters:MoneyConverters.ToFiatApproxBetweenParens}" />
             </MultiBinding>
           </TextBlock.Text>
         </TextBlock>
@@ -26,7 +26,7 @@
             <TextBlock.Text>
               <MultiBinding StringFormat="{}{0} {1}">
                 <Binding Path="Btc" Converter="{x:Static converters:MoneyConverters.ToFeeWithUnit}" />
-                <Binding Path="Usd^" Converter="{x:Static converters:MoneyConverters.ToUsdApproxBetweenParens}" />
+                <Binding Path="Fiat^" Converter="{x:Static converters:MoneyConverters.ToFiatApproxBetweenParens}" />
               </MultiBinding>
             </TextBlock.Text>
           </TextBlock>
@@ -45,8 +45,8 @@
               <TextBlock Classes="monoSpaced" TextWrapping="Wrap"
                          Text="{Binding Btc, Converter={x:Static converters:MoneyConverters.ToBtc}}"/>
               <TextBlock Classes="monoSpaced" TextWrapping="Wrap"
-                         Text="{Binding Usd^, Converter={x:Static converters:MoneyConverters.ToUsdFormatted}}"
-                         IsVisible="{Binding HasUsdBalance^}"
+                         Text="{Binding Fiat^, Converter={x:Static converters:MoneyConverters.ToFiatFormatted}}"
+                         IsVisible="{Binding HasFiatBalance^}"
                          Opacity="0.6"/>
             </StackPanel>
           </Border>

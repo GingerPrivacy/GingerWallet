@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using GingerCommon.Logging;
 using WalletWasabi.Backend.Models;
 using WalletWasabi.Interfaces;
 
@@ -19,14 +20,23 @@ public class CoingateExchangeRateProvider : IExchangeRateProvider
 		};
 #pragma warning restore RS0030 // Do not use banned APIs
 
-		var response = await httpClient.GetStringAsync("/v2/rates/merchant/BTC/USD", cancellationToken)
-			.ConfigureAwait(false);
-		var rate = decimal.Parse(response);
+		var exchangeRates = new List<ExchangeRate>();
 
-		var exchangeRates = new List<ExchangeRate>
+		var currenciesToFetch = new[]
 		{
-			new ExchangeRate { Rate = rate, Ticker = "USD" }
+			"USD",
+			"EUR",
+			"CNY",
+			"HUF",
 		};
+
+		foreach (var currency in currenciesToFetch)
+		{
+			var response = await httpClient.GetStringAsync($"/v2/rates/merchant/BTC/{currency}", cancellationToken).ConfigureAwait(false);
+			var rate = decimal.Parse(response);
+
+			exchangeRates.Add(new ExchangeRate { Rate = rate, Ticker = currency });
+		}
 
 		return exchangeRates;
 	}
