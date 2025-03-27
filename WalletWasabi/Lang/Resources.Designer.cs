@@ -3427,7 +3427,7 @@ namespace WalletWasabi.Lang {
         
         /// <summary>
         ///   Looks up a localized string similar to Paste BTC Address:
-        ///{0}}.
+        ///{0}.
         /// </summary>
         public static string PasteBTCAddress {
             get {
