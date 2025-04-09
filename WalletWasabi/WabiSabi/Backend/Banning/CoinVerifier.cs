@@ -20,7 +20,6 @@ public class CoinVerifier : IAsyncDisposable
 		Whitelist = whitelist;
 		WabiSabiConfig = wabiSabiConfig;
 		VerifierAuditArchiver = new CoinVerifierLogger(auditsDirectoryPath);
-		RiskConfig = new(wabiSabiConfig);
 	}
 
 	// Constructor used for testing
@@ -31,10 +30,7 @@ public class CoinVerifier : IAsyncDisposable
 		Whitelist = whitelist ?? new(Enumerable.Empty<Innocent>(), string.Empty, wabiSabiConfig);
 		WabiSabiConfig = wabiSabiConfig;
 		VerifierAuditArchiver = auditArchiver ?? new("test/directory/path");
-		RiskConfig = new(wabiSabiConfig);
 	}
-
-	public CoinVerifierRiskConfig RiskConfig { get; set; }
 
 	public event EventHandler<Coin>? CoinBlacklisted;
 
@@ -226,13 +222,11 @@ public class CoinVerifier : IAsyncDisposable
 					using CancellationTokenSource requestTimeoutCts = new(TotalApiRequestTimeout);
 					using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(verificationCancellationToken, item.Token, requestTimeoutCts.Token);
 
-					var apiResponseItem = await CoinVerifierApiClient.SendRequestAsync(coin, linkedCts.Token).ConfigureAwait(false);
-
 					// This calculates in which block the coin got into the blockchain.
 					// So we can compare it to the latest block height that the API provider has already processed.
-					int blockchainHeightOfCoin = currentBlockHeight - (confirmations - 1);
+					int coinBlockHeight = currentBlockHeight - (confirmations - 1);
 
-					apiResponseItem.Evaluate(blockchainHeightOfCoin, RiskConfig);
+					var apiResponseItem = await CoinVerifierApiClient.SendRequestAsync(coin, coinBlockHeight, currentBlockHeight, linkedCts.Token).ConfigureAwait(false);
 
 					// We got a definitive answer.
 					if (apiResponseItem.ShouldBan)

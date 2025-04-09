@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Reactive.Linq;
 using System.Windows.Input;
 using ReactiveUI;
@@ -65,11 +64,11 @@ public partial class StatusIconViewModel : ViewModelBase
 		}
 		else if (HealthMonitor.IsReadyToInstall)
 		{
-			return string.Format(CultureInfo.InvariantCulture, Resources.VersionReadyToInstall, HealthMonitor.ClientVersion);
+			return Resources.VersionReadyToInstall.SafeInject(HealthMonitor.ClientVersion);
 		}
 		else if (HealthMonitor.UpdateAvailable)
 		{
-			return string.Format(CultureInfo.InvariantCulture, Resources.VersionAvailable, HealthMonitor.ClientVersion);
+			return Resources.VersionAvailable.SafeInject(HealthMonitor.ClientVersion);
 		}
 
 		return string.Empty;

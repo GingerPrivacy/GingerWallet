@@ -7,7 +7,6 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform;
 using ReactiveUI;
 using WalletWasabi.Fluent.Extensions;
-using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Logging;
@@ -23,12 +22,15 @@ namespace WalletWasabi.Fluent;
 [AppLifetime]
 public class ApplicationStateManager : IMainWindowService
 {
+	private readonly object _powerSavingLock = new();
 	private readonly StateMachine<State, Trigger> _stateMachine;
 	private readonly IClassicDesktopStyleApplicationLifetime _lifetime;
+
 	private CompositeDisposable? _compositeDisposable;
 	private bool _hideRequest;
 	private bool _isShuttingDown;
 	private bool _restartRequest;
+	private bool _isPowerSavingModeActive;
 	private IActivatableLifetime? _activatable;
 
 	internal ApplicationStateManager(IClassicDesktopStyleApplicationLifetime lifetime, UiContext uiContext, bool startInBg)
@@ -69,38 +71,14 @@ public class ApplicationStateManager : IMainWindowService
 
 		_stateMachine.Configure(State.InitialState)
 			.InitialTransition(initTransitionState)
-			.OnTrigger(
-				Trigger.ShutdownRequested,
-				() =>
-				{
-					if (_restartRequest)
-					{
-						Services.TerminateService.ScheduleRestart();
-					}
-
-					_lifetime.Shutdown();
-				})
-			.OnTrigger(
-				Trigger.ShutdownPrevented,
-				() =>
-				{
-					_lifetime.MainWindow.BringToFront();
-					ApplicationViewModel.OnShutdownPrevented(_restartRequest);
-					_restartRequest = false; // reset the value.
-				});
+			.OnTrigger(Trigger.ShutdownRequested, OnShutdownRequested)
+			.OnTrigger(Trigger.ShutdownPrevented, OnShutdownPrevented)
+			.OnTrigger(Trigger.EnterPowerSavingMode, OnEnterPowerSavingMode)
+			.OnTrigger(Trigger.ExitPowerSavingMode, OnExitPowerSavingMode);
 
 		_stateMachine.Configure(State.Closed)
 			.SubstateOf(State.InitialState)
-			.OnEntry(() =>
-			{
-				_lifetime.MainWindow?.Close();
-				_lifetime.MainWindow = null;
-				ApplicationViewModel.IsMainWindowShown = false;
-				if (_activatable is { })
-				{
-					_activatable.TryEnterBackground();
-				}
-			})
+			.OnEntry(OnClosed)
 			.Permit(Trigger.Show, State.Open)
 			.Permit(Trigger.ShutdownPrevented, State.Open);
 
@@ -124,6 +102,8 @@ public class ApplicationStateManager : IMainWindowService
 		ShutdownPrevented,
 		ShutdownRequested,
 		MainWindowClosed,
+		EnterPowerSavingMode,
+		ExitPowerSavingMode,
 	}
 
 	private enum State
@@ -136,6 +116,73 @@ public class ApplicationStateManager : IMainWindowService
 
 	internal UiContext UiContext { get; }
 	internal ApplicationViewModel ApplicationViewModel { get; }
+
+	private void OnExitPowerSavingMode()
+	{
+		lock (_powerSavingLock)
+		{
+			if (!_isPowerSavingModeActive)
+			{
+				return;
+			}
+			_isPowerSavingModeActive = false;
+
+			/*
+			 * Code here.
+			 */
+			Services.HostedServices.Call<ExchangeRateService>(x => x.Active = true);
+
+			Logger.LogInfo("Power saving mode disabled.");
+		}
+	}
+
+	private void OnEnterPowerSavingMode()
+	{
+		lock (_powerSavingLock)
+		{
+			if (_isPowerSavingModeActive || _isShuttingDown)
+			{
+				return;
+			}
+			_isPowerSavingModeActive = true;
+
+			/*
+			 * Code here.
+			 */
+			Services.HostedServices.Call<ExchangeRateService>(x => x.Active = false);
+
+			Logger.LogInfo("Power saving mode enabled.");
+		}
+	}
+
+	private void OnClosed()
+	{
+		_lifetime.MainWindow?.Close();
+		_lifetime.MainWindow = null;
+		ApplicationViewModel.IsMainWindowShown = false;
+		_stateMachine.Fire(Trigger.EnterPowerSavingMode);
+		if (_activatable is { })
+		{
+			_activatable.TryEnterBackground();
+		}
+	}
+
+	private void OnShutdownRequested()
+	{
+		if (_restartRequest)
+		{
+			Services.TerminateService.ScheduleRestart();
+		}
+
+		_lifetime.Shutdown();
+	}
+
+	private void OnShutdownPrevented()
+	{
+		_lifetime.MainWindow.BringToFront();
+		ApplicationViewModel.OnShutdownPrevented(_restartRequest);
+		_restartRequest = false; // reset the value.
+	}
 
 	private void LifetimeOnShutdownRequested(object? sender, ShutdownRequestedEventArgs e)
 	{
@@ -248,7 +295,9 @@ public class ApplicationStateManager : IMainWindowService
 		}
 
 		ObserveWindowSize(result, _compositeDisposable);
+		ObserveWindowState(result, _compositeDisposable);
 
+		_stateMachine.Fire(Trigger.ExitPowerSavingMode);
 		result.Show();
 
 		ApplicationViewModel.IsMainWindowShown = true;
@@ -273,6 +322,27 @@ public class ApplicationStateManager : IMainWindowService
 			window.Width = configWidth.Value;
 			window.Height = configHeight.Value;
 		}
+	}
+
+	private void ObserveWindowState(Window window, CompositeDisposable disposables)
+	{
+		window
+			.WhenAnyValue(x => x.WindowState)
+			.Buffer(2, 1)
+			.Select(buffer => (OldValue: buffer[0], NewValue: buffer[1]))
+			.Subscribe(states =>
+			{
+				if (states.OldValue is WindowState.Minimized && states.NewValue is (WindowState.Normal or WindowState.Maximized or WindowState.FullScreen))
+				{
+					_stateMachine.Fire(Trigger.ExitPowerSavingMode);
+				}
+
+				if (states.NewValue is WindowState.Minimized && states.OldValue is (WindowState.Normal or WindowState.Maximized or WindowState.FullScreen))
+				{
+					_stateMachine.Fire(Trigger.EnterPowerSavingMode);
+				}
+			})
+			.DisposeWith(disposables);
 	}
 
 	private void ObserveWindowSize(Window window, CompositeDisposable disposables)

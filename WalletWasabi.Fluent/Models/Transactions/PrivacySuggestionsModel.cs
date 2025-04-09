@@ -195,7 +195,9 @@ public partial class PrivacySuggestionsModel
 				var (differenceBtc, differenceFiat) = GetDifference(parameters.TransactionInfo, newTransaction, exchangeRate);
 				var differenceText = GetDifferenceText(differenceBtc);
 				var differenceAmountText = GetDifferenceAmountText(differenceBtc, differenceFiat);
-				fullPrivacySuggestion = new FullPrivacySuggestion(newTransaction, amountDifference, differenceText, differenceAmountText, allPrivateCoin, isChangeless);
+				var isMore = differenceFiat > 0;
+				var isLess = differenceFiat < 0;
+				fullPrivacySuggestion = new FullPrivacySuggestion(newTransaction, amountDifference, differenceText, differenceAmountText, allPrivateCoin, isChangeless, isMore, isLess);
 				yield return fullPrivacySuggestion;
 			}
 		}
@@ -219,7 +221,9 @@ public partial class PrivacySuggestionsModel
 				var (btcDifference, fiatDifference) = GetDifference(parameters.TransactionInfo, newTransaction, exchangeRate);
 				var differenceText = GetDifferenceText(btcDifference);
 				var differenceAmountText = GetDifferenceAmountText(btcDifference, fiatDifference);
-				yield return new BetterPrivacySuggestion(newTransaction, differenceText, differenceAmountText, coins, isChangeless);
+				var isMore = fiatDifference > 0;
+				var isLess = fiatDifference < 0;
+				yield return new BetterPrivacySuggestion(newTransaction, differenceText, differenceAmountText, coins, isChangeless, isMore, isLess);
 			}
 		}
 	}
@@ -446,7 +450,7 @@ public partial class PrivacySuggestionsModel
 
 	private string GetDifferenceAmountText(decimal btcDifference, decimal fiatDifference)
 	{
-		return $"{Math.Abs(btcDifference).FormattedBtcFixedFractional()} BTC {Math.Abs(fiatDifference).ToFiatAproxBetweenParens(_amountProvider.Ticker)}";
+		return $"{Math.Abs(btcDifference).FormattedBtcFixedFractional()} BTC {Math.Abs(fiatDifference).ToFiatAproxBetweenParens()}";
 	}
 
 	private record Parameters(TransactionInfo TransactionInfo, BuildTransactionResult Transaction, bool IncludeSuggestions);

@@ -1,3 +1,4 @@
+using System.Globalization;
 using WalletWasabi.Fluent.Helpers;
 using Xunit;
 
@@ -18,6 +19,16 @@ public class FormattingTests
 	[InlineData(-0.000001, "Less than -0.01%")]
 	public void TestPercentageDiffFormatting(double n, string expected)
 	{
+		Lang.Resources.Culture = new CultureInfo("en-US")
+		{
+			NumberFormat =
+			{
+				CurrencyGroupSeparator = " ",
+				CurrencyDecimalSeparator = ".",
+				NumberGroupSeparator = " ",
+				NumberDecimalSeparator = "."
+			}
+		};
 		var toString = TextHelpers.FormatPercentageDiff(n);
 		Assert.Equal(expected, toString);
 	}

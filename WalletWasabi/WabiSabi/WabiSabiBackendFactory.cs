@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using WalletWasabi.BitcoinCore.Rpc;
 using WalletWasabi.WabiSabi.Backend.Banning;
 using WalletWasabi.WabiSabi.Backend.DoSPrevention;
@@ -72,6 +68,11 @@ public class WabiSabiBackendFactory
 		}
 
 		return signingState;
+	}
+
+	public virtual CoinVerifierProvider CreateCoinVerifierProvider(HttpClient httpClient, CoinVerifierConfig config)
+	{
+		throw new InvalidOperationException("Unknown CoinVerifierProvider type.");
 	}
 
 	// Singleton creation

@@ -6,7 +6,6 @@ using ReactiveUI;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 
@@ -28,9 +27,8 @@ public partial class WalletSettingsViewModel : RoutableViewModel
 	[AutoNotify] private string _walletName;
 	[AutoNotify] private int _selectedTab;
 
-	public WalletSettingsViewModel(UiContext uiContext, IWalletModel walletModel)
+	public WalletSettingsViewModel(IWalletModel walletModel)
 	{
-		UiContext = uiContext;
 		_wallet = walletModel;
 		_walletName = walletModel.Name;
 		_preferPsbtWorkflow = walletModel.Settings.PreferPsbtWorkflow;

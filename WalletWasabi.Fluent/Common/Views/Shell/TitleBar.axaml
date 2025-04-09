@@ -9,7 +9,8 @@
              xmlns:views="clr-namespace:WalletWasabi.Fluent.SearchBar.Views"
              xmlns:views1="clr-namespace:WalletWasabi.Fluent.Announcement.Views"
              xmlns:views2="clr-namespace:WalletWasabi.Fluent.Status.Views"
-             xmlns:shell1="clr-namespace:WalletWasabi.Fluent.Common.Views.Shell">
+             xmlns:shell1="clr-namespace:WalletWasabi.Fluent.Common.Views.Shell"
+             xmlns:converters="clr-namespace:WalletWasabi.Fluent.Converters">
 
   <UserControl.Resources>
 
@@ -19,7 +20,7 @@
 
     <DataTemplate x:Key="WasabiLogo">
       <StackPanel Orientation="Horizontal" Spacing="3" VerticalAlignment="Center" HorizontalAlignment="Center" IsHitTestVisible="False">
-        <Viewbox Height="18" Width="18" IsHitTestVisible="False" Margin="0 -2 4 0">
+        <Viewbox Height="18" Width="18" IsHitTestVisible="False" Margin="0 -1 4 0">
           <ThemeImage Source="{DynamicResource GingerWalletLogo}" />
         </Viewbox>
         <TextBlock Text="Ginger"  FontFamily="{StaticResource PoppinsFont}" />
@@ -38,7 +39,23 @@
     </DataTemplate>
 
     <DataTemplate x:Key="AnnouncementIcon">
-      <views1:AnnouncementIcon DataContext="{Binding #UserControl.DataContext.AnnouncementIcon}" VerticalAlignment="Center" IsVisible="{Binding Announcements.HasAny^}" ClipToBounds="False" Foreground="{DynamicResource AcrylicTrimForeground}" />
+      <views1:AnnouncementIcon DataContext="{Binding #UserControl.DataContext.AnnouncementIcon}"
+                               VerticalAlignment="Center"
+                               Classes.show="{Binding Announcements.HasAny^, Converter={x:Static converters:BoolOpacityConverters.BoolToOpacity}}"
+                               IsVisible="{Binding $self.Opacity, Converter={x:Static converters:BoolOpacityConverters.OpacityToBool}}"
+                               ClipToBounds="False"
+                               Foreground="{DynamicResource AcrylicTrimForeground}">
+        <views1:AnnouncementIcon.Styles>
+          <Style Selector="views1|AnnouncementIcon">
+            <Setter Property="Opacity" Value="0" />
+            <Setter Property="RenderTransform" Value="scale(0.8,0.8)" />
+          </Style>
+          <Style Selector="views1|AnnouncementIcon.show">
+            <Setter Property="Opacity" Value="1" />
+            <Setter Property="RenderTransform" Value="scale(1,1)" />
+          </Style>
+        </views1:AnnouncementIcon.Styles>
+      </views1:AnnouncementIcon>
     </DataTemplate>
 
     <DataTemplate x:Key="TwoFactorBadge">

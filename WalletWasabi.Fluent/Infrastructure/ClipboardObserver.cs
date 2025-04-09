@@ -5,6 +5,7 @@ using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Helpers;
+using WalletWasabi.Lang;
 using WalletWasabi.Userfacing;
 
 namespace WalletWasabi.Fluent.Infrastructure;
@@ -22,7 +23,7 @@ internal class ClipboardObserver
 	{
 		return ApplicationHelper.ClipboardTextChanged(scheduler)
 			.CombineLatest(_balances.Select(x => x.Fiat).Switch(), ParseToFiat)
-			.Select(money => money?.ToString("0.00"));
+			.Select(fiat => fiat?.ToString("0.##", Resources.Culture.NumberFormat));
 	}
 
 	public IObservable<string?> ClipboardBtcContentChanged(IScheduler scheduler)
@@ -43,7 +44,7 @@ internal class ClipboardObserver
 			text = corrected;
 		}
 
-		return decimal.TryParse(text, CurrencyInput.InvariantNumberFormat, out var n) ? n : (decimal?)default;
+		return decimal.TryParse(text, Resources.Culture.NumberFormat, out var n) ? n : (decimal?)default;
 	}
 
 	public static decimal? ParseToFiat(string? text, decimal balanceFiat)
@@ -66,6 +67,7 @@ internal class ClipboardObserver
 			text = corrected;
 		}
 
+		text = text.PrepareForMoneyParsing();
 		return Money.TryParse(text, out var n) ? n : default;
 	}
 
@@ -83,6 +85,6 @@ internal class ClipboardObserver
 		}
 
 		var money = ParseToMoney(text).Ensure(m => m <= balance);
-		return money?.ToDecimal(MoneyUnit.BTC).FormattedBtcExactFractional(text);
+		return money?.ToFormattedString();
 	}
 }

@@ -9,7 +9,6 @@ using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.HomeScreen.BuySell.Models;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Lang;
@@ -26,15 +25,14 @@ public abstract partial class OffersViewModel : RoutableViewModel
 
 	[AutoNotify] private string _selectedPaymentMethod;
 
-	protected OffersViewModel(UiContext uiContext, IWalletModel wallet, IEnumerable<OfferModel> offers)
+	protected OffersViewModel(IWalletModel wallet, IEnumerable<OfferModel> offers)
 	{
 		Title = Resources.Offers;
-		UiContext = uiContext;
 		_wallet = wallet;
 
 		PaymentMethods = new []{_allText}.Concat(offers.Select(x => x.MethodName).Order()).Distinct();
 
-		_selectedPaymentMethod = uiContext.ApplicationSettings.BuySellConfiguration.BuyPaymentMethod ?? "";
+		_selectedPaymentMethod = UiContext.ApplicationSettings.BuySellConfiguration.BuyPaymentMethod ?? "";
 		if (string.IsNullOrEmpty(_selectedPaymentMethod) || !PaymentMethods.Contains(_selectedPaymentMethod))
 		{
 			SelectedPaymentMethod = _allText;
@@ -48,8 +46,8 @@ public abstract partial class OffersViewModel : RoutableViewModel
 			.Skip(1)
 			.Do(p =>
 			{
-				var conf = uiContext.ApplicationSettings.BuySellConfiguration;
-				uiContext.ApplicationSettings.BuySellConfiguration = conf with { BuyPaymentMethod = p };
+				var conf = UiContext.ApplicationSettings.BuySellConfiguration;
+				UiContext.ApplicationSettings.BuySellConfiguration = conf with { BuyPaymentMethod = p };
 			})
 			.Subscribe();
 

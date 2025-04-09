@@ -18,6 +18,23 @@
       <Setter Property="Height" Value="22" />
     </Style>
 
+    <Style Selector="PathIcon.statusIcon">
+      <Setter Property="Opacity" Value="0" />
+      <Setter Property="RenderTransform" Value="scale(0.8,0.8)" />
+      <Setter Property="IsVisible" Value="{Binding $self.Opacity, Converter={x:Static converters:BoolOpacityConverters.OpacityToBool}}" />
+      <Setter Property="Transitions">
+        <Transitions>
+          <TransformOperationsTransition Property="RenderTransform" Duration="0:0:.135" Easing="{StaticResource FluentEasing}" />
+          <DoubleTransition Property="Opacity" Duration="0:0:.135" Easing="{StaticResource FluentEasing}"/>
+        </Transitions>
+      </Setter>
+    </Style>
+
+    <Style Selector="PathIcon.show">
+      <Setter Property="Opacity" Value="1" />
+      <Setter Property="RenderTransform" Value="scale(1,1)" />
+    </Style>
+
     <Style Selector="PathIcon.rotate">
       <Style.Animations>
         <Animation Duration="0:0:2" IterationCount="Infinite">
@@ -158,30 +175,35 @@
 
     <!--Update available-->
     <PathIcon
-      IsVisible="{Binding HealthMonitor.State, Converter={x:Static converters:HealthMonitorStateVisibilityConverter.Instance}, ConverterParameter={x:Static models:HealthMonitorState.UpdateAvailable}}"
+      Classes="statusIcon"
+      Classes.show="{Binding HealthMonitor.State, Converter={x:Static converters:HealthMonitorStateVisibilityConverter.Instance}, ConverterParameter={x:Static models:HealthMonitorState.UpdateAvailable}}"
       Data="{StaticResource arrow_clockwise_with_elipse}"
       Foreground="Goldenrod" />
 
     <!--Critical update available-->
     <PathIcon
-      IsVisible="{Binding HealthMonitor.State, Converter={x:Static converters:HealthMonitorStateVisibilityConverter.Instance}, ConverterParameter={x:Static models:HealthMonitorState.CriticalUpdateAvailable}}"
+      Classes="statusIcon"
+      Classes.show="{Binding HealthMonitor.State, Converter={x:Static converters:HealthMonitorStateVisibilityConverter.Instance}, ConverterParameter={x:Static models:HealthMonitorState.CriticalUpdateAvailable}}"
       Data="{StaticResource critical_update}"
       Foreground="{DynamicResource SystemErrorTextColor}" />
 
     <!-- Ready -->
     <PathIcon
-      IsVisible="{Binding HealthMonitor.State, Converter={x:Static converters:HealthMonitorStateVisibilityConverter.Instance}, ConverterParameter={x:Static models:HealthMonitorState.Ready}}"
+      Classes="statusIcon"
+      Classes.show="{Binding HealthMonitor.State, Converter={x:Static converters:HealthMonitorStateVisibilityConverter.Instance}, ConverterParameter={x:Static models:HealthMonitorState.Ready}}"
       Data="{StaticResource checkmark_circle_filled}" />
 
     <!-- Connection issue -->
     <PathIcon
-      IsVisible="{Binding HealthMonitor.State, Converter={x:Static converters:HealthMonitorStateVisibilityConverter.Instance}, ConverterParameter={x:Static models:HealthMonitorState.ConnectionIssueDetected}}"
+      Classes="statusIcon"
+      Classes.show="{Binding HealthMonitor.State, Converter={x:Static converters:HealthMonitorStateVisibilityConverter.Instance}, ConverterParameter={x:Static models:HealthMonitorState.ConnectionIssueDetected}}"
       Data="{StaticResource warning_filled}"
       Foreground="Gold" />
 
     <!-- Loading -->
     <PathIcon
-      IsVisible="{Binding HealthMonitor.State, Converter={x:Static converters:HealthMonitorStateVisibilityConverter.Instance}, ConverterParameter={x:Static models:HealthMonitorState.Loading}}"
+      Classes="statusIcon"
+      Classes.show="{Binding HealthMonitor.State, Converter={x:Static converters:HealthMonitorStateVisibilityConverter.Instance}, ConverterParameter={x:Static models:HealthMonitorState.Loading}}"
       Data="{StaticResource arrow_sync_regular}"
       Classes.rotate="{Binding $self.IsVisible}" />
   </Panel>

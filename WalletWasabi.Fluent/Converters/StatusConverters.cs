@@ -1,4 +1,3 @@
-using System.Globalization;
 using Avalonia.Data.Converters;
 using WalletWasabi.BitcoinCore.Monitoring;
 using WalletWasabi.Lang;
@@ -29,5 +28,5 @@ public static class StatusConverters
 		new FuncValueConverter<RpcStatus?, string>(status => status is null ? RpcStatus.Unresponsive.ToString() : status.ToString());
 
 	public static readonly IValueConverter PeerStatusStringConverter =
-		new FuncValueConverter<int, string>(peerCount => string.Format(CultureInfo.InvariantCulture, Resources.PeersConnected, peerCount));
+		new FuncValueConverter<int, string>(peerCount => Resources.PeersConnected.SafeInject(peerCount));
 }

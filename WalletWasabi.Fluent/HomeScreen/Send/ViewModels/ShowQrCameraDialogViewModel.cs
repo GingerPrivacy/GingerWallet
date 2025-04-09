@@ -5,7 +5,6 @@ using Avalonia.Threading;
 using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Lang;
 using WalletWasabi.Userfacing;
 using WalletWasabi.Userfacing.Bip21;
@@ -20,14 +19,13 @@ public partial class ShowQrCameraDialogViewModel : DialogViewModelBase<string?>
 	[AutoNotify] private string _errorMessage = "";
 	[AutoNotify] private string _qrContent = "";
 
-	public ShowQrCameraDialogViewModel(UiContext context, Network network)
+	public ShowQrCameraDialogViewModel(Network network)
 	{
 		Title = Resources.Camera;
 
 		_network = network;
 
 		SetupCancel(enableCancel: true, enableCancelOnEscape: true, enableCancelOnPressed: true);
-		UiContext = context;
 	}
 
 	protected override void OnNavigatedTo(bool isInHistory, CompositeDisposable disposables)

@@ -2,7 +2,6 @@ using System.Windows.Input;
 using ReactiveUI;
 using WalletWasabi.Fluent.Common.ViewModels;
 using WalletWasabi.Fluent.Models;
-using WalletWasabi.Fluent.Models.UI;
 
 namespace WalletWasabi.Fluent.TransactionBroadcasting.ViewModels;
 
@@ -15,18 +14,13 @@ namespace WalletWasabi.Fluent.TransactionBroadcasting.ViewModels;
 	IsLocalized = true)]
 public partial class BroadcasterViewModel : TriggerCommandViewModel
 {
-	public BroadcasterViewModel(UiContext uiContext)
-	{
-		UiContext = uiContext;
-	}
-
 	public override ICommand TargetCommand => ReactiveCommand.CreateFromTask(async () =>
 	{
-		var dialogResult = await Navigate().To().LoadTransaction().GetResultAsync();
+		var dialogResult = await UiContext.Navigate().To().LoadTransaction().GetResultAsync();
 
 		if (dialogResult is { } transaction)
 		{
-			Navigate().To().BroadcastTransaction(transaction);
+			UiContext.Navigate().To().BroadcastTransaction(transaction);
 		}
 	});
 }

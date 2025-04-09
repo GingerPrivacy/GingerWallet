@@ -24,7 +24,7 @@ public partial class TransactionSummaryViewModel : ViewModelBase
 	[AutoNotify] private double? _amountDiff;
 	[AutoNotify] private double? _feeDiff;
 
-	private TransactionSummaryViewModel(TransactionPreviewViewModel parent, IWalletModel wallet, TransactionInfo info, bool isPreview = false)
+	public TransactionSummaryViewModel(TransactionPreviewViewModel parent, IWalletModel wallet, TransactionInfo info, bool isPreview = false)
 	{
 		Parent = parent;
 		_wallet = wallet;

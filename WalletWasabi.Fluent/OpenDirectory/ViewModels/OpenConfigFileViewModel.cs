@@ -1,5 +1,4 @@
 using WalletWasabi.Fluent.Models;
-using WalletWasabi.Fluent.Models.UI;
 
 namespace WalletWasabi.Fluent.OpenDirectory.ViewModels;
 
@@ -10,9 +9,5 @@ namespace WalletWasabi.Fluent.OpenDirectory.ViewModels;
 	IsLocalized = true)]
 public partial class OpenConfigFileViewModel : OpenFileViewModel
 {
-	public OpenConfigFileViewModel(UiContext uiContext) : base(uiContext)
-	{
-	}
-
 	public override string FilePath => UiContext.Config.ConfigFilePath;
 }

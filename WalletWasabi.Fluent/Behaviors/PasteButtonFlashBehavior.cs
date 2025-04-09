@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -107,7 +106,7 @@ public class PasteButtonFlashBehavior : AttachedToVisualTreeBehavior<AnimatedBut
 		{
 			AssociatedObject.Classes.Add(FlashAnimation);
 			_lastFlashedOn = clipboardValue;
-			ToolTip.SetTip(AssociatedObject, string.Format(CultureInfo.InvariantCulture, Resources.PasteBTCAddress, clipboardValue));
+			ToolTip.SetTip(AssociatedObject, Resources.PasteBTCAddress.SafeInject(clipboardValue));
 		}
 		else
 		{

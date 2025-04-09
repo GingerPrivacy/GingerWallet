@@ -10,7 +10,7 @@ namespace WalletWasabi.Fluent.Settings.ViewModels;
 
 [AppLifetime]
 [NavigationMetaData(
-	Order = 3,
+	Order = 4,
 	Category = SearchCategory.Settings,
 	IconName = "settings_general_regular",
 	IsLocalized = true)]

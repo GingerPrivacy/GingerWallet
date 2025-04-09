@@ -20,7 +20,7 @@ public partial class OrdersViewModel : RoutableViewModel
 	private readonly OrderType _type;
 	[AutoNotify] private FlatTreeDataGridSource<OrderViewModel> _source = new([]);
 
-	private OrdersViewModel(IBuySellModel buySellModel, OrderType type)
+	public OrdersViewModel(IBuySellModel buySellModel, OrderType type)
 	{
 		_buySellModel = buySellModel;
 		_type = type;
@@ -45,7 +45,7 @@ public partial class OrdersViewModel : RoutableViewModel
 		orders
 			.ToObservableChangeSet(x => x.OrderId)
 			.ObserveOn(RxApp.MainThreadScheduler)
-			.Transform(x => new OrderViewModel(UiContext, x, _buySellModel))
+			.Transform(x => new OrderViewModel(x, _buySellModel))
 			.Sort(SortExpressionComparer<OrderViewModel>.Descending(x => x.Model.CreatedAt))
 			.Bind(out var previousOrders)
 			.Subscribe()

@@ -21,7 +21,7 @@ public partial class OrderDetailsViewModel : RoutableViewModel
 	[AutoNotify] private string _date = "";
 	[AutoNotify] private string _status = "";
 
-	private OrderDetailsViewModel(GetOrderModel model, IBuySellModel buyModel)
+	public OrderDetailsViewModel(GetOrderModel model, IBuySellModel buyModel)
 	{
 		_list = model.IsBuyOrder ? buyModel.BuyOrders : buyModel.SellOrders;
 		Title = Resources.OrderDetails;

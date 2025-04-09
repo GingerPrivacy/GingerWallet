@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -91,7 +90,7 @@ public class TransactionsSearchSource : ReactiveObject, ISearchSource, IDisposab
 	{
 		return new ActionableItem(
 			item.Transaction.Id.ToString(),
-			string.Format(CultureInfo.InvariantCulture, Resources.FoundIn, wallet.WalletModel.Name),
+			Resources.FoundIn.SafeInject(wallet.WalletModel.Name),
 			() => NavigateTo(wallet, item),
 			Resources.WalletTransactions,
 			new List<string>())

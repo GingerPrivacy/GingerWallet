@@ -29,7 +29,7 @@
                                      ToolTip.Tip="{x:Static lang:Resources.Copy}"
                                      DockPanel.Dock="Right" Width="30"
                                      Text="{Binding Path=CopyableContent, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static conv:StringConverters.AsString}}"
-                                     IsVisible="{TemplateBinding IsCopyButtonVisible}" />
+                                     ShowCopyButton="{TemplateBinding IsCopyButtonVisible}" />
               <Panel>
                 <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}"
                                   ContentTemplate="{TemplateBinding ContentTemplate}"

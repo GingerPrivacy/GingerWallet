@@ -1,6 +1,7 @@
 using NBitcoin;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text.Json.Serialization;
@@ -10,6 +11,8 @@ using WalletWasabi.Interfaces;
 using WalletWasabi.JsonConverters;
 using WalletWasabi.JsonConverters.Bitcoin;
 using WalletWasabi.Lang;
+using WalletWasabi.Lang.Models;
+using WalletWasabi.Services;
 
 namespace WalletWasabi.Daemon;
 
@@ -138,10 +141,21 @@ public record PersistentConfig : IConfigNg
 	public int DisplayLanguage { get; init; } = (int)Models.DisplayLanguage.English;
 
 	[JsonPropertyName("ExchangeCurrency")]
-	public string ExchangeCurrency { get; init; } = "USD";
+	public string ExchangeCurrency { get; init; } = new CultureInfo(GingerCultureInfo.DefaultLanguage).GuessPreferredCurrencyCode(ExchangeRateService.DefaultCurrencies);
+
+	[JsonPropertyName("GroupSeparator")]
+	[JsonConverter(typeof(GroupSeparatorJsonConverter))]
+	public string GroupSeparator { get; init; } = LocalizationExtension.GuessPreferredGroupSeparator();
+
+	[JsonPropertyName("DecimalSeparator")]
+	[JsonConverter(typeof(DecimalSeparatorJsonConverter))]
+	public string DecimalSeparator { get; init; } = LocalizationExtension.GuessPreferredDecimalSeparator();
 
 	[JsonPropertyName("ExtraNostrPubKey")]
 	public string ExtraNostrPubKey { get; init; } = "";
+
+	[JsonPropertyName("BtcFractionGroup")]
+	public int[] BtcFractionGroup { get; init; } = GingerCultureInfo.DefaultBitcoinFractionSizes;
 
 	public bool DeepEquals(PersistentConfig other)
 	{
@@ -175,6 +189,9 @@ public record PersistentConfig : IConfigNg
 			MaxCoinJoinMiningFeeRate == other.MaxCoinJoinMiningFeeRate &&
 			AbsoluteMinInputCount == other.AbsoluteMinInputCount &&
 			DisplayLanguage == other.DisplayLanguage &&
+			GroupSeparator == other.GroupSeparator &&
+			DecimalSeparator == other.DecimalSeparator &&
+			BtcFractionGroup.SequenceEqual(other.BtcFractionGroup) &&
 			ExchangeCurrency == other.ExchangeCurrency;
 	}
 

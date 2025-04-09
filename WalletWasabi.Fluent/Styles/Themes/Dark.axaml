@@ -43,6 +43,8 @@
   <Color x:Key="SystemAccentCustomColorLight">#FFB29B78</Color>
   <Color x:Key="SystemAccentCustomColorDark">#FF947A52</Color>
   <Color x:Key="SystemFadedAccentCustom">#17A68D67</Color>
+  <Color x:Key="SystemFadedAccentCustomLight">#40B29B78</Color>
+  <Color x:Key="SystemFadedAccentCustomDark">#36947A52</Color>
 
   <Color x:Key="ActionForegroundColor">#1F1F1F</Color>
 
@@ -114,8 +116,10 @@
                     Opacity="0" />
 
   <!-- Privacy colors -->
-  <SolidColorBrush x:Key="PrivacyLevelStrongBrush" Color="#5A8F4B" />
-  <SolidColorBrush x:Key="PrivacyLevelMediumBrush" Color="#536A4B" />
+  <SolidColorBrush x:Key="PrivacyLevelStrongBrush" Color="#4B713E" />
+  <SolidColorBrush x:Key="PrivacyLevelStrongBorderBrush" Color="#71AA5D" />
+  <SolidColorBrush x:Key="PrivacyLevelMediumBrush" Color="#656D39" />
+  <SolidColorBrush x:Key="PrivacyLevelMediumBorderBrush" Color="#9FAA5D" />
   <SolidColorBrush x:Key="PrivacyLevelNoneBrush" Color="#383838" />
 
   <!-- TreeDataGrid -->

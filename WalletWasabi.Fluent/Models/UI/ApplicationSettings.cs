@@ -45,13 +45,16 @@ public partial class ApplicationSettings : ReactiveObject
 	[AutoNotify] private bool _stopLocalBitcoinCoreOnShutdown;
 	[AutoNotify] private string _bitcoinP2PEndPoint;
 	[AutoNotify] private string _coordinatorUri;
-	[AutoNotify] private string _dustThreshold;
+	[AutoNotify] private Money _dustThreshold;
 
 	// Appearance
 	[AutoNotify] private bool _darkModeEnabled;
 	[AutoNotify] private DisplayLanguage _selectedDisplayLanguage;
 	[AutoNotify] private string _selectedExchangeCurrency;
 	[AutoNotify] private FeeDisplayUnit _selectedFeeDisplayUnit;
+	[AutoNotify] private string _selectedDecimalSeparator;
+	[AutoNotify] private string _selectedGroupSeparator;
+	[AutoNotify] private int[] _selectedBtcFractionGroup;
 
 	// General
 	[AutoNotify] private bool _autoCopy;
@@ -96,7 +99,7 @@ public partial class ApplicationSettings : ReactiveObject
 		_stopLocalBitcoinCoreOnShutdown = _startupConfig.StopLocalBitcoinCoreOnShutdown;
 		_bitcoinP2PEndPoint = _startupConfig.GetBitcoinP2pEndPoint().ToString(defaultPort: -1);
 		_coordinatorUri = _startupConfig.GetCoordinatorUri();
-		_dustThreshold = _startupConfig.DustThreshold.ToString();
+		_dustThreshold = _startupConfig.DustThreshold;
 
 		// Appearance
 		_darkModeEnabled = _uiConfig.DarkModeEnabled;
@@ -105,6 +108,9 @@ public partial class ApplicationSettings : ReactiveObject
 		_selectedFeeDisplayUnit = Enum.IsDefined(typeof(FeeDisplayUnit), _uiConfig.FeeDisplayUnit)
 			? (FeeDisplayUnit)_uiConfig.FeeDisplayUnit
 			: FeeDisplayUnit.Satoshis;
+		_selectedDecimalSeparator = _startupConfig.DecimalSeparator;
+		_selectedGroupSeparator = _startupConfig.GroupSeparator;
+		_selectedBtcFractionGroup = _startupConfig.BtcFractionGroup;
 
 		// General
 		_autoCopy = _uiConfig.Autocopy;
@@ -149,7 +155,10 @@ public partial class ApplicationSettings : ReactiveObject
 
 		this.WhenAnyValue(
 				x => x.SelectedDisplayLanguage,
-				x => x.SelectedExchangeCurrency)
+				x => x.SelectedExchangeCurrency,
+				x => x.SelectedDecimalSeparator,
+				x => x.SelectedGroupSeparator,
+				x => x.SelectedBtcFractionGroup)
 			.Skip(1)
 			.ObserveOn(RxApp.MainThreadScheduler)
 			.Throttle(TimeSpan.FromMilliseconds(ThrottleTime))
@@ -341,9 +350,7 @@ public partial class ApplicationSettings : ReactiveObject
 				StartLocalBitcoinCoreOnStartup = StartLocalBitcoinCoreOnStartup,
 				StopLocalBitcoinCoreOnShutdown = StopLocalBitcoinCoreOnShutdown,
 				LocalBitcoinCoreDataDir = Guard.Correct(LocalBitcoinCoreDataDir),
-				DustThreshold = decimal.TryParse(DustThreshold, out var threshold)
-					? Money.Coins(threshold)
-					: PersistentConfig.DefaultDustThreshold,
+				DustThreshold = DustThreshold,
 			};
 		}
 		else
@@ -368,7 +375,10 @@ public partial class ApplicationSettings : ReactiveObject
 		result = result with
 		{
 			DisplayLanguage = (int)SelectedDisplayLanguage,
-			ExchangeCurrency = SelectedExchangeCurrency
+			ExchangeCurrency = SelectedExchangeCurrency,
+			DecimalSeparator = SelectedDecimalSeparator,
+			GroupSeparator = SelectedGroupSeparator,
+			BtcFractionGroup = SelectedBtcFractionGroup,
 		};
 
 		// General

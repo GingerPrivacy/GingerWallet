@@ -12,7 +12,7 @@ namespace WalletWasabi.Fluent.HomeScreen.BuySell.ViewModels;
 
 public partial class OrderViewModel : ViewModelBase
 {
-	private OrderViewModel(GetOrderModel model, IBuySellModel buyModel)
+	public OrderViewModel(GetOrderModel model, IBuySellModel buyModel)
 	{
 		Model = model;
 		Labels = new LabelsArray([Model.ProviderName]);

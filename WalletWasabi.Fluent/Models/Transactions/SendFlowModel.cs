@@ -1,8 +1,6 @@
 using NBitcoin;
-using ReactiveUI;
 using System.Collections.Generic;
 using System.Linq;
-using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.HomeScreen.Send.Models;

@@ -7,10 +7,11 @@
              x:CompileBindings="True"
              xmlns:lang="using:WalletWasabi.Lang"
              xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.HomeScreen.Others.ViewModels"
+             xmlns:converters="clr-namespace:WalletWasabi.Fluent.Converters"
              x:Class="WalletWasabi.Fluent.HomeScreen.Others.Views.WalletStatsView">
   <ContentArea Title="{Binding Title}"
                EnableNext="True" NextContent="{x:Static lang:Resources.Done}">
-    <StackPanel Spacing="10" Margin="0 20 20 0">
+    <StackPanel Spacing="10">
       <PreviewItem Label="{x:Static lang:Resources.NumberOfCoins}"
                    CopyableContent="{Binding Model.CoinCount}">
         <PrivacyContentControl Classes="monoSpaced"
@@ -18,21 +19,21 @@
       </PreviewItem>
       <Separator />
       <PreviewItem Label="{x:Static lang:Resources.UnconfirmedBalance}"
-                   CopyableContent="{Binding Model.UnconfirmedBalance.FormattedBtc}">
+                   CopyableContent="{Binding Model.UnconfirmedBalance.Btc}">
         <PrivacyContentControl>
           <AmountControl Amount="{Binding Model.UnconfirmedBalance}" />
         </PrivacyContentControl>
       </PreviewItem>
       <Separator />
       <PreviewItem Label="{x:Static lang:Resources.ConfirmedBalance}"
-                   CopyableContent="{Binding Model.ConfirmedBalance.FormattedBtc}">
+                   CopyableContent="{Binding Model.ConfirmedBalance.Btc}">
         <PrivacyContentControl>
           <AmountControl Amount="{Binding Model.ConfirmedBalance}" />
         </PrivacyContentControl>
       </PreviewItem>
       <Separator />
       <PreviewItem Label="{x:Static lang:Resources.TotalBalance}"
-                   CopyableContent="{Binding Model.Balance.FormattedBtc}">
+                   CopyableContent="{Binding Model.Balance.Btc}">
         <PrivacyContentControl>
           <AmountControl Amount="{Binding Model.Balance}" />
         </PrivacyContentControl>

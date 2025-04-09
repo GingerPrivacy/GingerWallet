@@ -52,6 +52,13 @@ public static class FileDialogHelper
 		MimeTypes = new[] { "image/png" }
 	};
 
+	public static FilePickerFileType Svg { get; } = new("SVG Files")
+	{
+		Patterns = new[] { "*.svg" },
+		AppleUniformTypeIdentifiers = new[] { "public.svg-image" },
+		MimeTypes = new[] { "image/svg+xml" }
+	};
+
 	private static IStorageProvider? GetStorageProvider()
 	{
 		if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime { MainWindow: { } window })
@@ -80,35 +87,40 @@ public static class FileDialogHelper
 			switch (fileType)
 			{
 				case "*":
-					{
-						fileTypeFilters.Add(All);
-						break;
-					}
+				{
+					fileTypeFilters.Add(All);
+					break;
+				}
 				case "json":
-					{
-						fileTypeFilters.Add(Json);
-						break;
-					}
+				{
+					fileTypeFilters.Add(Json);
+					break;
+				}
 				case "txt":
-					{
-						fileTypeFilters.Add(Text);
-						break;
-					}
+				{
+					fileTypeFilters.Add(Text);
+					break;
+				}
 				case "psbt":
-					{
-						fileTypeFilters.Add(Psbt);
-						break;
-					}
+				{
+					fileTypeFilters.Add(Psbt);
+					break;
+				}
 				case "txn":
-					{
-						fileTypeFilters.Add(Txn);
-						break;
-					}
+				{
+					fileTypeFilters.Add(Txn);
+					break;
+				}
 				case "png":
-					{
-						fileTypeFilters.Add(Png);
-						break;
-					}
+				{
+					fileTypeFilters.Add(Png);
+					break;
+				}
+				case "svg":
+				{
+					fileTypeFilters.Add(Svg);
+					break;
+				}
 			}
 		}
 

@@ -1,7 +1,8 @@
+using GingerCommon.Logging;
+using Microsoft.Extensions.Logging;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using WalletWasabi.Logging;
 
 namespace WalletWasabi.Backend;
 
@@ -16,8 +17,11 @@ public class InitConfigStartupTask : IStartupTask
 
 	public async Task ExecuteAsync(CancellationToken cancellationToken)
 	{
-		Logger.InitializeDefaults(Path.Combine(Global.DataDir, "Logs.txt"));
+		Logger.CreateLogger(filePath: Path.Combine(Global.DataDir, "Logs.txt"));
+		Global.CreateDiscordLogger();
+
 		Logger.LogSoftwareStarted("Ginger Backend");
+		Logger.LogDiscord(LogLevel.Information, "Ginger Backend started");
 
 		AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 		TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;

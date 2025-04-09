@@ -1,6 +1,5 @@
 using Avalonia;
 using Avalonia.Controls;
-using ReactiveUI;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using WalletWasabi.Fluent.Extensions;

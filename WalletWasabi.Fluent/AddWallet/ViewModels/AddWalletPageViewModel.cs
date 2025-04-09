@@ -26,7 +26,7 @@ namespace WalletWasabi.Fluent.AddWallet.ViewModels;
 	IsLocalized = true)]
 public partial class AddWalletPageViewModel : DialogViewModelBase<Unit>
 {
-	private AddWalletPageViewModel()
+	public AddWalletPageViewModel()
 	{
 		CreateWalletCommand = ReactiveCommand.Create(OnCreateWallet);
 
@@ -108,6 +108,5 @@ public partial class AddWalletPageViewModel : DialogViewModelBase<Unit>
 		MainViewModel.Instance.IsOobeBackgroundVisible = true;
 		await NavigateDialogAsync(this, NavigationTarget.DialogScreen);
 		MainViewModel.Instance.IsOobeBackgroundVisible = false;
-
 	}
 }

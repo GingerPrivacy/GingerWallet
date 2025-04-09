@@ -2,7 +2,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:converters="clr-namespace:WalletWasabi.Fluent.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:CompileBindings="True" x:DataType="viewModels:BtcPriceTileViewModel"
              x:Class="WalletWasabi.Fluent.HomeScreen.Tiles.Views.BtcPriceTileView"
@@ -10,9 +9,19 @@
              xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.HomeScreen.Tiles.ViewModels">
 
   <TileControl Title="{x:Static lang:Resources.WalletExchangeRate}" IsBottomContentVisible="False">
-    <Viewbox VerticalAlignment="Center" HorizontalAlignment="Center" MaxHeight="40">
+    <TileControl.Styles>
+      <Style Selector="Viewbox">
+        <Setter Property="MaxHeight" Value="40"/>
+      </Style>
+      <Style Selector="Viewbox.small">
+        <Setter Property="MaxHeight" Value="25"/>
+        <Setter Property="Opacity" Value="0.3"/>
+      </Style>
+    </TileControl.Styles>
+    <Viewbox VerticalAlignment="Center" HorizontalAlignment="Center"
+             Classes.small="{Binding !IsRateAvailable}">
       <TextBlock Classes="h2 monoSpaced bold" TextAlignment="Center"
-                 Text="{Binding FiatPerBtc^, Converter={x:Static converters:MoneyConverters.ToFiatFormatted}}" />
-      </Viewbox>
+                 Text="{Binding ExchangeRateText^}" />
+    </Viewbox>
   </TileControl>
 </UserControl>

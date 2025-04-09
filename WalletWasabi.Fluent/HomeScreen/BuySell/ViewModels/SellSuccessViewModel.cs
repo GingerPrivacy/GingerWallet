@@ -2,7 +2,6 @@ using System.Windows.Input;
 using ReactiveUI;
 using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Fluent.Models.Transactions;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Lang;
@@ -12,9 +11,8 @@ namespace WalletWasabi.Fluent.HomeScreen.BuySell.ViewModels;
 [NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class SellSuccessViewModel : RoutableViewModel
 {
-	public SellSuccessViewModel(UiContext uiContext, IWalletModel walletModel, string providerLabel)
+	public SellSuccessViewModel(IWalletModel walletModel, string providerLabel)
 	{
-		UiContext = uiContext;
 		Provider = providerLabel;
 		Title = Resources.SellBitcoin;
 

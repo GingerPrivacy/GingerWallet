@@ -19,7 +19,7 @@ public partial class WalletStatsViewModel : RoutableViewModel
 	private readonly IWalletModel _wallet;
 	[AutoNotify] private IWalletStatsModel? _model;
 
-	private WalletStatsViewModel(IWalletModel wallet)
+	public WalletStatsViewModel(IWalletModel wallet)
 	{
 		_wallet = wallet;
 

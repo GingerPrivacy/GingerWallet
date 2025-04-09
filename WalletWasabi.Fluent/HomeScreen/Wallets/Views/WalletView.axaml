@@ -61,7 +61,7 @@
           <!-- Sell -->
           <Panel>
 
-            <Button Theme="{StaticResource SecondarFunctionButton}"
+            <Button Theme="{StaticResource SecondaryFunctionButton}"
                     CornerRadius="20 0 0 20"
                     IsVisible="{Binding IsSendButtonVisible}"
                     Command="{Binding SellCommand}">
@@ -80,7 +80,7 @@
           <!-- Buy -->
           <Panel>
 
-            <Button Theme="{StaticResource SecondarFunctionButton}"
+            <Button Theme="{StaticResource SecondaryFunctionButton}"
                     Classes.single="{Binding !IsSendButtonVisible}"
                     Command="{Binding BuyCommand}">
               <Button.Styles>

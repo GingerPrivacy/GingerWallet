@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WalletWasabi.Bases;
 using WalletWasabi.BuySell;
+using WalletWasabi.Extensions;
 using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Daemon.BuySell;
@@ -54,46 +55,43 @@ public class BuySellManager : PeriodicRunner
 
 		var wallets = WalletManager.GetWallets().Where(w => w.IsLoggedIn).ToArray();
 
-		Dictionary<string, (Wallet Wallet, BuySellClientModels.GetOrderResponseItem OrderItem)> orderIdsNeedsRefresh = new();
+		Dictionary<Wallet, BuySellClientModels.GetOrderResponseItem[]> activeOrdersByWallets = new();
 
 		_buySellWalletDataLock.EnterReadLock();
-		BuySellClientModels.GetOrderResponseItem[] currentOrders;
 		try
 		{
-			currentOrders = wallets.SelectMany(w => w.KeyManager.BuySellWalletData.Orders).ToArray();
+			foreach (var wallet in wallets)
+			{
+				var activeOrders = wallet.KeyManager.BuySellWalletData.Orders
+					.Where(order => order.Status.IsActive())
+					.ToArray();
+
+				if (activeOrders.Length > 0)
+				{
+					activeOrdersByWallets.Add(wallet, activeOrders);
+				}
+			}
 		}
 		finally
 		{
 			_buySellWalletDataLock.ExitReadLock();
 		}
 
-		foreach (var wallet in wallets)
-		{
-			foreach (var order in currentOrders
-				.Where(order => order.Status != BuySellClientModels.OrderStatus.Expired
-				|| order.Status != BuySellClientModels.OrderStatus.Complete
-				|| order.Status != BuySellClientModels.OrderStatus.Failed
-				|| order.Status != BuySellClientModels.OrderStatus.Refunded))
-			{
-				orderIdsNeedsRefresh.Add(order.OrderId, (wallet, order));
-			}
-		}
-
-		if (orderIdsNeedsRefresh.Count == 0)
+		if (activeOrdersByWallets.Count == 0)
 		{
 			// There are no orders to fetch.
 			return;
 		}
 
-		int orderOffset = 0;
-		var newOrders = new Dictionary<string, BuySellClientModels.GetOrderResponseItem>();
-
 		// Fetch orders in pages until no more orders are available.
+		var orderIds = activeOrdersByWallets.Values.SelectMany(orders => orders.Select(o => o.OrderId)).ToArray();
+		var newOrders = new Dictionary<string, BuySellClientModels.GetOrderResponseItem>();
+		int orderOffset = 0;
 		do
 		{
 			var ordersResponse = await Client.GetOrderAsync(new BuySellClientModels.GetOrderRequest
 			{
-				OrderId = orderIdsNeedsRefresh.Keys.ToArray(),
+				OrderId = orderIds,
 				Offset = orderOffset
 			}, linkedCts.Token).ConfigureAwait(false);
 
@@ -112,56 +110,48 @@ public class BuySellManager : PeriodicRunner
 				newOrders.Add(order.OrderId, order);
 			}
 
-			if (ordersResponse.Orders.Count == ordersResponse.Limit)
-			{
-				orderOffset += ordersResponse.Orders.Count;
-			}
-			else
+			if (ordersResponse.Orders.Count < ordersResponse.Limit)
 			{
 				break;
 			}
 
+			orderOffset += ordersResponse.Orders.Count;
 			linkedCts.Token.ThrowIfCancellationRequested();
-		}
-		while (true);
+		} while (true);
 
-		HashSet<Wallet> walletOrdersUpdated = new();
+		HashSet<Wallet> updatedWallets = [];
 
-		foreach (var wallet in wallets)
+		_buySellWalletDataLock.EnterWriteLock();
+		try
 		{
-			List<BuySellClientModels.GetOrderResponseItem> updatedOrderList = new();
-			foreach (var orderItem in currentOrders)
+			foreach (var (wallet, activeOrders) in activeOrdersByWallets)
 			{
-				if (newOrders.TryGetValue(orderItem.OrderId, out var orderResponseItem))
-				{
-					if (orderItem.UpdatedAt != orderResponseItem.UpdatedAt)
-					{
-						walletOrdersUpdated.Add(wallet);
-						updatedOrderList.Add(orderResponseItem);
-					}
-					else
-					{
-						updatedOrderList.Add(orderItem);
-					}
-				}
-			}
+				var updatedOrders =
+					activeOrders
+						.Select(o => newOrders.TryGetValue(o.OrderId, out var newOrder) && newOrder.UpdatedAt != o.UpdatedAt
+									? newOrder
+									: o)
+						.ToArray();
 
-			_buySellWalletDataLock.EnterWriteLock();
-			try
-			{
-				wallet.KeyManager.Attributes.BuySellWalletData.Orders = updatedOrderList.ToArray();
-				if (walletOrdersUpdated.Count != 0)
+				if (!updatedOrders.SequenceEqual(activeOrders))
 				{
+					var remainingOrders =
+						wallet.KeyManager.Attributes.BuySellWalletData.Orders
+						.Where(existingOrder => updatedOrders.All(updatedOrder => updatedOrder.OrderId != existingOrder.OrderId));
+
+					wallet.KeyManager.Attributes.BuySellWalletData.Orders = updatedOrders.Union(remainingOrders).ToArray();
 					wallet.KeyManager.ToFile();
+
+					updatedWallets.Add(wallet);
 				}
-			}
-			finally
-			{
-				_buySellWalletDataLock.ExitWriteLock();
 			}
 		}
+		finally
+		{
+			_buySellWalletDataLock.ExitWriteLock();
+		}
 
-		foreach (var wallet in walletOrdersUpdated)
+		foreach (var wallet in updatedWallets)
 		{
 			OrdersUpdated?.Invoke(this, wallet);
 		}

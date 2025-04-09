@@ -27,7 +27,7 @@ public partial class ReceiveViewModel : RoutableViewModel, IDisposable
 	private readonly IWalletModel _wallet;
 	private readonly CompositeDisposable _disposables = new();
 
-	private ReceiveViewModel(IWalletModel wallet)
+	public ReceiveViewModel(IWalletModel wallet)
 	{
 		_wallet = wallet;
 		SetupCancel(enableCancel: true, enableCancelOnEscape: true, enableCancelOnPressed: true);

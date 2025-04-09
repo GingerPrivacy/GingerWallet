@@ -47,12 +47,14 @@
     <Setter Property="DockPanel.Dock" Value="Right" />
     <Setter Property="Width" Value="250" />
     <Setter Property="HorizontalAlignment" Value="Right" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
   </Style>
 
   <Style Selector="StackPanel.settingsLayout > DockPanel > CurrencyEntryBox">
     <Setter Property="DockPanel.Dock" Value="Right" />
     <Setter Property="Width" Value="250" />
     <Setter Property="HorizontalAlignment" Value="Right" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
   </Style>
 
   <Style Selector="StackPanel.settingsLayout > DockPanel > CurrencyEntryBox.hideValidations /template/ DataValidationErrors#PART_DataValidationErrors">

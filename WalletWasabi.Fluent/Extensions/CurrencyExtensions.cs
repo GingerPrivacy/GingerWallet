@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Linq;
 using NBitcoin;
 using WalletWasabi.Blockchain.TransactionBuilding;
@@ -11,14 +10,6 @@ namespace WalletWasabi.Fluent.Extensions;
 
 public static class CurrencyExtensions
 {
-	private static readonly NumberFormatInfo FormatInfo = new()
-	{
-		CurrencyGroupSeparator = " ",
-		NumberGroupSeparator = " ",
-		CurrencyDecimalSeparator = ".",
-		NumberDecimalSeparator = "."
-	};
-
 	public static Money CalculateDestinationAmount(this BuildTransactionResult result, BitcoinAddress destination)
 	{
 		var isNormalPayment = result.OuterWalletOutputs.Any();
@@ -34,43 +25,14 @@ public static class CurrencyExtensions
 			.Sum();
 	}
 
-	public static string FormattedBtc(this decimal amount)
-	{
-		return string.Format(FormatInfo, "{0:### ### ### ##0.#### ####}", amount).Trim();
-	}
-
 	public static string FormattedBtcFixedFractional(this decimal amount)
 	{
-		return string.Format(FormatInfo, "{0:### ### ### ##0.0000 0000}", amount).Trim();
-	}
-
-	public static string FormattedBtcExactFractional(this decimal amount, int fractionalDigits)
-	{
-		fractionalDigits = Math.Min(fractionalDigits, 8);
-		var fractionalFormat = new string('0', fractionalDigits);
-		if (fractionalFormat.Length > 4)
-		{
-			fractionalFormat = fractionalFormat.Insert(4, " ");
-		}
-
-		var fullFormat = $"{{0:### ### ### ##0.{fractionalFormat}}}";
-
-		return string.Format(FormatInfo, fullFormat, amount).Trim();
-	}
-
-	public static string FormattedBtcExactFractional(this decimal amount, string originalText)
-	{
-		var fractionalCount =
-			originalText.Contains('.')
-			? originalText.Skip(originalText.LastIndexOf('.')).Where(char.IsDigit).Count()
-			: 0;
-
-		return FormattedBtcExactFractional(amount, fractionalCount);
+		return Money.Coins(amount).ToFormattedString();
 	}
 
 	public static string FormattedFiat(this decimal amount, string format = "N2")
 	{
-		return amount.ToString(format, FormatInfo).Trim();
+		return amount.ToString(format, Resources.Culture.NumberFormat).Trim();
 	}
 
 	public static decimal BtcToFiat(this Money money, decimal exchangeRate)
@@ -78,12 +40,13 @@ public static class CurrencyExtensions
 		return money.ToDecimal(MoneyUnit.BTC) * exchangeRate;
 	}
 
-	public static string ToFiatAprox(this decimal n, string ticker) => n != decimal.Zero ? $"≈{ToFiatFormatted(n, ticker)}" : "";
+	public static string ToFiatAprox(this decimal n) => n != decimal.Zero ? $"≈{ToFiatFormatted(n)}" : "";
 
-	public static string ToFiatAproxBetweenParens(this decimal n, string ticker) => n != decimal.Zero ? $"({ToFiatAprox(n, ticker)})" : "";
+	public static string ToFiatAproxBetweenParens(this decimal n) => n != decimal.Zero ? $"({ToFiatAprox(n)})" : "";
 
-	public static string ToFiatFormatted(this decimal n, string ticker)
+	public static string ToFiatFormatted(this decimal n)
 	{
+		var ticker = Resources.Culture.GetFiatTicker();
 		return ToFiatAmountFormatted(n) + " " + ticker;
 	}
 
@@ -91,15 +54,15 @@ public static class CurrencyExtensions
 	{
 		return n switch
 		{
-			>= 10 => Math.Ceiling(n).ToString("N0", FormatInfo),
-			>= 1 => n.ToString("N1", FormatInfo),
-			_ => n.ToString("N2", FormatInfo)
+			>= 10 => Math.Ceiling(n).ToString("N0", Resources.Culture.NumberFormat),
+			>= 1 => n.ToString("N1", Resources.Culture.NumberFormat),
+			_ => n.ToString("N2", Resources.Culture.NumberFormat)
 		};
 	}
 
 	public static string ToFormattedFiat(this decimal n, string? currencyString = null)
 	{
-		var strNum = n.ToString("#,0.##",FormatInfo);
+		var strNum = n.ToString("#,0.##", Resources.Culture.NumberFormat);
 		return string.IsNullOrEmpty(currencyString) ? strNum : $"{strNum} {currencyString}";
 	}
 
@@ -129,8 +92,8 @@ public static class CurrencyExtensions
 
 		return displayUnit switch
 		{
-			FeeDisplayUnit.Satoshis => fee.Satoshi.ToString(),
-			_ => fee.ToString()
+			FeeDisplayUnit.Satoshis => fee.Satoshi.ToString(Resources.Culture.NumberFormat),
+			_ => fee.ToString(Resources.Culture.NumberFormat)
 		};
 	}
 
@@ -147,8 +110,8 @@ public static class CurrencyExtensions
 		var feePartText = moneyUnit switch
 		{
 			MoneyUnit.BTC => fee.ToFormattedString(),
-			MoneyUnit.Satoshi => fee.Satoshi.ToString(),
-			_ => fee.ToString()
+			MoneyUnit.Satoshi => fee.Satoshi.ToString(Resources.Culture.NumberFormat),
+			_ => fee.ToString(Resources.Culture.NumberFormat)
 		};
 
 		var feeText = $"{feePartText} {displayUnit.FriendlyName()}";

@@ -24,7 +24,7 @@ public partial class CustomFeeRateDialogViewModel : DialogViewModelBase<FeeRate>
 		_transactionInfo = transactionInfo;
 
 		_customFee = transactionInfo.IsCustomFeeUsed
-			? transactionInfo.FeeRate.SatoshiPerByte.ToString("0.00", CultureInfo.InvariantCulture)
+			? transactionInfo.FeeRate.SatoshiPerByte.ToString("0.##", Resources.Culture.NumberFormat)
 			: "";
 
 		EnableBack = false;
@@ -47,7 +47,7 @@ public partial class CustomFeeRateDialogViewModel : DialogViewModelBase<FeeRate>
 
 	private void OnNext()
 	{
-		if (decimal.TryParse(CustomFee, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var feeRate))
+		if (decimal.TryParse(CustomFee, NumberStyles.AllowDecimalPoint, Resources.Culture.NumberFormat, out var feeRate))
 		{
 			_transactionInfo.IsCustomFeeUsed = true;
 			Close(DialogResultKind.Normal, new FeeRate(feeRate));
@@ -68,7 +68,7 @@ public partial class CustomFeeRateDialogViewModel : DialogViewModelBase<FeeRate>
 			return;
 		}
 
-		if (!decimal.TryParse(customFeeString, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var value))
+		if (!decimal.TryParse(customFeeString, NumberStyles.AllowDecimalPoint, Resources.Culture.NumberFormat, out var value))
 		{
 			errors.Add(ErrorSeverity.Error, Resources.InvalidFee);
 			return;

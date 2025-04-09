@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ReactiveUI;
@@ -11,7 +10,7 @@ namespace WalletWasabi.Fluent.CoinList.ViewModels;
 
 public partial class CoinViewModel : CoinListItem
 {
-    private CoinViewModel(LabelsArray labels, ICoinModel coin, bool canSelectWhenCoinjoining, bool ignorePrivacyMode, bool allowSelection)
+    public CoinViewModel(LabelsArray labels, ICoinModel coin, bool canSelectWhenCoinjoining, bool ignorePrivacyMode, bool allowSelection)
 	{
 		Labels = labels;
 		Coin = coin;
@@ -20,7 +19,7 @@ public partial class CoinViewModel : CoinListItem
 		IsConfirmed = coin.IsConfirmed;
 		IsBanned = coin.IsBanned;
 		var confirmationCount = coin.Confirmations;
-		ConfirmationStatus = string.Format(CultureInfo.InvariantCulture, Resources.ConfirmationCount, confirmationCount, TextHelpers.AddSIfPlural(confirmationCount));
+		ConfirmationStatus = Resources.ConfirmationCount.SafeInject(confirmationCount, TextHelpers.AddSIfPlural(confirmationCount));
 		BannedUntilUtcToolTip = coin.BannedUntilUtcToolTip;
 		AnonymityScore = coin.AnonScore;
 		BannedUntilUtc = coin.BannedUntilUtc;

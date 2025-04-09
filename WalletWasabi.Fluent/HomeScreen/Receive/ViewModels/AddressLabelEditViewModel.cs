@@ -5,7 +5,6 @@ using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
 using WalletWasabi.Fluent.HomeScreen.Labels.Models;
 using WalletWasabi.Fluent.HomeScreen.Labels.ViewModels;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Lang;
 
@@ -16,10 +15,9 @@ public partial class AddressLabelEditViewModel : DialogViewModelBase<LabelsArray
 {
 	[AutoNotify] private bool _isCurrentTextValid;
 
-	public AddressLabelEditViewModel(UiContext uiContext, IWalletModel wallet, IAddress address)
+	public AddressLabelEditViewModel(IWalletModel wallet, IAddress address)
 	{
 		Title = Resources.EditLabels;
-		UiContext = uiContext;
 		SuggestionLabels = new SuggestionLabelsViewModel(wallet, Intent.Receive, 3, address.Labels);
 
 		SetupCancel(enableCancel: true, enableCancelOnEscape: true, enableCancelOnPressed: true);

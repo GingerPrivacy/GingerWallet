@@ -12,7 +12,6 @@ internal class MainGenerator : CombinedGenerator
 		AddStaticFileGenerator<AutoNotifyAttributeGenerator>();
 		Add<AutoNotifyGenerator>();
 		Add<AutoInterfaceGenerator>();
-		Add<UiContextConstructorGenerator>();
 		Add<FluentNavigationGenerator>();
 	}
 }

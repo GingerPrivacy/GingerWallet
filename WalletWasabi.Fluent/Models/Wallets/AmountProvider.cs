@@ -1,39 +1,58 @@
+using System.Collections.Immutable;
 using System.Linq;
 using NBitcoin;
 using ReactiveUI;
 using System.Reactive.Linq;
-using WalletWasabi.Fluent.Converters;
-using WalletWasabi.Models;
+using WalletWasabi.Fluent.Extensions;
+using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Services;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
 
+[AppLifetime]
 [AutoInterface]
 public partial class AmountProvider : ReactiveObject
 {
-	private readonly WasabiSynchronizer _synchronizer;
-	[AutoNotify] private decimal _exchangeRate;
+	private readonly ExchangeRateService _exchangeRateService;
 
-	public AmountProvider(WasabiSynchronizer synchronizer, string ticker)
+	[AutoNotify] private decimal _exchangeRate;
+	[AutoNotify] private IOrderedEnumerable<string> _supportedCurrencies = Enumerable.Empty<string>().OrderBy(x => x);
+
+	public AmountProvider(ExchangeRateService exchangeRateService)
 	{
-		_synchronizer = synchronizer;
-		Ticker = ticker;
-		ExchangeRateObservable =
-			this.WhenAnyValue(provider => provider._synchronizer.ExchangeRates)
-				.Select(x => x.FirstOrDefault(y => y.Ticker == Ticker)?.Rate ?? 0)
-				.ObserveOn(RxApp.MainThreadScheduler);
+		_exchangeRateService = exchangeRateService;
+
+		ExchangeRateObservable = Observable
+			.FromEventPattern<decimal>(_exchangeRateService, nameof(_exchangeRateService.ExchangeRateChanged))
+			.Select(x => x.EventArgs)
+			.StartWith(exchangeRateService.ExchangeRate?.Value ?? 0)
+			.ObserveOn(RxApp.MainThreadScheduler)
+			.ReplayLastActive();
 
 		ExchangeRateObservable.BindTo(this, x => x.ExchangeRate);
+
+		SupportedCurrenciesObservable = Observable
+			.FromEventPattern<ImmutableSortedSet<string>>(_exchangeRateService, nameof(_exchangeRateService.SupportedCurrenciesChanged))
+			.Select(x => x.EventArgs)
+			.StartWith(exchangeRateService.SupportedCurrencies)
+			.ObserveOn(RxApp.MainThreadScheduler)
+			.Select(x => x.OrderBy(y => y))
+			.ReplayLastActive();
+
+		SupportedCurrenciesObservable.BindTo(this, x => x.SupportedCurrencies);
 	}
 
 	public IObservable<decimal> ExchangeRateObservable { get; }
 
-	public string Ticker { get; }
-
-	public string[] SupportedCurrencies => _synchronizer.SupportedCurrencies;
+	public IObservable<IOrderedEnumerable<string>> SupportedCurrenciesObservable { get; }
 
 	public Amount Create(Money? money)
 	{
 		return new Amount(money ?? Money.Zero, this);
+	}
+
+	public Amount Create(decimal value)
+	{
+		return new Amount(value, this);
 	}
 }

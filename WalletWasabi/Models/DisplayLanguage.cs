@@ -18,4 +18,14 @@ public enum DisplayLanguage
 
 	[Description("zh-SG")]
 	Chinese = 5,
+
+	// TODO Enable afer the release
+	// [Description("de-DE")]
+	// German = 6,
+	//
+	// [Description("pt-PT")]
+	// Portuguese = 7,
+	//
+	// [Description("tr-TR")]
+	// Turkish = 8,
 }

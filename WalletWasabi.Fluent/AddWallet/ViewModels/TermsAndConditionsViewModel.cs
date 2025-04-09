@@ -13,7 +13,7 @@ public partial class TermsAndConditionsViewModel : DialogViewModelBase<bool>
 {
 	[AutoNotify] private bool _isAgreed;
 
-	private TermsAndConditionsViewModel()
+	public TermsAndConditionsViewModel()
 	{
 		Title = Resources.TermsAndConditions;
 

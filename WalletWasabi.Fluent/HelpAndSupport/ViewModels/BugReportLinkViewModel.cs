@@ -12,7 +12,7 @@ namespace WalletWasabi.Fluent.HelpAndSupport.ViewModels;
 	IsLocalized = true)]
 public partial class BugReportLinkViewModel : TriggerCommandViewModel
 {
-	private BugReportLinkViewModel()
+	public BugReportLinkViewModel()
 	{
 		TargetCommand = ReactiveCommand.CreateFromTask(async () => await UiContext.FileSystem.OpenBrowserAsync(AboutViewModel.BugReportLink));
 	}

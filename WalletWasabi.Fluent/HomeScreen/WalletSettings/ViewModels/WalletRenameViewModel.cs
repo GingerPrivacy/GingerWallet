@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Reactive;
 using ReactiveUI;
 using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
@@ -13,7 +12,7 @@ public partial class WalletRenameViewModel : DialogViewModelBase<Unit>
 {
 	[AutoNotify] private string _newWalletName;
 
-	private WalletRenameViewModel(IWalletModel wallet)
+	public WalletRenameViewModel(IWalletModel wallet)
 	{
 		Title = Resources.RenameWallet;
 
@@ -48,7 +47,7 @@ public partial class WalletRenameViewModel : DialogViewModelBase<Unit>
 		}
 		catch
 		{
-			UiContext.Navigate().To().ShowErrorDialog(string.Format(CultureInfo.InvariantCulture, Resources.WalletCannotBeRenamed, NewWalletName), Resources.InvalidWalletName, "", NavigationTarget.CompactDialogScreen);
+			UiContext.Navigate().To().ShowErrorDialog(Resources.WalletCannotBeRenamed.SafeInject(NewWalletName), Resources.InvalidWalletName, "", NavigationTarget.CompactDialogScreen);
 		}
 	}
 }

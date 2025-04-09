@@ -12,7 +12,7 @@ namespace WalletWasabi.Fluent.HelpAndSupport.ViewModels;
 	IsLocalized = true)]
 public partial class UserSupportViewModel : TriggerCommandViewModel
 {
-	private UserSupportViewModel()
+	public UserSupportViewModel()
 	{
 		TargetCommand = ReactiveCommand.CreateFromTask(async () => await UiContext.FileSystem.OpenBrowserAsync(AboutViewModel.UserSupportLink));
 	}

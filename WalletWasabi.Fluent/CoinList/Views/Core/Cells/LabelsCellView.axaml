@@ -23,11 +23,13 @@
     </Style>
 
     <Style Selector="LabelsItemsPresenter.SemiPrivate">
+      <Setter Property="BorderBrush" Value="{DynamicResource PrivacyLevelMediumBorderBrush}" />
       <Setter Property="Background" Value="{DynamicResource PrivacyLevelMediumBrush}" />
       <Setter Property="Foreground" Value="{DynamicResource TextForegroundColor}" />
       <Setter Property="MaxLabelWidth" Value="1000" />
     </Style>
     <Style Selector="LabelsItemsPresenter.Private">
+      <Setter Property="BorderBrush" Value="{DynamicResource PrivacyLevelStrongBorderBrush}" />
       <Setter Property="Background" Value="{DynamicResource PrivacyLevelStrongBrush}" />
       <Setter Property="Foreground" Value="{DynamicResource TextForegroundColor}" />
       <Setter Property="MaxLabelWidth" Value="1000" />

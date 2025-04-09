@@ -16,7 +16,6 @@ using WalletWasabi.Fluent.HomeScreen.Send.Models;
 using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.Models.Transactions;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Fluent.Validation;
@@ -63,9 +62,8 @@ public partial class SendViewModel : RoutableViewModel
 	[AutoNotify] private bool _conversionReversed;
 	[AutoNotify(SetterModifier = AccessModifier.Private)] private SuggestionLabelsViewModel _suggestionLabels;
 
-	public SendViewModel(UiContext uiContext, IWalletModel walletModel, SendFlowModel parameters, LabelsArray? preLabel = null, bool continueWithFixedAmount = false)
+	public SendViewModel(IWalletModel walletModel, SendFlowModel parameters, LabelsArray? preLabel = null, bool continueWithFixedAmount = false)
 	{
-		UiContext = uiContext;
 		_to = "";
 
 		_wallet = parameters.Wallet;
@@ -77,7 +75,7 @@ public partial class SendViewModel : RoutableViewModel
 		_conversionReversed = Services.UiConfig.SendAmountConversionReversed;
 
 		ExchangeRate = _walletModel.AmountProvider.ExchangeRate;
-		FiatTicker = _walletModel.AmountProvider.Ticker;
+		FiatTicker = Resources.Culture.GetFiatTicker();
 
 		Balance =
 			_parameters.IsManual

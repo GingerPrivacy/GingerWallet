@@ -7,11 +7,33 @@
              xmlns:models="clr-namespace:WalletWasabi.Fluent.Models"
              xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.Settings.ViewModels"
+             xmlns:models1="clr-namespace:WalletWasabi.Fluent.Settings.Models"
              mc:Ignorable="d" d:DesignWidth="650"
              x:Class="WalletWasabi.Fluent.Settings.Views.AppearanceSettingsTabView"
              x:CompileBindings="True"
              x:DataType="viewModels:AppearanceSettingsTabViewModel">
+  <UserControl.Resources>
+    <conv:NumberFormatExampleConverter x:Key="DecimalSeparatorConverter" Type="DecimalSeparator" ExampleNumber="0.5"/>
+    <conv:NumberFormatExampleConverter x:Key="GroupSeparatorConverter" Type="GroupSeparator" ExampleNumber="1000"/>
+  </UserControl.Resources>
+
   <StackPanel Classes="settingsLayout">
+    <StackPanel.Styles>
+      <Style Selector="TextBlock.exampleTitle">
+        <Setter Property="DockPanel.Dock" Value="Left"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="0 0 10 0"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+      </Style>
+
+      <Style Selector="TextBlock.exampleValue">
+        <Setter Property="DockPanel.Dock" Value="Right"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="Margin" Value="0 1 0 0"/>
+        <Setter Property="Opacity" Value="0.6"/>
+      </Style>
+
+    </StackPanel.Styles>
 
     <DockPanel>
       <TextBlock Text="{x:Static lang:Resources.DarkMode}" />
@@ -29,9 +51,51 @@
       </ComboBox>
     </DockPanel>
 
-    <DockPanel>
+    <DockPanel IsEnabled="{Binding ExchangeCurrencySelectionEnabled^}">
       <TextBlock Text="{x:Static lang:Resources.ExchangeCurrency}" />
-      <ComboBox ItemsSource="{Binding ExchangeCurrencies}" SelectedItem="{Binding Settings.SelectedExchangeCurrency}" />
+      <ComboBox ItemsSource="{Binding ExchangeCurrencies^}" SelectedItem="{Binding Settings.SelectedExchangeCurrency}" />
+    </DockPanel>
+
+    <DockPanel>
+      <TextBlock Text="{x:Static lang:Resources.DecimalSeparator}" />
+      <ComboBox ItemsSource="{Binding DecimalsSeparators}" SelectedItem="{Binding SelectedDecimalSeparator}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate x:DataType="models1:SeparatorModel">
+            <DockPanel>
+              <TextBlock Classes="exampleTitle" Text="{Binding Name}" />
+              <TextBlock Classes="exampleValue monoSpaced" Text="{Binding Char, Converter={StaticResource DecimalSeparatorConverter}}" />
+            </DockPanel>
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+    </DockPanel>
+
+    <DockPanel>
+      <TextBlock Text="{x:Static lang:Resources.GroupSeparator}" />
+      <ComboBox ItemsSource="{Binding GroupSeparators}" SelectedItem="{Binding SelectedGroupSeparator}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate x:DataType="models1:SeparatorModel">
+            <DockPanel>
+              <TextBlock Classes="exampleTitle" Text="{Binding Name}" />
+              <TextBlock Classes="exampleValue monoSpaced" Text="{Binding Char, Converter={StaticResource GroupSeparatorConverter}}" />
+            </DockPanel>
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+    </DockPanel>
+
+    <DockPanel>
+      <TextBlock Text="{x:Static lang:Resources.BitcoinFractionGrouping}" />
+      <ComboBox ItemsSource="{Binding BtcFractionGroups}" SelectedItem="{Binding SelectedBtcFractionGroup}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate x:DataType="models1:BtcFractionGroupModel">
+            <DockPanel>
+              <TextBlock Classes="exampleTitle" Text="{Binding Name}" />
+              <TextBlock Classes="exampleValue monoSpaced" Text="{Binding ExampleString}" />
+            </DockPanel>
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
     </DockPanel>
 
     <DockPanel>

@@ -17,7 +17,7 @@ public partial class SpeedUpTransactionDialogViewModel : RoutableViewModel
 	private readonly SpeedupTransaction _speedupTransaction;
 	private readonly IWalletModel _wallet;
 
-	private SpeedUpTransactionDialogViewModel(IWalletModel wallet, SpeedupTransaction speedupTransaction)
+	public SpeedUpTransactionDialogViewModel(IWalletModel wallet, SpeedupTransaction speedupTransaction)
 	{
 		Title = Resources.SpeedUpTransaction;
 

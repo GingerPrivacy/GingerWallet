@@ -13,9 +13,18 @@ internal class FluentNavigationGenerator: GeneratorStep
 
 	public override void OnInitialize(Compilation compilation, GeneratorStep[] steps)
 	{
-		var uiContextStep = steps.OfType<UiContextConstructorGenerator>().First();
+		foreach (var syntaxTree in compilation.SyntaxTrees)
+		{
+			var semanticModel = compilation.GetSemanticModel(syntaxTree);
 
-		Constructors.AddRange(uiContextStep.Constructors);
+			var constructors = syntaxTree.GetRoot()
+				.DescendantNodes()
+				.OfType<ClassDeclarationSyntax>()
+				.Where(cls => cls.IsRoutableViewModel(semanticModel) && !cls.IsAbstractClass(semanticModel))
+				.SelectMany(cls => cls.Members.OfType<ConstructorDeclarationSyntax>());
+
+			Constructors.AddRange(constructors);
+		}
 	}
 
 	public override void Execute()
@@ -58,14 +67,7 @@ internal class FluentNavigationGenerator: GeneratorStep
 				.SelectMany(t => t.Type.GetNamespaces())
 				.ToArray();
 
-			var uiContextParam = constructor.ParameterList.Parameters.FirstOrDefault(x => x.Type.IsUiContextType(semanticModel));
-
 			var methodParams = constructor.ParameterList;
-
-			if (uiContextParam != null)
-			{
-				methodParams = SyntaxFactory.ParameterList(methodParams.Parameters.Remove(uiContextParam));
-			}
 
 			var navigationMetadata = viewModelTypeInfo
 				.GetAttributes()
@@ -102,7 +104,7 @@ internal class FluentNavigationGenerator: GeneratorStep
 					SyntaxFactory.SeparatedList(
 					constructor.ParameterList
 						.Parameters
-						.Select(x => x.Type.IsUiContextType(semanticModel) ? "UiContext" : x.Identifier.ValueText) // replace uiContext argument for UiContext property reference
+						.Select(x => x.Identifier.ValueText)
 						.Select(x => SyntaxFactory.ParseExpression(x))
 						.Select(SyntaxFactory.Argument),
 					constructor.ParameterList

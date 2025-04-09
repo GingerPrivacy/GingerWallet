@@ -10,9 +10,11 @@
              xmlns:lang="using:WalletWasabi.Lang"
              xmlns:tiles="clr-namespace:WalletWasabi.Fluent.HomeScreen.Tiles.ViewModels">
   <TileControl Title="{x:Static lang:Resources.WalletBalance}" IsBottomContentVisible="{Binding Amounts^.HasFiatBalance^}">
-    <CopyableItem ContentToCopy="{Binding Amounts^.Btc}" HorizontalContentAlignment="Center">
-      <PrivacyContentControl Classes="h3 monoSpaced bold" Margin="4" HorizontalContentAlignment="Center"
-                             Content="{Binding Amounts^.Btc, Converter={x:Static converters:MoneyConverters.ToBtc}}" />
+    <CopyableItem ContentToCopy="{Binding Amounts^.Btc}" HorizontalContentAlignment="Center" Margin="15 0">
+      <Viewbox MaxHeight="40">
+        <PrivacyContentControl Classes="h3 monoSpaced bold" HorizontalContentAlignment="Center"
+                               Content="{Binding Amounts^.Btc, Converter={x:Static converters:MoneyConverters.ToBtc}}" />
+      </Viewbox>
     </CopyableItem>
     <TileControl.BottomContent>
       <CopyableItem ContentToCopy="{Binding Amounts^.Fiat^, Converter={x:Static converters:MoneyConverters.ToFiatAmountFormattedWithoutSpaces}}" HorizontalContentAlignment="Center">

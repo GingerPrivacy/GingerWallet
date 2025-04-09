@@ -194,6 +194,7 @@ public class WasabiJsonRpcService : IJsonRpcService
 	public JsonRpcResult GetStatus()
 	{
 		var sync = Global.HostedServices.Get<WasabiSynchronizer>();
+		var rate = Global.HostedServices.Get<ExchangeRateService>();
 		var smartHeaderChain = Global.BitcoinStore.SmartHeaderChain;
 
 		return new JsonRpcResult
@@ -211,7 +212,7 @@ public class WasabiJsonRpcService : IJsonRpcService
 			["filtersCount"] = smartHeaderChain.HashCount,
 			["filtersLeft"] = smartHeaderChain.HashesLeft,
 			["network"] = Global.Network.Name,
-			["exchangeRate"] = sync.ExchangeRates.FirstOrDefault(x => x.Ticker == "USD")?.Rate ?? 0,
+			["exchangeRate"] = rate.ExchangeRate?.Symbol == "USD" ? rate.ExchangeRate.Value : 0,
 			["peers"] = Global.HostedServices.Get<P2pNetwork>().Nodes.ConnectedNodes.Select(
 				x => new JsonRpcResult
 				{

@@ -23,7 +23,7 @@ public partial class WalletVerifyRecoveryWordsViewModel : RoutableViewModel
 	[AutoNotify] private IEnumerable<string>? _suggestions;
 	[AutoNotify] private Mnemonic? _currentMnemonics;
 
-	private WalletVerifyRecoveryWordsViewModel(IWalletModel wallet)
+	public WalletVerifyRecoveryWordsViewModel(IWalletModel wallet)
 	{
 		Title = Lang.Resources.VerifyRecoveryWords;
 

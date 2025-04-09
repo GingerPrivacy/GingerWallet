@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
@@ -12,7 +11,6 @@ using ReactiveUI;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.HomeScreen.Tiles.PrivacyRing.Interfaces;
 using WalletWasabi.Fluent.HomeScreen.Tiles.ViewModels;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Lang;
@@ -30,14 +28,13 @@ public partial class PrivacyRingViewModel : RoutableViewModel
 	[AutoNotify] private Thickness _margin;
 	[AutoNotify] private Thickness _negativeMargin;
 
-	public PrivacyRingViewModel(UiContext uiContext, IWalletModel wallet)
+	public PrivacyRingViewModel(IWalletModel wallet)
 	{
 		Title = Resources.PrivacyProgress;
-		UiContext = uiContext;
 		_wallet = wallet;
 
 		NextCommand = CancelCommand;
-		PrivacyTile = new PrivacyControlTileViewModel(UiContext, wallet);
+		PrivacyTile = new PrivacyControlTileViewModel(wallet);
 		SetupCancel(enableCancel: true, enableCancelOnEscape: true, enableCancelOnPressed: true);
 	}
 

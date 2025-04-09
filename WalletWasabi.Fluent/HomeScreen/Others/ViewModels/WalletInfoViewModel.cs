@@ -22,7 +22,7 @@ public partial class WalletInfoViewModel : RoutableViewModel
 	[AutoNotify] private string _showButtonText = "Show sensitive data";
 	[AutoNotify] private string _lockIconString = "eye_show_regular";
 
-	private WalletInfoViewModel(IWalletModel wallet)
+	public WalletInfoViewModel(IWalletModel wallet)
 	{
 		_model = wallet.GetWalletInfo();
 		IsHardwareWallet = wallet.IsHardwareWallet;

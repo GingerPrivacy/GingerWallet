@@ -5,7 +5,6 @@ using Avalonia.Controls.Documents;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
 using WalletWasabi.Fluent.HelpAndSupport.ViewModels;
-using WalletWasabi.Fluent.Models.UI;
 
 
 namespace WalletWasabi.Fluent.Converters;
@@ -48,7 +47,7 @@ public class TextToInlineCollectionConverter
                 var hyperlink = new InlineUIContainer(
                     new ContentControl
                     {
-                        Content = new LinkViewModel(UiContext.Default)
+                        Content = new LinkViewModel()
                         {
                             IsClickable = true,
                             Description = url,
@@ -66,7 +65,7 @@ public class TextToInlineCollectionConverter
                 var hyperlink = new InlineUIContainer(
                     new ContentControl
                     {
-                        Content = new LinkViewModel(UiContext.Default)
+                        Content = new LinkViewModel()
                         {
                             IsClickable = true,
                             Description = linkText, // Uses the visible text of the markdown link.

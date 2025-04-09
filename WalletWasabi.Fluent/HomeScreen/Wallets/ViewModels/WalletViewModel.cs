@@ -49,8 +49,8 @@ public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
 		WalletModel = walletModel;
 		Wallet = wallet;
 
-		Settings = new WalletSettingsViewModel(UiContext, WalletModel);
-		History = new HistoryViewModel(UiContext, WalletModel);
+		Settings = new WalletSettingsViewModel(WalletModel);
+		History = new HistoryViewModel(WalletModel);
 		var searchItems = CreateSearchItems();
 		this.WhenAnyValue(x => x.IsSelected)
 			.Do(shouldDisplay => UiContext.EditableSearchSource.Toggle(searchItems, shouldDisplay))
@@ -236,7 +236,7 @@ public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
 
 		if (!IsWatchOnly)
 		{
-			yield return new PrivacyControlTileViewModel(UiContext, WalletModel);
+			yield return new PrivacyControlTileViewModel(WalletModel);
 		}
 
 		yield return new BtcPriceTileViewModel(UiContext.AmountProvider);

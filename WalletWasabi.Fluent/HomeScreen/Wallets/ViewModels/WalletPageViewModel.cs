@@ -26,7 +26,7 @@ public partial class WalletPageViewModel : ViewModelBase, IDisposable
 	[AutoNotify] private RoutableViewModel? _currentPage;
 	[AutoNotify] private string? _title;
 
-	private WalletPageViewModel(IWalletModel walletModel)
+	public WalletPageViewModel(IWalletModel walletModel)
 	{
 		WalletModel = walletModel;
 
@@ -84,7 +84,7 @@ public partial class WalletPageViewModel : ViewModelBase, IDisposable
 
 	private void ShowLogin()
 	{
-		CurrentPage = new LoginViewModel(UiContext, WalletModel);
+		CurrentPage = new LoginViewModel(WalletModel);
 	}
 
 	private void ShowWalletLoading()

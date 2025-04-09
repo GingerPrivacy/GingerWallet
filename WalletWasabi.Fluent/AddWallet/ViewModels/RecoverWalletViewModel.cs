@@ -25,7 +25,7 @@ public partial class RecoverWalletViewModel : RoutableViewModel
 	[AutoNotify] private Mnemonic? _currentMnemonics;
 	[AutoNotify] private bool _isMnemonicsValid;
 
-	private RecoverWalletViewModel(WalletCreationOptions.RecoverWallet options)
+	public RecoverWalletViewModel(WalletCreationOptions.RecoverWallet options)
 	{
 		Title = Lang.Resources.RecoveryWords;
 
