@@ -16,10 +16,10 @@ public record ExchangeRate(string Symbol, decimal Value, DateTimeOffset LastUpda
 public abstract class ExchangeRateProvider
 {
 	// There can be some extra, already replaced currencies in the CultureInfo data that we need to remove manually.
-	private static readonly SortedSet<string> ExcludeCurrencies = ["HRK"];
+	private static readonly SortedSet<string> ExcludeCurrencies = ["HRK", "SLL"];
 
 	// Same, but missing ones
-	private static readonly SortedSet<string> MissingCurrencies = ["MVR"];
+	private static readonly SortedSet<string> MissingCurrencies = ["MVR", "SLE", "VED", "VES"];
 
 	public static readonly ImmutableSortedSet<string> ValidCurrencies =
 		CultureInfo.GetCultures(CultureTypes.SpecificCultures).Select(culture => new RegionInfo(culture.Name).ISOCurrencySymbol).Where(x => x?.Length == 3 && !ExcludeCurrencies.Contains(x)).Concat(MissingCurrencies).ToImmutableSortedSet();
