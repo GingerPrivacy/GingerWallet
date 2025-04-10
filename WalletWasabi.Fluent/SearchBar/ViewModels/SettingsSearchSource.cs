@@ -44,30 +44,6 @@ public class SettingsSearchSource : ReactiveObject, ISearchSource
 		yield return new ContentSearchItem(content: Setting(selector: x => x.HideOnClose), name: Resources.RunInBackgroundWhenClosed, category: Resources.Settings, keywords: Resources.RunInBackgroundKeywords.ToKeywords(), icon: "nav_settings_regular", isEnabled) { IsDefault = false, Priority = 4 };
 		yield return new ContentSearchItem(content: Setting(selector: x => x.RunOnSystemStartup), name: Resources.RunAtStartup, category: Resources.Settings, keywords: Resources.RunAtStartupKeywords.ToKeywords(), icon: "nav_settings_regular", isEnabled) { IsDefault = false, Priority = 5 };
 		yield return new ContentSearchItem(content: Setting(selector: x => x.EnableGpu), name: Resources.EnableGPU, category: Resources.Settings, keywords: new List<string>(), icon: "nav_settings_regular", isEnabled) { IsDefault = false, Priority = 6 };
-
-		yield return ContentSearchItemNode.Create(
-			searchSource: _uiContext.EditableSearchSource,
-			setting: Setting(selector: x => x.UseTor),
-			name: Resources.NetworkAnonymizationTor,
-			category: Resources.Settings,
-			isDefault: false,
-			keywords: new List<string>(),
-			icon: "nav_settings_regular",
-			priority: 7,
-			isEnabled,
-			nestedItemConfiguration: new NestedItemConfiguration<TorMode>(
-				isDisplayed: mode => mode != TorMode.Disabled,
-				item: new ContentSearchItem(
-					content: Setting(selector: x => x.TerminateTorOnExit),
-					name: Resources.TerminateTorWhenShutdown,
-					category: Resources.Settings,
-					keywords: new List<string>(),
-					icon: "nav_settings_regular",
-					isEnabled)
-				{
-					IsDefault = false,
-					Priority = 8
-				}));
 	}
 
 	private Setting<ApplicationSettings, TProperty> Setting<TProperty>(Expression<Func<ApplicationSettings, TProperty>> selector)

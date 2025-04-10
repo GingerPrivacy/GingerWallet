@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Threading.Tasks;
 using WalletWasabi.Fluent.Authorization.Models;
 using WalletWasabi.Fluent.Models.Wallets;
@@ -25,7 +24,7 @@ public partial class HardwareWalletAuthDialogViewModel : AuthorizationDialogBase
 
 		EnableBack = false;
 
-		AuthorizationFailedMessage = string.Format(CultureInfo.InvariantCulture, Resources.AuthorizationFailedWithDeviceCheck, Environment.NewLine);
+		AuthorizationFailedMessage = Resources.AuthorizationFailedWithDeviceCheck.SafeInject(Environment.NewLine);
 	}
 
 	public WalletType WalletType { get; }

@@ -38,22 +38,21 @@ public partial class MainViewModel : ViewModelBase
 		ApplyUiConfigWindowState();
 
 		DialogScreen = new DialogScreenViewModel();
-		FullScreen = new DialogScreenViewModel(NavigationTarget.FullScreen);
 		CompactDialogScreen = new DialogScreenViewModel(NavigationTarget.CompactDialogScreen);
 		NavBar = new NavBarViewModel(UiContext);
 		MainScreen = new TargettedNavigationStack(NavigationTarget.HomeScreen);
-		UiContext.RegisterNavigation(new NavigationState(UiContext, MainScreen, DialogScreen, FullScreen, CompactDialogScreen, NavBar));
+		UiContext.RegisterNavigation(new NavigationState(UiContext, MainScreen, DialogScreen, CompactDialogScreen, NavBar));
 
 		StatusIcon = new StatusIconViewModel(UiContext);
 		AnnouncementIcon = new AnnouncementIconViewModel(UiContext, new AnnouncementsModel());
 
 		SettingsPage = new SettingsPageViewModel(UiContext);
 		PrivacyMode = new PrivacyModeViewModel(UiContext.ApplicationSettings);
-		Notifications = new WalletNotificationsViewModel(UiContext, NavBar);
+		Notifications = new WalletNotificationsViewModel(NavBar);
 
 		NavigationManager.RegisterType(NavBar);
 
-		this.RegisterAllViewModels(UiContext);
+		this.RegisterAllViewModels();
 
 		RxApp.MainThreadScheduler.Schedule(async () => await NavBar.InitialiseAsync());
 
@@ -65,9 +64,8 @@ public partial class MainViewModel : ViewModelBase
 		IsMainContentEnabled =
 			this.WhenAnyValue(
 					x => x.DialogScreen.IsDialogOpen,
-					x => x.FullScreen.IsDialogOpen,
 					x => x.CompactDialogScreen.IsDialogOpen,
-					(dialogIsOpen, fullScreenIsOpen, compactIsOpen) => !(dialogIsOpen || fullScreenIsOpen || compactIsOpen))
+					(dialogIsOpen, compactIsOpen) => !(dialogIsOpen || compactIsOpen))
 				.ObserveOn(RxApp.MainThreadScheduler);
 
 		CurrentWallet =
@@ -133,7 +131,6 @@ public partial class MainViewModel : ViewModelBase
 	public SearchBarViewModel SearchBar { get; }
 
 	public DialogScreenViewModel DialogScreen { get; }
-	public DialogScreenViewModel FullScreen { get; }
 	public DialogScreenViewModel CompactDialogScreen { get; }
 	public NavBarViewModel NavBar { get; }
 	public StatusIconViewModel StatusIcon { get; }
@@ -146,9 +143,7 @@ public partial class MainViewModel : ViewModelBase
 
 	public bool IsDialogOpen()
 	{
-		return DialogScreen.IsDialogOpen
-			   || FullScreen.IsDialogOpen
-			   || CompactDialogScreen.IsDialogOpen;
+		return DialogScreen.IsDialogOpen || CompactDialogScreen.IsDialogOpen;
 	}
 
 	public void ShowDialogAlert()
@@ -166,19 +161,12 @@ public partial class MainViewModel : ViewModelBase
 			DialogScreen.ShowAlert = true;
 			return;
 		}
-
-		if (FullScreen.IsDialogOpen)
-		{
-			FullScreen.ShowAlert = false;
-			FullScreen.ShowAlert = true;
-		}
 	}
 
 	public void ClearStacks()
 	{
 		MainScreen.Clear();
 		DialogScreen.Clear();
-		FullScreen.Clear();
 		CompactDialogScreen.Clear();
 	}
 

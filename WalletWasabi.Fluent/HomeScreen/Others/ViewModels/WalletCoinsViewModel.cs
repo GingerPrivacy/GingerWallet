@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Reactive.Disposables;
 using WalletWasabi.Fluent.CoinList.ViewModels;
 using WalletWasabi.Fluent.Models;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 
@@ -20,13 +19,12 @@ public partial class WalletCoinsViewModel : RoutableViewModel
 {
 	private readonly IWalletModel _wallet;
 
-	public WalletCoinsViewModel(UiContext uiContext, IWalletModel wallet)
+	public WalletCoinsViewModel(IWalletModel wallet)
 	{
-		UiContext = uiContext;
 		_wallet = wallet;
 		SetupCancel(enableCancel: false, enableCancelOnEscape: true, enableCancelOnPressed: true);
 		NextCommand = CancelCommand;
-		CoinList = new CoinListViewModel(UiContext, _wallet.Coins, new List<ICoinModel>(), allowCoinjoiningCoinSelection: false, ignorePrivacyMode: false, allowSelection: false);
+		CoinList = new CoinListViewModel(_wallet.Coins, new List<ICoinModel>(), allowCoinjoiningCoinSelection: false, ignorePrivacyMode: false, allowSelection: false);
 	}
 
 	public CoinListViewModel CoinList { get; }

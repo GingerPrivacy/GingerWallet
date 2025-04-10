@@ -28,7 +28,7 @@ public partial class CoinListViewModel : ViewModelBase, IDisposable
 	private readonly bool _allowCoinjoiningCoinSelection;
 
 	[System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Uses DisposeWith()")]
-	private CoinListViewModel(ICoinListModel availableCoins, IList<ICoinModel> initialCoinSelection, bool allowCoinjoiningCoinSelection, bool ignorePrivacyMode, bool allowSelection = true)
+	public CoinListViewModel(ICoinListModel availableCoins, IList<ICoinModel> initialCoinSelection, bool allowCoinjoiningCoinSelection, bool ignorePrivacyMode, bool allowSelection = true)
 	{
 		_ignorePrivacyMode = ignorePrivacyMode;
 		_allowSelection = allowSelection;
@@ -165,10 +165,10 @@ public partial class CoinListViewModel : ViewModelBase, IDisposable
 					var coin = pocket.Coins.First();
 					var coinModel = availableCoins.GetCoinModel(coin);
 
-					return (CoinListItem)new CoinViewModel(UiContext, pocket.Labels, coinModel, _ignorePrivacyMode, _allowCoinjoiningCoinSelection, _allowSelection);
+					return (CoinListItem)new CoinViewModel(pocket.Labels, coinModel, _ignorePrivacyMode, _allowCoinjoiningCoinSelection, _allowSelection);
 				}
 
-				return new PocketViewModel(UiContext, pocket, availableCoins, _allowCoinjoiningCoinSelection, _ignorePrivacyMode, _allowSelection);
+				return new PocketViewModel(pocket, availableCoins, _allowCoinjoiningCoinSelection, _ignorePrivacyMode, _allowSelection);
 			});
 
 		source.EditDiff(newItems, new LambdaComparer<CoinListItem>((a, b) => Equals(a?.Key, b?.Key)));

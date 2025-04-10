@@ -2,14 +2,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
 using WalletWasabi.Announcer;
-using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Infrastructure;
 
 namespace WalletWasabi.Fluent.Announcement.Models;

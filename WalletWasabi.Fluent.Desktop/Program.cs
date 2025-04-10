@@ -8,7 +8,6 @@ using ReactiveUI;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
@@ -23,6 +22,7 @@ using WalletWasabi.Extensions;
 using WalletWasabi.Fluent.CrashReport;
 using WalletWasabi.Fluent.Desktop.Extensions;
 using WalletWasabi.Fluent.Helpers;
+using WalletWasabi.Lang.Models;
 using WalletWasabi.Models;
 using WalletWasabi.Services.Terminate;
 
@@ -209,7 +209,21 @@ public static class WasabiAppExtensions
 					.SetupAppBuilder()
 					.AfterSetup(_ =>
 					{
-						Lang.Resources.Culture = new CultureInfo(((DisplayLanguage)app.Global!.Config.Language).GetDescription()!);
+						var config = app.Global!.Config;
+						Lang.Resources.Culture = new GingerCultureInfo(((DisplayLanguage)config.Language).GetDescription()!)
+						{
+							BitcoinFractionGroupSizes = config.BtcFractionGroup,
+							BitcoinTicker = "BTC",
+							FiatTicker = config.ExchangeCurrency,
+							NumberFormat =
+							{
+								NumberGroupSizes = [3],
+								CurrencyGroupSeparator = config.GroupSeparator,
+								CurrencyDecimalSeparator = config.DecimalSeparator,
+								NumberGroupSeparator = config.GroupSeparator,
+								NumberDecimalSeparator = config.DecimalSeparator
+							}
+						};
 						ThemeHelper.ApplyTheme(uiConfig.DarkModeEnabled ? Theme.Dark : Theme.Light);
 					});
 

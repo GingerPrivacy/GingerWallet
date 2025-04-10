@@ -5,15 +5,14 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows.Input;
 using DynamicData;
-using DynamicData.Aggregation;
 using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Fluent.Common.ViewModels;
 using WalletWasabi.Fluent.Extensions;
-using WalletWasabi.Fluent.HomeScreen.Tiles.PrivacyBar.ViewModels;
 using WalletWasabi.Fluent.HomeScreen.Tiles.PrivacyRing.Interfaces;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Lang;
+using DynamicData.Aggregation;
 
 namespace WalletWasabi.Fluent.HomeScreen.Tiles.ViewModels;
 
@@ -22,44 +21,44 @@ public partial class PrivacyControlTileViewModel : ActivatableViewModel, IPrivac
 	private readonly IWalletModel _wallet;
 	[AutoNotify] private bool _fullyMixed;
 	[AutoNotify] private string _percentText = "";
-	[AutoNotify] private Money _balancePrivate = Money.Zero;
-	[AutoNotify] private bool _hasPrivateBalance;
 
-	private PrivacyControlTileViewModel(IWalletModel wallet)
+	public PrivacyControlTileViewModel(IWalletModel wallet)
 	{
 		_wallet = wallet;
-		PrivateText = Resources.Private.ToUpper(CultureInfo.InvariantCulture);
-		var canShowDetails = _wallet.HasBalance;
 
-		ShowDetailsCommand = ReactiveCommand.Create(ShowDetails, canShowDetails);
+		IsPrivacyProgressDisplayed = wallet.Privacy.PrivateAndSemiPrivatePercentage.Select(x => x > 0);
+		PrivatePercentage = wallet.Privacy.PrivatePercentage;
+		PrivateAndSemiPrivatePercentage = wallet.Privacy.PrivateAndSemiPrivatePercentage;
+		ProgressText = wallet.HasBalance.Select(x => x ? Resources.StartCoinjoiningToGainPrivacy : Resources.NoProgressYet);
 
-		PrivacyBar = new PrivacyBarViewModel(wallet);
+		ShowDetailsCommand = ReactiveCommand.Create(ShowDetails, _wallet.HasBalance);
 
-		var coinList =
-			_wallet.Coins.List
-						 .Connect(suppressEmptyChangeSets: false); // coinList here is not subscribed to SmartCoin changes.
-																   // Dynamic updates to SmartCoin properties won't be reflected in the UI.
-																   // See CoinModel.SubscribeToCoinChanges().
+		var coinList = _wallet.Coins.List.Connect(suppressEmptyChangeSets: false);
 
-		TotalAmount = coinList.Sum(set => set.Amount.ToDecimal(MoneyUnit.Satoshi));
-		PrivateAmount = coinList.Filter(x => x.IsPrivate, suppressEmptyChangeSets: false).Sum(set => set.Amount.ToDecimal(MoneyUnit.Satoshi));
-		SemiPrivateAndPrivateAmount = coinList.Filter(x => x.IsPrivate || x.IsSemiPrivate, suppressEmptyChangeSets: false).Sum(set => set.Amount.ToDecimal(MoneyUnit.Satoshi));
-		IsPrivacyProgressDisplayed = SemiPrivateAndPrivateAmount.CombineLatest(TotalAmount, resultSelector: IsProgressVisible);
+		PrivateAmount = coinList.Filter(x => x.IsPrivate, suppressEmptyChangeSets: false).Sum(set => set.Amount.ToDecimal(MoneyUnit.BTC)).Select(x => wallet.AmountProvider.Create(x));
+		HasPrivateBalance = PrivateAmount.Select(x => x.HasBalance);
+
+		SemiPrivateAmount = coinList.Filter(x => x.IsSemiPrivate, suppressEmptyChangeSets: false).Sum(set => set.Amount.ToDecimal(MoneyUnit.BTC)).Select(x => wallet.AmountProvider.Create(x));
+		HasSemiPrivateBalance = SemiPrivateAmount.Select(x => x.HasBalance);
 	}
+
+	public IObservable<string> ProgressText { get; set; }
+
+	public IObservable<bool> HasSemiPrivateBalance { get; set; }
+
+	public IObservable<bool> HasPrivateBalance { get; set; }
+
+	public IObservable<Amount> SemiPrivateAmount { get; set; }
+
+	public IObservable<Amount> PrivateAmount { get; set; }
+
+	public IObservable<double> PrivateAndSemiPrivatePercentage { get; set; }
+
+	public IObservable<double> PrivatePercentage { get; set; }
 
 	public IObservable<bool> IsPrivacyProgressDisplayed { get; }
 
 	public ICommand ShowDetailsCommand { get; }
-
-	public PrivacyBarViewModel? PrivacyBar { get; }
-
-	public IObservable<decimal> SemiPrivateAndPrivateAmount { get; }
-
-	public IObservable<decimal> PrivateAmount { get; }
-
-	public IObservable<decimal> TotalAmount { get; }
-
-	public string PrivateText { get; }
 
 	protected override void OnActivated(CompositeDisposable disposables)
 	{
@@ -81,16 +80,6 @@ public partial class PrivacyControlTileViewModel : ActivatableViewModel, IPrivac
 					   })
 					   .Subscribe()
 					   .DisposeWith(disposables);
-
-		PrivacyBar?.Activate(disposables);
-	}
-
-	private static bool IsProgressVisible(decimal privateAndSemiPrivateBalance, decimal totalBalance)
-	{
-		var hasPrivacy = privateAndSemiPrivateBalance > 0;
-		var hasBalance = totalBalance > 0;
-		var isProgressVisible = hasPrivacy && hasBalance;
-		return isProgressVisible;
 	}
 
 	private void ShowDetails()
@@ -100,14 +89,6 @@ public partial class PrivacyControlTileViewModel : ActivatableViewModel, IPrivac
 
 	private void Update(int privacyProgress, bool isWalletPrivate, IReadOnlyCollection<ICoinModel> coins)
 	{
-		PercentText =
-			coins.TotalAmount() > Money.Zero
-			? $"{privacyProgress} %"
-			: "N/A";
-
-		FullyMixed = isWalletPrivate;
-
-		BalancePrivate = coins.Where(x => x.IsPrivate).TotalAmount();
-		HasPrivateBalance = BalancePrivate > Money.Zero;
+		PercentText = privacyProgress.ToString(Resources.Culture);
 	}
 }

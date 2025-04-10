@@ -1,6 +1,5 @@
 using WalletWasabi.Fluent.AddWallet.ViewModels;
 using WalletWasabi.Fluent.HelpAndSupport.ViewModels;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.OpenDirectory.ViewModels;
 using WalletWasabi.Fluent.Settings.ViewModels;
 using WalletWasabi.Fluent.TransactionBroadcasting.ViewModels;
@@ -9,10 +8,10 @@ namespace WalletWasabi.Fluent.Common.ViewModels;
 
 public static class MainViewModelExtensions
 {
-	public static void RegisterAllViewModels(this MainViewModel mainViewModel, UiContext uiContext)
+	public static void RegisterAllViewModels(this MainViewModel mainViewModel)
 	{
 		PrivacyModeViewModel.Register(mainViewModel.PrivacyMode);
-		AddWalletPageViewModel.RegisterLazy(() => new AddWalletPageViewModel(uiContext));
+		AddWalletPageViewModel.RegisterLazy(() => new AddWalletPageViewModel());
 		SettingsPageViewModel.Register(mainViewModel.SettingsPage);
 
 		GeneralSettingsTabViewModel.RegisterLazy(() =>
@@ -45,16 +44,16 @@ public static class MainViewModelExtensions
 			return mainViewModel.SettingsPage;
 		});
 
-		AboutViewModel.RegisterLazy(() => new AboutViewModel(uiContext));
-		BroadcasterViewModel.RegisterLazy(() => new BroadcasterViewModel(uiContext));
-		LegalDocumentsViewModel.RegisterLazy(() => new LegalDocumentsViewModel(uiContext));
-		UserSupportViewModel.RegisterLazy(() => new UserSupportViewModel(uiContext));
-		BugReportLinkViewModel.RegisterLazy(() => new BugReportLinkViewModel(uiContext));
-		DocsLinkViewModel.RegisterLazy(() => new DocsLinkViewModel(uiContext));
-		OpenDataFolderViewModel.RegisterLazy(() => new OpenDataFolderViewModel(uiContext));
-		OpenWalletsFolderViewModel.RegisterLazy(() => new OpenWalletsFolderViewModel(uiContext));
-		OpenLogsViewModel.RegisterLazy(() => new OpenLogsViewModel(uiContext));
-		OpenTorLogsViewModel.RegisterLazy(() => new OpenTorLogsViewModel(uiContext));
-		OpenConfigFileViewModel.RegisterLazy(() => new OpenConfigFileViewModel(uiContext));
+		AboutViewModel.RegisterLazy(() => new AboutViewModel());
+		BroadcasterViewModel.RegisterLazy(() => new BroadcasterViewModel());
+		LegalDocumentsViewModel.RegisterLazy(() => new LegalDocumentsViewModel());
+		UserSupportViewModel.RegisterLazy(() => new UserSupportViewModel());
+		BugReportLinkViewModel.RegisterLazy(() => new BugReportLinkViewModel());
+		DocsLinkViewModel.RegisterLazy(() => new DocsLinkViewModel());
+		OpenDataFolderViewModel.RegisterLazy(() => new OpenDataFolderViewModel());
+		OpenWalletsFolderViewModel.RegisterLazy(() => new OpenWalletsFolderViewModel());
+		OpenLogsViewModel.RegisterLazy(() => new OpenLogsViewModel());
+		OpenTorLogsViewModel.RegisterLazy(() => new OpenTorLogsViewModel());
+		OpenConfigFileViewModel.RegisterLazy(() => new OpenConfigFileViewModel());
 	}
 }

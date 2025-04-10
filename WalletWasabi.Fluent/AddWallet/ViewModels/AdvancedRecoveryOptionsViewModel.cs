@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Reactive.Linq;
 using ReactiveUI;
 using WalletWasabi.Blockchain.Keys;
@@ -16,7 +15,7 @@ public partial class AdvancedRecoveryOptionsViewModel : DialogViewModelBase<int?
 
 	public AdvancedRecoveryOptionsViewModel(int minGapLimit)
 	{
-		Title = Lang.Resources.AdvancedRecoveryOptionsViewModelTitle;
+		Title = Resources.AdvancedRecoveryOptionsViewModelTitle;
 
 		_minGapLimit = minGapLimit.ToString();
 
@@ -37,7 +36,7 @@ public partial class AdvancedRecoveryOptionsViewModel : DialogViewModelBase<int?
 		{
 			errors.Add(
 				ErrorSeverity.Error,
-				string.Format(CultureInfo.InvariantCulture, Resources.MustBeNumberBetween, KeyManager.AbsoluteMinGapLimit, KeyManager.MaxGapLimit));
+				Resources.MustBeNumberBetween.SafeInject(KeyManager.AbsoluteMinGapLimit, KeyManager.MaxGapLimit));
 		}
 	}
 }

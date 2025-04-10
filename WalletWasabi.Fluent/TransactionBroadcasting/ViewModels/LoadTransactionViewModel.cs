@@ -7,7 +7,6 @@ using WalletWasabi.Blockchain.Transactions;
 using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Lang;
 using WalletWasabi.Logging;
 
@@ -17,11 +16,9 @@ public partial class LoadTransactionViewModel : DialogViewModelBase<SmartTransac
 {
 	[AutoNotify] private SmartTransaction? _finalTransaction;
 
-	public LoadTransactionViewModel(UiContext uiContext)
+	public LoadTransactionViewModel()
 	{
 		Title = Resources.BroadcastTransaction;
-
-		UiContext = uiContext;
 
 		SetupCancel(enableCancel: true, enableCancelOnEscape: true, enableCancelOnPressed: true);
 

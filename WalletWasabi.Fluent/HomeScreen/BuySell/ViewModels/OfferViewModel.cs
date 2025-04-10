@@ -1,14 +1,9 @@
-using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Fluent.Common.ViewModels;
-using WalletWasabi.Fluent.Extensions;
-using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.HomeScreen.BuySell.Models;
 using WalletWasabi.Fluent.SearchBar.Models;
-using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.HomeScreen.BuySell.ViewModels;
 

@@ -339,6 +339,7 @@
       "gingercommon": {
         "type": "Project",
         "dependencies": {
+          "Microsoft.Extensions.Http": "[8.0.0, )",
           "Microsoft.Extensions.Logging.Console": "[8.0.1, )",
           "Microsoft.Extensions.Logging.Debug": "[8.0.1, )"
         }

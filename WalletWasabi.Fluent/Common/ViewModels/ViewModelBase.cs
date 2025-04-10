@@ -24,7 +24,7 @@ public class ViewModelBase : ReactiveObject, INotifyDataErrorInfo, IRegisterVali
 
 	bool INotifyDataErrorInfo.HasErrors => Validations.Any;
 
-	protected UiContext UiContext { get; set; } = UiContext.Default;
+	protected UiContext UiContext = UiContext.Default;
 
 	protected void ClearValidations()
 	{

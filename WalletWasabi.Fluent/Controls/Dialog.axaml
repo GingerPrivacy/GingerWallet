@@ -43,9 +43,7 @@
           <DoubleTransition Property="Opacity" Duration="0:0:0.25" Easing="{StaticResource FluentEasing}" />
         </Transitions>
       </Setter>
-      <Setter Property="Background" Value="{DynamicResource DialogOverlayColor}" />
       <Setter Property="IsHitTestVisible" Value="False" />
-      <Setter Property="Opacity" Value="0" />
     </Style>
     <Style Selector="^/template/ Panel#PART_DialogHost">
       <Setter Property="Margin" Value="20,30,20,20" />
@@ -76,6 +74,7 @@
       <Setter Property="IsHitTestVisible" Value="True" />
     </Style>
     <Style Selector="^:open /template/ Panel#PART_Overlay">
+      <Setter Property="Background" Value="{DynamicResource DialogOverlayColor}" />
       <Setter Property="Opacity" Value="1" />
     </Style>
     <Style Selector="^:open /template/ Panel#PART_DialogHost">

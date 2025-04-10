@@ -8,12 +8,10 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Threading;
 using NBitcoin;
-using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Helpers;
 using WalletWasabi.Userfacing;
-using static WalletWasabi.Userfacing.CurrencyInput;
 
 namespace WalletWasabi.Fluent.Controls;
 
@@ -47,6 +45,11 @@ public partial class CurrencyEntryBox : TextBox
 		AvaloniaProperty.Register<CurrencyEntryBox, bool>(nameof(ValidatePasteBalance));
 
 	private static readonly string[] InvalidCharacters = new string[1] { "\u007f" };
+
+	private static readonly Regex InvalidCharacterRegex = new(
+		$"[^0-9{Regex.Escape(Lang.Resources.Culture.NumberFormat.CurrencyDecimalSeparator)}]",
+		RegexOptions.Compiled
+	);
 
 	public CurrencyEntryBox()
 	{
@@ -134,10 +137,10 @@ public partial class CurrencyEntryBox : TextBox
 
 	protected override void OnTextInput(TextInputEventArgs e)
 	{
-		var input = e.Text == null ? "" : e.Text.TotalTrim();
+		var input = e.Text ??= "";
 
-		// Reject space char input when there's no text.
-		if (string.IsNullOrWhiteSpace(Text) && string.IsNullOrWhiteSpace(input))
+		// Only allow valid chars
+		if (string.IsNullOrWhiteSpace(input) || InvalidCharacterRegex.IsMatch(input))
 		{
 			e.Handled = true;
 			base.OnTextInput(e);
@@ -164,7 +167,7 @@ public partial class CurrencyEntryBox : TextBox
 
 		preComposedText = preComposedText.TotalTrim();
 
-		var parsed = decimal.TryParse(preComposedText, NumberStyles.Number, InvariantNumberFormat, out var fiatValue);
+		var parsed = decimal.TryParse(preComposedText, NumberStyles.Number, Lang.Resources.Culture.NumberFormat, out var fiatValue);
 
 		e.Handled = !(isValid && parsed);
 
@@ -178,12 +181,12 @@ public partial class CurrencyEntryBox : TextBox
 
 	private bool IsReplacingWithImplicitDecimal(string input)
 	{
-		return input.StartsWith('.') && SelectedText == Text;
+		return input.StartsWith(Lang.Resources.Culture.NumberFormat.NumberDecimalSeparator) && SelectedText == Text;
 	}
 
 	private bool IsInsertingImplicitDecimal(string input)
 	{
-		return input.StartsWith('.') && CaretIndex == 0 && Text is not null && !Text.Contains('.');
+		return input.StartsWith(Lang.Resources.Culture.NumberFormat.NumberDecimalSeparator) && CaretIndex == 0 && Text is not null && !Text.Contains(Lang.Resources.Culture.NumberFormat.NumberDecimalSeparator);
 	}
 
 	private TextInputEventArgs ReplaceCurrentTextWithLeadingZero(TextInputEventArgs e)
@@ -203,50 +206,31 @@ public partial class CurrencyEntryBox : TextBox
 		return new TextInputEventArgs { Text = "" };
 	}
 
-	[GeneratedRegex($"^(?<Whole>[0-9{GroupSeparator}]*)(\\{DecimalSeparator}?(?<Frac>[0-9{GroupSeparator}]*))$")]
-	private static partial Regex RegexBtcFormat();
-
-	[GeneratedRegex($"{GroupSeparator}{{2,}}")]
-	private static partial Regex RegexConsecutiveSpaces();
-
-	[GeneratedRegex($"[{GroupSeparator}{DecimalSeparator}]+")]
-	private static partial Regex RegexGroupAndDecimal();
-
 	private bool ValidateEntryText(string preComposedText)
 	{
-		// Check if it has a decimal separator.
-		var trailingDecimal = preComposedText.Length > 0 && preComposedText.EndsWith(DecimalSeparator);
-		var match = RegexBtcFormat().Match(preComposedText);
+		var decimalSeparator = Lang.Resources.Culture.NumberFormat.NumberDecimalSeparator;
 
-		// Ignore group chars on count of the whole part of the decimal.
-		var wholeStr = match.Groups["Whole"].ToString();
-		var whole = RegexGroupAndDecimal().Replace(wholeStr, "").Length;
-
-		var fracStr = match.Groups["Frac"].ToString().Replace(GroupSeparator, "");
-		var frac = RegexGroupAndDecimal().Replace(fracStr, "").Length;
-
-		// Check for consecutive spaces (2 or more) and leading spaces.
-		var rule1 = preComposedText.Length > 1 && (preComposedText.StartsWith(GroupSeparator) ||
-												   RegexConsecutiveSpaces().IsMatch(preComposedText));
-
-		// Check for trailing spaces in the whole number part and in the last part of the precomp string.
-		var rule2 = whole >= 8 && (preComposedText.EndsWith(GroupSeparator) || wholeStr.EndsWith(GroupSeparator));
-
-		// Check for non-numeric chars.
-		var rule3 = !CurrencyInput.RegexDecimalCharsOnly().IsMatch(preComposedText);
-		if (rule1 || rule2 || rule3)
+		if (preComposedText.Count(c => c == decimalSeparator[0]) > 1)
 		{
 			return false;
 		}
 
-		// Reject and dont process the input if the string doesn't match.
-		if (!match.Success)
+		int decimalIndex = preComposedText.IndexOf(decimalSeparator, StringComparison.Ordinal);
+		var wholeCount = 0;
+		var fractionCount = 0;
+
+		if (decimalIndex != -1)
 		{
-			return false;
+			wholeCount = preComposedText.Substring(0, decimalIndex).Length;
+			fractionCount = preComposedText.Substring(decimalIndex + 1).Length;
+		}
+		else
+		{
+			wholeCount = preComposedText.Length;
 		}
 
 		// Passthrough the decimal place char or the group separator.
-		if (preComposedText == DecimalSeparator && !trailingDecimal)
+		if (preComposedText == decimalSeparator)
 		{
 			return false;
 		}
@@ -254,8 +238,8 @@ public partial class CurrencyEntryBox : TextBox
 		if (IsFiat)
 		{
 			// Fiat input restriction is to only allow 2 decimal places max
-			// and also 16 whole number places.
-			if ((whole > 16 && !trailingDecimal) || frac > MaxDecimals)
+			// and also 18 whole number places.
+			if (wholeCount > 18 || fractionCount > MaxDecimals)
 			{
 				return false;
 			}
@@ -264,7 +248,7 @@ public partial class CurrencyEntryBox : TextBox
 		{
 			// Bitcoin input restriction is to only allow 8 decimal places max
 			// and also 8 whole number places.
-			if ((whole > 8 && !trailingDecimal) || frac > MaxDecimals)
+			if (wholeCount > 8 || fractionCount > MaxDecimals)
 			{
 				return false;
 			}
@@ -303,13 +287,15 @@ public partial class CurrencyEntryBox : TextBox
 			return;
 		}
 
+		text = text.Replace("\r", "").Replace("\n", "").Trim();
+
 		// Ignore paste if there are invalid characters
-		if (!CurrencyInput.RegexValidCharsOnly().IsMatch(text))
+		if (!CurrencyInput.RegexValidNumber().IsMatch(text))
 		{
 			return;
 		}
 
-		text = text.Replace("\r", "").Replace("\n", "").Trim();
+		text = TextHelpers.ClearNumberFormat(text);
 
 		if (!TryParsePastedValue(text, out text))
 		{
@@ -342,7 +328,7 @@ public partial class CurrencyEntryBox : TextBox
 				: ClipboardObserver.ParseToMoney(text);
 			if (money is not null)
 			{
-				result = money.ToDecimal(MoneyUnit.BTC).FormattedBtcExactFractional(text);
+				result = money.ToString(Lang.Resources.Culture.NumberFormat, trimExcessZero: true);
 				return true;
 			}
 		}
@@ -358,7 +344,7 @@ public partial class CurrencyEntryBox : TextBox
 				: ClipboardObserver.ParseToFiat(text);
 			if (fiat is not null)
 			{
-				result = fiat.Value.ToString("0.00");
+				result = fiat.Value.ToString(Lang.Resources.Culture.NumberFormat);
 				return true;
 			}
 		}

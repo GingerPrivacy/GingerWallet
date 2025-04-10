@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reactive.Linq;
 using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Fluent.Infrastructure;
@@ -10,12 +11,13 @@ using WalletWasabi.Helpers;
 using WalletWasabi.Lang;
 using WalletWasabi.Models;
 using WalletWasabi.Userfacing;
+using WalletWasabi.Fluent.Helpers;
 
 namespace WalletWasabi.Fluent.Settings.ViewModels;
 
 [AppLifetime]
 [NavigationMetaData(
-	Order = 1,
+	Order = 2,
 	Category = SearchCategory.Settings,
 	IconName = "settings_bitcoin_regular",
 	IsLocalized = true)]
@@ -29,13 +31,23 @@ public partial class BitcoinTabSettingsViewModel : RoutableViewModel
 		Settings = settings;
 
 		this.ValidateProperty(x => x.BitcoinP2PEndPoint, ValidateBitcoinP2PEndPoint);
-		this.ValidateProperty(x => x.DustThreshold, ValidateDustThreshold);
 
 		_bitcoinP2PEndPoint = settings.BitcoinP2PEndPoint;
-		_dustThreshold = settings.DustThreshold;
+		_dustThreshold = settings.DustThreshold.ToString(Resources.Culture.NumberFormat);
 
 		this.WhenAnyValue(x => x.Settings.BitcoinP2PEndPoint)
 			.Subscribe(x => BitcoinP2PEndPoint = x);
+
+		this.WhenAnyValue(x => x.DustThreshold)
+			.Skip(1)
+			.Subscribe(x =>
+			{
+				x = x.PrepareForMoneyParsing();
+				if (Money.TryParse(x, out var result))
+				{
+					Settings.DustThreshold = result;
+				}
+			});
 	}
 
 	public bool IsReadOnly => Settings.IsOverridden;
@@ -57,34 +69,6 @@ public partial class BitcoinTabSettingsViewModel : RoutableViewModel
 			else
 			{
 				Settings.BitcoinP2PEndPoint = BitcoinP2PEndPoint;
-			}
-		}
-	}
-
-	private void ValidateDustThreshold(IValidationErrors errors)
-	{
-		var dustThreshold = DustThreshold;
-		if (!string.IsNullOrWhiteSpace(dustThreshold))
-		{
-			bool error = false;
-
-			if (!string.IsNullOrEmpty(dustThreshold) && dustThreshold.Contains(
-				',',
-				StringComparison.InvariantCultureIgnoreCase))
-			{
-				error = true;
-				errors.Add(ErrorSeverity.Error, Resources.UseDecimalPoint);
-			}
-
-			if (!decimal.TryParse(dustThreshold, out var dust) || dust < 0)
-			{
-				error = true;
-				errors.Add(ErrorSeverity.Error, Resources.InvalidDustThreshold);
-			}
-
-			if (!error)
-			{
-				Settings.DustThreshold = dustThreshold;
 			}
 		}
 	}

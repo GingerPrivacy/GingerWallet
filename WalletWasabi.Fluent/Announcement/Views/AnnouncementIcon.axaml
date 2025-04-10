@@ -9,6 +9,12 @@
              x:DataType="viewModels:AnnouncementIconViewModel"
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.Announcement.Views.AnnouncementIcon">
+  <UserControl.Transitions>
+    <Transitions>
+      <TransformOperationsTransition Property="RenderTransform" Duration="0:0:.5" Easing="{StaticResource FluentEasing}" />
+      <DoubleTransition Property="Opacity" Duration="0:0:.5" Easing="{StaticResource FluentEasing}"/>
+    </Transitions>
+  </UserControl.Transitions>
   <UserControl.Styles>
 
     <Style Selector="FlyoutPresenter">

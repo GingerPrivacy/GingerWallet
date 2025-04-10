@@ -265,7 +265,7 @@
     <value>Naviguer, Ouvrir, Configurer, Fichier</value>
   </data>
   <data name="SearchBoxWatermark" xml:space="preserve">
-    <value>Chercher des paramètres / fonctions avancées</value>
+    <value>Rechercher</value>
   </data>
   <data name="OpenPasswordBoxWatermark" xml:space="preserve">
     <value>Phrase de récupération</value>
@@ -1918,7 +1918,7 @@
     <value>Ginger Wallet n'a pas pu ouvrir le fichier.</value>
   </data>
   <data name="FoundIn" xml:space="preserve">
-    <value>Trouvé dans \"{0}\"</value>
+    <value>Trouvé dans "{0}"</value>
   </data>
   <data name="IncorrectPassphraseRetry" xml:space="preserve">
     <value>La phrase de passe est incorrecte ! Veuillez réessayer.</value>
@@ -2070,5 +2070,38 @@
   <data name="PasteBTCAddress" xml:space="preserve">
     <value>l'adresse BTC :
 {0}</value>
+  </data>
+  <data name="DecimalSeparator" xml:space="preserve">
+    <value>Séparateur Décimal des Nombres</value>
+  </data>
+  <data name="GroupSeparator" xml:space="preserve">
+    <value>Séparateur de Groupes de Nombres</value>
+  </data>
+  <data name="DotEnum" xml:space="preserve">
+    <value>Point</value>
+  </data>
+  <data name="CommaEnum" xml:space="preserve">
+    <value>Virgule</value>
+  </data>
+  <data name="NoneEnum" xml:space="preserve">
+    <value>Aucun</value>
+  </data>
+  <data name="SpaceEnum" xml:space="preserve">
+    <value>Espace</value>
+  </data>
+  <data name="BitcoinFractionGrouping" xml:space="preserve">
+    <value>Regroupement des fractions de Bitcoin</value>
+  </data>
+  <data name="ApostropheEnum" xml:space="preserve">
+    <value>Apostrophe</value>
+  </data>
+  <data name="NotAvailable" xml:space="preserve">
+    <value>Non disponible</value>
+  </data>
+  <data name="NoProgressYet" xml:space="preserve">
+    <value>Pas encore de progrès</value>
+  </data>
+    <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
+    <value>Commencez le coinjoining pour gagner en confidentialité</value>
   </data>
 </root>

@@ -13,7 +13,7 @@ namespace WalletWasabi.Fluent.AddWallet.ViewModels.Create;
 
 public partial class RecoveryWordsViewModel : RoutableViewModel
 {
-	private RecoveryWordsViewModel(WalletCreationOptions.AddNewWallet options)
+	public RecoveryWordsViewModel(WalletCreationOptions.AddNewWallet options)
 	{
 		Title = Lang.Resources.RecoveryWords;
 

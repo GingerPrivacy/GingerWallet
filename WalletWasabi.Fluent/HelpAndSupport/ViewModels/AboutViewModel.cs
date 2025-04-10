@@ -4,7 +4,6 @@ using System.Windows.Input;
 using ReactiveUI;
 using WalletWasabi.Fluent.Common.ViewModels;
 using WalletWasabi.Fluent.Models;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Helpers;
 using WalletWasabi.Lang;
@@ -20,22 +19,20 @@ namespace WalletWasabi.Fluent.HelpAndSupport.ViewModels;
 	IsLocalized = true)]
 public partial class AboutViewModel : RoutableViewModel
 {
-	public AboutViewModel(UiContext uiContext, bool navigateBack = false)
+	public AboutViewModel(bool navigateBack = false)
 	{
-		UiContext = uiContext;
-
 		EnableBack = navigateBack;
 
 		Links = new List<ViewModelBase>()
 			{
-				new LinkViewModel(UiContext)
+				new LinkViewModel()
 				{
 					Link = SourceCodeLink,
 					Description = Resources.SourceCodeGitHub,
 					IsClickable = true
 				},
 				new SeparatorViewModel(),
-				new LinkViewModel(UiContext)
+				new LinkViewModel()
 				{
 					Link = ClearnetLink,
 					Description = Resources.WebsiteClearnet,
@@ -50,21 +47,21 @@ public partial class AboutViewModel : RoutableViewModel
 					IsClickable = false
 				},*/
 				new SeparatorViewModel(),
-				new LinkViewModel(UiContext)
+				new LinkViewModel()
 				{
 					Link = UserSupportLink,
 					Description = Resources.UserSupportViewModelTitle,
 					IsClickable = true
 				},
 				new SeparatorViewModel(),
-				new LinkViewModel(UiContext)
+				new LinkViewModel()
 				{
 					Link = BugReportLink,
 					Description = Resources.BugReport,
 					IsClickable = true
 				},
 				new SeparatorViewModel(),
-				new LinkViewModel(UiContext)
+				new LinkViewModel()
 				{
 					Link = FAQLink,
 					Description = Resources.FAQ,
@@ -72,7 +69,7 @@ public partial class AboutViewModel : RoutableViewModel
 				},
 			};
 
-		License = new LinkViewModel(UiContext)
+		License = new LinkViewModel()
 		{
 			Link = LicenseLink,
 			Description = Resources.MITLicense,

@@ -142,6 +142,15 @@ public class Config
 			[nameof(ExchangeCurrency)] = (
 				"Exchange currency for BTC",
 				GetStringValue("ExchangeCurrency", PersistentConfig.ExchangeCurrency, cliArgs)),
+			[nameof(DecimalSeparator)] = (
+				"Decimal separator for currencies",
+				GetStringValue("DecimalSeparator", PersistentConfig.DecimalSeparator, cliArgs)),
+			[nameof(GroupSeparator)] = (
+				"Group separator for currencies",
+				GetStringValue("GroupSeparator", PersistentConfig.GroupSeparator, cliArgs)),
+			[nameof(BtcFractionGroup)] = (
+				"Grouping for Bitcoin fraction",
+				GetIntArrayValue("BtcFractionGroup", PersistentConfig.BtcFractionGroup, cliArgs)),
 		};
 
 		// Check if any config value is overridden (either by an environment value, or by a CLI argument).
@@ -198,6 +207,9 @@ public class Config
 	public LogMode[] LogModes => GetEffectiveValue<LogModeArrayValue, LogMode[]>(nameof(LogModes));
 	public int Language => GetEffectiveValue<IntValue, int>(nameof(Language));
 	public string ExchangeCurrency => GetEffectiveValue<StringValue, string>(nameof(ExchangeCurrency));
+	public string DecimalSeparator => GetEffectiveValue<StringValue, string>(nameof(DecimalSeparator));
+	public string GroupSeparator => GetEffectiveValue<StringValue, string>(nameof(GroupSeparator));
+	public int[] BtcFractionGroup => GetEffectiveValue<IntArrayValue, int[]>(nameof(BtcFractionGroup));
 
 	public bool EnableGpu => GetEffectiveValue<BoolValue, bool>(nameof(EnableGpu));
 	public string CoordinatorIdentifier => GetEffectiveValue<StringValue, string>(nameof(CoordinatorIdentifier));
@@ -405,6 +417,17 @@ public class Config
 		return new StringArrayValue(arrayValues, arrayValues, ValueSource.Disk);
 	}
 
+	private static IntArrayValue GetIntArrayValue(string key, int[] arrayValues, string[] cliArgs)
+	{
+		if (GetOverrideValue(key, cliArgs, out string? overrideValue, out ValueSource? valueSource))
+		{
+			int[] overrideValues = overrideValue.Split(';', StringSplitOptions.None).Select(int.Parse).ToArray();;
+			return new IntArrayValue(arrayValues, overrideValues, valueSource.Value);
+		}
+
+		return new IntArrayValue(arrayValues, arrayValues, ValueSource.Disk);
+	}
+
 	private static LogModeArrayValue GetLogModeArrayValue(string key, LogMode[] arrayValues, string[] cliArgs)
 	{
 		if (GetOverrideValue(key, cliArgs, out string? overrideValue, out ValueSource? valueSource))
@@ -564,6 +587,7 @@ public class Config
 	private record StringValue(string Value, string EffectiveValue, ValueSource ValueSource) : ITypedValue<string>;
 	private record NullableStringValue(string? Value, string? EffectiveValue, ValueSource ValueSource) : ITypedValue<string?>;
 	private record StringArrayValue(string[] Value, string[] EffectiveValue, ValueSource ValueSource) : ITypedValue<string[]>;
+	private record IntArrayValue(int[] Value, int[] EffectiveValue, ValueSource ValueSource) : ITypedValue<int[]>;
 	private record LogModeArrayValue(LogMode[] Value, LogMode[] EffectiveValue, ValueSource ValueSource) : ITypedValue<LogMode[]>;
 	private record TorModeValue(TorMode Value, TorMode EffectiveValue, ValueSource ValueSource) : ITypedValue<TorMode>;
 	private record NetworkValue(Network Value, Network EffectiveValue, ValueSource ValueSource) : ITypedValue<Network>;

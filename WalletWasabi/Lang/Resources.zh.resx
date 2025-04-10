@@ -268,7 +268,7 @@
     <value>浏览，打开，配置，文件</value>
   </data>
   <data name="SearchBoxWatermark" xml:space="preserve">
-    <value>搜索设置 / 高级功能</value>
+    <value>搜索</value>
   </data>
   <data name="OpenPasswordBoxWatermark" xml:space="preserve">
     <value>密码短语</value>
@@ -1918,7 +1918,7 @@
     <value>Ginger Wallet 无法打开文件。</value>
   </data>
   <data name="FoundIn" xml:space="preserve">
-    <value>在 \"{0}\" 中找到</value>
+    <value>在 "{0}" 中找到</value>
   </data>
   <data name="IncorrectPassphraseRetry" xml:space="preserve">
     <value>密码短语不正确！请重试。</value>
@@ -2067,5 +2067,38 @@
   <data name="PasteBTCAddress" xml:space="preserve">
     <value>粘贴 BTC 地址：
 {0}</value>
+  </data>
+  <data name="DecimalSeparator" xml:space="preserve">
+    <value>数字小数分隔符</value>
+  </data>
+  <data name="GroupSeparator" xml:space="preserve">
+    <value>数字分组分隔符</value>
+  </data>
+  <data name="DotEnum" xml:space="preserve">
+    <value>点</value>
+  </data>
+  <data name="CommaEnum" xml:space="preserve">
+    <value>逗号</value>
+  </data>
+  <data name="NoneEnum" xml:space="preserve">
+    <value>无</value>
+  </data>
+  <data name="SpaceEnum" xml:space="preserve">
+    <value>空格</value>
+  </data>
+  <data name="BitcoinFractionGrouping" xml:space="preserve">
+    <value>比特币小数分组</value>
+  </data>
+  <data name="ApostropheEnum" xml:space="preserve">
+    <value>省略符 (撇号)</value>
+  </data>
+  <data name="NotAvailable" xml:space="preserve">
+    <value>不可用</value>
+  </data>
+  <data name="NoProgressYet" xml:space="preserve">
+    <value>还没有进展</value>
+  </data>
+    <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
+    <value>开始进行 CoinJoin 以获得隐私</value>
   </data>
 </root>

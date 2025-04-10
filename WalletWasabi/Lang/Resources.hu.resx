@@ -268,7 +268,7 @@
     <value>Böngészés, Megnyitás, Beállítás, Fájl</value>
   </data>
   <data name="SearchBoxWatermark" xml:space="preserve">
-    <value>Beállítások keresése / haladó funkciók</value>
+    <value>Keresés</value>
   </data>
   <data name="OpenPasswordBoxWatermark" xml:space="preserve">
     <value>Passphrase</value>
@@ -1918,7 +1918,7 @@
     <value>A Ginger Wallet nem tudta megnyitni a fájlt.</value>
   </data>
   <data name="FoundIn" xml:space="preserve">
-    <value>Megtalálva ebben: \"{0}\"</value>
+    <value>Megtalálva ebben: "{0}"</value>
   </data>
   <data name="IncorrectPassphraseRetry" xml:space="preserve">
     <value>A passphrase helytelen! Kérjük, próbáld újra.</value>
@@ -2070,5 +2070,38 @@
   <data name="PasteBTCAddress" xml:space="preserve">
     <value>Bitcoin tárcacím beillesztése:
 {0}</value>
+  </data>
+  <data name="DecimalSeparator" xml:space="preserve">
+    <value>Szám tizedesjel</value>
+  </data>
+  <data name="GroupSeparator" xml:space="preserve">
+    <value>Szám ezreselválasztó</value>
+  </data>
+  <data name="DotEnum" xml:space="preserve">
+    <value>Pont</value>
+  </data>
+  <data name="CommaEnum" xml:space="preserve">
+    <value>Vessző</value>
+  </data>
+  <data name="NoneEnum" xml:space="preserve">
+    <value>Nincs</value>
+  </data>
+  <data name="SpaceEnum" xml:space="preserve">
+    <value>Szóköz</value>
+  </data>
+  <data name="BitcoinFractionGrouping" xml:space="preserve">
+    <value>Bitcoin tört rész csoportosítása</value>
+  </data>
+  <data name="ApostropheEnum" xml:space="preserve">
+    <value>Aposztróf</value>
+  </data>
+  <data name="NotAvailable" xml:space="preserve">
+    <value>Nem elérhető</value>
+  </data>
+  <data name="NoProgressYet" xml:space="preserve">
+    <value>Még nincs előrelépés</value>
+  </data>
+    <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
+    <value>Indítsd el a coinjoint, hogy növeld az anonimitásod</value>
   </data>
 </root>

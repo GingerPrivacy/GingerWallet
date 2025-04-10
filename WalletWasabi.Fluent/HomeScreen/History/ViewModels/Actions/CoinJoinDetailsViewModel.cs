@@ -1,6 +1,5 @@
 using System.Reactive.Disposables;
 using NBitcoin;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Lang;
@@ -23,13 +22,11 @@ public partial class CoinJoinDetailsViewModel : RoutableViewModel
 	[AutoNotify] private FeeRate? _feeRate;
 	[AutoNotify] private bool _feeRateVisible;
 
-	public CoinJoinDetailsViewModel(UiContext uiContext, IWalletModel wallet, TransactionModel transaction)
+	public CoinJoinDetailsViewModel(IWalletModel wallet, TransactionModel transaction)
 	{
 		Title = Resources.CoinjoinDetails;
 		_wallet = wallet;
 		_transaction = transaction;
-
-		UiContext = uiContext;
 
 		SetupCancel(enableCancel: false, enableCancelOnEscape: true, enableCancelOnPressed: true);
 		NextCommand = CancelCommand;
@@ -50,7 +47,7 @@ public partial class CoinJoinDetailsViewModel : RoutableViewModel
 		if (_wallet.Transactions.TryGetById(_transaction.Id, _transaction.IsChild, out var transaction))
 		{
 			Date = transaction.DateToolTipString;
-			CoinJoinFeeAmount = _wallet.AmountProvider.Create(Math.Abs(transaction.DisplayAmount));
+			CoinJoinFeeAmount = _wallet.AmountProvider.Create((Money)Math.Abs(transaction.DisplayAmount));
 			Confirmations = transaction.Confirmations;
 			IsConfirmed = Confirmations > 0;
 			TransactionId = transaction.Id;

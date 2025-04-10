@@ -11,7 +11,6 @@ using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Fluent.CoinList.ViewModels;
 using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
 using WalletWasabi.Fluent.Models.Transactions;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Lang;
 using WalletWasabi.Wallets;
@@ -32,12 +31,11 @@ public partial class ManualControlDialogViewModel : DialogViewModelBase<IEnumera
 	private readonly LabelsArray? _preLabel;
 	private readonly bool _continueWithFixedAmount;
 
-	public ManualControlDialogViewModel(UiContext uiContext, IWalletModel walletModel, Wallet wallet, LabelsArray? preLabel = null, bool continueWithFixedAmount = false)
+	public ManualControlDialogViewModel(IWalletModel walletModel, Wallet wallet, LabelsArray? preLabel = null, bool continueWithFixedAmount = false)
 	{
-		UiContext = uiContext;
 		Title = Resources.WalletManualControl;
 
-		CoinList = new CoinListViewModel(UiContext, walletModel.Coins, [], allowCoinjoiningCoinSelection: true, ignorePrivacyMode: true, allowSelection: true);
+		CoinList = new CoinListViewModel(walletModel.Coins, [], allowCoinjoiningCoinSelection: true, ignorePrivacyMode: true, allowSelection: true);
 
 		var nextCommandCanExecute =
 			CoinList.Selection
@@ -80,6 +78,8 @@ public partial class ManualControlDialogViewModel : DialogViewModelBase<IEnumera
 
 	protected override void OnNavigatedFrom(bool isInHistory)
 	{
+		base.OnNavigatedFrom(isInHistory);
+
 		if (!isInHistory)
 		{
 			CoinList.Dispose();

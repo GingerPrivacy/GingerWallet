@@ -1,10 +1,8 @@
 using System.Collections.Generic;
-using System.Globalization;
 using System.Threading.Tasks;
 using NBitcoin;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.HomeScreen.BuySell.Models;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Lang;
 using WalletWasabi.Logging;
@@ -13,7 +11,7 @@ namespace WalletWasabi.Fluent.HomeScreen.BuySell.ViewModels;
 
 public class SellOffersViewModel : OffersViewModel
 {
-	public SellOffersViewModel(UiContext uiContext, IWalletModel wallet, IEnumerable<OfferModel> offers) : base(uiContext, wallet, offers)
+	public SellOffersViewModel(IWalletModel wallet, IEnumerable<OfferModel> offers) : base(wallet, offers)
 	{
 	}
 

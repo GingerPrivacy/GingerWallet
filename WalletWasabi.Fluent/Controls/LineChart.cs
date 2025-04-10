@@ -373,7 +373,7 @@ public partial class LineChart : Control
 
 		if (YAxisStroke is not null && YAxisValues is not null)
 		{
-			state.YAxisLabels = YAxisValues.Select(x => x.ToString(CultureInfo.InvariantCulture)).ToList();
+			state.YAxisLabels = YAxisValues.Select(x => x.ToString(Lang.Resources.Culture.NumberFormat)).ToList();
 		}
 	}
 

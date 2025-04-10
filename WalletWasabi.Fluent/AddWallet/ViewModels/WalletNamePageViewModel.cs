@@ -5,7 +5,6 @@ using ReactiveUI;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Fluent.AddWallet.Models;
 using WalletWasabi.Fluent.Extensions;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Fluent.Validation;
 using WalletWasabi.Lang;
@@ -18,11 +17,9 @@ public partial class WalletNamePageViewModel : RoutableViewModel
 	private readonly WalletCreationOptions _options;
 	[AutoNotify] private string _walletName;
 
-	public WalletNamePageViewModel(UiContext uiContext, WalletCreationOptions options)
+	public WalletNamePageViewModel(WalletCreationOptions options)
 	{
 		Title = Resources.WalletName;
-
-		UiContext = uiContext;
 
 		_options = options;
 		_walletName = UiContext.WalletRepository.GetNextWalletName();

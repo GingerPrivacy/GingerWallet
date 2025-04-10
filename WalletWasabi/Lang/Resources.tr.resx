@@ -1,0 +1,2104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <!--
+        Microsoft ResX Schema
+
+        Version 2.0
+
+        The primary goals of this format is to allow a simple XML format
+        that is mostly human readable. The generation and parsing of the
+        various data types are done through the TypeConverter classes
+        associated with the data types.
+
+        Example:
+
+        ... ado.net/XML headers & schema ...
+        <resheader name="resmimetype">text/microsoft-resx</resheader>
+        <resheader name="version">2.0</resheader>
+        <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+        <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+        <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+        <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+        <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+            <value>[base64 mime encoded serialized .NET Framework object]</value>
+        </data>
+        <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+            <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+            <comment>This is a comment</comment>
+        </data>
+
+        There are any number of "resheader" rows that contain simple
+        name/value pairs.
+
+        Each data row contains a name, and value. The row also contains a
+        type or mimetype. Type corresponds to a .NET class that support
+        text/value conversion through the TypeConverter architecture.
+        Classes that don't support this are serialized and stored with the
+        mimetype set.
+
+        The mimetype is used for serialized objects, and tells the
+        ResXResourceReader how to depersist the object. This is currently not
+        extensible. For a given mimetype the value must be set accordingly:
+
+        Note - application/x-microsoft.net.object.binary.base64 is the format
+        that the ResXResourceWriter will generate, however the reader can
+        read any of the formats listed below.
+
+        mimetype: application/x-microsoft.net.object.binary.base64
+        value   : The object must be serialized with
+                : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+                : and then encoded with base64 encoding.
+
+        mimetype: application/x-microsoft.net.object.soap.base64
+        value   : The object must be serialized with
+                : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+                : and then encoded with base64 encoding.
+
+        mimetype: application/x-microsoft.net.object.bytearray.base64
+        value   : The object must be serialized into a byte array
+                : using a System.ComponentModel.TypeConverter
+                : and then encoded with base64 encoding.
+        -->
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+        <xsd:element name="root" msdata:IsDataSet="true">
+            <xsd:complexType>
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:element name="metadata">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" use="required" type="xsd:string" />
+                            <xsd:attribute name="type" type="xsd:string" />
+                            <xsd:attribute name="mimetype" type="xsd:string" />
+                            <xsd:attribute ref="xml:space" />
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="assembly">
+                        <xsd:complexType>
+                            <xsd:attribute name="alias" type="xsd:string" />
+                            <xsd:attribute name="name" type="xsd:string" />
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="data">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+                            <xsd:attribute ref="xml:space" />
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="resheader">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" />
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
+            </xsd:complexType>
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="AbortedNotEnoughAlicesMessage" xml:space="preserve">
+        <value>Katılımcı sayısı yetersiz, yeniden deniyor...</value>
+    </data>
+    <data name="AboutViewModelCaption" xml:space="preserve">
+        <value>Ginger Wallet'ın mevcut bilgilerini göster</value>
+    </data>
+    <data name="AboutViewModelKeywords" xml:space="preserve">
+        <value>Hakkında, Yazılım, Sürüm, Kaynak, Kod, Github, Web Sitesi, Koordinatör, İstatistikler, Tor, Onion, Kullanıcı, Destek, Hata, Rapor, SSS, Sorular, Belgeler, Dokümantasyon, Lisans, Gelişmiş, Bilgi, Donanım, Cüzdan</value>
+    </data>
+    <data name="AboutViewModelTitle" xml:space="preserve">
+        <value>Ginger Wallet Hakkında</value>
+    </data>
+    <data name="Accelerator" xml:space="preserve">
+        <value>Hızlandırıcı</value>
+    </data>
+    <data name="Accept" xml:space="preserve">
+        <value>Kabul et</value>
+    </data>
+    <data name="AcceptingOfferRedirect" xml:space="preserve">
+        <value>Bir teklifi kabul etmek, işlemi tamamlamak için sağlayıcının sayfasına yönlendirecektir.</value>
+    </data>
+    <data name="AcceptTermsAndConditions" xml:space="preserve">
+        <value>Şartlar ve Koşulları kabul etmelisiniz!</value>
+    </data>
+    <data name="AccountKeyPathSegWit" xml:space="preserve">
+        <value>Hesap Anahtar Yolu (SegWit)</value>
+    </data>
+    <data name="AccountKeyPathTaproot" xml:space="preserve">
+        <value>Hesap Anahtar Yolu (Taproot)</value>
+    </data>
+    <data name="AddPassphrase" xml:space="preserve">
+        <value>Şifre Ekle</value>
+    </data>
+    <data name="Address" xml:space="preserve">
+        <value>Adres</value>
+    </data>
+    <data name="AddressAwaitingPayment" xml:space="preserve">
+        <value>Ödeme Bekleyen Adres</value>
+    </data>
+    <data name="AddressesAwaitingPayment" xml:space="preserve">
+        <value>Ödeme Bekleyen Adresler</value>
+    </data>
+    <data name="AddWalletPageViewModelCaption" xml:space="preserve">
+        <value>Oluştur, bağlan, içe aktar veya kurtar</value>
+    </data>
+    <data name="AddWalletPageViewModelKeywords" xml:space="preserve">
+        <value>Cüzdan, Ekle, Oluştur, Yeni, Kurtar, İçe Aktar, Bağlan, Donanım, ColdCard, Trezor, Ledger</value>
+    </data>
+    <data name="AddWalletPageViewModelTitle" xml:space="preserve">
+        <value>Cüzdan Ekle</value>
+    </data>
+    <data name="Advanced" xml:space="preserve">
+        <value>Gelişmiş</value>
+    </data>
+    <data name="AdvancedInformation" xml:space="preserve">
+        <value>Sürüm Bilgisi</value>
+    </data>
+    <data name="AdvancedRecoveryOptionsViewModelMinimumGapLimit" xml:space="preserve">
+        <value>Minimum Boşluk Limiti:</value>
+    </data>
+    <data name="AdvancedRecoveryOptionsViewModelTitle" xml:space="preserve">
+        <value>Gelişmiş Kurtarma Seçenekleri</value>
+    </data>
+    <data name="AdvancedSettingsTabViewModelCaption" xml:space="preserve">
+        <value>Gelişmiş ayarları yönet</value>
+    </data>
+    <data name="AdvancedSettingsTabViewModelKeywords" xml:space="preserve">
+        <value>Ayarlar, Gelişmiş, Etkinleştir, GPU</value>
+    </data>
+    <data name="AdvancedSettingsTabViewModelTitle" xml:space="preserve">
+        <value>Gelişmiş</value>
+    </data>
+    <data name="AfterDeductingFee" xml:space="preserve">
+        <value>{0} ücretini düşürdükten sonra {1} alacaksınız — başka bir ücret uygulanmaz.</value>
+    </data>
+    <data name="All" xml:space="preserve">
+        <value>Tümü</value>
+    </data>
+    <data name="AllCoinsConfirmed" xml:space="preserve">
+        <value>Tüm coinler onaylandı.</value>
+    </data>
+    <data name="AllPrivateMessage" xml:space="preserve">
+        <value>Hadi! Tüm fonlarınız gizli!</value>
+    </data>
+    <data name="AMLKYCNotice" xml:space="preserve">
+        <value>Kabul Et’e tıklayarak, işlemin daha sonra üçüncü taraf sağlayıcı tarafından AML/KYC doğrulaması gerektirebileceğini kabul ediyorum.</value>
+    </data>
+    <data name="Amount" xml:space="preserve">
+        <value>Tutar</value>
+    </data>
+    <data name="AmountCannotExceed" xml:space="preserve">
+        <value>Tutar {0}'ı aşamaz.</value>
+    </data>
+    <data name="AmountLessThanTotalSupply" xml:space="preserve">
+        <value>Tutar, BTC toplam arzından fazla olamaz.</value>
+    </data>
+    <data name="AmountMoreThanZero" xml:space="preserve">
+        <value>Tutar, 0 BTC'den fazla olmalıdır.</value>
+    </data>
+    <data name="AmountMustBeAtLeast" xml:space="preserve">
+        <value>Tutar en az {0} olmalıdır.</value>
+    </data>
+    <data name="AmountReceived" xml:space="preserve">
+        <value>Alınan Tutar</value>
+    </data>
+    <data name="AmountSent" xml:space="preserve">
+        <value>Gönderilen Tutar</value>
+    </data>
+    <data name="AmountWithColom" xml:space="preserve">
+        <value>Tutar:</value>
+    </data>
+    <data name="and" xml:space="preserve">
+        <value>ve</value>
+    </data>
+    <data name="Announcements" xml:space="preserve">
+        <value>Duyurular</value>
+    </data>
+    <data name="AnonTargetText" xml:space="preserve">
+        <value>Anonimlik puanı hedefi</value>
+    </data>
+    <data name="AnonTargetTooltip" xml:space="preserve">
+        <value>Bir coin'in özel olarak kabul edilebilmesi için gereken minimum anonimlik puanı.</value>
+    </data>
+    <data name="AnonymityScore" xml:space="preserve">
+        <value>Anonimlik Puanı</value>
+    </data>
+    <data name="ApostropheEnum" xml:space="preserve">
+        <value>Apostrof</value>
+    </data>
+    <data name="Appearance" xml:space="preserve">
+        <value>Görünüm</value>
+    </data>
+    <data name="AppearanceSettingsTabViewModelCaption" xml:space="preserve">
+        <value>Görünüm ayarlarını yönet</value>
+    </data>
+    <data name="AppearanceSettingsTabViewModelKeywords" xml:space="preserve">
+        <value>Ayarlar, Görünüm, Bitcoin, Koyu, Mod, Ücret, Görüntüleme, Format, BTC, sats, Dönüştürme, Para Birimi</value>
+    </data>
+    <data name="AppearanceSettingsTabViewModelTitle" xml:space="preserve">
+        <value>Görünüm</value>
+    </data>
+    <data name="AppearanceThemeKeywords" xml:space="preserve">
+        <value>Siyah, Beyaz, Tema, Koyu, Açık</value>
+    </data>
+    <data name="ApplicationRestartApplyChanges" xml:space="preserve">
+        <value>Devam’a bastıktan sonra, değişikliklerin uygulanabilmesi için uygulama yeniden başlatılacaktır.</value>
+    </data>
+    <data name="ApplicationRestartRescan" xml:space="preserve">
+        <value>Uygulama yeniden başlatılacak ve cüzdanınızı tekrar açtığınızda, yeniden tarama işlemi başlayacaktır. Bu işlem, cüzdanınızdaki işlem sayısına bağlı olarak biraz zaman alabilir.</value>
+    </data>
+    <data name="ApplyNewSettingRestart" xml:space="preserve">
+        <value>Yeni ayarı uygulayabilmek için Ginger Wallet'ın yeniden başlatılması gerekir.</value>
+    </data>
+    <data name="AskMeLater" xml:space="preserve">
+        <value>Sonra sor</value>
+    </data>
+    <data name="AuthCodePrompt" xml:space="preserve">
+        <value>Aşağıdaki QR kodunu tercih ettiğiniz doğrulayıcı uygulama ile tarayın, ardından doğrulama kodunu girin.</value>
+    </data>
+    <data name="AuthorizationFailed" xml:space="preserve">
+        <value>Yetkilendirme başarısız oldu, lütfen tekrar deneyin.</value>
+    </data>
+    <data name="AuthorizationFailedWithDeviceCheck" xml:space="preserve">
+        <value>Yetkilendirme başarısız.{0}Lütfen cihazınızı kontrol edin ve tekrar deneyin.</value>
+    </data>
+    <data name="AuthorizeWithHardwareWallet" xml:space="preserve">
+        <value>Donanım Cüzdanı ile Yetkilendirme</value>
+    </data>
+    <data name="AutoCopyAddresses" xml:space="preserve">
+        <value>Adresleri otomatik kopyala</value>
+    </data>
+    <data name="AutoDownloadNewVersion" xml:space="preserve">
+        <value>Yeni sürümü otomatik indir</value>
+    </data>
+    <data name="AutomaticallyStartCoinjoin" xml:space="preserve">
+        <value>Coinjoin'i otomatik başlat</value>
+    </data>
+    <data name="AutoPasteAddresses" xml:space="preserve">
+        <value>Adresleri otomatik yapıştır</value>
+    </data>
+    <data name="BackendNotConnected" xml:space="preserve">
+        <value>Bağlantı bekleniyor</value>
+    </data>
+    <data name="BalanceNotAccurateServerConnection" xml:space="preserve">
+        <value>Bildiren bakiye doğru olmayabilir ve bazı diğer özellikler kullanılabilir olmayabilir çünkü Ginger, sunucuya bağlanamadı. Bağlantı yeniden deneniyor.</value>
+    </data>
+    <data name="BetterPrivacy" xml:space="preserve">
+        <value>Daha İyi Gizlilik</value>
+    </data>
+    <data name="BitcoinAddressValidity" xml:space="preserve">
+        <value>Bitcoin adresi {0} için geçerli, ancak {1} için geçerli değil.</value>
+    </data>
+    <data name="BitcoinCoreKnotsDataFolder" xml:space="preserve">
+        <value>Bitcoin Core/Knots Veri Klasörü</value>
+    </data>
+    <data name="BitcoinFractionGrouping" xml:space="preserve">
+        <value>Bitcoin Kesirli Gruplama</value>
+    </data>
+    <data name="BitcoinP2PEndpoint" xml:space="preserve">
+        <value>Bitcoin P2P Uç Noktası</value>
+    </data>
+    <data name="BitcoinTabSettingsViewModelCaption" xml:space="preserve">
+        <value>Bitcoin ayarlarını yönet</value>
+    </data>
+    <data name="BitcoinTabSettingsViewModelKeywords" xml:space="preserve">
+        <value>Ayarlar, Bitcoin, Ağ, Ana, TestNet, RegTest, Çalıştır, Düğüm, Core, Knots, Sürüm, Başlangıç, P2P, Uç Nokta, Toz, Eşik, BTC</value>
+    </data>
+    <data name="BitcoinTabSettingsViewModelTitle" xml:space="preserve">
+        <value>Bitcoin</value>
+    </data>
+    <data name="BlockHash" xml:space="preserve">
+        <value>Blok hash</value>
+    </data>
+    <data name="BlockHeight" xml:space="preserve">
+        <value>Blok yüksekliği</value>
+    </data>
+    <data name="Broadcast" xml:space="preserve">
+        <value>Yayınla</value>
+    </data>
+    <data name="BroadcasterViewModelCaption" xml:space="preserve">
+        <value>İşleminizi buradan yayınlayın</value>
+    </data>
+    <data name="BroadcasterViewModelKeywords" xml:space="preserve">
+        <value>İşlem Kimliği, Girdi, Çıktı, Tutar, Ağ, Ücret, Sayı, BTC, İmzalı, Yapıştır, İçe Aktar, Yayınla, İşlem</value>
+    </data>
+    <data name="BroadcasterViewModelTitle" xml:space="preserve">
+        <value>Yayınla</value>
+    </data>
+    <data name="BroadcastTransaction" xml:space="preserve">
+        <value>İşlem Yayınla</value>
+    </data>
+    <data name="Browser" xml:space="preserve">
+        <value>Tarayıcı</value>
+    </data>
+    <data name="BrowserError" xml:space="preserve">
+        <value>Ginger Wallet tarayıcıyı açamadı, lütfen daha fazla bilgi için günlükleri kontrol edin.</value>
+    </data>
+    <data name="BugReport" xml:space="preserve">
+        <value>Hata Raporu</value>
+    </data>
+    <data name="BugReportLinkViewModelCaption" xml:space="preserve">
+        <value>Ginger Wallet'ın GitHub sorunları web sitesini aç</value>
+    </data>
+    <data name="BugReportLinkViewModelKeywords" xml:space="preserve">
+        <value>Destek, Web Sitesi, Hata, Rapor</value>
+    </data>
+    <data name="BugReportLinkViewModelTitle" xml:space="preserve">
+        <value>Hata Raporu</value>
+    </data>
+    <data name="Buy" xml:space="preserve">
+        <value>Satın Al</value>
+    </data>
+    <data name="BuyAmountWatermark" xml:space="preserve">
+        <value>Buraya tutarı girin...</value>
+    </data>
+    <data name="BuyBitcoin" xml:space="preserve">
+        <value>Bitcoin Satın Al</value>
+    </data>
+    <data name="ByAmount" xml:space="preserve">
+        <value>{0} tarafından</value>
+    </data>
+    <data name="Camera" xml:space="preserve">
+        <value>Kamera</value>
+    </data>
+    <data name="Cancel" xml:space="preserve">
+        <value>İptal et</value>
+    </data>
+    <data name="Cancellation" xml:space="preserve">
+        <value>İptal</value>
+    </data>
+    <data name="CancellationFailed" xml:space="preserve">
+        <value>İptal Başarısız</value>
+    </data>
+    <data name="CancellingThisTransactionWillCostYou" xml:space="preserve">
+        <value>Bu işlemi iptal etmek size {0} maliyeti olacak.</value>
+    </data>
+    <data name="CancelTransaction" xml:space="preserve">
+        <value>İşlemi İptal Et</value>
+    </data>
+    <data name="CannotModifyWithTwoFactorEnabled" xml:space="preserve">
+        <value>İki faktörlü doğrulama etkinleştirildiğinde değiştirilemez.</value>
+    </data>
+    <data name="CantParticipateInCoinjoinUntil" xml:space="preserve">
+        <value>Coinjoin'e katılamaz: {0}</value>
+    </data>
+    <data name="CantSeeThisTransaction" xml:space="preserve">
+        <value>Bu işlemi göremezsiniz:</value>
+    </data>
+    <data name="ChangeAvoidance" xml:space="preserve">
+        <value>Değişim Kaçınma</value>
+    </data>
+    <data name="ChangeCanLinkTransactions" xml:space="preserve">
+        <value>Değişim, bu işlemi, onu kullanacak bir sonraki işlemle bağlantı kurmak için kullanılabilir. Alıcı için uygunsa, değişimi göndermek için biraz daha fazla ya da az göndermek için değişim kaçınma önerisini kullanın ya da daha sonra coinjoin yapın.</value>
+    </data>
+    <data name="ChangesAppliedAfterRestart" xml:space="preserve">
+        <value>Değişiklikler, uygulama yeniden başlatıldığında uygulanacaktır.</value>
+    </data>
+    <data name="ChangeTransactionFeeOrConfirmationTime" xml:space="preserve">
+        <value>Değişim işlem ücreti veya onay süresi</value>
+    </data>
+    <data name="CheckDeviceAndFinishInitialization" xml:space="preserve">
+        <value>Cihazınızı kontrol edin ve başlatmayı tamamlayın.</value>
+    </data>
+    <data name="ChooseHideModifyDisplayAddresses" xml:space="preserve">
+        <value>Aşağıdaki adresleri gizlemeyi, değiştirmeyi veya görüntülemeyi seçebilirsiniz</value>
+    </data>
+    <data name="ChooseLabelsForTransaction" xml:space="preserve">
+        <value>Bu işlemi bağlamak için etiketler seçin.</value>
+    </data>
+    <data name="ChooseTransactionVisibility" xml:space="preserve">
+        <value>Bu işlemi kimlerin görebileceğini ve kimlerin göremeyeceğini seçin.</value>
+    </data>
+    <data name="ClickIconForDetails" xml:space="preserve">
+        <value>Detaylar için bu simgeye tıklayın</value>
+    </data>
+    <data name="ClipboardEmpty" xml:space="preserve">
+        <value>Pano boş!</value>
+    </data>
+    <data name="CloseAndUpdate" xml:space="preserve">
+        <value>Kapat ve güncelle.</value>
+    </data>
+    <data name="CoinAlreadySpent" xml:space="preserve">
+        <value>Harcamaya çalıştığınız en az bir coin zaten harcandı.</value>
+    </data>
+    <data name="CoinControl" xml:space="preserve">
+        <value>Coin Kontrolü</value>
+    </data>
+    <data name="CoinDetails" xml:space="preserve">
+        <value>Coin Detayları</value>
+    </data>
+    <data name="CoinInUnconfirmedChain" xml:space="preserve">
+        <value>Harcamaya çalıştığınız en az bir coin, onaylanmamış işlemlerle uzun veya ağır bir zincirin parçasıdır. Bazı önceki işlemlerin onaylanmasını beklemelisiniz.</value>
+    </data>
+    <data name="Coinjoin" xml:space="preserve">
+        <value>Coinjoin</value>
+    </data>
+    <data name="CoinJoinCoinSelection" xml:space="preserve">
+        <value>Coin Seçimi</value>
+    </data>
+    <data name="CoinjoinDetails" xml:space="preserve">
+        <value>Coinjoin Detayları</value>
+    </data>
+    <data name="CoinjoinFees" xml:space="preserve">
+        <value>Coinjoin Ücretleri</value>
+    </data>
+    <data name="Coinjoining" xml:space="preserve">
+        <value>Coinjoining</value>
+    </data>
+    <data name="CoinJoinInProgress" xml:space="preserve">
+        <value>Coinjoin işlemi devam ediyor</value>
+    </data>
+    <data name="CoinJoinProfilesCaption" xml:space="preserve">
+        <value>Ginger, tüm fonlarınızı otomatik olarak coinjoin yaparak finansal gizliliğinizi korur. Koordine ücreti %0.3 ve madencilik ücretleri uygulanır. Kullanımı kolaylaştırmak için varsayılan yapılandırmayı önceden uyguladık.</value>
+    </data>
+    <data name="Coinjoins" xml:space="preserve">
+        <value>Coinjoins</value>
+    </data>
+    <data name="CoinjoinSettings" xml:space="preserve">
+        <value>Coinjoin Ayarları</value>
+    </data>
+    <data name="CoinJoinTimePrefText" xml:space="preserve">
+        <value>Coinjoin zaman tercihi</value>
+    </data>
+    <data name="CoinJoinTimePrefToolTip" xml:space="preserve">
+        <value>Sadece bu zaman diliminin medyan ücret oranının altında olduğunda coinjoin yapın.</value>
+    </data>
+    <data name="CoinjoinToOtherWalletRestrictions1" xml:space="preserve">
+        <value>- Sadece yüklü cüzdanlar seçilebilir.</value>
+    </data>
+    <data name="CoinjoinToOtherWalletRestrictions2" xml:space="preserve">
+        <value>- Coinjoin işlemiyle gelen coinler bu cüzdana alınacaktır. Ancak bu ayar Ginger yeniden başlatıldığında sıfırlanır.</value>
+    </data>
+    <data name="CoinjoinToOtherWalletRestrictions3" xml:space="preserve">
+        <value>- Coinjoin işlemi devam ederken seçilen cüzdan değiştirilemez.</value>
+    </data>
+    <data name="CoinjoinToThisWallet" xml:space="preserve">
+        <value>Bu cüzdana coinjoin yap</value>
+    </data>
+    <data name="CoinjoinTransactions" xml:space="preserve">
+        <value>Coinjoin işlemi sayısı</value>
+    </data>
+    <data name="CoinsCantParticipateCoinJoin" xml:space="preserve">
+        <value>Bazı coinler Coinjoin'a katılamaz.</value>
+    </data>
+    <data name="CoinsReceivedFromOthers" xml:space="preserve">
+        <value>Diğerlerinden alınan coinler, aşağıdaki tutarın altındaki adreslere gönderildiğinde görünmez. Potansiyel toz saldırılarını engellemek için.</value>
+    </data>
+    <data name="CoinsRejectedMessage" xml:space="preserve">
+        <value>Bazı fonlar coinjoining'den reddedildi</value>
+    </data>
+    <data name="CoinsWaitingForConfirmation" xml:space="preserve">
+        <value>{0} coin onay bekliyor.</value>
+    </data>
+    <data name="CommaEnum" xml:space="preserve">
+        <value>Virgül</value>
+    </data>
+    <data name="CompatibilityPassphraseUsed" xml:space="preserve">
+        <value>Uyumlu şifre kullanıldı! Kurtarılabilirliği sağlamak için yeni bir cüzdan oluşturmayı düşünün!</value>
+    </data>
+    <data name="CompatibleBitcoinCoreKnotsVersion" xml:space="preserve">
+        <value>Uyumlu Bitcoin Core ve Bitcoin Knots Sürümü</value>
+    </data>
+    <data name="CompatibleCoordinatorVersions" xml:space="preserve">
+        <value>Uyumlu Koordinatör Sürümleri</value>
+    </data>
+    <data name="CompatibleHardwareWalletInterfaceVersion" xml:space="preserve">
+        <value>Uyumlu HWI Sürümü</value>
+    </data>
+    <data name="Completed" xml:space="preserve">
+        <value>Tamamlandı</value>
+    </data>
+    <data name="Configuration" xml:space="preserve">
+        <value>Yapılandırma</value>
+    </data>
+    <data name="Confirm" xml:space="preserve">
+        <value>Onayla</value>
+    </data>
+    <data name="ConfirmationCount" xml:space="preserve">
+        <value>{0} onayı{1}</value>
+    </data>
+    <data name="Confirmations" xml:space="preserve">
+        <value>({0} onay)</value>
+    </data>
+    <data name="ConfirmationTimeEstimation" xml:space="preserve">
+        <value>Bu, işlemler ve bloklar için bazı verilere dayalı bir tahmindir. Onay süresi değişebilir.</value>
+    </data>
+    <data name="Confirmed" xml:space="preserve">
+        <value>Onaylandı</value>
+    </data>
+    <data name="ConfirmedBalance" xml:space="preserve">
+        <value>Onaylanmış bakiye</value>
+    </data>
+    <data name="ConfirmedWithConfirmationCount" xml:space="preserve">
+        <value>Onaylı ({0} onayı{1})</value>
+    </data>
+    <data name="ConfirmRecoveryWordsViewModel" xml:space="preserve">
+        <value>Kurtarma Kelimelerini Onayla</value>
+    </data>
+    <data name="ConfirmRecoveryWordsViewModelClickRecovery" xml:space="preserve">
+        <value>Kurtarma kelimesini #{0} tıklayın</value>
+    </data>
+    <data name="ConfirmRecoveryWordsViewModelStoreSafely" xml:space="preserve">
+        <value>Şifrenizi güvenli bir şekilde saklayın; kaybolursa kurtarılamaz. Cüzdanınızı açmak ve kurtarmak için gereklidir ve kurtarma kelimelerini uzatarak ekstra koruma sağlar.</value>
+    </data>
+    <data name="ConnectHardwareWalletViewModelAlreadyAdded" xml:space="preserve">
+        <value>Bağlı donanım cüzdanı yazılıma zaten eklenmiş, altına tıklayarak açın veya yeniden tarama için Rescan'a tıklayın.</value>
+    </data>
+    <data name="ConnectHardwareWalletViewModelCaption" xml:space="preserve">
+        <value>Donanım cüzdanınızı PC'ye bağlayın</value>
+    </data>
+    <data name="ConnectHardwareWalletViewModelConnectPc" xml:space="preserve">
+        <value>Donanım cüzdanını PC'ye bağlayın / Cihazdaki PIN'i girin.</value>
+    </data>
+    <data name="ConnectHardwareWalletViewModelEnterPassphrase" xml:space="preserve">
+        <value>Gerekirse donanım cüzdanınızda şifrenizi girin.</value>
+    </data>
+    <data name="ConnectHardwareWalletViewModelEnterPassphraseOnDevice" xml:space="preserve">
+        <value>Cihazınızda şifrenizi girin.</value>
+    </data>
+    <data name="ConnectHardwareWalletViewModelEnterPin" xml:space="preserve">
+        <value>Cihazınızda PIN'inizi girin.</value>
+    </data>
+    <data name="ConnectHardwareWalletViewModelMakeSureOnlyOne" xml:space="preserve">
+        <value>Bilgisayara yalnızca bir donanım cüzdanının bağlı olduğundan emin olun.</value>
+    </data>
+    <data name="Continue" xml:space="preserve">
+        <value>Devam et</value>
+    </data>
+    <data name="CoordinationFee" xml:space="preserve">
+        <value>Koordinasyon Ücreti</value>
+    </data>
+    <data name="CoordinationFeeInfo" xml:space="preserve">
+        <value>Sadece yeni coin'leri coinjoin yaparken %0.3'lük bir ücret ödeyeceksiniz.</value>
+    </data>
+    <data name="CoordinationFeeRateTooHighMessage" xml:space="preserve">
+        <value>Koordinasyon ücreti oranı çok yüksekti</value>
+    </data>
+    <data name="Copy" xml:space="preserve">
+        <value>Kopyala</value>
+    </data>
+    <data name="CopyAmount" xml:space="preserve">
+        <value>Miktarı Kopyala</value>
+    </data>
+    <data name="CopyLabel" xml:space="preserve">
+        <value>Etiketi Kopyala</value>
+    </data>
+    <data name="CopyLink" xml:space="preserve">
+        <value>Bağlantıyı Kopyala</value>
+    </data>
+    <data name="CopyTransactionId" xml:space="preserve">
+        <value>İşlem Kimliğini Kopyala</value>
+    </data>
+    <data name="CostEfficiency" xml:space="preserve">
+        <value>Maliyet-Etkinlik</value>
+    </data>
+    <data name="CouldNotSaveChange" xml:space="preserve">
+        <value>Değişikliğinizi kaydedemedik, lütfen daha fazla bilgi için günlükleri kontrol edin.</value>
+    </data>
+    <data name="CouldSeeThisTransaction" xml:space="preserve">
+        <value>Bu işlemi görebildiniz:</value>
+    </data>
+    <data name="CountDownMessage" xml:space="preserve">
+        <value>Coinjoin'in otomatik başlatılmasını bekliyor</value>
+    </data>
+    <data name="CountryOfResidenceRequired" xml:space="preserve">
+        <value>Regülasyon uyumluluğu ve işlem işleme için ikamet ettiğiniz ülke gereklidir</value>
+    </data>
+    <data name="CountryWithColon" xml:space="preserve">
+        <value>Ülke:</value>
+    </data>
+    <data name="Created" xml:space="preserve">
+        <value>Oluşturuldu</value>
+    </data>
+    <data name="CreateNewWallet" xml:space="preserve">
+        <value>Yeni</value>
+    </data>
+    <data name="CreatePasswordDialogConfirmPassphrase" xml:space="preserve">
+        <value>Şifrenizi onaylayın</value>
+    </data>
+    <data name="CreatePasswordDialogTypePassphrase" xml:space="preserve">
+        <value>Bir şifre yazın</value>
+    </data>
+    <data name="CriticalUpdateRequired" xml:space="preserve">
+        <value>Kritik güncelleme gerekiyor</value>
+    </data>
+    <data name="CurrentCoordinatorVersion" xml:space="preserve">
+        <value>Mevcut Koordinatör Sürümü</value>
+    </data>
+    <data name="CustomBrowserPath" xml:space="preserve">
+        <value>Özel tarayıcı yolu</value>
+    </data>
+    <data name="CustomEnum" xml:space="preserve">
+        <value>Özel</value>
+    </data>
+    <data name="CustomFeeRate" xml:space="preserve">
+        <value>Özel Ücret Oranı</value>
+    </data>
+    <data name="Cut" xml:space="preserve">
+        <value>Kes</value>
+    </data>
+    <data name="DarkMode" xml:space="preserve">
+        <value>Karanlık mod</value>
+    </data>
+    <data name="Date" xml:space="preserve">
+        <value>Tarih</value>
+    </data>
+    <data name="DateTime" xml:space="preserve">
+        <value>Tarih / Saat</value>
+    </data>
+    <data name="day" xml:space="preserve">
+        <value>gün</value>
+    </data>
+    <data name="Days" xml:space="preserve">
+        <value>Günler</value>
+    </data>
+    <data name="DecimalSeparator" xml:space="preserve">
+        <value>Onluk Sayı Ayracı</value>
+    </data>
+    <data name="Default" xml:space="preserve">
+        <value>Varsayılan</value>
+    </data>
+    <data name="DestinationAddresses" xml:space="preserve">
+        <value>Hedef adresler</value>
+    </data>
+    <data name="DetectedConfirmation" xml:space="preserve">
+        <value>{0} tespit edildi. Bu doğru mu?</value>
+    </data>
+    <data name="Disabled" xml:space="preserve">
+        <value>Devre dışı</value>
+    </data>
+    <data name="DisabledEnum" xml:space="preserve">
+        <value>Devre dışı</value>
+    </data>
+    <data name="DiscreetMode" xml:space="preserve">
+        <value>Gizli Mod</value>
+    </data>
+    <data name="DocsLinkViewModelCaption" xml:space="preserve">
+        <value>Ginger Wallet'in SSS sitesini açın</value>
+    </data>
+    <data name="DocsLinkViewModelKeywords" xml:space="preserve">
+        <value>Kullanıcı, Destek, Web Sitesi, Belgeler, Kılavuz</value>
+    </data>
+    <data name="DocsLinkViewModelTitle" xml:space="preserve">
+        <value>Kullanıcı Kılavuzu/SSS</value>
+    </data>
+    <data name="Done" xml:space="preserve">
+        <value>Tamamlandı</value>
+    </data>
+    <data name="DotEnum" xml:space="preserve">
+        <value>Nokta</value>
+    </data>
+    <data name="DustThreshold" xml:space="preserve">
+        <value>Toz Eşiği</value>
+    </data>
+    <data name="Edit" xml:space="preserve">
+        <value>Düzenle</value>
+    </data>
+    <data name="EditLabels" xml:space="preserve">
+        <value>Etiketleri Düzenle</value>
+    </data>
+    <data name="EditSelectedAddressLabels" xml:space="preserve">
+        <value>Seçilen adresin etiketlerini burada düzenleyin:</value>
+    </data>
+    <data name="EnabledEnum" xml:space="preserve">
+        <value>Etkinleştirildi</value>
+    </data>
+    <data name="EnabledOnlyRunningEnum" xml:space="preserve">
+        <value>Etkinleştirildi (yalnızca bağlantı modu)</value>
+    </data>
+    <data name="EnableGPU" xml:space="preserve">
+        <value>GPU'yu Etkinleştir</value>
+    </data>
+    <data name="EnableGPURendering" xml:space="preserve">
+        <value>Etkinleştirildiğinde, kullanıcı arayüzünü render etmek için bir grafik kartı (GPU) kullanılır. GPU kullanmak, CPU'ya kıyasla performansı artırabilir.</value>
+    </data>
+    <data name="EnterAmountForOffers" xml:space="preserve">
+        <value>Miktarı girin, biz de sizin için en iyi teklifleri hesaplayalım.</value>
+    </data>
+    <data name="EnterNamesForAddress" xml:space="preserve">
+        <value>Bu adresi vereceğiniz kişi veya şirketlerin isimlerini girin</value>
+    </data>
+    <data name="EnterPassphrase" xml:space="preserve">
+        <value>Şifreyi Gir</value>
+    </data>
+    <data name="EnterPassphraseAuth" xml:space="preserve">
+        <value>Şifrenizi girin</value>
+    </data>
+    <data name="EntitiesCanDeanonymizeTransaction" xml:space="preserve">
+        <value>Bazı varlıklar bu işlemi anonimleştirebilir çünkü gizliliği olmayan coin'ler harcanıyor. Bu işlem için yeterli özel coin'lerinizin olması için daha fazla coinjoin yapın.</value>
+    </data>
+    <data name="EntitiesKnowThisIsYourTransaction" xml:space="preserve">
+        <value>Bu varlıklar bu işlemin sizin işleminiz olduğunu biliyor. Daha fazla coinjoin yapın veya etiket yönetimi aracını kullanarak bu işlemin size ait olduğunu bilecek kişileri dikkatlice seçin.</value>
+    </data>
+    <data name="Error" xml:space="preserve">
+        <value>Hata</value>
+    </data>
+    <data name="ErrorAddingWallet" xml:space="preserve">
+        <value>Cüzdanınızı eklerken bir hata oluştu.</value>
+    </data>
+    <data name="EstimatedConfirmationTime" xml:space="preserve">
+        <value>Tahmini Onay Süresi</value>
+    </data>
+    <data name="EstimatedConfirmationTimeWithValue" xml:space="preserve">
+        <value>Tahmini Onay Süresi: {0}</value>
+    </data>
+    <data name="ExampleBitcoinAddressOrPayjoinURI" xml:space="preserve">
+        <value>(ör. Bitcoin adresi veya payjoin URI)</value>
+    </data>
+    <data name="ExchangeCurrency" xml:space="preserve">
+        <value>Döviz kuru</value>
+    </data>
+    <data name="ExcludeCoinjoinDescription" xml:space="preserve">
+        <value>Seçilen coin'ler coinjoin'dan hariç tutulacaktır. Bu coin'lerin gizliliği artmayacaktır, buna dikkat etmek önemlidir.</value>
+    </data>
+    <data name="ExcludedCoinsViewModelCaption" xml:space="preserve">
+        <value>Hariç coin'leri göster</value>
+    </data>
+    <data name="ExcludedCoinsViewModelKeywords" xml:space="preserve">
+        <value>Cüzdan, Hariç, Coin'ler, Coinjoin, Dondur, UTXO</value>
+    </data>
+    <data name="ExcludedCoinsViewModelTitle" xml:space="preserve">
+        <value>Coin'leri Hariç Tut</value>
+    </data>
+    <data name="ExcludedFromCoinjoins" xml:space="preserve">
+        <value>Coinjoin'lardan hariç tutuldu</value>
+    </data>
+    <data name="ExpectedConfirmationTime" xml:space="preserve">
+        <value>Beklenen onay süresi</value>
+    </data>
+    <data name="ExperimentalCoinJoinCoinSelector" xml:space="preserve">
+        <value>(DENEME) Geliştirilmiş Coin Seçimi</value>
+    </data>
+    <data name="Expired" xml:space="preserve">
+        <value>Süresi dolmuş</value>
+    </data>
+    <data name="ExportTransaction" xml:space="preserve">
+        <value>İşlem dışa aktar</value>
+    </data>
+    <data name="ExtendedAccountPrivateKeyXpriv" xml:space="preserve">
+        <value>Genişletilmiş Hesap Özel Anahtarı xpriv</value>
+    </data>
+    <data name="ExtendedAccountPublicKeySegWit" xml:space="preserve">
+        <value>Genişletilmiş Hesap Genel Anahtarı (SegWit)</value>
+    </data>
+    <data name="ExtendedAccountPublicKeyTaproot" xml:space="preserve">
+        <value>Genişletilmiş Hesap Genel Anahtarı (Taproot)</value>
+    </data>
+    <data name="ExtendedMasterFingerprint" xml:space="preserve">
+        <value>Genişletilmiş Anahtar Parmak İzi</value>
+    </data>
+    <data name="ExtendedMasterPrivateKey" xml:space="preserve">
+        <value>Genişletilmiş Anahtar Özel Anahtarı</value>
+    </data>
+    <data name="ExtendedMasterZprv" xml:space="preserve">
+        <value>Genişletilmiş Anahtar zprv</value>
+    </data>
+    <data name="Failed" xml:space="preserve">
+        <value>Başarısız</value>
+    </data>
+    <data name="FailedToGetLegalDocuments" xml:space="preserve">
+        <value>Yasal belgeleri almakta başarısız oldu.</value>
+    </data>
+    <data name="FAQ" xml:space="preserve">
+        <value>SSS</value>
+    </data>
+    <data name="Fastest" xml:space="preserve">
+        <value>en hızlı</value>
+    </data>
+    <data name="Fee" xml:space="preserve">
+        <value>Ücret</value>
+    </data>
+    <data name="FeeDisplayUnit" xml:space="preserve">
+        <value>Ücret görüntüleme birimi</value>
+    </data>
+    <data name="FeeRate" xml:space="preserve">
+        <value>Ücret Oranı</value>
+    </data>
+    <data name="FeeRateFormatted" xml:space="preserve">
+        <value>Ücret Oranı: {0:0} sat/vByte</value>
+    </data>
+    <data name="FeeRateSatPerVByte" xml:space="preserve">
+        <value>Ücret Oranı (sat/vByte)</value>
+    </data>
+    <data name="Fees" xml:space="preserve">
+        <value>Ücretler</value>
+    </data>
+    <data name="FeeTooHigh" xml:space="preserve">
+        <value>Girilen ücret çok yüksek.</value>
+    </data>
+    <data name="ForceUsingLowPrivacyCoinsInCoinJoinCoinSelector" xml:space="preserve">
+        <value>Düşük gizlilikli coin'leri kullanmaya zorla</value>
+    </data>
+    <data name="ForceUsingLowPrivacyCoinsInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+        <value>Seçim, en düşük gizlilikli coin'lerden en az birini içermelidir.</value>
+    </data>
+    <data name="FoundIn" xml:space="preserve">
+        <value>{0} içinde bulundu</value>
+    </data>
+    <data name="FriendsDontPay" xml:space="preserve">
+        <value>Arkadaşlar Ücret Ödemez</value>
+    </data>
+    <data name="FriendsDontPayInfo" xml:space="preserve">
+        <value>Diğer Ginger coinjoin'lerinden alınan coin'ler için koordinasyon ücreti ödemezsiniz.</value>
+    </data>
+    <data name="FullNodeConnecting" xml:space="preserve">
+        <value>Tam düğüm bağlanıyor...</value>
+    </data>
+    <data name="FullNodeDownloadingBlocks" xml:space="preserve">
+        <value>Tam düğüm {0} blok indiriyor...</value>
+    </data>
+    <data name="FullNodeSynchronized" xml:space="preserve">
+        <value>Tam düğüm senkronize oldu</value>
+    </data>
+    <data name="FullNodeUnresponsive" xml:space="preserve">
+        <value>Tam düğüm yanıt vermiyor</value>
+    </data>
+    <data name="FullPrivacy" xml:space="preserve">
+        <value>Tam Gizlilik</value>
+    </data>
+    <data name="General" xml:space="preserve">
+        <value>Genel</value>
+    </data>
+    <data name="GeneralErrorMessage" xml:space="preserve">
+        <value>Geçerli koşullar bekleniyor</value>
+    </data>
+    <data name="GeneralSettingsTabViewModelCaption" xml:space="preserve">
+        <value>Genel ayarları yönet</value>
+    </data>
+    <data name="GeneralSettingsTabViewModelKeywords" xml:space="preserve">
+        <value>Ayarlar, Genel, Bitcoin, Çalıştır, Ginger, Bilgisayar, Sistem, Başlat, Arka plan, Kapat, Otomatik, Kopyala, Yapıştır, Adresler, Özel, Değiştir, Adres, tarayıcı</value>
+    </data>
+    <data name="GeneralSettingsTabViewModelTitle" xml:space="preserve">
+        <value>Genel</value>
+    </data>
+    <data name="Generate" xml:space="preserve">
+        <value>Oluştur</value>
+    </data>
+    <data name="GetStarted" xml:space="preserve">
+        <value>Başlayın</value>
+    </data>
+    <data name="GingerUnableToCloseCoinJoinInProgress" xml:space="preserve">
+        <value>Ginger şu anda kapanamıyor. Coinjoin devam ediyor.</value>
+    </data>
+    <data name="GingerWalletUnableToCancelTransaction" xml:space="preserve">
+        <value>Ginger Wallet, işleminizi iptal edemedi.</value>
+    </data>
+    <data name="GingerWalletUnableToOpenFile" xml:space="preserve">
+        <value>Ginger Wallet, dosyanızı açamadı.</value>
+    </data>
+    <data name="GingerWalletUnableToSpeedUpTransaction" xml:space="preserve">
+        <value>Ginger Wallet, işleminizi hızlandıramadı.</value>
+    </data>
+    <data name="GroupSeparator" xml:space="preserve">
+        <value>Sayı Grubu Ayracı</value>
+    </data>
+    <data name="HardwareWallet" xml:space="preserve">
+        <value>Donanım Cüzdanı</value>
+    </data>
+    <data name="HardwareWalletAuthDialogViewModelCaption" xml:space="preserve">
+        <value>Donanım cüzdanınızı bağlayın, Devam’a basın ve ardından cihazdaki talimatları izleyin.</value>
+    </data>
+    <data name="HardwareWalletNotFound" xml:space="preserve">
+        <value>Donanım cüzdanı bulunamadı. Bağlı olduğundan emin olun.</value>
+    </data>
+    <data name="HelpAndSupport" xml:space="preserve">
+        <value>Yardım ve Destek</value>
+    </data>
+    <data name="Hide" xml:space="preserve">
+        <value>Gizle</value>
+    </data>
+    <data name="HideAddress" xml:space="preserve">
+        <value>Adresi Gizle</value>
+    </data>
+    <data name="HideSensitiveData" xml:space="preserve">
+        <value>Hassas verileri Gizle</value>
+    </data>
+    <data name="hour" xml:space="preserve">
+        <value>saat</value>
+    </data>
+    <data name="Hours" xml:space="preserve">
+        <value>Saatler</value>
+    </data>
+    <data name="HoverOverRingSegments" xml:space="preserve">
+        <value>Yüzük segmentlerinin üzerine gelerek coin ayrıntılarını görün</value>
+    </data>
+    <data name="ImportOrPasteTransactionHex" xml:space="preserve">
+        <value>İşlem hex'ini içe aktarın veya yapıştırın ve ağa yayınlayın.</value>
+    </data>
+    <data name="ImportTransaction" xml:space="preserve">
+        <value>İşlem İçe Aktar</value>
+    </data>
+    <data name="ImportTransactionFileDialogTitle" xml:space="preserve">
+        <value>İşlem İçe Aktar</value>
+    </data>
+    <data name="ImportWallet" xml:space="preserve">
+        <value>Dosya İçe Aktar</value>
+    </data>
+    <data name="ImproveThisTransaction" xml:space="preserve">
+        <value>Bu işlemi iyileştirin:</value>
+    </data>
+    <data name="Incoming" xml:space="preserve">
+        <value>Gelen</value>
+    </data>
+    <data name="IncorrectPassphrase" xml:space="preserve">
+        <value>Şifre yanlış.{0}Lütfen tekrar deneyin.</value>
+    </data>
+    <data name="IncorrectPassphraseRetry" xml:space="preserve">
+        <value>Şifre yanlış! Lütfen tekrar deneyin.</value>
+    </data>
+    <data name="Index" xml:space="preserve">
+        <value>İndeks</value>
+    </data>
+    <data name="InitializeDeviceFirst" xml:space="preserve">
+        <value>Önce cihazınızı başlatın.</value>
+    </data>
+    <data name="InputRegistrationMessage" xml:space="preserve">
+        <value>Diğer katılımcılar bekleniyor</value>
+    </data>
+    <data name="InputTooLong" xml:space="preserve">
+        <value>Girdi çok uzun.</value>
+    </data>
+    <data name="InsufficientFunds" xml:space="preserve">
+        <value>İstenen miktarı karşılayacak yeterli bakiye yok.</value>
+    </data>
+    <data name="InsufficientFundsForTransactionFee" xml:space="preserve">
+        <value>İşlem ücreti için yeterli bakiye yok.</value>
+    </data>
+    <data name="InternalError" xml:space="preserve">
+        <value>Dahili hata.</value>
+    </data>
+    <data name="InvalidBTCAddress" xml:space="preserve">
+        <value>Adres geçerli bir BTC adresi değil.</value>
+    </data>
+    <data name="InvalidBTCAddressOrURI" xml:space="preserve">
+        <value>Geçerli bir BTC adresi veya URI girin.</value>
+    </data>
+    <data name="InvalidDustThreshold" xml:space="preserve">
+        <value>Geçersiz toz eşiği.</value>
+    </data>
+    <data name="InvalidEndpoint" xml:space="preserve">
+        <value>Geçersiz uç nokta.</value>
+    </data>
+    <data name="InvalidFee" xml:space="preserve">
+        <value>Girilen ücret geçerli değil.</value>
+    </data>
+    <data name="InvalidInputLength" xml:space="preserve">
+        <value>Girdi uzunluğu geçersiz.</value>
+    </data>
+    <data name="InvalidRecoveryWords" xml:space="preserve">
+        <value>Kurtarma Kelimeleri geçerli değil.</value>
+    </data>
+    <data name="InvalidSetRecoveryWords" xml:space="preserve">
+        <value>Geçersiz set. Kurtarma kelimelerinizi doğru sırayla yazdığınızdan emin olun.</value>
+    </data>
+    <data name="InvalidWalletName" xml:space="preserve">
+        <value>Geçersiz cüzdan adı.</value>
+    </data>
+    <data name="IsConnected" xml:space="preserve">
+        <value>bağlandı</value>
+    </data>
+    <data name="IsNotConnected" xml:space="preserve">
+        <value>bağlanmadı</value>
+    </data>
+    <data name="IsNotRunning" xml:space="preserve">
+        <value>çalışmıyor</value>
+    </data>
+    <data name="IsRunning" xml:space="preserve">
+        <value>çalışıyor</value>
+    </data>
+    <data name="IsTurnedOff" xml:space="preserve">
+        <value>kapalı</value>
+    </data>
+    <data name="Label" xml:space="preserve">
+        <value>Etiket</value>
+    </data>
+    <data name="LabelManagement" xml:space="preserve">
+        <value>Etiket Yönetimi</value>
+    </data>
+    <data name="LabelsWatermarkText" xml:space="preserve">
+        <value>Kişi veya Şirket örn. Alice, Bob, Pizza Inc</value>
+    </data>
+    <data name="Language" xml:space="preserve">
+        <value>Dil</value>
+    </data>
+    <data name="LegalDocumentsViewModelCaption" xml:space="preserve">
+        <value>Şartlar ve koşulları görüntüle</value>
+    </data>
+    <data name="LegalDocumentsViewModelKeywords" xml:space="preserve">
+        <value>Görünüm, Hukuki, Belge, Şartlar, Koşullar, Gizlilik, Politika, Beyan</value>
+    </data>
+    <data name="LegalDocumentsViewModelTitle" xml:space="preserve">
+        <value>Hukuki Belge</value>
+    </data>
+    <data name="Less" xml:space="preserve">
+        <value>daha az</value>
+    </data>
+    <data name="LessThan" xml:space="preserve">
+        <value>Daha az</value>
+    </data>
+    <data name="LightningAddressesNotSupported" xml:space="preserve">
+        <value>Lightning adresleri desteklenmiyor.</value>
+    </data>
+    <data name="LoadingViewDownloadText" xml:space="preserve">
+        <value>Bitcoin ağ verilerini indiriyor ve işliyor</value>
+    </data>
+    <data name="LoadingViewModelPercentCompleted" xml:space="preserve">
+        <value>{0}% tamamlandı</value>
+    </data>
+    <data name="LoadingViewModelTimeRemaining" xml:space="preserve">
+        <value>- {0} kaldı</value>
+    </data>
+    <data name="LoadingViewProcessLonger" xml:space="preserve">
+        <value>Bu işlem ilk başlatmada, büyük cüzdanlarda veya senkronizasyonlar arasında uzun boşluklar olduğunda daha uzun sürecektir.</value>
+    </data>
+    <data name="LoadingViewThirdparty" xml:space="preserve">
+        <value>Ginger, bunu herhangi bir üçüncü tarafın bakiyeniz ve finansal faaliyetleriniz hakkında bilgi sahibi olmadan yapar.</value>
+    </data>
+    <data name="LocalBitcoinCoreKnotsVersion" xml:space="preserve">
+        <value>Yerel Bitcoin Core/Knots sürümü</value>
+    </data>
+    <data name="MarkAllAsRead" xml:space="preserve">
+        <value>Tümünü okundu olarak işaretle</value>
+    </data>
+    <data name="Max" xml:space="preserve">
+        <value>Maks:</value>
+    </data>
+    <data name="min" xml:space="preserve">
+        <value>min</value>
+    </data>
+    <data name="MinFeeLimit" xml:space="preserve">
+        <value>1 sat/vByte'dan daha az olamaz.</value>
+    </data>
+    <data name="MiningFeeRateTooHighMessage" xml:space="preserve">
+        <value>Madencilik ücreti oranı çok yüksekti</value>
+    </data>
+    <data name="MinInputCountTooLowMessage" xml:space="preserve">
+        <value>Min girdi sayısı çok düşüktü</value>
+    </data>
+    <data name="minute" xml:space="preserve">
+        <value>dakika</value>
+    </data>
+    <data name="MITLicense" xml:space="preserve">
+        <value>MIT Lisansı</value>
+    </data>
+    <data name="ModifyingSettingsNotPossible" xml:space="preserve">
+        <value>Ayarları değiştirmek mümkün değil, çünkü bazı parametreler başlatma sırasında geçersiz kılındı.</value>
+    </data>
+    <data name="Months" xml:space="preserve">
+        <value>Aylar</value>
+    </data>
+    <data name="More" xml:space="preserve">
+        <value>daha fazla</value>
+    </data>
+    <data name="MustBeNumberBetween" xml:space="preserve">
+        <value>{0} ile {1} arasında bir sayı olmalıdır.</value>
+    </data>
+    <data name="Name" xml:space="preserve">
+        <value>Ad</value>
+    </data>
+    <data name="Network" xml:space="preserve">
+        <value>Ağ</value>
+    </data>
+    <data name="NetworkAnonymizationTor" xml:space="preserve">
+        <value>Ağ anonimleştirmesi (Tor)</value>
+    </data>
+    <data name="Next" xml:space="preserve">
+        <value>Sonraki</value>
+    </data>
+    <data name="No" xml:space="preserve">
+        <value>Hayır</value>
+    </data>
+    <data name="NoCategory" xml:space="preserve">
+        <value>Hayır kategori</value>
+    </data>
+    <data name="NoCoinsEligibleToMixMessage" xml:space="preserve">
+        <value>Coinjoin için uygun yeterli bakiye yok</value>
+    </data>
+    <data name="NoInformationAboutPeople" xml:space="preserve">
+        <value>Bu kişiler hakkında bilgi yok, yalnızca gerekli olduğunda kullanın!</value>
+    </data>
+    <data name="NonCoinjoinTransactions" xml:space="preserve">
+        <value>Coinjoin olmayan işlem sayısı</value>
+    </data>
+    <data name="NoneEnum" xml:space="preserve">
+        <value>Yok</value>
+    </data>
+    <data name="NonPrivate" xml:space="preserve">
+        <value>Gizlilik dışı</value>
+    </data>
+    <data name="NonPrivateFunds" xml:space="preserve">
+        <value>Gizlilik dışı fonlar</value>
+    </data>
+    <data name="NoOfferForAmount" xml:space="preserve">
+        <value>Belirtilen miktar için herhangi bir teklif bulunamadı.</value>
+    </data>
+    <data name="NoProgressYet" xml:space="preserve">
+        <value>Henüz İlerleme Yok</value>
+    </data>
+    <data name="NoResults" xml:space="preserve">
+        <value>Sonuç yok</value>
+    </data>
+    <data name="NotAvailable" xml:space="preserve">
+        <value>Mevcut Değil</value>
+    </data>
+    <data name="NotCoinjoining" xml:space="preserve">
+        <value>Coinjoin yapılmıyor</value>
+    </data>
+    <data name="NumberOfAddresses" xml:space="preserve">
+        <value>Adres sayısı</value>
+    </data>
+    <data name="NumberOfCleanAddresses" xml:space="preserve">
+        <value>Temiz adres sayısı</value>
+    </data>
+    <data name="NumberOfCoins" xml:space="preserve">
+        <value>Coin sayısı (UTXO'lar)</value>
+    </data>
+    <data name="NumberOfLockedAddresses" xml:space="preserve">
+        <value>Kilitleme işlemi yapılan adres sayısı</value>
+    </data>
+    <data name="NumberOfTransactions" xml:space="preserve">
+        <value>İşlem sayısı</value>
+    </data>
+    <data name="NumberOfUsedAddresses" xml:space="preserve">
+        <value>Kullanılmış adres sayısı</value>
+    </data>
+    <data name="Offers" xml:space="preserve">
+        <value>Teklifler</value>
+    </data>
+    <data name="Often" xml:space="preserve">
+        <value>Sıkça</value>
+    </data>
+    <data name="Ok" xml:space="preserve">
+        <value>Tamam</value>
+    </data>
+    <data name="OnlyAvailableWhenTorEnabled" xml:space="preserve">
+        <value>Sadece Tor etkinleştirildiğinde kullanılabilir.</value>
+    </data>
+    <data name="OnlyExcludedCoinsAvailableMessage" xml:space="preserve">
+        <value>Yalnızca hariç tutulan fonlar mevcuttur</value>
+    </data>
+    <data name="OnlyImmatureCoinsAvailableMessage" xml:space="preserve">
+        <value>Yalnızca olgunlaşmamış fonlar mevcuttur</value>
+    </data>
+    <data name="Open" xml:space="preserve">
+        <value>Açık</value>
+    </data>
+    <data name="OpenConfigFileViewModelKeywords" xml:space="preserve">
+        <value>Gözat, Aç, Yapılandır, Dosya</value>
+    </data>
+    <data name="OpenConfigFileViewModelTitle" xml:space="preserve">
+        <value>Yapılandırma Dosyası</value>
+    </data>
+    <data name="OpenDataFolderViewModelKeywords" xml:space="preserve">
+        <value>Gözat, Aç, Veri, Klasör</value>
+    </data>
+    <data name="OpenDataFolderViewModelTitle" xml:space="preserve">
+        <value>Veri Klasörü</value>
+    </data>
+    <data name="OpenInBrowser" xml:space="preserve">
+        <value>Ginger tarafından kullanılan Tarayıcı</value>
+    </data>
+    <data name="OpenInTheBrowser" xml:space="preserve">
+        <value>Tarayıcıda aç</value>
+    </data>
+    <data name="OpenLink" xml:space="preserve">
+        <value>Bağlantıyı Aç</value>
+    </data>
+    <data name="OpenLogsViewModelKeywords" xml:space="preserve">
+        <value>Gözat, Aç, Kayıtlar</value>
+    </data>
+    <data name="OpenLogsViewModelTitle" xml:space="preserve">
+        <value>Kayıtlar</value>
+    </data>
+    <data name="OpenPasswordBoxWatermark" xml:space="preserve">
+        <value>Şifre</value>
+    </data>
+    <data name="OpenTorLogsViewModelKeywords" xml:space="preserve">
+        <value>Gözat, Aç, Tor, Kayıtlar</value>
+    </data>
+    <data name="OpenTorLogsViewModelTitle" xml:space="preserve">
+        <value>Tor Kayıtları</value>
+    </data>
+    <data name="OpenWallet" xml:space="preserve">
+        <value>Cüzdanı aç</value>
+    </data>
+    <data name="OpenWalletsFolderViewModelKeywords" xml:space="preserve">
+        <value>Gözat, Aç, Cüzdan, Klasör</value>
+    </data>
+    <data name="OpenWalletsFolderViewModelTitle" xml:space="preserve">
+        <value>Cüzdan Klasörü</value>
+    </data>
+    <data name="OrderDetails" xml:space="preserve">
+        <value>Sipariş Detayları</value>
+    </data>
+    <data name="Other" xml:space="preserve">
+        <value>Diğer</value>
+    </data>
+    <data name="Outgoing" xml:space="preserve">
+        <value>Giden</value>
+    </data>
+    <data name="PassphrasesNotMatch" xml:space="preserve">
+        <value>Şifreler uyuşmuyor.</value>
+    </data>
+    <data name="PassphraseTooLong" xml:space="preserve">
+        <value>Şifre çok uzun.</value>
+    </data>
+    <data name="Paste" xml:space="preserve">
+        <value>Yapıştır</value>
+    </data>
+    <data name="PasteBTCAddress" xml:space="preserve">
+        <value>BTC Adresini Yapıştır:
+{0}</value>
+    </data>
+    <data name="PasteFromClipboard" xml:space="preserve">
+        <value>Pano'dan yapıştır</value>
+    </data>
+    <data name="PastOrdersDetails" xml:space="preserve">
+        <value>Geçmiş siparişlerinizi izleyebilir, yönetebilir ve detaylarını görebilirsiniz.</value>
+    </data>
+    <data name="PauseMessage" xml:space="preserve">
+        <value>Coinjoin duraklatıldı</value>
+    </data>
+    <data name="PayjoinNotPossibleWithHardwareWallets" xml:space="preserve">
+        <value>Payjoin, donanım cüzdanlarıyla mümkün değildir.</value>
+    </data>
+    <data name="Payment" xml:space="preserve">
+        <value>Ödeme</value>
+    </data>
+    <data name="Peers" xml:space="preserve">
+        <value>Bağlantılı kişiler</value>
+    </data>
+    <data name="PeersConnected" xml:space="preserve">
+        <value>{0} bağlı</value>
+    </data>
+    <data name="Pending" xml:space="preserve">
+        <value>Beklemede</value>
+    </data>
+    <data name="PendingConfirmingIn" xml:space="preserve">
+        <value>Beklemede (yaklaşık {0} içinde onaylanıyor)</value>
+    </data>
+    <data name="PermissionError" xml:space="preserve">
+        <value>Ginger Wallet, yetki eksikliği nedeniyle bu işlemi gerçekleştiremedi.</value>
+    </data>
+    <data name="PleaseWaitToShutDown" xml:space="preserve">
+        <value>Kapanıyor</value>
+    </data>
+    <data name="PlebsDontPay" xml:space="preserve">
+        <value>Plebs Ücret Ödemez</value>
+    </data>
+    <data name="PlebsDontPayInfo" xml:space="preserve">
+        <value>0.01 BTC veya daha az olan coin'ler için koordinasyon ücreti ödemezsiniz.</value>
+    </data>
+    <data name="PlebStopMessage" xml:space="preserve">
+        <value>Coinjoin ekonomik olmayabilir</value>
+    </data>
+    <data name="PlebStopMessageBelow" xml:space="preserve">
+        <value>Daha fazla fon ekleyin veya atlamak için Oynat'a basın</value>
+    </data>
+    <data name="PlebStopThreshold" xml:space="preserve">
+        <value>Coinjoin eşiği durduruldu</value>
+    </data>
+    <data name="PlebStopToolTip" xml:space="preserve">
+        <value>Eğer cüzdan bakiyesi bu miktardan daha azsa, coinjoin otomatik olarak duracaktır.</value>
+    </data>
+    <data name="PressPlayToStartMessage" xml:space="preserve">
+        <value>Başlamak için Oynat'a basın</value>
+    </data>
+    <data name="PreviewTransaction" xml:space="preserve">
+        <value>İşlem Önizlemesi</value>
+    </data>
+    <data name="PreviousOrders" xml:space="preserve">
+        <value>Önceki Siparişler</value>
+    </data>
+    <data name="Privacy" xml:space="preserve">
+        <value>Gizlilik</value>
+    </data>
+    <data name="PrivacyProgress" xml:space="preserve">
+        <value>Gizlilik İlerlemesi</value>
+    </data>
+    <data name="PrivacyProtectedWithPayjoin" xml:space="preserve">
+        <value>Gizliliğiniz payjoin ile korunuyor.</value>
+    </data>
+    <data name="Private" xml:space="preserve">
+        <value>Özel</value>
+    </data>
+    <data name="PrivateCoins" xml:space="preserve">
+        <value>Özel Coin'ler</value>
+    </data>
+    <data name="PrivateExternalOutputDescriptor" xml:space="preserve">
+        <value>Özel Harici Çıktı tanımlayıcısı</value>
+    </data>
+    <data name="PrivateFunds" xml:space="preserve">
+        <value>Özel fonlar</value>
+    </data>
+    <data name="PrivateInternalOutputDescriptor" xml:space="preserve">
+        <value>Özel Dahili Çıktı tanımlayıcısı</value>
+    </data>
+    <data name="ProceedConfirmation" xml:space="preserve">
+        <value>Devam etmek ister misiniz?</value>
+    </data>
+    <data name="Provider" xml:space="preserve">
+        <value>Sağlayıcı</value>
+    </data>
+    <data name="PSBTworkflow" xml:space="preserve">
+        <value>PSBT iş akışı</value>
+    </data>
+    <data name="PublicExternalOutputDescriptor" xml:space="preserve">
+        <value>Halka Açık Harici Çıktı tanımlayıcısı</value>
+    </data>
+    <data name="PublicInternalOutputDescriptor" xml:space="preserve">
+        <value>Halka Açık Dahili Çıktı tanımlayıcısı</value>
+    </data>
+    <data name="QRCode" xml:space="preserve">
+        <value>QR Kodu</value>
+    </data>
+    <data name="Quit" xml:space="preserve">
+        <value>Çık</value>
+    </data>
+    <data name="RandomlySkippedRoundMessage" xml:space="preserve">
+        <value>Daha iyi gizlilik için bir tur atlanıyor</value>
+    </data>
+    <data name="RandomSkip" xml:space="preserve">
+        <value>Rastgele Atlama</value>
+    </data>
+    <data name="Rarely" xml:space="preserve">
+        <value>Nadiren</value>
+    </data>
+    <data name="ReceiveInWithColom" xml:space="preserve">
+        <value>Şurada al:</value>
+    </data>
+    <data name="ReceiveViewModelCaption" xml:space="preserve">
+        <value>Cüzdan alım diyalog kutusunu görüntüle</value>
+    </data>
+    <data name="ReceiveViewModelKeywords" xml:space="preserve">
+        <value>Cüzdan, Al, İşlem</value>
+    </data>
+    <data name="ReceiveViewModelTitle" xml:space="preserve">
+        <value>Al</value>
+    </data>
+    <data name="Recipient" xml:space="preserve">
+        <value>Alıcı</value>
+    </data>
+    <data name="RecipientWithColon" xml:space="preserve">
+        <value>Alıcı:</value>
+    </data>
+    <data name="RecoverWallet" xml:space="preserve">
+        <value>Kurtarma</value>
+    </data>
+    <data name="RecoverWalletViewModelPassphraseMessage" xml:space="preserve">
+        <value>Cüzdanınızı oluştururken bir şifre kullandıysanız, aşağıya yazmalısınız, aksi takdirde bu alanı boş bırakın.</value>
+    </data>
+    <data name="RecoveryWords" xml:space="preserve">
+        <value>Kurtarma Kelimeleri</value>
+    </data>
+    <data name="RecoveryWordsViewCaption" xml:space="preserve">
+        <value>Kurtarma kelimelerini doğru sırayla yazın ve güvenli bir yerde saklayın. Cüzdanınızı kurtarmak için bunlar gereklidir.</value>
+    </data>
+    <data name="RecoveryWordsViewCopyRecoveryWords" xml:space="preserve">
+        <value>Kurtarma kelimelerini kopyala</value>
+    </data>
+    <data name="RecoveryWordsViewNotSeeAfter" xml:space="preserve">
+        <value>Cüzdan oluşturulduktan sonra bu kelimeleri bir daha göremeyeceksiniz.</value>
+    </data>
+    <data name="RedcoinText" xml:space="preserve">
+        <value>Tek bir gizlilik dışı coin sınırlaması</value>
+    </data>
+    <data name="RedcoinToolTip" xml:space="preserve">
+        <value>Yalnızca anonimlik puanı 1 olan tek bir coin'in coinjoin kaydına alınmasına izin verin.</value>
+    </data>
+    <data name="ReducePrivacyOfTransaction" xml:space="preserve">
+        <value>Bu, işleminizin gizliliğini azaltabilir.</value>
+    </data>
+    <data name="Refunded" xml:space="preserve">
+        <value>İade edildi</value>
+    </data>
+    <data name="RegionSelection" xml:space="preserve">
+        <value>Bölge Seçimi</value>
+    </data>
+    <data name="RenameWallet" xml:space="preserve">
+        <value>Cüzdanı Yeniden Adlandır</value>
+    </data>
+    <data name="Rescan" xml:space="preserve">
+        <value>Yeniden Tarama</value>
+    </data>
+    <data name="RestartApplication" xml:space="preserve">
+        <value>Uygulamayı Yeniden Başlat</value>
+    </data>
+    <data name="ResyncWallet" xml:space="preserve">
+        <value>Cüzdanı Yeniden Senkronize Et</value>
+    </data>
+    <data name="ReviewCoins" xml:space="preserve">
+        <value>Coin'leri İncele</value>
+    </data>
+    <data name="RoundFinishedMessage" xml:space="preserve">
+        <value>Tur bitti, bir sonraki turu bekliyoruz</value>
+    </data>
+    <data name="RoundSucceedMessage" xml:space="preserve">
+        <value>Coinjoin başarılı! Devam ediliyor...</value>
+    </data>
+    <data name="RunAtStartup" xml:space="preserve">
+        <value>Ginger'ı bilgisayar açıldığında çalıştır</value>
+    </data>
+    <data name="RunAtStartupKeywords" xml:space="preserve">
+        <value>başlangıç, önyükleme</value>
+    </data>
+    <data name="RunBitcoinKnotsOnStartup" xml:space="preserve">
+        <value>(EXPERIMENTAL) Bitcoin Knots'u başlangıçta çalıştır</value>
+    </data>
+    <data name="RunInBackgroundKeywords" xml:space="preserve">
+        <value>gizle, tepsi</value>
+    </data>
+    <data name="RunInBackgroundWhenClosed" xml:space="preserve">
+        <value>Pencere kapandığında arka planda çalıştır</value>
+    </data>
+    <data name="SafeFeeText" xml:space="preserve">
+        <value>Aşağıdaki coinjoin zaman tercihini yoksay</value>
+    </data>
+    <data name="SafeFeeToolTip" xml:space="preserve">
+        <value>Ücret oranı bu değerin altındaysa her zaman coinjoin yap (Coinjoin zaman tercihini geçersiz kılar).</value>
+    </data>
+    <data name="Save" xml:space="preserve">
+        <value>Kaydet</value>
+    </data>
+    <data name="SavePSBTFile" xml:space="preserve">
+        <value>PSBT dosyasını kaydet</value>
+    </data>
+    <data name="SaveQRCode" xml:space="preserve">
+        <value>QR Kodu Kaydet</value>
+    </data>
+    <data name="ScanQRCode" xml:space="preserve">
+        <value>QR Kodu Tara</value>
+    </data>
+    <data name="SearchBoxWatermark" xml:space="preserve">
+        <value>Ara</value>
+    </data>
+    <data name="second" xml:space="preserve">
+        <value>saniye</value>
+    </data>
+    <data name="Security" xml:space="preserve">
+        <value>Güvenlik</value>
+    </data>
+    <data name="SecuritySettingsTabViewModelCaption" xml:space="preserve">
+        <value>Güvenlik ayarlarını yönet</value>
+    </data>
+    <data name="SecuritySettingsTabViewModelKeywords" xml:space="preserve">
+        <value>Güvenlik, Ayarlar, 2FA, İki Faktörlü, Kimlik Doğrulama, İki, Faktör</value>
+    </data>
+    <data name="SecuritySettingsTabViewModelTitle" xml:space="preserve">
+        <value>Güvenlik</value>
+    </data>
+    <data name="SelectAll" xml:space="preserve">
+        <value>Tümünü Seç</value>
+    </data>
+    <data name="SelectAllowedCoins" xml:space="preserve">
+        <value>İşlemde kullanılmasına izin verilen coin'leri seç</value>
+    </data>
+    <data name="SelectPreferredLanguage" xml:space="preserve">
+        <value>Tercih ettiğiniz dili seçin:</value>
+    </data>
+    <data name="SelfCoinJoinToolTip" xml:space="preserve">
+        <value>Bu Coinjoin'da, coin'lerin çoğunluğu size ait. Bu, gizlilik ilerlemenizi önemli ölçüde azaltacaktır. Daha fazla katılımcı katılana kadar daha az cüzdanla katılmayı düşünün.</value>
+    </data>
+    <data name="SelfTransfer" xml:space="preserve">
+        <value>Kendi Transferi</value>
+    </data>
+    <data name="Sell" xml:space="preserve">
+        <value>Sat</value>
+    </data>
+    <data name="SellBitcoin" xml:space="preserve">
+        <value>Bitcoin Sat</value>
+    </data>
+    <data name="SellSuccessText1" xml:space="preserve">
+        <value>Sağlayıcının sayfasındaki talimatları izleyin. Belirli bir noktada bir</value>
+    </data>
+    <data name="SellSuccessText2" xml:space="preserve">
+        <value>adres</value>
+    </data>
+    <data name="SellSuccessText3" xml:space="preserve">
+        <value>ve</value>
+    </data>
+    <data name="SellSuccessText4" xml:space="preserve">
+        <value>göndereceğiniz tam miktar</value>
+    </data>
+    <data name="SellSuccessText5" xml:space="preserve">
+        <value>alacaksınız. Her ikisini de aldıktan sonra buraya geri dönün.</value>
+    </data>
+    <data name="SemiPrivate" xml:space="preserve">
+        <value>Yarı özel</value>
+    </data>
+    <data name="SemiPrivateCoins" xml:space="preserve">
+        <value>Yarı özel Coin'ler</value>
+    </data>
+    <data name="SemiPrivateFunds" xml:space="preserve">
+        <value>Yarı özel fonlar</value>
+    </data>
+    <data name="SendNow" xml:space="preserve">
+        <value>Şimdi Gönder</value>
+    </data>
+    <data name="SendSuggestion" xml:space="preserve">
+        <value>Gönder</value>
+    </data>
+    <data name="SendViewModelCaption" xml:space="preserve">
+        <value>Cüzdan gönderme diyalog kutusunu görüntüle</value>
+    </data>
+    <data name="SendViewModelKeywords" xml:space="preserve">
+        <value>Cüzdan, Gönder, İşlem</value>
+    </data>
+    <data name="SendViewModelTitle" xml:space="preserve">
+        <value>Gönder</value>
+    </data>
+    <data name="ServerDidNotGiveFeeExemptionMessage" xml:space="preserve">
+        <value>Sunucu remix ücreti muafiyeti vermedi</value>
+    </data>
+    <data name="ServiceNotAvailable" xml:space="preserve">
+        <value>Hizmet şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin.</value>
+    </data>
+    <data name="SetPreferredBrowserPath" xml:space="preserve">
+        <value>Tercih edilen tarayıcının tam yolunu ayarla</value>
+    </data>
+    <data name="Settings" xml:space="preserve">
+        <value>Ayarlar</value>
+    </data>
+    <data name="SettingsPageViewModelCaption" xml:space="preserve">
+        <value>Genel, gelişmiş ve diğer ayarları yönet</value>
+    </data>
+    <data name="SettingsPageViewModelKeywords" xml:space="preserve">
+        <value>Ayarlar, Genel, Kullanıcı, Arayüz, Gelişmiş</value>
+    </data>
+    <data name="SettingsPageViewModelTitle" xml:space="preserve">
+        <value>Ayarlar</value>
+    </data>
+    <data name="SetTransactionConfirmationPreference" xml:space="preserve">
+        <value>İşlemin ne kadar hızlı onaylanması gerektiğini belirleyin.</value>
+    </data>
+    <data name="Show" xml:space="preserve">
+        <value>Göster</value>
+    </data>
+    <data name="ShowDetails" xml:space="preserve">
+        <value>Detayları Göster</value>
+    </data>
+    <data name="ShowOnHardwareWallet" xml:space="preserve">
+        <value>Donanım cüzdanında göster</value>
+    </data>
+    <data name="ShowSensitiveData" xml:space="preserve">
+        <value>Hassas verileri göster</value>
+    </data>
+    <data name="Skip" xml:space="preserve">
+        <value>Atla</value>
+    </data>
+    <data name="SomethingHappenedWithDevice" xml:space="preserve">
+        <value>Cihazınızla bir şey oldu, PIN/Şifrenizle kilidini açın veya PC'ye yeniden bağlanın.</value>
+    </data>
+    <data name="SomethingWrong" xml:space="preserve">
+        <value>Bir şeyler yanlış gitti. Lütfen tekrar deneyin.</value>
+    </data>
+    <data name="Sometimes" xml:space="preserve">
+        <value>Bazen</value>
+    </data>
+    <data name="Sorting" xml:space="preserve">
+        <value>Sıralama</value>
+    </data>
+    <data name="SourceCodeGitHub" xml:space="preserve">
+        <value>Kaynak Kod (GitHub)</value>
+    </data>
+    <data name="SpaceEnum" xml:space="preserve">
+        <value>Boşluk</value>
+    </data>
+    <data name="SpeedingUpTransactionCostAmount" xml:space="preserve">
+        <value>Bu işlemi hızlandırmak size</value>
+    </data>
+    <data name="SpeedingUpTransactionDeductFromRecipient" xml:space="preserve">
+        <value>Bu işlemi hızlandırmak, alıcının miktarından düşecektir</value>
+    </data>
+    <data name="SpeedUpFailed" xml:space="preserve">
+        <value>Hızlandırma Başarısız</value>
+    </data>
+    <data name="SpeedUpTransaction" xml:space="preserve">
+        <value>İşlem Hızlandır</value>
+    </data>
+    <data name="StateWithColon" xml:space="preserve">
+        <value>Durum:</value>
+    </data>
+    <data name="Status" xml:space="preserve">
+        <value>Durum</value>
+    </data>
+    <data name="StopBitcoinKnotsOnShutdown" xml:space="preserve">
+        <value>Bitcoin Knots'u kapatma sırasında durdur</value>
+    </data>
+    <data name="StoppedMessage" xml:space="preserve">
+        <value>Coinjoin durdu</value>
+    </data>
+    <data name="Success" xml:space="preserve">
+        <value>Başarı</value>
+    </data>
+    <data name="SystemDefaultEnum" xml:space="preserve">
+        <value>Sistem Varsayılanı</value>
+    </data>
+    <data name="TargetCoinCountPerBucketInCoinJoinCoinSelector" xml:space="preserve">
+        <value>Her cüzdan kovası için hedef coin sayısı</value>
+    </data>
+    <data name="TargetCoinCountPerBucketInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+        <value>Coin seçici, aşırı kalabalık olan kovalardan (10k.., 20k.., 40k.. vb. satoshi aralığındaki coin'ler) coin vermeyi tercih edecektir.</value>
+    </data>
+    <data name="TerminateTorWhenShutdown" xml:space="preserve">
+        <value>Ginger kapandığında Tor'u sonlandır</value>
+    </data>
+    <data name="TermsAndConditions" xml:space="preserve">
+        <value>Şartlar ve koşullar</value>
+    </data>
+    <data name="TermsAndConditionsViewCaption" xml:space="preserve">
+        <value>Ginger'ı kullanmaya devam edebilmek için lütfen şartları ve koşulları kabul edin</value>
+    </data>
+    <data name="TermsAndConditionsViewIAgree" xml:space="preserve">
+        <value>Ben _şartları ve koşulları kabul ediyorum</value>
+    </data>
+    <data name="TermsAndConditionsViewTermsAndConditions" xml:space="preserve">
+        <value>Şartlar ve koşullar</value>
+    </data>
+    <data name="TheSameAmount" xml:space="preserve">
+        <value>aynı miktar</value>
+    </data>
+    <data name="ThisCannotBeUndone" xml:space="preserve">
+        <value>Bu işlem geri alınamaz.</value>
+    </data>
+    <data name="ThisMayTakeAFewMinutes" xml:space="preserve">
+        <value>Bu birkaç dakika sürebilir. Ginger bitince otomatik olarak kapanacaktır.</value>
+    </data>
+    <data name="ThisOpenSourceSoftwareIsLicensedWith" xml:space="preserve">
+        <value>Bu açık kaynak yazılımı, şu lisansla lisanslanmıştır</value>
+    </data>
+    <data name="To" xml:space="preserve">
+        <value>Evet:</value>
+    </data>
+    <data name="Today" xml:space="preserve">
+        <value>Bugün</value>
+    </data>
+    <data name="TokenVerificationFailed" xml:space="preserve">
+        <value>Token doğrulanamadı, daha fazla bilgi için lütfen günlükleri kontrol edin.</value>
+    </data>
+    <data name="Tools" xml:space="preserve">
+        <value>Araçlar</value>
+    </data>
+    <data name="TorNetworkIssues" xml:space="preserve">
+        <value>Tor ağı sorun yaşıyor:</value>
+    </data>
+    <data name="TotalBalance" xml:space="preserve">
+        <value>Toplam bakiye</value>
+    </data>
+    <data name="TotalCostIncludesFee" xml:space="preserve">
+        <value>{0} toplam maliyeti {1} ücretini içeriyor.</value>
+    </data>
+    <data name="TotalTransactions" xml:space="preserve">
+        <value>Toplam işlem sayısı</value>
+    </data>
+    <data name="Transaction" xml:space="preserve">
+        <value>İşlem</value>
+    </data>
+    <data name="TransactionAlreadyConfirmed" xml:space="preserve">
+        <value>İşlem zaten onaylandı.</value>
+    </data>
+    <data name="TransactionBuilding" xml:space="preserve">
+        <value>İşlem Kuruluyor</value>
+    </data>
+    <data name="TransactionCanceledOnDevice" xml:space="preserve">
+        <value>İşlem cihazda iptal edildi.</value>
+    </data>
+    <data name="TransactionConsolidatesCoins" xml:space="preserve">
+        <value>İşlem, {0} coin üzerinde birleştirme yapar.</value>
+    </data>
+    <data name="TransactionCreatesChange" xml:space="preserve">
+        <value>İşlem, değişiklik yaratır.</value>
+    </data>
+    <data name="TransactionDetails" xml:space="preserve">
+        <value>İşlem Detayları</value>
+    </data>
+    <data name="TransactionDuplicatedInputs" xml:space="preserve">
+        <value>İşlemde yinelenen girişler var.</value>
+    </data>
+    <data name="TransactionExport" xml:space="preserve">
+        <value>İşlem İhracı</value>
+    </data>
+    <data name="TransactionFee" xml:space="preserve">
+        <value>İşlem Ücreti</value>
+    </data>
+    <data name="TransactionFeeEstimationsUnavailable" xml:space="preserve">
+        <value>İşlem ücreti tahminleri şu anda mevcut değil. Lütfen daha sonra tekrar deneyin veya ücreti manuel olarak girebilirsiniz.</value>
+    </data>
+    <data name="TransactionFeeExceedsPaymentAmount" xml:space="preserve">
+        <value>İşlem, ücretinden dolayı gönderilemez çünkü ücreti ödeme miktarından fazla.</value>
+    </data>
+    <data name="TransactionFeeInfo" xml:space="preserve">
+        <value>Her coinjoin için madencilik ücretleri ödeyeceksiniz.</value>
+    </data>
+    <data name="TransactionFeeRate" xml:space="preserve">
+        <value>_İşlem ücreti oranı:</value>
+    </data>
+    <data name="TransactionID" xml:space="preserve">
+        <value>İşlem Kimliği</value>
+    </data>
+    <data name="TransactionIDs" xml:space="preserve">
+        <value>İşlem Kimlikleri</value>
+    </data>
+    <data name="TransactionInterlinksLabels" xml:space="preserve">
+        <value>İşlem etiketleri bağlantıları:</value>
+    </data>
+    <data name="TransactionKnownAsYoursBy" xml:space="preserve">
+        <value>İşlem, şu kişi tarafından biliniyor:</value>
+    </data>
+    <data name="TransactionMayBeReplacedByCoinjoin" xml:space="preserve">
+        <value>Bu, işleminizin coinjoin tarafından değiştirilmesine neden olabilir. Bu işlemi göndermeden önce mevcut coinjoin'un tamamlanmasını beklemeyi düşünün.</value>
+    </data>
+    <data name="TransactionNotFinal" xml:space="preserve">
+        <value>İşlem tamamlanmadı ve yayımlanamaz.</value>
+    </data>
+    <data name="TransactionNotPrivateEnough" xml:space="preserve">
+        <value>Bu işlem, yeterince özel olmayan coin'leri harcadığı için yeterince özel değil. Bu işlem için yeterli özel coin'e sahip olmak için daha fazla coinjoin yapın.</value>
+    </data>
+    <data name="TransactionOnHold" xml:space="preserve">
+        <value>İşleminiz beklemede. Lütfen Destek ile iletişime geçin.</value>
+    </data>
+    <data name="TransactionTooBig" xml:space="preserve">
+        <value>İşlem çok büyük.</value>
+    </data>
+    <data name="TransactionUsesCoinjoiningCoins" xml:space="preserve">
+        <value>İşlem, coinjoin coin'leri kullanıyor.</value>
+    </data>
+    <data name="TransactionUsesNonPrivateCoins" xml:space="preserve">
+        <value>İşlem, özel olmayan coin'leri kullanıyor.</value>
+    </data>
+    <data name="TransactionUsesSemiPrivateCoins" xml:space="preserve">
+        <value>İşlem, yarı özel coin'leri kullanıyor.</value>
+    </data>
+    <data name="TransactionUsesUnconfirmedCoins" xml:space="preserve">
+        <value>İşlem, onaylanmamış coin'leri kullanıyor.</value>
+    </data>
+    <data name="TransactionWellOptimized" xml:space="preserve">
+        <value>Bu işlem iyi optimize edilmiştir.</value>
+    </data>
+    <data name="TrimWarnMessage" xml:space="preserve">
+        <value>Önde ve sonda boşluklar kaldırılacaktır!</value>
+    </data>
+    <data name="TwoFactorAuthentication" xml:space="preserve">
+        <value>İki faktörlü kimlik doğrulama</value>
+    </data>
+    <data name="TwoFactorAuthenticationWithCapitals" xml:space="preserve">
+        <value>İki Faktörlü Kimlik Doğrulama</value>
+    </data>
+    <data name="TwoFactorDisabledWarnMessage" xml:space="preserve">
+        <value>İki Faktörlü Kimlik Doğrulama devre dışı. Daha fazla koruma için Ayarlarda etkinleştirin.</value>
+    </data>
+    <data name="TwoFactorDisabledWarnMessageOpenSettings" xml:space="preserve">
+        <value>Ayarları Aç</value>
+    </data>
+    <data name="TwoFactorSetup" xml:space="preserve">
+        <value>İki Faktörlü Kimlik Doğrulama Kurulumu</value>
+    </data>
+    <data name="Type" xml:space="preserve">
+        <value>Tür</value>
+    </data>
+    <data name="TypeInWalletName" xml:space="preserve">
+        <value>Bir cüzdan adı girin</value>
+    </data>
+    <data name="TypeInYourRecoveryWords" xml:space="preserve">
+        <value>Kurtarma kelimelerinizi doğru sırayla girin</value>
+    </data>
+    <data name="UnableToBroadcastTransaction" xml:space="preserve">
+        <value>İşlem yayımlanamadı.</value>
+    </data>
+    <data name="UnableToCreateTransaction" xml:space="preserve">
+        <value>Ginger Wallet, işleminizi oluşturamadı.</value>
+    </data>
+    <data name="UnableToExportPSBT" xml:space="preserve">
+        <value>Ginger Wallet, PSBT'yi dışa aktaramadı.</value>
+    </data>
+    <data name="UnableToLoadTransaction" xml:space="preserve">
+        <value>İşlem yüklenemedi.</value>
+    </data>
+    <data name="UnableToPasteTransaction" xml:space="preserve">
+        <value>İşlem yapıştırılamadı.</value>
+    </data>
+    <data name="UnableToRecoverWallet" xml:space="preserve">
+        <value>Ginger Wallet, cüzdanınızı kurtaramadı.</value>
+    </data>
+    <data name="UnableToSendAddressToDevice" xml:space="preserve">
+        <value>Cüzdana adres gönderilemedi</value>
+    </data>
+    <data name="UnableToSendTransaction" xml:space="preserve">
+        <value>Ginger Wallet, işleminizi gönderemedi.</value>
+    </data>
+    <data name="UnableToVerifyRecoveryWords" xml:space="preserve">
+        <value>Ginger Wallet, kurtarma kelimelerini doğrulayamıyor.</value>
+    </data>
+    <data name="UnconfirmedBalance" xml:space="preserve">
+        <value>Onaylanmamış bakiye</value>
+    </data>
+    <data name="UnconfirmedCoinsMayCauseIssues" xml:space="preserve">
+        <value>Bu, işleminizin reddedilmesine, onaylanmasının gecikmesine veya istenen sürede onaylanması için gerekenin daha fazla maliyetli olmasına neden olabilir. Yalnızca onaylanmış coin'leri kullanmak için bir onay bekleyin.</value>
+    </data>
+    <data name="UndoLastModification" xml:space="preserve">
+        <value>Son değişikliği geri al</value>
+    </data>
+    <data name="UneconomicalRoundMessage" xml:space="preserve">
+        <value>Daha ucuz coinjoin'ler bekleniyor</value>
+    </data>
+    <data name="UnexpextedError" xml:space="preserve">
+        <value>Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin veya destekle iletişime geçin.</value>
+    </data>
+    <data name="Unknown" xml:space="preserve">
+        <value>Bilinmiyor</value>
+    </data>
+    <data name="UnknownErrorDeviceCheck" xml:space="preserve">
+        <value>Bilinmeyen hata. Cihazın bağlı olduğundan ve meşgul olmadığından emin olun, ardından tekrar deneyin.</value>
+    </data>
+    <data name="UnknownPeople" xml:space="preserve">
+        <value>Bilinmeyen Kişiler</value>
+    </data>
+    <data name="UnselectAll" xml:space="preserve">
+        <value>Tümünü seçme</value>
+    </data>
+    <data name="Update" xml:space="preserve">
+        <value>Güncelle</value>
+    </data>
+    <data name="UpdateAvailable" xml:space="preserve">
+        <value>Güncelleme mevcut.</value>
+    </data>
+    <data name="UseDecimalPoint" xml:space="preserve">
+        <value>Virgül yerine ondalık nokta kullanın.</value>
+    </data>
+    <data name="UseOldCoinSelectorAsFallbackInCoinJoinCoinSelector" xml:space="preserve">
+        <value>Eski Coin Seçiciyi yedek olarak kullan</value>
+    </data>
+    <data name="UseOldCoinSelectorAsFallbackInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+        <value>Eski ve yeni coin seçici ikisi de kullanılacak ve daha iyi sonuç seçilecektir.</value>
+    </data>
+    <data name="UserInSendWorkflowMessage" xml:space="preserve">
+        <value>Gönderme diyalog kutusunun kapanmasını bekliyor</value>
+    </data>
+    <data name="UserSupportViewModelCaption" xml:space="preserve">
+        <value>Ginger Wallet'ın kullanıcı destek sitesini aç</value>
+    </data>
+    <data name="UserSupportViewModelKeywords" xml:space="preserve">
+        <value>Kullanıcı, Destek, Web Sitesi</value>
+    </data>
+    <data name="UserSupportViewModelTitle" xml:space="preserve">
+        <value>Kullanıcı Desteği</value>
+    </data>
+    <data name="ValidationErrorNotInRange" xml:space="preserve">
+        <value>Değer, {0} ile {1} arasında olmalıdır.</value>
+    </data>
+    <data name="ValidationErrorNotNumber" xml:space="preserve">
+        <value>Bir sayı değil.</value>
+    </data>
+    <data name="ValueLossRateNormalInCoinJoinCoinSelector" xml:space="preserve">
+        <value>Skor hesaplaması için miktar kaybı normalleştirmesi</value>
+    </data>
+    <data name="ValueLossRateNormalInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+        <value>Daha düşük değerde, coin seçici daha az miktar kaybı olan coin seçimlerini tercih edecektir.</value>
+    </data>
+    <data name="Verify" xml:space="preserve">
+        <value>Doğrula</value>
+    </data>
+    <data name="VerifyRecoveryWords" xml:space="preserve">
+        <value>Kurtarma Kelimelerini Doğrula</value>
+    </data>
+    <data name="VerifyRecoveryWordsErrorCaption" xml:space="preserve">
+        <value>Girdiğiniz Kurtarma Kelimeleri yanlış.</value>
+    </data>
+    <data name="VerifyRecoveryWordsErrorMessage" xml:space="preserve">
+        <value>Tekrar deneyin, ancak Kurtarma Kelimelerinizi doğrulayamıyorsanız, paranızı mümkün olan en kısa sürede yeni bir cüzdana aktarmalısınız.</value>
+    </data>
+    <data name="VersionAvailable" xml:space="preserve">
+        <value>Sürüm {0} artık mevcut</value>
+    </data>
+    <data name="VersionReadyToInstall" xml:space="preserve">
+        <value>Sürüm {0} şimdi kurulmaya hazır</value>
+    </data>
+    <data name="WaitingForBlameRoundMessage" xml:space="preserve">
+        <value>Suçlama turu bekleniyor</value>
+    </data>
+    <data name="WaitingForConfirmedFunds" xml:space="preserve">
+        <value>Onaylanmış fonlar bekleniyor</value>
+    </data>
+    <data name="WaitingForResponse" xml:space="preserve">
+        <value>Yanıt bekleniyor</value>
+    </data>
+    <data name="WaitingMessage" xml:space="preserve">
+        <value>Coinjoin bekleniyor</value>
+    </data>
+    <data name="WaitingRoundMessage" xml:space="preserve">
+        <value>BekleyenTurMesajı</value>
+    </data>
+    <data name="Wallet" xml:space="preserve">
+        <value>Cüzdan</value>
+    </data>
+    <data name="WalletAutomatic" xml:space="preserve">
+        <value>Otomatik</value>
+    </data>
+    <data name="WalletBalance" xml:space="preserve">
+        <value>BAKIYE</value>
+    </data>
+    <data name="WalletCannotBeRenamed" xml:space="preserve">
+        <value>Cüzdan {0} olarak yeniden adlandırılamaz</value>
+    </data>
+    <data name="WalletCoinJoinSettingsViewModelCaption" xml:space="preserve">
+        <value>Cüzdan coinjoin ayarlarını görüntüle</value>
+    </data>
+    <data name="WalletCoinJoinSettingsViewModelKeywords" xml:space="preserve">
+        <value>Cüzdan, Ayarlar</value>
+    </data>
+    <data name="WalletCoinJoinSettingsViewModelTitle" xml:space="preserve">
+        <value>Coinjoin Ayarları</value>
+    </data>
+    <data name="WalletCoinsDescription" xml:space="preserve">
+        <value>Sahip olduğunuz coinlerin listesi.</value>
+    </data>
+    <data name="WalletCoinsViewModelCaption" xml:space="preserve">
+        <value>Cüzdan coinlerini görüntüle</value>
+    </data>
+    <data name="WalletCoinsViewModelKeywords" xml:space="preserve">
+        <value>Cüzdan, Coinler, UTXO</value>
+    </data>
+    <data name="WalletCoinsViewModelTitle" xml:space="preserve">
+        <value>Cüzdan Coinleri</value>
+    </data>
+    <data name="WalletExchangeRate" xml:space="preserve">
+        <value>DEĞİŞİM ORANI</value>
+    </data>
+    <data name="WalletImportFailed" xml:space="preserve">
+        <value>Ginger Wallet, cüzdanınızı içe aktaramadı.</value>
+    </data>
+    <data name="WalletInfoViewModelCaption" xml:space="preserve">
+        <value>Cüzdan bilgilerini görüntüle</value>
+    </data>
+    <data name="WalletInfoViewModelKeywords" xml:space="preserve">
+        <value>Cüzdan, Bilgiler</value>
+    </data>
+    <data name="WalletInfoViewModelTitle" xml:space="preserve">
+        <value>Cüzdan Bilgileri</value>
+    </data>
+    <data name="WalletManualControl" xml:space="preserve">
+        <value>Manuel Kontrol</value>
+    </data>
+    <data name="WalletName" xml:space="preserve">
+        <value>Cüzdan Adı</value>
+    </data>
+    <data name="WalletNameAlreadyExists" xml:space="preserve">
+        <value>{0} adında bir cüzdan zaten mevcut. Lütfen farklı bir ad deneyin.</value>
+    </data>
+    <data name="WalletNameCannotBeEmpty" xml:space="preserve">
+        <value>Cüzdan adı boş olamaz.</value>
+    </data>
+    <data name="WalletNameInvalid" xml:space="preserve">
+        <value>Seçilen cüzdan adı geçersiz. Lütfen farklı bir ad deneyin.</value>
+    </data>
+    <data name="WalletNameTaken" xml:space="preserve">
+        <value>Cüzdan adı zaten alınmış.</value>
+    </data>
+    <data name="WalletPrivacyProgress" xml:space="preserve">
+        <value>GİZLİLİK İLERLEME</value>
+    </data>
+    <data name="WalletReceive" xml:space="preserve">
+        <value>Al</value>
+    </data>
+    <data name="WalletRenameCaption" xml:space="preserve">
+        <value>Cüzdan adınızı değiştirebilirsiniz</value>
+    </data>
+    <data name="WalletSend" xml:space="preserve">
+        <value>Gönder</value>
+    </data>
+    <data name="WalletSettings" xml:space="preserve">
+        <value>Cüzdan Ayarları</value>
+    </data>
+    <data name="WalletSettingsKeywords" xml:space="preserve">
+        <value>Cüzdan, Ayarlar</value>
+    </data>
+    <data name="WalletSettingsViewModelCaption" xml:space="preserve">
+        <value>Cüzdan ayarlarını görüntüle</value>
+    </data>
+    <data name="WalletSettingsViewModelKeywords" xml:space="preserve">
+        <value>Cüzdan, Ayarlar</value>
+    </data>
+    <data name="WalletSettingsViewModelTitle" xml:space="preserve">
+        <value>Cüzdan Ayarları</value>
+    </data>
+    <data name="WalletStatsViewModelCaption" xml:space="preserve">
+        <value>Cüzdan istatistiklerini görüntüle</value>
+    </data>
+    <data name="WalletStatsViewModelKeywords" xml:space="preserve">
+        <value>Cüzdan, İstatistikler</value>
+    </data>
+    <data name="WalletStatsViewModelTitle" xml:space="preserve">
+        <value>Cüzdan İstatistikleri</value>
+    </data>
+    <data name="WalletToolsDoNotForget" xml:space="preserve">
+        <value>Cüzdanınızı geri yüklemek için şifreniz de gereklidir, unutmayın.</value>
+    </data>
+    <data name="WalletToolsRecommend" xml:space="preserve">
+        <value>Cüzdanınızın Kurtarma Kelimelerini zaman zaman doğrulamanız tavsiye edilir.</value>
+    </data>
+    <data name="WalletToolsVerifyRecoveryWords" xml:space="preserve">
+        <value>Kurtarma Kelimelerini Doğrula</value>
+    </data>
+    <data name="WalletTransactions" xml:space="preserve">
+        <value>İşlemler</value>
+    </data>
+    <data name="WasabiDownloadBlocksFromFullNode" xml:space="preserve">
+        <value>Ginger, kontrol ettiğiniz tam bir düğümden blokları indirecek.</value>
+    </data>
+    <data name="WebsiteClearnet" xml:space="preserve">
+        <value>Web sitesi (Clearnet)</value>
+    </data>
+    <data name="Weeks" xml:space="preserve">
+        <value>Haftalar</value>
+    </data>
+    <data name="WeightedAnonymityLossNormalInCoinJoinCoinSelector" xml:space="preserve">
+        <value>Gizlilik farkı normalleştirmesi skor hesaplaması için</value>
+    </data>
+    <data name="WeightedAnonymityLossNormalInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+        <value>Daha düşük değerde, coin seçici daha küçük gizlilik skoru farkı olan coinleri tercih edecektir.</value>
+    </data>
+    <data name="WelcomeToGingerWallet" xml:space="preserve">
+        <value>Ginger Wallet'a Hoş Geldiniz</value>
+    </data>
+    <data name="WhitespaceMessage" xml:space="preserve">
+        <value>Önde ve sonda boşluklara izin verilmez!</value>
+    </data>
+    <data name="WishToHideAddressWithLabels" xml:space="preserve">
+        <value>Aşağıdaki etiketlerle adresi gizlemek ister misiniz?</value>
+    </data>
+    <data name="WouldYouLikeToPersonalizeIt" xml:space="preserve">
+        <value>Bunu kişiselleştirmek ister misiniz?</value>
+    </data>
+    <data name="WrongPassphrase" xml:space="preserve">
+        <value>Yanlış şifre.</value>
+    </data>
+    <data name="Yes" xml:space="preserve">
+        <value>Evet</value>
+    </data>
+    <data name="Yesterday" xml:space="preserve">
+        <value>Dün</value>
+    </data>
+    <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
+        <value>Gizliliğini artırmak için coinjoining'e başla</value>
+    </data>
+</root>

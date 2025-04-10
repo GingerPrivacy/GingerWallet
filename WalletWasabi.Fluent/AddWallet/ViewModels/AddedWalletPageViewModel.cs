@@ -14,7 +14,7 @@ public partial class AddedWalletPageViewModel : RoutableViewModel
 	private readonly IWalletSettingsModel _walletSettings;
 	private IWalletModel? _wallet;
 
-	private AddedWalletPageViewModel(IWalletSettingsModel walletSettings, WalletCreationOptions options)
+	public AddedWalletPageViewModel(IWalletSettingsModel walletSettings, WalletCreationOptions options)
 	{
 		Title = Resources.Success;
 

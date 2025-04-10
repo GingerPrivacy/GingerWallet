@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Threading.Tasks;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Lang;
@@ -31,7 +30,7 @@ public partial class PasswordAuthDialogViewModel : AuthorizationDialogBase
 
 		EnableBack = false;
 
-		AuthorizationFailedMessage = string.Format(CultureInfo.InvariantCulture, Resources.IncorrectPassphrase, Environment.NewLine);
+		AuthorizationFailedMessage = Resources.IncorrectPassphrase.SafeInject(Environment.NewLine);
 	}
 
 	public string ContinueText { get; init; }

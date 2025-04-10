@@ -18,6 +18,7 @@
           <Setter Property="Opacity" Value="1" />
           <Setter Property="FontSize" Value="14" />
           <Setter Property="Margin" Value="20 0" />
+          <Setter Property="HorizontalAlignment" Value="Right" />
           <Setter Property="Background" Value="Transparent" />
           <Setter Property="Foreground" Value="{DynamicResource TextForegroundColor}" />
         </Style>

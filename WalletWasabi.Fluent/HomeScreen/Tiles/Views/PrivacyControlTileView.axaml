@@ -9,52 +9,126 @@
              xmlns:lang="using:WalletWasabi.Lang"
              xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.HomeScreen.Tiles.ViewModels">
 
-  <TileControl Title="{x:Static lang:Resources.WalletPrivacyProgress}" IsBottomContentVisible="{Binding HasPrivateBalance}">
+  <TileControl Title="{x:Static lang:Resources.WalletPrivacyProgress}" IsBottomContentVisible="False">
+    <Panel>
 
-    <DockPanel>
-      <Button Command="{Binding ShowDetailsCommand}" Classes="plain" DockPanel.Dock="Bottom">
-        <Panel IsVisible="{Binding IsPrivacyProgressDisplayed^}">
-          <Panel.Styles>
-            <Style Selector="ProgressBar">
-              <Setter Property="VerticalAlignment" Value="Stretch" />
-              <Setter Property="CornerRadius" Value="10" />
-              <Setter Property="Height" Value="8" />
-            </Style>
-          </Panel.Styles>
+      <TextBlock Margin="10 0" Text="{Binding ProgressText^}" Opacity="0.3" Classes="monoSpaced" FontSize="15"
+                 HorizontalAlignment="Center" VerticalAlignment="Center"
+                 IsVisible="{Binding !IsPrivacyProgressDisplayed^}" TextAlignment="Center" TextWrapping="Wrap" />
 
-          <ProgressBar Background="{DynamicResource PrivacyLevelNoneBrush}" ToolTip.Tip="{x:Static lang:Resources.NonPrivateFunds}" />
-          <ProgressBar Maximum="{Binding TotalAmount^}" Background="{x:Null}"
-                       Value="{Binding SemiPrivateAndPrivateAmount^}" ToolTip.Tip="{x:Static lang:Resources.SemiPrivateFunds}" Foreground="{DynamicResource PrivacyLevelMediumBrush}" />
-          <ProgressBar Maximum="{Binding TotalAmount^}" Background="{x:Null}"
-                       Value="{Binding PrivateAmount^}" ToolTip.Tip="{x:Static lang:Resources.PrivateFunds}" Foreground="{DynamicResource PrivacyLevelStrongBrush}" />
-        </Panel>
-      </Button>
+      <DockPanel HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                 IsVisible="{Binding IsPrivacyProgressDisplayed^}">
 
-      <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="6">
-        <Button Command="{Binding ShowDetailsCommand}" Classes="plain"
-                ToolTip.Tip="{x:Static lang:Resources.ShowDetails}" VerticalAlignment="Center" HorizontalAlignment="Center"
-                Height="36" Width="36">
-          <ThemeImage Source="{StaticResource privacy_indicator_good}" Opacity="0.6" />
+        <Button DockPanel.Dock="Left" Command="{Binding ShowDetailsCommand}" Classes="plain" Margin="0 0 15 0">
+          <Panel>
+            <Panel.Styles>
+              <Style Selector="ProgressRing">
+                <Setter Property="Width" Value="80" />
+                <Setter Property="Height" Value="80" />
+                <Setter Property="StrokeThickness" Value="8" />
+              </Style>
+              <Style Selector="ProgressRing.border">
+                <Setter Property="StrokeBorderThickness" Value="2" />
+              </Style>
+            </Panel.Styles>
+
+            <ProgressRing Percentage="0" Background="{DynamicResource PrivacyLevelNoneBrush}"
+                          ToolTip.Tip="{x:Static lang:Resources.NonPrivateFunds}" />
+            <ProgressRing StrokeBorderThickness="2"
+                          Percentage="{Binding PrivateAndSemiPrivatePercentage^}"
+                          Background="{x:Null}"
+                          Foreground="{DynamicResource PrivacyLevelMediumBrush}"
+                          StrokeBorderBrush="{DynamicResource PrivacyLevelMediumBorderBrush}"
+                          ToolTip.Tip="{x:Static lang:Resources.SemiPrivateFunds}" />
+            <ProgressRing StrokeBorderThickness="2"
+                          Percentage="{Binding PrivatePercentage^}"
+                          Background="{x:Null}"
+                          Foreground="{DynamicResource PrivacyLevelStrongBrush}"
+                          StrokeBorderBrush="{DynamicResource PrivacyLevelStrongBorderBrush}"
+                          ToolTip.Tip="{x:Static lang:Resources.PrivateFunds}" />
+
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
+                       Text="{Binding PercentText}" Classes="bold" FontSize="24" />
+
+          </Panel>
         </Button>
-        <TextBlock HorizontalAlignment="Center"
-                   TextAlignment="Center"
-                   Text="{Binding PercentText}" Classes="h2 bold" />
-      </StackPanel>
-    </DockPanel>
 
-    <TileControl.BottomContent>
-      <StackPanel Margin="0 8 0 0" Opacity="0.8" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
-        <Border VerticalAlignment="Center" BorderThickness="1" CornerRadius="2"
-                BorderBrush="{DynamicResource ButtonForeground}">
-          <TextBlock
-            Text="{Binding PrivateText}" Classes="bold" Margin="4 2" VerticalAlignment="Center" HorizontalAlignment="Center" />
-        </Border>
-        <CopyableItem ContentToCopy="{Binding BalancePrivate}">
-          <PrivacyContentControl Classes="bold"
-                                 VerticalAlignment="Center"
-                                 Content="{Binding BalancePrivate, Converter={x:Static converters:MoneyConverters.ToBtc}}" />
-        </CopyableItem>
-      </StackPanel>
-    </TileControl.BottomContent>
+        <StackPanel DockPanel.Dock="Right" Spacing="8" HorizontalAlignment="Left" VerticalAlignment="Center">
+          <StackPanel.Styles>
+            <Style Selector="PrivacyContentControl.btc">
+              <Setter Property="FontSize" Value="12" />
+            </Style>
+            <Style Selector="PrivacyContentControl.usd">
+              <Setter Property="FontSize" Value="11" />
+              <Setter Property="FontWeight" Value="Light" />
+              <Setter Property="Opacity" Value="0.6" />
+              <Setter Property="MaxPrivacyChars" Value="12" />
+            </Style>
+            <Style Selector="CopyableItem">
+              <Setter Property="HorizontalAlignment" Value="Left" />
+              <Setter Property="Margin" Value="0 0 15 0" />
+            </Style>
+            <Style Selector="Viewbox.btc">
+              <Setter Property="MaxWidth" Value="137" />
+              <Setter Property="MaxHeight" Value="16" />
+            </Style>
+            <Style Selector="Viewbox.usd">
+              <Setter Property="Margin" Value="0 -2 0 0" />
+              <Setter Property="MaxWidth" Value="137" />
+              <Setter Property="MaxHeight" Value="15" />
+            </Style>
+            <Style Selector="PathIcon.icon">
+              <Setter Property="DockPanel.Dock" Value="Left" />
+              <Setter Property="Margin" Value="0 0 10 0" />
+              <Setter Property="Height" Value="20" />
+            </Style>
+          </StackPanel.Styles>
+
+          <DockPanel IsVisible="{Binding HasPrivateBalance^}">
+            <PathIcon Data="{StaticResource privacy_progress_private}"
+                      Foreground="{DynamicResource PrivacyLevelStrongBrush}"
+                      ToolTip.Tip="{x:Static lang:Resources.PrivateFunds}"
+                      Classes="icon" />
+            <StackPanel>
+              <CopyableItem ContentToCopy="{Binding PrivateAmount^.Btc}">
+                <Viewbox Classes="btc">
+                  <PrivacyContentControl Classes="btc monoSpaced"
+                                         Content="{Binding PrivateAmount^.Btc, Converter={x:Static converters:MoneyConverters.ToBtc}}" />
+                </Viewbox>
+              </CopyableItem>
+              <CopyableItem ContentToCopy="{Binding PrivateAmount^.Fiat^}">
+                <Viewbox Classes="usd">
+                  <PrivacyContentControl Classes="usd monoSpaced"
+                                         Content="{Binding PrivateAmount^.Fiat^, Converter={x:Static converters:MoneyConverters.ToFiatApprox}}" />
+                </Viewbox>
+              </CopyableItem>
+            </StackPanel>
+          </DockPanel>
+
+          <DockPanel IsVisible="{Binding HasSemiPrivateBalance^}">
+            <PathIcon Data="{StaticResource privacy_progress_semiprivate}"
+                      Foreground="{DynamicResource PrivacyLevelMediumBrush}"
+                      ToolTip.Tip="{x:Static lang:Resources.SemiPrivateFunds}"
+                      Classes="icon" />
+            <StackPanel>
+              <CopyableItem ContentToCopy="{Binding SemiPrivateAmount^.Btc}">
+                <Viewbox Classes="btc">
+                  <PrivacyContentControl Classes="btc monoSpaced"
+                                         Content="{Binding SemiPrivateAmount^.Btc, Converter={x:Static converters:MoneyConverters.ToBtc}}" />
+                </Viewbox>
+              </CopyableItem>
+              <CopyableItem ContentToCopy="{Binding SemiPrivateAmount^.Fiat^}">
+                <Viewbox Classes="usd">
+                  <PrivacyContentControl Classes="usd monoSpaced"
+                                         Content="{Binding SemiPrivateAmount^.Fiat^, Converter={x:Static converters:MoneyConverters.ToFiatApprox}}" />
+                </Viewbox>
+              </CopyableItem>
+            </StackPanel>
+          </DockPanel>
+
+        </StackPanel>
+
+      </DockPanel>
+    </Panel>
   </TileControl>
 </UserControl>

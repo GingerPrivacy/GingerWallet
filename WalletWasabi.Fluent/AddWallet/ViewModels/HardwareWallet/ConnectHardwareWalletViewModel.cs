@@ -23,7 +23,7 @@ public partial class ConnectHardwareWalletViewModel : RoutableViewModel
 	[AutoNotify] private bool _existingWalletFound;
 	[AutoNotify] private bool _confirmationRequired;
 
-	private ConnectHardwareWalletViewModel(WalletCreationOptions.ConnectToHardwareWallet options)
+	public ConnectHardwareWalletViewModel(WalletCreationOptions.ConnectToHardwareWallet options)
 	{
 		Title = Lang.Resources.HardwareWallet;
 

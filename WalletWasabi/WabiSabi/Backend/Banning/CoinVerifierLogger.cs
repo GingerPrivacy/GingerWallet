@@ -55,7 +55,7 @@ public class CoinVerifierLogger : IAsyncDisposable
 
 		if (apiResponse is not null)
 		{
-			details = apiResponse.GetDetails();
+			details = apiResponse.Details;
 		}
 		else if (exception is not null)
 		{

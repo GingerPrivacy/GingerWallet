@@ -12,7 +12,7 @@ namespace WalletWasabi.Fluent.OpenDirectory.ViewModels;
 	IsLocalized = true)]
 public partial class OpenDataFolderViewModel : TriggerCommandViewModel
 {
-	private OpenDataFolderViewModel()
+	public OpenDataFolderViewModel()
 	{
 		TargetCommand = ReactiveCommand.Create(() => UiContext.FileSystem.OpenFolderInFileExplorer(UiContext.Config.DataDir));
 	}

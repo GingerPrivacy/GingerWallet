@@ -6,6 +6,7 @@
              x:Class="WalletWasabi.Fluent.HomeScreen.WalletSettings.Views.CoinjoinCoinSelectorSettingsView"
              xmlns:lang="using:WalletWasabi.Lang"
              xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.HomeScreen.WalletSettings.ViewModels"
+             x:CompileBindings="True"
              x:DataType="viewModels:CoinjoinCoinSelectorSettingsViewModel">
   <ContentArea Title="{Binding Title}"
                EnableBack="{Binding EnableBack}"
@@ -14,32 +15,27 @@
                MaxHeight="450" Width="750">
 
     <StackPanel Classes="settingsLayout">
-      <DockPanel IsVisible="{Binding UseExperimentalCoinSelector}"
-                 ToolTip.Tip="{x:Static lang:Resources.ForceUsingLowPrivacyCoinsInCoinJoinCoinSelectorToolTip}">
+      <DockPanel ToolTip.Tip="{x:Static lang:Resources.ForceUsingLowPrivacyCoinsInCoinJoinCoinSelectorToolTip}">
         <TextBlock Text="{x:Static lang:Resources.ForceUsingLowPrivacyCoinsInCoinJoinCoinSelector}" />
         <ToggleSwitch IsChecked="{Binding ForceUsingLowPrivacyCoins}" />
       </DockPanel>
 
-      <DockPanel IsVisible="{Binding UseExperimentalCoinSelector}"
-                 ToolTip.Tip="{x:Static lang:Resources.WeightedAnonymityLossNormalInCoinJoinCoinSelectorToolTip}">
+      <DockPanel ToolTip.Tip="{x:Static lang:Resources.WeightedAnonymityLossNormalInCoinJoinCoinSelectorToolTip}">
         <TextBlock Text="{x:Static lang:Resources.WeightedAnonymityLossNormalInCoinJoinCoinSelector}" />
         <TextBox Text="{Binding WeightedAnonymityLossNormal}" />
       </DockPanel>
 
-      <DockPanel IsVisible="{Binding UseExperimentalCoinSelector}"
-                 ToolTip.Tip="{x:Static lang:Resources.ValueLossRateNormalInCoinJoinCoinSelectorToolTip}">
+      <DockPanel ToolTip.Tip="{x:Static lang:Resources.ValueLossRateNormalInCoinJoinCoinSelectorToolTip}">
         <TextBlock Text="{x:Static lang:Resources.ValueLossRateNormalInCoinJoinCoinSelector}" />
         <TextBox Text="{Binding ValueLossRateNormal}" />
       </DockPanel>
 
-      <DockPanel IsVisible="{Binding UseExperimentalCoinSelector}"
-                 ToolTip.Tip="{x:Static lang:Resources.TargetCoinCountPerBucketInCoinJoinCoinSelectorToolTip}">
+      <DockPanel ToolTip.Tip="{x:Static lang:Resources.TargetCoinCountPerBucketInCoinJoinCoinSelectorToolTip}">
         <TextBlock Text="{x:Static lang:Resources.TargetCoinCountPerBucketInCoinJoinCoinSelector}" />
         <TextBox Text="{Binding TargetCoinCountPerBucket}" />
       </DockPanel>
 
-      <DockPanel IsVisible="{Binding UseExperimentalCoinSelector}"
-                 ToolTip.Tip="{x:Static lang:Resources.UseOldCoinSelectorAsFallbackInCoinJoinCoinSelectorToolTip}">
+      <DockPanel ToolTip.Tip="{x:Static lang:Resources.UseOldCoinSelectorAsFallbackInCoinJoinCoinSelectorToolTip}">
         <TextBlock Text="{x:Static lang:Resources.UseOldCoinSelectorAsFallbackInCoinJoinCoinSelector}" />
         <ToggleSwitch IsChecked="{Binding UseOldCoinSelectorAsFallback}" />
       </DockPanel>

@@ -20,7 +20,7 @@ public partial class ReceiveAddressesViewModel : RoutableViewModel
 
 	[AutoNotify] private FlatTreeDataGridSource<AddressViewModel> _source = new(Enumerable.Empty<AddressViewModel>());
 
-	private ReceiveAddressesViewModel(IWalletModel wallet)
+	public ReceiveAddressesViewModel(IWalletModel wallet)
 	{
 		Title = Resources.AddressesAwaitingPayment;
 		_wallet = wallet;
@@ -67,7 +67,7 @@ public partial class ReceiveAddressesViewModel : RoutableViewModel
 		UiContext.Navigate().To().ReceiveAddress(_wallet, a, Services.UiConfig.Autocopy);
 	}
 
-	private async Task OnEditAddressAsync(IAddress address)
+	public async Task OnEditAddressAsync(IAddress address)
 	{
 		var result = await Navigate().To().AddressLabelEdit(_wallet, address).GetResultAsync();
 		if (result is { } labels)

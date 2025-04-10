@@ -8,7 +8,7 @@ namespace WalletWasabi.Fluent.Common.ViewModels;
 
 public partial class SuccessViewModel : RoutableViewModel
 {
-	private SuccessViewModel()
+	public SuccessViewModel()
 	{
 		Title = Resources.Success;
 

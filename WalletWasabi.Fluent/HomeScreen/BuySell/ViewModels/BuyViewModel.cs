@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
@@ -8,11 +7,11 @@ using System.Windows.Input;
 using ReactiveUI;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.HomeScreen.BuySell.Models;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Fluent.Validation;
 using WalletWasabi.Lang;
+using WalletWasabi.Lang.Models;
 using WalletWasabi.Logging;
 using WalletWasabi.Models;
 
@@ -34,9 +33,8 @@ public partial class BuyViewModel : RoutableViewModel
 
 	private CountryModel[] _availableCountries = [];
 
-	public BuyViewModel(UiContext uiContext, IWalletModel wallet)
+	public BuyViewModel(IWalletModel wallet)
 	{
-		UiContext = uiContext;
 		_wallet = wallet;
 		Title = Resources.BuyBitcoin;
 		_selectedCountry = UiContext.ApplicationSettings.GetCurrentBuyCountry();
@@ -131,11 +129,11 @@ public partial class BuyViewModel : RoutableViewModel
 
 		if (decimalAmount > MaxAmount)
 		{
-			errors.Add(ErrorSeverity.Error, string.Format(CultureInfo.InvariantCulture, Resources.AmountCannotExceed, MaxAmount.ToFormattedFiat(SelectedCurrency?.Ticker)));
+			errors.Add(ErrorSeverity.Error,Resources.AmountCannotExceed.SafeInject(MaxAmount.ToFormattedFiat(SelectedCurrency?.Ticker)));
 		}
 		else if (decimalAmount < MinAmount)
 		{
-			errors.Add(ErrorSeverity.Error, string.Format(CultureInfo.InvariantCulture, Resources.AmountMustBeAtLeast, MinAmount.ToFormattedFiat(SelectedCurrency?.Ticker)));
+			errors.Add(ErrorSeverity.Error, Resources.AmountMustBeAtLeast.SafeInject(MinAmount.ToFormattedFiat(SelectedCurrency?.Ticker)));
 		}
 	}
 
@@ -192,7 +190,9 @@ public partial class BuyViewModel : RoutableViewModel
 
 		if (SelectedCurrency is null || (SelectedCurrency is not null && !Currencies.Contains(SelectedCurrency)))
 		{
-			SelectedCurrency = Currencies.FirstOrDefault(x => x.Ticker == "USD") ?? Currencies.First();
+			SelectedCurrency = Currencies.FirstOrDefault(x => x.Ticker == UiContext.ApplicationSettings.SelectedExchangeCurrency) ??
+			                   Currencies.FirstOrDefault(x => x.Ticker == GingerCultureInfo.DefaultFiatCurrencyTicker) ??
+			                   Currencies.First();
 		}
 	}
 

@@ -13,7 +13,7 @@ public partial class ShuttingDownViewModel : RoutableViewModel
 	private readonly ApplicationViewModel _applicationViewModel;
 	private readonly bool _restart;
 
-	private ShuttingDownViewModel(ApplicationViewModel applicationViewModel, bool restart)
+	public ShuttingDownViewModel(ApplicationViewModel applicationViewModel, bool restart)
 	{
 		Title = Resources.PleaseWaitToShutDown;
 

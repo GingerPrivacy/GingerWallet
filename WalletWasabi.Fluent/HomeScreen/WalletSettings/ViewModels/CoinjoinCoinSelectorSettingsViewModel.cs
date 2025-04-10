@@ -1,9 +1,7 @@
-using System.Globalization;
 using System.Reactive;
 using System.Reactive.Linq;
 using ReactiveUI;
 using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Validation;
 using WalletWasabi.Lang;
@@ -22,10 +20,9 @@ public partial class CoinjoinCoinSelectorSettingsViewModel : DialogViewModelBase
 	[AutoNotify] private string _targetCoinCountPerBucket;
 	[AutoNotify] private bool _useOldCoinSelectorAsFallback;
 
-	public CoinjoinCoinSelectorSettingsViewModel(UiContext uiContext, IWalletModel wallet)
+	public CoinjoinCoinSelectorSettingsViewModel(IWalletModel wallet)
 	{
 		_wallet = wallet;
-		UiContext = uiContext;
 		Title = Resources.Configuration;
 
 		NextCommand = ReactiveCommand.Create(() => Close());
@@ -37,9 +34,9 @@ public partial class CoinjoinCoinSelectorSettingsViewModel : DialogViewModelBase
 		this.ValidateProperty(x => x.TargetCoinCountPerBucket, x => ValidateDouble(x, TargetCoinCountPerBucket, 1.0, 30.0));
 
 		_forceUsingLowPrivacyCoins = _wallet.Settings.ForceUsingLowPrivacyCoins;
-		_weightedAnonymityLossNormal = _wallet.Settings.WeightedAnonymityLossNormal.ToString(CultureInfo.InvariantCulture);
-		_valueLossRateNormal = _wallet.Settings.ValueLossRateNormal.ToString(CultureInfo.InvariantCulture);
-		_targetCoinCountPerBucket = _wallet.Settings.TargetCoinCountPerBucket.ToString(CultureInfo.InvariantCulture);
+		_weightedAnonymityLossNormal = _wallet.Settings.WeightedAnonymityLossNormal.ToString(Resources.Culture.NumberFormat);
+		_valueLossRateNormal = _wallet.Settings.ValueLossRateNormal.ToString(Resources.Culture.NumberFormat);
+		_targetCoinCountPerBucket = _wallet.Settings.TargetCoinCountPerBucket.ToString(Resources.Culture.NumberFormat);
 		_useOldCoinSelectorAsFallback = _wallet.Settings.UseOldCoinSelectorAsFallback;
 
 		this.WhenAnyValue(x => x.ForceUsingLowPrivacyCoins)
@@ -57,7 +54,7 @@ public partial class CoinjoinCoinSelectorSettingsViewModel : DialogViewModelBase
 			.ObserveOn(RxApp.TaskpoolScheduler)
 			.Subscribe(x =>
 			{
-				if (double.TryParse(x, out var result) && result != _wallet.Settings.WeightedAnonymityLossNormal)
+				if (double.TryParse(x, Resources.Culture.NumberFormat, out var result) && result != _wallet.Settings.WeightedAnonymityLossNormal)
 				{
 					_wallet.Settings.WeightedAnonymityLossNormal = result;
 					_wallet.Settings.Save();
@@ -70,7 +67,7 @@ public partial class CoinjoinCoinSelectorSettingsViewModel : DialogViewModelBase
 			.ObserveOn(RxApp.TaskpoolScheduler)
 			.Subscribe(x =>
 			{
-				if (double.TryParse(x, out var result) && result != _wallet.Settings.ValueLossRateNormal)
+				if (double.TryParse(x, Resources.Culture.NumberFormat, out var result) && result != _wallet.Settings.ValueLossRateNormal)
 				{
 					_wallet.Settings.ValueLossRateNormal = result;
 					_wallet.Settings.Save();
@@ -83,7 +80,7 @@ public partial class CoinjoinCoinSelectorSettingsViewModel : DialogViewModelBase
 			.ObserveOn(RxApp.TaskpoolScheduler)
 			.Subscribe(x =>
 			{
-				if (double.TryParse(x, out var result) && result != _wallet.Settings.TargetCoinCountPerBucket)
+				if (double.TryParse(x, Resources.Culture.NumberFormat, out var result) && result != _wallet.Settings.TargetCoinCountPerBucket)
 				{
 					_wallet.Settings.TargetCoinCountPerBucket = result;
 					_wallet.Settings.Save();
@@ -102,14 +99,14 @@ public partial class CoinjoinCoinSelectorSettingsViewModel : DialogViewModelBase
 
 	private void ValidateDouble(IValidationErrors errors, string value, double min, double max)
 	{
-		if (!double.TryParse(value, out var result))
+		if (!double.TryParse(value, Resources.Culture.NumberFormat, out var result))
 		{
 			errors.Add(ErrorSeverity.Error, Resources.ValidationErrorNotNumber);
 			return;
 		}
 		if (result < min || result > max)
 		{
-			errors.Add(ErrorSeverity.Error, error: string.Format(CultureInfo.InvariantCulture, Resources.ValidationErrorNotInRange, min, max));
+			errors.Add(ErrorSeverity.Error, error: Resources.ValidationErrorNotInRange.SafeInject(min, max));
 			return;
 		}
 	}

@@ -157,15 +157,13 @@ public class WabiSabiConfig : ConfigBase
 	[JsonProperty(PropertyName = "IsCoinVerifierEnabled", DefaultValueHandling = DefaultValueHandling.Populate)]
 	public bool IsCoinVerifierEnabled { get; set; } = false;
 
-	[DefaultValueIntegerArray("")]
+	[DefaultValue("")]
 	[JsonProperty(PropertyName = "RiskFlags", DefaultValueHandling = DefaultValueHandling.Populate)]
-	[JsonConverter(typeof(IntegerArrayJsonConverter))]
-	public IEnumerable<int> RiskFlags { get; set; } = Enumerable.Empty<int>();
+	public string RiskFlags { get; set; } = "";
 
-	[DefaultValueDoubleArrayAttribute("")]
+	[DefaultValue("")]
 	[JsonProperty(PropertyName = "RiskScores", DefaultValueHandling = DefaultValueHandling.Populate)]
-	[JsonConverter(typeof(DoubleArrayJsonConverter))]
-	public IEnumerable<double> RiskScores { get; set; } = Enumerable.Empty<double>();
+	public string RiskScores { get; set; } = "";
 
 	[DefaultValue("")]
 	[JsonProperty(PropertyName = "CoinVerifierProvider", DefaultValueHandling = DefaultValueHandling.Populate)]

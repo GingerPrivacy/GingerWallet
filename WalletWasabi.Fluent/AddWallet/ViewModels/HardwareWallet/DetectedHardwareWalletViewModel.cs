@@ -15,7 +15,7 @@ namespace WalletWasabi.Fluent.AddWallet.ViewModels.HardwareWallet;
 
 public partial class DetectedHardwareWalletViewModel : RoutableViewModel
 {
-	private DetectedHardwareWalletViewModel(WalletCreationOptions.ConnectToHardwareWallet options)
+	public DetectedHardwareWalletViewModel(WalletCreationOptions.ConnectToHardwareWallet options)
 	{
 		Title = Resources.HardwareWallet;
 

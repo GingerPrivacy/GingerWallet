@@ -16,7 +16,7 @@ public partial class TwoFactoryAuthenticationDialogViewModel : DialogViewModelBa
 
 	private string? _clientServerId;
 
-	private TwoFactoryAuthenticationDialogViewModel()
+	public TwoFactoryAuthenticationDialogViewModel()
 	{
 		Title = Resources.TwoFactorSetup;
 

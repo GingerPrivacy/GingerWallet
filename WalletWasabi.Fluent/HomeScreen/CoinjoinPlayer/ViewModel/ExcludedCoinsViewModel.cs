@@ -9,7 +9,6 @@ using ReactiveUI;
 using WalletWasabi.Fluent.CoinList.ViewModels;
 using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
 using WalletWasabi.Fluent.Extensions;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 
 namespace WalletWasabi.Fluent.HomeScreen.CoinjoinPlayer.ViewModel;
@@ -23,12 +22,11 @@ public partial class ExcludedCoinsViewModel : DialogViewModelBase<Unit>
 
 	[AutoNotify] private bool _hasSelection;
 
-	public ExcludedCoinsViewModel(UiContext uiContext, IWalletModel wallet)
+	public ExcludedCoinsViewModel(IWalletModel wallet)
 	{
-		UiContext = uiContext;
 		_wallet = wallet;
 		var initialCoins = wallet.Coins.List.Items.Where(x => x.IsExcludedFromCoinJoin);
-		CoinList = new CoinListViewModel(UiContext, wallet.Coins, initialCoins.ToList(), allowCoinjoiningCoinSelection: false, ignorePrivacyMode: true);
+		CoinList = new CoinListViewModel(wallet.Coins, initialCoins.ToList(), allowCoinjoiningCoinSelection: false, ignorePrivacyMode: true);
 		SetupCancel(enableCancel: true, enableCancelOnEscape: true, enableCancelOnPressed: true);
 		NextCommand = ReactiveCommand.Create(() => Close());
 		ToggleSelectionCommand = ReactiveCommand.Create(() => SelectAll(!CoinList.Selection.Any()));
@@ -54,8 +52,16 @@ public partial class ExcludedCoinsViewModel : DialogViewModelBase<Unit>
 			.DoAsync(async x => await _wallet.Coins.UpdateExcludedCoinsFromCoinjoinAsync(x.ToArray()))
 			.Subscribe()
 			.DisposeWith(disposables);
+	}
 
-		CoinList.DisposeWith(disposables);
+	protected override void OnNavigatedFrom(bool isInHistory)
+	{
+		base.OnNavigatedFrom(isInHistory);
+
+		if (!isInHistory)
+		{
+			CoinList.Dispose();
+		}
 	}
 
 	private void SelectAll(bool value)

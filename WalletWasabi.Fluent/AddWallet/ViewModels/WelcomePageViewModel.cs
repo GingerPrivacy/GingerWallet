@@ -1,13 +1,14 @@
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ReactiveUI;
+using WalletWasabi.Extensions;
 using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Models.UI;
-using WalletWasabi.Fluent.Settings.Models;
 using WalletWasabi.Lang;
 using WalletWasabi.Models;
 
@@ -22,7 +23,7 @@ public partial class WelcomePageViewModel : DialogViewModelBase<Unit>
 	[AutoNotify] private bool _isRestartNeeded;
 	[AutoNotify] private DisplayLanguage _selectedDisplayLanguage;
 
-	private WelcomePageViewModel()
+	public WelcomePageViewModel()
 	{
 		SetupCancel(enableCancel: false, enableCancelOnEscape: false, enableCancelOnPressed: false);
 
@@ -49,16 +50,18 @@ public partial class WelcomePageViewModel : DialogViewModelBase<Unit>
 			.Skip(1)
 			.Subscribe(lang =>
 			{
-				var preset = LocalizationPreset.GetPreset(lang);
+				var cultureName = lang.GetDescription() ?? "en-US";
+				var culture = CultureInfo.GetCultureInfo(cultureName);
+				var currencyCode = culture.GuessPreferredCurrencyCode(UiContext.AmountProvider.SupportedCurrencies);
 
-				Settings.SelectedDisplayLanguage = preset.Language;
-				Settings.SelectedExchangeCurrency = preset.ExchangeCurrency;
+				Settings.SelectedDisplayLanguage = lang;
+				Settings.SelectedExchangeCurrency = currencyCode;
 			});
 	}
 
 	public IObservable<bool> CanGoBack { get; }
 
-	public IEnumerable<DisplayLanguage> DisplayLanguagesList => Enum.GetValues(typeof(DisplayLanguage)).Cast<DisplayLanguage>();
+	public IEnumerable<DisplayLanguage> DisplayLanguagesList => Enum.GetValues(typeof(DisplayLanguage)).Cast<DisplayLanguage>().OrderBy(x => x.ToLocalTranslation());
 
 	public IApplicationSettings Settings => UiContext.ApplicationSettings;
 

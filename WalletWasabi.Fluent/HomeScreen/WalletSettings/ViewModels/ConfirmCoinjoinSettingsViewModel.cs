@@ -11,7 +11,7 @@ public partial class ConfirmCoinjoinSettingsViewModel : DialogViewModelBase<Unit
 {
 	private readonly WalletSettingsViewModel _settings;
 
-	private ConfirmCoinjoinSettingsViewModel(WalletSettingsViewModel settings)
+	public ConfirmCoinjoinSettingsViewModel(WalletSettingsViewModel settings)
 	{
 		_settings = settings;
 		Title = Resources.Coinjoin;

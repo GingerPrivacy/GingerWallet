@@ -1,3 +1,5 @@
+using GingerCommon.Logging;
+using Microsoft.Extensions.Logging;
 using NBitcoin;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -11,7 +13,6 @@ using WalletWasabi.BitcoinCore.Rpc;
 using WalletWasabi.Blockchain.BlockFilters;
 using WalletWasabi.Blockchain.Blocks;
 using WalletWasabi.Helpers;
-using WalletWasabi.Logging;
 using WalletWasabi.Nostr;
 using WalletWasabi.Services;
 using WalletWasabi.WabiSabi;
@@ -58,6 +59,15 @@ public class Global : IDisposable
 
 		MempoolMirror = new MempoolMirror(TimeSpan.FromSeconds(21), RpcClient, P2pNode);
 		CoinJoinMempoolManager = new CoinJoinMempoolManager(CoinJoinIdStore, MempoolMirror);
+	}
+
+	public void CreateDiscordLogger()
+	{
+		string discordWebhook = Config.DiscordLoggerWebhook;
+		if (!string.IsNullOrEmpty(discordWebhook))
+		{
+			Logger.CreateDiscordLogger(LogLevel.Information, HttpClientFactory, discordWebhook);
+		}
 	}
 
 	public string DataDir { get; }
@@ -107,29 +117,15 @@ public class Global : IDisposable
 		{
 			try
 			{
-				if (!Uri.TryCreate(wabiSabiConfig.CoinVerifierApiUrl, UriKind.RelativeOrAbsolute, out Uri? url))
-				{
-					throw new ArgumentException($"Blacklist API URL is invalid in {nameof(WabiSabiConfig)}.");
-				}
-				if (string.IsNullOrEmpty(wabiSabiConfig.CoinVerifierApiAuthToken))
-				{
-					throw new ArgumentException($"Blacklist API token was not provided in {nameof(WabiSabiConfig)}.");
-				}
-				if (wabiSabiConfig.RiskFlags is null)
-				{
-					throw new ArgumentException($"Risk indicators were not provided in {nameof(WabiSabiConfig)}.");
-				}
-
-				CoinVerifierHttpClient.BaseAddress = url;
-				CoinVerifierHttpClient.Timeout = CoinVerifierApiClient.ApiRequestTimeout;
-
-				if (!Enum.TryParse(CoordinatorParameters.RuntimeCoordinatorConfig.CoinVerifierProvider, out CoinVerifierProvider provider))
-				{
-					throw new ArgumentException($"CoinVerifierProvider is invalid in {nameof(WabiSabiConfig)}.");
-				}
+				CoinVerifierConfig config = new(
+					wabiSabiConfig.CoinVerifierProvider,
+					wabiSabiConfig.CoinVerifierApiUrl,
+					wabiSabiConfig.CoinVerifierApiAuthToken,
+					wabiSabiConfig.CoinVerifierApiSecret,
+					string.IsNullOrEmpty(wabiSabiConfig.RiskScores) ? wabiSabiConfig.RiskFlags : wabiSabiConfig.RiskScores);
 
 				WhiteList = await Whitelist.CreateAndLoadFromFileAsync(CoordinatorParameters.WhitelistFilePath, wabiSabiConfig, cancel).ConfigureAwait(false);
-				CoinVerifierApiClient = new CoinVerifierApiClient(provider, wabiSabiConfig.CoinVerifierApiAuthToken, wabiSabiConfig.CoinVerifierApiSecret, CoinVerifierHttpClient);
+				CoinVerifierApiClient = new CoinVerifierApiClient(CoinVerifierHttpClient, config);
 				CoinVerifier = new(CoinJoinIdStore, CoinVerifierApiClient, WhiteList, wabiSabiConfig, auditsDirectoryPath: Path.Combine(CoordinatorParameters.CoordinatorDataDir, "CoinVerifierAudits"));
 
 				Logger.LogInfo("CoinVerifier created successfully.");
@@ -137,6 +133,13 @@ public class Global : IDisposable
 			catch (Exception exc)
 			{
 				throw new InvalidOperationException($"There was an error when creating {nameof(CoinVerifier)}. Details: '{exc}'", exc);
+			}
+		}
+		else
+		{
+			if (Config.Network == Network.Main)
+			{
+				throw new InvalidOperationException($"{nameof(CoinVerifier)} is mandatory on the main network.");
 			}
 		}
 

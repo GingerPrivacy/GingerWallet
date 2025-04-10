@@ -20,7 +20,7 @@
                                  DockPanel.Dock="{TemplateBinding CopyButtonPlacement}"
                                  Width="30"
                                  Text="{Binding Path=CopyableContent, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static conv:StringConverters.AsString}}"
-                                 IsVisible="{TemplateBinding IsCopyButtonVisible}"
+                                 ShowCopyButton="{TemplateBinding IsCopyButtonVisible}"
                                  VerticalAlignment="Center"
                                  HorizontalAlignment="Center"/>
           <Button Classes="plain"

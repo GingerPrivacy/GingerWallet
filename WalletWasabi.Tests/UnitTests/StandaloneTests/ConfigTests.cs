@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using WalletWasabi.Bases;
 using WalletWasabi.Daemon;
+using WalletWasabi.Lang.Models;
 using WalletWasabi.Tests.Helpers;
 using WalletWasabi.WabiSabi.Backend;
 using WalletWasabi.WabiSabi.Models;
@@ -59,9 +60,12 @@ public class ConfigTests
 		string workDirectory = await Common.GetEmptyWorkDirAsync();
 		string configPath = Path.Combine(workDirectory, $"{nameof(ToFileAndLoadFileTestAsync)}.json");
 
-		string expected = GetPersistentConfigString();
-
 		PersistentConfig config = new() { LocalBitcoinCoreDataDir = TestLocalBitcoinCoreDataDir };
+		DecimalSeparator = config.DecimalSeparator;
+		GroupSeparator = config.GroupSeparator;
+		ExchangeCurrency = config.ExchangeCurrency;
+
+		string expected = GetPersistentConfigString();
 
 		string storedJson = ConfigManagerNg.ToFile(configPath, config);
 		Assert.Equal(expected, storedJson.ReplaceLineEndings("\n"));
@@ -74,6 +78,13 @@ public class ConfigTests
 		string reserialized = JsonSerializer.Serialize(readConfig, ConfigManagerNg.DefaultOptions);
 		Assert.Equal(expected, reserialized.ReplaceLineEndings("\n"));
 	}
+
+	/*
+	 * These are set by the OS culture during init.
+	 */
+	public static string GroupSeparator { get; set; }
+	public static string DecimalSeparator { get; set; }
+	public static string ExchangeCurrency { get; set; }
 
 	public static string GetWasabiConfigString(decimal coordinationFeeRate = 0.003m)
 		=> $$"""
@@ -177,8 +188,14 @@ public class ConfigTests
 			  "AbsoluteMinInputCount": 6,
 			  "MaxBlockRepositorySize": 1000,
 			  "Language": 1,
-			  "ExchangeCurrency": "USD",
-			  "ExtraNostrPubKey": ""
+			  "ExchangeCurrency": "{{ExchangeCurrency}}",
+			  "GroupSeparator": "{{GroupSeparator}}",
+			  "DecimalSeparator": "{{DecimalSeparator}}",
+			  "ExtraNostrPubKey": "",
+			  "BtcFractionGroup": [
+			    4,
+			    4
+			  ]
 			}
 			""".ReplaceLineEndings("\n");
 }

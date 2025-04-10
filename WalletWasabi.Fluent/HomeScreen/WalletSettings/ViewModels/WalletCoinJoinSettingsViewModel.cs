@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -7,6 +6,7 @@ using System.Windows.Input;
 using DynamicData;
 using NBitcoin;
 using ReactiveUI;
+using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
@@ -56,11 +56,11 @@ public partial class WalletCoinJoinSettingsViewModel : RoutableViewModel
 		_wallet = walletModel;
 		_isCoinjoinProfileSelected = _wallet.Settings.IsCoinjoinProfileSelected;
 		_autoCoinJoin = _wallet.Settings.AutoCoinjoin;
-		_plebStopThreshold = _wallet.Settings.PlebStopThreshold.ToString();
-		_anonScoreTarget = _wallet.Settings.AnonScoreTarget.ToString(CultureInfo.InvariantCulture);
+		_plebStopThreshold = _wallet.Settings.PlebStopThreshold.ToString(Resources.Culture.NumberFormat);
+		_anonScoreTarget = _wallet.Settings.AnonScoreTarget.ToString(Resources.Culture.NumberFormat);
 		_selectedOutputWallet = UiContext.WalletRepository.Wallets.Items.First(x => x.Id == _wallet.Settings.OutputWalletId);
 		_redCoinIsolation = _wallet.Settings.RedCoinIsolation;
-		_safeMiningFeeRate = _wallet.Settings.SafeMiningFeeRate.ToString(CultureInfo.InvariantCulture);
+		_safeMiningFeeRate = _wallet.Settings.SafeMiningFeeRate.ToString(Resources.Culture.NumberFormat);
 
 		_timeFrames =
 		[
@@ -115,15 +115,15 @@ public partial class WalletCoinJoinSettingsViewModel : RoutableViewModel
 			.Skip(1)
 			.Throttle(TimeSpan.FromMilliseconds(1000))
 			.ObserveOn(RxApp.TaskpoolScheduler)
-			.Subscribe(
-				x =>
+			.Subscribe(x =>
+			{
+				x = x.PrepareForMoneyParsing();
+				if (Money.TryParse(x, out var result) && result != _wallet.Settings.PlebStopThreshold)
 				{
-					if (Money.TryParse(x, out var result) && result != _wallet.Settings.PlebStopThreshold)
-					{
-						_wallet.Settings.PlebStopThreshold = result;
-						_wallet.Settings.Save();
-					}
-				});
+					_wallet.Settings.PlebStopThreshold = result;
+					_wallet.Settings.Save();
+				}
+			});
 
 		this.WhenAnyValue(x => x.AnonScoreTarget)
 			.Skip(1)
@@ -217,7 +217,7 @@ public partial class WalletCoinJoinSettingsViewModel : RoutableViewModel
 		}
 		if (result < min || result > max)
 		{
-			errors.Add(ErrorSeverity.Error, error: string.Format(CultureInfo.InvariantCulture, Resources.ValidationErrorNotInRange, min, max));
+			errors.Add(ErrorSeverity.Error, error:Resources.ValidationErrorNotInRange.SafeInject(min, max));
 			return;
 		}
 	}

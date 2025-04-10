@@ -18,7 +18,6 @@ using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.HomeScreen.Send.Models;
 using WalletWasabi.Fluent.Models.Transactions;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.Models;
 using WalletWasabi.Fluent.Navigation.ViewModels;
@@ -44,7 +43,7 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 	[AutoNotify] private bool _canUndo;
 	[AutoNotify] private bool _isCoinControlVisible;
 
-	public TransactionPreviewViewModel(UiContext uiContext, IWalletModel walletModel, SendFlowModel sendFlow)
+	public TransactionPreviewViewModel(IWalletModel walletModel, SendFlowModel sendFlow)
 	{
 		Title = Resources.PreviewTransaction;
 		_undoHistory = new();
@@ -57,8 +56,8 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 		_cancellationTokenSource = new CancellationTokenSource();
 
 		PrivacySuggestions = new PrivacySuggestionsFlyoutViewModel(walletModel, _sendFlow);
-		CurrentTransactionSummary = new TransactionSummaryViewModel(uiContext, this, walletModel, _info);
-		PreviewTransactionSummary = new TransactionSummaryViewModel(uiContext, this, walletModel, _info, true);
+		CurrentTransactionSummary = new TransactionSummaryViewModel(this, walletModel, _info);
+		PreviewTransactionSummary = new TransactionSummaryViewModel(this, walletModel, _info, true);
 
 		TransactionSummaries =
 		[
@@ -161,7 +160,7 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 	{
 		DialogViewModelBase<FeeRate> feeDialog = _info.IsCustomFeeUsed
 			? new CustomFeeRateDialogViewModel(_info)
-			: new SendFeeViewModel(UiContext, _wallet, _info, false);
+			: new SendFeeViewModel(_wallet, _info, false);
 
 		var feeDialogResult = await NavigateDialogAsync(feeDialog, feeDialog.DefaultTarget);
 
@@ -206,7 +205,7 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 	{
 		if (_info.FeeRate == FeeRate.Zero)
 		{
-			var feeDialogResult = await NavigateDialogAsync(new SendFeeViewModel(UiContext, _wallet, _info, true));
+			var feeDialogResult = await NavigateDialogAsync(new SendFeeViewModel(_wallet, _info, true));
 			if (feeDialogResult.Kind == DialogResultKind.Normal && feeDialogResult.Result is { } newFeeRate)
 			{
 				_info.FeeRate = newFeeRate;

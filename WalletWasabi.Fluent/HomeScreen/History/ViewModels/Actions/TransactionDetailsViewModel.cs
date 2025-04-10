@@ -5,7 +5,6 @@ using System.Reactive.Linq;
 using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Blockchain.Analysis.Clustering;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Lang;
@@ -30,10 +29,9 @@ public partial class TransactionDetailsViewModel : RoutableViewModel
 	[AutoNotify] private FeeRate? _feeRate;
 	[AutoNotify] private bool _isFeeRateVisible;
 
-	public TransactionDetailsViewModel(UiContext uiContext, IWalletModel wallet, TransactionModel model)
+	public TransactionDetailsViewModel(IWalletModel wallet, TransactionModel model)
 	{
 		Title = Resources.TransactionDetails;
-		UiContext = uiContext;
 		_wallet = wallet;
 
 		NextCommand = ReactiveCommand.Create(OnNext);
@@ -65,7 +63,7 @@ public partial class TransactionDetailsViewModel : RoutableViewModel
 		BlockHeight = model.BlockHeight;
 		Confirmations = model.Confirmations;
 		FeeRate = model.FeeRate;
-		IsFeeRateVisible = FeeRate != FeeRate.Zero;
+		IsFeeRateVisible = FeeRate is not null && FeeRate != FeeRate.Zero;
 
 		var confirmationTime = _wallet.Transactions.TryEstimateConfirmationTime(model);
 		if (confirmationTime is { })

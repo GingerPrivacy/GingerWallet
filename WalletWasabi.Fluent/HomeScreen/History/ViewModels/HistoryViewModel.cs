@@ -34,7 +34,7 @@ public partial class HistoryViewModel : ActivatableViewModel
 	[AutoNotify(SetterModifier = AccessModifier.Private)]
 	private bool _isTransactionHistoryEmpty;
 
-	private HistoryViewModel(IWalletModel wallet)
+	public HistoryViewModel(IWalletModel wallet)
 	{
 		_wallet = wallet;
 	}
@@ -101,7 +101,7 @@ public partial class HistoryViewModel : ActivatableViewModel
 	{
 		return new PrivacyTextColumn<HistoryItemViewModelBase>(
 			"",
-			x => $"{(x.Transaction.DisplayAmount == Money.Zero ? " " : "")}{x.Transaction.DisplayAmount.ToBtcWithUnit(true)}",
+			x => $"{(x.Transaction.DisplayAmount == Money.Zero ? " " : "")}{x.Transaction.DisplayAmount.ToFormattedString(fplus: true, addTicker: true)}",
 			type: PrivacyCellType.Amount,
 			options: new ColumnOptions<HistoryItemViewModelBase>
 			{
@@ -221,14 +221,14 @@ public partial class HistoryViewModel : ActivatableViewModel
 	{
 		HistoryItemViewModelBase viewModel = transaction.Type switch
 		{
-			TransactionType.IncomingTransaction => new TransactionHistoryItemViewModel(UiContext, _wallet, transaction),
-			TransactionType.OutgoingTransaction => new TransactionHistoryItemViewModel(UiContext, _wallet, transaction),
-			TransactionType.SelfTransferTransaction => new TransactionHistoryItemViewModel(UiContext, _wallet, transaction),
-			TransactionType.Coinjoin => new CoinJoinHistoryItemViewModel(UiContext, _wallet, transaction),
-			TransactionType.CoinjoinGroup => new CoinJoinsHistoryItemViewModel(UiContext, _wallet, transaction),
-			TransactionType.Cancellation => new TransactionHistoryItemViewModel(UiContext, _wallet, transaction),
-			TransactionType.CPFP => new SpeedUpHistoryItemViewModel(UiContext, _wallet, transaction, parent),
-			_ => new TransactionHistoryItemViewModel(UiContext, _wallet, transaction)
+			TransactionType.IncomingTransaction => new TransactionHistoryItemViewModel(_wallet, transaction),
+			TransactionType.OutgoingTransaction => new TransactionHistoryItemViewModel(_wallet, transaction),
+			TransactionType.SelfTransferTransaction => new TransactionHistoryItemViewModel(_wallet, transaction),
+			TransactionType.Coinjoin => new CoinJoinHistoryItemViewModel(_wallet, transaction),
+			TransactionType.CoinjoinGroup => new CoinJoinsHistoryItemViewModel(_wallet, transaction),
+			TransactionType.Cancellation => new TransactionHistoryItemViewModel(_wallet, transaction),
+			TransactionType.CPFP => new SpeedUpHistoryItemViewModel(_wallet, transaction, parent),
+			_ => new TransactionHistoryItemViewModel(_wallet, transaction)
 		};
 
 		var children = transaction.Children.Reverse();

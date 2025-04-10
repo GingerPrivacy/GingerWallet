@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Threading.Tasks;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.HomeScreen.BuySell.Models;
@@ -12,6 +11,6 @@ public class SellOfferViewModel : OfferViewModel
 	{
 		Amount = offer.AmountTo.ToFormattedFiat(offer.CurrencyTo);
 		Fee = offer.Fee.ToFormattedFiat(offer.CurrencyTo);
-		FeeToolTip = string.Format(CultureInfo.InvariantCulture, Resources.AfterDeductingFee, Fee, offer.AmountTo.ToFormattedFiat(offer.CurrencyTo));
+		FeeToolTip = Resources.AfterDeductingFee.SafeInject(Fee, offer.AmountTo.ToFormattedFiat(offer.CurrencyTo));
 	}
 }

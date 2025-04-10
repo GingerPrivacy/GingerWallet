@@ -11,8 +11,6 @@ public interface INavigate : IWalletNavigation
 
 	INavigationStack<RoutableViewModel> DialogScreen { get; }
 
-	INavigationStack<RoutableViewModel> FullScreen { get; }
-
 	INavigationStack<RoutableViewModel> CompactDialogScreen { get; }
 
 	IObservable<bool> IsDialogOpen { get; }

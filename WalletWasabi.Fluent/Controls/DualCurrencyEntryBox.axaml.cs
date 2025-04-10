@@ -12,7 +12,7 @@ using Avalonia.VisualTree;
 using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Fluent.Extensions;
-using WalletWasabi.Userfacing;
+using WalletWasabi.Fluent.Helpers;
 
 namespace WalletWasabi.Fluent.Controls;
 
@@ -242,12 +242,9 @@ public class DualCurrencyEntryBox : TemplatedControl
 		}
 		else
 		{
-			if (CurrencyInput.TryCorrectBitcoinAmount(text, out var better))
-			{
-				text = better;
-			}
+			text = TextHelpers.ClearNumberFormat(text);
 
-			if (decimal.TryParse(text, NumberStyles.Number, CurrencyInput.InvariantNumberFormat, out var decimalValue))
+			if (decimal.TryParse(text, NumberStyles.Number, Lang.Resources.Culture.NumberFormat, out var decimalValue))
 			{
 				SetBtcAmount(decimalValue);
 			}
@@ -269,7 +266,7 @@ public class DualCurrencyEntryBox : TemplatedControl
 		}
 		else
 		{
-			if (decimal.TryParse(text, NumberStyles.Number, CurrencyInput.InvariantNumberFormat, out var decimalValue))
+			if (decimal.TryParse(text, NumberStyles.Number, Lang.Resources.Culture.NumberFormat, out var decimalValue))
 			{
 				SetBtcAmount(FiatToBitcoin(decimalValue));
 			}
@@ -288,12 +285,12 @@ public class DualCurrencyEntryBox : TemplatedControl
 
 	private void UpdateTextDisplay(bool insertValue)
 	{
-		Watermark = FullFormatBtc(0);
+		Watermark = "0 BTC";
 
 		var text = LeftEntryBox?.Text ?? "";
 		if (_isTextInputFocused)
 		{
-			text = insertValue ? AmountBtc?.ToString(CultureInfo.InvariantCulture) : RemoveFormat(text);
+			text = insertValue ? AmountBtc?.ToString(Lang.Resources.Culture.NumberFormat) : TextHelpers.ClearNumberFormat(text);
 		}
 		else
 		{
@@ -318,11 +315,11 @@ public class DualCurrencyEntryBox : TemplatedControl
 		var text = RightEntryBox?.Text ?? "";
 		if (_isConversationTextFocused)
 		{
-			text = insertValue ? RemoveFormat(conversion?.FormattedFiat(format: "0.##") ?? "") : RemoveFormat(text);
+			text = insertValue ? TextHelpers.ClearNumberFormat(conversion?.FormattedFiat(format: "#,##0.##") ?? "") : TextHelpers.ClearNumberFormat(text);
 		}
 		else
 		{
-			text = AmountBtc > 0 ? conversion?.FormattedFiat(format: "0.##") ?? string.Empty : string.Empty;
+			text = AmountBtc > 0 ? conversion?.FormattedFiat(format: "#,##0.##") ?? string.Empty : string.Empty;
 		}
 
 		SetCurrentValue(ConversionTextProperty, text);
@@ -343,11 +340,6 @@ public class DualCurrencyEntryBox : TemplatedControl
 	private decimal? BitcoinToFiat(decimal? btcValue)
 	{
 		return btcValue * ConversionRate;
-	}
-
-	private static string FullFormatBtc(decimal value)
-	{
-		return $"{value.FormattedBtc()} BTC";
 	}
 
 	private static string FullFormatFiat(decimal value, string currencyCode, bool approximate)
@@ -425,8 +417,6 @@ public class DualCurrencyEntryBox : TemplatedControl
 
 		focusOn?.Focus();
 	}
-
-	private string RemoveFormat(string text) => text.Replace(" ", "");
 
 	protected override void UpdateDataValidation(AvaloniaProperty property, BindingValueType state, Exception? error)
 	{

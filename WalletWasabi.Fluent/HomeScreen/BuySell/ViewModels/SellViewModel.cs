@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
@@ -8,11 +7,11 @@ using System.Windows.Input;
 using ReactiveUI;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.HomeScreen.BuySell.Models;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Fluent.Validation;
 using WalletWasabi.Lang;
+using WalletWasabi.Lang.Models;
 using WalletWasabi.Logging;
 using WalletWasabi.Models;
 
@@ -36,15 +35,14 @@ public partial class SellViewModel : RoutableViewModel
 
 	private CountryModel[] _availableCountries = [];
 
-	public SellViewModel(UiContext uiContext, IWalletModel wallet)
+	public SellViewModel(IWalletModel wallet)
 	{
-		UiContext = uiContext;
 		_wallet = wallet;
 		Title = Resources.SellBitcoin;
 		_selectedCountry = UiContext.ApplicationSettings.GetCurrentSellCountry();
 		ExchangeRate = wallet.AmountProvider.ExchangeRate;
 		_conversionReversed = Services.UiConfig.SendAmountConversionReversed; // must be fixed
-		FiatTicker = _wallet.AmountProvider.Ticker;
+		FiatTicker = Resources.Culture.GetFiatTicker();
 
 		var nextCanExecute =
 			this.WhenAnyValue(x => x.Amount, x => x.FetchingLimits, x => x.MinAmount, x => x.MaxAmount)
@@ -138,7 +136,7 @@ public partial class SellViewModel : RoutableViewModel
 
 		if (decimalAmount > MaxAmount)
 		{
-			errors.Add(ErrorSeverity.Error, string.Format(CultureInfo.InvariantCulture, Resources.AmountCannotExceed, new Amount(MaxAmount).FormattedBtcWithUnit));
+			errors.Add(ErrorSeverity.Error, Resources.AmountCannotExceed.SafeInject(new Amount(MaxAmount).FormattedBtcWithUnit));
 		}
 		else if (decimalAmount > _wallet.Coins.List.Items.Sum(x => x.Amount))
 		{
@@ -146,7 +144,7 @@ public partial class SellViewModel : RoutableViewModel
 		}
 		else if (decimalAmount < MinAmount)
 		{
-			errors.Add(ErrorSeverity.Error, string.Format(CultureInfo.InvariantCulture, Resources.AmountMustBeAtLeast, new Amount(MinAmount).FormattedBtcWithUnit));
+			errors.Add(ErrorSeverity.Error, Resources.AmountMustBeAtLeast.SafeInject(new Amount(MinAmount).FormattedBtcWithUnit));
 		}
 	}
 
@@ -203,7 +201,9 @@ public partial class SellViewModel : RoutableViewModel
 
 		if (SelectedCurrency is null || (SelectedCurrency is not null && !Currencies.Contains(SelectedCurrency)))
 		{
-			SelectedCurrency = Currencies.FirstOrDefault(x => x.Ticker == "USD") ?? Currencies.First();
+			SelectedCurrency = Currencies.FirstOrDefault(x => x.Ticker == UiContext.ApplicationSettings.SelectedExchangeCurrency) ??
+			                   Currencies.FirstOrDefault(x => x.Ticker == GingerCultureInfo.DefaultFiatCurrencyTicker) ??
+			                   Currencies.First();
 		}
 	}
 

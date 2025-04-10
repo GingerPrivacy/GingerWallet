@@ -34,7 +34,7 @@ public partial class NavBarViewModel : ViewModelBase, IWalletSelector
 		UiContext.WalletRepository
 				 .Wallets
 				 .Connect()
-				 .Transform(newWallet => new WalletPageViewModel(UiContext, newWallet))
+				 .Transform(newWallet => new WalletPageViewModel(newWallet))
 				 .AutoRefresh(x => x.IsLoggedIn)
 				 .Sort(SortExpressionComparer<WalletPageViewModel>.Descending(i => i.IsLoggedIn).ThenByAscending(x => x.WalletModel.Name))
 				 .Bind(out var wallets)

@@ -12,7 +12,7 @@ public partial class VerifyTwoFactoryAuthenticationDialogViewModel : DialogViewM
 {
 	[AutoNotify] private string _twoFactorToken = "";
 
-	private VerifyTwoFactoryAuthenticationDialogViewModel()
+	public VerifyTwoFactoryAuthenticationDialogViewModel()
 	{
 		Title = Resources.TwoFactorAuthenticationWithCapitals;
 

@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Globalization;
 using Avalonia;
 using Avalonia.Media;
@@ -27,7 +26,7 @@ public class PrivacyRingItemViewModel : IPrivacyRingPreviewItem
 		IsPrivate = coin.IsPrivate;
 		IsSemiPrivate = coin.IsSemiPrivate;
 		IsNonPrivate = coin.IsNonPrivate;
-		AmountText = coin.Amount.ToBtcWithUnit();
+		AmountText = coin.Amount.ToFormattedString(addTicker: true);
 		Unconfirmed = !coin.IsConfirmed;
 		Confirmations = coin.Confirmations;
 		AnonScoreText = $"{coin.AnonScore}";

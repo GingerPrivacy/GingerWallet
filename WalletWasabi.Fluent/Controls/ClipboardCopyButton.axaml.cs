@@ -15,6 +15,9 @@ public class ClipboardCopyButton : TemplatedControl
 	public static readonly StyledProperty<string> TextProperty =
 		AvaloniaProperty.Register<ClipboardCopyButton, string>(nameof(Text));
 
+	public static readonly StyledProperty<bool> ShowCopyButtonProperty =
+		AvaloniaProperty.Register<ClipboardCopyButton, bool>(nameof(ShowCopyButton));
+
 	public ClipboardCopyButton()
 	{
 		var canCopy = this.WhenAnyValue(x => x.Text, selector: text => text is not null);
@@ -31,6 +34,12 @@ public class ClipboardCopyButton : TemplatedControl
 	{
 		get => GetValue(TextProperty);
 		set => SetValue(TextProperty, value);
+	}
+
+	public bool ShowCopyButton
+	{
+		get => GetValue(ShowCopyButtonProperty);
+		set => SetValue(ShowCopyButtonProperty, value);
 	}
 
 	private async Task CopyToClipboardAsync()

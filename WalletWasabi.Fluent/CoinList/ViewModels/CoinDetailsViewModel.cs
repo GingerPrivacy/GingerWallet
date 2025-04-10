@@ -1,5 +1,4 @@
 using NBitcoin;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Lang;
@@ -8,14 +7,13 @@ namespace WalletWasabi.Fluent.CoinList.ViewModels;
 
 public class CoinDetailsViewModel : RoutableViewModel
 {
-	public CoinDetailsViewModel(UiContext uiContext, ICoinModel coin)
+	public CoinDetailsViewModel(ICoinModel coin)
 	{
-		UiContext = uiContext;
 		Title = Resources.CoinDetails;
 		EnableBack = true;
 		SetupCancel(enableCancel: false, enableCancelOnEscape: true, enableCancelOnPressed: true);
 
-		Amount = uiContext.AmountProvider.Create(coin.Amount);
+		Amount = UiContext.AmountProvider.Create(coin.Amount);
 		Address = coin.Address.ToString();
 		Index = coin.Index;
 		TransactionId = coin.TransactionId;

@@ -1,3 +1,4 @@
+using GingerCommon.Static;
 using LinqKit;
 using NBitcoin;
 using System.Collections.Generic;

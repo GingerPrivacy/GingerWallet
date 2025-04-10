@@ -6,10 +6,9 @@ namespace WalletWasabi.Fluent.HelpAndSupport.ViewModels;
 
 public partial class LinkViewModel : ViewModelBase
 {
-	private LinkViewModel()
+	public LinkViewModel()
 	{
 		OpenBrowserCommand = ReactiveCommand.CreateFromTask<string>(async (link) => await UiContext.FileSystem.OpenBrowserAsync(link));
-
 		CopyLinkCommand = ReactiveCommand.CreateFromTask<string>(async (link) => await UiContext.Clipboard.SetTextAsync(link));
 	}
 

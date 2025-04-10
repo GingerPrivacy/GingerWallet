@@ -20,22 +20,20 @@ public class NavigationState : ReactiveObject, INavigate
 		UiContext uiContext,
 		INavigationStack<RoutableViewModel> homeScreenNavigation,
 		INavigationStack<RoutableViewModel> dialogScreenNavigation,
-		INavigationStack<RoutableViewModel> fullScreenNavigation,
 		INavigationStack<RoutableViewModel> compactDialogScreenNavigation,
 		IWalletNavigation walletNavigation)
 	{
 		UiContext = uiContext;
 		HomeScreen = homeScreenNavigation;
 		DialogScreen = dialogScreenNavigation;
-		FullScreen = fullScreenNavigation;
 		CompactDialogScreen = compactDialogScreenNavigation;
 		_walletNavigation = walletNavigation;
+
 		this.WhenAnyValue(
 				x => x.DialogScreen.CurrentPage,
 				x => x.CompactDialogScreen.CurrentPage,
-				x => x.FullScreen.CurrentPage,
 				x => x.HomeScreen.CurrentPage,
-				(dialog, compactDialog, fullScreenDialog, mainScreen) => compactDialog ?? dialog ?? fullScreenDialog ?? mainScreen)
+				(dialog, compactDialog, mainScreen) => compactDialog ?? dialog ?? mainScreen)
 			.WhereNotNull()
 			.ObserveOn(RxApp.MainThreadScheduler)
 			.Do(OnCurrentPageChanged)
@@ -45,8 +43,7 @@ public class NavigationState : ReactiveObject, INavigate
 			this.WhenAnyValue(
 				x => x.DialogScreen.CurrentPage,
 				x => x.CompactDialogScreen.CurrentPage,
-				x => x.FullScreen.CurrentPage,
-				(d, c, f) => (d ?? c ?? f) != null);
+				(d, c) => (d ?? c) != null);
 	}
 
 	public UiContext UiContext { get; }
@@ -55,8 +52,6 @@ public class NavigationState : ReactiveObject, INavigate
 
 	public INavigationStack<RoutableViewModel> DialogScreen { get; }
 
-	public INavigationStack<RoutableViewModel> FullScreen { get; }
-
 	public INavigationStack<RoutableViewModel> CompactDialogScreen { get; }
 
 	public IObservable<bool> IsDialogOpen { get; }
@@ -64,7 +59,6 @@ public class NavigationState : ReactiveObject, INavigate
 	public bool IsAnyPageBusy =>
 		HomeScreen.CurrentPage is { IsBusy: true } ||
 		DialogScreen.CurrentPage is { IsBusy: true } ||
-		FullScreen.CurrentPage is { IsBusy: true } ||
 		CompactDialogScreen.CurrentPage is { IsBusy: true };
 
 	public INavigationStack<RoutableViewModel> Navigate(NavigationTarget currentTarget)
@@ -73,7 +67,6 @@ public class NavigationState : ReactiveObject, INavigate
 		{
 			NavigationTarget.HomeScreen => HomeScreen,
 			NavigationTarget.DialogScreen => DialogScreen,
-			NavigationTarget.FullScreen => FullScreen,
 			NavigationTarget.CompactDialogScreen => CompactDialogScreen,
 			_ => throw new NotSupportedException(),
 		};
@@ -105,11 +98,6 @@ public class NavigationState : ReactiveObject, INavigate
 		if (DialogScreen.CurrentPage is { } dialogScreen)
 		{
 			dialogScreen.IsActive = false;
-		}
-
-		if (FullScreen.CurrentPage is { } fullScreen)
-		{
-			fullScreen.IsActive = false;
 		}
 
 		if (CompactDialogScreen.CurrentPage is { } compactDialogScreen)

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.Logging.Debug;
 using System;
 using System.Globalization;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
@@ -51,6 +52,25 @@ public static class Logger
 		LoggerInstance = logger;
 	}
 
+	public static void CreateDiscordLogger(LogLevel? logLevel, IHttpClientFactory httpClientFactory, string webhook)
+	{
+		if (logLevel == LogLevel.None || string.IsNullOrEmpty(webhook))
+		{
+			return;
+		}
+
+		logLevel ??= LogLevel.Error;
+
+		using ILoggerFactory factory = LoggerFactory.Create(builder =>
+		{
+			builder.ClearProviders();
+			builder.AddFilter<DiscordLoggerProvider>(null, (LogLevel)logLevel);
+			builder.AddProvider(new DiscordLoggerProvider(httpClientFactory, webhook));
+		});
+		ILogger logger = factory.CreateLogger("Discord");
+		DiscordLogger = logger;
+	}
+
 	public static void FinishFileLogging()
 	{
 		FileLoggerProvider.CloseFiles();
@@ -62,6 +82,8 @@ public static class Logger
 
 	private static ILogger? LoggerInstance = null;
 	private static string[]? LogLevelStrings = null;
+
+	private static ILogger? DiscordLogger = null;
 
 	private static void InitLevelStrings()
 	{
@@ -95,13 +117,21 @@ public static class Logger
 		}
 	}
 
-	/// Original logger methods
+	public static void LogDiscord(LogLevel level, string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1)
+	{
+		Log(DiscordLogger, level, message, callerFilePath, callerMemberName, callerLineNumber);
+	}
 
+	/// Original logger methods
 	public static void Log(LogLevel level, string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1)
+	{
+		Log(LoggerInstance, level, message, callerFilePath, callerMemberName, callerLineNumber);
+	}
+
+	private static void Log(ILogger? loggerInstance, LogLevel level, string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1)
 	{
 		try
 		{
-			var loggerInstance = LoggerInstance;
 			if (loggerInstance is null || !On || !loggerInstance.IsEnabled(level))
 			{
 				return;

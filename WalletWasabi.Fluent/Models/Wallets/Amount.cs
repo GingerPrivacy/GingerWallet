@@ -28,6 +28,13 @@ public class Amount
 		HasFiatBalance = Fiat.Select(x => x != 0m);
 	}
 
+	public Amount(decimal amount, IAmountProvider exchangeRateProvider)
+	{
+		Btc = Money.Coins(amount);
+		Fiat = exchangeRateProvider.ExchangeRateObservable.Select(x => x * Btc.ToDecimal(MoneyUnit.BTC));
+		HasFiatBalance = Fiat.Select(x => x != 0m);
+	}
+
 	public Amount(decimal amount)
 	{
 		Btc = Money.Coins(amount);
@@ -44,5 +51,5 @@ public class Amount
 	public IObservable<bool> HasFiatBalance { get; }
 
 	public string FormattedBtc => Btc.ToFormattedString();
-	public string FormattedBtcWithUnit => Btc.ToBtcWithUnit();
+	public string FormattedBtcWithUnit => Btc.ToFormattedString(addTicker: true);
 }

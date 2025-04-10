@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using ReactiveUI;
 using WalletWasabi.Blockchain.Transactions;
 using WalletWasabi.Fluent.Extensions;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Lang;
 using WalletWasabi.Logging;
@@ -11,11 +10,9 @@ namespace WalletWasabi.Fluent.TransactionBroadcasting.ViewModels;
 
 public partial class BroadcastTransactionViewModel : RoutableViewModel
 {
-	public BroadcastTransactionViewModel(UiContext uiContext, SmartTransaction transaction)
+	public BroadcastTransactionViewModel(SmartTransaction transaction)
 	{
 		Title = Resources.BroadcastTransaction;
-
-		UiContext = uiContext;
 
 		SetupCancel(enableCancel: true, enableCancelOnEscape: true, enableCancelOnPressed: true);
 

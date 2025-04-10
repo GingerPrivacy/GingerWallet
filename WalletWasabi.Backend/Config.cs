@@ -75,6 +75,10 @@ public class Config : ConfigBase
 	[JsonProperty(PropertyName = "EnableNostrCoordinatorPublisher", DefaultValueHandling = DefaultValueHandling.Populate)]
 	public bool EnableNostrCoordinatorPublisher { get; internal set; }
 
+	[DefaultValue("")]
+	[JsonProperty(DefaultValueHandling = DefaultValueHandling.Populate)]
+	public string DiscordLoggerWebhook { get; internal set; } = "";
+
 	public EndPoint GetBitcoinP2pEndPoint()
 	{
 		if (Network == Network.Main)

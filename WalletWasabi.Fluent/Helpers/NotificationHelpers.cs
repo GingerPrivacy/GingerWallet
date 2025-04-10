@@ -15,7 +15,7 @@ namespace WalletWasabi.Fluent.Helpers;
 
 public static class NotificationHelpers
 {
-	private const int DefaultNotificationTimeout = 10;
+	public static readonly TimeSpan DefaultNotificationTimeout = TimeSpan.FromSeconds(10);
 	private static WindowNotificationManager? NotificationManager;
 
 	public static void SetNotificationManager(Visual host)
@@ -34,13 +34,13 @@ public static class NotificationHelpers
 	{
 		if (NotificationManager is { } nm)
 		{
-			RxApp.MainThreadScheduler.Schedule(() => nm.Show(new Notification(title, message, NotificationType.Information, TimeSpan.FromSeconds(DefaultNotificationTimeout), onClick)));
+			RxApp.MainThreadScheduler.Schedule(() => nm.Show(new Notification(title, message, NotificationType.Information, DefaultNotificationTimeout, onClick)));
 		}
 	}
 
 	public static void Show(IWalletModel wallet, ProcessedResult result, Action onClick)
 	{
-		if (TryGetNotificationInputs(result, wallet.AmountProvider.ExchangeRate, wallet.AmountProvider.Ticker, out var message))
+		if (TryGetNotificationInputs(result, wallet.AmountProvider.ExchangeRate, out var message))
 		{
 			Show(wallet.Name, message, onClick);
 		}
@@ -48,10 +48,10 @@ public static class NotificationHelpers
 
 	public static void Show(object viewModel)
 	{
-		NotificationManager?.Show(viewModel);
+		NotificationManager?.Show(viewModel, NotificationType.Information, expiration: DefaultNotificationTimeout);
 	}
 
-	private static bool TryGetNotificationInputs(ProcessedResult result, decimal fiatExchangeRate, string ticker, [NotNullWhen(true)] out string? message)
+	private static bool TryGetNotificationInputs(ProcessedResult result, decimal fiatExchangeRate, [NotNullWhen(true)] out string? message)
 	{
 		message = null;
 
@@ -71,7 +71,7 @@ public static class NotificationHelpers
 				Money incoming = receivedSum - spentSum;
 				Money receiveSpentDiff = incoming.Abs();
 				string amountString = receiveSpentDiff.ToFormattedString();
-				string fiatString = receiveSpentDiff.BtcToFiat(fiatExchangeRate).ToFiatAproxBetweenParens(ticker);
+				string fiatString = receiveSpentDiff.BtcToFiat(fiatExchangeRate).ToFiatAproxBetweenParens();
 
 				if (result.Transaction.Transaction.IsCoinBase)
 				{
@@ -88,7 +88,7 @@ public static class NotificationHelpers
 				else if (incoming < Money.Zero)
 				{
 					var sentAmount = receiveSpentDiff - miningFee;
-					var fiatSentAmount = sentAmount.BtcToFiat(fiatExchangeRate).ToFiatAproxBetweenParens(ticker);
+					var fiatSentAmount = sentAmount.BtcToFiat(fiatExchangeRate).ToFiatAproxBetweenParens();
 					message = $"{sentAmount.ToFormattedString()} BTC {fiatSentAmount} sent";
 				}
 			}
@@ -99,7 +99,7 @@ public static class NotificationHelpers
 				Money incoming = receivedSum - spentSum;
 				Money receiveSpentDiff = incoming.Abs();
 				string amountString = receiveSpentDiff.ToFormattedString();
-				string fiatString = receiveSpentDiff.BtcToFiat(fiatExchangeRate).ToFiatAproxBetweenParens(ticker);
+				string fiatString = receiveSpentDiff.BtcToFiat(fiatExchangeRate).ToFiatAproxBetweenParens();
 
 				if (isConfirmedSpent && receiveSpentDiff == miningFee)
 				{
@@ -112,7 +112,7 @@ public static class NotificationHelpers
 				else if (incoming < Money.Zero)
 				{
 					var sentAmount = receiveSpentDiff - miningFee;
-					var fiatSentAmount = sentAmount.BtcToFiat(fiatExchangeRate).ToFiatAproxBetweenParens(ticker);
+					var fiatSentAmount = sentAmount.BtcToFiat(fiatExchangeRate).ToFiatAproxBetweenParens();
 					message = $"{sentAmount.ToFormattedString()} BTC {fiatSentAmount} sent got confirmed";
 				}
 			}

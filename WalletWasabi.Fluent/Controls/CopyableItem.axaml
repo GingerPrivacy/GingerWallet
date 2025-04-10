@@ -23,13 +23,13 @@
             <ContentPresenter
               Content="{TemplateBinding Content}"
               ContentTemplate="{TemplateBinding ContentTemplate}" />
-            <ClipboardCopyButton x:Name="CopyButton" Text="{TemplateBinding ContentToCopy}" HorizontalAlignment="Right" Margin="0 0 -24 0">
-              <ClipboardCopyButton.IsVisible>
+            <ClipboardCopyButton x:Name="CopyButton" Text="{TemplateBinding ContentToCopy}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 -24 -2">
+              <ClipboardCopyButton.ShowCopyButton>
                 <MultiBinding Converter="{x:Static converters:BooleanConverters.Or}">
                   <Binding Path="#ContentPane.IsPointerOver" />
                   <Binding Path="#CopyButton.CopyCommand.IsExecuting^" />
                 </MultiBinding>
-              </ClipboardCopyButton.IsVisible>
+              </ClipboardCopyButton.ShowCopyButton>
             </ClipboardCopyButton>
           </Grid>
         </Border>

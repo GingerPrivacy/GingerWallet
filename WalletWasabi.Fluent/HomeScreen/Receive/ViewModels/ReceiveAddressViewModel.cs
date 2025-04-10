@@ -7,7 +7,6 @@ using DynamicData.Binding;
 using ReactiveUI;
 using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Fluent.Extensions;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Lang;
@@ -18,10 +17,9 @@ public partial class ReceiveAddressViewModel : RoutableViewModel
 {
 	private readonly IWalletModel _wallet;
 
-	public ReceiveAddressViewModel(UiContext uiContext, IWalletModel wallet, IAddress model, bool isAutoCopyEnabled)
+	public ReceiveAddressViewModel(IWalletModel wallet, IAddress model, bool isAutoCopyEnabled)
 	{
 		_wallet = wallet;
-		UiContext = uiContext;
 		Model = model;
 		Address = model.Text;
 		Type = model.Type.Name;
