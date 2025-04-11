@@ -13,6 +13,7 @@ using Avalonia.Interactivity;
 using Avalonia.Metadata;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
+using Microsoft.Net.Http.Headers;
 using ReactiveUI;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
@@ -42,7 +43,7 @@ public class TagsBox : TemplatedControl
 	public static readonly StyledProperty<bool> ForceAddProperty =
 		AvaloniaProperty.Register<TagsBox, bool>(nameof(ForceAdd));
 
-	public static readonly StyledProperty<string> WatermarkProperty =
+	public static readonly StyledProperty<string?> WatermarkProperty =
 		TextBox.WatermarkProperty.AddOwner<TagsBox>();
 
 	public static readonly StyledProperty<bool> RestrictInputToSuggestionsProperty =
@@ -108,7 +109,7 @@ public class TagsBox : TemplatedControl
 		set => SetAndRaise(TopItemsProperty, ref _topItems, value);
 	}
 
-	public string Watermark
+	public string? Watermark
 	{
 		get => GetValue(WatermarkProperty);
 		set => SetValue(WatermarkProperty, value);
@@ -232,10 +233,13 @@ public class TagsBox : TemplatedControl
 					.Subscribe(_ => RequestAdd = true)
 					.DisposeWith(_compositeDisposable);
 
-		Observable
-			.FromEventPattern(_autoCompleteBox.SuggestionListBox, nameof(PointerReleased))
-			.Subscribe(_ => RequestAdd = true)
-			.DisposeWith(_compositeDisposable);
+		if (_autoCompleteBox.SuggestionListBox is not null)
+		{
+			Observable
+				.FromEventPattern(_autoCompleteBox.SuggestionListBox, nameof(PointerReleased))
+				.Subscribe(_ => RequestAdd = true)
+				.DisposeWith(_compositeDisposable);
+		}
 
 		Observable
 			.FromEventPattern<CancelEventArgs>(_autoCompleteBox, nameof(_autoCompleteBox.DropDownOpening))
@@ -373,7 +377,12 @@ public class TagsBox : TemplatedControl
 
 	private void UpdateCounters()
 	{
-		var tagItems = _containerControl.GetVisualDescendants().OfType<TagControl>().ToArray();
+		var tagItems = _containerControl?.GetVisualDescendants().OfType<TagControl>().ToArray();
+
+		if (tagItems is null)
+		{
+			return;
+		}
 
 		for (var i = 0; i < tagItems.Length; i++)
 		{
@@ -385,7 +394,7 @@ public class TagsBox : TemplatedControl
 	{
 		base.OnGotFocus(e);
 
-		_autoCompleteBox.InternalTextBox?.Focus();
+		_autoCompleteBox?.InternalTextBox?.Focus();
 	}
 
 	private void CheckIsInputEnabled()
@@ -412,7 +421,11 @@ public class TagsBox : TemplatedControl
 			return;
 		}
 
-		var typedFullText = autoCompleteBox.SearchText + e.Text;
+		var baseText = string.IsNullOrEmpty(_autoCompleteBox.InternalTextBox.SelectedText)
+			? _autoCompleteBox.Text
+			: _autoCompleteBox.SearchText;
+
+		var typedFullText = baseText + e.Text;
 
 		if (!_isInputEnabled ||
 		    (typedFullText is { Length: 1 } && typedFullText.StartsWith(TagSeparator)) ||
@@ -444,7 +457,7 @@ public class TagsBox : TemplatedControl
 		}
 	}
 
-	protected override void UpdateDataValidation(AvaloniaProperty property, BindingValueType state, Exception error)
+	protected override void UpdateDataValidation(AvaloniaProperty property, BindingValueType state, Exception? error)
 	{
 		if (property == ItemsProperty)
 		{

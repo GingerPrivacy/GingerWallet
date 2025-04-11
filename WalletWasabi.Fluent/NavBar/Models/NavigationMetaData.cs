@@ -33,6 +33,7 @@ public sealed record NavigationMetaData(
 			SearchCategory.HelpAndSupport => Lang.Resources.HelpAndSupport,
 			SearchCategory.Open => Lang.Resources.Open,
 			SearchCategory.Settings => Lang.Resources.Settings,
+			_ => ""
 		};
 	}
 };

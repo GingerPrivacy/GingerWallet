@@ -1,6 +1,6 @@
-﻿using System.Reactive.Disposables;
+using System.Reactive;
+using System.Reactive.Disposables;
 using ReactiveUI;
-using WalletWasabi.Affiliation.Models;
 using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
 using WalletWasabi.Lang;
 

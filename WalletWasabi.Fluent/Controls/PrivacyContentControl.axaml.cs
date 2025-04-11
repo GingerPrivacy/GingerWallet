@@ -49,7 +49,7 @@ public class PrivacyContentControl : ContentControl
 		isContentRevealed.Connect().DisposeWith(_disposables);
 	}
 
-	public IObservable<bool> IsContentRevealed { get; }
+	public IObservable<bool> IsContentRevealed { get; } = Observable.Return(false);
 
 	public ReplacementMode PrivacyReplacementMode
 	{

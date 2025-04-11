@@ -1,3 +1,4 @@
+using System.Globalization;
 using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
 using WalletWasabi.Helpers;
 using WalletWasabi.Lang;
@@ -25,7 +26,7 @@ public partial class AboutAdvancedInfoViewModel : DialogViewModelBase<System.Rea
 
 	public string BackendCompatibleVersions => Constants.ClientSupportBackendVersionText;
 
-	public string CurrentBackendMajorVersion => WasabiClient.ApiVersion.ToString();
+	public string CurrentBackendMajorVersion => WasabiClient.ApiVersion.ToString(CultureInfo.InvariantCulture);
 
 	protected override void OnDialogClosed()
 	{

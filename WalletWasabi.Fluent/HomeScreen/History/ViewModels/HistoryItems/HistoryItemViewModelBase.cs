@@ -6,7 +6,6 @@ using System.Windows.Input;
 using ReactiveUI;
 using WalletWasabi.Fluent.Common.ViewModels;
 using WalletWasabi.Fluent.Extensions;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.TreeDataGrid;
 using WalletWasabi.Lang;
@@ -58,11 +57,6 @@ public abstract partial class HistoryItemViewModelBase : ViewModelBase, ITreeDat
 				}
 			})
 			.Subscribe();
-	}
-
-	protected HistoryItemViewModelBase(UiContext uiContext, TransactionModel transaction) : this(transaction)
-	{
-		UiContext = uiContext;
 	}
 
 	/// <summary>

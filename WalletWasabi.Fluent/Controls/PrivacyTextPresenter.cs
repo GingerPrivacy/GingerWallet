@@ -37,15 +37,18 @@ public class PrivacyTextPresenter : UserControl
 		};
 	}
 
+	// TODO Might be removed on Avalonia side soon
 	private GlyphRun? CreateGlyphRun(double width)
 	{
 		var privacyChar = UiConstants.PrivacyChar;
 
-		var glyphTypeface = new Typeface((FontFamily?)FontFamily).GlyphTypeface;
+		var glyphTypeface = new Typeface(FontFamily).GlyphTypeface;
+#pragma warning disable CS0618 // Type or member is obsolete
 		var glyph = glyphTypeface.GetGlyph(privacyChar);
 
 		var scale = FontSize / glyphTypeface.Metrics.DesignEmHeight;
 		var advance = glyphTypeface.GetGlyphAdvance(glyph) * scale;
+#pragma warning restore CS0618 // Type or member is obsolete
 
 		var count = Math.Min(width > 0 && width < advance ? 1 : (int)(width / advance), MaxPrivacyChars);
 		if (count == 0)
