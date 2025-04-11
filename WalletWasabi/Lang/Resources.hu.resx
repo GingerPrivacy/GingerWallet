@@ -309,9 +309,6 @@
   <data name="and" xml:space="preserve">
     <value>és</value>
   </data>
-  <data name="Plural" xml:space="preserve">
-    <value> </value>
-  </data>
   <data name="LoadingViewDownloadText" xml:space="preserve">
     <value>Bitcoin-hálózati adatok letöltése és feldolgozása</value>
   </data>
@@ -1225,7 +1222,7 @@
     <value>Felhasználási feltételeket</value>
   </data>
   <data name="TermsAndConditionsViewIAgree" xml:space="preserve">
-    <value>Elfogadom a</value>
+    <value>Elfogadom a </value>
   </data>
   <data name="ResyncWallet" xml:space="preserve">
     <value>Tárca újraszinkronizálása</value>
@@ -2103,5 +2100,8 @@
   </data>
     <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
     <value>Indítsd el a coinjoint, hogy növeld az anonimitásod</value>
+  </data>
+  <data name="Plural" xml:space="preserve">
+    <value>\0</value>
   </data>
 </root>

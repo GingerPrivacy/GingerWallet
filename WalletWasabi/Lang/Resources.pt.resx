@@ -1670,7 +1670,7 @@
         <value>Para continuar usando o Ginger, por favor aceite os termos e condições</value>
     </data>
     <data name="TermsAndConditionsViewIAgree" xml:space="preserve">
-        <value>Eu _concordo com os</value>
+        <value>Eu _concordo com os </value>
     </data>
     <data name="TermsAndConditionsViewTermsAndConditions" xml:space="preserve">
         <value>Termos e condições</value>
@@ -1685,7 +1685,7 @@
         <value>Isso pode levar alguns minutos. O Ginger será fechado automaticamente quando terminar.</value>
     </data>
     <data name="ThisOpenSourceSoftwareIsLicensedWith" xml:space="preserve">
-        <value>Este software open source é licenciado com</value>
+        <value>Este software open source é licenciado com </value>
     </data>
     <data name="To" xml:space="preserve">
         <value>Para:</value>
@@ -2100,5 +2100,8 @@
     </data>
     <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
         <value>Comece o coinjoining para obter mais privacidade</value>
+    </data>
+    <data name="Plural" xml:space="preserve">
+        <value>\0</value>
     </data>
 </root>

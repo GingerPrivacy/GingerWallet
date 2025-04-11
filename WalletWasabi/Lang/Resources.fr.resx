@@ -306,9 +306,6 @@
   <data name="and" xml:space="preserve">
     <value>et</value>
   </data>
-  <data name="Plural" xml:space="preserve">
-    <value> </value>
-  </data>
   <data name="LoadingViewDownloadText" xml:space="preserve">
     <value>Téléchargement et traitement des données du réseau Bitcoin</value>
   </data>
@@ -2103,5 +2100,8 @@
   </data>
     <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
     <value>Commencez le coinjoining pour gagner en confidentialité</value>
+  </data>
+  <data name="Plural" xml:space="preserve">
+    <value>\0</value>
   </data>
 </root>

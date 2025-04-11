@@ -414,9 +414,6 @@
   <data name="AbortedNotEnoughAlicesMessage" xml:space="preserve">
     <value>参与者不足，重试中...</value>
   </data>
-  <data name="Plural" xml:space="preserve">
-    <value> </value>
-  </data>
   <data name="CoinJoinInProgress" xml:space="preserve">
     <value>Coinjoin 进行中</value>
   </data>
@@ -1189,7 +1186,7 @@
     <value>按正确顺序输入恢复词</value>
   </data>
   <data name="EnterPassphrase" xml:space="preserve">
-    <value> 输入密码短语</value>
+    <value>输入密码短语</value>
   </data>
   <data name="RecoverWalletViewModelPassphraseMessage" xml:space="preserve">
     <value>如果您在创建钱包时使用了密码，则必须在下方输入，否则请留空。</value>
@@ -1495,7 +1492,7 @@
     <value>Not coinjoining</value>
   </data>
   <data name="ExcludedFromCoinjoins" xml:space="preserve">
-    <value> 排除在 Coinjoin 之外</value>
+    <value>排除在 Coinjoin 之外</value>
   </data>
   <data name="ConfirmationCount" xml:space="preserve">
     <value>{0} 次确认{1}</value>
@@ -1822,7 +1819,7 @@
     <value>Ginger 现在无法关闭。CoinJoin 正在进行中。</value>
   </data>
   <data name="ThisMayTakeAFewMinutes" xml:space="preserve">
-    <value> 这可能需要几分钟。完成后，Ginger 将自动关闭。</value>
+    <value>这可能需要几分钟。完成后，Ginger 将自动关闭。</value>
   </data>
   <data name="TransactionAlreadyConfirmed" xml:space="preserve">
     <value>交易已经确认。</value>
@@ -1864,7 +1861,7 @@
     <value>对等节点</value>
   </data>
   <data name="BroadcastTransaction" xml:space="preserve">
-    <value> 广播交易</value>
+    <value>广播交易</value>
   </data>
   <data name="UnableToBroadcastTransaction" xml:space="preserve">
     <value>无法广播交易。</value>
@@ -2100,5 +2097,8 @@
   </data>
     <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
     <value>开始进行 CoinJoin 以获得隐私</value>
+  </data>
+  <data name="Plural" xml:space="preserve">
+    <value>\0</value>
   </data>
 </root>
