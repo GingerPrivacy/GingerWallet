@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Resources;
+using System.Text;
 using WalletWasabi.Extensions;
 using WalletWasabi.Lang.Models;
 using WalletWasabi.Logging;
@@ -25,11 +26,22 @@ public static class LocalizationExtension
 			DisplayLanguage.Hungarian => "Magyar",
 			DisplayLanguage.French => "Français",
 			DisplayLanguage.Chinese => "中文",
-			// DisplayLanguage.German => "Deutsch",
-			// DisplayLanguage.Portuguese => "Português",
-			// DisplayLanguage.Turkish => "Türkçe",
+			DisplayLanguage.German => "Deutsch",
+			DisplayLanguage.Portuguese => "Português",
+			DisplayLanguage.Turkish => "Türkçe",
 			_ => language.ToString()
 		};
+	}
+
+	public static string ToEscapeSequenceString(this string input)
+	{
+		return input
+			.Replace("\\0", "\0")
+			.Replace("\\n", "\n")
+			.Replace("\\t", "\t")
+			.Replace("\\r", "\r")
+			.Replace("\\'", "\'")
+			.Replace("\\\"", "\"");
 	}
 
 	public static string SafeInject(this string main, params object?[] texts)

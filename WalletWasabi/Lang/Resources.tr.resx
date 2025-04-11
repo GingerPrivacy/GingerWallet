@@ -1670,7 +1670,7 @@
         <value>Ginger'ı kullanmaya devam edebilmek için lütfen şartları ve koşulları kabul edin</value>
     </data>
     <data name="TermsAndConditionsViewIAgree" xml:space="preserve">
-        <value>Ben _şartları ve koşulları kabul ediyorum</value>
+        <value>Ben _şartları ve koşulları kabul ediyorum </value>
     </data>
     <data name="TermsAndConditionsViewTermsAndConditions" xml:space="preserve">
         <value>Şartlar ve koşullar</value>
@@ -1685,7 +1685,7 @@
         <value>Bu birkaç dakika sürebilir. Ginger bitince otomatik olarak kapanacaktır.</value>
     </data>
     <data name="ThisOpenSourceSoftwareIsLicensedWith" xml:space="preserve">
-        <value>Bu açık kaynak yazılımı, şu lisansla lisanslanmıştır</value>
+        <value>Bu açık kaynak yazılımı, şu lisansla lisanslanmıştır </value>
     </data>
     <data name="To" xml:space="preserve">
         <value>Evet:</value>
@@ -2100,5 +2100,8 @@
     </data>
     <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
         <value>Gizliliğini artırmak için coinjoining'e başla</value>
+    </data>
+    <data name="Plural" xml:space="preserve">
+        <value>\0</value>
     </data>
 </root>

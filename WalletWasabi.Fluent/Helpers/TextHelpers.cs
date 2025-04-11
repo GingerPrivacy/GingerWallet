@@ -11,7 +11,7 @@ namespace WalletWasabi.Fluent.Helpers;
 
 public static partial class TextHelpers
 {
-	public static string AddSIfPlural(int n) => n > 1 ? Resources.Plural : "";
+	public static string AddSIfPlural(int n) => n > 1 ? Resources.Plural.ToEscapeSequenceString() : "";
 
 	private static string ConcatNumberAndUnit(int n, string unit) => n > 0 ? $"{n} {unit}{AddSIfPlural(n)}" : "";
 
@@ -79,7 +79,7 @@ public static partial class TextHelpers
 		bool addTicker = false)
 	{
 		var moneyString = money.ToString(Resources.Culture.NumberFormat, fplus: fplus, trimExcessZero: trimExcessZero);
-		var hasSign = moneyString.StartsWith("+") || moneyString.StartsWith("-");
+		var hasSign = moneyString.StartsWith('+') || moneyString.StartsWith('-');
 		var sign = hasSign ? moneyString[0] : '\0';
 		var numericPart = hasSign ? moneyString.Substring(1) : moneyString;
 		var parts = numericPart.Split(Resources.Culture.NumberFormat.NumberDecimalSeparator);
