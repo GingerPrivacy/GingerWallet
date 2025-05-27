@@ -13,12 +13,12 @@ namespace WalletWasabi.Fluent.Settings.ViewModels;
 	IsLocalized = true)]
 public partial class AdvancedSettingsTabViewModel : RoutableViewModel
 {
-	public AdvancedSettingsTabViewModel(IApplicationSettings settings)
+	public AdvancedSettingsTabViewModel(ApplicationSettings settings)
 	{
 		Settings = settings;
 	}
 
 	public bool IsReadOnly => Settings.IsOverridden;
 
-	public IApplicationSettings Settings { get; }
+	public ApplicationSettings Settings { get; }
 }

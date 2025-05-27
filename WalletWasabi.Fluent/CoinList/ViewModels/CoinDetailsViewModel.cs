@@ -5,9 +5,10 @@ using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.CoinList.ViewModels;
 
-public class CoinDetailsViewModel : RoutableViewModel
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
+public partial class CoinDetailsViewModel : RoutableViewModel
 {
-	public CoinDetailsViewModel(ICoinModel coin)
+	public CoinDetailsViewModel(CoinModel coin)
 	{
 		Title = Resources.CoinDetails;
 		EnableBack = true;

@@ -17,14 +17,14 @@ namespace WalletWasabi.Fluent.HomeScreen.Others.ViewModels;
 	IsLocalized = true)]
 public partial class WalletCoinsViewModel : RoutableViewModel
 {
-	private readonly IWalletModel _wallet;
+	private readonly WalletModel _wallet;
 
-	public WalletCoinsViewModel(IWalletModel wallet)
+	public WalletCoinsViewModel(WalletModel wallet)
 	{
 		_wallet = wallet;
 		SetupCancel(enableCancel: false, enableCancelOnEscape: true, enableCancelOnPressed: true);
 		NextCommand = CancelCommand;
-		CoinList = new CoinListViewModel(_wallet.Coins, new List<ICoinModel>(), allowCoinjoiningCoinSelection: false, ignorePrivacyMode: false, allowSelection: false);
+		CoinList = new CoinListViewModel(_wallet.Coins, new List<CoinModel>(), allowCoinjoiningCoinSelection: false, ignorePrivacyMode: false, allowSelection: false);
 	}
 
 	public CoinListViewModel CoinList { get; }

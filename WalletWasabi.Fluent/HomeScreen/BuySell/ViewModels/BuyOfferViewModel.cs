@@ -13,5 +13,6 @@ public class BuyOfferViewModel : OfferViewModel
 		Amount = $"≈ {new Amount(Offer.AmountTo).FormattedBtcWithUnit}";
 		Fee = offer.Fee.ToFormattedFiat(offer.CurrencyFrom);
 		FeeToolTip = Resources.TotalCostIncludesFee.SafeInject(offer.AmountFrom.ToFormattedFiat(offer.CurrencyFrom), Fee);
+		IsNoKycVisible = offer.ProviderCode == "wert";
 	}
 }

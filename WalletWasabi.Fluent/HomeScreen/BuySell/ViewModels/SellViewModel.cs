@@ -20,7 +20,7 @@ namespace WalletWasabi.Fluent.HomeScreen.BuySell.ViewModels;
 [NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class SellViewModel : RoutableViewModel
 {
-	private readonly IWalletModel _wallet;
+	private readonly WalletModel _wallet;
 	[AutoNotify] private CountrySelection? _selectedCountry;
 	[AutoNotify] private decimal _exchangeRate;
 	[AutoNotify] private bool _conversionReversed;
@@ -35,7 +35,7 @@ public partial class SellViewModel : RoutableViewModel
 
 	private CountryModel[] _availableCountries = [];
 
-	public SellViewModel(IWalletModel wallet)
+	public SellViewModel(WalletModel wallet)
 	{
 		_wallet = wallet;
 		Title = Resources.SellBitcoin;
@@ -267,7 +267,7 @@ public partial class SellViewModel : RoutableViewModel
 				catch (Exception ex)
 				{
 					Logger.LogError(ex);
-					Navigate().Clear();
+					UiContext.Navigate(CurrentTarget).Clear();
 					await ShowErrorAsync(Resources.Sell, Resources.ServiceNotAvailable, "");
 				}
 				finally

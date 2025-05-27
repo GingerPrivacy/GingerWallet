@@ -12,7 +12,6 @@ using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
 using WalletWasabi.Fluent.HomeScreen.Notifications.ViewModels;
 using WalletWasabi.Fluent.HomeScreen.Wallets.ViewModels;
 using WalletWasabi.Fluent.Infrastructure;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.NavBar.ViewModels;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Fluent.SearchBar.ViewModels;
@@ -30,23 +29,22 @@ public partial class MainViewModel : ViewModelBase
 	[AutoNotify] private bool _isOobeBackgroundVisible;
 	[AutoNotify] private bool _isCoinJoinActive;
 
-	public MainViewModel(UiContext uiContext)
+	public MainViewModel()
 	{
-		UiContext = uiContext;
 		UiContext.SetMainViewModel(this);
 
 		ApplyUiConfigWindowState();
 
 		DialogScreen = new DialogScreenViewModel();
 		CompactDialogScreen = new DialogScreenViewModel(NavigationTarget.CompactDialogScreen);
-		NavBar = new NavBarViewModel(UiContext);
+		NavBar = new NavBarViewModel();
 		MainScreen = new TargettedNavigationStack(NavigationTarget.HomeScreen);
 		UiContext.RegisterNavigation(new NavigationState(UiContext, MainScreen, DialogScreen, CompactDialogScreen, NavBar));
 
-		StatusIcon = new StatusIconViewModel(UiContext);
-		AnnouncementIcon = new AnnouncementIconViewModel(UiContext, new AnnouncementsModel());
+		StatusIcon = new StatusIconViewModel();
+		AnnouncementIcon = new AnnouncementIconViewModel(new AnnouncementsModel());
 
-		SettingsPage = new SettingsPageViewModel(UiContext);
+		SettingsPage = new SettingsPageViewModel();
 		PrivacyMode = new PrivacyModeViewModel(UiContext.ApplicationSettings);
 		Notifications = new WalletNotificationsViewModel(NavBar);
 
@@ -139,7 +137,7 @@ public partial class MainViewModel : ViewModelBase
 	public PrivacyModeViewModel PrivacyMode { get; }
 	public WalletNotificationsViewModel Notifications { get; }
 
-	public static MainViewModel Instance { get; private set; }
+	public static MainViewModel Instance { get; private set; } = null!;
 
 	public bool IsDialogOpen()
 	{

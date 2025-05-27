@@ -7,11 +7,6 @@ using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
 
-public partial interface IWalletStatsModel : IDisposable
-{
-}
-
-[AutoInterface]
 public partial class WalletStatsModel : ReactiveObject, IDisposable
 {
 	private readonly CompositeDisposable _disposables = new();
@@ -27,7 +22,7 @@ public partial class WalletStatsModel : ReactiveObject, IDisposable
 	[AutoNotify] private int _nonCoinjointransactionCount;
 	[AutoNotify] private int _coinjoinTransactionCount;
 
-	public WalletStatsModel(IWalletModel walletModel, Wallet wallet)
+	public WalletStatsModel(WalletModel walletModel, Wallet wallet)
 	{
 		_balance = Amount.Zero;
 		_confirmedBalance = Amount.Zero;
@@ -44,7 +39,7 @@ public partial class WalletStatsModel : ReactiveObject, IDisposable
 		_disposables.Dispose();
 	}
 
-	private void Update(IWalletModel walletModel, Wallet wallet)
+	private void Update(WalletModel walletModel, Wallet wallet)
 	{
 		// Number of coins in the wallet.
 		CoinCount = wallet.Coins.Unspent().Count();

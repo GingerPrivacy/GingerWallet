@@ -13,14 +13,12 @@ public class BlockchainState
 	{
 		Network = network;
 		Height = height;
-		TurboSyncHeight = turboSyncHeight;
 	}
 
 	public BlockchainState()
 	{
 		Network = Network.Main;
 		Height = 0;
-		TurboSyncHeight = 0;
 	}
 
 	public BlockchainState(Network network) : this(network, height: 0, turboSyncHeight: 0)
@@ -33,9 +31,6 @@ public class BlockchainState
 
 	[JsonProperty]
 	[JsonConverter(typeof(WalletHeightJsonConverter))]
+	[System.Text.Json.Serialization.JsonConverter(typeof(WalletHeightJsonConverterNg))]
 	public Height Height { get; set; }
-
-	[JsonProperty]
-	[JsonConverter(typeof(WalletHeightJsonConverter))]
-	public Height TurboSyncHeight { get; set; }
 }

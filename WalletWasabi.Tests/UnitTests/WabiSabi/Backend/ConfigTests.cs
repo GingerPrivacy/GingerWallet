@@ -1,13 +1,13 @@
+using NBitcoin;
+using NBitcoin.RPC;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using NBitcoin;
-using NBitcoin.RPC;
 using WalletWasabi.BitcoinCore.Rpc;
 using WalletWasabi.Helpers;
 using WalletWasabi.JsonConverters.Timing;
-using WalletWasabi.Tests.Helpers;
+using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.WabiSabi;
 using WalletWasabi.WabiSabi.Backend;
 using WalletWasabi.WabiSabi.Backend.Rounds.CoinJoinStorage;
@@ -26,8 +26,7 @@ public class ConfigTests
 	[Fact]
 	public async Task CreatesConfigAsync()
 	{
-		var workDir = Common.GetWorkDir();
-		await IoHelpers.TryDeleteDirectoryAsync(workDir);
+		var workDir = TestDirectory.Get();
 		CoordinatorParameters coordinatorParameters = new(workDir);
 		using WabiSabiCoordinator coordinator = CreateWabiSabiCoordinator(coordinatorParameters);
 		await coordinator.StartAsync(CancellationToken.None);
@@ -40,8 +39,7 @@ public class ConfigTests
 	[Fact]
 	public async Task LoadsConfigAsync()
 	{
-		var workDir = Common.GetWorkDir();
-		await IoHelpers.TryDeleteDirectoryAsync(workDir);
+		var workDir = TestDirectory.Get();
 		CoordinatorParameters coordinatorParameters = new(workDir);
 
 		// Create the config first with default value.
@@ -68,8 +66,7 @@ public class ConfigTests
 	[Fact]
 	public async Task LoadsIncompleteConfigAsync()
 	{
-		var workDir = Common.GetWorkDir();
-		await IoHelpers.TryDeleteDirectoryAsync(workDir);
+		var workDir = TestDirectory.Get();
 		CoordinatorParameters coordinatorParameters = new(workDir);
 
 		// Create the config first with default value.
@@ -109,7 +106,7 @@ public class ConfigTests
 	[Fact]
 	public async Task ChecksConfigChangesAsync()
 	{
-		var workDir = Common.GetWorkDir();
+		var workDir = TestDirectory.Get();
 		await IoHelpers.TryDeleteDirectoryAsync(workDir);
 
 		CoordinatorParameters coordinatorParameters = new(workDir);

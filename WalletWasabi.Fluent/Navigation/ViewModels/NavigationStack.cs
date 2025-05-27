@@ -197,8 +197,7 @@ public partial class NavigationStack<T> : ViewModelBase, INavigationStack<T> whe
 		var dialogTask = dialog.GetDialogResultAsync();
 
 		var t = dialog as T;
-
-		if (CurrentPage != t)
+		if (CurrentPage != t && !dialogTask.IsCompleted)
 		{
 			To(t, navigationMode);
 		}

@@ -1,11 +1,10 @@
+using Microsoft.Extensions.Caching.Memory;
 using NBitcoin;
 using NBitcoin.Protocol;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Caching.Memory;
 using WalletWasabi.BitcoinCore.Rpc;
-using WalletWasabi.Blockchain.Analysis.FeesEstimation;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Blockchain.TransactionBroadcasting;
 using WalletWasabi.Blockchain.TransactionBuilding;
@@ -16,12 +15,14 @@ using WalletWasabi.Logging;
 using WalletWasabi.Models;
 using WalletWasabi.Services;
 using WalletWasabi.Stores;
+using WalletWasabi.Tests.Helpers;
+using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.Tests.XunitConfiguration;
 using WalletWasabi.Wallets;
+using WalletWasabi.Wallets.FilterProcessor;
 using WalletWasabi.WebClients.Wasabi;
 using Xunit;
-using WalletWasabi.Tests.Helpers;
-using WalletWasabi.Wallets.FilterProcessor;
+using WalletWasabi.Daemon.FeeRateProviders;
 
 namespace WalletWasabi.Tests.RegressionTests;
 
@@ -62,14 +63,14 @@ public class SpendUnconfirmedTxTests : IClassFixture<RegTestFixture>
 		// 3. Create wasabi synchronizer service.
 		await using WasabiHttpClientFactory httpClientFactory = new(torEndPoint: null, backendUriGetter: () => new Uri(RegTestFixture.BackendEndPoint));
 		using WasabiSynchronizer synchronizer = new(period: TimeSpan.FromSeconds(3), 10000, bitcoinStore, httpClientFactory);
-		HybridFeeProvider feeProvider = new(synchronizer, null);
+		FeeRateProvider feeProvider = new(httpClientFactory, network);
 		using UnconfirmedTransactionChainProvider unconfirmedChainProvider = new(httpClientFactory);
 
 		// 4. Create key manager service.
 		var keyManager = KeyManager.CreateNew(out _, password, network);
 
 		// 5. Create wallet service.
-		var workDir = Common.GetWorkDir();
+		var workDir = TestDirectory.Get();
 
 		using MemoryCache cache = BitcoinFactory.CreateMemoryCache();
 		await using SpecificNodeBlockProvider specificNodeBlockProvider = new(network, serviceConfiguration, httpClientFactory.TorEndpoint);
@@ -93,7 +94,6 @@ public class SpendUnconfirmedTxTests : IClassFixture<RegTestFixture>
 			nodes.Connect(); // Start connection service.
 			node.VersionHandshake(); // Start mempool service.
 			await synchronizer.StartAsync(CancellationToken.None); // Start wasabi synchronizer service.
-			await feeProvider.StartAsync(CancellationToken.None);
 
 			// Start wallet and filter processing service
 			using var wallet = await walletManager.AddAndStartWalletAsync(keyManager);
@@ -224,7 +224,6 @@ public class SpendUnconfirmedTxTests : IClassFixture<RegTestFixture>
 			bitcoinStore.IndexStore.NewFilters -= setup.Wallet_NewFiltersProcessed;
 			await walletManager.RemoveAndStopAllAsync(CancellationToken.None);
 			await synchronizer.StopAsync(CancellationToken.None);
-			await feeProvider.StopAsync(CancellationToken.None);
 			nodes?.Dispose();
 			node?.Disconnect();
 		}

@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace WalletWasabi.Fluent.HomeScreen.Tiles.PrivacyRing.Views;
 
-public partial class PrivacyRingDetailsView : UserControl
+public class PrivacyRingDetailsView : UserControl
 {
 	public PrivacyRingDetailsView()
 	{

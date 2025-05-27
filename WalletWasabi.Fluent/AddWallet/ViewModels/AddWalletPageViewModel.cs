@@ -48,12 +48,12 @@ public partial class AddWalletPageViewModel : DialogViewModelBase<Unit>
 	private void OnCreateWallet()
 	{
 		var options = new WalletCreationOptions.AddNewWallet().WithNewMnemonic();
-		Navigate().To().WalletNamePage(options);
+		UiContext.Navigate().To().WalletNamePage(options);
 	}
 
 	private void OnConnectHardwareWallet()
 	{
-		Navigate().To().WalletNamePage(new WalletCreationOptions.ConnectToHardwareWallet());
+		UiContext.Navigate().To().WalletNamePage(new WalletCreationOptions.ConnectToHardwareWallet());
 	}
 
 	private async Task OnImportWalletAsync()
@@ -75,13 +75,13 @@ public partial class AddWalletPageViewModel : DialogViewModelBase<Unit>
 			var validationError = UiContext.WalletRepository.ValidateWalletName(walletName);
 			if (validationError is { })
 			{
-				Navigate().To().WalletNamePage(options);
+				UiContext.Navigate().To().WalletNamePage(options);
 				return;
 			}
 
 			var walletSettings = await UiContext.WalletRepository.NewWalletAsync(options);
 
-			Navigate().To().AddedWalletPage(walletSettings, options);
+			UiContext.Navigate().To().AddedWalletPage(walletSettings, options);
 		}
 		catch (Exception ex)
 		{
@@ -92,7 +92,7 @@ public partial class AddWalletPageViewModel : DialogViewModelBase<Unit>
 
 	private void OnRecoverWallet()
 	{
-		Navigate().To().WalletNamePage(new WalletCreationOptions.RecoverWallet());
+		UiContext.Navigate().To().WalletNamePage(new WalletCreationOptions.RecoverWallet());
 	}
 
 	protected override void OnNavigatedTo(bool isInHistory, CompositeDisposable disposables)
@@ -106,7 +106,7 @@ public partial class AddWalletPageViewModel : DialogViewModelBase<Unit>
 	public async Task Activate()
 	{
 		MainViewModel.Instance.IsOobeBackgroundVisible = true;
-		await NavigateDialogAsync(this, NavigationTarget.DialogScreen);
+		await UiContext.Navigate().To().AddWalletPage().GetResultAsync();
 		MainViewModel.Instance.IsOobeBackgroundVisible = false;
 	}
 }

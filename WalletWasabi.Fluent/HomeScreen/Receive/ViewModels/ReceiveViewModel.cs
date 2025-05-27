@@ -24,10 +24,10 @@ namespace WalletWasabi.Fluent.HomeScreen.Receive.ViewModels;
 	IsLocalized = true)]
 public partial class ReceiveViewModel : RoutableViewModel, IDisposable
 {
-	private readonly IWalletModel _wallet;
+	private readonly WalletModel _wallet;
 	private readonly CompositeDisposable _disposables = new();
 
-	public ReceiveViewModel(IWalletModel wallet)
+	public ReceiveViewModel(WalletModel wallet)
 	{
 		_wallet = wallet;
 		SetupCancel(enableCancel: true, enableCancelOnEscape: true, enableCancelOnPressed: true);
@@ -50,7 +50,7 @@ public partial class ReceiveViewModel : RoutableViewModel, IDisposable
 		AddressesModel = wallet.Addresses;
 	}
 
-	public IAddressesModel AddressesModel { get; }
+	public AddressesModel AddressesModel { get; }
 
 	public SuggestionLabelsViewModel SuggestionLabels { get; }
 
@@ -74,7 +74,7 @@ public partial class ReceiveViewModel : RoutableViewModel, IDisposable
 		var address = _wallet.Addresses.NextReceiveAddress(SuggestionLabels.Labels, type);
 		SuggestionLabels.Labels.Clear();
 
-		Navigate().To().ReceiveAddress(_wallet, address, Services.UiConfig.Autocopy);
+		UiContext.Navigate().To().ReceiveAddress(_wallet, address, Services.UiConfig.Autocopy);
 	}
 
 	private void OnShowExistingAddresses()

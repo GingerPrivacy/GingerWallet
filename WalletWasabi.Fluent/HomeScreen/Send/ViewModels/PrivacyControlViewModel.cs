@@ -16,7 +16,8 @@ using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.HomeScreen.Send.ViewModels;
 
-public partial class PrivacyControlViewModel : DialogViewModelBase<IEnumerable<SmartCoin>>
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
+public partial class PrivacyControlViewModel : DialogViewModelBase<IEnumerable<SmartCoin>?>
 {
 	private readonly Wallet _wallet;
 	private readonly SendFlowModel _sendFlow;

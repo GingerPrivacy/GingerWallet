@@ -11,6 +11,7 @@ using WalletWasabi.Fluent.Navigation.ViewModels;
 
 namespace WalletWasabi.Fluent.AddWallet.ViewModels.Create;
 
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class ConfirmRecoveryWordsViewModel : RoutableViewModel
 {
 	private readonly List<RecoveryWordViewModel> _words;
@@ -51,8 +52,6 @@ public partial class ConfirmRecoveryWordsViewModel : RoutableViewModel
 			.DisposeWith(disposables);
 
 		EnableBack = true;
-
-		CancelCommand = ReactiveCommand.Create(OnCancel);
 
 		var nextCommandCanExecute =
 			confirmationWordsSourceList
@@ -136,7 +135,7 @@ public partial class ConfirmRecoveryWordsViewModel : RoutableViewModel
 	private async Task OnNextAsync()
 	{
 		var dialogCaption = Lang.Resources.ConfirmRecoveryWordsViewModelStoreSafely;
-		var password = await Navigate().To().CreatePasswordDialog(Lang.Resources.AddPassphrase, dialogCaption, enableEmpty: true).GetResultAsync();
+		var password = await UiContext.Navigate().To().CreatePasswordDialog(Lang.Resources.AddPassphrase, dialogCaption, enableEmpty: true).GetResultAsync();
 
 		if (password is { })
 		{
@@ -148,13 +147,8 @@ public partial class ConfirmRecoveryWordsViewModel : RoutableViewModel
 
 			IsBusy = false;
 
-			Navigate().To().AddedWalletPage(walletSettings, options);
+			UiContext.Navigate().To().AddedWalletPage(walletSettings, options);
 		}
-	}
-
-	private void OnCancel()
-	{
-		Navigate().Clear();
 	}
 
 	private void SetSkip()

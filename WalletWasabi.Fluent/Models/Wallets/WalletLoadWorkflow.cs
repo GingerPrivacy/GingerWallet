@@ -14,7 +14,6 @@ using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
 
-[AutoInterface]
 public partial class WalletLoadWorkflow
 {
 	private readonly CompositeDisposable _disposables = new();
@@ -124,7 +123,7 @@ public partial class WalletLoadWorkflow
 
 		var tipHeight = Math.Max(serverTipHeight, clientTipHeight);
 		var startingHeight = SmartHeader.GetStartingHeader(_wallet.Network, IndexType.SegwitTaproot).Height;
-		var bestHeight = (uint)_wallet.KeyManager.GetBestHeight(SyncType.Complete).Value;
+		var bestHeight = (uint)_wallet.KeyManager.GetBestHeight().Value;
 		_filterProcessStartingHeight = bestHeight < startingHeight ? startingHeight : bestHeight;
 
 		_filtersToProcessCount = tipHeight - _filterProcessStartingHeight;

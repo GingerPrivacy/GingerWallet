@@ -34,6 +34,12 @@
   <SolidColorBrush x:Key="ActionButtonPointerOverBackgroundColor" Color="{StaticResource SystemAccentColorLight1}" />
   <SolidColorBrush x:Key="ActionButtonDisabledBackgroundColor" Color="{StaticResource SystemChromeDisabledLowColor}" />
 
+  <SolidColorBrush x:Key="DangerButtonForegroundColor" Color="{StaticResource AccentButtonForegroundColor}" />
+  <SolidColorBrush x:Key="DangerButtonBackgroundColor" Color="{StaticResource DangerAccentColor}" />
+  <SolidColorBrush x:Key="DangerButtonPressedBackgroundColor" Color="{StaticResource DangerAccentColorDark1}" />
+  <SolidColorBrush x:Key="DangerButtonPointerOverBackgroundColor" Color="{StaticResource DangerAccentColorLight1}" />
+  <SolidColorBrush x:Key="DangerButtonDisabledBackgroundColor" Color="{StaticResource SystemChromeDisabledLowColor}" />
+
   <SolidColorBrush x:Key="NavBarItemSelectedBrush" Color="{StaticResource AcrylicTrimForeground}" />
 
   <SolidColorBrush x:Key="LogoAccentColor" Color="#A68D67" />

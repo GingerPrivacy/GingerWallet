@@ -13,9 +13,8 @@ using WalletWasabi.Fluent.Infrastructure;
 namespace WalletWasabi.Fluent.Announcement.Models;
 
 [AppLifetime]
-[AutoInterface]
 [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope")]
-public partial class AnnouncementsModel
+public class AnnouncementsModel
 {
 	private readonly ReadOnlyObservableCollection<AnnouncementModel> _list;
 	private readonly SourceCache<AnnouncementModel, long> _listCache;

@@ -6,6 +6,7 @@ using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.Common.ViewModels;
 
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class SuccessViewModel : RoutableViewModel
 {
 	public SuccessViewModel()
@@ -21,7 +22,7 @@ public partial class SuccessViewModel : RoutableViewModel
 	{
 		await Task.Delay(UiConstants.CloseSuccessDialogMillisecondsDelay);
 
-		Navigate().Clear();
+		UiContext.Navigate(CurrentTarget).Clear();
 	}
 
 	protected override void OnNavigatedTo(bool isInHistory, CompositeDisposable disposables)

@@ -103,6 +103,11 @@
 
   <SolidColorBrush x:Key="TagsBoxItemBackground" Color="#FCFCFC" />
 
+  <!-- Danger button -->
+  <Color x:Key="DangerAccentColor">#993737</Color>
+  <Color x:Key="DangerAccentColorDark1">#B44141</Color>
+  <Color x:Key="DangerAccentColorLight1">#963636</Color>
+
   <!-- DropShadowEffects -->
   <DropShadowEffect x:Key="TileDropShadowEffect"
                     Color="#000000"

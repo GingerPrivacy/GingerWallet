@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace WalletWasabi.Fluent.HomeScreen.WalletSettings.Views;
 
-public partial class CoinjoinCoinSelectorSettingsView : UserControl
+public class CoinjoinCoinSelectorSettingsView : UserControl
 {
 	public CoinjoinCoinSelectorSettingsView()
 	{

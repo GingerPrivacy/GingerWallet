@@ -3,16 +3,14 @@ using System.Reactive.Linq;
 using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Fluent.Extensions;
-using WalletWasabi.Helpers;
 using WalletWasabi.Wallets;
 using Unit = System.Reactive.Unit;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
 
-[AutoInterface]
-public partial class WalletPrivacyModel
+public class WalletPrivacyModel
 {
-	public WalletPrivacyModel(IWalletModel walletModel, Wallet wallet)
+	public WalletPrivacyModel(WalletModel walletModel, Wallet wallet)
 	{
 		ProgressUpdated =
 			walletModel.Transactions.TransactionProcessed

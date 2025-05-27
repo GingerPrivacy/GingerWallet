@@ -1,5 +1,3 @@
-using System.Reactive.Linq;
-using Moq;
 using NBitcoin;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Models.Wallets;
@@ -12,9 +10,8 @@ public class AmountExtensionsTests
 	[Fact]
 	public void DifferenceShouldBeExpected()
 	{
-		var exchangeRateProvider = Mock.Of<IAmountProvider>(x => x.ExchangeRateObservable == Observable.Return(1m));
-		var previous = new Amount(Money.FromUnit(221, MoneyUnit.Satoshi), exchangeRateProvider);
-		var current = new Amount(Money.FromUnit(110, MoneyUnit.Satoshi), exchangeRateProvider);
+		var previous = new Amount(Money.FromUnit(221, MoneyUnit.Satoshi).ToDecimal(MoneyUnit.BTC));
+		var current = new Amount(Money.FromUnit(110, MoneyUnit.Satoshi).ToDecimal(MoneyUnit.BTC));
 
 		var result = current.Diff(previous);
 

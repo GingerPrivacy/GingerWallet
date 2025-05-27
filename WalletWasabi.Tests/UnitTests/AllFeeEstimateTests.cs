@@ -158,7 +158,7 @@ public class AllFeeEstimateTests
 	}
 
 	[Fact]
-	public async Task RpcFailuresAsync()
+	public async Task RpcExceptionsAsync()
 	{
 		var mockRpc = new MockRpcClient();
 		mockRpc.Network = Network.Main;
@@ -181,7 +181,7 @@ public class AllFeeEstimateTests
 	}
 
 	[Fact]
-	public async Task ToleratesRpcFailuresAsync()
+	public async Task ToleratesRpcExceptionsAsync()
 	{
 		var mockRpc = CreateAndConfigureRpcClient();
 		mockRpc.Network = Network.Main;
@@ -237,10 +237,10 @@ public class AllFeeEstimateTests
 
 		var histogram = MempoolInfoGenerator.FeeRanges.Reverse().Select((x, i) => new FeeRateGroup
 		{
-			Count = (uint) (100 * Math.Pow(i + 1, 2)),
-			Sizes = (uint) (40 * 100 * (i + 1)),
-			From = new FeeRate((decimal) x.from),
-			To = new FeeRate((decimal) x.to),
+			Count = (uint)(100 * Math.Pow(i + 1, 2)),
+			Sizes = (uint)(40 * 100 * (i + 1)),
+			From = new FeeRate((decimal)x.from),
+			To = new FeeRate((decimal)x.to),
 			Fees = Money.Zero,
 			Group = x.from
 		}).ToArray();
@@ -270,7 +270,6 @@ public class AllFeeEstimateTests
 		Assert.Equal(124, allFee.Estimations[144]);
 		Assert.True(allFee.Estimations[1008] > 1);
 	}
-
 
 	[Fact]
 	public async Task WorksWithBitcoinCoreEstimationsAsync()

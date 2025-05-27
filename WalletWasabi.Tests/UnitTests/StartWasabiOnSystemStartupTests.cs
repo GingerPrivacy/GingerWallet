@@ -1,10 +1,11 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent;
+using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Helpers;
 using WalletWasabi.Tests.Helpers;
+using WalletWasabi.Tests.TestCommon;
 using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests;
@@ -61,8 +62,7 @@ public class StartWasabiOnSystemStartupTests
 	public void RunOnSystemStartupGetsSetCorrectly()
 	{
 		// Imitate fresh UiConfig file
-		string workDir = Common.GetWorkDir();
-		IoHelpers.EnsureDirectoryExists(workDir);
+		string workDir = TestDirectory.Get();
 		UiConfig config = new(Path.Combine(workDir, "UiConfig.json"));
 		config.LoadFile(true);
 		Assert.True(config.Oobe);

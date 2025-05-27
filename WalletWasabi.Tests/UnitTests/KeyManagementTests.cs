@@ -7,9 +7,9 @@ using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Crypto.Randomness;
 using WalletWasabi.Logging;
 using WalletWasabi.Models;
-using WalletWasabi.Tests.Helpers;
-using Xunit;
+using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.Wallets;
+using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests;
 
@@ -42,7 +42,7 @@ public class KeyManagementTests
 		Assert.NotNull(manager3.SegwitExtPubKey);
 		Assert.NotNull(manager3.TaprootExtPubKey);
 
-		var sameManager = new KeyManager(manager.EncryptedSecret, manager.ChainCode, manager.MasterFingerprint, manager.SegwitExtPubKey, manager.TaprootExtPubKey, null, new BlockchainState(Network.Main));
+		var sameManager = new KeyManager(manager.EncryptedSecret, manager.ChainCode, manager.MasterFingerprint, manager.SegwitExtPubKey, manager.TaprootExtPubKey, 0, new BlockchainState(Network.Main));
 		var sameManager2 = new KeyManager(manager.EncryptedSecret, manager.ChainCode, password, Network.Main);
 		Logger.TurnOff();
 		Assert.Throws<SecurityException>(() => new KeyManager(manager.EncryptedSecret, manager.ChainCode, "differentPassword", Network.Main));
@@ -113,8 +113,7 @@ public class KeyManagementTests
 	{
 		string password = "password";
 
-		var filePath = Path.Combine(Common.GetWorkDir(), "Wallet.json");
-		DeleteFileAndDirectoryIfExists(filePath);
+		var filePath = Path.Combine(TestDirectory.Get(), "Wallet.json");
 
 		Logger.TurnOff();
 		Assert.Throws<FileNotFoundException>(() => KeyManager.FromFile(filePath));
@@ -151,22 +150,18 @@ public class KeyManagementTests
 		Assert.Equal(manager.EncryptedSecret, sameManager.EncryptedSecret);
 		Assert.Equal(manager.SegwitExtPubKey, sameManager.SegwitExtPubKey);
 		Assert.Equal(manager.TaprootExtPubKey, sameManager.TaprootExtPubKey);
-
-		DeleteFileAndDirectoryIfExists(filePath);
 	}
 
 	[Fact]
 	public void CanSerializeHeightCorrectly()
 	{
-		var filePath = "wallet-serialization.json";
+		var filePath = Path.Combine(TestDirectory.Get(), "wallet-serialization.json");
 		var manager = KeyManager.CreateNew(out _, "", Network.Main, filePath);
 		manager.SetBestHeight(10_000);
 		manager.ToFile();
 
 		var sameManager = KeyManager.FromFile(filePath);
-		Assert.Equal(new Height(9_899), sameManager.GetBestHeight(SyncType.Complete));
-
-		DeleteFileAndDirectoryIfExists(filePath);
+		Assert.Equal(new Height(9_899), sameManager.GetBestHeight());
 	}
 
 	[Fact]
@@ -230,23 +225,5 @@ public class KeyManagementTests
 		Assert.Contains(keysForChange, IsTaproot);
 		Assert.Contains(keysForChange, IsSegwit);
 		Assert.Equal(keysForChange.Count(IsTaproot), keysForChange.Count(IsSegwit));
-	}
-
-	private static void DeleteFileAndDirectoryIfExists(string filePath)
-	{
-		var dir = Path.GetDirectoryName(filePath);
-
-		if (File.Exists(filePath))
-		{
-			File.Delete(filePath);
-		}
-
-		if (dir is not null && Directory.Exists(dir))
-		{
-			if (Directory.GetFiles(dir).Length == 0)
-			{
-				Directory.Delete(dir);
-			}
-		}
 	}
 }

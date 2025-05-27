@@ -15,7 +15,7 @@ namespace WalletWasabi.Fluent.HomeScreen.Labels.ViewModels;
 
 public partial class SuggestionLabelsViewModel : ActivatableViewModel
 {
-	private readonly IWalletModel _wallet;
+	private readonly WalletModel _wallet;
 	private readonly int _topSuggestionsCount;
 	private readonly SourceList<SuggestionLabelViewModel> _sourceLabels;
 	private readonly ObservableCollectionExtended<string> _topSuggestions;
@@ -24,7 +24,7 @@ public partial class SuggestionLabelsViewModel : ActivatableViewModel
 	[AutoNotify] private bool _isCurrentTextValid;
 	[AutoNotify] private bool _forceAdd;
 
-	public SuggestionLabelsViewModel(IWalletModel wallet, Intent intent, int topSuggestionsCount, IEnumerable<string>? labels = null)
+	public SuggestionLabelsViewModel(WalletModel wallet, Intent intent, int topSuggestionsCount, IEnumerable<string>? labels = null)
 	{
 		_wallet = wallet;
 		_topSuggestionsCount = topSuggestionsCount;

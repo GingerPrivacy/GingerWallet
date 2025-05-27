@@ -25,7 +25,7 @@ public class TargettedNavigationStack : NavigationStack<RoutableViewModel>
 	{
 		base.OnPopped(page);
 
-		page.CurrentTarget = NavigationTarget.Default;
+		page.CurrentTarget = NavigationTarget.Unspecified;
 	}
 
 	protected override void OnNavigated(

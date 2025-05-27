@@ -1,21 +1,22 @@
+using Microsoft.Extensions.Caching.Memory;
 using NBitcoin;
 using NBitcoin.Protocol;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Caching.Memory;
 using WalletWasabi.BitcoinCore.Rpc;
-using WalletWasabi.Blockchain.Analysis.FeesEstimation;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Helpers;
 using WalletWasabi.Models;
 using WalletWasabi.Services;
 using WalletWasabi.Stores;
+using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.Tests.XunitConfiguration;
 using WalletWasabi.Wallets;
 using WalletWasabi.Wallets.FilterProcessor;
 using WalletWasabi.WebClients.Wasabi;
 using Xunit;
+using WalletWasabi.Daemon.FeeRateProviders;
 
 namespace WalletWasabi.Tests.RegressionTests;
 
@@ -52,13 +53,13 @@ public class WalletTests : IClassFixture<RegTestFixture>
 		// 2. Create wasabi synchronizer service.
 		await using WasabiHttpClientFactory httpClientFactory = new(torEndPoint: null, backendUriGetter: () => new Uri(RegTestFixture.BackendEndPoint));
 		using WasabiSynchronizer synchronizer = new(period: TimeSpan.FromSeconds(3), 1000, bitcoinStore, httpClientFactory);
-		HybridFeeProvider feeProvider = new(synchronizer, null);
+		FeeRateProvider feeProvider = new(httpClientFactory, network);
 
 		// 3. Create key manager service.
 		var keyManager = KeyManager.CreateNew(out _, setup.Password, network);
 
 		// 4. Create wallet service.
-		var workDir = Helpers.Common.GetWorkDir();
+		var workDir = TestDirectory.Get();
 
 		IFileSystemBlockRepository blockRepository = bitcoinStore.BlockRepository;
 
@@ -92,7 +93,6 @@ public class WalletTests : IClassFixture<RegTestFixture>
 			nodes.Connect(); // Start connection service.
 			node.VersionHandshake(); // Start mempool service.
 			await synchronizer.StartAsync(CancellationToken.None); // Start wasabi synchronizer service.
-			await feeProvider.StartAsync(testDeadlineCts.Token);
 
 			using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30)))
 			{
@@ -226,7 +226,6 @@ public class WalletTests : IClassFixture<RegTestFixture>
 			wallet.NewFiltersProcessed -= setup.Wallet_NewFiltersProcessed;
 			await wallet.StopAsync(testDeadlineCts.Token);
 			await synchronizer.StopAsync(testDeadlineCts.Token);
-			await feeProvider.StopAsync(testDeadlineCts.Token);
 			nodes?.Dispose();
 			node?.Disconnect();
 		}

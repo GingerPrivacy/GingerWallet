@@ -8,6 +8,13 @@ public abstract class GingerRandom
 {
 	public abstract void GetBytes(Span<byte> output);
 
+	public byte[] GetBytes(int size)
+	{
+		var res = new byte[size];
+		GetBytes(res);
+		return res;
+	}
+
 	public virtual ulong GetUInt64()
 	{
 		Span<byte> bytes = stackalloc byte[8];

@@ -4,9 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ReactiveUI;
 using WalletWasabi.Fluent.Common.ViewModels;
-using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
 using WalletWasabi.Fluent.Navigation.Interfaces;
-using WalletWasabi.Fluent.Navigation.Models;
 
 namespace WalletWasabi.Fluent.Navigation.ViewModels;
 
@@ -14,7 +12,7 @@ public abstract partial class RoutableViewModel : ViewModelBase, INavigatable
 {
 	private CompositeDisposable? _currentDisposable;
 
-	[AutoNotify] private string? _title;
+	[AutoNotify] private string _title = "";
 	[AutoNotify] private string? _caption;
 	[AutoNotify] private string[]? _keywords;
 	[AutoNotify] private bool _isBusy;
@@ -26,13 +24,13 @@ public abstract partial class RoutableViewModel : ViewModelBase, INavigatable
 
 	protected RoutableViewModel()
 	{
-		BackCommand = ReactiveCommand.Create(() => Navigate().Back(), this.WhenAnyValue(model => model.IsBusy, b => !b));
-		CancelCommand = ReactiveCommand.Create(() => Navigate().Clear());
+		BackCommand = ReactiveCommand.Create(() => UiContext.Navigate(CurrentTarget).Back(), this.WhenAnyValue(model => model.IsBusy, b => !b));
+		CancelCommand = ReactiveCommand.Create(() => UiContext.Navigate(CurrentTarget).Clear());
 	}
 
 	public NavigationTarget CurrentTarget { get; internal set; }
 
-	public virtual NavigationTarget DefaultTarget => NavigationTarget.HomeScreen;
+	public virtual NavigationTarget DefaultTarget => NavigationTarget.Unspecified;
 
 	public ICommand? NextCommand { get; protected set; }
 
@@ -66,18 +64,6 @@ public abstract partial class RoutableViewModel : ViewModelBase, INavigatable
 		_currentDisposable = null;
 	}
 
-	public INavigationStack<RoutableViewModel> Navigate()
-	{
-		var currentTarget = CurrentTarget == NavigationTarget.Default ? DefaultTarget : CurrentTarget;
-
-		return Navigate(currentTarget);
-	}
-
-	public INavigationStack<RoutableViewModel> Navigate(NavigationTarget currentTarget)
-	{
-		return UiContext.Navigate(currentTarget);
-	}
-
 	public void OnNavigatedTo(bool isInHistory)
 	{
 		DoNavigateTo(isInHistory);
@@ -103,26 +89,16 @@ public abstract partial class RoutableViewModel : ViewModelBase, INavigatable
 		}
 	}
 
-	public async Task<DialogResult<TResult>> NavigateDialogAsync<TResult>(DialogViewModelBase<TResult> dialog)
-		=> await NavigateDialogAsync(dialog, CurrentTarget);
-
-	public async Task<DialogResult<TResult>> NavigateDialogAsync<TResult>(DialogViewModelBase<TResult> dialog, NavigationTarget target, NavigationMode navigationMode = NavigationMode.Normal)
-	{
-		target = NavigationExtensions.GetTarget(this, target);
-
-		return await UiContext.Navigate(target).NavigateDialogAsync(dialog, navigationMode);
-	}
-
-	protected async Task ShowErrorAsync(string title, string message, string caption, NavigationTarget navigationTarget = NavigationTarget.Default)
+	protected async Task ShowErrorAsync(string title, string message, string caption, NavigationTarget navigationTarget = NavigationTarget.Unspecified)
 	{
 		var target =
-			navigationTarget != NavigationTarget.Default
+			navigationTarget != NavigationTarget.Unspecified
 			? navigationTarget
 			: CurrentTarget == NavigationTarget.CompactDialogScreen
 				? NavigationTarget.CompactDialogScreen
 				: NavigationTarget.DialogScreen;
 
-		await Navigate(target).ShowErrorAsync(title, message, caption);
+		await UiContext.Navigate().Navigate(target).To().ShowErrorDialog(message, title, caption).GetResultAsync();
 	}
 
 	protected void SetupCancel(bool enableCancel, bool enableCancelOnEscape, bool enableCancelOnPressed, bool escapeGoesBack = false)

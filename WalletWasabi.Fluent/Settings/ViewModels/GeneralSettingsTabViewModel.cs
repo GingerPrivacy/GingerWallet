@@ -24,9 +24,8 @@ public partial class GeneralSettingsTabViewModel : RoutableViewModel
 	[AutoNotify] private bool _runOnSystemStartup;
 	[AutoNotify] private bool _modifyTorEnabled;
 
-	public GeneralSettingsTabViewModel(UiContext uiContext, IApplicationSettings settings)
+	public GeneralSettingsTabViewModel(ApplicationSettings settings)
 	{
-		UiContext = uiContext;
 		Settings = settings;
 		_runOnSystemStartup = settings.RunOnSystemStartup;
 
@@ -72,7 +71,7 @@ public partial class GeneralSettingsTabViewModel : RoutableViewModel
 
 	public bool IsReadOnly => Settings.IsOverridden;
 
-	public IApplicationSettings Settings { get; }
+	public ApplicationSettings Settings { get; }
 
 	public ICommand StartupCommand { get; }
 

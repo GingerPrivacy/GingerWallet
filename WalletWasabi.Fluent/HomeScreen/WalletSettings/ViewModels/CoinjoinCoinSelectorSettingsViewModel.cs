@@ -12,7 +12,7 @@ namespace WalletWasabi.Fluent.HomeScreen.WalletSettings.ViewModels;
 [NavigationMetaData(NavigationTarget = NavigationTarget.CompactDialogScreen)]
 public partial class CoinjoinCoinSelectorSettingsViewModel : DialogViewModelBase<Unit>
 {
-	private readonly IWalletModel _wallet;
+	private readonly WalletModel _wallet;
 
 	[AutoNotify] private bool _forceUsingLowPrivacyCoins;
 	[AutoNotify] private string _weightedAnonymityLossNormal;
@@ -20,7 +20,7 @@ public partial class CoinjoinCoinSelectorSettingsViewModel : DialogViewModelBase
 	[AutoNotify] private string _targetCoinCountPerBucket;
 	[AutoNotify] private bool _useOldCoinSelectorAsFallback;
 
-	public CoinjoinCoinSelectorSettingsViewModel(IWalletModel wallet)
+	public CoinjoinCoinSelectorSettingsViewModel(WalletModel wallet)
 	{
 		_wallet = wallet;
 		Title = Resources.Configuration;

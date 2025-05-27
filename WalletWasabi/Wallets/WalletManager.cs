@@ -56,6 +56,8 @@ public class WalletManager : IWalletProvider
 	/// </summary>
 	public event EventHandler<Wallet>? WalletAdded;
 
+	public event EventHandler<Wallet>? WalletRemoved;
+
 	/// <summary>Cancels initialization of wallets.</summary>
 	private CancellationTokenSource CancelAllTasks { get; } = new();
 
@@ -125,11 +127,14 @@ public class WalletManager : IWalletProvider
 			throw new InvalidOperationException($"Invalid name {newWalletName} - {error.Message}");
 		}
 
-		var (currentWalletFilePath, currentWalletBackupFilePath) = WalletDirectories.GetWalletFilePaths(wallet.WalletName);
-		var (newWalletFilePath, newWalletBackupFilePath) = WalletDirectories.GetWalletFilePaths(newWalletName);
+		var (currentWalletFilePath, currentWalletBackupFilePath, currentWalletAttrFilePath) = WalletDirectories.GetWalletFilePaths(wallet.WalletName);
+		var (newWalletFilePath, newWalletBackupFilePath, newWalletAttrFilePath) = WalletDirectories.GetWalletFilePaths(newWalletName);
 
 		Logger.LogInfo($"Renaming file {currentWalletFilePath} to {newWalletFilePath}");
 		File.Move(currentWalletFilePath, newWalletFilePath);
+
+		Logger.LogInfo($"Renaming file {currentWalletAttrFilePath} to {newWalletAttrFilePath}");
+		File.Move(currentWalletAttrFilePath, newWalletAttrFilePath);
 
 		try
 		{
@@ -253,7 +258,7 @@ public class WalletManager : IWalletProvider
 
 	private Wallet LoadWalletByNameFromDisk(string walletName, string? secret)
 	{
-		(string walletFullPath, string walletBackupFullPath) = WalletDirectories.GetWalletFilePaths(walletName);
+		(string walletFullPath, string walletBackupFullPath, _) = WalletDirectories.GetWalletFilePaths(walletName);
 		Wallet wallet;
 		try
 		{
@@ -288,6 +293,51 @@ public class WalletManager : IWalletProvider
 		}
 
 		return wallet;
+	}
+
+	public bool RemoveWallet(Wallet wallet)
+	{
+		var (walletFile, backupFile, attrFile) = WalletDirectories.GetWalletFilePaths(wallet.WalletName);
+
+		wallet.KeyManager.SetFilePath(null);
+
+		if (!TryDelete(walletFile))
+		{
+			wallet.KeyManager.SetFilePath(walletFile);
+			return false;
+		}
+
+		TryDelete(backupFile);
+		TryDelete(attrFile);
+
+		lock (Lock)
+		{
+			Wallets.Remove(wallet);
+		}
+
+		wallet.StateChanged -= Wallet_StateChanged;
+		Logger.LogInfo($"'{Path.GetFileNameWithoutExtension(walletFile)}' wallet was removed.");
+		wallet.Dispose();
+
+		WalletRemoved.SafeInvoke(this, wallet);
+
+		return true;
+
+		bool TryDelete(string path)
+		{
+			try
+			{
+				Logger.LogInfo($"Deleting file {path}");
+				File.Delete(path);
+				return true;
+			}
+			catch (Exception ex)
+			{
+				Logger.LogError(ex);
+			}
+
+			return false;
+		}
 	}
 
 	private void AddWallet(Wallet wallet)
@@ -438,14 +488,6 @@ public class WalletManager : IWalletProvider
 		}
 
 		IsInitialized = true;
-	}
-
-	public void EnsureTurboSyncHeightConsistency()
-	{
-		foreach (var km in GetWallets().Select(x => x.KeyManager).Where(x => x.GetNetwork() == Network))
-		{
-			km.EnsureTurboSyncHeightConsistency();
-		}
 	}
 
 	public void SetMaxBestHeight(uint bestHeight)

@@ -11,9 +11,9 @@ using WalletWasabi.Blockchain.TransactionProcessing;
 using WalletWasabi.Blockchain.Transactions;
 using WalletWasabi.Extensions;
 using WalletWasabi.Fluent.Helpers;
-using WalletWasabi.Helpers;
 using WalletWasabi.Models;
 using WalletWasabi.Tests.Helpers;
+using WalletWasabi.Tests.TestCommon;
 using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests.Transactions;
@@ -1503,8 +1503,7 @@ public class TransactionProcessorTests
 
 	private async Task<AllTransactionStore> CreateTransactionStoreAsync([CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "")
 	{
-		string dir = Path.Combine(Common.GetWorkDir(callerFilePath, callerMemberName), "TransactionStore");
-		await IoHelpers.TryDeleteDirectoryAsync(dir);
+		string dir = Path.Combine(TestDirectory.Get(callerFilePath, callerMemberName), "TransactionStore");
 		AllTransactionStore txStore = new(dir, Network.RegTest);
 		await txStore.InitializeAsync();
 		return txStore;

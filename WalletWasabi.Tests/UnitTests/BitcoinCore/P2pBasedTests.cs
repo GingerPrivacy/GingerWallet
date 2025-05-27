@@ -11,6 +11,7 @@ using WalletWasabi.Helpers;
 using WalletWasabi.Services;
 using WalletWasabi.Stores;
 using WalletWasabi.Tests.Helpers;
+using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.Wallets;
 using Xunit;
 
@@ -29,7 +30,7 @@ public class P2pBasedTests
 
 		try
 		{
-			string dir = Common.GetWorkDir();
+			string dir = coreNode.DataDir;
 			var network = coreNode.Network;
 			var rpc = coreNode.RpcClient;
 
@@ -102,7 +103,7 @@ public class P2pBasedTests
 			await rpc.GenerateAsync(101);
 			var network = rpc.Network;
 
-			var dir = Common.GetWorkDir();
+			var dir = TestDirectory.Get();
 
 			using Key k = new();
 			var addr = k.PubKey.GetAddress(ScriptPubKeyType.Segwit, network);

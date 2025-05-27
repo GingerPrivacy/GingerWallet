@@ -81,7 +81,7 @@ public class App : Application
 	private void InitializeTrayIcons()
 	{
 		// TODO: This is temporary workaround until https://github.com/zkSNACKs/WalletWasabi/issues/8151 is fixed.
-		var trayIcon = TrayIcon.GetIcons(this).FirstOrDefault();
+		var trayIcon = TrayIcon.GetIcons(this)?.FirstOrDefault();
 		if (trayIcon is not null)
 		{
 			if (this.TryFindResource("DefaultNativeMenu", out var nativeMenu))
@@ -92,37 +92,37 @@ public class App : Application
 	}
 
 	// It begins to show that we're re-inventing DI, aren't we?
-	private static IWalletRepository CreateWalletRepository(IAmountProvider amountProvider)
+	private static WalletRepository CreateWalletRepository(AmountProvider amountProvider, HardwareWalletInterface hardwareWalletInterface)
 	{
-		return new WalletRepository(amountProvider);
+		return new WalletRepository(amountProvider, hardwareWalletInterface);
 	}
 
-	private static IHardwareWalletInterface CreateHardwareWalletInterface()
+	private static HardwareWalletInterface CreateHardwareWalletInterface(Network network)
 	{
-		return new HardwareWalletInterface();
+		return new HardwareWalletInterface(network);
 	}
 
-	private static IFileSystem CreateFileSystem()
+	private static FileSystemModel CreateFileSystem()
 	{
 		return new FileSystemModel();
 	}
 
-	private static IClientConfig CreateConfig()
+	private static ClientConfigModel CreateConfig()
 	{
 		return new ClientConfigModel();
 	}
 
-	private static IApplicationSettings CreateApplicationSettings(TwoFactorAuthentication twoFactorAuthentication)
+	private static ApplicationSettings CreateApplicationSettings(TwoFactorAuthentication twoFactorAuthentication)
 	{
 		return new ApplicationSettings(Services.PersistentConfigFilePath, Services.PersistentConfig, Services.Config, Services.UiConfig, twoFactorAuthentication);
 	}
 
-	private static ITransactionBroadcasterModel CreateBroadcaster(Network network)
+	private static TransactionBroadcasterModel CreateBroadcaster(Network network)
 	{
 		return new TransactionBroadcasterModel(network);
 	}
 
-	private static IAmountProvider CreateAmountProvider()
+	private static AmountProvider CreateAmountProvider()
 	{
 		return new AmountProvider(Services.HostedServices.Get<ExchangeRateService>());
 	}
@@ -133,6 +133,7 @@ public class App : Application
 		var applicationSettings = CreateApplicationSettings(twoFactorAuthentication);
 		var amountProvider = CreateAmountProvider();
 		var torStatusChecker = new TorStatusCheckerModel();
+		var hardwareWalletInterface = CreateHardwareWalletInterface(applicationSettings.Network);
 
 		// This class (App) represents the actual Avalonia Application and it's sole presence means we're in the actual runtime context (as opposed to unit tests)
 		// Once all ViewModels have been refactored to receive UiContext as a constructor parameter, this static singleton property can be removed.
@@ -140,9 +141,9 @@ public class App : Application
 			new QrCodeGenerator(),
 			new QrCodeReader(),
 			new UiClipboard(),
-			CreateWalletRepository(amountProvider),
+			CreateWalletRepository(amountProvider, hardwareWalletInterface),
 			new CoinjoinModel(),
-			CreateHardwareWalletInterface(),
+			hardwareWalletInterface,
 			CreateFileSystem(),
 			CreateConfig(),
 			applicationSettings,

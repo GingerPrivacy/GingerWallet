@@ -16,7 +16,7 @@ public partial class LoginViewModel : RoutableViewModel
 	[AutoNotify] private bool _isPasswordNeeded;
 	[AutoNotify] private string _errorMessage;
 
-	public LoginViewModel(IWalletModel wallet)
+	public LoginViewModel(WalletModel wallet)
 	{
 		_password = "";
 		_errorMessage = "";
@@ -37,7 +37,7 @@ public partial class LoginViewModel : RoutableViewModel
 
 	public ICommand OkCommand { get; }
 
-	private async Task OnNextAsync(IWalletModel walletModel)
+	private async Task OnNextAsync(WalletModel walletModel)
 	{
 		var (success, compatibilityPasswordUsed) = await walletModel.Auth.TryLoginAsync(Password);
 

@@ -26,12 +26,12 @@ public partial class ManualControlDialogViewModel : DialogViewModelBase<IEnumera
 {
 	[AutoNotify] private bool _hasSelection;
 
-	private readonly IWalletModel _walletModel;
+	private readonly WalletModel _walletModel;
 	private readonly Wallet _wallet;
 	private readonly LabelsArray? _preLabel;
 	private readonly bool _continueWithFixedAmount;
 
-	public ManualControlDialogViewModel(IWalletModel walletModel, Wallet wallet, LabelsArray? preLabel = null, bool continueWithFixedAmount = false)
+	public ManualControlDialogViewModel(WalletModel walletModel, Wallet wallet, LabelsArray? preLabel = null, bool continueWithFixedAmount = false)
 	{
 		Title = Resources.WalletManualControl;
 
@@ -92,7 +92,7 @@ public partial class ManualControlDialogViewModel : DialogViewModelBase<IEnumera
 
 		var sendParameters = new SendFlowModel(_wallet, _walletModel, coins);
 
-		Navigate().To().Send(_walletModel, sendParameters, _preLabel, _continueWithFixedAmount);
+		UiContext.Navigate().To().Send(_walletModel, sendParameters, _preLabel, _continueWithFixedAmount);
 	}
 
 	private void SelectAll(bool value)

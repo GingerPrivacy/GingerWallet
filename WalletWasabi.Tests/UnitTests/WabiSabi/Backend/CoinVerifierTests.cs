@@ -26,7 +26,7 @@ public class CoinVerifierTests
 
 	public class MockCoinVerifierProvider : CoinVerifierProvider
 	{
-		public MockCoinVerifierProvider(HttpClient httpClient, CoinVerifierConfig config) : base(httpClient, config)
+		public MockCoinVerifierProvider(HttpClient httpClient, CoinVerifierConfig config, string responseLogPath = "") : base(httpClient, config, responseLogPath)
 		{
 		}
 
@@ -43,7 +43,7 @@ public class CoinVerifierTests
 		public override ApiResponse ParseResponse(HttpStatusCode statusCode, string responseString, Coin coin, int coinBlockHeight, int currentBlockHeight)
 		{
 			bool ban = responseString == BanResponse;
-			return new ApiResponse(ApiResponseInfoOK, ban, ban, "");
+			return new ApiResponse(ApiResponseInfo.OK, "mock", ban, ban, "");
 		}
 	}
 

@@ -21,10 +21,9 @@ public class ExecuteCommandOnActivatedBehavior : DisposingBehavior<Control>
 
 	protected override void OnAttached(CompositeDisposable disposables)
 	{
-		if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
+		if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime &&
+		    lifetime.MainWindow is { } mainWindow)
 		{
-			var mainWindow = lifetime.MainWindow;
-
 			Observable
 				.FromEventPattern(mainWindow, nameof(mainWindow.Activated))
 				.Subscribe(_ =>

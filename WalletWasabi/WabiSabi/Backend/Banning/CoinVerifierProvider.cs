@@ -4,16 +4,19 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using GingerCommon.Logging;
+using System.IO;
+using WalletWasabi.Helpers;
+using Microsoft.Extensions.Logging;
+using GingerCommon.Crypto.Random;
 
 namespace WalletWasabi.WabiSabi.Backend.Banning;
 
 public abstract class CoinVerifierProvider : IDisposable
 {
-	protected static ApiResponseInfo ApiResponseInfoOK = new(HttpStatusCode.OK, true, "", "");
-
-	public CoinVerifierProvider(HttpClient httpClient, CoinVerifierConfig config, int maxParallelRequestCount = 10)
+	public CoinVerifierProvider(HttpClient httpClient, CoinVerifierConfig config, string responseLogPath, int maxParallelRequestCount = 10)
 	{
 		Config = config;
+		ResponseLogPath = responseLogPath;
 		MaxParallelRequestCount = maxParallelRequestCount;
 
 		ThrottlingSemaphore = new(initialCount: MaxParallelRequestCount);
@@ -29,7 +32,7 @@ public abstract class CoinVerifierProvider : IDisposable
 		{
 			throw new HttpRequestException($"The connection to the API is not safe. Expected https but was {url.Scheme}.");
 		}
-		httpClient.BaseAddress = url;
+		RequestUri = url;
 
 		if (string.IsNullOrEmpty(config.ApiKey))
 		{
@@ -52,6 +55,8 @@ public abstract class CoinVerifierProvider : IDisposable
 
 	protected HttpClient HttpClient { get; }
 	protected CoinVerifierConfig Config { get; }
+	protected Uri RequestUri { get; }
+	protected string ResponseLogPath { get; }
 
 	private SemaphoreSlim ThrottlingSemaphore { get; }
 
@@ -60,6 +65,14 @@ public abstract class CoinVerifierProvider : IDisposable
 	public abstract ApiResponse ParseResponse(HttpStatusCode statusCode, string responseString, Coin coin, int coinBlockHeight, int currentBlockHeight);
 
 	public abstract bool IsValid(HttpResponseMessage response);
+
+	public virtual async Task<HttpResponseMessage> SendRawRequestAsync(Coin coin, int coinBlockHeight, int currentBlockHeight, CancellationToken cancellationToken)
+	{
+		using var request = CreateRequest(coin);
+		request.RequestUri = RequestUri;
+		var response = await HttpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+		return response;
+	}
 
 	public virtual async Task<ApiResponse> SendRequestAsync(Coin coin, int coinBlockHeight, int currentBlockHeight, CancellationToken cancellationToken)
 	{
@@ -76,10 +89,9 @@ public abstract class CoinVerifierProvider : IDisposable
 
 				try
 				{
-					using var request = CreateRequest(coin);
 					using CancellationTokenSource apiTimeoutCts = new(ApiRequestTimeout);
 					using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(apiTimeoutCts.Token, cancellationToken);
-					response = await HttpClient.SendAsync(request, linkedCts.Token).ConfigureAwait(false);
+					response = await SendRawRequestAsync(coin, coinBlockHeight, currentBlockHeight, linkedCts.Token).ConfigureAwait(false);
 				}
 				finally
 				{
@@ -89,6 +101,7 @@ public abstract class CoinVerifierProvider : IDisposable
 				responseString = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 				if (IsValid(response))
 				{
+					LogResponse(responseString);
 					// Successful request, break the iteration.
 					break;
 				}
@@ -120,6 +133,27 @@ public abstract class CoinVerifierProvider : IDisposable
 		var result = ParseResponse(response.StatusCode, responseString, coin, coinBlockHeight, currentBlockHeight);
 
 		return result;
+	}
+
+	public void LogResponse(string responseString)
+	{
+		if (string.IsNullOrWhiteSpace(ResponseLogPath))
+		{
+			return;
+		}
+
+		try
+		{
+			DateTimeOffset now = DateTimeOffset.UtcNow;
+			string name = Config.Name.ToLowerInvariant();
+			string path = Path.Combine(ResponseLogPath, $"{now:yyyy_MM}_{name}");
+			IoHelpers.EnsureDirectoryExists(path);
+			File.WriteAllText(Path.Combine(path, $"{name}_{now:yyyyMMdd_HHmmss_fff}_r{SecureRandom.Instance.GetInt(0, 1000):D3}.txt"), responseString);
+		}
+		catch (Exception ex)
+		{
+			Logger.Log("Failed to save the CoinVerifier's response string", ex, LogLevel.Warning);
+		}
 	}
 
 	public virtual void Dispose()

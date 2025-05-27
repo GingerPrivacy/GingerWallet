@@ -9,10 +9,10 @@ namespace WalletWasabi.Fluent.Authorization.ViewModels;
 [NavigationMetaData(NavigationTarget = NavigationTarget.CompactDialogScreen)]
 public partial class HardwareWalletAuthDialogViewModel : AuthorizationDialogBase
 {
-	private readonly IHardwareWalletModel _wallet;
+	private readonly HardwareWalletModel _wallet;
 	private readonly TransactionAuthorizationInfo _transactionAuthorizationInfo;
 
-	public HardwareWalletAuthDialogViewModel(IHardwareWalletModel wallet, TransactionAuthorizationInfo transactionAuthorizationInfo)
+	public HardwareWalletAuthDialogViewModel(HardwareWalletModel wallet, TransactionAuthorizationInfo transactionAuthorizationInfo)
 	{
 		Title = Resources.AuthorizeWithHardwareWallet;
 

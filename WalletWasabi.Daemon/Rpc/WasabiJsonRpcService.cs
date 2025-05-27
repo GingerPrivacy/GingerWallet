@@ -521,7 +521,7 @@ public class WasabiJsonRpcService : IJsonRpcService
 	[JsonRpcMethod("getfeerates", initializable: false)]
 	public object GetFeeRate()
 	{
-		if (Global.HostedServices.Get<WasabiSynchronizer>().LastAllFeeEstimate is { } nonNullFeeRates)
+		if (Global.FeeRateProvider.GetAllFeeEstimate() is { } nonNullFeeRates)
 		{
 			return nonNullFeeRates.Estimations;
 		}

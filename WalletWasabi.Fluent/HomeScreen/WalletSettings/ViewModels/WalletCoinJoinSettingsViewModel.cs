@@ -8,7 +8,6 @@ using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Models;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Fluent.Validation;
@@ -27,13 +26,13 @@ namespace WalletWasabi.Fluent.HomeScreen.WalletSettings.ViewModels;
 	Searchable = false)]
 public partial class WalletCoinJoinSettingsViewModel : RoutableViewModel
 {
-	private readonly IWalletModel _wallet;
+	private readonly WalletModel _wallet;
 	[AutoNotify] private bool _autoCoinJoin;
 	[AutoNotify] private bool _isCoinjoinProfileSelected;
 	[AutoNotify] private string _plebStopThreshold;
 	[AutoNotify] private string? _selectedCoinjoinProfileName;
-	[AutoNotify] private IWalletModel _selectedOutputWallet;
-	[AutoNotify] private ReadOnlyObservableCollection<IWalletModel> _wallets = ReadOnlyObservableCollection<IWalletModel>.Empty;
+	[AutoNotify] private WalletModel _selectedOutputWallet;
+	[AutoNotify] private ReadOnlyObservableCollection<WalletModel> _wallets = ReadOnlyObservableCollection<WalletModel>.Empty;
 	[AutoNotify] private bool _isOutputWalletSelectionEnabled = true;
 	[AutoNotify] private bool _redCoinIsolation;
 	[AutoNotify] private string _anonScoreTarget;
@@ -50,9 +49,8 @@ public partial class WalletCoinJoinSettingsViewModel : RoutableViewModel
 
 	private CompositeDisposable _disposable = new();
 
-	public WalletCoinJoinSettingsViewModel(UiContext uiContext, IWalletModel walletModel)
+	public WalletCoinJoinSettingsViewModel(WalletModel walletModel)
 	{
-		UiContext = uiContext;
 		_wallet = walletModel;
 		_isCoinjoinProfileSelected = _wallet.Settings.IsCoinjoinProfileSelected;
 		_autoCoinJoin = _wallet.Settings.AutoCoinjoin;

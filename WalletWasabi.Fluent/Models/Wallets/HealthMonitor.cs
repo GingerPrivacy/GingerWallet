@@ -15,11 +15,6 @@ using WalletWasabi.Tor.StatusChecker;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
 
-public partial interface IHealthMonitor : IDisposable
-{
-}
-
-[AutoInterface]
 public partial class HealthMonitor : ReactiveObject, IDisposable
 {
 	private readonly ObservableAsPropertyHelper<ICollection<Issue>> _torIssues;
@@ -37,7 +32,7 @@ public partial class HealthMonitor : ReactiveObject, IDisposable
 	[AutoNotify] private bool _checkForUpdates = true;
 	[AutoNotify] private Version? _clientVersion;
 
-	public HealthMonitor(IApplicationSettings applicationSettings, ITorStatusCheckerModel torStatusChecker)
+	public HealthMonitor(ApplicationSettings applicationSettings, TorStatusCheckerModel torStatusChecker)
 	{
 		// Do not make it dynamic, because if you change this config settings only next time will it activate.
 		UseTor = applicationSettings.UseTor;

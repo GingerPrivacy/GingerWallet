@@ -11,9 +11,10 @@ using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.HomeScreen.History.ViewModels.Actions;
 
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class TransactionDetailsViewModel : RoutableViewModel
 {
-	private readonly IWalletModel _wallet;
+	private readonly WalletModel _wallet;
 
 	[AutoNotify] private bool _isConfirmed;
 	[AutoNotify] private string? _amountText = "";
@@ -29,7 +30,7 @@ public partial class TransactionDetailsViewModel : RoutableViewModel
 	[AutoNotify] private FeeRate? _feeRate;
 	[AutoNotify] private bool _isFeeRateVisible;
 
-	public TransactionDetailsViewModel(IWalletModel wallet, TransactionModel model)
+	public TransactionDetailsViewModel(WalletModel wallet, TransactionModel model)
 	{
 		Title = Resources.TransactionDetails;
 		_wallet = wallet;
@@ -92,7 +93,7 @@ public partial class TransactionDetailsViewModel : RoutableViewModel
 
 	private void OnNext()
 	{
-		Navigate().Clear();
+		UiContext.Navigate(CurrentTarget).Clear();
 	}
 
 	protected override void OnNavigatedTo(bool isInHistory, CompositeDisposable disposables)

@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Linq;
 using NBitcoin;
 using ReactiveUI;
+using WalletWasabi.Daemon.FeeRateProviders;
 using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.Models.UI;
@@ -26,7 +28,7 @@ public partial class BitcoinTabSettingsViewModel : RoutableViewModel
 	[AutoNotify] private string _bitcoinP2PEndPoint;
 	[AutoNotify] private string _dustThreshold;
 
-	public BitcoinTabSettingsViewModel(IApplicationSettings settings)
+	public BitcoinTabSettingsViewModel(ApplicationSettings settings)
 	{
 		Settings = settings;
 
@@ -48,15 +50,23 @@ public partial class BitcoinTabSettingsViewModel : RoutableViewModel
 					Settings.DustThreshold = result;
 				}
 			});
+
+		FeeRateProvidersEnabled =
+			this.WhenAnyValue(x => x.Settings.Network)
+				.Select(x => x != Network.RegTest);
 	}
+
+	public IObservable<bool> FeeRateProvidersEnabled { get; }
 
 	public bool IsReadOnly => Settings.IsOverridden;
 
-	public IApplicationSettings Settings { get; }
+	public ApplicationSettings Settings { get; }
 
 	public Version BitcoinCoreVersion => Constants.BitcoinCoreVersion;
 
 	public IEnumerable<Network> Networks { get; } = new[] { Network.Main, Network.RegTest };
+
+	public IEnumerable<FeeRateProviderSource> FeeRateProviders => Enum.GetValues(typeof(FeeRateProviderSource)).Cast<FeeRateProviderSource>();
 
 	private void ValidateBitcoinP2PEndPoint(IValidationErrors errors)
 	{

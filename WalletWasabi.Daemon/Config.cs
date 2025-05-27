@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net;
+using WalletWasabi.Daemon.FeeRateProviders;
 using WalletWasabi.Exceptions;
 using WalletWasabi.Helpers;
 using WalletWasabi.Logging;
@@ -151,6 +152,9 @@ public class Config
 			[nameof(BtcFractionGroup)] = (
 				"Grouping for Bitcoin fraction",
 				GetIntArrayValue("BtcFractionGroup", PersistentConfig.BtcFractionGroup, cliArgs)),
+			[nameof(FeeRateEstimationProvider)] = (
+				"The mining fee rate provider. Available providers are BlockstreamInfo and MempoolSpace",
+				GetFeeRateEstimationProviderValue("FeeRateEstimationProvider", PersistentConfig.FeeRateEstimationProvider, cliArgs))
 		};
 
 		// Check if any config value is overridden (either by an environment value, or by a CLI argument).
@@ -223,6 +227,8 @@ public class Config
 	public int AbsoluteMinInputCount => int.Max(
 		GetEffectiveValue<IntValue, int>(nameof(AbsoluteMinInputCount)),
 		Constants.AbsoluteMinInputCount);
+
+	public FeeRateProviderSource FeeRateEstimationProvider => GetEffectiveValue<FeeRateProviderSourceValue, FeeRateProviderSource>(nameof(FeeRateEstimationProvider));
 
 	public ServiceConfiguration ServiceConfiguration { get; }
 
@@ -452,6 +458,17 @@ public class Config
 		return new LogModeArrayValue(arrayValues, arrayValues, ValueSource.Disk);
 	}
 
+	private static FeeRateProviderSourceValue GetFeeRateEstimationProviderValue(string key, FeeRateProviderSource value, string[] cliArgs)
+	{
+		if (GetOverrideValue(key, cliArgs, out string? overrideValue, out ValueSource? valueSource) &&
+		    Enum.TryParse(overrideValue, ignoreCase: true, out FeeRateProviderSource source))
+		{
+			return new FeeRateProviderSourceValue(value, source, valueSource.Value);
+		}
+
+		return new FeeRateProviderSourceValue(value, value, ValueSource.Disk);
+	}
+
 	private static TorModeValue GetTorModeValue(string key, object value, string[] cliArgs)
 	{
 		TorMode computedValue;
@@ -590,6 +607,7 @@ public class Config
 	private record IntArrayValue(int[] Value, int[] EffectiveValue, ValueSource ValueSource) : ITypedValue<int[]>;
 	private record LogModeArrayValue(LogMode[] Value, LogMode[] EffectiveValue, ValueSource ValueSource) : ITypedValue<LogMode[]>;
 	private record TorModeValue(TorMode Value, TorMode EffectiveValue, ValueSource ValueSource) : ITypedValue<TorMode>;
+	private record FeeRateProviderSourceValue(FeeRateProviderSource Value, FeeRateProviderSource EffectiveValue, ValueSource ValueSource) : ITypedValue<FeeRateProviderSource>;
 	private record NetworkValue(Network Value, Network EffectiveValue, ValueSource ValueSource) : ITypedValue<Network>;
 	private record MoneyValue(Money Value, Money EffectiveValue, ValueSource ValueSource) : ITypedValue<Money>;
 	private record EndPointValue(EndPoint Value, EndPoint EffectiveValue, ValueSource ValueSource) : ITypedValue<EndPoint>;

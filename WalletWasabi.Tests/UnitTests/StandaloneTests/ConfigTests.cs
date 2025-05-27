@@ -1,11 +1,9 @@
 using NBitcoin;
 using System.IO;
 using System.Text.Json;
-using System.Threading.Tasks;
 using WalletWasabi.Bases;
 using WalletWasabi.Daemon;
-using WalletWasabi.Lang.Models;
-using WalletWasabi.Tests.Helpers;
+using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.WabiSabi.Backend;
 using WalletWasabi.WabiSabi.Models;
 using Xunit;
@@ -15,10 +13,10 @@ namespace WalletWasabi.Tests.UnitTests.StandaloneTests;
 public class ConfigTests
 {
 	[Fact]
-	public async Task CheckConfigFileChangeTestAsync()
+	public void CheckConfigFileChangeTest()
 	{
-		string workDirectory = await Common.GetEmptyWorkDirAsync();
-		string configPath = Path.Combine(workDirectory, $"{nameof(CheckConfigFileChangeTestAsync)}.json");
+		string workDirectory = TestDirectory.Get();
+		string configPath = Path.Combine(workDirectory, $"{nameof(CheckConfigFileChangeTest)}.json");
 
 		// Create config and store it.
 		WabiSabiConfig config = new WabiSabiConfig();
@@ -55,17 +53,15 @@ public class ConfigTests
 	public static string ReadAllTextAndNormalize(string configPath) => File.ReadAllText(configPath).ReplaceLineEndings("\n");
 
 	[Fact]
-	public async Task ToFileAndLoadFileTestAsync()
+	public void ToFileAndLoadFileTest()
 	{
-		string workDirectory = await Common.GetEmptyWorkDirAsync();
-		string configPath = Path.Combine(workDirectory, $"{nameof(ToFileAndLoadFileTestAsync)}.json");
+		string workDirectory = TestDirectory.Get();
+		string configPath = Path.Combine(workDirectory, $"{nameof(ToFileAndLoadFileTest)}.json");
 
+		// We need OS culture dependent values
 		PersistentConfig config = new() { LocalBitcoinCoreDataDir = TestLocalBitcoinCoreDataDir };
-		DecimalSeparator = config.DecimalSeparator;
-		GroupSeparator = config.GroupSeparator;
-		ExchangeCurrency = config.ExchangeCurrency;
 
-		string expected = GetPersistentConfigString();
+		string expected = GetPersistentConfigString(config.GroupSeparator, config.DecimalSeparator, config.ExchangeCurrency);
 
 		string storedJson = ConfigManagerNg.ToFile(configPath, config);
 		Assert.Equal(expected, storedJson.ReplaceLineEndings("\n"));
@@ -78,13 +74,6 @@ public class ConfigTests
 		string reserialized = JsonSerializer.Serialize(readConfig, ConfigManagerNg.DefaultOptions);
 		Assert.Equal(expected, reserialized.ReplaceLineEndings("\n"));
 	}
-
-	/*
-	 * These are set by the OS culture during init.
-	 */
-	public static string GroupSeparator { get; set; }
-	public static string DecimalSeparator { get; set; }
-	public static string ExchangeCurrency { get; set; }
 
 	public static string GetWasabiConfigString(decimal coordinationFeeRate = 0.003m)
 		=> $$"""
@@ -123,12 +112,15 @@ public class ConfigTests
 			  "CoordinatorExtPubKeyCurrentDepth": 1,
 			  "MaxSuggestedAmountBase": "0.10",
 			  "IsCoinVerifierEnabled": false,
-			  "RiskFlags": "",
-			  "RiskScores": "",
-			  "CoinVerifierProvider": "",
-			  "CoinVerifierApiUrl": "",
-			  "CoinVerifierApiAuthToken": "",
-			  "CoinVerifierApiSecret": "",
+			  "CoinVerifiers": [
+			    {
+			      "Name": "",
+			      "ApiUrl": "",
+			      "ApiKey": "",
+			      "ApiSecret": "",
+			      "RiskSettings": ""
+			    }
+			  ],
 			  "CoinVerifierStartBefore": "0d 0h 2m 0s",
 			  "CoinVerifierRequiredConfirmations": 3,
 			  "CoinVerifierRequiredConfirmationAmount": "1.00",
@@ -144,8 +136,6 @@ public class ConfigTests
 			  "AllowP2pkhOutputs": false,
 			  "AllowP2shOutputs": false,
 			  "AllowP2wshOutputs": false,
-			  "AffiliationMessageSignerKey": "30770201010420686710a86f0cdf425e3bc9781f51e45b9440aec1215002402d5cdee713066623a00a06082a8648ce3d030107a14403420004f267804052bd863a1644233b8bfb5b8652ab99bcbfa0fb9c36113a571eb5c0cb7c733dbcf1777c2745c782f96e218bb71d67d15da1a77d37fa3cb96f423e53ba",
-			  "AffiliateServers": {},
 			  "DelayTransactionSigning": false,
 			  "IsCoordinationEnabled": true
 			}
@@ -153,7 +143,7 @@ public class ConfigTests
 
 	private static string TestLocalBitcoinCoreDataDir = "LocalBitcoinCoreDataDir";
 
-	public static string GetPersistentConfigString()
+	public static string GetPersistentConfigString(string groupSeparator, string decimalSeparator, string exchangeCurrency)
 	=> $$"""
 			{
 			  "Network": "Main",
@@ -188,14 +178,15 @@ public class ConfigTests
 			  "AbsoluteMinInputCount": 6,
 			  "MaxBlockRepositorySize": 1000,
 			  "Language": 1,
-			  "ExchangeCurrency": "{{ExchangeCurrency}}",
-			  "GroupSeparator": "{{GroupSeparator}}",
-			  "DecimalSeparator": "{{DecimalSeparator}}",
+			  "ExchangeCurrency": "{{exchangeCurrency}}",
+			  "GroupSeparator": "{{groupSeparator}}",
+			  "DecimalSeparator": "{{decimalSeparator}}",
 			  "ExtraNostrPubKey": "",
 			  "BtcFractionGroup": [
 			    4,
 			    4
-			  ]
+			  ],
+			  "FeeRateEstimationProvider": "MempoolSpace"
 			}
 			""".ReplaceLineEndings("\n");
 }

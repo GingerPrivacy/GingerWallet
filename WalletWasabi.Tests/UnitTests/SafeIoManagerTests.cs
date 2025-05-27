@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using WalletWasabi.Crypto.Randomness;
 using WalletWasabi.Helpers;
 using WalletWasabi.Io;
-using WalletWasabi.Tests.Helpers;
+using WalletWasabi.Tests.TestCommon;
 using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests;
@@ -21,7 +21,7 @@ public class SafeIoManagerTests
 	[Fact]
 	public async Task IoManagerTestsAsync()
 	{
-		var file = Path.Combine(Common.GetWorkDir(), "file1.dat");
+		var file = Path.Combine(TestDirectory.Get(), "file1.dat");
 
 		List<string> lines = new();
 		for (int i = 0; i < 1000; i++)
@@ -99,9 +99,9 @@ public class SafeIoManagerTests
 
 		Assert.False(ioman1.Exists());
 
-		// Check if directory is empty.
+		// Check if directory has only lock.txt
 		var fileCount = Directory.EnumerateFiles(Path.GetDirectoryName(ioman1.FilePath)!).Count();
-		Assert.Equal(0, fileCount);
+		Assert.Equal(1, fileCount);
 
 		// TryReplace test.
 		var dummyFilePath = $"{ioman1.FilePath}dummy";
@@ -128,7 +128,7 @@ public class SafeIoManagerTests
 	[Fact]
 	public async Task IoTestsAsync()
 	{
-		var file = Path.Combine(Common.GetWorkDir(), "file.dat");
+		var file = Path.Combine(TestDirectory.Get(), "file.dat");
 
 		AsyncLock asyncLock = new();
 		SafeIoManager ioman = new(file);

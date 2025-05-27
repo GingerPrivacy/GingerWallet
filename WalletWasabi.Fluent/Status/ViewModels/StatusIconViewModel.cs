@@ -4,7 +4,6 @@ using ReactiveUI;
 using WalletWasabi.Fluent.Common.ViewModels;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Infrastructure;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Helpers;
 using WalletWasabi.Lang;
@@ -16,10 +15,9 @@ public partial class StatusIconViewModel : ViewModelBase
 {
 	[AutoNotify] private string? _versionText;
 
-	public StatusIconViewModel(UiContext uiContext)
+	public StatusIconViewModel()
 	{
-		UiContext = uiContext;
-		HealthMonitor = uiContext.HealthMonitor;
+		HealthMonitor = UiContext.HealthMonitor;
 
 		ManualUpdateCommand = ReactiveCommand.CreateFromTask(() => UiContext.FileSystem.OpenBrowserAsync(UiConstants.DownloadLink));
 		UpdateCommand = ReactiveCommand.Create(
@@ -44,7 +42,7 @@ public partial class StatusIconViewModel : ViewModelBase
 			.BindTo<string, StatusIconViewModel, string>(this, x => x.VersionText);
 	}
 
-	public IHealthMonitor HealthMonitor { get; }
+	public HealthMonitor HealthMonitor { get; }
 
 	public ICommand OpenTorStatusSiteCommand { get; }
 

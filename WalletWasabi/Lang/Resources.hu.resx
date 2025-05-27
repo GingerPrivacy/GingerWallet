@@ -163,7 +163,7 @@
     <value>Bitcoin beállítások kezelése</value>
   </data>
   <data name="BitcoinTabSettingsViewModelKeywords" xml:space="preserve">
-    <value>Beállítások, Bitcoin, Hálózat, Main, TestNet, RegTest, Futtatás, Csomópont, Core, Knots, Verzió, Indítás, P2P, Végpont, Apró, Küszöbérték, BTC</value>
+    <value>Beállítások, Bitcoin, Hálózat, Main, TestNet, RegTest, Futtatás, Csomópont, Core, Knots, Verzió, Indítás, P2P, Végpont, Dust, Küszöbérték, BTC</value>
   </data>
   <data name="AdvancedSettingsTabViewModelTitle" xml:space="preserve">
     <value>Haladó</value>
@@ -223,7 +223,7 @@
     <value>Hiba jelentése</value>
   </data>
   <data name="BugReportLinkViewModelCaption" xml:space="preserve">
-    <value>Ginger Wallet hibajelentő oldalának megnyitása.</value>
+    <value>Ginger Wallet hibajelentő oldalának megnyitása</value>
   </data>
   <data name="BugReportLinkViewModelKeywords" xml:space="preserve">
     <value>Támogatás, Weboldal, Hiba, Jelentés</value>
@@ -508,7 +508,7 @@
     <value>- A coinjoin tranzakcióból származó érméket ez a tárca fogja megkapni. Azonban ez a beállítás a Ginger újraindítása után visszaáll.</value>
   </data>
   <data name="CoinjoinToOtherWalletRestrictions3" xml:space="preserve">
-    <value>- A kiválasztott tárca nem változtatható ki, ha egy coinjoin folyamatban van.</value>
+    <value>- A kiválasztott tárca nem változtatható, ha egy coinjoin folyamatban van.</value>
   </data>
   <data name="PlebStopToolTip" xml:space="preserve">
     <value>A coinjoin automatikusan leáll, ha a tárca egyenlege kevesebb ennél.</value>
@@ -619,7 +619,7 @@
     <value>Legalább egy érme, amelyet próbálsz elkölteni, már el lett költve.</value>
   </data>
   <data name="CoinInUnconfirmedChain" xml:space="preserve">
-    <value>Legalább egy érme, amelyet próbálsy elkölteni, egy hosszú vagy terhelt lánc része, amelyben még nem igazolták vissza a tranzakciókat. Meg kell várni, hogy néhány korábbi tranzakció megerősítést nyerjen.</value>
+    <value>Legalább egy érme, amelyet próbálsz elkölteni, egy hosszú vagy terhelt lánc része, amelyben még nem igazolták vissza a tranzakciókat. Meg kell várni, hogy néhány korábbi tranzakció megerősítést nyerjen.</value>
   </data>
   <data name="TransactionDuplicatedInputs" xml:space="preserve">
     <value>A tranzakció duplikált bemeneteket tartalmaz.</value>
@@ -748,7 +748,7 @@
     <value>Nem lehet elküldeni a tárcacímet az eszközre</value>
   </data>
   <data name="ChooseHideModifyDisplayAddresses" xml:space="preserve">
-    <value>Választhatsz az alábbi címek elrejtése, módosítása vagy megjelenítése között.</value>
+    <value>Választhatsz az alábbi tárcacímek elrejtése, módosítása vagy megjelenítése között.</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>Tárcacím</value>
@@ -1195,7 +1195,7 @@
     <value>Haladó helyreállítási beállítások</value>
   </data>
   <data name="AdvancedRecoveryOptionsViewModelMinimumGapLimit" xml:space="preserve">
-    <value>Minimális keresési határ</value>
+    <value>Minimális keresési határ:</value>
   </data>
   <data name="PeersConnected" xml:space="preserve">
     <value>{0} csatlakozva</value>
@@ -1891,7 +1891,7 @@
     <value>A jóváhagyás nem sikerült, kérjük, próbáld újra.</value>
   </data>
   <data name="AuthorizeWithHardwareWallet" xml:space="preserve">
-    <value>Jóváhagyás hardveres tárcával</value>
+    <value>Jóváhagyás hardvertárcával</value>
   </data>
   <data name="AuthorizationFailedWithDeviceCheck" xml:space="preserve">
     <value>A jóváhagyás nem sikerült.{0}Ellenőrizd az eszközt, majd próbáld újra.</value>
@@ -1924,7 +1924,7 @@
     <value>A folytatáshoz el kell fogadnod a felhasználási feltételeket!</value>
   </data>
   <data name="CompatibilityPassphraseUsed" xml:space="preserve">
-    <value>Kompatibilitási jelszót használtak! Kérjük, fontold meg egy új tárca létrehozását a helyreállíthatóság biztosítása érdekében!</value>
+    <value>Kompatibilitási passphrase-t használtak! Kérjük, fontold meg egy új tárca létrehozását a helyreállíthatóság biztosítása érdekében!</value>
   </data>
   <data name="PassphraseTooLong" xml:space="preserve">
     <value>A passphrase túl hosszú.</value>
@@ -2014,7 +2014,7 @@
     <value>Beillesztés a vágólapról</value>
   </data>
   <data name="ImportTransaction" xml:space="preserve">
-    <value>Importar transacción</value>
+    <value>Tranzakció importálása</value>
   </data>
   <data name="Quit" xml:space="preserve">
     <value>Kilépés</value>
@@ -2098,10 +2098,34 @@
   <data name="NoProgressYet" xml:space="preserve">
     <value>Még nincs előrelépés</value>
   </data>
-    <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
+  <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
     <value>Indítsd el a coinjoint, hogy növeld az anonimitásod</value>
   </data>
   <data name="Plural" xml:space="preserve">
     <value>\0</value>
+  </data>
+    <data name="Resync" xml:space="preserve">
+    <value>Újraszinkronizálás</value>
+  </data>
+    <data name="DeleteWallet" xml:space="preserve">
+    <value>Tárca törlése</value>
+  </data>
+    <data name="Delete" xml:space="preserve">
+    <value>Törlés</value>
+  </data>
+    <data name="DeletingAWalletIsPermanentAndCannotBeUndone" xml:space="preserve">
+    <value>A tárca törlése végleges, és nem visszavonható. A tárca csak a helyreállító szavaid segítségével állítható vissza, ezért győződj meg róla, hogy megvannak. A törlés megerősítéséhez kérlek írd be, hogy</value>
+  </data>
+  <data name="InTheFieldBelow" xml:space="preserve">
+    <value>az alábbi mezőbe.</value>
+  </data>
+  <data name="NoKYC" xml:space="preserve">
+    <value>1000 USD alatti vásárlásokhoz ennél a szolgáltatónál nem szükséges dokumentumfeltöltés.</value>
+  </data>
+  <data name="SensitiveData" xml:space="preserve">
+    <value>Bizalmas adat</value>
+  </data>
+  <data name="CouldntDeleteWalletCheckLogs" xml:space="preserve">
+    <value>Nem sikerült törölni a tárcát, a részletekért nézd meg a naplófájlt.</value>
   </data>
 </root>

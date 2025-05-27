@@ -4,7 +4,7 @@ using Avalonia.Markup.Xaml;
 
 namespace WalletWasabi.Fluent.Common.Views.Shell;
 
-public partial class WelcomeBg : UserControl
+public class WelcomeBg : UserControl
 {
 	public static readonly StyledProperty<bool> EnableAnimationsProperty =
 		AvaloniaProperty.Register<WelcomeBg, bool>(nameof(EnableAnimations));

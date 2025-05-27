@@ -10,9 +10,9 @@ using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.HomeScreen.BuySell.ViewModels;
 
-public partial class OrderViewModel : ViewModelBase
+public class OrderViewModel : ViewModelBase
 {
-	public OrderViewModel(GetOrderModel model, IBuySellModel buyModel)
+	public OrderViewModel(GetOrderModel model, BuySellModel buyModel)
 	{
 		Model = model;
 		Labels = new LabelsArray([Model.ProviderName]);

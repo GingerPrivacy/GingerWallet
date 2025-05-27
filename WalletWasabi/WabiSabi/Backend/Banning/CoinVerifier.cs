@@ -164,7 +164,7 @@ public class CoinVerifier : IAsyncDisposable
 		{
 			var result = new CoinVerifyResult(coin, ShouldBan: false, ShouldRemove: false);
 			item.SetResult(result);
-			VerifierAuditArchiver.LogVerificationResult(result, Reason.OneHop);
+			VerifierAuditArchiver.LogVerificationResult(result, AuditResultType.OneHop);
 			return true;
 		}
 
@@ -172,7 +172,7 @@ public class CoinVerifier : IAsyncDisposable
 		{
 			var result = new CoinVerifyResult(coin, ShouldBan: false, ShouldRemove: false);
 			item.SetResult(result);
-			VerifierAuditArchiver.LogVerificationResult(result, Reason.Whitelisted);
+			VerifierAuditArchiver.LogVerificationResult(result, AuditResultType.Whitelisted);
 			return true;
 		}
 
@@ -180,7 +180,7 @@ public class CoinVerifier : IAsyncDisposable
 		{
 			var result = new CoinVerifyResult(coin, ShouldBan: false, ShouldRemove: false);
 			item.SetResult(result);
-			VerifierAuditArchiver.LogVerificationResult(result, Reason.Remix);
+			VerifierAuditArchiver.LogVerificationResult(result, AuditResultType.Remix);
 			return true;
 		}
 
@@ -190,7 +190,7 @@ public class CoinVerifier : IAsyncDisposable
 			{
 				var result = new CoinVerifyResult(coin, ShouldBan: false, ShouldRemove: true);
 				item.SetResult(result);
-				VerifierAuditArchiver.LogVerificationResult(result, Reason.Immature);
+				VerifierAuditArchiver.LogVerificationResult(result, AuditResultType.Immature);
 				return true;
 			}
 		}
@@ -238,15 +238,15 @@ public class CoinVerifier : IAsyncDisposable
 						Whitelist.Add(coin.Outpoint);
 					}
 
-					var result = new CoinVerifyResult(coin, ShouldBan: apiResponseItem.ShouldBan, ShouldRemove: apiResponseItem.ShouldRemove);
+					var result = new CoinVerifyResult(coin, ShouldBan: apiResponseItem.ShouldBan, ShouldRemove: apiResponseItem.ShouldRemove || apiResponseItem.ShouldBan);
 					item.SetResult(result);
-					VerifierAuditArchiver.LogVerificationResult(result, Reason.RemoteApiChecked, apiResponseItem);
+					VerifierAuditArchiver.LogVerificationResult(result, AuditResultType.RemoteApiChecked, apiResponseItem);
 				}
 				catch (Exception ex)
 				{
 					var result = new CoinVerifyResult(coin, ShouldBan: false, ShouldRemove: true);
 					item.SetResult(result);
-					VerifierAuditArchiver.LogVerificationResult(result, Reason.Exception, apiResponse: null, exception: ex);
+					VerifierAuditArchiver.LogVerificationResult(result, AuditResultType.Exception, apiResponse: null, exception: ex);
 
 					Logger.LogWarning($"Coin verification has failed for coin '{coin.Outpoint}' with '{ex}'.");
 

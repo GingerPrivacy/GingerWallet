@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace WalletWasabi.Fluent.Extensions;
 
 public static class DateTimeOffsetExtensions
@@ -6,5 +8,5 @@ public static class DateTimeOffsetExtensions
 
 	public static string ToUserFacingFriendlyString(this DateTimeOffset value) => value.DateTime.ToUserFacingFriendlyString();
 
-	public static string ToOnlyTimeString(this DateTimeOffset value) => value.ToString("HH:mm");
+	public static string ToOnlyTimeString(this DateTimeOffset value) => value.ToString("HH:mm", CultureInfo.InvariantCulture);
 }

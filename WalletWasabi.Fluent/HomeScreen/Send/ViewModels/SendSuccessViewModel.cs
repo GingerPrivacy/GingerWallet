@@ -7,6 +7,7 @@ using WalletWasabi.Fluent.Navigation.ViewModels;
 
 namespace WalletWasabi.Fluent.HomeScreen.Send.ViewModels;
 
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class SendSuccessViewModel : RoutableViewModel
 {
 	private readonly SmartTransaction _finalTransaction;
@@ -24,7 +25,7 @@ public partial class SendSuccessViewModel : RoutableViewModel
 	{
 		await Task.Delay(UiConstants.CloseSuccessDialogMillisecondsDelay);
 
-		Navigate().Clear();
+		UiContext.Navigate(CurrentTarget).Clear();
 
 		// TODO: Remove this
 		MainViewModel.Instance.NavBar.SelectedWallet?.WalletViewModel?.SelectTransaction(_finalTransaction.GetHash());

@@ -8,6 +8,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Skia.Helpers;
 using SkiaSharp;
 using WalletWasabi.Fluent.Helpers;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.Screenshot;
 public static class Capture
@@ -66,7 +67,7 @@ public static class Capture
 			return;
 		}
 		var extension = Path.GetExtension(path);
-		switch (extension.ToLower())
+		switch (extension.ToLower(Resources.Culture))
 		{
 			case ".png":
 			{

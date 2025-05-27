@@ -9,12 +9,13 @@ using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.AddWallet.ViewModels;
 
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class AddedWalletPageViewModel : RoutableViewModel
 {
-	private readonly IWalletSettingsModel _walletSettings;
-	private IWalletModel? _wallet;
+	private readonly WalletSettingsModel _walletSettings;
+	private WalletModel? _wallet;
 
-	public AddedWalletPageViewModel(IWalletSettingsModel walletSettings, WalletCreationOptions options)
+	public AddedWalletPageViewModel(WalletSettingsModel walletSettings, WalletCreationOptions options)
 	{
 		Title = Resources.Success;
 
@@ -48,7 +49,7 @@ public partial class AddedWalletPageViewModel : RoutableViewModel
 
 		await Task.Delay(UiConstants.CloseSuccessDialogMillisecondsDelay);
 
-		Navigate().Clear();
+		UiContext.Navigate(CurrentTarget).Clear();
 
 		UiContext.Navigate().To(_wallet);
 	}

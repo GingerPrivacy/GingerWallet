@@ -11,7 +11,7 @@ namespace WalletWasabi.Fluent.HomeScreen.BuySell.ViewModels;
 [NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class SellSuccessViewModel : RoutableViewModel
 {
-	public SellSuccessViewModel(IWalletModel walletModel, string providerLabel)
+	public SellSuccessViewModel(WalletModel walletModel, string providerLabel)
 	{
 		Provider = providerLabel;
 		Title = Resources.SellBitcoin;
@@ -19,8 +19,8 @@ public partial class SellSuccessViewModel : RoutableViewModel
 		SetupCancel(enableCancel: true, enableCancelOnEscape: true, enableCancelOnPressed: false);
 		EnableBack = false;
 
-		NextCommand = ReactiveCommand.Create(() => Navigate().To().Send(walletModel, new SendFlowModel(walletModel.Wallet, walletModel), new LabelsArray(providerLabel), true));
-		SendManualControlCommand = ReactiveCommand.Create(() => Navigate().To().ManualControlDialog(walletModel, walletModel.Wallet, new LabelsArray(providerLabel), true));
+		NextCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().Send(walletModel, new SendFlowModel(walletModel.Wallet, walletModel), new LabelsArray(providerLabel), true));
+		SendManualControlCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().ManualControlDialog(walletModel, walletModel.Wallet, new LabelsArray(providerLabel), true));
 	}
 
 	public ICommand SendManualControlCommand { get; }

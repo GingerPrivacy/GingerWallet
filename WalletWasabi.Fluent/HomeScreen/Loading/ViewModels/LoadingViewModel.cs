@@ -7,15 +7,16 @@ using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.HomeScreen.Loading.ViewModels;
 
+[NavigationMetaData(NavigationTarget = NavigationTarget.HomeScreen)]
 public partial class LoadingViewModel : RoutableViewModel
 {
-	private readonly IWalletModel _wallet;
+	private readonly WalletModel _wallet;
 
 	[AutoNotify] private double _percent;
 	[AutoNotify] private string _statusText = " "; // Should not be empty as we have to preserve the space in the view.
 	[AutoNotify] private bool _isLoading;
 
-	public LoadingViewModel(IWalletModel wallet)
+	public LoadingViewModel(WalletModel wallet)
 	{
 		_wallet = wallet;
 	}

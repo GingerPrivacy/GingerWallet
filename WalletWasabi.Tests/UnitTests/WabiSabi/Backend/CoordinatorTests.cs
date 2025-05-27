@@ -1,10 +1,10 @@
-using System.Threading;
-using System.Threading.Tasks;
 using NBitcoin;
 using NBitcoin.RPC;
+using System.Threading;
+using System.Threading.Tasks;
 using WalletWasabi.BitcoinCore.Rpc;
-using WalletWasabi.Helpers;
 using WalletWasabi.Tests.Helpers;
+using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.WabiSabi;
 using WalletWasabi.WabiSabi.Backend;
 using WalletWasabi.WabiSabi.Backend.DoSPrevention;
@@ -21,8 +21,7 @@ public class CoordinatorTests
 	[Fact]
 	public async Task CanLiveAsync()
 	{
-		var workDir = Common.GetWorkDir();
-		await IoHelpers.TryDeleteDirectoryAsync(workDir);
+		var workDir = TestDirectory.Get();
 		CoordinatorParameters coordinatorParameters = new(workDir);
 		using WabiSabiCoordinator coordinator = CreateWabiSabiCoordinator(coordinatorParameters);
 		await coordinator.StartAsync(CancellationToken.None);
@@ -32,8 +31,7 @@ public class CoordinatorTests
 	[Fact]
 	public async Task CanCancelAsync()
 	{
-		var workDir = Common.GetWorkDir();
-		await IoHelpers.TryDeleteDirectoryAsync(workDir);
+		var workDir = TestDirectory.Get();
 		CoordinatorParameters coordinatorParameters = new(workDir);
 
 		using WabiSabiCoordinator coordinator = CreateWabiSabiCoordinator(coordinatorParameters);
@@ -72,7 +70,7 @@ public class CoordinatorTests
 	[Fact]
 	public void BanDoubleSpendersTest()
 	{
-		var workDir = Common.GetWorkDir();
+		var workDir = TestDirectory.Get();
 		CoordinatorParameters coordinatorParameters = new(workDir);
 		WabiSabiConfig cfg = coordinatorParameters.RuntimeCoordinatorConfig;
 		DoSConfiguration dosConfig = cfg.GetDoSConfiguration() with { MinTimeInPrison = TimeSpan.Zero };

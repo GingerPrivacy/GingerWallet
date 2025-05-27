@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace WalletWasabi.Fluent.HomeScreen.CoinjoinPlayer.View;
 
-public partial class ExcludedCoinsView : UserControl
+public class ExcludedCoinsView : UserControl
 {
 	public ExcludedCoinsView()
 	{

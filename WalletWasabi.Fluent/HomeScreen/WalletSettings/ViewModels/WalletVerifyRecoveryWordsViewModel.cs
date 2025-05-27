@@ -18,12 +18,13 @@ using WalletWasabi.Models;
 
 namespace WalletWasabi.Fluent.HomeScreen.WalletSettings.ViewModels;
 
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class WalletVerifyRecoveryWordsViewModel : RoutableViewModel
 {
 	[AutoNotify] private IEnumerable<string>? _suggestions;
 	[AutoNotify] private Mnemonic? _currentMnemonics;
 
-	public WalletVerifyRecoveryWordsViewModel(IWalletModel wallet)
+	public WalletVerifyRecoveryWordsViewModel(WalletModel wallet)
 	{
 		Title = Lang.Resources.VerifyRecoveryWords;
 
@@ -59,7 +60,7 @@ public partial class WalletVerifyRecoveryWordsViewModel : RoutableViewModel
 			Resources.VerifyRecoveryWordsErrorCaption);
 	}
 
-	private async Task OnNextAsync(IWalletModel wallet)
+	private async Task OnNextAsync(WalletModel wallet)
 	{
 		try
 		{
@@ -74,7 +75,7 @@ public partial class WalletVerifyRecoveryWordsViewModel : RoutableViewModel
 			var verificationResult = wallet.Auth.VerifyRecoveryWords(currentMnemonics);
 			if (verificationResult)
 			{
-				Navigate().To().Success(navigationMode: NavigationMode.Clear);
+				UiContext.Navigate().To().Success(navigationMode: NavigationMode.Clear);
 			}
 			else
 			{

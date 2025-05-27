@@ -16,14 +16,14 @@ namespace WalletWasabi.Fluent.HomeScreen.Others.ViewModels;
 	IsLocalized = true)]
 public partial class WalletStatsViewModel : RoutableViewModel
 {
-	private readonly IWalletModel _wallet;
-	[AutoNotify] private IWalletStatsModel? _model;
+	private readonly WalletModel _wallet;
+	[AutoNotify] private WalletStatsModel? _model;
 
-	public WalletStatsViewModel(IWalletModel wallet)
+	public WalletStatsViewModel(WalletModel wallet)
 	{
 		_wallet = wallet;
 
-		NextCommand = ReactiveCommand.Create(() => Navigate().Clear());
+		NextCommand = ReactiveCommand.Create(() => UiContext.Navigate(CurrentTarget).Clear());
 		SetupCancel(enableCancel: true, enableCancelOnEscape: true, enableCancelOnPressed: true);
 	}
 

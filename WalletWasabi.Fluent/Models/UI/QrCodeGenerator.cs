@@ -4,8 +4,7 @@ using Gma.QrCodeNet.Encoding;
 
 namespace WalletWasabi.Fluent.Models.UI;
 
-[AutoInterface]
-public partial class QrCodeGenerator
+public class QrCodeGenerator
 {
 	private readonly QrEncoder _encoder = new();
 

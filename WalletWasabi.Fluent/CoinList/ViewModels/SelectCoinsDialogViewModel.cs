@@ -20,7 +20,7 @@ namespace WalletWasabi.Fluent.CoinList.ViewModels;
 	NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class SelectCoinsDialogViewModel : DialogViewModelBase<IEnumerable<SmartCoin>>
 {
-	public SelectCoinsDialogViewModel(IWalletModel wallet, IList<ICoinModel> selectedCoins, SendFlowModel sendFlow)
+	public SelectCoinsDialogViewModel(WalletModel wallet, IList<CoinModel> selectedCoins, SendFlowModel sendFlow)
 	{
 		Title = Resources.CoinControl;
 

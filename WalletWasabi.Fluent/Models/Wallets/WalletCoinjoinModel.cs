@@ -1,10 +1,10 @@
 using System.Linq;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ReactiveUI;
 using WalletWasabi.Fluent.Extensions;
-using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.WabiSabi.Client;
 using WalletWasabi.WabiSabi.Client.CoinJoinProgressEvents;
 using WalletWasabi.WabiSabi.Client.StatusChangedEvents;
@@ -12,16 +12,16 @@ using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
 
-[AppLifetime]
-[AutoInterface]
-public partial class WalletCoinjoinModel : ReactiveObject
+public partial class WalletCoinjoinModel : ReactiveObject, IDisposable
 {
+	private readonly CompositeDisposable _disposable = new();
+
 	private readonly Wallet _wallet;
-	private readonly IWalletSettingsModel _settings;
+	private readonly WalletSettingsModel _settings;
 	private CoinJoinManager _coinJoinManager;
 	[AutoNotify] private bool _isCoinjoining;
 
-	public WalletCoinjoinModel(Wallet wallet, IWalletSettingsModel settings)
+	public WalletCoinjoinModel(Wallet wallet, WalletSettingsModel settings)
 	{
 		_wallet = wallet;
 		_settings = settings;
@@ -47,34 +47,43 @@ public partial class WalletCoinjoinModel : ReactiveObject
 						await StopAsync();
 					}
 				})
-				.Subscribe();
+				.Subscribe()
+				.DisposeWith(_disposable);
 
 		var coinjoinInputStarted =
-			StatusUpdated.OfType<CoinJoinStatusEventArgs>()
-						 .Where(e => e.CoinJoinProgressEventArgs is EnteringInputRegistrationPhase)
-						 .Select(_ => true);
+			StatusUpdated
+				.OfType<CoinJoinStatusEventArgs>()
+				.Where(e => e.CoinJoinProgressEventArgs is EnteringInputRegistrationPhase)
+				.Select(_ => true);
 
 		var coinjoinStarted =
-			StatusUpdated.OfType<StartedEventArgs>()
+			StatusUpdated
+				.OfType<StartedEventArgs>()
 				.Select(_ => true);
 
 		var coinjoinStopped =
-			StatusUpdated.OfType<WalletStoppedCoinJoinEventArgs>()
+			StatusUpdated
+				.OfType<WalletStoppedCoinJoinEventArgs>()
 				.Select(_ => false);
 
 		var coinjoinCompleted =
-			StatusUpdated.OfType<CompletedEventArgs>()
+			StatusUpdated
+				.OfType<CompletedEventArgs>()
 				.Select(_ => false);
 
 		IsRunning =
-			coinjoinInputStarted.Merge(coinjoinStopped)
+			coinjoinInputStarted
+				.Merge(coinjoinStopped)
 				.Merge(coinjoinCompleted)
-						   .ObserveOn(RxApp.MainThreadScheduler);
+				.ObserveOn(RxApp.MainThreadScheduler);
 
-		IsRunning.BindTo(this, x => x.IsCoinjoining);
+		IsRunning
+			.BindTo(this, x => x.IsCoinjoining)
+			.DisposeWith(_disposable);
 
 		IsStarted =
-			coinjoinStarted.Merge(coinjoinStopped)
+			coinjoinStarted
+				.Merge(coinjoinStopped)
 				.ObserveOn(RxApp.MainThreadScheduler);
 	}
 
@@ -94,5 +103,11 @@ public partial class WalletCoinjoinModel : ReactiveObject
 	public async Task StopAsync()
 	{
 		await _coinJoinManager.StopAsync(_wallet, CancellationToken.None);
+	}
+
+	public void Dispose()
+	{
+		_ = StopAsync();
+		_disposable.Dispose();
 	}
 }

@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text.Json.Serialization;
+using WalletWasabi.Daemon.FeeRateProviders;
 using WalletWasabi.Exceptions;
 using WalletWasabi.Helpers;
 using WalletWasabi.Interfaces;
@@ -157,6 +158,10 @@ public record PersistentConfig : IConfigNg
 	[JsonPropertyName("BtcFractionGroup")]
 	public int[] BtcFractionGroup { get; init; } = GingerCultureInfo.DefaultBitcoinFractionSizes;
 
+	[JsonPropertyName("FeeRateEstimationProvider")]
+	[JsonConverter(typeof(DefaultingEnumConverter<FeeRateProviderSource>))]
+	public FeeRateProviderSource FeeRateEstimationProvider { get; init; } = FeeRateProviderSource.MempoolSpace;
+
 	public bool DeepEquals(PersistentConfig other)
 	{
 		bool useTorIsEqual = Config.ObjectToTorMode(UseTor) == Config.ObjectToTorMode(other.UseTor);
@@ -192,7 +197,8 @@ public record PersistentConfig : IConfigNg
 			GroupSeparator == other.GroupSeparator &&
 			DecimalSeparator == other.DecimalSeparator &&
 			BtcFractionGroup.SequenceEqual(other.BtcFractionGroup) &&
-			ExchangeCurrency == other.ExchangeCurrency;
+			ExchangeCurrency == other.ExchangeCurrency &&
+			FeeRateEstimationProvider == other.FeeRateEstimationProvider;
 	}
 
 	public EndPoint GetBitcoinP2pEndPoint()

@@ -15,7 +15,7 @@ public partial class AddressLabelEditViewModel : DialogViewModelBase<LabelsArray
 {
 	[AutoNotify] private bool _isCurrentTextValid;
 
-	public AddressLabelEditViewModel(IWalletModel wallet, IAddress address)
+	public AddressLabelEditViewModel(WalletModel wallet, AddressModel address)
 	{
 		Title = Resources.EditLabels;
 		SuggestionLabels = new SuggestionLabelsViewModel(wallet, Intent.Receive, 3, address.Labels);

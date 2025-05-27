@@ -17,7 +17,7 @@ public partial class AdvancedRecoveryOptionsViewModel : DialogViewModelBase<int?
 	{
 		Title = Resources.AdvancedRecoveryOptionsViewModelTitle;
 
-		_minGapLimit = minGapLimit.ToString();
+		_minGapLimit = minGapLimit.ToString(Resources.Culture);
 
 		this.ValidateProperty(x => x.MinGapLimit, ValidateMinGapLimit);
 
@@ -25,7 +25,7 @@ public partial class AdvancedRecoveryOptionsViewModel : DialogViewModelBase<int?
 		EnableBack = false;
 
 		NextCommand = ReactiveCommand.Create(
-			() => Close(result: int.Parse(MinGapLimit)),
+			() => Close(result: int.Parse(MinGapLimit, Resources.Culture)),
 			this.WhenAnyValue(x => x.MinGapLimit).Select(_ => !Validations.Any));
 	}
 

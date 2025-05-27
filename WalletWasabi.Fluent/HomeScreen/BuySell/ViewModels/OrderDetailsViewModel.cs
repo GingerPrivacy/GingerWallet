@@ -11,6 +11,7 @@ using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.HomeScreen.BuySell.ViewModels;
 
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class OrderDetailsViewModel : RoutableViewModel
 {
 	private readonly ReadOnlyObservableCollection<GetOrderModel> _list;
@@ -21,7 +22,7 @@ public partial class OrderDetailsViewModel : RoutableViewModel
 	[AutoNotify] private string _date = "";
 	[AutoNotify] private string _status = "";
 
-	public OrderDetailsViewModel(GetOrderModel model, IBuySellModel buyModel)
+	public OrderDetailsViewModel(GetOrderModel model, BuySellModel buyModel)
 	{
 		_list = model.IsBuyOrder ? buyModel.BuyOrders : buyModel.SellOrders;
 		Title = Resources.OrderDetails;
@@ -80,7 +81,7 @@ public partial class OrderDetailsViewModel : RoutableViewModel
 
 	private void OnNext()
 	{
-		Navigate().Back();
+		UiContext.Navigate(CurrentTarget).Back();
 	}
 
 	protected override void OnNavigatedTo(bool isInHistory, CompositeDisposable disposables)

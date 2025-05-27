@@ -12,7 +12,7 @@ public partial class WalletRenameViewModel : DialogViewModelBase<Unit>
 {
 	[AutoNotify] private string _newWalletName;
 
-	public WalletRenameViewModel(IWalletModel wallet)
+	public WalletRenameViewModel(WalletModel wallet)
 	{
 		Title = Resources.RenameWallet;
 
@@ -38,12 +38,12 @@ public partial class WalletRenameViewModel : DialogViewModelBase<Unit>
 		NextCommand = ReactiveCommand.Create(() => OnRename(wallet), canRename);
 	}
 
-	private void OnRename(IWalletModel wallet)
+	private void OnRename(WalletModel wallet)
 	{
 		try
 		{
 			wallet.Rename(NewWalletName);
-			Navigate().Back();
+			UiContext.Navigate(CurrentTarget).Back();
 		}
 		catch
 		{

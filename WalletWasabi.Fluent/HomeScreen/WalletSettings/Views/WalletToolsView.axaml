@@ -20,12 +20,21 @@
         </TextBlock>
       </ToolTip.Tip>
       <TextBlock Text="{x:Static lang:Resources.WalletToolsVerifyRecoveryWords}" />
-      <Button Theme="{StaticResource AccentButton}" Command="{Binding VerifyRecoveryWordsCommand}" Content="{x:Static lang:Resources.Open}" DockPanel.Dock="Right" />
+      <Button Theme="{StaticResource AccentButton}" Command="{Binding VerifyRecoveryWordsCommand}"
+              Content="{x:Static lang:Resources.Verify}" DockPanel.Dock="Right" />
     </DockPanel>
 
     <DockPanel>
       <TextBlock Text="{x:Static lang:Resources.ResyncWallet}" />
-      <Button Theme="{StaticResource AccentButton}" Command="{Binding ResyncWalletCommand}" Content="{x:Static lang:Resources.Open}" DockPanel.Dock="Right" />
+      <Button Theme="{StaticResource AccentButton}" Command="{Binding ResyncWalletCommand}"
+              Content="{x:Static lang:Resources.Resync}" DockPanel.Dock="Right" />
     </DockPanel>
+
+    <DockPanel>
+      <TextBlock Text="{x:Static lang:Resources.DeleteWallet}" />
+      <Button Theme="{StaticResource DangerAccentButton}" Command="{Binding DeleteWalletCommand}"
+              Content="{x:Static lang:Resources.Delete}" DockPanel.Dock="Right" />
+    </DockPanel>
+
   </StackPanel>
 </UserControl>

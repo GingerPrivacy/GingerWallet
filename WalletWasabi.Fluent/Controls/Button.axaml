@@ -28,6 +28,19 @@
     </Style>
   </ControlTheme>
 
+  <ControlTheme x:Key="DangerAccentButton" TargetType="Button" BasedOn="{StaticResource AccentButton}">
+    <Setter Property="Background" Value="{DynamicResource DangerButtonBackgroundColor}" />
+    <Setter Property="Foreground" Value="{DynamicResource DangerButtonForegroundColor}" />
+    <Style Selector="^:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource DangerButtonPointerOverBackgroundColor}" />
+      <Setter Property="Foreground" Value="{DynamicResource DangerButtonForegroundColor}" />
+    </Style>
+    <Style Selector="^:pressed /template/ ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource DangerButtonPressedBackgroundColor}" />
+      <Setter Property="Foreground" Value="{DynamicResource DangerButtonForegroundColor}" />
+    </Style>
+  </ControlTheme>
+
   <ControlTheme x:Key="SortButtonBase" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
     <Setter Property="Background" Value="{DynamicResource Layer2BackgroundBrush}" />
     <Setter Property="Foreground">

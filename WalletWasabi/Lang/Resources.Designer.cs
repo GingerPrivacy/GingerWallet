@@ -312,7 +312,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By clicking Accept, I acknowledge that the transaction may later require AML/KYC verification by the third-party provider..
+        ///   Looks up a localized string similar to By clicking Accept, I acknowledge that the transaction may later require AML/KYC verification by a third-party provider..
         /// </summary>
         public static string AMLKYCNotice {
             get {
@@ -1554,6 +1554,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t delete the wallet, check logs for more details..
+        /// </summary>
+        public static string CouldntDeleteWalletCheckLogs {
+            get {
+                return ResourceManager.GetString("CouldntDeleteWalletCheckLogs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could see this transaction:.
         /// </summary>
         public static string CouldSeeThisTransaction {
@@ -1739,6 +1748,33 @@ namespace WalletWasabi.Lang {
         public static string Default {
             get {
                 return ResourceManager.GetString("Default", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Wallet.
+        /// </summary>
+        public static string DeleteWallet {
+            get {
+                return ResourceManager.GetString("DeleteWallet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deleting a wallet is permanent and cannot be undone. The wallet can only be restored using your recovery words, so make sure you have them. To confirm the deletion, please enter.
+        /// </summary>
+        public static string DeletingAWalletIsPermanentAndCannotBeUndone {
+            get {
+                return ResourceManager.GetString("DeletingAWalletIsPermanentAndCannotBeUndone", resourceCulture);
             }
         }
         
@@ -2364,7 +2400,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Settings, General, Bitcoin, Run, Ginger, Computer, System, Start, Background, Close, Auto, Copy, Paste, Addresses, Custom, Change, Address, browser.
+        ///   Looks up a localized string similar to Settings, General, Bitcoin, Run, Ginger, Computer, System, Start, Background, Close, Auto, Copy, Paste, Addresses, Custom, Change, Address, Browser.
         /// </summary>
         public static string GeneralSettingsTabViewModelKeywords {
             get {
@@ -2666,6 +2702,15 @@ namespace WalletWasabi.Lang {
         public static string InternalError {
             get {
                 return ResourceManager.GetString("InternalError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to in the field below..
+        /// </summary>
+        public static string InTheFieldBelow {
+            get {
+                return ResourceManager.GetString("InTheFieldBelow", resourceCulture);
             }
         }
         
@@ -3116,6 +3161,15 @@ namespace WalletWasabi.Lang {
         public static string NoInformationAboutPeople {
             get {
                 return ResourceManager.GetString("NoInformationAboutPeople", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No document upload required for purchases under 1000 USD with this provider..
+        /// </summary>
+        public static string NoKYC {
+            get {
+                return ResourceManager.GetString("NoKYC", resourceCulture);
             }
         }
         
@@ -4048,6 +4102,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resync.
+        /// </summary>
+        public static string Resync {
+            get {
+                return ResourceManager.GetString("Resync", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resync Wallet.
         /// </summary>
         public static string ResyncWallet {
@@ -4413,6 +4476,15 @@ namespace WalletWasabi.Lang {
         public static string SendViewModelTitle {
             get {
                 return ResourceManager.GetString("SendViewModelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sensitive Data.
+        /// </summary>
+        public static string SensitiveData {
+            get {
+                return ResourceManager.GetString("SensitiveData", resourceCulture);
             }
         }
         
@@ -5137,7 +5209,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Two-Factor authentication is disabled. Enable it in the Setting for greater protection..
+        ///   Looks up a localized string similar to Two-Factor authentication is disabled. Enable it in the Settings for greater protection..
         /// </summary>
         public static string TwoFactorDisabledWarnMessage {
             get {
@@ -5560,7 +5632,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to WaitingRoundMessage.
+        ///   Looks up a localized string similar to Awaiting a round.
         /// </summary>
         public static string WaitingRoundMessage {
             get {

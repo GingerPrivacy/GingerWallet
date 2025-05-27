@@ -10,7 +10,7 @@ public partial class BtcPriceTileViewModel : ActivatableViewModel
 {
 	[AutoNotify] private bool _isRateAvailable;
 
-	public BtcPriceTileViewModel(IAmountProvider amountProvider)
+	public BtcPriceTileViewModel(AmountProvider amountProvider)
 	{
 		ExchangeRateText = amountProvider.ExchangeRateObservable
 			.Select(x =>

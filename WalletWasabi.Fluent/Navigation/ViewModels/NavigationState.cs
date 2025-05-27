@@ -1,33 +1,31 @@
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using ReactiveUI;
-using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
-using WalletWasabi.Fluent.HomeScreen.Wallets.Interfaces;
+using WalletWasabi.Fluent.HomeScreen.Wallets.ViewModels;
 using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
+using WalletWasabi.Fluent.NavBar.ViewModels;
 using WalletWasabi.Fluent.Navigation.Interfaces;
-using WalletWasabi.Fluent.Navigation.Models;
 
 namespace WalletWasabi.Fluent.Navigation.ViewModels;
 
 [AppLifetime]
-public class NavigationState : ReactiveObject, INavigate
+public class NavigationState : ReactiveObject
 {
-	private readonly IWalletNavigation _walletNavigation;
+	private readonly NavBarViewModel _navBar;
 
 	public NavigationState(
 		UiContext uiContext,
 		INavigationStack<RoutableViewModel> homeScreenNavigation,
 		INavigationStack<RoutableViewModel> dialogScreenNavigation,
 		INavigationStack<RoutableViewModel> compactDialogScreenNavigation,
-		IWalletNavigation walletNavigation)
+		NavBarViewModel navBar)
 	{
+		_navBar = navBar;
 		UiContext = uiContext;
 		HomeScreen = homeScreenNavigation;
 		DialogScreen = dialogScreenNavigation;
 		CompactDialogScreen = compactDialogScreenNavigation;
-		_walletNavigation = walletNavigation;
 
 		this.WhenAnyValue(
 				x => x.DialogScreen.CurrentPage,
@@ -77,15 +75,9 @@ public class NavigationState : ReactiveObject, INavigate
 		return new FluentNavigate(UiContext);
 	}
 
-	public IWalletViewModel? To(IWalletModel wallet)
+	public WalletViewModel? To(WalletModel wallet)
 	{
-		return _walletNavigation.To(wallet);
-	}
-
-	public async Task<DialogResult<TResult>> NavigateDialogAsync<TResult>(DialogViewModelBase<TResult> dialog, NavigationTarget target = NavigationTarget.Default, NavigationMode navigationMode = NavigationMode.Normal)
-	{
-		target = NavigationExtensions.GetTarget(dialog, target);
-		return await Navigate(target).NavigateDialogAsync(dialog, navigationMode);
+		return _navBar.Select(wallet);
 	}
 
 	private void OnCurrentPageChanged(RoutableViewModel page)

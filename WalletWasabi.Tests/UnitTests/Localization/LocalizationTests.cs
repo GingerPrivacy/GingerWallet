@@ -90,6 +90,29 @@ public class LocalizationTests
 		}
 	}
 
+	[Fact]
+	public void EnsureSingleSpacingTest()
+	{
+		var supportedLanguages = Enum.GetValues(typeof(DisplayLanguage)).Cast<DisplayLanguage>().Select(x => x.GetDescription() ?? throw new InvalidOperationException("Missing Description"));
+
+		foreach (var lang in supportedLanguages)
+		{
+			ResourceSet? resourceSet = Resources.ResourceManager.GetResourceSet(new CultureInfo(lang), true, true);
+
+			if (resourceSet is null)
+			{
+				throw new InvalidOperationException($"Resource Set is not available for {lang}.");
+			}
+
+			foreach (DictionaryEntry entry in resourceSet)
+			{
+				if (entry.Value is string value)
+				{
+					Assert.False(HasConsecutiveInnerWhitespaces(value), $"Invalid spacing in key '{entry.Key}' for culture: {lang}");
+				}
+			}
+		}
+	}
 
 	[Fact]
 	public void ResourceFormatTest()
@@ -113,6 +136,26 @@ public class LocalizationTests
 				}
 			}
 		}
+	}
+
+	public static bool HasConsecutiveInnerWhitespaces(string input)
+	{
+		if (string.IsNullOrEmpty(input))
+		{
+			return false;
+		}
+
+		var trimmed = input.Trim();
+
+		for (var i = 1; i < trimmed.Length; i++)
+		{
+			if (char.IsWhiteSpace(trimmed[i]) && char.IsWhiteSpace(trimmed[i - 1]))
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private bool IsValidFormat(string value)

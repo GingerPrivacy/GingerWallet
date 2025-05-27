@@ -2014,7 +2014,7 @@
     <value>从剪贴板粘贴</value>
   </data>
   <data name="ImportTransaction" xml:space="preserve">
-    <value>Importar transacción</value>
+    <value>导入交易</value>
   </data>
   <data name="Quit" xml:space="preserve">
     <value>退出</value>
@@ -2095,10 +2095,34 @@
   <data name="NoProgressYet" xml:space="preserve">
     <value>还没有进展</value>
   </data>
-    <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
+  <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
     <value>开始进行 CoinJoin 以获得隐私</value>
   </data>
   <data name="Plural" xml:space="preserve">
     <value>\0</value>
+  </data>
+    <data name="Resync" xml:space="preserve">
+    <value>重新同步</value>
+  </data>
+    <data name="DeleteWallet" xml:space="preserve">
+    <value>删除钱包</value>
+  </data>
+    <data name="Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+    <data name="DeletingAWalletIsPermanentAndCannotBeUndone" xml:space="preserve">
+    <value>删除钱包是永久性的，无法撤销。钱包只能通过你的恢复词恢复，请确保你已保存好。要确认删除，请输入</value>
+  </data>
+  <data name="InTheFieldBelow" xml:space="preserve">
+    <value>在下方字段中。</value>
+  </data>
+  <data name="NoKYC" xml:space="preserve">
+    <value>使用此服务提供商进行低于 1000 美元的购买无需 KYC。</value>
+  </data>
+  <data name="SensitiveData" xml:space="preserve">
+    <value>敏感数据</value>
+  </data>
+  <data name="CouldntDeleteWalletCheckLogs" xml:space="preserve">
+    <value>无法删除钱包，请检查日志以获取更多详细信息。</value>
   </data>
 </root>

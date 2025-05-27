@@ -8,6 +8,7 @@ using WalletWasabi.BitcoinCore;
 using WalletWasabi.BitcoinCore.Endpointing;
 using WalletWasabi.Blockchain.Mempool;
 using WalletWasabi.Helpers;
+using WalletWasabi.Tests.TestCommon;
 
 namespace WalletWasabi.Tests.Helpers;
 
@@ -15,7 +16,7 @@ public static class TestNodeBuilder
 {
 	public static async Task<CoreNode> CreateAsync([CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", string additionalFolder = "", MempoolService? mempoolService = null)
 	{
-		var dataDir = Path.Combine(Common.GetWorkDir(callerFilePath, callerMemberName), additionalFolder);
+		var dataDir = Path.Combine(TestDirectory.Get(callerFilePath, callerMemberName), additionalFolder);
 
 		CoreNodeParams nodeParameters = CreateDefaultCoreNodeParams(mempoolService ?? new MempoolService(), dataDir);
 		return await CoreNode.CreateAsync(
@@ -25,7 +26,7 @@ public static class TestNodeBuilder
 
 	public static async Task<CoreNode> CreateForHeavyConcurrencyAsync([CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", string additionalFolder = "", MempoolService? mempoolService = null)
 	{
-		var dataDir = Path.Combine(Common.GetWorkDir(callerFilePath, callerMemberName), additionalFolder);
+		var dataDir = Path.Combine(TestDirectory.Get(callerFilePath, callerMemberName), additionalFolder);
 
 		CoreNodeParams nodeParameters = CreateDefaultCoreNodeParams(mempoolService ?? new MempoolService(), dataDir);
 		nodeParameters.RpcWorkQueue = 32;
@@ -40,8 +41,8 @@ public static class TestNodeBuilder
 				Network.RegTest,
 				mempoolService ?? new MempoolService(),
 				dataDir,
-				tryRestart: true,
-				tryDeleteDataDir: true,
+				tryRestart: false,
+				tryDeleteDataDir: false,
 				EndPointStrategy.Random,
 				EndPointStrategy.Random,
 				txIndex: 1,

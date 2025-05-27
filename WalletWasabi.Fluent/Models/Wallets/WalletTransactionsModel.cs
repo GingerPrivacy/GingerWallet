@@ -19,41 +19,43 @@ using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
 
-[AutoInterface]
-public partial class WalletTransactionsModel : ReactiveObject, IDisposable
+public class WalletTransactionsModel : ReactiveObject, IDisposable
 {
-	private readonly IWalletModel _walletModel;
+	private readonly WalletModel _walletModel;
 	private readonly Wallet _wallet;
 	private readonly TransactionTreeBuilder _treeBuilder;
 	private readonly CompositeDisposable _disposable = new();
 
-	public WalletTransactionsModel(IWalletModel walletModel, Wallet wallet)
+	public WalletTransactionsModel(WalletModel walletModel, Wallet wallet)
 	{
 		_walletModel = walletModel;
 		_wallet = wallet;
 		_treeBuilder = new TransactionTreeBuilder(wallet);
 
 		TransactionProcessed =
-			Observable.FromEventPattern<ProcessedResult?>(wallet, nameof(wallet.WalletRelevantTransactionProcessed)).ToSignal()
+			Observable
+				.FromEventPattern<ProcessedResult?>(wallet, nameof(wallet.WalletRelevantTransactionProcessed)).ToSignal()
 				.Merge(Observable.FromEventPattern(wallet, nameof(wallet.NewFiltersProcessed)).ToSignal())
 				.Sample(TimeSpan.FromSeconds(1))
 				.ObserveOn(RxApp.MainThreadScheduler)
 				.StartWith(Unit.Default);
 
 		NewTransactionArrived =
-			Observable.FromEventPattern<ProcessedResult>(wallet, nameof(wallet.WalletRelevantTransactionProcessed))
-					  .Select(x => (walletModel, x.EventArgs))
-					  .ObserveOn(RxApp.MainThreadScheduler);
+			Observable
+				.FromEventPattern<ProcessedResult>(wallet, nameof(wallet.WalletRelevantTransactionProcessed))
+				.Select(x => (walletModel, x.EventArgs))
+				.ObserveOn(RxApp.MainThreadScheduler);
 
 		RequestedUnconfirmedTxChainArrived =
-			Observable.FromEventPattern<EventArgs>(wallet.UnconfirmedTransactionChainProvider, nameof(wallet.UnconfirmedTransactionChainProvider.RequestedUnconfirmedChainArrived)).ToSignal()
+			Observable
+				.FromEventPattern<EventArgs>(wallet.UnconfirmedTransactionChainProvider, nameof(wallet.UnconfirmedTransactionChainProvider.RequestedUnconfirmedChainArrived)).ToSignal()
 				.ObserveOn(RxApp.MainThreadScheduler);
 
 		Cache =
 			TransactionProcessed
-			.Merge(RequestedUnconfirmedTxChainArrived)
-			.Fetch(BuildSummary, model => model.Id)
-			.DisposeWith(_disposable);
+				.Merge(RequestedUnconfirmedTxChainArrived)
+				.Fetch(BuildSummary, model => model.Id)
+				.DisposeWith(_disposable);
 
 		IsEmpty = Cache.Empty();
 	}
@@ -64,7 +66,7 @@ public partial class WalletTransactionsModel : ReactiveObject, IDisposable
 
 	public IObservable<Unit> TransactionProcessed { get; }
 
-	public IObservable<(IWalletModel Wallet, ProcessedResult EventArgs)> NewTransactionArrived { get; }
+	public IObservable<(WalletModel Wallet, ProcessedResult EventArgs)> NewTransactionArrived { get; }
 	public IObservable<Unit> RequestedUnconfirmedTxChainArrived { get; }
 
 	public bool TryGetById(uint256 transactionId, bool isChild, [NotNullWhen(true)] out TransactionModel? transaction)

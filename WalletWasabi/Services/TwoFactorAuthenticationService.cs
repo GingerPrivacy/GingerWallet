@@ -66,7 +66,7 @@ public class TwoFactorAuthenticationService
 			// Try to read as plain text.
 			keyManager = KeyManager.FromFile(walletFileInfo.FullName, null);
 
-			var (walletFilePath, walletBackupFilePath) = WalletDirectories.GetWalletFilePaths(keyManager.WalletName);
+			var (walletFilePath, walletBackupFilePath, _) = WalletDirectories.GetWalletFilePaths(keyManager.WalletName);
 			keyManager.EncryptionKey = secret;
 
 			Logger.LogInfo($"Wallet file was not encrypted '{walletFileInfo.Name}', encrypting... ");
@@ -134,7 +134,7 @@ public class TwoFactorAuthenticationService
 			var keyManager = wallet.KeyManager;
 			keyManager.EncryptionKey = null;
 
-			var (walletFilePath, walletBackupFilePath) = WalletDirectories.GetWalletFilePaths(wallet.WalletName);
+			var (_, walletBackupFilePath, _) = WalletDirectories.GetWalletFilePaths(wallet.WalletName);
 			keyManager.ToFile();
 			keyManager.ToFile(walletBackupFilePath);
 

@@ -7,10 +7,10 @@ namespace WalletWasabi.Fluent.Authorization.ViewModels;
 [NavigationMetaData(NavigationTarget = NavigationTarget.CompactDialogScreen)]
 public partial class PasswordAuthDialogViewModel : AuthorizationDialogBase
 {
-	private readonly IWalletModel _wallet;
+	private readonly WalletModel _wallet;
 	[AutoNotify] private string _password;
 
-	public PasswordAuthDialogViewModel(IWalletModel wallet, string? continueText = null)
+	public PasswordAuthDialogViewModel(WalletModel wallet, string? continueText = null)
 	{
 		continueText ??= Resources.Continue;
 

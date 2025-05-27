@@ -117,9 +117,13 @@ public static class Logger
 		}
 	}
 
-	public static void LogDiscord(LogLevel level, string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1)
+	public static void LogDiscord(LogLevel level, string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1, LogLevel normalLogLevel = LogLevel.None)
 	{
 		Log(DiscordLogger, level, message, callerFilePath, callerMemberName, callerLineNumber);
+		if (normalLogLevel != LogLevel.None)
+		{
+			Log(LoggerInstance, normalLogLevel, message, callerFilePath, callerMemberName, callerLineNumber);
+		}
 	}
 
 	/// Original logger methods

@@ -15,7 +15,7 @@ using WalletWasabi.Userfacing;
 
 namespace WalletWasabi.Fluent.Controls;
 
-public partial class CurrencyEntryBox : TextBox
+public class CurrencyEntryBox : TextBox
 {
 	public static readonly StyledProperty<string> CurrencyCodeProperty =
 		AvaloniaProperty.Register<CurrencyEntryBox, string>(nameof(CurrencyCode));
@@ -201,7 +201,7 @@ public partial class CurrencyEntryBox : TextBox
 	private TextInputEventArgs InsertLeadingZeroForDecimal(TextInputEventArgs e)
 	{
 		var prependText = "0" + e.Text;
-		SetCurrentValue(TextProperty, Text.Insert(0, prependText));
+		SetCurrentValue(TextProperty, Text?.Insert(0, prependText));
 		SetCurrentValue(CaretIndexProperty, CaretIndex + prependText.Length);
 		return new TextInputEventArgs { Text = "" };
 	}

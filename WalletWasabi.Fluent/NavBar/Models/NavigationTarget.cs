@@ -5,7 +5,7 @@ namespace WalletWasabi.Fluent;
 
 public enum NavigationTarget
 {
-	Default = 0,
+	Unspecified = 0,
 	HomeScreen = 1,
 	DialogScreen = 2,
 	CompactDialogScreen = 4,

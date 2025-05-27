@@ -7,19 +7,19 @@ using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models.Wallets;
-using WalletWasabi.Fluent.Navigation.Interfaces;
+using WalletWasabi.Fluent.NavBar.ViewModels;
 
 namespace WalletWasabi.Fluent.HomeScreen.Notifications.ViewModels;
 
 [AppLifetime]
 public partial class WalletNotificationsViewModel : ViewModelBase
 {
-	private readonly IWalletSelector _walletSelector;
+	private readonly NavBarViewModel _navBar;
 	[AutoNotify] private bool _isBusy;
 
-	public WalletNotificationsViewModel(IWalletSelector walletSelector)
+	public WalletNotificationsViewModel(NavBarViewModel navBar)
 	{
-		_walletSelector = walletSelector;
+		_navBar = navBar;
 	}
 
 	public void StartListening()
@@ -36,7 +36,7 @@ public partial class WalletNotificationsViewModel : ViewModelBase
 			.Subscribe();
 	}
 
-	private async Task OnNotificationReceivedAsync(IWalletModel wallet, ProcessedResult e)
+	private async Task OnNotificationReceivedAsync(WalletModel wallet, ProcessedResult e)
 	{
 		if (!e.IsOwnCoinJoin)
 		{
@@ -47,17 +47,17 @@ public partial class WalletNotificationsViewModel : ViewModelBase
 					return;
 				}
 
-				var wvm = _walletSelector.To(wallet);
+				var wvm = _navBar.Select(wallet);
 				wvm?.SelectTransaction(e.Transaction.GetHash());
 			}
 
 			NotificationHelpers.Show(wallet, e, OnClick);
 		}
 
-		if (_walletSelector.SelectedWalletModel == wallet && (e.NewlyReceivedCoins.Count != 0 || e.NewlyConfirmedReceivedCoins.Count != 0))
+		if (_navBar.SelectedWalletModel == wallet && (e.NewlyReceivedCoins.Count != 0 || e.NewlyConfirmedReceivedCoins.Count != 0))
 		{
 			await Task.Delay(200);
-			_walletSelector.SelectedWallet?.SelectTransaction(e.Transaction.GetHash());
+			_navBar.SelectedWallet?.WalletViewModel?.SelectTransaction(e.Transaction.GetHash());
 		}
 	}
 }

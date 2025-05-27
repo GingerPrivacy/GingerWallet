@@ -26,7 +26,7 @@
       <ComboBox ItemsSource="{Binding Wallets}" IsEnabled="{Binding IsOutputWalletSelectionEnabled}"
                 SelectedItem="{Binding SelectedOutputWallet}">
         <ComboBox.ItemTemplate>
-          <DataTemplate x:DataType="wallets1:IWalletModel">
+          <DataTemplate x:DataType="wallets1:WalletModel">
             <TextBlock Text="{Binding Name}" />
           </DataTemplate>
         </ComboBox.ItemTemplate>

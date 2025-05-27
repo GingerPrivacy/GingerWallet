@@ -2,7 +2,7 @@ using GingerCommon.Logging;
 
 namespace WalletWasabi.Fluent.Models.ClientConfig;
 
-public class ClientConfigModel : IClientConfig
+public class ClientConfigModel
 {
 	public string DataDir => Services.DataDir;
 

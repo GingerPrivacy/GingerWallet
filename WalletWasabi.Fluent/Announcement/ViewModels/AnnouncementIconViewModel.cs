@@ -6,7 +6,6 @@ using ReactiveUI;
 using WalletWasabi.Fluent.Announcement.Models;
 using WalletWasabi.Fluent.Common.ViewModels;
 using WalletWasabi.Fluent.Infrastructure;
-using WalletWasabi.Fluent.Models.UI;
 
 namespace WalletWasabi.Fluent.Announcement.ViewModels;
 
@@ -16,9 +15,8 @@ public partial class AnnouncementIconViewModel : ViewModelBase
 	[AutoNotify] private AnnouncementModel? _selectedAnnouncement;
 	[AutoNotify] private bool _hideFlyout;
 
-	public AnnouncementIconViewModel(UiContext uiContext, IAnnouncementsModel announcements)
+	public AnnouncementIconViewModel(AnnouncementsModel announcements)
 	{
-		UiContext = uiContext;
 		Announcements = announcements;
 
 		this.WhenAnyValue(x => x.SelectedAnnouncement)
@@ -35,7 +33,7 @@ public partial class AnnouncementIconViewModel : ViewModelBase
 		MarkAllAsReadCommand = ReactiveCommand.Create(() => Announcements.MarkAllAsRead());
 	}
 
-	public IAnnouncementsModel Announcements { get; }
+	public AnnouncementsModel Announcements { get; }
 
 	public ICommand MarkAllAsReadCommand { get; }
 

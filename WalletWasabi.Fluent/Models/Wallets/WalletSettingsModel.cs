@@ -11,7 +11,6 @@ using WalletWasabi.Wallets;
 namespace WalletWasabi.Fluent.Models.Wallets;
 
 [AppLifetime]
-[AutoInterface]
 public partial class WalletSettingsModel : ReactiveObject
 {
 	private readonly KeyManager _keyManager;

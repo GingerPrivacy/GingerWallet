@@ -10,8 +10,7 @@ using WalletWasabi.Models;
 
 namespace WalletWasabi.Fluent.Models;
 
-[AutoInterface]
-public partial class TransactionBroadcasterModel
+public class TransactionBroadcasterModel
 {
 	private readonly Network _network;
 

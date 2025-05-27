@@ -7,7 +7,7 @@ using WalletWasabi.Backend.Models;
 using WalletWasabi.Blockchain.Blocks;
 using WalletWasabi.Helpers;
 using WalletWasabi.Stores;
-using WalletWasabi.Tests.Helpers;
+using WalletWasabi.Tests.TestCommon;
 using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests.Stores;
@@ -39,5 +39,5 @@ public class IndexStoreTests
 	}
 
 	private string GetWorkDirectory([CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "")
-		=> Path.Combine(Common.GetWorkDir(callerFilePath, callerMemberName), "IndexStore");
+		=> Path.Combine(TestDirectory.Get(callerFilePath, callerMemberName), "IndexStore");
 }

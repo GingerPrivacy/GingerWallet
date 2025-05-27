@@ -29,27 +29,7 @@ public static class TransactionFeeHelper
 			[1008] = 1
 		});
 
-	public static async Task<AllFeeEstimate> GetFeeEstimatesWhenReadyAsync(Wallet wallet, CancellationToken cancellationToken)
-	{
-		var feeProvider = wallet.FeeProvider;
-
-		bool RpcFeeProviderInError() => feeProvider.RpcFeeProvider?.InError ?? true;
-		bool ThirdPartyFeeProviderInError() => feeProvider.ThirdPartyFeeProvider.InError;
-
-		while (!RpcFeeProviderInError() || !ThirdPartyFeeProviderInError())
-		{
-			if (TryGetFeeEstimates(wallet, out var feeEstimates))
-			{
-				return feeEstimates;
-			}
-
-			await Task.Delay(100, cancellationToken);
-		}
-
-		throw new InvalidOperationException("Couldn't get the fee estimations.");
-	}
-
-	public static bool TryEstimateConfirmationTime(HybridFeeProvider feeProvider, Network network, SmartTransaction tx, UnconfirmedTransactionChainProvider unconfirmedTxChainProvider, [NotNullWhen(true)] out TimeSpan? estimate)
+	public static bool TryEstimateConfirmationTime(IWalletFeeRateProvider feeProvider, Network network, SmartTransaction tx, UnconfirmedTransactionChainProvider unconfirmedTxChainProvider, [NotNullWhen(true)] out TimeSpan? estimate)
 	{
 		estimate = null;
 
@@ -90,17 +70,25 @@ public static class TransactionFeeHelper
 	public static bool TryGetFeeEstimates(Wallet wallet, [NotNullWhen(true)] out AllFeeEstimate? estimates)
 		=> TryGetFeeEstimates(wallet.FeeProvider, wallet.Network, out estimates);
 
-	public static bool TryGetFeeEstimates(HybridFeeProvider feeProvider, Network network, [NotNullWhen(true)] out AllFeeEstimate? estimates)
+	public static bool TryGetFeeEstimates(IWalletFeeRateProvider feeProvider, Network network, [NotNullWhen(true)] out AllFeeEstimate? estimates)
 	{
-		estimates = null;
-
-		if (feeProvider.AllFeeEstimate is null)
+		if (network == Network.TestNet)
 		{
-			return false;
+			estimates = TestNetFeeEstimates;
+			return true;
 		}
 
-		estimates = network == Network.TestNet ? TestNetFeeEstimates : feeProvider.AllFeeEstimate;
-		return true;
+		estimates = null;
+
+		try
+		{
+			estimates = feeProvider.GetAllFeeEstimate();
+			return estimates is not null;
+		}
+		catch
+		{
+		}
+		return false;
 	}
 
 	public static TimeSpan CalculateConfirmationTime(double targetBlock)

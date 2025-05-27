@@ -1,55 +1,68 @@
 using NBitcoin;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Security;
 using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Extensions;
 using WalletWasabi.Helpers;
 using WalletWasabi.Io;
 using WalletWasabi.JsonConverters;
-using WalletWasabi.JsonConverters.Bitcoin;
 using WalletWasabi.Logging;
 using WalletWasabi.Models;
 using WalletWasabi.Wallets;
 using static WalletWasabi.Blockchain.Keys.WpkhOutputDescriptorHelper;
-using static WalletWasabi.BuySell.BuySellClientModels;
 
 namespace WalletWasabi.Blockchain.Keys;
 
-[JsonObject(MemberSerialization.OptIn)]
-public class KeyManager
+public class KeyManager : IJsonOnSerializing, IJsonOnDeserialized
 {
 	public const int AbsoluteMinGapLimit = 21;
 	public const int MaxGapLimit = 10_000;
 
-	private static readonly JsonConverter[] JsonConverters =
+	public static readonly JsonSerializerOptions JsonOptions = GetJsonOptions();
+
+	private static JsonSerializerOptions GetJsonOptions()
 	{
-		new BitcoinEncryptedSecretNoECJsonConverter(),
-		new ByteArrayJsonConverter(),
-		new HDFingerprintJsonConverter(),
-		new ExtPubKeyJsonConverter(),
-		new KeyPathJsonConverter(),
-		new MoneyBtcJsonConverter(),
-		new CoinjoinSkipFactorsJsonConverter(),
-	};
+		JsonSerializerOptions options = new()
+		{
+			Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+			WriteIndented = true,
+		};
+		options.Converters.Add(new GingerCommon.Serialization.JsonConverters.KeyPathJsonConverter());
+		options.Converters.Add(new GingerCommon.Serialization.JsonConverters.ExtPubKeyJsonConverter());
+		options.Converters.Add(new GingerCommon.Serialization.JsonConverters.PubKeyJsonConverter());
+		options.Converters.Add(new GingerCommon.Serialization.JsonConverters.NetworkJsonConverter());
+		options.Converters.Add(new GingerCommon.Serialization.JsonConverters.BitcoinEncryptedSecretNoECJsonConverter());
+		options.Converters.Add(new GingerCommon.Serialization.JsonConverters.HDFingerprintJsonConverter());
+		options.Converters.Add(new GingerCommon.Serialization.JsonConverters.MoneyJsonConverter());
+		options.Converters.Add(new GingerCommon.Serialization.JsonConverters.OutPointJsonConverter());
+		options.Converters.Add(new GingerCommon.Serialization.JsonConverters.Uint256JsonConverter());
+		options.Converters.Add(new WalletHeightJsonConverterNg());
+		options.Converters.Add(new CoinjoinSkipFactorsJsonConverterNg());
+		options.Converters.Add(new LabelsArrayJsonConverterNg());
+		// We does not need byte[] converter as the base64 encode is the default behavior
+
+		return options;
+	}
 
 	[JsonConstructor]
-	public KeyManager(BitcoinEncryptedSecretNoEC? encryptedSecret, byte[]? chainCode, HDFingerprint? masterFingerprint, ExtPubKey extPubKey, ExtPubKey? taprootExtPubKey, int? minGapLimit, BlockchainState blockchainState, string? filePath = null, KeyPath? segwitAccountKeyPath = null, KeyPath? taprootAccountKeyPath = null)
+	public KeyManager(BitcoinEncryptedSecretNoEC? encryptedSecret, byte[]? chainCode, HDFingerprint? masterFingerprint, ExtPubKey segwitExtPubKey, ExtPubKey? taprootExtPubKey, int minGapLimit, BlockchainState blockchainState, string? filePath = null, KeyPath? segwitAccountKeyPath = null, KeyPath? taprootAccountKeyPath = null)
 	{
 		Attributes = new();
 		EncryptedSecret = encryptedSecret;
 		ChainCode = chainCode;
 		MasterFingerprint = masterFingerprint;
-		SegwitExtPubKey = Guard.NotNull(nameof(extPubKey), extPubKey);
+		SegwitExtPubKey = Guard.NotNull(nameof(segwitExtPubKey), segwitExtPubKey);
 		TaprootExtPubKey = taprootExtPubKey;
 
-		MinGapLimit = Math.Max(AbsoluteMinGapLimit, minGapLimit ?? 0);
+		MinGapLimit = Math.Max(AbsoluteMinGapLimit, minGapLimit);
 
 		BlockchainState = blockchainState;
 
@@ -95,14 +108,12 @@ public class KeyManager
 		TaprootInternalKeyGenerator = new HdPubKeyGenerator(TaprootExtPubKey.Derive(1), TaprootAccountKeyPath.Derive(1), MinGapLimit);
 	}
 
-	[OnDeserialized]
-	private void OnDeserializedMethod(StreamingContext context)
+	public void OnDeserialized()
 	{
 		HdPubKeyCache.AddRangeKeys(HdPubKeys);
 	}
 
-	[OnSerializing]
-	private void OnSerializingMethod(StreamingContext context)
+	public void OnSerializing()
 	{
 		HdPubKeys.Clear();
 		HdPubKeys.AddRange(HdPubKeyCache.HdPubKeys.ToHashSet().OrderBy(x => x.FullKeyPath, new NBitcoinExtensions.KeyPathComparer()));
@@ -131,10 +142,9 @@ public class KeyManager
 		return WpkhOutputDescriptorHelper.GetOutputDescriptors(network, MasterFingerprint.Value, GetMasterExtKey(password), SegwitAccountKeyPath);
 	}
 
-	#region Properties
-
 	private WalletAttributes _attributes;
 
+	[JsonIgnore]
 	public WalletAttributes Attributes
 	{
 		get => _attributes;
@@ -146,87 +156,63 @@ public class KeyManager
 	}
 
 	/// <remarks><c>null</c> if the watch-only mode is on.</remarks>
-	[JsonProperty(PropertyName = "EncryptedSecret")]
 	public BitcoinEncryptedSecretNoEC? EncryptedSecret { get; }
 
 	/// <remarks><c>null</c> if the watch-only mode is on.</remarks>
-	[JsonProperty(PropertyName = "ChainCode")]
 	public byte[]? ChainCode { get; }
 
-	[JsonProperty(PropertyName = "MasterFingerprint")]
 	public HDFingerprint? MasterFingerprint { get; private set; }
 
-	[JsonProperty(PropertyName = "ExtPubKey")]
+	[JsonPropertyName("ExtPubKey")]
 	public ExtPubKey SegwitExtPubKey { get; }
 
-	[JsonProperty(PropertyName = "TaprootExtPubKey")]
 	public ExtPubKey? TaprootExtPubKey { get; private set; }
 
-	[JsonProperty(PropertyName = "UseTurboSync")]
-	public bool UseTurboSync { get; private set; } = true;
-
-	[JsonProperty(PropertyName = "MinGapLimit")]
 	public int MinGapLimit { get; private set; }
 
-	[JsonProperty(PropertyName = "AccountKeyPath")]
+	[JsonPropertyName("AccountKeyPath")]
 	public KeyPath SegwitAccountKeyPath { get; private set; }
 
-	[JsonProperty(PropertyName = "TaprootAccountKeyPath")]
 	public KeyPath TaprootAccountKeyPath { get; private set; }
 
-	[JsonProperty(PropertyName = "BlockchainState")]
+	[JsonInclude]
 	private BlockchainState BlockchainState { get; }
 
-	[JsonProperty(PropertyName = "PreferPsbtWorkflow")]
 	public bool PreferPsbtWorkflow { get; set; }
 
-	[JsonProperty(PropertyName = "AutoCoinJoin")]
 	public bool AutoCoinJoin { get => Attributes.AutoCoinJoin; set => Attributes.AutoCoinJoin = value; }
 
 	/// <summary>
 	/// Won't coinjoin automatically if the wallet balance is less than this.
 	/// </summary>
-	[JsonProperty(PropertyName = "PlebStopThreshold")]
-	[JsonConverter(typeof(MoneyBtcJsonConverter))]
 	public Money PlebStopThreshold { get => Attributes.PlebStopThreshold; set => Attributes.PlebStopThreshold = value; }
 
-	[JsonProperty(PropertyName = "Icon")]
 	public string? Icon { get => Attributes.Icon; private set => Attributes.Icon = value; }
-
-	[JsonProperty(PropertyName = "AnonScoreTarget")]
 	public int AnonScoreTarget { get => Attributes.AnonScoreTarget; set => Attributes.AnonScoreTarget = value; }
 
-	[JsonProperty(PropertyName = "SafeMiningFeeRate")]
 	public int SafeMiningFeeRate { get => Attributes.SafeMiningFeeRate; set => Attributes.SafeMiningFeeRate = value; }
-
-	[JsonProperty(PropertyName = "FeeRateMedianTimeFrameHours")]
 	public int FeeRateMedianTimeFrameHours { get => Attributes.FeeRateMedianTimeFrameHours; private set => Attributes.FeeRateMedianTimeFrameHours = value; }
 
-	[JsonProperty(PropertyName = "IsCoinjoinProfileSelected")]
 	public bool IsCoinjoinProfileSelected { get => Attributes.IsCoinjoinProfileSelected; set => Attributes.IsCoinjoinProfileSelected = value; }
-
-	[JsonProperty(PropertyName = "RedCoinIsolation")]
 	public bool RedCoinIsolation { get => Attributes.RedCoinIsolation; set => Attributes.RedCoinIsolation = value; }
-
-	[JsonProperty(PropertyName = "CoinjoinSkipFactors")]
 	public CoinjoinSkipFactors CoinjoinSkipFactors { get => Attributes.CoinjoinSkipFactors; set => Attributes.CoinjoinSkipFactors = value; }
-
-	[JsonProperty(Order = 999, PropertyName = "HdPubKeys")]
-	private List<HdPubKey> HdPubKeys { get; } = new();
-
-	[JsonProperty(ItemConverterType = typeof(OutPointJsonConverter), PropertyName = "ExcludedCoinsFromCoinJoin")]
 	public List<OutPoint> ExcludedCoinsFromCoinJoin { get => Attributes.ExcludedCoinsFromCoinJoin; private set => Attributes.ExcludedCoinsFromCoinJoin = value; }
 
-	[JsonProperty(PropertyName = "BuySellWalletData")]
 	public BuySellWalletData BuySellWalletData { get => Attributes.BuySellWalletData; set => Attributes.BuySellWalletData = value; }
 
+	[JsonInclude]
+	private List<HdPubKey> HdPubKeys { get; } = new();
+
+	[JsonIgnore]
 	public string? FilePath { get; private set; }
 
 	[MemberNotNullWhen(returnValue: false, nameof(EncryptedSecret))]
 	[MemberNotNullWhen(returnValue: false, nameof(ChainCode))]
+	[JsonIgnore]
 	public bool IsWatchOnly => EncryptedSecret is null;
 
 	[MemberNotNullWhen(returnValue: true, nameof(MasterFingerprint))]
+	[JsonIgnore]
 	public bool IsHardwareWallet => EncryptedSecret is null && MasterFingerprint is not null;
 
 	internal HdPubKeyCache HdPubKeyCache { get; } = new();
@@ -235,15 +221,15 @@ public class KeyManager
 	// keys (stored in the `HdPubKeyCache`), minGapLimit, secrets, height, network.
 	private object CriticalStateLock { get; } = new();
 
+	[JsonIgnore]
 	public string? EncryptionKey { get; set; }
-
-	#endregion Properties
 
 	private HdPubKeyGenerator SegwitExternalKeyGenerator { get; set; }
 	private HdPubKeyGenerator SegwitInternalKeyGenerator { get; }
 	private HdPubKeyGenerator? TaprootExternalKeyGenerator { get; set; }
 	private HdPubKeyGenerator? TaprootInternalKeyGenerator { get; }
 
+	[JsonIgnore]
 	public string WalletName => string.IsNullOrWhiteSpace(FilePath) ? "" : Path.GetFileNameWithoutExtension(FilePath);
 
 	public static KeyManager CreateNew(out Mnemonic mnemonic, string password, Network network, string? filePath = null)
@@ -318,8 +304,8 @@ public class KeyManager
 			jsonString = TwoFactorAuthenticationHelpers.DecryptString(jsonString, secret);
 		}
 
-		KeyManager km = JsonConvert.DeserializeObject<KeyManager>(jsonString, JsonConverters)
-			?? throw new JsonSerializationException($"Wallet file at: `{filePath}` is not a valid wallet file or it is corrupted.");
+		KeyManager km = JsonSerializer.Deserialize<KeyManager>(jsonString, JsonOptions)
+			?? throw new JsonException($"Wallet file at: `{filePath}` is not a valid wallet file or it is corrupted.");
 
 		km.SetFilePath(filePath);
 		km.EncryptionKey = secret;
@@ -337,7 +323,7 @@ public class KeyManager
 					jsonStringAttributes = TwoFactorAuthenticationHelpers.DecryptString(jsonStringAttributes, km.SegwitExtPubKey.ToString(km.BlockchainState.Network));
 				}
 
-				walletAttributes = JsonConvert.DeserializeObject<WalletAttributes>(jsonStringAttributes, JsonConverters);
+				walletAttributes = JsonSerializer.Deserialize<WalletAttributes>(jsonStringAttributes, JsonOptions);
 				if (walletAttributes is not null)
 				{
 					km.Attributes = walletAttributes;
@@ -694,8 +680,8 @@ public class KeyManager
 
 		lock (CriticalStateLock)
 		{
-			jsonString = JsonConvert.SerializeObject(this, Formatting.Indented, JsonConverters);
-			jsonStringAttributes = JsonConvert.SerializeObject(Attributes, Formatting.Indented, JsonConverters);
+			jsonString = JsonSerializer.Serialize(this, JsonOptions);
+			jsonStringAttributes = JsonSerializer.Serialize(Attributes, JsonOptions);
 		}
 
 		IoHelpers.EnsureContainingDirectoryExists(filePath);
@@ -731,11 +717,11 @@ public class KeyManager
 
 	#region BlockchainState
 
-	public Height GetBestHeight(SyncType syncType)
+	public Height GetBestHeight()
 	{
 		lock (CriticalStateLock)
 		{
-			return syncType == SyncType.Turbo ? BlockchainState.TurboSyncHeight : BlockchainState.Height;
+			return BlockchainState.Height;
 		}
 	}
 
@@ -744,39 +730,11 @@ public class KeyManager
 		return BlockchainState.Network;
 	}
 
-	public void SetBestHeight(SyncType syncType, Height height, bool toFile = true)
-	{
-		if (syncType == SyncType.Turbo)
-		{
-			// Only keys in TurboSync subset (external + internal that didn't receive or fully spent coins) were tested, update TurboSyncHeight.
-			SetBestTurboSyncHeight(height, toFile);
-		}
-		else
-		{
-			// All keys were tested at this height, update the Height.
-			SetBestHeight(height, toFile);
-		}
-	}
-
 	public void SetBestHeight(Height height, bool toFile = true)
 	{
 		lock (CriticalStateLock)
 		{
 			BlockchainState.Height = height;
-			EnsureTurboSyncHeightConsistency(false);
-			if (toFile)
-			{
-				ToFile();
-			}
-		}
-	}
-
-	public void SetBestTurboSyncHeight(Height height, bool toFile = true)
-	{
-		lock (CriticalStateLock)
-		{
-			BlockchainState.TurboSyncHeight = height;
-
 			if (toFile)
 			{
 				ToFile();
@@ -788,7 +746,6 @@ public class KeyManager
 	{
 		lock (CriticalStateLock)
 		{
-			SetBestTurboSyncHeight(turboSyncHeight, false);
 			SetBestHeight(height, false);
 			ToFile();
 		}
@@ -799,33 +756,10 @@ public class KeyManager
 		lock (CriticalStateLock)
 		{
 			var prevHeight = BlockchainState.Height;
-			var prevTurboSyncHeight = BlockchainState.TurboSyncHeight;
 			if (newHeight < prevHeight)
 			{
 				SetBestHeights(newHeight, newHeight);
 				Logger.LogWarning($"Wallet ({WalletName}) height has been set back by {prevHeight - (int)newHeight}. From {prevHeight} to {newHeight}.");
-			}
-			else if (newHeight < prevTurboSyncHeight)
-			{
-				SetBestTurboSyncHeight(newHeight);
-				Logger.LogWarning($"Wallet ({WalletName}) turbo sync height has been set back by {prevTurboSyncHeight - (int)newHeight}. From {prevTurboSyncHeight} to {newHeight}.");
-			}
-		}
-	}
-
-	public void EnsureTurboSyncHeightConsistency(bool toFile = true)
-	{
-		lock (CriticalStateLock)
-		{
-			if (BlockchainState.TurboSyncHeight < BlockchainState.Height)
-			{
-				// TurboSyncHeight can't be behind BestHeight
-				BlockchainState.TurboSyncHeight = BlockchainState.Height;
-			}
-
-			if (toFile)
-			{
-				ToFile();
 			}
 		}
 	}

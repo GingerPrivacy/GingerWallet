@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using WalletWasabi.Daemon;
 using WalletWasabi.Helpers;
 using WalletWasabi.Logging;
-using WalletWasabi.Tests.Helpers;
+using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.Wallets;
 using WalletWasabi.Wallets.BlockProvider;
 using WalletWasabi.Wallets.FilterProcessor;
@@ -50,7 +50,7 @@ public class BlockDownloadTests
 		_ = mockFileSystemBlockRepository.Setup(c => c.SaveAsync(It.IsAny<Block>(), It.IsAny<CancellationToken>()))
 			.Returns(Task.CompletedTask);
 
-		RuntimeParams.SetDataDir(Path.Combine(Common.DataDir, "RegTests", "Backend"));
+		RuntimeParams.SetDataDir(Path.Combine(TestDirectory.DataDir, "RegTests", "Backend"));
 		await RuntimeParams.LoadAsync();
 
 		string addressManagerFilePath = Path.Combine(Config.DataDir, "BitcoinP2pNetwork", $"AddressManager{Network.Main}.dat");
@@ -82,7 +82,7 @@ public class BlockDownloadTests
 
 			foreach ((uint height, uint256 blockHash) in HeightToBlockHash)
 			{
-				Task<IResult> taskCompletionSource = blockDownloadService.TryGetBlockAsync(P2pSourceRequest.Automatic, blockHash, new Priority(SyncType.Complete, height), testCts.Token);
+				Task<IResult> taskCompletionSource = blockDownloadService.TryGetBlockAsync(P2pSourceRequest.Automatic, blockHash, new Priority(height), testCts.Token);
 				tasks.Add(taskCompletionSource);
 			}
 

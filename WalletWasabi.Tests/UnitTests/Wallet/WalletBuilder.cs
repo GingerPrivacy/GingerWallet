@@ -2,10 +2,12 @@ using Microsoft.AspNetCore.Connections;
 using Microsoft.Extensions.Caching.Memory;
 using NBitcoin;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using WalletWasabi.Backend.Models;
-using WalletWasabi.Blockchain.Analysis.FeesEstimation;
 using WalletWasabi.Blockchain.Blocks;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Blockchain.Mempool;
@@ -13,13 +15,11 @@ using WalletWasabi.Blockchain.Transactions;
 using WalletWasabi.Models;
 using WalletWasabi.Services;
 using WalletWasabi.Stores;
-using WalletWasabi.WebClients.Wasabi;
-using WalletWasabi.Tests.Helpers;
-using System.IO;
-using System.Linq;
-using WalletWasabi.Wallets.FilterProcessor;
-using System.Threading;
+using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.Wallets;
+using WalletWasabi.Wallets.FilterProcessor;
+using WalletWasabi.WebClients.Wasabi;
+using WalletWasabi.Daemon.FeeRateProviders;
 
 namespace WalletWasabi.Tests.UnitTests.Wallet;
 
@@ -27,7 +27,7 @@ public class WalletBuilder : IAsyncDisposable
 {
 	public WalletBuilder(MockNode node, [CallerMemberName] string callerName = "NN")
 	{
-		DataDir = Common.GetWorkDir(nameof(WalletSynchronizationTests), callerName);
+		DataDir = TestDirectory.Get(nameof(WalletSynchronizationTests), callerName);
 
 		SmartHeaderChain smartHeaderChain = new();
 		IndexStore = new IndexStore(Path.Combine(DataDir, "indexStore"), node.Network, smartHeaderChain);
@@ -66,7 +66,7 @@ public class WalletBuilder : IAsyncDisposable
 
 		var serviceConfiguration = new ServiceConfiguration(new UriEndPoint(new Uri("http://www.nomatter.dontcare")), Money.Coins(WalletWasabi.Helpers.Constants.DefaultDustThreshold));
 
-		HybridFeeProvider feeProvider = new(Synchronizer, null);
+		var feeProvider = new FeeRateProvider(HttpClientFactory, keyManager.GetNetwork());
 
 		WalletFactory walletFactory = new(DataDir, Network.RegTest, BitcoinStore, Synchronizer, serviceConfiguration, feeProvider, BlockDownloadService, UnconfirmedTransactionChainProvider);
 		return walletFactory.CreateAndInitialize(keyManager);

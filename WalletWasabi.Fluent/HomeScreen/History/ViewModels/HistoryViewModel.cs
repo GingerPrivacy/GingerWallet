@@ -26,7 +26,7 @@ namespace WalletWasabi.Fluent.HomeScreen.History.ViewModels;
 [AppLifetime]
 public partial class HistoryViewModel : ActivatableViewModel
 {
-	private readonly IWalletModel _wallet;
+	private readonly WalletModel _wallet;
 
 	[AutoNotify(SetterModifier = AccessModifier.Private)]
 	private HierarchicalTreeDataGridSource<HistoryItemViewModelBase>? _source; // This will get its value as soon as this VM is activated.
@@ -34,14 +34,15 @@ public partial class HistoryViewModel : ActivatableViewModel
 	[AutoNotify(SetterModifier = AccessModifier.Private)]
 	private bool _isTransactionHistoryEmpty;
 
-	public HistoryViewModel(IWalletModel wallet)
+	[AutoNotify(SetterModifier = AccessModifier.Private)]
+	private IEnumerable<SortableItem>? _sortables;
+
+	public HistoryViewModel(WalletModel wallet)
 	{
 		_wallet = wallet;
 	}
 
 	public IObservableCollection<HistoryItemViewModelBase> Transactions { get; } = new ObservableCollectionExtended<HistoryItemViewModelBase>();
-
-	public IEnumerable<SortableItem> Sortables { get; private set; }
 
 	private static IColumn<HistoryItemViewModelBase> IndicatorsColumn()
 	{
@@ -194,6 +195,7 @@ public partial class HistoryViewModel : ActivatableViewModel
 		// Balance			BalanceColumnView			Balance (BTC)	Auto		145				210			true
 
 		// NOTE: When changing column width or min width please also change HistoryPlaceholderPanel column widths.
+#pragma warning disable CA2000 // Dispose objects before losing scope
 		Source = new HierarchicalTreeDataGridSource<HistoryItemViewModelBase>(Transactions)
 		{
 			Columns =
@@ -205,6 +207,7 @@ public partial class HistoryViewModel : ActivatableViewModel
 				ActionsColumn(),
 			}
 		}.DisposeWith(disposables);
+#pragma warning restore CA2000 // Dispose objects before losing scope
 
 		Source.RowSelection!.SingleSelect = true;
 
