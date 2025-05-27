@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace WalletWasabi.Fluent.HomeScreen.Receive.Views.Columns;
 
-public partial class TypeColumnView : UserControl
+public class TypeColumnView : UserControl
 {
 	public TypeColumnView()
 	{

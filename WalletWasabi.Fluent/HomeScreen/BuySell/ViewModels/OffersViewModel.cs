@@ -16,16 +16,15 @@ using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.HomeScreen.BuySell.ViewModels;
 
-[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public abstract partial class OffersViewModel : RoutableViewModel
 {
-	protected readonly IWalletModel _wallet;
+	protected readonly WalletModel _wallet;
 	private readonly ReadOnlyObservableCollection<OfferViewModel> _offers;
 	private readonly string _allText = Resources.All;
 
 	[AutoNotify] private string _selectedPaymentMethod;
 
-	protected OffersViewModel(IWalletModel wallet, IEnumerable<OfferModel> offers)
+	protected OffersViewModel(WalletModel wallet, IEnumerable<OfferModel> offers)
 	{
 		Title = Resources.Offers;
 		_wallet = wallet;

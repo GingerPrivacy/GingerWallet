@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using WalletWasabi.Backend.Models;
 using WalletWasabi.WebClients.BlockchainInfo;
 using WalletWasabi.WebClients.Coinbase;
 using WalletWasabi.WebClients.CoinGecko;

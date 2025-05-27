@@ -24,7 +24,7 @@ public partial class ShuttingDownViewModel : RoutableViewModel
 			async () =>
 			{
 				await UiContext.CoinjoinModel.RestartAbortedCoinjoinsAsync();
-				Navigate().Clear();
+				UiContext.Navigate(CurrentTarget).Clear();
 			});
 	}
 
@@ -38,7 +38,7 @@ public partial class ShuttingDownViewModel : RoutableViewModel
 				  {
 					  if (UiContext.CoinjoinModel.CanShutdown())
 					  {
-						  Navigate().Clear();
+						  UiContext.Navigate(CurrentTarget).Clear();
 						  _applicationViewModel.Shutdown(_restart);
 					  }
 				  })

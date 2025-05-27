@@ -1,6 +1,5 @@
 using System;
 using System.Buffers.Binary;
-using System.IO;
 using System.Numerics;
 using System.Security.Cryptography;
 
@@ -17,28 +16,30 @@ public sealed class DeterministicRandom : GingerRandom
 
 	public DeterministicRandom(ulong seed)
 	{
-		byte[] beforeHash = new byte[32];
-		{
-			using MemoryStream inputStream = new(beforeHash, true);
-			using BinaryWriter writer = new(inputStream);
-			writer.Write(seed);
-			writer.Write(seed + 1);
-			writer.Write(seed + 2);
-			writer.Write(seed + 3);
-		}
-		byte[] afterHash = [];
+		Span<byte> beforeHash = stackalloc byte[32];
+		BinaryPrimitives.WriteUInt64LittleEndian(beforeHash, seed);
+		BinaryPrimitives.WriteUInt64LittleEndian(beforeHash[8..], seed + 1);
+		BinaryPrimitives.WriteUInt64LittleEndian(beforeHash[16..], seed + 2);
+		BinaryPrimitives.WriteUInt64LittleEndian(beforeHash[24..], seed + 3);
+
+		Span<byte> afterHash = stackalloc byte[32];
 		lock (SeedGeneratorLock)
 		{
-			afterHash = SeedGenerator.ComputeHash(beforeHash);
+			SeedGenerator.TryComputeHash(beforeHash, afterHash, out int res);
 		}
-		{
-			using MemoryStream inputStream = new(afterHash, false);
-			using BinaryReader reader = new(inputStream);
-			_s0 = reader.ReadUInt64();
-			_s1 = reader.ReadUInt64();
-			_s2 = reader.ReadUInt64();
-			_s3 = reader.ReadUInt64();
-		}
+		_s0 = BinaryPrimitives.ReadUInt64LittleEndian(afterHash);
+		_s1 = BinaryPrimitives.ReadUInt64LittleEndian(afterHash[8..]);
+		_s2 = BinaryPrimitives.ReadUInt64LittleEndian(afterHash[16..]);
+		_s3 = BinaryPrimitives.ReadUInt64LittleEndian(afterHash[24..]);
+	}
+
+	// 32 byte long array
+	public DeterministicRandom(byte[] seed)
+	{
+		_s0 = BinaryPrimitives.ReadUInt64LittleEndian(new ReadOnlySpan<byte>(seed, 0, 8));
+		_s1 = BinaryPrimitives.ReadUInt64LittleEndian(new ReadOnlySpan<byte>(seed, 8, 8));
+		_s2 = BinaryPrimitives.ReadUInt64LittleEndian(new ReadOnlySpan<byte>(seed, 16, 8));
+		_s3 = BinaryPrimitives.ReadUInt64LittleEndian(new ReadOnlySpan<byte>(seed, 24, 8));
 	}
 
 	public override void GetBytes(Span<byte> buffer)

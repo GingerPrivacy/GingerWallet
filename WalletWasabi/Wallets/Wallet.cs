@@ -40,7 +40,7 @@ public class Wallet : BackgroundService, IWallet
 		BitcoinStore bitcoinStore,
 		WasabiSynchronizer syncer,
 		ServiceConfiguration serviceConfiguration,
-		HybridFeeProvider feeProvider,
+		IWalletFeeRateProvider feeProvider,
 		TransactionProcessor transactionProcessor,
 		WalletFilterProcessor walletFilterProcessor,
 		UnconfirmedTransactionChainProvider unconfirmedTransactionChainProvider)
@@ -110,7 +110,7 @@ public class Wallet : BackgroundService, IWallet
 	public Network Network { get; }
 	public TransactionProcessor TransactionProcessor { get; }
 
-	public HybridFeeProvider FeeProvider { get; }
+	public IWalletFeeRateProvider FeeProvider { get; }
 	public UnconfirmedTransactionChainProvider UnconfirmedTransactionChainProvider { get; }
 	public WalletFilterProcessor WalletFilterProcessor { get; }
 	public FilterModel? LastProcessedFilter => WalletFilterProcessor.LastProcessedFilter;
@@ -358,15 +358,10 @@ public class Wallet : BackgroundService, IWallet
 	}
 
 	/// <inheritdoc />
-	protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+	protected override Task ExecuteAsync(CancellationToken stoppingToken)
 	{
-		// Perform final synchronization in the background.
-		if (KeyManager.UseTurboSync)
-		{
-			await PerformSynchronizationAsync(SyncType.NonTurbo, stoppingToken).ConfigureAwait(false);
-		}
-
 		Logger.LogInfo($"Wallet '{WalletName}' is fully synchronized.");
+		return Task.CompletedTask;
 	}
 
 	public string AddCoinJoinPayment(IDestination destination, Money amount)
@@ -438,14 +433,7 @@ public class Wallet : BackgroundService, IWallet
 		{
 			var filterModels = filters as FilterModel[] ?? filters.ToArray();
 
-			if (KeyManager.UseTurboSync)
-			{
-				await WalletFilterProcessor.ProcessAsync(new List<SyncType> { SyncType.Turbo, SyncType.NonTurbo }, CancellationToken.None).ConfigureAwait(false);
-			}
-			else
-			{
-				await WalletFilterProcessor.ProcessAsync(SyncType.Complete, CancellationToken.None).ConfigureAwait(false);
-			}
+			await WalletFilterProcessor.ProcessAsync(CancellationToken.None).ConfigureAwait(false);
 
 			NewFiltersProcessed?.Invoke(this, filterModels);
 			await Task.Delay(100).ConfigureAwait(false);
@@ -473,7 +461,7 @@ public class Wallet : BackgroundService, IWallet
 		// Make sure that the keys are asserted in case of an empty HdPubKeys array.
 		KeyManager.GetKeys();
 
-		Height bestTurboSyncHeight = KeyManager.GetBestHeight(SyncType.Turbo);
+		Height bestTurboSyncHeight = KeyManager.GetBestHeight();
 
 		TransactionProcessor.Process(BitcoinStore.TransactionStore.ConfirmedStore.GetTransactions().TakeWhile(x => x.Height <= bestTurboSyncHeight));
 
@@ -490,16 +478,16 @@ public class Wallet : BackgroundService, IWallet
 				continue;
 			}
 			lastHashesLeft = BitcoinStore.SmartHeaderChain.HashesLeft;
-			await PerformSynchronizationAsync(KeyManager.UseTurboSync ? SyncType.Turbo : SyncType.Complete, cancel).ConfigureAwait(false);
+			await PerformSynchronizationAsync(cancel).ConfigureAwait(false);
 		}
 
 		// Request a synchronization once all filters were downloaded.
-		await PerformSynchronizationAsync(KeyManager.UseTurboSync ? SyncType.Turbo : SyncType.Complete, cancel).ConfigureAwait(false);
+		await PerformSynchronizationAsync(cancel).ConfigureAwait(false);
 	}
 
-	public async Task PerformSynchronizationAsync(SyncType syncType, CancellationToken cancellationToken)
+	public async Task PerformSynchronizationAsync(CancellationToken cancellationToken)
 	{
-		await WalletFilterProcessor.ProcessAsync(syncType, cancellationToken).ConfigureAwait(false);
+		await WalletFilterProcessor.ProcessAsync(cancellationToken).ConfigureAwait(false);
 	}
 
 	private async Task LoadDummyMempoolAsync()
@@ -612,14 +600,9 @@ public class Wallet : BackgroundService, IWallet
 	private void EnsureHeightsAreAtLeastSegWitActivation()
 	{
 		var startingSegwitHeight = new Height(SmartHeader.GetStartingHeader(Network, IndexType.SegwitTaproot).Height);
-		if (startingSegwitHeight > KeyManager.GetBestHeight(SyncType.Complete))
+		if (startingSegwitHeight > KeyManager.GetBestHeight())
 		{
 			KeyManager.SetBestHeight(startingSegwitHeight);
-		}
-
-		if (startingSegwitHeight > KeyManager.GetBestHeight(SyncType.Turbo))
-		{
-			KeyManager.SetBestTurboSyncHeight(startingSegwitHeight);
 		}
 	}
 }

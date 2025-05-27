@@ -1,8 +1,11 @@
 using GingerCommon.Logging;
 using Microsoft.Extensions.Logging;
 using NBitcoin;
+using NBitcoin.Secp256k1;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -18,6 +21,7 @@ using WalletWasabi.Services;
 using WalletWasabi.WabiSabi;
 using WalletWasabi.WabiSabi.Backend;
 using WalletWasabi.WabiSabi.Backend.Banning;
+using WalletWasabi.WabiSabi.Backend.Rounds;
 using WalletWasabi.WabiSabi.Backend.Rounds.CoinJoinStorage;
 using WalletWasabi.WabiSabi.Backend.Statistics;
 using WalletWasabi.WabiSabi.Recommendation;
@@ -109,6 +113,7 @@ public class Global : IDisposable
 		HostedServices.Register<MempoolMirror>(() => MempoolMirror, "Full Node Mempool Mirror");
 
 		var blockNotifier = HostedServices.Get<BlockNotifier>();
+		blockNotifier.ExceptionThrown += BlockNotifier_ExceptionThrown;
 
 		var wabiSabiConfig = CoordinatorParameters.RuntimeCoordinatorConfig;
 		bool coinVerifierEnabled = wabiSabiConfig.IsCoinVerifierEnabled;
@@ -117,15 +122,15 @@ public class Global : IDisposable
 		{
 			try
 			{
-				CoinVerifierConfig config = new(
-					wabiSabiConfig.CoinVerifierProvider,
-					wabiSabiConfig.CoinVerifierApiUrl,
-					wabiSabiConfig.CoinVerifierApiAuthToken,
-					wabiSabiConfig.CoinVerifierApiSecret,
-					string.IsNullOrEmpty(wabiSabiConfig.RiskScores) ? wabiSabiConfig.RiskFlags : wabiSabiConfig.RiskScores);
+				List<CoinVerifierConfig> configs = wabiSabiConfig.CoinVerifiers.Where(x => x is not null && !string.IsNullOrEmpty(x.Name)).ToList();
+
+				if (configs.Count == 0)
+				{
+					throw new InvalidOperationException("No CoinVerifierProvider was added to the config.");
+				}
 
 				WhiteList = await Whitelist.CreateAndLoadFromFileAsync(CoordinatorParameters.WhitelistFilePath, wabiSabiConfig, cancel).ConfigureAwait(false);
-				CoinVerifierApiClient = new CoinVerifierApiClient(CoinVerifierHttpClient, config);
+				CoinVerifierApiClient = new CoinVerifierApiClient(CoinVerifierHttpClient, RpcClient, configs, Path.Combine(CoordinatorParameters.CoordinatorDataDir, "CoinVerifierResponses"));
 				CoinVerifier = new(CoinJoinIdStore, CoinVerifierApiClient, WhiteList, wabiSabiConfig, auditsDirectoryPath: Path.Combine(CoordinatorParameters.CoordinatorDataDir, "CoinVerifierAudits"));
 
 				Logger.LogInfo("CoinVerifier created successfully.");
@@ -153,6 +158,11 @@ public class Global : IDisposable
 
 		IndexBuilderService.Synchronize();
 		Logger.LogInfo($"{nameof(IndexBuilderService)} is successfully initialized and started synchronization.");
+	}
+
+	private void BlockNotifier_ExceptionThrown(object? sender, Exception e)
+	{
+		Logger.LogDiscord(LogLevel.Error, $"BlockNotifier had an exception: '{e.Message}'.", normalLogLevel: LogLevel.Error);
 	}
 
 	[MemberNotNull(nameof(WabiSabiCoordinator))]
@@ -225,6 +235,7 @@ public class Global : IDisposable
 				{
 					var blockNotifier = HostedServices.Get<BlockNotifier>();
 					blockNotifier.OnBlock -= wabiSabiCoordinator.BanDescendant;
+					blockNotifier.ExceptionThrown -= BlockNotifier_ExceptionThrown;
 					P2pNode.OnTransactionArrived -= wabiSabiCoordinator.BanDoubleSpenders;
 				}
 

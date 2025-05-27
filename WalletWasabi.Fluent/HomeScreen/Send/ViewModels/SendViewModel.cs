@@ -45,7 +45,7 @@ public partial class SendViewModel : RoutableViewModel
 {
 	private readonly object _parsingLock = new();
 	private readonly Wallet _wallet;
-	private readonly IWalletModel _walletModel;
+	private readonly WalletModel _walletModel;
 	private readonly SendFlowModel _parameters;
 	private readonly bool _continueWithFixedAmount;
 	private readonly CoinJoinManager? _coinJoinManager;
@@ -62,7 +62,7 @@ public partial class SendViewModel : RoutableViewModel
 	[AutoNotify] private bool _conversionReversed;
 	[AutoNotify(SetterModifier = AccessModifier.Private)] private SuggestionLabelsViewModel _suggestionLabels;
 
-	public SendViewModel(IWalletModel walletModel, SendFlowModel parameters, LabelsArray? preLabel = null, bool continueWithFixedAmount = false)
+	public SendViewModel(WalletModel walletModel, SendFlowModel parameters, LabelsArray? preLabel = null, bool continueWithFixedAmount = false)
 	{
 		_to = "";
 
@@ -171,7 +171,7 @@ public partial class SendViewModel : RoutableViewModel
 
 		var sendParameters = _parameters with { TransactionInfo = transactionInfo };
 
-		Navigate().To().TransactionPreview(_walletModel, sendParameters);
+		UiContext.Navigate().To().TransactionPreview(_walletModel, sendParameters);
 	}
 
 	private async Task OnAutoPasteAsync()
@@ -227,7 +227,7 @@ public partial class SendViewModel : RoutableViewModel
 
 	private async Task ShowQrCameraAsync()
 	{
-		var result = await Navigate().To().ShowQrCameraDialog(_walletModel.Network).GetResultAsync();
+		var result = await UiContext.Navigate().To().ShowQrCameraDialog(_walletModel.Network).GetResultAsync();
 		if (!string.IsNullOrWhiteSpace(result))
 		{
 			To = result;
@@ -358,6 +358,11 @@ public partial class SendViewModel : RoutableViewModel
 								   .DisposeWith(disposables);
 
 		RxApp.MainThreadScheduler.Schedule(async () => await OnAutoPasteAsync());
+
+		Observable
+			.Timer(TimeSpan.Zero, TimeSpan.FromSeconds(10), RxApp.TaskpoolScheduler)
+			.Subscribe(_ => _wallet.FeeProvider.TriggerRefresh())
+			.DisposeWith(disposables);
 
 		base.OnNavigatedTo(inHistory, disposables);
 	}

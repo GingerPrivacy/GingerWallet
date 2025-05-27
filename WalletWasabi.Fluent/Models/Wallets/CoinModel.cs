@@ -10,7 +10,6 @@ using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
 
-[AutoInterface]
 public partial class CoinModel : ReactiveObject
 {
 	private bool _subscribedToCoinChanges;
@@ -103,9 +102,9 @@ public partial class CoinModel : ReactiveObject
 		_subscribedToCoinChanges = true;
 	}
 
-	public bool IsSameAddress(ICoinModel anotherCoin) => anotherCoin is CoinModel cm && cm.Coin.HdPubKey == Coin.HdPubKey;
+	public bool IsSameAddress(CoinModel anotherCoin) => anotherCoin is CoinModel cm && cm.Coin.HdPubKey == Coin.HdPubKey;
 
-	public bool IsSame(ICoinModel anotherCoin) => anotherCoin is CoinModel cm && cm.Coin.Outpoint == Coin.Outpoint;
+	public bool IsSame(CoinModel anotherCoin) => anotherCoin is CoinModel cm && cm.Coin.Outpoint == Coin.Outpoint;
 
 	// TODO: Leaky abstraction. This shouldn't exist.
 	public SmartCoin GetSmartCoin() => Coin;

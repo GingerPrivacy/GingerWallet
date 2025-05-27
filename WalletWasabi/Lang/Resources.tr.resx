@@ -2104,4 +2104,28 @@
     <data name="Plural" xml:space="preserve">
         <value>\0</value>
     </data>
+    <data name="Resync" xml:space="preserve">
+        <value>Yeniden senkronize et</value>
+    </data>
+    <data name="DeleteWallet" xml:space="preserve">
+        <value>Cüzdanı sil</value>
+    </data>
+    <data name="Delete" xml:space="preserve">
+        <value>Sil</value>
+    </data>
+    <data name="DeletingAWalletIsPermanentAndCannotBeUndone" xml:space="preserve">
+        <value>Bir cüzdanı silmek kalıcıdır ve geri alınamaz. Cüzdan yalnızca kurtarma kelimelerinle geri yüklenebilir, bu yüzden onları elinde bulundurduğundan emin ol. Silmeyi onaylamak için lütfen yaz</value>
+    </data>
+    <data name="InTheFieldBelow" xml:space="preserve">
+        <value>aşağıdaki alana.</value>
+    </data>
+    <data name="NoKYC" xml:space="preserve">
+        <value>Bu sağlayıcıyla yapılan 1000 USD altındaki alımlarda belge yüklemesi gerekmez.</value>
+    </data>
+    <data name="SensitiveData" xml:space="preserve">
+        <value>Hassas veriler</value>
+    </data>
+    <data name="CouldntDeleteWalletCheckLogs" xml:space="preserve">
+        <value>Cüzdan silinemedi, daha fazla bilgi için günlükleri kontrol edin.</value>
+    </data>
 </root>

@@ -7,8 +7,13 @@ namespace WalletWasabi.Fluent;
 [StaticViewLocator]
 public partial class ViewLocator : IDataTemplate
 {
-	public Control Build(object data)
+	public Control Build(object? data)
 	{
+		if (data is null)
+		{
+			throw new ArgumentNullException($"Param: {data}");
+		}
+		
 		var type = data.GetType();
 		if (s_views.TryGetValue(type, out var func))
 		{
@@ -17,7 +22,7 @@ public partial class ViewLocator : IDataTemplate
 		throw new Exception($"Unable to create view for type: {type}");
 	}
 
-	public bool Match(object data)
+	public bool Match(object? data)
 	{
 		return data is ViewModelBase;
 	}

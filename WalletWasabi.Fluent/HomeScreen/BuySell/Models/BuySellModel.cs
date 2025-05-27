@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using DynamicData;
@@ -15,10 +16,10 @@ using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.HomeScreen.BuySell.Models;
 
-[AppLifetime]
-[AutoInterface]
-public partial class BuySellModel
+public class BuySellModel : IDisposable
 {
+	private readonly CompositeDisposable _disposable = new();
+
 	private readonly Wallet _wallet;
 	private readonly BuySellManager _buySellManager;
 
@@ -37,13 +38,15 @@ public partial class BuySellModel
 			.Connect()
 			.Filter(x => x.IsBuyOrder)
 			.Bind(out _buyOrders)
-			.Subscribe();
+			.Subscribe()
+			.DisposeWith(_disposable);
 
 		_listCache
 			.Connect()
 			.Filter(x => x.IsSellOrder)
 			.Bind(out _sellOrders)
-			.Subscribe();
+			.Subscribe()
+			.DisposeWith(_disposable);
 
 		HasBuyOrderOnHold = BuyOrders
 			.ToObservableChangeSet(x => x.OrderId)
@@ -68,7 +71,8 @@ public partial class BuySellModel
 			.Where(x => x == _wallet)
 			.StartWith(_wallet)
 			.DoAsync(async _ => await UpdateOrdersAsync())
-			.Subscribe();
+			.Subscribe()
+			.DisposeWith(_disposable);
 	}
 
 	public IObservable<bool> HasAnyBuyOrder { get; set; }
@@ -224,5 +228,11 @@ public partial class BuySellModel
 	public async Task<(decimal, decimal)> GetSellLimitsAsync(string currencyTo, string countryCode, string? stateCode)
 	{
 		return await _buySellManager.GetSellLimitsAsync(currencyTo, countryCode, stateCode);
+	}
+
+	public void Dispose()
+	{
+		_disposable.Dispose();
+		_listCache.Dispose();
 	}
 }

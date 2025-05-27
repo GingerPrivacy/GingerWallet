@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.Settings.ViewModels"
+             xmlns:feeRateProviders="clr-namespace:WalletWasabi.Daemon.FeeRateProviders;assembly=WalletWasabi.Daemon"
+             xmlns:conv="clr-namespace:WalletWasabi.Fluent.Converters"
              mc:Ignorable="d" d:DesignWidth="650"
              x:DataType="viewModels:BitcoinTabSettingsViewModel"
              x:Class="WalletWasabi.Fluent.Settings.Views.BitcoinTabSettingsView"
@@ -13,6 +15,18 @@
     <DockPanel>
       <TextBlock Text="{x:Static lang:Resources.Network}" />
       <ComboBox ItemsSource="{Binding Networks}" SelectedItem="{Binding Settings.Network}" />
+    </DockPanel>
+
+    <DockPanel IsEnabled="{Binding FeeRateProvidersEnabled^}">
+      <TextBlock Text="Fee Rate Provider" />
+      <ComboBox ItemsSource="{Binding FeeRateProviders}"
+                SelectedItem="{Binding Settings.SelectedFeeRateProviderSource}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate x:DataType="feeRateProviders:FeeRateProviderSource">
+            <TextBlock Text="{Binding Converter={x:Static conv:EnumConverters.ToFriendlyName}}" />
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
     </DockPanel>
 
     <DockPanel>

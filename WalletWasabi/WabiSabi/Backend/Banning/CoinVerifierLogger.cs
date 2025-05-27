@@ -27,34 +27,29 @@ public class CoinVerifierLogger : IAsyncDisposable
 
 	private List<AuditEvent> LogLines { get; } = new();
 
-	public void LogException(uint256 roundId, Exception exception)
+	public void LogException(uint256 roundId, string exceptionLevel, Exception exception)
 	{
 		var logArray = new string[]
 		{
+			exceptionLevel,
 			$"{roundId}",
 			$"{exception.Message}"
 		};
 
-		AddLogLineAndFormatCsv(DateTimeOffset.UtcNow, AuditEventType.Exception, logArray);
+		AddLogLineAndFormatCsv(DateTimeOffset.UtcNow, logArray);
 	}
 
-	public void LogRoundEvent(uint256 roundId, string message)
+	public void LogVerificationResult(CoinVerifyResult coinVerifyResult, AuditResultType resultType, ApiResponse? apiResponse = null, Exception? exception = null)
 	{
-		var logAsArray = new string[]
-		{
-			$"Round ID: {roundId}",
-			$"{message}"
-		};
-
-		AddLogLineAndFormatCsv(DateTimeOffset.UtcNow, AuditEventType.Round, logAsArray);
-	}
-
-	public void LogVerificationResult(CoinVerifyResult coinVerifyResult, Reason reason, ApiResponse? apiResponse = null, Exception? exception = null)
-	{
-		string details = "No details";
+		string resultTypeStr = $"{resultType}";
+		string details = "";
 
 		if (apiResponse is not null)
 		{
+			if (apiResponse.Provider.Length > 0)
+			{
+				resultTypeStr = apiResponse.Provider[0..1].ToUpperInvariant() + apiResponse.Provider[1..].ToLowerInvariant();
+			}
 			details = apiResponse.Details;
 		}
 		else if (exception is not null)
@@ -66,14 +61,13 @@ public class CoinVerifierLogger : IAsyncDisposable
 		{
 			$"{coinVerifyResult.Coin.Outpoint}",
 			$"{coinVerifyResult.Coin.ScriptPubKey.GetDestinationAddress(Network.Main)}",
-			$"{coinVerifyResult.ShouldBan}",
-			$"{coinVerifyResult.ShouldRemove}",
 			$"{coinVerifyResult.Coin.Amount}",
-			$"{reason}",
+			coinVerifyResult.ShouldBan ? "Banned" : (coinVerifyResult.ShouldRemove ? "Removed" : "Allowed"),
+			$"{resultTypeStr}",
 			$"{details}"
 		};
 
-		AddLogLineAndFormatCsv(DateTimeOffset.UtcNow, AuditEventType.VerificationResult, auditAsArray);
+		AddLogLineAndFormatCsv(DateTimeOffset.UtcNow, auditAsArray);
 	}
 
 	public async Task SaveAuditsAsync()
@@ -92,18 +86,9 @@ public class CoinVerifierLogger : IAsyncDisposable
 		}
 
 		List<string> lines = new();
-
 		foreach (AuditEvent line in auditLines)
 		{
-			var auditParts = new string[]
-			{
-				$"{line.DateTimeOffset:yyyy-MM-dd HH:mm:ss}",
-				$"{line.AuditEventType}",
-				$"{line.LogMessage}"
-			};
-
-			var audit = string.Join(CsvSeparator, auditParts);
-			lines.Add(audit);
+			lines.Add($"{line.DateTimeOffset:yyyy-MM-dd HH:mm:ss}{CsvSeparator}{line.LogMessage}");
 		}
 
 		var firstDate = auditLines.Select(x => x.DateTimeOffset).First();
@@ -115,14 +100,14 @@ public class CoinVerifierLogger : IAsyncDisposable
 		}
 	}
 
-	private void AddLogLineAndFormatCsv(DateTimeOffset dateTime, AuditEventType auditEventType, IEnumerable<string> unformattedTexts)
+	private void AddLogLineAndFormatCsv(DateTimeOffset dateTime, IEnumerable<string> unformattedTexts)
 	{
 		var csvCompatibleTexts = unformattedTexts.Select(text => text.Replace(CsvSeparator, ' '));
 		var csvLine = string.Join(CsvSeparator, csvCompatibleTexts);
 
 		lock (LogLinesLock)
 		{
-			LogLines.Add(new AuditEvent(dateTime, auditEventType, csvLine));
+			LogLines.Add(new AuditEvent(dateTime, csvLine));
 		}
 	}
 
@@ -131,5 +116,5 @@ public class CoinVerifierLogger : IAsyncDisposable
 		await SaveAuditsAsync().ConfigureAwait(false);
 	}
 
-	public record AuditEvent(DateTimeOffset DateTimeOffset, AuditEventType AuditEventType, string LogMessage);
+	public record AuditEvent(DateTimeOffset DateTimeOffset, string LogMessage);
 }

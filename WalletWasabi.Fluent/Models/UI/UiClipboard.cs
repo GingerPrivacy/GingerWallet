@@ -3,8 +3,7 @@ using WalletWasabi.Fluent.Helpers;
 
 namespace WalletWasabi.Fluent.Models.UI;
 
-[AutoInterface]
-public partial class UiClipboard
+public class UiClipboard
 {
 	public async Task<string> GetTextAsync() => await ApplicationHelper.GetTextAsync();
 

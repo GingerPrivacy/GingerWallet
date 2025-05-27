@@ -37,13 +37,28 @@ public class WalletDirectories
 
 	public Network Network { get; }
 
-	public (string walletFilePath, string walletBackupFilePath) GetWalletFilePaths(string walletName)
+	public (string walletFilePath, string walletBackupFilePath, string walletAttrFilePath) GetWalletFilePaths(string walletName)
 	{
+		string walletFileName;
+		string walletAttrFileName;
+
 		if (!walletName.EndsWith($".{WalletFileExtension}", StringComparison.OrdinalIgnoreCase))
 		{
-			walletName = $"{walletName}.{WalletFileExtension}";
+			walletFileName = $"{walletName}.{WalletFileExtension}";
+			walletAttrFileName = $"{walletName}.{WalletAttributesFileExtension}";
 		}
-		return (Path.Combine(WalletsDir, walletName), Path.Combine(WalletsBackupDir, walletName));
+		else
+		{
+			walletFileName = walletName;
+			walletAttrFileName = walletName[..^WalletFileExtension.Length] + WalletAttributesFileExtension;
+		}
+
+		return
+		(
+			Path.Combine(WalletsDir, walletFileName),
+			Path.Combine(WalletsBackupDir, walletFileName),
+			Path.Combine(WalletsDir, walletAttrFileName)
+		);
 	}
 
 	public IEnumerable<FileInfo> EnumerateWalletFiles(bool includeBackupDir = false)

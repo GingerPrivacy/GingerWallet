@@ -15,16 +15,15 @@ namespace WalletWasabi.Fluent.Settings.ViewModels;
 public partial class PrivacyModeViewModel : RoutableViewModel
 {
 	[AutoNotify] private bool _privacyMode;
-	[AutoNotify] private string? _iconName;
-	[AutoNotify] private string? _iconNameFocused;
+	[AutoNotify] private string _iconName;
+	[AutoNotify] private string _iconNameFocused = "";
 
-	public PrivacyModeViewModel(IApplicationSettings applicationSettings)
+	public PrivacyModeViewModel(ApplicationSettings applicationSettings)
 	{
 		Title = Resources.DiscreetMode;
 
 		_privacyMode = applicationSettings.PrivacyMode;
-
-		SetIcon();
+		_iconName = GetIcon();
 
 		this.WhenAnyValue(x => x.PrivacyMode)
 			.Skip(1)
@@ -35,11 +34,11 @@ public partial class PrivacyModeViewModel : RoutableViewModel
 	public void Toggle()
 	{
 		PrivacyMode = !PrivacyMode;
-		SetIcon();
+		IconName = GetIcon();
 	}
 
-	public void SetIcon()
+	private string GetIcon()
 	{
-		IconName = PrivacyMode ? "eye_hide_regular" : "eye_show_regular";
+		return PrivacyMode ? "eye_hide_regular" : "eye_show_regular";
 	}
 }

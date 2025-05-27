@@ -15,6 +15,7 @@ using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.AddWallet.ViewModels.HardwareWallet;
 
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class ConnectHardwareWalletViewModel : RoutableViewModel
 {
 	private readonly WalletCreationOptions.ConnectToHardwareWallet _options;
@@ -54,7 +55,7 @@ public partial class ConnectHardwareWalletViewModel : RoutableViewModel
 
 	public string WalletName { get; }
 
-	public IWalletModel? ExistingWallet { get; set; }
+	public WalletModel? ExistingWallet { get; set; }
 
 	public ICommand NavigateToExistingWalletLoginCommand { get; }
 
@@ -81,7 +82,7 @@ public partial class ConnectHardwareWalletViewModel : RoutableViewModel
 	{
 		if (ExistingWallet is { })
 		{
-			Navigate().Clear();
+			UiContext.Navigate(CurrentTarget).Clear();
 			UiContext.Navigate().To(ExistingWallet);
 		}
 	}
@@ -187,7 +188,7 @@ public partial class ConnectHardwareWalletViewModel : RoutableViewModel
 
 	private void NavigateToNext(HwiEnumerateEntry device)
 	{
-		Navigate().To().DetectedHardwareWallet(_options with { Device = device });
+		UiContext.Navigate().To().DetectedHardwareWallet(_options with { Device = device });
 	}
 
 	protected override void OnNavigatedTo(bool isInHistory, CompositeDisposable disposables)

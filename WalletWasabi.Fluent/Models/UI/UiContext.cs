@@ -14,27 +14,27 @@ public class UiContext
 	///     The use of this property is a temporary workaround until we finalize the refactoring of all ViewModels (to be
 	///     testable)
 	/// </summary>
-	public static UiContext Default;
+	public static UiContext Default = null!;
 
-	private INavigate? _navigate;
+	private NavigationState? _navigate;
 
 	public UiContext(
-		IQrCodeGenerator qrCodeGenerator,
-		IQrCodeReader qrCodeReader,
-		IUiClipboard clipboard,
-		IWalletRepository walletRepository,
-		ICoinjoinModel coinJoinModel,
-		IHardwareWalletInterface hardwareWalletInterface,
-		IFileSystem fileSystem,
-		IClientConfig config,
-		IApplicationSettings applicationSettings,
-		ITransactionBroadcasterModel transactionBroadcaster,
-		IAmountProvider amountProvider,
-		IEditableSearchSource editableSearchSource,
-		ITorStatusCheckerModel torStatusChecker,
-		ILegalDocumentsProvider legalDocumentsProvider,
-		IHealthMonitor healthMonitor,
-		ITwoFactorAuthentication twoFactorAuthentication)
+		QrCodeGenerator qrCodeGenerator,
+		QrCodeReader qrCodeReader,
+		UiClipboard clipboard,
+		WalletRepository walletRepository,
+		CoinjoinModel coinJoinModel,
+		HardwareWalletInterface hardwareWalletInterface,
+		FileSystemModel fileSystem,
+		ClientConfigModel config,
+		ApplicationSettings applicationSettings,
+		TransactionBroadcasterModel transactionBroadcaster,
+		AmountProvider amountProvider,
+		EditableSearchSourceSource editableSearchSource,
+		TorStatusCheckerModel torStatusChecker,
+		LegalDocumentsProvider legalDocumentsProvider,
+		HealthMonitor healthMonitor,
+		TwoFactorAuthentication twoFactorAuthentication)
 	{
 		QrCodeGenerator = qrCodeGenerator ?? throw new ArgumentNullException(nameof(qrCodeGenerator));
 		QrCodeReader = qrCodeReader ?? throw new ArgumentNullException(nameof(qrCodeReader));
@@ -52,32 +52,39 @@ public class UiContext
 		LegalDocumentsProvider = legalDocumentsProvider ?? throw new ArgumentNullException(nameof(legalDocumentsProvider));
 		HealthMonitor = healthMonitor ?? throw new ArgumentNullException(nameof(healthMonitor));
 		TwoFactorAuthentication = twoFactorAuthentication ?? throw new ArgumentNullException(nameof(twoFactorAuthentication));
+
+		if (Default != null)
+		{
+			throw new InvalidOperationException($"MainViewModel instantiated more than once.");
+		}
+
+		Default = this;
 	}
 
-	public IUiClipboard Clipboard { get; }
-	public IQrCodeGenerator QrCodeGenerator { get; }
-	public IWalletRepository WalletRepository { get; }
-	public ICoinjoinModel CoinjoinModel { get; }
-	public IQrCodeReader QrCodeReader { get; }
-	public IHardwareWalletInterface HardwareWalletInterface { get; }
-	public IFileSystem FileSystem { get; }
-	public IClientConfig Config { get; }
-	public IApplicationSettings ApplicationSettings { get; }
-	public ITransactionBroadcasterModel TransactionBroadcaster { get; }
-	public IAmountProvider AmountProvider { get; }
-	public IEditableSearchSource EditableSearchSource { get; }
-	public ITorStatusCheckerModel TorStatusChecker { get; }
-	public ILegalDocumentsProvider LegalDocumentsProvider { get; }
-	public IHealthMonitor HealthMonitor { get; }
-	public ITwoFactorAuthentication TwoFactorAuthentication { get; }
+	public UiClipboard Clipboard { get; }
+	public QrCodeGenerator QrCodeGenerator { get; }
+	public WalletRepository WalletRepository { get; }
+	public CoinjoinModel CoinjoinModel { get; }
+	public QrCodeReader QrCodeReader { get; }
+	public HardwareWalletInterface HardwareWalletInterface { get; }
+	public FileSystemModel FileSystem { get; }
+	public ClientConfigModel Config { get; }
+	public ApplicationSettings ApplicationSettings { get; }
+	public TransactionBroadcasterModel TransactionBroadcaster { get; }
+	public AmountProvider AmountProvider { get; }
+	public EditableSearchSourceSource EditableSearchSource { get; }
+	public TorStatusCheckerModel TorStatusChecker { get; }
+	public LegalDocumentsProvider LegalDocumentsProvider { get; }
+	public HealthMonitor HealthMonitor { get; }
+	public TwoFactorAuthentication TwoFactorAuthentication { get; }
 	public MainViewModel? MainViewModel { get; private set; }
 
-	public void RegisterNavigation(INavigate navigate)
+	public void RegisterNavigation(NavigationState navigate)
 	{
 		_navigate ??= navigate;
 	}
 
-	public INavigate Navigate()
+	public NavigationState Navigate()
 	{
 		return _navigate ?? throw new InvalidOperationException($"{GetType().Name} {nameof(_navigate)} hasn't been initialized.");
 	}

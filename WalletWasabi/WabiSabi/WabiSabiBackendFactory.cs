@@ -70,7 +70,7 @@ public class WabiSabiBackendFactory
 		return signingState;
 	}
 
-	public virtual CoinVerifierProvider CreateCoinVerifierProvider(HttpClient httpClient, CoinVerifierConfig config)
+	public virtual CoinVerifierProvider CreateCoinVerifierProvider(HttpClient httpClient, IRPCClient rpcClient, CoinVerifierConfig config, string responsePath)
 	{
 		throw new InvalidOperationException("Unknown CoinVerifierProvider type.");
 	}

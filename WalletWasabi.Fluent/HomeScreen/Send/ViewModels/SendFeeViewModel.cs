@@ -1,6 +1,5 @@
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
-using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -22,7 +21,7 @@ namespace WalletWasabi.Fluent.HomeScreen.Send.ViewModels;
 	NavBarPosition = NavBarPosition.None,
 	Searchable = false,
 	NavigationTarget = NavigationTarget.DialogScreen)]
-public partial class SendFeeViewModel : DialogViewModelBase<FeeRate>
+public partial class SendFeeViewModel : DialogViewModelBase<FeeRate?>
 {
 	private readonly Wallet _wallet;
 	private readonly TransactionInfo _transactionInfo;
@@ -69,8 +68,7 @@ public partial class SendFeeViewModel : DialogViewModelBase<FeeRate>
 
 	private async Task<FeeRate?> ShowCustomFeeRateDialogAsync()
 	{
-		var result = await NavigateDialogAsync(new CustomFeeRateDialogViewModel(_transactionInfo), NavigationTarget.CompactDialogScreen);
-		return result.Result;
+		return await UiContext.Navigate().To().CustomFeeRateDialog(_transactionInfo).GetResultAsync();
 	}
 
 	private async Task FeeEstimationsAreNotAvailableAsync()
@@ -99,53 +97,60 @@ public partial class SendFeeViewModel : DialogViewModelBase<FeeRate>
 
 		base.OnNavigatedTo(isInHistory, disposables);
 
-		var feeProvider = _wallet.FeeProvider;
-
-		Observable
-			.FromEventPattern(feeProvider, nameof(feeProvider.AllFeeEstimateChanged))
-			.Select(_ =>
-			{
-				TransactionFeeHelper.TryGetFeeEstimates(_wallet, out var estimates);
-				return estimates;
-			})
-			.WhereNotNull()
-			.ObserveOn(RxApp.MainThreadScheduler)
-			.Subscribe(estimations => FeeChart.UpdateFeeEstimates(estimations.WildEstimations, _transactionInfo.MaximumPossibleFeeRate))
-			.DisposeWith(disposables);
-
 		RxApp.MainThreadScheduler.Schedule(async () =>
 		{
-			AllFeeEstimate feeEstimates;
-			using var cancelTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(15));
-
 			try
 			{
-				feeEstimates = await TransactionFeeHelper.GetFeeEstimatesWhenReadyAsync(_wallet, cancelTokenSource.Token);
-			}
-			catch (Exception ex)
-			{
-				Logger.LogInfo(ex);
-				await FeeEstimationsAreNotAvailableAsync();
-				return;
-			}
+				// Create a CancellationTokenSource and ensure it's canceled when disposables is disposed.
+				using var cts = new CancellationTokenSource();
+				disposables.Add(Disposable.Create(() => cts.Cancel()));
 
-			FeeChart.UpdateFeeEstimates(feeEstimates.WildEstimations, _transactionInfo.MaximumPossibleFeeRate);
-
-			if (_transactionInfo.FeeRate != FeeRate.Zero)
-			{
-				FeeChart.InitCurrentConfirmationTarget(_transactionInfo.FeeRate);
+				while (!disposables.IsDisposed)
+				{
+					await RefreshFeeChartAsync(cts.Token);
+					await Task.Delay(TimeSpan.FromSeconds(90), cts.Token);
+				}
 			}
-
-			if (_isSilent)
+			catch
 			{
-				_transactionInfo.ConfirmationTimeSpan = TransactionFeeHelper.CalculateConfirmationTime(FeeChart.CurrentConfirmationTarget);
+				// Dismiss the exception, just refresh function.
+			}
+		}).DisposeWith(disposables);
+	}
 
-				OnNext();
-			}
-			else
-			{
-				IsBusy = false;
-			}
-		});
+	private async Task RefreshFeeChartAsync(CancellationToken cancellationToken)
+	{
+		AllFeeEstimate feeEstimates;
+		using var cancelTokenSourceTimeout = new CancellationTokenSource(TimeSpan.FromSeconds(15));
+		using var cancelTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancelTokenSourceTimeout.Token, cancellationToken);
+
+		try
+		{
+			feeEstimates = await _wallet.FeeProvider.GetAllFeeEstimateAsync(cancelTokenSource.Token);
+		}
+		catch (Exception ex)
+		{
+			Logger.LogInfo(ex);
+			await FeeEstimationsAreNotAvailableAsync();
+			return;
+		}
+
+		FeeChart.UpdateFeeEstimates(feeEstimates.WildEstimations, _transactionInfo.MaximumPossibleFeeRate);
+
+		if (_transactionInfo.FeeRate != FeeRate.Zero)
+		{
+			FeeChart.InitCurrentConfirmationTarget(_transactionInfo.FeeRate);
+		}
+
+		if (_isSilent)
+		{
+			_transactionInfo.ConfirmationTimeSpan = TransactionFeeHelper.CalculateConfirmationTime(FeeChart.CurrentConfirmationTarget);
+
+			OnNext();
+		}
+		else
+		{
+			IsBusy = false;
+		}
 	}
 }

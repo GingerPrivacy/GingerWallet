@@ -10,9 +10,10 @@ using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.HomeScreen.BuySell.ViewModels;
 
-public class BuyOffersViewModel : OffersViewModel
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
+public partial class BuyOffersViewModel : OffersViewModel
 {
-	public BuyOffersViewModel(IWalletModel wallet, IEnumerable<OfferModel> offers) : base(wallet, offers)
+	public BuyOffersViewModel(WalletModel wallet, IEnumerable<OfferModel> offers) : base(wallet, offers)
 	{
 
 	}

@@ -3,15 +3,14 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel;
-using System.Linq;
 using WalletWasabi.Bases;
 using WalletWasabi.Helpers;
 using WalletWasabi.JsonConverters;
 using WalletWasabi.JsonConverters.Bitcoin;
 using WalletWasabi.JsonConverters.Timing;
 using WalletWasabi.WabiSabi.Models;
-using WalletWasabi.Affiliation.Serialization;
 using WalletWasabi.WabiSabi.Backend.DoSPrevention;
+using WalletWasabi.WabiSabi.Backend.Banning;
 
 namespace WalletWasabi.WabiSabi.Backend;
 
@@ -157,29 +156,8 @@ public class WabiSabiConfig : ConfigBase
 	[JsonProperty(PropertyName = "IsCoinVerifierEnabled", DefaultValueHandling = DefaultValueHandling.Populate)]
 	public bool IsCoinVerifierEnabled { get; set; } = false;
 
-	[DefaultValue("")]
-	[JsonProperty(PropertyName = "RiskFlags", DefaultValueHandling = DefaultValueHandling.Populate)]
-	public string RiskFlags { get; set; } = "";
-
-	[DefaultValue("")]
-	[JsonProperty(PropertyName = "RiskScores", DefaultValueHandling = DefaultValueHandling.Populate)]
-	public string RiskScores { get; set; } = "";
-
-	[DefaultValue("")]
-	[JsonProperty(PropertyName = "CoinVerifierProvider", DefaultValueHandling = DefaultValueHandling.Populate)]
-	public string CoinVerifierProvider { get; set; } = "";
-
-	[DefaultValue("")]
-	[JsonProperty(PropertyName = "CoinVerifierApiUrl", DefaultValueHandling = DefaultValueHandling.Populate)]
-	public string CoinVerifierApiUrl { get; set; } = "";
-
-	[DefaultValue("")]
-	[JsonProperty(PropertyName = "CoinVerifierApiAuthToken", DefaultValueHandling = DefaultValueHandling.Populate)]
-	public string CoinVerifierApiAuthToken { get; set; } = "";
-
-	[DefaultValue("")]
-	[JsonProperty(PropertyName = "CoinVerifierApiSecret", DefaultValueHandling = DefaultValueHandling.Populate)]
-	public string CoinVerifierApiSecret { get; set; } = "";
+	[JsonProperty(PropertyName = "CoinVerifiers")]
+	public CoinVerifierConfig[] CoinVerifiers { get; set; } = [new("", "", "", "", "")];
 
 	[DefaultValueTimeSpan("0d 0h 2m 0s")]
 	[JsonProperty(PropertyName = "CoinVerifierStartBefore", DefaultValueHandling = DefaultValueHandling.Populate)]
@@ -241,14 +219,6 @@ public class WabiSabiConfig : ConfigBase
 	[DefaultValue(false)]
 	[JsonProperty(PropertyName = "AllowP2wshOutputs", DefaultValueHandling = DefaultValueHandling.Populate)]
 	public bool AllowP2wshOutputs { get; set; } = false;
-
-	[DefaultValue(Constants.FallbackAffiliationMessageSignerKey)]
-	[JsonProperty(PropertyName = "AffiliationMessageSignerKey", DefaultValueHandling = DefaultValueHandling.Populate)]
-	public string AffiliationMessageSignerKey { get; set; } = Constants.FallbackAffiliationMessageSignerKey;
-
-	[DefaultAffiliateServers]
-	[JsonProperty(PropertyName = "AffiliateServers", DefaultValueHandling = DefaultValueHandling.Populate)]
-	public ImmutableDictionary<string, string> AffiliateServers { get; set; } = ImmutableDictionary<string, string>.Empty;
 
 	[DefaultValue(false)]
 	[JsonProperty(PropertyName = "DelayTransactionSigning", DefaultValueHandling = DefaultValueHandling.Populate)]

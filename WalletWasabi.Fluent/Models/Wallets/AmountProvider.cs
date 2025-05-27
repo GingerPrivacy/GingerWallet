@@ -10,7 +10,6 @@ using WalletWasabi.Services;
 namespace WalletWasabi.Fluent.Models.Wallets;
 
 [AppLifetime]
-[AutoInterface]
 public partial class AmountProvider : ReactiveObject
 {
 	private readonly ExchangeRateService _exchangeRateService;

@@ -10,7 +10,7 @@ namespace WalletWasabi.Fluent.HomeScreen.Send.ViewModels;
 
 public partial class TransactionSummaryViewModel : ViewModelBase
 {
-	private readonly IWalletModel _wallet;
+	private readonly WalletModel _wallet;
 	private BuildTransactionResult? _transaction;
 	[AutoNotify] private bool _transactionHasChange;
 	[AutoNotify] private TimeSpan? _confirmationTime;
@@ -24,7 +24,7 @@ public partial class TransactionSummaryViewModel : ViewModelBase
 	[AutoNotify] private double? _amountDiff;
 	[AutoNotify] private double? _feeDiff;
 
-	public TransactionSummaryViewModel(TransactionPreviewViewModel parent, IWalletModel wallet, TransactionInfo info, bool isPreview = false)
+	public TransactionSummaryViewModel(TransactionPreviewViewModel parent, WalletModel wallet, TransactionInfo info, bool isPreview = false)
 	{
 		Parent = parent;
 		_wallet = wallet;

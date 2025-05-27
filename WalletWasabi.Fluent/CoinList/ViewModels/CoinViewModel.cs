@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ReactiveUI;
@@ -8,9 +9,9 @@ using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.CoinList.ViewModels;
 
-public partial class CoinViewModel : CoinListItem
+public class CoinViewModel : CoinListItem
 {
-    public CoinViewModel(LabelsArray labels, ICoinModel coin, bool canSelectWhenCoinjoining, bool ignorePrivacyMode, bool allowSelection)
+	public CoinViewModel(LabelsArray labels, CoinModel coin, bool canSelectWhenCoinjoining, bool ignorePrivacyMode, bool allowSelection)
 	{
 		Labels = labels;
 		Coin = coin;
@@ -41,6 +42,6 @@ public partial class CoinViewModel : CoinListItem
         ShowDetailsCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().CoinDetails(coin));
 	}
 
-	public ICoinModel Coin { get; }
-	public override string Key => Coin.Key.ToString();
+	public CoinModel Coin { get; }
+	public override string Key => Coin.Key.ToString(CultureInfo.InvariantCulture);
 }

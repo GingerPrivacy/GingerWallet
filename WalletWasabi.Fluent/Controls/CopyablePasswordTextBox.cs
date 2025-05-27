@@ -7,7 +7,7 @@ using Avalonia.Interactivity;
 
 namespace WalletWasabi.Fluent.Controls;
 
-public partial class CopyablePasswordTextBox : TextBox
+public class CopyablePasswordTextBox : TextBox
 {
 	public static readonly DirectProperty<CopyablePasswordTextBox, bool> CanCutModifiedProperty =
 		AvaloniaProperty.RegisterDirect<CopyablePasswordTextBox, bool>(

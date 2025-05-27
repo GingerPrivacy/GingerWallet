@@ -7,6 +7,7 @@ using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Bases;
 using WalletWasabi.Daemon;
+using WalletWasabi.Daemon.FeeRateProviders;
 using WalletWasabi.Exceptions;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
@@ -22,7 +23,6 @@ using Unit = System.Reactive.Unit;
 namespace WalletWasabi.Fluent.Models.UI;
 
 [AppLifetime]
-[AutoInterface]
 public partial class ApplicationSettings : ReactiveObject
 {
 	private const int ThrottleTime = 500;
@@ -32,14 +32,14 @@ public partial class ApplicationSettings : ReactiveObject
 	private readonly PersistentConfig _startupConfig;
 	private readonly Config _config;
 	private readonly UiConfig _uiConfig;
-	private readonly ITwoFactorAuthentication _twoFactorAuthentication;
+	private readonly TwoFactorAuthentication _twoFactorAuthentication;
 
 	// Advanced
 	[AutoNotify] private bool _enableGpu;
 
 	// Bitcoin
 	[AutoNotify] private Network _network;
-
+	[AutoNotify] private FeeRateProviderSource _selectedFeeRateProviderSource;
 	[AutoNotify] private bool _startLocalBitcoinCoreOnStartup;
 	[AutoNotify] private string _localBitcoinCoreDataDir;
 	[AutoNotify] private bool _stopLocalBitcoinCoreOnShutdown;
@@ -80,7 +80,7 @@ public partial class ApplicationSettings : ReactiveObject
 	//Buy Sell
 	[AutoNotify] private BuySellConfiguration _buySellConfiguration;
 
-	public ApplicationSettings(string persistentConfigFilePath, PersistentConfig persistentConfig, Config config, UiConfig uiConfig, ITwoFactorAuthentication twoFactorAuthentication)
+	public ApplicationSettings(string persistentConfigFilePath, PersistentConfig persistentConfig, Config config, UiConfig uiConfig, TwoFactorAuthentication twoFactorAuthentication)
 	{
 		_persistentConfigFilePath = persistentConfigFilePath;
 		_startupConfig = persistentConfig;
@@ -94,6 +94,7 @@ public partial class ApplicationSettings : ReactiveObject
 
 		// Bitcoin
 		_network = config.Network;
+		_selectedFeeRateProviderSource = _startupConfig.FeeRateEstimationProvider;
 		_startLocalBitcoinCoreOnStartup = _startupConfig.StartLocalBitcoinCoreOnStartup;
 		_localBitcoinCoreDataDir = _startupConfig.LocalBitcoinCoreDataDir;
 		_stopLocalBitcoinCoreOnShutdown = _startupConfig.StopLocalBitcoinCoreOnShutdown;
@@ -158,7 +159,8 @@ public partial class ApplicationSettings : ReactiveObject
 				x => x.SelectedExchangeCurrency,
 				x => x.SelectedDecimalSeparator,
 				x => x.SelectedGroupSeparator,
-				x => x.SelectedBtcFractionGroup)
+				x => x.SelectedBtcFractionGroup,
+				x => x.SelectedFeeRateProviderSource)
 			.Skip(1)
 			.ObserveOn(RxApp.MainThreadScheduler)
 			.Throttle(TimeSpan.FromMilliseconds(ThrottleTime))
@@ -369,6 +371,7 @@ public partial class ApplicationSettings : ReactiveObject
 		if (Network != Network.RegTest)
 		{
 			result = result with { UseTor = UseTor.ToString() };
+			result = result with { FeeRateEstimationProvider = SelectedFeeRateProviderSource };
 		}
 
 		// Appearance

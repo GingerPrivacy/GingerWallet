@@ -19,11 +19,10 @@ public partial class SecuritySettingsTabViewModel : RoutableViewModel
 	[AutoNotify] private bool _twoFactorEnabled;
 	[AutoNotify] private bool _modifyTwoFactorEnabled;
 
-	public SecuritySettingsTabViewModel(UiContext uiContext, IApplicationSettings settings)
+	public SecuritySettingsTabViewModel(ApplicationSettings settings)
 	{
-		UiContext = uiContext;
 		Settings = settings;
-		TwoFactorEnabled = uiContext.TwoFactorAuthentication.TwoFactorEnabled;
+		TwoFactorEnabled = UiContext.TwoFactorAuthentication.TwoFactorEnabled;
 
 		GenerateTwoFactorCommand = ReactiveCommand.CreateFromTask(async () =>
 		{
@@ -45,7 +44,7 @@ public partial class SecuritySettingsTabViewModel : RoutableViewModel
 
 	public bool IsReadOnly => Settings.IsOverridden;
 
-	public IApplicationSettings Settings { get; }
+	public ApplicationSettings Settings { get; }
 
 	public ICommand GenerateTwoFactorCommand { get; set; }
 }

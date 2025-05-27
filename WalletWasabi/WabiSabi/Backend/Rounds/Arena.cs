@@ -1,8 +1,11 @@
-using System.Collections.Concurrent;
+using GingerCommon.Logging;
+using Microsoft.Extensions.Logging;
 using NBitcoin;
 using NBitcoin.RPC;
 using Nito.AsyncEx;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -10,19 +13,17 @@ using System.Threading.Tasks;
 using WalletWasabi.Bases;
 using WalletWasabi.BitcoinCore.Rpc;
 using WalletWasabi.Crypto.Randomness;
-using WalletWasabi.WabiSabi.Backend.Banning;
-using WalletWasabi.WabiSabi.Backend.Models;
-using WalletWasabi.WabiSabi.Models.MultipartyTransaction;
-using WalletWasabi.WabiSabi.Backend.Rounds.CoinJoinStorage;
-using WalletWasabi.WabiSabi.Backend.Statistics;
-using System.Collections.Immutable;
-using WalletWasabi.WabiSabi.Models;
 using WalletWasabi.Extensions;
-using WalletWasabi.Logging;
+using WalletWasabi.Helpers;
+using WalletWasabi.WabiSabi.Backend.Banning;
 using WalletWasabi.WabiSabi.Backend.DoSPrevention;
 using WalletWasabi.WabiSabi.Backend.Events;
+using WalletWasabi.WabiSabi.Backend.Models;
+using WalletWasabi.WabiSabi.Backend.Rounds.CoinJoinStorage;
+using WalletWasabi.WabiSabi.Backend.Statistics;
+using WalletWasabi.WabiSabi.Models;
+using WalletWasabi.WabiSabi.Models.MultipartyTransaction;
 using WalletWasabi.WabiSabi.Recommendation;
-using WalletWasabi.Helpers;
 
 namespace WalletWasabi.WabiSabi.Backend.Rounds;
 
@@ -159,14 +160,15 @@ public partial class Arena : PeriodicRunner
 							if (coinVerifyInfo.ShouldRemove)
 							{
 								round.Alices.Remove(coinAliceDictionary[coinVerifyInfo.Coin]);
-								CoinVerifier.VerifierAuditArchiver.LogRoundEvent(round.Id, $"{coinVerifyInfo.Coin.Outpoint} got removed from round");
+								Logger.LogInfo($"{round.Id} {coinVerifyInfo.Coin.Outpoint} got removed from round");
 							}
 						}
 					}
 					catch (Exception exc)
 					{
 						// This should never happen.
-						CoinVerifier.VerifierAuditArchiver.LogException(round.Id, exc);
+						CoinVerifier.VerifierAuditArchiver.LogException(round.Id, "AliceException", exc);
+						Logger.LogDiscord(LogLevel.Error, $"AliceException at round {round.Id}: {exc.Message}", normalLogLevel: LogLevel.Error);
 						throw;
 					}
 				}
@@ -814,11 +816,6 @@ public partial class Arena : PeriodicRunner
 	private void NotifyInput(uint256 roundId, Coin coin, bool isCoordinationFeeExempted)
 	{
 		InputAdded.SafeInvoke(this, new InputAddedEventArgs(roundId, coin, isCoordinationFeeExempted));
-	}
-
-	private void NotifyAffiliation(uint256 roundId, Coin coin, string affiliationId)
-	{
-		AffiliationAdded.SafeInvoke(this, new AffiliationAddedEventArgs(roundId, coin, affiliationId));
 	}
 
 	private SigningState FinalizeTransaction(uint256 roundId, ConstructionState constructionState)

@@ -55,12 +55,12 @@ public class RoundStateUpdater : PeriodicRunner
 
 	protected override async Task ActionAsync(CancellationToken cancellationToken)
 	{
-		if (DateTimeOffset.UtcNow - _lastRequestTime < _waitPeriod)
+		if (DateTimeOffset.UtcNow - _lastRequestTime < _waitPeriod && _verifyRoundState)
 		{
 			return;
 		}
 
-		if (SlowRequestsMode)
+		if (SlowRequestsMode && _verifyRoundState)
 		{
 			lock (AwaitersLock)
 			{

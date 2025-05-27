@@ -11,12 +11,11 @@ using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
 
-[AutoInterface]
-public abstract partial class CoinListModel : IDisposable
+public abstract class CoinListModel : IDisposable
 {
 	private readonly CompositeDisposable _disposables = new();
 
-	public CoinListModel(Wallet wallet, IWalletModel walletModel)
+	public CoinListModel(Wallet wallet, WalletModel walletModel)
 	{
 		Wallet = wallet;
 		WalletModel = walletModel;
@@ -45,25 +44,25 @@ public abstract partial class CoinListModel : IDisposable
 	}
 
 	protected Wallet Wallet { get; }
-	protected IWalletModel WalletModel { get; }
+	protected WalletModel WalletModel { get; }
 
-	public IObservableCache<ICoinModel, int> List { get; }
+	public IObservableCache<CoinModel, int> List { get; }
 
 	public IObservableCache<Pocket, LabelsArray> Pockets { get; }
 
-	public ICoinModel GetCoinModel(SmartCoin smartCoin)
+	public CoinModel GetCoinModel(SmartCoin smartCoin)
 	{
 		return List.Items.First(coinModel => coinModel.Key == smartCoin.Outpoint.GetHashCode());
 	}
 
-	protected ICoinModel CreateCoinModel(SmartCoin smartCoin)
+	protected CoinModel CreateCoinModel(SmartCoin smartCoin)
 	{
 		return new CoinModel(smartCoin, Wallet.Network, WalletModel.Settings.AnonScoreTarget);
 	}
 
 	protected abstract Pocket[] GetPockets();
 
-	protected abstract ICoinModel[] CreateCoinModels();
+	protected abstract CoinModel[] CreateCoinModels();
 
 	public void Dispose() => _disposables.Dispose();
 }

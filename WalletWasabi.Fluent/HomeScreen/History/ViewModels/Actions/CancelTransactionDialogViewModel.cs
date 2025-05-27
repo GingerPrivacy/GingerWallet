@@ -13,10 +13,10 @@ namespace WalletWasabi.Fluent.HomeScreen.History.ViewModels.Actions;
 [NavigationMetaData(NavigationTarget = NavigationTarget.CompactDialogScreen)]
 public partial class CancelTransactionDialogViewModel : RoutableViewModel
 {
-	private readonly IWalletModel _wallet;
+	private readonly WalletModel _wallet;
 	private readonly CancellingTransaction _cancellingTransaction;
 
-	public CancelTransactionDialogViewModel(IWalletModel wallet, CancellingTransaction cancellingTransaction)
+	public CancelTransactionDialogViewModel(WalletModel wallet, CancellingTransaction cancellingTransaction)
 	{
 		Title = Resources.CancelTransaction;
 		_wallet = wallet;
@@ -37,7 +37,7 @@ public partial class CancelTransactionDialogViewModel : RoutableViewModel
 		_wallet.Transactions.Cache
 			.Watch(_cancellingTransaction.TargetTransaction.Id)
 			.Where(change => change.Current.IsConfirmed)
-			.Do(_ => Navigate().Back())
+			.Do(_ => UiContext.Navigate(CurrentTarget).Back())
 			.Subscribe()
 			.DisposeWith(disposables);
 
@@ -71,7 +71,7 @@ public partial class CancelTransactionDialogViewModel : RoutableViewModel
 	{
 		if (_wallet.Auth.HasPassword)
 		{
-			return await Navigate().To().PasswordAuthDialog(_wallet, Resources.WalletSend).GetResultAsync();
+			return await UiContext.Navigate().To().PasswordAuthDialog(_wallet, Resources.WalletSend).GetResultAsync();
 		}
 
 		return true;

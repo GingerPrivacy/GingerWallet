@@ -13,11 +13,12 @@ using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.HomeScreen.Receive.ViewModels;
 
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class ReceiveAddressViewModel : RoutableViewModel
 {
-	private readonly IWalletModel _wallet;
+	private readonly WalletModel _wallet;
 
-	public ReceiveAddressViewModel(IWalletModel wallet, IAddress model, bool isAutoCopyEnabled)
+	public ReceiveAddressViewModel(WalletModel wallet, AddressModel model, bool isAutoCopyEnabled)
 	{
 		_wallet = wallet;
 		Model = model;
@@ -57,7 +58,7 @@ public partial class ReceiveAddressViewModel : RoutableViewModel
 
 	public IObservable<bool[,]> QrCode { get; }
 
-	private IAddress Model { get; }
+	private AddressModel Model { get; }
 
 	protected override void OnNavigatedTo(bool isInHistory, CompositeDisposable disposables)
 	{
@@ -69,7 +70,7 @@ public partial class ReceiveAddressViewModel : RoutableViewModel
 				{
 					if (Equals(address, Model))
 					{
-						Navigate().BackTo<ReceiveViewModel>();
+						UiContext.Navigate(CurrentTarget).BackTo<ReceiveViewModel>();
 					}
 				})
 			.Subscribe()

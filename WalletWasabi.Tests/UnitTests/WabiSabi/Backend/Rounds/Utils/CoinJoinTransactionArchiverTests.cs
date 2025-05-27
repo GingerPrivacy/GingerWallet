@@ -1,7 +1,11 @@
 using NBitcoin;
+using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
+using WalletWasabi.Blockchain.TransactionBuilding;
+using WalletWasabi.Blockchain.Transactions;
+using WalletWasabi.Tests.Helpers;
 using WalletWasabi.WabiSabi.Backend.Rounds.CoinJoinStorage;
 using Xunit;
 using static WalletWasabi.WabiSabi.Backend.Rounds.CoinJoinStorage.CoinJoinTransactionArchiver;
@@ -19,9 +23,21 @@ public class CoinJoinTransactionArchiverTests
 		string tempFolder = Path.GetTempPath();
 		CoinJoinTransactionArchiver archiver = new(tempFolder);
 
-		Transaction randomTx = Network.TestNet.Consensus.ConsensusFactory.CreateTransaction();
+		var coins = new[]
+{
+			("", 0, 1.00118098m, true, 1)
+		};
 
-		DateTimeOffset now = DateTimeOffset.Parse("2021-09-28T20:45:30.3124Z");
+		TransactionFactory transactionFactory = ServiceFactory.CreateTransactionFactory(coins);
+		using Key key = new();
+		var payment = new PaymentIntent(new[]
+		{
+			new DestinationRequest(key, Money.Coins(0.3m))
+		});
+		var txParameters = TransactionParametersBuilder.CreateDefault().SetFeeRate(2m).SetAllowUnconfirmed(true).SetPayment(payment).SetFeeRate(20m).Build();
+		var randomTx = transactionFactory.BuildTransaction(txParameters).Transaction.Transaction;
+
+		DateTimeOffset now = DateTimeOffset.Parse("2021-09-28T20:45:30.3124Z", CultureInfo.InvariantCulture);
 		string storagePath = await archiver.StoreJsonAsync(randomTx, now);
 
 		TransactionInfo transactionInfo = JsonSerializer.Deserialize<TransactionInfo>(File.ReadAllText(storagePath))!;

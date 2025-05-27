@@ -56,7 +56,7 @@ public class StepTransactionSigningTests
 	}
 
 	[Fact]
-	public async Task FailsBroadcastAsync()
+	public async Task TransactionBroadcastErrorsAsync()
 	{
 		using CancellationTokenSource cancellationTokenSource = new(TestTimeout);
 		var token = cancellationTokenSource.Token;

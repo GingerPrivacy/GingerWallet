@@ -1,18 +1,14 @@
 using NBitcoin;
-using Newtonsoft.Json;
 using System.Collections.Generic;
-using WalletWasabi.JsonConverters.Bitcoin;
 using WalletWasabi.Extensions;
 using WalletWasabi.Models;
-using WalletWasabi.JsonConverters;
-using System.Runtime.Serialization;
 using System.Linq;
 using WalletWasabi.WabiSabi.Client.CoinJoin.Client;
+using System.Text.Json.Serialization;
 
 namespace WalletWasabi.Blockchain.Keys;
 
-[JsonObject(MemberSerialization.OptIn)]
-public class WalletAttributes
+public class WalletAttributes : IJsonOnSerializing
 {
 	public const bool DefaultAutoCoinjoin = false;
 	public const int DefaultAnonScoreTarget = 20;
@@ -40,57 +36,46 @@ public class WalletAttributes
 		}
 	}
 
-	[JsonProperty(PropertyName = "AutoCoinJoin")]
 	public bool AutoCoinJoin { get; set; } = DefaultAutoCoinjoin;
 
 	/// <summary>
 	/// Won't coinjoin automatically if the wallet balance is less than this.
 	/// </summary>
-	[JsonProperty(PropertyName = "PlebStopThreshold")]
-	[JsonConverter(typeof(MoneyBtcJsonConverter))]
 	public Money PlebStopThreshold { get; set; } = DefaultPlebStopThreshold;
 
-	[JsonProperty(PropertyName = "Icon")]
+	[JsonInclude]
 	public string? Icon { get; internal set; }
 
-	[JsonProperty(PropertyName = "AnonScoreTarget")]
 	public int AnonScoreTarget { get; set; } = DefaultAnonScoreTarget;
 
-	[JsonProperty(PropertyName = "SafeMiningFeeRate")]
 	public int SafeMiningFeeRate { get; set; } = DefaultSafeMiningFeeRate;
 
-	[JsonProperty(PropertyName = "FeeRateMedianTimeFrameHours")]
+	[JsonInclude]
 	public int FeeRateMedianTimeFrameHours { get; internal set; } = DefaultFeeRateMedianTimeFrameHours;
 
-	[JsonProperty(PropertyName = "IsCoinjoinProfileSelected")]
 	public bool IsCoinjoinProfileSelected { get; set; } = false;
 
-	[JsonProperty(PropertyName = "RedCoinIsolation")]
 	public bool RedCoinIsolation { get; set; } = DefaultRedCoinIsolation;
 
-	[JsonProperty(PropertyName = "CoinjoinSkipFactors")]
 	public CoinjoinSkipFactors CoinjoinSkipFactors { get; set; } = CoinjoinSkipFactors.NoSkip;
 
-	[JsonProperty(PropertyName = "BuySellWalletData")]
 	public BuySellWalletData BuySellWalletData { get; set; } = new();
 
-	[JsonProperty]
 	public CoinJoinCoinSelectionSettings CoinJoinCoinSelectionSettings { get; set; } = new();
 
-	[JsonProperty(ItemConverterType = typeof(Uint256JsonConverter), PropertyName = "CoinJoinTransactions")]
+	[JsonInclude]
 	public List<uint256> CoinJoinTransactions { get; internal set; } = new();
 
-	[JsonProperty(ItemConverterType = typeof(OutPointJsonConverter), Order = 800, PropertyName = "ExcludedCoinsFromCoinJoin")]
+	[JsonInclude]
 	public List<OutPoint> ExcludedCoinsFromCoinJoin { get; internal set; } = new();
 
-	[JsonProperty(ItemConverterType = typeof(OutPointJsonConverter), Order = 900, PropertyName = "CoinJoinOutputs")]
+	[JsonInclude]
 	public List<OutPoint> CoinJoinOutputs { get; internal set; } = new();
 
-	[JsonProperty(Order = 999, PropertyName = "HdPubKeys")]
-	private List<HdPubKey> HdPubKeys { get; } = new();
+	[JsonInclude]
+	private List<HdPubKey> HdPubKeys { get; set; } = new();
 
-	[OnSerializing]
-	private void OnSerializingMethod(StreamingContext context)
+	public void OnSerializing()
 	{
 		HdPubKeys.Clear();
 		if (KeyManager is not null)

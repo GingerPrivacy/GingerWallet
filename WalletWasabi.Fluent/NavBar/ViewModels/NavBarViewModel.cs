@@ -6,12 +6,9 @@ using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
 using WalletWasabi.Fluent.Common.ViewModels;
-using WalletWasabi.Fluent.HomeScreen.Wallets.Interfaces;
 using WalletWasabi.Fluent.HomeScreen.Wallets.ViewModels;
 using WalletWasabi.Fluent.Infrastructure;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
-using WalletWasabi.Fluent.Navigation.Interfaces;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 
 namespace WalletWasabi.Fluent.NavBar.ViewModels;
@@ -20,25 +17,34 @@ namespace WalletWasabi.Fluent.NavBar.ViewModels;
 /// The ViewModel that represents the structure of the sidebar.
 /// </summary>
 [AppLifetime]
-public partial class NavBarViewModel : ViewModelBase, IWalletSelector
+public partial class NavBarViewModel : ViewModelBase
 {
 	[AutoNotify] private WalletPageViewModel? _selectedWallet;
-	private IWalletModel? _selectedWalletModel;
+	[AutoNotify] private WalletModel? _selectedWalletModel;
 
-	public NavBarViewModel(UiContext uiContext)
+	public NavBarViewModel()
 	{
-		UiContext = uiContext;
-
 		BottomItems = new ObservableCollection<NavBarItemViewModel>();
 
 		UiContext.WalletRepository
 				 .Wallets
 				 .Connect()
 				 .Transform(newWallet => new WalletPageViewModel(newWallet))
+				 .DisposeMany()
 				 .AutoRefresh(x => x.IsLoggedIn)
 				 .Sort(SortExpressionComparer<WalletPageViewModel>.Descending(i => i.IsLoggedIn).ThenByAscending(x => x.WalletModel.Name))
 				 .Bind(out var wallets)
 				 .Subscribe();
+
+		wallets
+			.ToObservableChangeSet()
+			.Subscribe(_ =>
+			{
+				if (Wallets is not null && SelectedWallet is not null && !Wallets.Contains(SelectedWallet))
+				{
+					SelectedWallet = Wallets.FirstOrDefault();
+				}
+			});
 
 		Wallets = wallets;
 	}
@@ -46,15 +52,6 @@ public partial class NavBarViewModel : ViewModelBase, IWalletSelector
 	public ObservableCollection<NavBarItemViewModel> BottomItems { get; }
 
 	public ReadOnlyObservableCollection<WalletPageViewModel> Wallets { get; }
-
-	// AutoInterfaces (such as IWalletModel) cannot be seen by AutoNotifyGenerator.
-	public IWalletModel? SelectedWalletModel
-	{
-		get => _selectedWalletModel;
-		set => this.RaiseAndSetIfChanged(ref _selectedWalletModel, value);
-	}
-
-	IWalletViewModel? IWalletSelector.SelectedWallet => SelectedWallet?.WalletViewModel;
 
 	public void Activate()
 	{
@@ -98,7 +95,7 @@ public partial class NavBarViewModel : ViewModelBase, IWalletSelector
 		}
 	}
 
-	IWalletViewModel? IWalletNavigation.To(IWalletModel wallet)
+	public WalletViewModel? Select(WalletModel wallet)
 	{
 		SelectedWallet = Wallets.First(x => x.WalletModel.Name == wallet.Name);
 		return SelectedWallet.WalletViewModel;

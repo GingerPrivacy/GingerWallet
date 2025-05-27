@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace WalletWasabi.Fluent.HomeScreen.BuySell.Views;
 
-public partial class SellSuccessView : UserControl
+public class SellSuccessView : UserControl
 {
 	public SellSuccessView()
 	{

@@ -21,10 +21,53 @@ internal class FluentNavigationGenerator: GeneratorStep
 				.DescendantNodes()
 				.OfType<ClassDeclarationSyntax>()
 				.Where(cls => cls.IsRoutableViewModel(semanticModel) && !cls.IsAbstractClass(semanticModel))
+				.Where(cls => !HasAppLifetimeAttribute(cls, semanticModel)) // Exclude [AppLifetime] classes
+				.Where(cls => HasValidNavigationMetaData(cls, semanticModel)) // Exclude invalid [NavigationMetaData]
 				.SelectMany(cls => cls.Members.OfType<ConstructorDeclarationSyntax>());
 
 			Constructors.AddRange(constructors);
 		}
+	}
+
+	private static bool HasValidNavigationMetaData(ClassDeclarationSyntax cls, SemanticModel semanticModel)
+	{
+		var symbol = semanticModel.GetDeclaredSymbol(cls);
+		if (symbol == null)
+		{
+			return false;
+		}
+
+		var navigationMetaData = symbol.GetAttributes().FirstOrDefault(attr =>
+			attr.AttributeClass?.ToDisplayString() == "WalletWasabi.Fluent.NavigationMetaDataAttribute" || // Fully qualified name
+			attr.AttributeClass?.Name == "NavigationMetaDataAttribute"); // Short name as fallback
+
+		if (navigationMetaData is null)
+		{
+			return false;
+		}
+
+		var navigationTargetArg = navigationMetaData.NamedArguments.FirstOrDefault(arg => arg.Key == "NavigationTarget");
+
+		if (navigationTargetArg.Equals(default(KeyValuePair<string, TypedConstant>)) ||
+		    navigationTargetArg.Value.Value is int navTargetValue && navTargetValue == 0)
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	private static bool HasAppLifetimeAttribute(ClassDeclarationSyntax cls, SemanticModel semanticModel)
+	{
+		var symbol = semanticModel.GetDeclaredSymbol(cls);
+		if (symbol == null)
+		{
+			return false;
+		}
+
+		return symbol.GetAttributes().Any(attr =>
+			attr.AttributeClass?.ToDisplayString() == "AppLifetime" ||
+			attr.AttributeClass?.ToDisplayString().EndsWith(".AppLifetimeAttribute") == true);
 	}
 
 	public override void Execute()
@@ -132,7 +175,6 @@ internal class FluentNavigationGenerator: GeneratorStep
 						{
 						    var dialog = new {{className}}{{constructorArgs.ToFullString()}};
 							var target = UiContext.Navigate(navigationTarget);
-							target.To(dialog, navigationMode);
 
 							return new FluentDialog<{{dialogReturnType}}>(target.NavigateDialogAsync(dialog, navigationMode));
 						}

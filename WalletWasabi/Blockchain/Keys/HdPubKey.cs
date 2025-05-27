@@ -2,6 +2,8 @@ using NBitcoin;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using WalletWasabi.Bases;
 using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Helpers;
@@ -50,14 +52,17 @@ public class HdPubKey : NotifyPropertyChangedBase, IEquatable<HdPubKey>
 		}
 	}
 
+	[System.Text.Json.Serialization.JsonIgnore]
 	public Cluster Cluster
 	{
 		get => _cluster;
 		set => RaiseAndSetIfChanged(ref _cluster, value);
 	}
 
+	[System.Text.Json.Serialization.JsonIgnore]
 	public HashSet<uint256> OutputAnonSetReasons { get; } = new();
 
+	[System.Text.Json.Serialization.JsonIgnore]
 	public double AnonymitySet
 	{
 		get => _anonymitySet;
@@ -65,15 +70,16 @@ public class HdPubKey : NotifyPropertyChangedBase, IEquatable<HdPubKey>
 	}
 
 	[JsonProperty(Order = 1)]
-	[JsonConverter(typeof(PubKeyJsonConverter))]
+	[Newtonsoft.Json.JsonConverter(typeof(PubKeyJsonConverter))]
 	public PubKey PubKey { get; }
 
 	[JsonProperty(Order = 2)]
-	[JsonConverter(typeof(KeyPathJsonConverter))]
+	[Newtonsoft.Json.JsonConverter(typeof(KeyPathJsonConverter))]
 	public KeyPath FullKeyPath { get; }
 
 	[JsonProperty(Order = 3, PropertyName = "Label")]
-	[JsonConverter(typeof(LabelsArrayJsonConverter))]
+	[Newtonsoft.Json.JsonConverter(typeof(LabelsArrayJsonConverter))]
+	[JsonPropertyName("Label")]
 	public LabelsArray Labels { get; private set; }
 
 	[JsonProperty(Order = 4)]
@@ -81,12 +87,19 @@ public class HdPubKey : NotifyPropertyChangedBase, IEquatable<HdPubKey>
 
 	/// <summary>Height of the block where all coins associated with the key were spent, or <c>null</c> if not yet spent.</summary>
 	/// <remarks>Value can be non-<c>null</c> only for <see cref="IsInternal">internal keys</see> as they should be used just once.</remarks>
+	[System.Text.Json.Serialization.JsonIgnore]
 	public Height? LatestSpendingHeight { get; set; }
 
+	[System.Text.Json.Serialization.JsonIgnore]
 	public Script P2wpkhScript => _p2wpkhScript.Value;
+
+	[System.Text.Json.Serialization.JsonIgnore]
 	public Script P2Taproot => _p2Taproot.Value;
 
+	[System.Text.Json.Serialization.JsonIgnore]
 	public int Index { get; }
+
+	[System.Text.Json.Serialization.JsonIgnore]
 	public bool IsInternal { get; }
 
 	public void SetAnonymitySet(double anonset, uint256? outputAnonSetReason = null)

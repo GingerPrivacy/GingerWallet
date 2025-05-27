@@ -1,32 +1,29 @@
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.HomeScreen.BuySell.Models;
 using WalletWasabi.Fluent.HomeScreen.Labels.Models;
-using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models.Transactions;
 using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
 
-public partial interface IWalletModel : INotifyPropertyChanged;
-
-[AppLifetime]
-[AutoInterface]
-public partial class WalletModel : ReactiveObject
+public partial class WalletModel : ReactiveObject, IDisposable
 {
-	private readonly Lazy<IWalletCoinjoinModel> _coinjoin;
-	private readonly Lazy<IWalletCoinsModel> _coins;
+	private readonly CompositeDisposable _disposable = new();
+
+	private readonly Lazy<WalletCoinjoinModel> _coinjoin;
+	private readonly Lazy<WalletCoinsModel> _coins;
 	private readonly Lazy<BuySellModel> _buySellModel;
 
 	[AutoNotify] private bool _isLoggedIn;
 	[AutoNotify] private bool _isLoaded;
 	[AutoNotify] private bool _isSelected;
 
-	public WalletModel(Wallet wallet, IAmountProvider amountProvider)
+	public WalletModel(Wallet wallet, AmountProvider amountProvider)
 	{
 		Wallet = wallet;
 		AmountProvider = amountProvider;
@@ -69,14 +66,16 @@ public partial class WalletModel : ReactiveObject
 			 .Subscribe();
 
 		this.WhenAnyValue(x => x.Auth.IsLoggedIn)
-			.BindTo(this, x => x.IsLoggedIn);
+			.BindTo(this, x => x.IsLoggedIn)
+			.DisposeWith(_disposable);
 
 		this.WhenAnyObservable(x => x.State)
 			.Select(x => x == WalletState.Started)
-			.BindTo(this, x => x.IsLoaded);
+			.BindTo(this, x => x.IsLoaded)
+			.DisposeWith(_disposable);
 	}
 
-	public IAddressesModel Addresses { get; }
+	public AddressesModel Addresses { get; }
 
 	// TODO: Make this internal after Send refactoring
 	public Wallet Wallet { get; }
@@ -87,27 +86,27 @@ public partial class WalletModel : ReactiveObject
 
 	public Network Network => Wallet.Network;
 
-	public IWalletTransactionsModel Transactions { get; }
+	public WalletTransactionsModel Transactions { get; }
 
 	public IObservable<Amount> Balances { get; }
 
 	public IObservable<bool> HasBalance { get; }
 
-	public IWalletAuthModel Auth { get; }
+	public WalletAuthModel Auth { get; }
 
-	public IWalletLoadWorkflow Loader { get; }
+	public WalletLoadWorkflow Loader { get; }
 
-	public IWalletSettingsModel Settings { get; }
+	public WalletSettingsModel Settings { get; }
 
-	public IWalletPrivacyModel Privacy { get; }
+	public WalletPrivacyModel Privacy { get; }
 
 	public IObservable<WalletState> State { get; }
 
-	public IAmountProvider AmountProvider { get; }
+	public AmountProvider AmountProvider { get; }
 
-	public IWalletCoinjoinModel Coinjoin => _coinjoin.Value;
+	public WalletCoinjoinModel Coinjoin => _coinjoin.Value;
 
-	public IWalletCoinsModel Coins => _coins.Value;
+	public WalletCoinsModel Coins => _coins.Value;
 
 	public BuySellModel BuySellModel => _buySellModel.Value; // TODO: Source gen is idiot, investigate what's its problem if interfaces is used.
 
@@ -122,17 +121,17 @@ public partial class WalletModel : ReactiveObject
 		return Wallet.GetLabelsWithRanking(intent);
 	}
 
-	public IWalletStatsModel GetWalletStats()
+	public WalletStatsModel GetWalletStats()
 	{
 		return new WalletStatsModel(this, Wallet);
 	}
 
-	public IWalletInfoModel GetWalletInfo()
+	public WalletInfoModel GetWalletInfo()
 	{
 		return new WalletInfoModel(Wallet);
 	}
 
-	public IPrivacySuggestionsModel GetPrivacySuggestionsModel(SendFlowModel sendFlow)
+	public PrivacySuggestionsModel GetPrivacySuggestionsModel(SendFlowModel sendFlow)
 	{
 		return new PrivacySuggestionsModel(sendFlow);
 	}
@@ -141,5 +140,25 @@ public partial class WalletModel : ReactiveObject
 	{
 		Services.WalletManager.RenameWallet(Wallet, newWalletName);
 		this.RaisePropertyChanged(nameof(Name));
+	}
+
+	public void Dispose()
+	{
+		DisposeIfCreated(_coinjoin);
+		DisposeIfCreated(_coins);
+		DisposeIfCreated(_buySellModel);
+		Transactions.Dispose();
+		Addresses.Dispose();
+		_disposable.Dispose();
+
+		return;
+
+		void DisposeIfCreated<T>(Lazy<T> objectToDispose)
+		{
+			if (objectToDispose is { IsValueCreated: true, Value: IDisposable disposable })
+			{
+				disposable.Dispose();
+			}
+		}
 	}
 }

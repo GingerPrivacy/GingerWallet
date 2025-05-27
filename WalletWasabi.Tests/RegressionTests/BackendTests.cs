@@ -14,17 +14,18 @@ using WalletWasabi.Backend.Controllers;
 using WalletWasabi.Backend.Models;
 using WalletWasabi.Backend.Models.Responses;
 using WalletWasabi.BitcoinCore.Rpc;
-using WalletWasabi.Blockchain.Analysis.FeesEstimation;
 using WalletWasabi.Blockchain.BlockFilters;
 using WalletWasabi.Blockchain.Blocks;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Blockchain.TransactionBroadcasting;
 using WalletWasabi.Blockchain.TransactionBuilding;
+using WalletWasabi.Daemon.FeeRateProviders;
 using WalletWasabi.Logging;
 using WalletWasabi.Models;
 using WalletWasabi.Services;
 using WalletWasabi.Stores;
 using WalletWasabi.Tests.Helpers;
+using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.Tests.XunitConfiguration;
 using WalletWasabi.Tor.Http;
 using WalletWasabi.Tor.Http.Extensions;
@@ -145,13 +146,13 @@ public class BackendTests : IClassFixture<RegTestFixture>
 		// 3. Create wasabi synchronizer service.
 		await using WasabiHttpClientFactory httpClientFactory = new(torEndPoint: null, backendUriGetter: () => new Uri(RegTestFixture.BackendEndPoint));
 		using WasabiSynchronizer synchronizer = new(period: TimeSpan.FromSeconds(3), 10000, bitcoinStore, httpClientFactory);
-		HybridFeeProvider feeProvider = new(synchronizer, null);
+		FeeRateProvider feeProvider = new(httpClientFactory, network);
 
 		// 4. Create key manager service.
 		var keyManager = KeyManager.CreateNew(out _, password, network);
 
 		// 5. Create wallet service.
-		var workDir = Helpers.Common.GetWorkDir();
+		var workDir = TestDirectory.Get();
 
 		using MemoryCache cache = BitcoinFactory.CreateMemoryCache();
 		await using SpecificNodeBlockProvider specificNodeBlockProvider = new(network, serviceConfiguration, httpClientFactory.TorEndpoint);
@@ -170,7 +171,6 @@ public class BackendTests : IClassFixture<RegTestFixture>
 		nodes.Connect(); // Start connection service.
 		node.VersionHandshake(); // Start mempool service.
 		await synchronizer.StartAsync(CancellationToken.None); // Start wasabi synchronizer service.
-		await feeProvider.StartAsync(CancellationToken.None);
 
 		using var wallet = await walletManager.AddAndStartWalletAsync(keyManager);
 
@@ -234,7 +234,6 @@ public class BackendTests : IClassFixture<RegTestFixture>
 		bitcoinStore.IndexStore.NewFilters -= setup.Wallet_NewFiltersProcessed;
 		await walletManager.RemoveAndStopAllAsync(CancellationToken.None);
 		await synchronizer.StopAsync(CancellationToken.None);
-		await feeProvider.StopAsync(CancellationToken.None);
 		nodes?.Dispose();
 		node?.Disconnect();
 	}
@@ -246,7 +245,7 @@ public class BackendTests : IClassFixture<RegTestFixture>
 		IRPCClient rpc = setup.RpcClient;
 		using Backend.Global global = setup.Global;
 
-		var indexBuilderServiceDir = Helpers.Common.GetWorkDir();
+		var indexBuilderServiceDir = TestDirectory.Get();
 		var indexFilePath = Path.Combine(indexBuilderServiceDir, $"Index{rpc.Network}.dat");
 
 		IndexBuilderService indexBuilderService = new(IndexType.SegwitTaproot, rpc, global.HostedServices.Get<BlockNotifier>(), indexFilePath);

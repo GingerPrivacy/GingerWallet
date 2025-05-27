@@ -5,7 +5,6 @@ using WalletWasabi.Services;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
 
-[AutoInterface]
 public partial class TwoFactorAuthentication : ReactiveObject
 {
 	[AutoNotify] private bool _twoFactorEnabled;

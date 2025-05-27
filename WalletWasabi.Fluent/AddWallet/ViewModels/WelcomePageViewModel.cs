@@ -14,6 +14,7 @@ using WalletWasabi.Models;
 
 namespace WalletWasabi.Fluent.AddWallet.ViewModels;
 
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class WelcomePageViewModel : DialogViewModelBase<Unit>
 {
 	private const int NumberOfPages = 2;
@@ -63,7 +64,7 @@ public partial class WelcomePageViewModel : DialogViewModelBase<Unit>
 
 	public IEnumerable<DisplayLanguage> DisplayLanguagesList => Enum.GetValues(typeof(DisplayLanguage)).Cast<DisplayLanguage>().OrderBy(x => x.ToLocalTranslation());
 
-	public IApplicationSettings Settings => UiContext.ApplicationSettings;
+	public ApplicationSettings Settings => UiContext.ApplicationSettings;
 
 	private void OnNext()
 	{
@@ -77,7 +78,7 @@ public partial class WelcomePageViewModel : DialogViewModelBase<Unit>
 		}
 		else if (!UiContext.WalletRepository.HasWallet)
 		{
-			Navigate().To().AddWalletPage();
+			UiContext.Navigate().To().AddWalletPage();
 		}
 		else
 		{

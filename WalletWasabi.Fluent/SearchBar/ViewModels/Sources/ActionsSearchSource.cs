@@ -34,10 +34,11 @@ public class ActionsSearchSource : ISearchSource
 	{
 		return NavigationManager.MetaData
 			.Where(m => m.Searchable)
+			.Where(m => m.Title is not null && m.Caption is not null)
 			.Select(m =>
 			{
 				var onActivate = CreateOnActivateFunction(m);
-				var searchItem = new ActionableItem(m.Title, m.Caption, onActivate, m.GetCategoryString(), m.GetKeywords())
+				var searchItem = new ActionableItem(m.Title!, m.Caption!, onActivate, m.GetCategoryString(), m.GetKeywords())
 				{
 					Icon = m.IconName,
 					IsDefault = true,

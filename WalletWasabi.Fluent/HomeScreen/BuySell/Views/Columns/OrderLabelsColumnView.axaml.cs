@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace WalletWasabi.Fluent.HomeScreen.BuySell.Views.Columns;
 
-public partial class OrderLabelsColumnView : UserControl
+public class OrderLabelsColumnView : UserControl
 {
 	public OrderLabelsColumnView()
 	{

@@ -122,7 +122,7 @@
     <comment>This is a button which is used to open your bitcoin wallet. One word only. </comment>
   </data>
   <data name="TwoFactorDisabledWarnMessage" xml:space="preserve">
-    <value>Two-Factor authentication is disabled. Enable it in the Setting for greater protection.</value>
+    <value>Two-Factor authentication is disabled. Enable it in the Settings for greater protection.</value>
     <comment>This is a notification message to the user that the two-factor authentication is disabled and consider enabling it. </comment>
   </data>
   <data name="AddWalletPageViewModelTitle" xml:space="preserve">
@@ -156,7 +156,7 @@
     <value>Manage general settings</value>
   </data>
   <data name="GeneralSettingsTabViewModelKeywords" xml:space="preserve">
-    <value>Settings, General, Bitcoin, Run, Ginger, Computer, System, Start, Background, Close, Auto, Copy, Paste, Addresses, Custom, Change, Address, browser</value>
+    <value>Settings, General, Bitcoin, Run, Ginger, Computer, System, Start, Background, Close, Auto, Copy, Paste, Addresses, Custom, Change, Address, Browser</value>
   </data>
   <data name="BitcoinTabSettingsViewModelTitle" xml:space="preserve">
     <value>Bitcoin</value>
@@ -429,7 +429,7 @@
     <value>Awaiting the blame round</value>
   </data>
   <data name="WaitingRoundMessage" xml:space="preserve">
-    <value>WaitingRoundMessage</value>
+    <value>Awaiting a round</value>
   </data>
   <data name="PlebStopMessage" xml:space="preserve">
     <value>Coinjoin may be uneconomical</value>
@@ -1678,7 +1678,7 @@
     <value>Ginger Wallet could not open the browser, please check the logs for more details.</value>
   </data>
   <data name="AMLKYCNotice" xml:space="preserve">
-    <value>By clicking Accept, I acknowledge that the transaction may later require AML/KYC verification by the third-party provider.</value>
+    <value>By clicking Accept, I acknowledge that the transaction may later require AML/KYC verification by a third-party provider.</value>
   </data>
   <data name="Accept" xml:space="preserve">
     <value>Accept</value>
@@ -2104,7 +2104,31 @@
   <data name="NoProgressYet" xml:space="preserve">
     <value>No Progress Yet</value>
   </data>
-    <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
+  <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
     <value>Start coinjoining to gain privacy</value>
+  </data>
+    <data name="Resync" xml:space="preserve">
+    <value>Resync</value>
+  </data>
+    <data name="DeleteWallet" xml:space="preserve">
+    <value>Delete Wallet</value>
+  </data>
+    <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+    <data name="DeletingAWalletIsPermanentAndCannotBeUndone" xml:space="preserve">
+    <value>Deleting a wallet is permanent and cannot be undone. The wallet can only be restored using your recovery words, so make sure you have them. To confirm the deletion, please enter</value>
+  </data>
+  <data name="InTheFieldBelow" xml:space="preserve">
+    <value>in the field below.</value>
+  </data>
+  <data name="NoKYC" xml:space="preserve">
+    <value>No document upload required for purchases under 1000 USD with this provider.</value>
+  </data>
+  <data name="SensitiveData" xml:space="preserve">
+    <value>Sensitive Data</value>
+  </data>
+  <data name="CouldntDeleteWalletCheckLogs" xml:space="preserve">
+    <value>Couldn't delete the wallet, check logs for more details.</value>
   </data>
 </root>

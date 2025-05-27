@@ -12,12 +12,12 @@ namespace WalletWasabi.Fluent.SearchBar.ViewModels.SearchItems;
 
 public class SearchItemNode<TObject, TProperty> : ReactiveObject, IContentSearchItem where TObject : class, INotifyPropertyChanged
 {
-	private readonly IEditableSearchSource _editableSearchSource;
+	private readonly EditableSearchSourceSource _editableSearchSource;
 	private readonly NestedItemConfiguration<TProperty>[] _nestedItems;
 	private readonly Setting<TObject, TProperty> _setting;
 	private readonly CompositeDisposable _disposables = new();
 
-	public SearchItemNode(IEditableSearchSource editableSearchSource, Setting<TObject, TProperty> setting, string name, string category, IEnumerable<string> keywords, string? icon, bool isDefault, bool isEnabled, params NestedItemConfiguration<TProperty>[] nestedItems)
+	public SearchItemNode(EditableSearchSourceSource editableSearchSource, Setting<TObject, TProperty> setting, string name, string category, IEnumerable<string> keywords, string? icon, bool isDefault, bool isEnabled, params NestedItemConfiguration<TProperty>[] nestedItems)
 	{
 		_editableSearchSource = editableSearchSource;
 		_setting = setting;

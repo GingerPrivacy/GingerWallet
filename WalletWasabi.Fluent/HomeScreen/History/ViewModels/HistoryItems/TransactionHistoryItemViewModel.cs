@@ -7,11 +7,11 @@ using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.HomeScreen.History.ViewModels.HistoryItems;
 
-public partial class TransactionHistoryItemViewModel : HistoryItemViewModelBase
+public class TransactionHistoryItemViewModel : HistoryItemViewModelBase
 {
-	private IWalletModel _wallet;
+	private WalletModel _wallet;
 
-	public TransactionHistoryItemViewModel(IWalletModel wallet, TransactionModel transaction) : base(transaction)
+	public TransactionHistoryItemViewModel(WalletModel wallet, TransactionModel transaction) : base(transaction)
 	{
 		_wallet = wallet;
 

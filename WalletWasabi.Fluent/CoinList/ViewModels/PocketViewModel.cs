@@ -14,7 +14,7 @@ namespace WalletWasabi.Fluent.CoinList.ViewModels;
 
 public class PocketViewModel : CoinListItem
 {
-	public PocketViewModel(Pocket pocket, ICoinListModel availableCoins, bool canSelectCoinjoiningCoins, bool ignorePrivacyMode, bool allowSelection)
+	public PocketViewModel(Pocket pocket, CoinListModel availableCoins, bool canSelectCoinjoiningCoins, bool ignorePrivacyMode, bool allowSelection)
 	{
 		AllowSelection = allowSelection;
 

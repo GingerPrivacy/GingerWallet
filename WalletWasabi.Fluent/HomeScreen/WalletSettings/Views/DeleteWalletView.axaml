@@ -1,0 +1,36 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="WalletWasabi.Fluent.HomeScreen.WalletSettings.Views.DeleteWalletView"
+             xmlns:lang="using:WalletWasabi.Lang"
+             x:CompileBindings="True"
+             xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.HomeScreen.WalletSettings.ViewModels"
+             x:DataType="viewModels:DeleteWalletViewModel">
+  <ContentArea Title="{Binding Title}"
+               MaxWidth="550"
+               EnableNext="True" NextContent="{x:Static lang:Resources.Delete}">
+    <DockPanel>
+      <TextBox Watermark="{x:Static lang:Resources.WalletName}" Text="{Binding Input}" Width="250" Margin="0 20 0 0"
+               HorizontalAlignment="Center"
+               DockPanel.Dock="Bottom">
+        <Interaction.Behaviors>
+          <FocusOnAttachedBehavior />
+        </Interaction.Behaviors>
+      </TextBox>
+
+      <TextBlock TextWrapping="Wrap" TextAlignment="Center" DockPanel.Dock="Bottom">
+        <Run
+          Text="{x:Static lang:Resources.DeletingAWalletIsPermanentAndCannotBeUndone}" />
+        <Run Text="{Binding WalletName}" Foreground="{DynamicResource SystemAccentCustomColorLight}" FontWeight="Bold" />
+        <Run Text="{x:Static lang:Resources.InTheFieldBelow}" />
+      </TextBlock>
+
+      <Viewbox MaxHeight="100" Margin="0 0 0 30" DockPanel.Dock="Top">
+        <PathIcon Data="{StaticResource delete_regular}" Opacity="0.6" />
+      </Viewbox>
+    </DockPanel>
+  </ContentArea>
+
+</UserControl>

@@ -10,18 +10,15 @@ using WalletWasabi.Fluent.SearchBar.Models.Settings;
 using WalletWasabi.Fluent.SearchBar.ViewModels.SearchItems;
 using WalletWasabi.Fluent.SearchBar.ViewModels.Sources;
 using WalletWasabi.Lang;
-using WalletWasabi.Models;
 
 namespace WalletWasabi.Fluent.SearchBar.ViewModels;
 
 public class SettingsSearchSource : ReactiveObject, ISearchSource
 {
-	private readonly UiContext _uiContext;
-	private readonly IApplicationSettings _applicationSettings;
+	private readonly ApplicationSettings _applicationSettings;
 
 	public SettingsSearchSource(UiContext uiContext, IObservable<string> query)
 	{
-		_uiContext = uiContext;
 		_applicationSettings = uiContext.ApplicationSettings;
 
 		var filter = query.Select(SearchSource.DefaultFilter);
@@ -46,8 +43,8 @@ public class SettingsSearchSource : ReactiveObject, ISearchSource
 		yield return new ContentSearchItem(content: Setting(selector: x => x.EnableGpu), name: Resources.EnableGPU, category: Resources.Settings, keywords: new List<string>(), icon: "nav_settings_regular", isEnabled) { IsDefault = false, Priority = 6 };
 	}
 
-	private Setting<ApplicationSettings, TProperty> Setting<TProperty>(Expression<Func<ApplicationSettings, TProperty>> selector)
+	private Setting<ApplicationSettings, TProperty> Setting<TProperty>(Expression<Func<ApplicationSettings, TProperty?>> selector)
 	{
-		return new Setting<ApplicationSettings, TProperty>((ApplicationSettings)_applicationSettings, selector);
+		return new Setting<ApplicationSettings, TProperty>(_applicationSettings, selector);
 	}
 }

@@ -20,7 +20,7 @@ namespace WalletWasabi.Fluent.HomeScreen.Tiles.PrivacyRing.ViewModels;
 [NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class PrivacyRingViewModel : RoutableViewModel
 {
-	private readonly IWalletModel _wallet;
+	private readonly WalletModel _wallet;
 
 	[AutoNotify] private IPrivacyRingPreviewItem? _selectedItem;
 	[AutoNotify] private double _height;
@@ -28,7 +28,7 @@ public partial class PrivacyRingViewModel : RoutableViewModel
 	[AutoNotify] private Thickness _margin;
 	[AutoNotify] private Thickness _negativeMargin;
 
-	public PrivacyRingViewModel(IWalletModel wallet)
+	public PrivacyRingViewModel(WalletModel wallet)
 	{
 		Title = Resources.PrivacyProgress;
 		_wallet = wallet;
@@ -92,7 +92,7 @@ public partial class PrivacyRingViewModel : RoutableViewModel
 		PrivacyTile.Activate(disposables);
 	}
 
-	private void RenderRing(SourceList<PrivacyRingItemViewModel> list, IEnumerable<ICoinModel> coins)
+	private void RenderRing(SourceList<PrivacyRingItemViewModel> list, IEnumerable<CoinModel> coins)
 	{
 		if (Width == 0d)
 		{
@@ -106,7 +106,7 @@ public partial class PrivacyRingViewModel : RoutableViewModel
 		SetReferences(list);
 	}
 
-	private void CreateSegments(IExtendedList<PrivacyRingItemViewModel> list, IEnumerable<ICoinModel> coins)
+	private void CreateSegments(IExtendedList<PrivacyRingItemViewModel> list, IEnumerable<CoinModel> coins)
 	{
 		list.Clear();
 
@@ -122,7 +122,7 @@ public partial class PrivacyRingViewModel : RoutableViewModel
 		list.AddRange(result);
 	}
 
-	private IEnumerable<PrivacyRingItemViewModel> CreateSegmentsByCoin(IEnumerable<ICoinModel> coins)
+	private IEnumerable<PrivacyRingItemViewModel> CreateSegmentsByCoin(IEnumerable<CoinModel> coins)
 	{
 		var groupsByPrivacy =
 			coins.GroupBy(x => x.PrivacyLevel)
@@ -149,7 +149,7 @@ public partial class PrivacyRingViewModel : RoutableViewModel
 		}
 	}
 
-	private IEnumerable<PrivacyRingItemViewModel> CreateSegmentsByPrivacyLevel(IEnumerable<ICoinModel> coins)
+	private IEnumerable<PrivacyRingItemViewModel> CreateSegmentsByPrivacyLevel(IEnumerable<CoinModel> coins)
 	{
 		var total = coins.TotalBtcAmount();
 		var start = 0.0m;

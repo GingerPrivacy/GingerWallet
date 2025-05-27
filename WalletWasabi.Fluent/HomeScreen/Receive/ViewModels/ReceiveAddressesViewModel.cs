@@ -14,13 +14,14 @@ using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.HomeScreen.Receive.ViewModels;
 
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class ReceiveAddressesViewModel : RoutableViewModel
 {
-	private readonly IWalletModel _wallet;
+	private readonly WalletModel _wallet;
 
 	[AutoNotify] private FlatTreeDataGridSource<AddressViewModel> _source = new(Enumerable.Empty<AddressViewModel>());
 
-	public ReceiveAddressesViewModel(IWalletModel wallet)
+	public ReceiveAddressesViewModel(WalletModel wallet)
 	{
 		Title = Resources.AddressesAwaitingPayment;
 		_wallet = wallet;
@@ -57,19 +58,19 @@ public partial class ReceiveAddressesViewModel : RoutableViewModel
 		base.OnNavigatedTo(isInHistory, disposables);
 	}
 
-	private AddressViewModel CreateAddressViewModel(IAddress address)
+	private AddressViewModel CreateAddressViewModel(AddressModel address)
 	{
 		return new AddressViewModel(UiContext, OnEditAddressAsync, OnShowAddressAsync, address);
 	}
 
-	private void OnShowAddressAsync(IAddress a)
+	private void OnShowAddressAsync(AddressModel a)
 	{
 		UiContext.Navigate().To().ReceiveAddress(_wallet, a, Services.UiConfig.Autocopy);
 	}
 
-	public async Task OnEditAddressAsync(IAddress address)
+	public async Task OnEditAddressAsync(AddressModel address)
 	{
-		var result = await Navigate().To().AddressLabelEdit(_wallet, address).GetResultAsync();
+		var result = await UiContext.Navigate().To().AddressLabelEdit(_wallet, address).GetResultAsync();
 		if (result is { } labels)
 		{
 			address.SetLabels(labels);

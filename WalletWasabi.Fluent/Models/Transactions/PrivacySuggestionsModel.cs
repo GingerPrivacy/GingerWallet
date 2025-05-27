@@ -22,8 +22,7 @@ using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.Models.Transactions;
 
-[AutoInterface]
-public partial class PrivacySuggestionsModel
+public class PrivacySuggestionsModel
 {
 	private const decimal MaximumDifferenceTolerance = 0.25m;
 	private const int ConsolidationTolerance = 10;
@@ -39,7 +38,7 @@ public partial class PrivacySuggestionsModel
 	private readonly Wallet _wallet;
 	private CancellationTokenSource? _singleRunCancellationTokenSource;
 	private CancellationTokenSource? _linkedCancellationTokenSource;
-	private readonly IAmountProvider _amountProvider;
+	private readonly AmountProvider _amountProvider;
 
 	public PrivacySuggestionsModel(SendFlowModel sendFlow)
 	{

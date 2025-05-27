@@ -9,6 +9,7 @@ using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.AddWallet.ViewModels;
 
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class TermsAndConditionsViewModel : DialogViewModelBase<bool>
 {
 	[AutoNotify] private bool _isAgreed;
@@ -17,7 +18,7 @@ public partial class TermsAndConditionsViewModel : DialogViewModelBase<bool>
 	{
 		Title = Resources.TermsAndConditions;
 
-		ViewTermsCommand = ReactiveCommand.Create(() => Navigate().To().LegalDocuments());
+		ViewTermsCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().LegalDocuments());
 
 		NextCommand = ReactiveCommand.Create(
 			OnNext,
@@ -29,7 +30,7 @@ public partial class TermsAndConditionsViewModel : DialogViewModelBase<bool>
 
 	public ICommand ViewTermsCommand { get; }
 
-	public static async Task<bool> TryShowAsync(UiContext uiContext, IWalletModel walletModel)
+	public static async Task<bool> TryShowAsync(UiContext uiContext, WalletModel walletModel)
 	{
 		if (walletModel.Auth.IsLegalRequired)
 		{

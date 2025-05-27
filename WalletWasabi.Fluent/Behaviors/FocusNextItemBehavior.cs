@@ -32,9 +32,7 @@ internal class FocusNextItemBehavior : DisposingBehavior<Control>
 					{
 						foreach (var item in parentControl.GetLogicalChildren())
 						{
-							var nextToFocus = item.FindLogicalDescendantOfType<TextBox>();
-
-							if (nextToFocus.IsEnabled)
+							if (item.FindLogicalDescendantOfType<TextBox>() is { IsEnabled: true } nextToFocus)
 							{
 								nextToFocus.Focus();
 								return;

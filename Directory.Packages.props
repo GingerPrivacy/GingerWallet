@@ -31,7 +31,7 @@
     <!-- Version 4.3.0 contains a vulnerability, manually bumped to 4.3.2. -->
     <!-- Core libraries. -->
     <PackageVersion Include="WabiSabi" Version="1.0.1.2" />
-    <PackageVersion Include="NBitcoin" Version="7.0.27" />
+    <PackageVersion Include="NBitcoin" Version="7.0.42.2" />
     <!-- Backend. -->
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <!-- UI. -->

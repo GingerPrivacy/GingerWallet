@@ -4,7 +4,7 @@ using WalletWasabi.Fluent.Common.ViewModels;
 
 namespace WalletWasabi.Fluent.HelpAndSupport.ViewModels;
 
-public partial class LinkViewModel : ViewModelBase
+public class LinkViewModel : ViewModelBase
 {
 	public LinkViewModel()
 	{

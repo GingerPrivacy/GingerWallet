@@ -181,7 +181,7 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 	}
 
 	[Fact]
-	public async Task FailToRegisterOutputsCoinJoinTestAsync()
+	public async Task ErrorWhileRegisterOutputsCoinJoinTestAsync()
 	{
 		long[] amounts = new long[] { 10_000_000, 20_000_000, 30_000_000 };
 		int inputCount = amounts.Length;
@@ -320,6 +320,7 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 				config.AllowP2trInputs = true;
 				config.AllowP2trOutputs = true;
 				config.TransactionSigningTimeout = TimeSpan.FromSeconds(5 * inputCount);
+				config.BlameInputRegistrationTimeout = TimeSpan.FromSeconds(5 * inputCount);
 				return config;
 			}))).CreateClient();
 
@@ -331,16 +332,6 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 		var mockHttpClientFactory = new MockWasabiHttpClientFactory();
 		mockHttpClientFactory.OnNewHttpClientWithPersonCircuit = () => (personCircuit, httpClientWrapper);
 		mockHttpClientFactory.OnNewHttpClientWithCircuitPerRequest = () => httpClientWrapper;
-
-		using var roundStateUpdater = new RoundStateUpdater(TimeSpan.FromSeconds(1), [], apiClient, false);
-		await roundStateUpdater.StartAsync(CancellationToken.None);
-
-		var roundState = await roundStateUpdater.CreateRoundAwaiterAsync(roundState => roundState.Phase == Phase.InputRegistration, cts.Token);
-
-		var coinJoinClient = WabiSabiTestFactory.CreateTestCoinJoinClient(mockHttpClientFactory, keyManager1, roundStateUpdater);
-
-		// Run the coinjoin client task.
-		var coinJoinTask = Task.Run(async () => await coinJoinClient.StartCoinJoinAsync(async () => await Task.FromResult(coins), true, cts.Token).ConfigureAwait(false), cts.Token);
 
 		// Creates a IBackendHttpClientFactory that creates an HttpClient that says everything is okay
 		// when a signature is sent but it doesn't really send it.
@@ -360,8 +351,15 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 		mockNonSigningHttpClientFactory.OnNewHttpClientWithPersonCircuit = () => (personCircuit, nonSigningHttpClient);
 		mockNonSigningHttpClientFactory.OnNewHttpClientWithCircuitPerRequest = () => nonSigningHttpClient;
 
+		using var roundStateUpdater = new RoundStateUpdater(TimeSpan.FromSeconds(1), [], apiClient, false);
+		await roundStateUpdater.StartAsync(CancellationToken.None);
+
+		var roundState = await roundStateUpdater.CreateRoundAwaiterAsync(roundState => roundState.Phase == Phase.InputRegistration, cts.Token);
+		var coinJoinClient = WabiSabiTestFactory.CreateTestCoinJoinClient(mockHttpClientFactory, keyManager1, roundStateUpdater);
 		var badCoinJoinClient = WabiSabiTestFactory.CreateTestCoinJoinClient(mockNonSigningHttpClientFactory, keyManager2, roundStateUpdater);
 
+		// Run the coinjoin client task.
+		var coinJoinTask = Task.Run(async () => await coinJoinClient.StartCoinJoinAsync(async () => await Task.FromResult(coins), true, cts.Token).ConfigureAwait(false), cts.Token);
 		var badCoinsTask = Task.Run(async () => await badCoinJoinClient.StartRoundAsync(badCoins, roundState, cts.Token).ConfigureAwait(false), cts.Token);
 
 		try

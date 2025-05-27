@@ -2104,4 +2104,28 @@
     <data name="Plural" xml:space="preserve">
         <value>\0</value>
     </data>
+    <data name="Resync" xml:space="preserve">
+        <value>Ressincronizar</value>
+    </data>
+    <data name="DeleteWallet" xml:space="preserve">
+        <value>Excluir carteira</value>
+    </data>
+    <data name="Delete" xml:space="preserve">
+        <value>Excluir</value>
+    </data>
+    <data name="DeletingAWalletIsPermanentAndCannotBeUndone" xml:space="preserve">
+        <value>Excluir uma carteira é permanente e não pode ser desfeito. A carteira só pode ser restaurada usando suas palavras de recuperação, então certifique-se de tê-las. Para confirmar a exclusão, digite</value>
+    </data>
+    <data name="InTheFieldBelow" xml:space="preserve">
+        <value>no campo abaixo.</value>
+    </data>
+    <data name="NoKYC" xml:space="preserve">
+        <value>Nenhum envio de documento é necessário para compras abaixo de 1000 USD com este provedor.</value>
+    </data>
+    <data name="SensitiveData" xml:space="preserve">
+        <value>Dados sensíveis</value>
+    </data>
+    <data name="CouldntDeleteWalletCheckLogs" xml:space="preserve">
+        <value>Não foi possível excluir a carteira, verifique os logs para mais detalhes.</value>
+    </data>
 </root>

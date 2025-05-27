@@ -1,10 +1,12 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ReactiveUI;
+using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 
 namespace WalletWasabi.Fluent.NavBar.ViewModels;
 
+[AppLifetime]
 public partial class NavBarItemViewModel : RoutableViewModel
 {
 	private readonly INavBarItem _item;

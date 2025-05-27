@@ -63,12 +63,20 @@
                   <DockPanel>
 
                     <!-- Provider -->
-                    <TextBlock Text="{Binding Offer.ProviderName}"
-                               ToolTip.Tip="{x:Static lang:Resources.Provider}"
-                               VerticalAlignment="Center" HorizontalAlignment="Left" DockPanel.Dock="Left"
-                               FontWeight="Bold"
-                               FontSize="16"
-                               Foreground="{DynamicResource SystemAccentCustomColorLight}" />
+                    <StackPanel Spacing="5"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center" HorizontalAlignment="Left" DockPanel.Dock="Left">
+                      <TextBlock Text="{Binding Offer.ProviderName}"
+                                 ToolTip.Tip="{x:Static lang:Resources.Provider}"
+                                 FontWeight="Bold"
+                                 FontSize="16"
+                                 Foreground="{DynamicResource SystemAccentCustomColorLight}" />
+
+                      <PathIcon Data="{StaticResource shield_little_checkmark}"
+                                ToolTip.Tip="{x:Static lang:Resources.NoKYC}"
+                                Opacity="0.8"
+                                IsVisible="{Binding IsNoKycVisible}" />
+                    </StackPanel>
 
                     <!-- Accept button -->
                     <Button Theme="{StaticResource FunctionButton}"

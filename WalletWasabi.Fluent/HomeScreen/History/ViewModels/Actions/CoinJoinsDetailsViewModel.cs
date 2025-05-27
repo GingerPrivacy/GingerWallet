@@ -12,7 +12,7 @@ namespace WalletWasabi.Fluent.HomeScreen.History.ViewModels.Actions;
 [NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class CoinJoinsDetailsViewModel : RoutableViewModel
 {
-	private readonly IWalletModel _wallet;
+	private readonly WalletModel _wallet;
 	private readonly TransactionModel _transaction;
 
 	[AutoNotify] private string _date = "";
@@ -24,7 +24,7 @@ public partial class CoinJoinsDetailsViewModel : RoutableViewModel
 	[AutoNotify] private ObservableCollection<uint256>? _transactionIds;
 	[AutoNotify] private int _txCount;
 
-	public CoinJoinsDetailsViewModel(IWalletModel wallet, TransactionModel transaction)
+	public CoinJoinsDetailsViewModel(WalletModel wallet, TransactionModel transaction)
 	{
 		Title = Resources.Coinjoins;
 		_wallet = wallet;

@@ -13,7 +13,6 @@ using NBitcoin.RPC;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.Http;
-using WalletWasabi.Affiliation;
 using WalletWasabi.Backend.Middlewares;
 using WalletWasabi.BitcoinCore.Rpc;
 using WalletWasabi.Cache;
@@ -83,7 +82,7 @@ public class Startup
 		AddConfigService(services, dataDir);
 
 		services.AddSingleton<IdempotencyRequestCache>();
-		services.AddHttpClient(AffiliationConstants.LogicalHttpClientName).ConfigurePrimaryHttpMessageHandler(() => new SocketsHttpHandler
+		services.AddHttpClient("WalletWasabi").ConfigurePrimaryHttpMessageHandler(() => new SocketsHttpHandler
 		{
 			// See https://github.com/dotnet/runtime/issues/18348#issuecomment-415845645
 			PooledConnectionLifetime = TimeSpan.FromMinutes(5)
@@ -102,12 +101,6 @@ public class Startup
 			var global = serviceProvider.GetRequiredService<Global>();
 			var coordinator = global.HostedServices.Get<WabiSabiCoordinator>();
 			return coordinator.CoinJoinFeeRateStatStore;
-		});
-		services.AddSingleton(serviceProvider =>
-		{
-			var global = serviceProvider.GetRequiredService<Global>();
-			var coordinator = global.HostedServices.Get<WabiSabiCoordinator>();
-			return coordinator.AffiliationManager;
 		});
 		services.AddSingleton(serviceProvider =>
 		{

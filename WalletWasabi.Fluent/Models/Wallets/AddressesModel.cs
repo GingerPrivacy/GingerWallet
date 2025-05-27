@@ -1,21 +1,21 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using DynamicData;
 using NBitcoin;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Blockchain.TransactionProcessing;
-using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
 
-[AppLifetime]
-[AutoInterface]
-public partial class AddressesModel
+public class AddressesModel : IDisposable
 {
+	private readonly CompositeDisposable _disposable = new();
+
 	private readonly ISubject<HdPubKey> _newAddressGenerated = new Subject<HdPubKey>();
 	private readonly Wallet _wallet;
 	private readonly SourceList<HdPubKey> _source;
@@ -30,38 +30,41 @@ public partial class AddressesModel
 				h => wallet.WalletRelevantTransactionProcessed += h,
 				h => wallet.WalletRelevantTransactionProcessed -= h)
 			.Do(_ => UpdateUnusedKeys())
-			.Subscribe();
+			.Subscribe()
+			.DisposeWith(_disposable);
 
 		_newAddressGenerated
 			.Do(address => _source.Add(address))
 			.Subscribe();
 
-		_source.Connect()
-			.Transform(key => (IAddress) new Address(_wallet.KeyManager, key, Hide))
+		_source
+			.Connect()
+			.Transform(key => new AddressModel(_wallet.KeyManager, key, Hide))
 			.Bind(out var unusedAddresses)
-			.Subscribe();
+			.Subscribe()
+			.DisposeWith(_disposable);
 
 		Unused = unusedAddresses;
 	}
 
 	private IEnumerable<HdPubKey> GetUnusedKeys() => _wallet.KeyManager.GetKeys(x => x is { IsInternal: false, KeyState: KeyState.Clean, Labels.Count: > 0 });
 
-	public IAddress NextReceiveAddress(IEnumerable<string> destinationLabels, ScriptPubKeyType type)
+	public AddressModel NextReceiveAddress(IEnumerable<string> destinationLabels, ScriptPubKeyType type)
 	{
 		var pubKey = _wallet.GetNextReceiveAddress(destinationLabels, type);
-		var nextReceiveAddress = new Address(_wallet.KeyManager, pubKey, Hide);
+		var nextReceiveAddress = new AddressModel(_wallet.KeyManager, pubKey, Hide);
 		_newAddressGenerated.OnNext(pubKey);
 
 		return nextReceiveAddress;
 	}
 
-	public ReadOnlyObservableCollection<IAddress> Unused { get; }
+	public ReadOnlyObservableCollection<AddressModel> Unused { get; }
 
-	public void Hide(Address address)
+	public void Hide(AddressModel addressModel)
 	{
-		_wallet.KeyManager.SetKeyState(KeyState.Locked, address.HdPubKey);
+		_wallet.KeyManager.SetKeyState(KeyState.Locked, addressModel.HdPubKey);
 		_wallet.KeyManager.ToFile();
-		_source.Remove(address.HdPubKey);
+		_source.Remove(addressModel.HdPubKey);
 	}
 
 	private void UpdateUnusedKeys()
@@ -74,5 +77,11 @@ public partial class AddressesModel
 		{
 			_source.Remove(item);
 		}
+	}
+
+	public void Dispose()
+	{
+		_disposable.Dispose();
+		_source.Dispose();
 	}
 }

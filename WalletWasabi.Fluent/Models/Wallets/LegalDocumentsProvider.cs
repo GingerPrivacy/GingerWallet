@@ -4,8 +4,7 @@ using WalletWasabi.Legal;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
 
-[AutoInterface]
-public partial class LegalDocumentsProvider
+public class LegalDocumentsProvider
 {
 	public Task<LegalDocuments> WaitAndGetLatestDocumentAsync()
 	{

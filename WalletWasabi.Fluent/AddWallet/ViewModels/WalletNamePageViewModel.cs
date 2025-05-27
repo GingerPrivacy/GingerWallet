@@ -12,6 +12,7 @@ using WalletWasabi.Models;
 
 namespace WalletWasabi.Fluent.AddWallet.ViewModels;
 
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class WalletNamePageViewModel : RoutableViewModel
 {
 	private readonly WalletCreationOptions _options;
@@ -49,15 +50,15 @@ public partial class WalletNamePageViewModel : RoutableViewModel
 		switch (options)
 		{
 			case WalletCreationOptions.AddNewWallet add:
-				Navigate().To().RecoveryWords(add);
+				UiContext.Navigate().To().RecoveryWords(add);
 				break;
 
 			case WalletCreationOptions.ConnectToHardwareWallet chw:
-				Navigate().To().ConnectHardwareWallet(chw);
+				UiContext.Navigate().To().ConnectHardwareWallet(chw);
 				break;
 
 			case WalletCreationOptions.RecoverWallet rec:
-				Navigate().To().RecoverWallet(rec);
+				UiContext.Navigate().To().RecoverWallet(rec);
 				break;
 
 			case WalletCreationOptions.ImportWallet imp:
@@ -74,7 +75,7 @@ public partial class WalletNamePageViewModel : RoutableViewModel
 		try
 		{
 			var walletSettings = await UiContext.WalletRepository.NewWalletAsync(options);
-			Navigate().To().AddedWalletPage(walletSettings, options);
+			UiContext.Navigate().To().AddedWalletPage(walletSettings, options);
 		}
 		catch (Exception ex)
 		{
@@ -98,7 +99,7 @@ public partial class WalletNamePageViewModel : RoutableViewModel
 
 		if (isInHistory && !UiContext.WalletRepository.HasWallet)
 		{
-			Navigate().Back();
+			UiContext.Navigate(CurrentTarget).Back();
 		}
 		else if (!UiContext.WalletRepository.HasWallet && NextCommand is { } cmd && cmd.CanExecute(default))
 		{

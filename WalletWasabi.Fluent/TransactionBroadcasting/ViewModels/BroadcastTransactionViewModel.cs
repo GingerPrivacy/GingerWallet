@@ -8,6 +8,7 @@ using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.TransactionBroadcasting.ViewModels;
 
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class BroadcastTransactionViewModel : RoutableViewModel
 {
 	public BroadcastTransactionViewModel(SmartTransaction transaction)
@@ -48,7 +49,7 @@ public partial class BroadcastTransactionViewModel : RoutableViewModel
 		try
 		{
 			await UiContext.TransactionBroadcaster.SendAsync(transaction);
-			Navigate().To().Success();
+			UiContext.Navigate().To().Success();
 		}
 		catch (Exception ex)
 		{

@@ -2014,7 +2014,7 @@
     <value>Coller depuis le presse-papiers</value>
   </data>
   <data name="ImportTransaction" xml:space="preserve">
-    <value>Importar transacción</value>
+    <value>Importer la transaction</value>
   </data>
   <data name="Quit" xml:space="preserve">
     <value>Quitter</value>
@@ -2098,10 +2098,34 @@
   <data name="NoProgressYet" xml:space="preserve">
     <value>Pas encore de progrès</value>
   </data>
-    <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
+  <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
     <value>Commencez le coinjoining pour gagner en confidentialité</value>
   </data>
   <data name="Plural" xml:space="preserve">
     <value>\0</value>
+  </data>
+    <data name="Resync" xml:space="preserve">
+    <value>Resynchroniser</value>
+  </data>
+    <data name="DeleteWallet" xml:space="preserve">
+    <value>Supprimer le portefeuille</value>
+  </data>
+    <data name="Delete" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+    <data name="DeletingAWalletIsPermanentAndCannotBeUndone" xml:space="preserve">
+    <value>La suppression d’un portefeuille est permanente et ne peut pas être annulée. Le portefeuille ne peut être restauré qu’à l’aide de vos mots de récupération, alors assurez-vous de les avoir. Pour confirmer la suppression, veuillez saisir</value>
+  </data>
+  <data name="InTheFieldBelow" xml:space="preserve">
+    <value>dans le champ ci-dessous.</value>
+  </data>
+  <data name="NoKYC" xml:space="preserve">
+    <value>Aucun téléchargement de document requis pour les achats inférieurs à 1000 USD avec ce fournisseur.</value>
+  </data>
+  <data name="SensitiveData" xml:space="preserve">
+    <value>Données sensibles</value>
+  </data>
+  <data name="CouldntDeleteWalletCheckLogs" xml:space="preserve">
+    <value>Impossible de supprimer le portefeuille, consultez les journaux pour plus de détails.</value>
   </data>
 </root>

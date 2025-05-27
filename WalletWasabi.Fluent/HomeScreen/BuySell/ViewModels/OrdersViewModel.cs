@@ -16,11 +16,11 @@ namespace WalletWasabi.Fluent.HomeScreen.BuySell.ViewModels;
 [NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class OrdersViewModel : RoutableViewModel
 {
-	private readonly IBuySellModel _buySellModel;
+	private readonly BuySellModel _buySellModel;
 	private readonly OrderType _type;
 	[AutoNotify] private FlatTreeDataGridSource<OrderViewModel> _source = new([]);
 
-	public OrdersViewModel(IBuySellModel buySellModel, OrderType type)
+	public OrdersViewModel(BuySellModel buySellModel, OrderType type)
 	{
 		_buySellModel = buySellModel;
 		_type = type;

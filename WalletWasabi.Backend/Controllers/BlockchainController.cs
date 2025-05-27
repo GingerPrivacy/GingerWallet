@@ -414,7 +414,7 @@ public class BlockchainController : ControllerBase
 		// Updating the status of WabiSabi coinjoin.
 		if (Global.WabiSabiCoordinator is { } wabiSabiCoordinator)
 		{
-			var ww2CjDownAfter = TimeSpan.FromHours(3);
+			var ww2CjDownAfter = TimeSpan.FromHours(24);
 			var wabiSabiValidInterval = wabiSabiCoordinator.Config.StandardInputRegistrationTimeout * 2;
 			if (wabiSabiValidInterval < ww2CjDownAfter)
 			{

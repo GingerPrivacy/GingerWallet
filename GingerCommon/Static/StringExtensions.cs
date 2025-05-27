@@ -37,6 +37,14 @@ public static class StringExtensions
 		return me;
 	}
 
+	/// <summary>
+	/// New lines should end with '\n'.
+	/// </summary>
+	public static string StandardLineEndings(this string me)
+	{
+		return me.ReplaceLineEndings("\n");
+	}
+
 	// This method removes the path and file extension.
 	//
 	// Given Ginger releases are currently built using Windows, the generated assemblies contain

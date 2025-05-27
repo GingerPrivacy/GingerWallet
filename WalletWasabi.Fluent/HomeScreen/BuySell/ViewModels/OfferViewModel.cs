@@ -20,6 +20,7 @@ public abstract class OfferViewModel : ViewModelBase
 	public string Amount { get; protected set; } = "";
 	public string Fee { get; protected set; } = "";
 	public string FeeToolTip { get; protected set; } = "";
+	public bool IsNoKycVisible { get; protected set; }
 	public string MethodName => Offer.MethodName;
 	public ComposedKey Key => new(Offer);
 }

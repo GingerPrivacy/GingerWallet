@@ -49,7 +49,7 @@ public partial class LegalDocumentsViewModel : RoutableViewModel
 			{
 				Logger.LogError(ex);
 				await ShowErrorAsync(Title, message: Resources.FailedToGetLegalDocuments, caption: "");
-				Navigate().Back();
+				UiContext.Navigate(CurrentTarget).Back();
 			}
 			finally
 			{

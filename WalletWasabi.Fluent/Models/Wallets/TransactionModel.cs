@@ -5,7 +5,7 @@ using WalletWasabi.Blockchain.Analysis.Clustering;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
 
-public partial class TransactionModel : ReactiveObject
+public class TransactionModel : ReactiveObject
 {
 	private readonly List<TransactionModel> _children = new();
 

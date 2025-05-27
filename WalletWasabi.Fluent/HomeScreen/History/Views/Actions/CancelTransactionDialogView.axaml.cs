@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace WalletWasabi.Fluent.HomeScreen.History.Views.Actions;
 
-public partial class CancelTransactionDialogView : UserControl
+public class CancelTransactionDialogView : UserControl
 {
 	public CancelTransactionDialogView()
 	{

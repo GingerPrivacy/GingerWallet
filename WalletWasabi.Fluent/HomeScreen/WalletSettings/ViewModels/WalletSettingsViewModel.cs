@@ -3,11 +3,13 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ReactiveUI;
+using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.ViewModels;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.HomeScreen.WalletSettings.ViewModels;
 
@@ -22,12 +24,12 @@ namespace WalletWasabi.Fluent.HomeScreen.WalletSettings.ViewModels;
 	Searchable = false)]
 public partial class WalletSettingsViewModel : RoutableViewModel
 {
-	private readonly IWalletModel _wallet;
+	private readonly WalletModel _wallet;
 	[AutoNotify] private bool _preferPsbtWorkflow;
 	[AutoNotify] private string _walletName;
 	[AutoNotify] private int _selectedTab;
 
-	public WalletSettingsViewModel(IWalletModel walletModel)
+	public WalletSettingsViewModel(WalletModel walletModel)
 	{
 		_wallet = walletModel;
 		_walletName = walletModel.Name;
@@ -36,13 +38,13 @@ public partial class WalletSettingsViewModel : RoutableViewModel
 		IsHardwareWallet = walletModel.IsHardwareWallet;
 		IsWatchOnly = walletModel.IsWatchOnlyWallet;
 
-		WalletCoinJoinSettings = new WalletCoinJoinSettingsViewModel(UiContext, walletModel);
+		WalletCoinJoinSettings = new WalletCoinJoinSettingsViewModel(walletModel);
 
 		SetupCancel(enableCancel: false, enableCancelOnEscape: true, enableCancelOnPressed: true);
 
 		NextCommand = CancelCommand;
 
-		VerifyRecoveryWordsCommand = ReactiveCommand.Create(() => Navigate().To().WalletVerifyRecoveryWords(walletModel));
+		VerifyRecoveryWordsCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().WalletVerifyRecoveryWords(walletModel));
 
 		this.WhenAnyValue(x => x.PreferPsbtWorkflow)
 			.Skip(1)
@@ -65,6 +67,22 @@ public partial class WalletSettingsViewModel : RoutableViewModel
 				AppLifetimeHelper.Shutdown(withShutdownPrevention: true, restart: true);
 			}
 		});
+
+		DeleteWalletCommand = ReactiveCommand.CreateFromTask(async () =>
+		{
+			var confirmed = await UiContext.Navigate().To().DeleteWallet(walletModel.Name).GetResultAsync();
+			if (confirmed)
+			{
+				var success = UiContext.WalletRepository.RemoveWallet(walletModel);
+				if (!success)
+				{
+					await ShowErrorAsync(Resources.DeleteWallet, Resources.CouldntDeleteWalletCheckLogs, "");
+					return;
+				}
+
+				UiContext.Navigate().To().Success();
+			}
+		});
 	}
 
 	public ICommand RenameCommand { get; set; }
@@ -79,9 +97,11 @@ public partial class WalletSettingsViewModel : RoutableViewModel
 
 	public ICommand ResyncWalletCommand { get; }
 
+	public ICommand DeleteWalletCommand { get; }
+
 	private async Task OnRenameWalletAsync()
 	{
-		await Navigate().To().WalletRename(_wallet).GetResultAsync();
+		await UiContext.Navigate().To().WalletRename(_wallet).GetResultAsync();
 		UiContext.WalletRepository.StoreLastSelectedWallet(_wallet);
 	}
 

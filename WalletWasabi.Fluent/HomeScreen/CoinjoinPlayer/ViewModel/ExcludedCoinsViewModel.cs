@@ -18,11 +18,11 @@ namespace WalletWasabi.Fluent.HomeScreen.CoinjoinPlayer.ViewModel;
 	IsLocalized = true)]
 public partial class ExcludedCoinsViewModel : DialogViewModelBase<Unit>
 {
-	private readonly IWalletModel _wallet;
+	private readonly WalletModel _wallet;
 
 	[AutoNotify] private bool _hasSelection;
 
-	public ExcludedCoinsViewModel(IWalletModel wallet)
+	public ExcludedCoinsViewModel(WalletModel wallet)
 	{
 		_wallet = wallet;
 		var initialCoins = wallet.Coins.List.Items.Where(x => x.IsExcludedFromCoinJoin);

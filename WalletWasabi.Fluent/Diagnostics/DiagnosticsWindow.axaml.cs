@@ -6,7 +6,7 @@ using Avalonia.Styling;
 
 namespace WalletWasabi.Fluent.Diagnostics;
 
-public partial class DiagnosticsWindow : Window
+public class DiagnosticsWindow : Window
 {
 	private readonly Control? _control;
 	private Style? _pointerOverStyle;

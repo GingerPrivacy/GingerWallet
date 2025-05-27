@@ -26,11 +26,10 @@ public partial class AppearanceSettingsTabViewModel : RoutableViewModel
 	[AutoNotify] private SeparatorModel _selectedGroupSeparator;
 	[AutoNotify] private BtcFractionGroupModel _selectedBtcFractionGroup;
 
-	public AppearanceSettingsTabViewModel(UiContext uiContext, IApplicationSettings settings)
+	public AppearanceSettingsTabViewModel(ApplicationSettings settings)
 	{
-		UiContext = uiContext;
 		Settings = settings;
-		ExchangeCurrencies = uiContext.AmountProvider.SupportedCurrenciesObservable;
+		ExchangeCurrencies = UiContext.AmountProvider.SupportedCurrenciesObservable;
 		ExchangeCurrencySelectionEnabled = ExchangeCurrencies.Select(x => x.Any());
 
 		_selectedDecimalSeparator = DecimalsSeparators.First(x => x.Char == Settings.SelectedDecimalSeparator);
@@ -56,7 +55,7 @@ public partial class AppearanceSettingsTabViewModel : RoutableViewModel
 
 	public bool IsReadOnly => Settings.IsOverridden;
 
-	public IApplicationSettings Settings { get; }
+	public ApplicationSettings Settings { get; }
 
 	public IEnumerable<FeeDisplayUnit> FeeDisplayUnits =>
 		Enum.GetValues(typeof(FeeDisplayUnit)).Cast<FeeDisplayUnit>();

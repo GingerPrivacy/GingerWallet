@@ -84,13 +84,6 @@ public class SpectrumDrawHandler : IDrawHandler
 		}
 	}
 
-	public void Render(DrawingContext context)
-	{
-		var custom = new SpectrumDrawOperation(_control.Bounds, Draw);
-
-		context.Custom(custom);
-	}
-
 	public void Draw(ISkiaSharpApiLease skia, Rect bounds)
 	{
 		for (int i = 0; i < NumBins; i++)

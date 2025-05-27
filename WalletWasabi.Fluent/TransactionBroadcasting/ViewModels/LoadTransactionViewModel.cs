@@ -12,6 +12,7 @@ using WalletWasabi.Logging;
 
 namespace WalletWasabi.Fluent.TransactionBroadcasting.ViewModels;
 
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class LoadTransactionViewModel : DialogViewModelBase<SmartTransaction?>
 {
 	[AutoNotify] private SmartTransaction? _finalTransaction;

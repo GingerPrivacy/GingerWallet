@@ -3,7 +3,8 @@ using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
 
 namespace WalletWasabi.Fluent.Common.ViewModels;
 
-public class ShowErrorDialogViewModel : DialogViewModelBase<bool>
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
+public partial class ShowErrorDialogViewModel : DialogViewModelBase<bool>
 {
 	public ShowErrorDialogViewModel(string message, string title, string caption)
 	{

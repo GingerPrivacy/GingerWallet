@@ -13,6 +13,7 @@ using WalletWasabi.BitcoinCore;
 using WalletWasabi.Helpers;
 using WalletWasabi.Logging;
 using WalletWasabi.Tests.Helpers;
+using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.Tor.Http;
 using Constants = WalletWasabi.Helpers.Constants;
 
@@ -24,14 +25,14 @@ public class RegTestFixture : IDisposable
 
 	public RegTestFixture()
 	{
-		RuntimeParams.SetDataDir(Path.Combine(Common.DataDir, "RegTests", "Backend"));
+		RuntimeParams.SetDataDir(Path.Combine(TestDirectory.DataDir, "RegTests", "Backend"));
 		RuntimeParams.LoadAsync().GetAwaiter().GetResult();
 		BackendRegTestNode = TestNodeBuilder.CreateAsync(callerFilePath: "RegTests", callerMemberName: "BitcoinCoreData").GetAwaiter().GetResult();
 
 		var walletName = "wallet";
 		BackendRegTestNode.RpcClient.CreateWalletAsync(walletName).GetAwaiter().GetResult();
 
-		var testnetBackendDir = Path.Combine(Common.DataDir, "RegTests", "Backend");
+		var testnetBackendDir = Path.Combine(TestDirectory.DataDir, "RegTests", "Backend");
 		IoHelpers.TryDeleteDirectoryAsync(testnetBackendDir).GetAwaiter().GetResult();
 		Thread.Sleep(100);
 		Directory.CreateDirectory(testnetBackendDir);

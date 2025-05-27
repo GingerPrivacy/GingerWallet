@@ -19,7 +19,7 @@ using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.CoinList.ViewModels;
 
-public partial class CoinListViewModel : ViewModelBase, IDisposable
+public class CoinListViewModel : ViewModelBase, IDisposable
 {
 	private readonly CompositeDisposable _disposables = new();
 	private readonly ReadOnlyObservableCollection<CoinListItem> _itemsCollection;
@@ -28,7 +28,7 @@ public partial class CoinListViewModel : ViewModelBase, IDisposable
 	private readonly bool _allowCoinjoiningCoinSelection;
 
 	[System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Uses DisposeWith()")]
-	public CoinListViewModel(ICoinListModel availableCoins, IList<ICoinModel> initialCoinSelection, bool allowCoinjoiningCoinSelection, bool ignorePrivacyMode, bool allowSelection = true)
+	public CoinListViewModel(CoinListModel availableCoins, IList<CoinModel> initialCoinSelection, bool allowCoinjoiningCoinSelection, bool ignorePrivacyMode, bool allowSelection = true)
 	{
 		_ignorePrivacyMode = ignorePrivacyMode;
 		_allowSelection = allowSelection;
@@ -83,7 +83,7 @@ public partial class CoinListViewModel : ViewModelBase, IDisposable
 			.Do(
 				pockets =>
 				{
-					IList<ICoinModel> oldSelection = Selection.ToArray();
+					IList<CoinModel> oldSelection = Selection.ToArray();
 					var oldExpandedItemsLabel = _itemsCollection.Where(x => x.IsExpanded).Select(x => x.Labels).ToArray();
 					Rebuild(viewModels, pockets, availableCoins);
 					UpdateSelection(coinItemsCollection, oldSelection);
@@ -116,7 +116,7 @@ public partial class CoinListViewModel : ViewModelBase, IDisposable
 		SetInitialSelection(initialCoinSelection);
 	}
 
-	private void SetInitialSelection(IEnumerable<ICoinModel> initialSelection)
+	private void SetInitialSelection(IEnumerable<CoinModel> initialSelection)
 	{
 		var initialSmartCoins = initialSelection.GetSmartCoins().ToList();
 		var coinsToSelect = CoinItems.Where(x => initialSmartCoins.Contains(x.Coin.GetSmartCoin()));
@@ -131,7 +131,7 @@ public partial class CoinListViewModel : ViewModelBase, IDisposable
 
 	public ReactiveCommand<Unit, Unit> ExpandAllCommand { get; set; }
 
-	public ReadOnlyObservableCollection<ICoinModel> Selection { get; }
+	public ReadOnlyObservableCollection<CoinModel> Selection { get; }
 
 	public HierarchicalTreeDataGridSource<CoinListItem> TreeDataGridSource { get; }
 
@@ -142,7 +142,7 @@ public partial class CoinListViewModel : ViewModelBase, IDisposable
 		_disposables.Dispose();
 	}
 
-	private static void UpdateSelection(IEnumerable<CoinViewModel> coinItems, IList<ICoinModel> selectedCoins)
+	private static void UpdateSelection(IEnumerable<CoinViewModel> coinItems, IList<CoinModel> selectedCoins)
 	{
 		var selectedSmartCoins = selectedCoins.GetSmartCoins().ToList();
 
@@ -154,7 +154,7 @@ public partial class CoinListViewModel : ViewModelBase, IDisposable
 		}
 	}
 
-	private void Rebuild(ISourceList<CoinListItem> source, IEnumerable<Pocket> pockets, ICoinListModel availableCoins)
+	private void Rebuild(ISourceList<CoinListItem> source, IEnumerable<Pocket> pockets, CoinListModel availableCoins)
 	{
 		var newItems =
 			pockets.Select(pocket =>

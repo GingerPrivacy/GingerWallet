@@ -13,6 +13,7 @@ using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.AddWallet.ViewModels.HardwareWallet;
 
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class DetectedHardwareWalletViewModel : RoutableViewModel
 {
 	public DetectedHardwareWalletViewModel(WalletCreationOptions.ConnectToHardwareWallet options)
@@ -57,19 +58,19 @@ public partial class DetectedHardwareWalletViewModel : RoutableViewModel
 		{
 			CancelCts ??= new CancellationTokenSource();
 			var walletSettings = await UiContext.WalletRepository.NewWalletAsync(options, CancelCts.Token);
-			Navigate().To().AddedWalletPage(walletSettings, options);
+			UiContext.Navigate().To().AddedWalletPage(walletSettings, options);
 		}
 		catch (Exception ex)
 		{
 			Logger.LogError(ex);
 			await ShowErrorAsync(Title, ex.ToUserFriendlyString(), Resources.ErrorAddingWallet);
-			Navigate().Back();
+			UiContext.Navigate(CurrentTarget).Back();
 		}
 	}
 
 	private void OnNo()
 	{
-		Navigate().Back();
+		UiContext.Navigate(CurrentTarget).Back();
 	}
 
 	protected override void OnNavigatedTo(bool isInHistory, CompositeDisposable disposables)

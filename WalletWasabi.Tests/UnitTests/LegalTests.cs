@@ -1,9 +1,8 @@
 using System.IO;
 using System.Threading.Tasks;
-using WalletWasabi.Helpers;
 using WalletWasabi.Legal;
 using WalletWasabi.Services;
-using WalletWasabi.Tests.Helpers;
+using WalletWasabi.Tests.TestCommon;
 using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests;
@@ -13,13 +12,7 @@ public class LegalTests
 	[Fact]
 	public async Task LeavesTrashAloneAsync()
 	{
-		var legalDir = Common.GetWorkDir();
-		if (Directory.Exists(legalDir))
-		{
-			await IoHelpers.TryDeleteDirectoryAsync(legalDir);
-		}
-
-		Directory.CreateDirectory(legalDir);
+		var legalDir = TestDirectory.Get();
 
 		var res = await LegalDocuments.LoadAgreedAsync(legalDir);
 		Assert.Null(res);
@@ -29,7 +22,8 @@ public class LegalTests
 		await trash1.DisposeAsync();
 		res = await LegalDocuments.LoadAgreedAsync(legalDir);
 		Assert.Null(res);
-		Assert.Single(Directory.GetFiles(legalDir));
+		// 1 legal file + lock.txt from TestDirectory.Get()
+		Assert.Equal(2, Directory.GetFiles(legalDir).Length);
 		Assert.Empty(Directory.GetDirectories(legalDir));
 
 		// Leaves 3 trash alone.
@@ -39,20 +33,15 @@ public class LegalTests
 		await trash3.DisposeAsync();
 		res = await LegalDocuments.LoadAgreedAsync(legalDir);
 		Assert.Null(res);
-		Assert.Equal(3, Directory.GetFiles(legalDir).Length);
+		// 3 legal files + lock.txt from TestDirectory.Get()
+		Assert.Equal(4, Directory.GetFiles(legalDir).Length);
 		Assert.Empty(Directory.GetDirectories(legalDir));
 	}
 
 	[Fact]
 	public async Task ResolvesConflictsAsync()
 	{
-		var legalDir = Common.GetWorkDir();
-		if (Directory.Exists(legalDir))
-		{
-			await IoHelpers.TryDeleteDirectoryAsync(legalDir);
-		}
-
-		Directory.CreateDirectory(legalDir);
+		var legalDir = TestDirectory.Get();
 
 		var res = await LegalDocuments.LoadAgreedAsync(legalDir);
 		Assert.Null(res);
@@ -64,7 +53,8 @@ public class LegalTests
 		await candidate2.DisposeAsync();
 		res = await LegalDocuments.LoadAgreedAsync(legalDir);
 		Assert.Null(res);
-		Assert.Empty(Directory.GetFiles(legalDir));
+		// only lock.txt from TestDirectory.Get()
+		Assert.Single(Directory.GetFiles(legalDir));
 		Assert.Empty(Directory.GetDirectories(legalDir));
 
 		// Only the candidates are deleted.
@@ -76,20 +66,14 @@ public class LegalTests
 		await candidate2.DisposeAsync();
 		res = await LegalDocuments.LoadAgreedAsync(legalDir);
 		Assert.Null(res);
-		Assert.Single(Directory.GetFiles(legalDir));
+		Assert.Equal(2, Directory.GetFiles(legalDir).Length);
 		Assert.Empty(Directory.GetDirectories(legalDir));
 	}
 
 	[Fact]
 	public async Task CanLoadLegalDocsAsync()
 	{
-		var legalDir = Common.GetWorkDir();
-		if (Directory.Exists(legalDir))
-		{
-			await IoHelpers.TryDeleteDirectoryAsync(legalDir);
-		}
-
-		Directory.CreateDirectory(legalDir);
+		var legalDir = TestDirectory.Get();
 
 		var res = await LegalDocuments.LoadAgreedAsync(legalDir);
 		Assert.Null(res);
@@ -101,7 +85,8 @@ public class LegalTests
 		await candidate.DisposeAsync();
 		res = await LegalDocuments.LoadAgreedAsync(legalDir);
 		Assert.NotNull(res);
-		Assert.Single(Directory.GetFiles(legalDir));
+		// the legal docs + the lock.txt from TestDirectory.Get()
+		Assert.Equal(2, Directory.GetFiles(legalDir).Length);
 		Assert.Empty(Directory.GetDirectories(legalDir));
 		Assert.Equal(version, res?.Version);
 	}
@@ -111,7 +96,7 @@ public class LegalTests
 	{
 		Version version = new(1, 1);
 		LegalDocuments legal = new(version, "Don't trust, verify!");
-		string legalFolderPath = Path.Combine(Common.GetWorkDir(), LegalChecker.LegalFolderName);
+		string legalFolderPath = Path.Combine(TestDirectory.Get(), LegalChecker.LegalFolderName);
 		await legal.ToFileAsync(legalFolderPath);
 
 		string expectedFilePath = $"{Path.Combine(legalFolderPath, version.ToString())}.txt";

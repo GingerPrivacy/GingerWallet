@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using NBitcoin;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -16,6 +16,7 @@ using WalletWasabi.Blockchain.Transactions;
 using WalletWasabi.Helpers;
 using WalletWasabi.Models;
 using WalletWasabi.Stores;
+using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.Tests.XunitConfiguration;
 using WalletWasabi.Wallets;
 using WalletWasabi.WebClients.Wasabi;
@@ -57,7 +58,7 @@ public class RegTestSetup : IAsyncDisposable
 		[CallerFilePath] string callerFilePath = "",
 		[CallerMemberName] string callerMemberName = "")
 	{
-		string dir = Helpers.Common.GetWorkDir(callerFilePath, callerMemberName);
+		string dir = TestDirectory.Get(callerFilePath, callerMemberName);
 		RegTestSetup setup = new(regTestFixture, dir);
 		await setup.AssertFiltersInitializedAsync().ConfigureAwait(false); // Make sure filters are created on the server side.
 

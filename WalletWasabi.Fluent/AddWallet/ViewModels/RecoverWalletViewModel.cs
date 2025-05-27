@@ -19,6 +19,7 @@ using WalletWasabi.Models;
 
 namespace WalletWasabi.Fluent.AddWallet.ViewModels;
 
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class RecoverWalletViewModel : RoutableViewModel
 {
 	[AutoNotify] private IEnumerable<string>? _suggestions;
@@ -62,7 +63,7 @@ public partial class RecoverWalletViewModel : RoutableViewModel
 		var (walletName, _, _, _) = options;
 		ArgumentException.ThrowIfNullOrEmpty(walletName);
 
-		var password = await Navigate().To().CreatePasswordDialog(Lang.Resources.EnterPassphrase, Lang.Resources.RecoverWalletViewModelPassphraseMessage).GetResultAsync();
+		var password = await UiContext.Navigate().To().CreatePasswordDialog(Lang.Resources.EnterPassphrase, Lang.Resources.RecoverWalletViewModelPassphraseMessage).GetResultAsync();
 		if (password is not { } || CurrentMnemonics is not { IsValidChecksum: true } currentMnemonics)
 		{
 			return;
@@ -74,7 +75,7 @@ public partial class RecoverWalletViewModel : RoutableViewModel
 		{
 			options = options with { Password = password, Mnemonic = currentMnemonics, MinGapLimit = MinGapLimit };
 			var wallet = await UiContext.WalletRepository.NewWalletAsync(options);
-			Navigate().To().AddedWalletPage(wallet, options);
+			UiContext.Navigate().To().AddedWalletPage(wallet, options);
 		}
 		catch (Exception ex)
 		{
@@ -87,7 +88,7 @@ public partial class RecoverWalletViewModel : RoutableViewModel
 
 	private async Task OnAdvancedRecoveryOptionsDialogAsync()
 	{
-		var result = await Navigate().To().AdvancedRecoveryOptions(MinGapLimit).GetResultAsync();
+		var result = await UiContext.Navigate().To().AdvancedRecoveryOptions(MinGapLimit).GetResultAsync();
 		if (result is { } minGapLimit)
 		{
 			MinGapLimit = minGapLimit;

@@ -18,9 +18,9 @@ public record WalletFactory(
 	BitcoinStore BitcoinStore,
 	WasabiSynchronizer WasabiSynchronizer,
 	ServiceConfiguration ServiceConfiguration,
-	HybridFeeProvider FeeProvider,
+	IWalletFeeRateProvider FeeProvider,
 	BlockDownloadService BlockDownloadService,
-    UnconfirmedTransactionChainProvider UnconfirmedTransactionChainProvider)
+	UnconfirmedTransactionChainProvider UnconfirmedTransactionChainProvider)
 {
 	public Wallet Create(KeyManager keyManager)
 	{

@@ -61,7 +61,7 @@ public class ApplicationStateManager : IMainWindowService
 		}
 
 		UiContext = uiContext;
-		ApplicationViewModel = new ApplicationViewModel(UiContext, this);
+		ApplicationViewModel = new ApplicationViewModel(this);
 		State initTransitionState = startInBg ? State.Closed : State.Open;
 
 		Observable

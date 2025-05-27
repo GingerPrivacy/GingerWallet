@@ -2,6 +2,7 @@ using System.Globalization;
 using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
+using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.Converters;
 
@@ -40,7 +41,7 @@ public class DiffToBrushConverter : AvaloniaObject, IValueConverter
 
 		if (value is double || value is int || value is float || value is decimal)
 		{
-			var number = System.Convert.ToDouble(value);
+			var number = System.Convert.ToDouble(value, Resources.Culture);
 			if (number > 0)
 			{
 				return PositiveBrush;

@@ -2104,4 +2104,28 @@
     <data name="Plural" xml:space="preserve">
         <value>\0</value>
     </data>
+    <data name="Resync" xml:space="preserve">
+        <value>Erneut synchronisieren</value>
+    </data>
+    <data name="DeleteWallet" xml:space="preserve">
+        <value>Wallet löschen</value>
+    </data>
+    <data name="Delete" xml:space="preserve">
+        <value>Löschen</value>
+    </data>
+    <data name="DeletingAWalletIsPermanentAndCannotBeUndone" xml:space="preserve">
+        <value>Das Löschen einer Wallet ist dauerhaft und kann nicht rückgängig gemacht werden. Die Wallet kann nur mit deinen Wiederherstellungswörtern wiederhergestellt werden, also stelle sicher, dass du sie hast. Um das Löschen zu bestätigen, gib bitte ein</value>
+    </data>
+    <data name="InTheFieldBelow" xml:space="preserve">
+        <value>in das Feld unten.</value>
+    </data>
+    <data name="NoKYC" xml:space="preserve">
+        <value>Kein Dokumenten-Upload erforderlich für Käufe unter 1000 USD bei diesem Anbieter.</value>
+    </data>
+    <data name="SensitiveData" xml:space="preserve">
+        <value>Sensible Daten</value>
+    </data>
+    <data name="CouldntDeleteWalletCheckLogs" xml:space="preserve">
+        <value>Konnte die Wallet nicht löschen, siehe Protokolle für weitere Details.</value>
+    </data>
 </root>

@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -7,7 +8,6 @@ using WalletWasabi.Fluent.Common.ViewModels;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.HomeScreen.WalletSettings.ViewModels;
 using WalletWasabi.Fluent.Infrastructure;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.State;
 using WalletWasabi.Lang;
@@ -50,7 +50,7 @@ public partial class CoinjoinPlayerViewModel : ViewModelBase
 	private static string MinInputCountTooLowMessage = Resources.MinInputCountTooLowMessage;
 	private static string ServerDidNotGiveFeeExemptionMessage = Resources.ServerDidNotGiveFeeExemptionMessage;
 
-	private readonly IWalletModel _wallet;
+	private readonly WalletModel _wallet;
 	private readonly StateMachine<State, Trigger> _stateMachine;
 	private readonly DispatcherTimer _countdownTimer;
 	private readonly DispatcherTimer _autoCoinJoinStartTimer;
@@ -72,9 +72,8 @@ public partial class CoinjoinPlayerViewModel : ViewModelBase
 	private DateTimeOffset _countDownStartTime;
 	private DateTimeOffset _countDownEndTime;
 
-	public CoinjoinPlayerViewModel(UiContext uiContext, IWalletModel wallet, WalletSettingsViewModel settings)
+	public CoinjoinPlayerViewModel(WalletModel wallet, WalletSettingsViewModel settings)
 	{
-		UiContext = uiContext;
 		_wallet = wallet;
 
 		wallet.Coinjoin.StatusUpdated
@@ -325,8 +324,8 @@ public partial class CoinjoinPlayerViewModel : ViewModelBase
 		}
 
 		var format = @"hh\:mm\:ss";
-		LeftText = $"{GetElapsedTime().ToString(format)}";
-		RightText = $"-{GetRemainingTime().ToString(format)}";
+		LeftText = $"{GetElapsedTime().ToString(format, CultureInfo.InvariantCulture)}";
+		RightText = $"-{GetRemainingTime().ToString(format, CultureInfo.InvariantCulture)}";
 		ProgressValue = GetPercentage();
 	}
 

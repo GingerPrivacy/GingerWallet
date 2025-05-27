@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows.Input;
@@ -18,11 +16,11 @@ namespace WalletWasabi.Fluent.HomeScreen.Tiles.ViewModels;
 
 public partial class PrivacyControlTileViewModel : ActivatableViewModel, IPrivacyRingPreviewItem
 {
-	private readonly IWalletModel _wallet;
+	private readonly WalletModel _wallet;
 	[AutoNotify] private bool _fullyMixed;
 	[AutoNotify] private string _percentText = "";
 
-	public PrivacyControlTileViewModel(IWalletModel wallet)
+	public PrivacyControlTileViewModel(WalletModel wallet)
 	{
 		_wallet = wallet;
 
@@ -87,7 +85,7 @@ public partial class PrivacyControlTileViewModel : ActivatableViewModel, IPrivac
 		UiContext.Navigate().To().PrivacyRing(_wallet);
 	}
 
-	private void Update(int privacyProgress, bool isWalletPrivate, IReadOnlyCollection<ICoinModel> coins)
+	private void Update(int privacyProgress, bool isWalletPrivate, IReadOnlyCollection<CoinModel> coins)
 	{
 		PercentText = privacyProgress.ToString(Resources.Culture);
 	}

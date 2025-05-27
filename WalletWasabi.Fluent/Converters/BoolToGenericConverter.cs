@@ -1,10 +1,12 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Avalonia;
 using Avalonia.Data.Converters;
 
 namespace WalletWasabi.Fluent.Converters;
 
-public class BoolToGenericConverter<T> : AvaloniaObject, IValueConverter
+[SuppressMessage("AvaloniaProperty", "AVP1002:AvaloniaProperty objects should not be owned by a generic type")]
+public abstract class BoolToGenericConverter<T> : AvaloniaObject, IValueConverter
 {
 	public static readonly StyledProperty<T?> TrueProperty =
 		AvaloniaProperty.Register<BoolToGenericConverter<T>, T?>(nameof(True));

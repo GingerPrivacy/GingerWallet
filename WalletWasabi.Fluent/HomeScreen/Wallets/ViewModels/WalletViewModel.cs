@@ -12,11 +12,9 @@ using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.HomeScreen.CoinjoinPlayer.ViewModel;
 using WalletWasabi.Fluent.HomeScreen.History.ViewModels;
 using WalletWasabi.Fluent.HomeScreen.Tiles.ViewModels;
-using WalletWasabi.Fluent.HomeScreen.Wallets.Interfaces;
 using WalletWasabi.Fluent.HomeScreen.WalletSettings.ViewModels;
 using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models.Transactions;
-using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.Models;
 using WalletWasabi.Fluent.Navigation.ViewModels;
@@ -29,7 +27,8 @@ using WalletWasabi.Wallets;
 namespace WalletWasabi.Fluent.HomeScreen.Wallets.ViewModels;
 
 [AppLifetime]
-public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
+[NavigationMetaData(NavigationTarget = NavigationTarget.HomeScreen)]
+public partial class WalletViewModel : RoutableViewModel
 {
 	[AutoNotify(SetterModifier = AccessModifier.Protected)] private bool _isCoinJoining;
 
@@ -43,9 +42,8 @@ public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
 	[AutoNotify(SetterModifier = AccessModifier.Private)] private bool _isWalletBalanceZero;
 	[AutoNotify(SetterModifier = AccessModifier.Protected)] private WalletState _walletState;
 
-	public WalletViewModel(UiContext uiContext, IWalletModel walletModel, Wallet wallet)
+	public WalletViewModel(WalletModel walletModel, Wallet wallet)
 	{
-		UiContext = uiContext;
 		WalletModel = walletModel;
 		Wallet = wallet;
 
@@ -83,38 +81,38 @@ public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
 		BuyCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().Buy(walletModel));
 		SellCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().Sell(walletModel));
 
-		SendCommand = ReactiveCommand.Create(() => Navigate().To().Send(walletModel, new SendFlowModel(wallet, walletModel)));
-		SendManualControlCommand = ReactiveCommand.Create(() => Navigate().To().ManualControlDialog(walletModel, wallet));
+		SendCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().Send(walletModel, new SendFlowModel(wallet, walletModel)));
+		SendManualControlCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().ManualControlDialog(walletModel, wallet));
 
-		ReceiveCommand = ReactiveCommand.Create(() => Navigate().To().Receive(WalletModel));
+		ReceiveCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().Receive(WalletModel));
 
 		WalletInfoCommand = ReactiveCommand.CreateFromTask(async () =>
 		{
 			if (await AuthorizeForPasswordAsync())
 			{
-				Navigate().To().WalletInfo(WalletModel);
+				UiContext.Navigate().To().WalletInfo(WalletModel);
 			}
 		});
 
-		WalletStatsCommand = ReactiveCommand.Create(() => Navigate().To().WalletStats(WalletModel));
+		WalletStatsCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().WalletStats(WalletModel));
 
 		WalletSettingsCommand = ReactiveCommand.Create(
 			() =>
 			{
 				Settings.SelectedTab = 0;
-				Navigate(NavigationTarget.DialogScreen).To(Settings);
+				UiContext.Navigate().Navigate(Settings.DefaultTarget).To(Settings);
 			});
 
 		CoinJoinSettingsCommand = ReactiveCommand.Create(
 			() =>
 			{
 				Settings.SelectedTab = 1;
-				Navigate(NavigationTarget.DialogScreen).To(Settings);
+				UiContext.Navigate().Navigate(Settings.DefaultTarget).To(Settings);
 			});
 
-		WalletCoinsCommand = ReactiveCommand.Create(() => Navigate(NavigationTarget.DialogScreen).To().WalletCoins(WalletModel));
+		WalletCoinsCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().WalletCoins(WalletModel));
 
-		CoinjoinPlayerViewModel = new CoinjoinPlayerViewModel(uiContext, WalletModel, Settings);
+		CoinjoinPlayerViewModel = new CoinjoinPlayerViewModel(WalletModel, Settings);
 
 		Tiles = GetTiles().ToList();
 
@@ -128,7 +126,7 @@ public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
 	// TODO: Remove this
 	public Wallet Wallet { get; }
 
-	public IWalletModel WalletModel { get; }
+	public WalletModel WalletModel { get; }
 
 	public bool IsLoggedIn => WalletModel.Auth.IsLoggedIn;
 
@@ -179,7 +177,7 @@ public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
 
 	public void NavigateAndHighlight(uint256 txid)
 	{
-		Navigate().To(this, NavigationMode.Clear);
+		UiContext.Navigate(DefaultTarget).To(this, NavigationMode.Clear);
 
 		SelectTransaction(txid);
 	}
@@ -246,7 +244,7 @@ public partial class WalletViewModel : RoutableViewModel, IWalletViewModel
 	{
 		if (WalletModel.Auth.HasPassword)
 		{
-			return await Navigate().To().PasswordAuthDialog(WalletModel).GetResultAsync();
+			return await UiContext.Navigate().To().PasswordAuthDialog(WalletModel).GetResultAsync();
 		}
 
 		return true;

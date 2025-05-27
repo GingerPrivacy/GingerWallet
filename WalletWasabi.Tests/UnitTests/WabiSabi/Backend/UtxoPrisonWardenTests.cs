@@ -1,9 +1,9 @@
-using System.Threading;
-using System.Threading.Tasks;
 using Moq;
 using NBitcoin;
-using WalletWasabi.Helpers;
+using System.Threading;
+using System.Threading.Tasks;
 using WalletWasabi.Tests.Helpers;
+using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.WabiSabi;
 using WalletWasabi.WabiSabi.Backend.DoSPrevention;
 using WalletWasabi.WabiSabi.Backend.Rounds.CoinJoinStorage;
@@ -16,8 +16,7 @@ public class UtxoPrisonWardenTests
 	[Fact]
 	public async Task CanStartAndStopAsync()
 	{
-		var workDir = Common.GetWorkDir();
-		await IoHelpers.TryDeleteDirectoryAsync(workDir);
+		var workDir = TestDirectory.Get();
 		CoordinatorParameters coordinatorParameters = new(workDir);
 		using var w = new Warden(
 			coordinatorParameters.PrisonFilePath,
@@ -30,8 +29,7 @@ public class UtxoPrisonWardenTests
 	[Fact]
 	public async Task PrisonSerializationAsync()
 	{
-		var workDir = Common.GetWorkDir();
-		await IoHelpers.TryDeleteDirectoryAsync(workDir);
+		var workDir = TestDirectory.Get();
 
 		// Create prison.
 		CoordinatorParameters coordinatorParameters = new(workDir);

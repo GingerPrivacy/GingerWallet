@@ -16,13 +16,13 @@ namespace WalletWasabi.Fluent.HomeScreen.Others.ViewModels;
 	IsLocalized = true)]
 public partial class WalletInfoViewModel : RoutableViewModel
 {
-	private readonly IWalletInfoModel _model;
+	private readonly WalletInfoModel _model;
 
 	[AutoNotify] private bool _showSensitiveData;
-	[AutoNotify] private string _showButtonText = "Show sensitive data";
+	[AutoNotify] private string _showButtonText = Resources.ShowSensitiveData;
 	[AutoNotify] private string _lockIconString = "eye_show_regular";
 
-	public WalletInfoViewModel(IWalletModel wallet)
+	public WalletInfoViewModel(WalletModel wallet)
 	{
 		_model = wallet.GetWalletInfo();
 		IsHardwareWallet = wallet.IsHardwareWallet;
@@ -31,7 +31,7 @@ public partial class WalletInfoViewModel : RoutableViewModel
 
 		EnableCancel = !wallet.IsWatchOnlyWallet;
 
-		NextCommand = ReactiveCommand.Create(() => Navigate().Clear());
+		NextCommand = ReactiveCommand.Create(() => UiContext.Navigate(CurrentTarget).Clear());
 
 		CancelCommand = ReactiveCommand.Create(() =>
 		{

@@ -9,10 +9,9 @@ using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
 
-[AutoInterface]
-public partial class WalletCoinsModel(Wallet wallet, IWalletModel walletModel) : CoinListModel(wallet, walletModel)
+public class WalletCoinsModel(Wallet wallet, WalletModel walletModel) : CoinListModel(wallet, walletModel)
 {
-	public async Task UpdateExcludedCoinsFromCoinjoinAsync(ICoinModel[] coinsToExclude)
+	public async Task UpdateExcludedCoinsFromCoinjoinAsync(CoinModel[] coinsToExclude)
 	{
 		await Task.Run(() =>
 		{
@@ -21,13 +20,13 @@ public partial class WalletCoinsModel(Wallet wallet, IWalletModel walletModel) :
 		});
 	}
 
-	public List<ICoinModel> GetSpentCoins(BuildTransactionResult? transaction)
+	public List<CoinModel> GetSpentCoins(BuildTransactionResult? transaction)
 	{
 		var coins = (transaction?.SpentCoins ?? new List<SmartCoin>()).ToList();
 		return coins.Select(GetCoinModel).ToList();
 	}
 
-	public bool AreEnoughToCreateTransaction(TransactionInfo transactionInfo, IEnumerable<ICoinModel> coins)
+	public bool AreEnoughToCreateTransaction(TransactionInfo transactionInfo, IEnumerable<CoinModel> coins)
 	{
 		return TransactionHelpers.TryBuildTransactionWithoutPrevTx(Wallet.KeyManager, transactionInfo, Wallet.Coins, coins.GetSmartCoins(), Wallet.Kitchen.SaltSoup(), out _);
 	}
@@ -37,7 +36,7 @@ public partial class WalletCoinsModel(Wallet wallet, IWalletModel walletModel) :
 		return Wallet.GetPockets().ToArray();
 	}
 
-	protected override ICoinModel[] CreateCoinModels()
+	protected override CoinModel[] CreateCoinModels()
 	{
 		return Wallet.Coins.Select(CreateCoinModel).ToArray();
 	}

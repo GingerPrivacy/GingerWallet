@@ -15,9 +15,9 @@ namespace WalletWasabi.Fluent.HomeScreen.History.ViewModels.Actions;
 public partial class SpeedUpTransactionDialogViewModel : RoutableViewModel
 {
 	private readonly SpeedupTransaction _speedupTransaction;
-	private readonly IWalletModel _wallet;
+	private readonly WalletModel _wallet;
 
-	public SpeedUpTransactionDialogViewModel(IWalletModel wallet, SpeedupTransaction speedupTransaction)
+	public SpeedUpTransactionDialogViewModel(WalletModel wallet, SpeedupTransaction speedupTransaction)
 	{
 		Title = Resources.SpeedUpTransaction;
 
@@ -44,7 +44,7 @@ public partial class SpeedUpTransactionDialogViewModel : RoutableViewModel
 			.Connect()
 			.Watch(_speedupTransaction.TargetTransaction.GetHash())
 			.Where(change => change.Current.IsConfirmed)
-			.Do(_ => Navigate().Back())
+			.Do(_ => UiContext.Navigate(CurrentTarget).Back())
 			.Subscribe()
 			.DisposeWith(disposables);
 
@@ -78,7 +78,7 @@ public partial class SpeedUpTransactionDialogViewModel : RoutableViewModel
 	{
 		if (_wallet.Auth.HasPassword)
 		{
-			return await Navigate().To().PasswordAuthDialog(_wallet, Resources.WalletSend).GetResultAsync();
+			return await UiContext.Navigate().To().PasswordAuthDialog(_wallet, Resources.WalletSend).GetResultAsync();
 		}
 
 		return true;

@@ -32,7 +32,7 @@ public static class TransactionBuilderWalletExtensions
 
 		if (feeStrategy.TryGetTarget(out int? target))
 		{
-			feeRate = wallet.FeeProvider.AllFeeEstimate?.GetFeeRate(target.Value)
+			feeRate = wallet.FeeProvider.GetAllFeeEstimate()?.GetFeeRate(target.Value)
 				?? throw new InvalidOperationException("Cannot get fee estimations.");
 		}
 		else if (!feeStrategy.TryGetFeeRate(out feeRate))
@@ -40,7 +40,7 @@ public static class TransactionBuilderWalletExtensions
 			throw new NotSupportedException(feeStrategy.Type.ToString());
 		}
 
-		TransactionParameters parameters = new (
+		TransactionParameters parameters = new(
 			payments,
 			FeeRate: feeRate,
 			AllowUnconfirmed: allowUnconfirmed,

@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace WalletWasabi.Fluent.SearchBar.Views;
 
-public partial class RestartView : UserControl
+public class RestartView : UserControl
 {
 	public RestartView()
 	{

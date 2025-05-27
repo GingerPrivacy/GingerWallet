@@ -3,7 +3,6 @@ using System.Reactive.Linq;
 using ReactiveUI;
 using WalletWasabi.Fluent.Common.ViewModels;
 using WalletWasabi.Fluent.HomeScreen.Loading.ViewModels;
-using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Login.ViewModels;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.Models;
@@ -12,7 +11,6 @@ using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.HomeScreen.Wallets.ViewModels;
 
-[AppLifetime]
 public partial class WalletPageViewModel : ViewModelBase, IDisposable
 {
 	private readonly CompositeDisposable _disposables = new();
@@ -26,7 +24,7 @@ public partial class WalletPageViewModel : ViewModelBase, IDisposable
 	[AutoNotify] private RoutableViewModel? _currentPage;
 	[AutoNotify] private string? _title;
 
-	public WalletPageViewModel(IWalletModel walletModel)
+	public WalletPageViewModel(WalletModel walletModel)
 	{
 		WalletModel = walletModel;
 
@@ -63,7 +61,7 @@ public partial class WalletPageViewModel : ViewModelBase, IDisposable
 			.Where(t => t.Item1)
 			.Select(t => t.Item2)
 			.WhereNotNull()
-			.Do(x => UiContext.Navigate().To(x, NavigationTarget.HomeScreen, NavigationMode.Clear))
+			.Do(x => UiContext.Navigate().Navigate(NavigationTarget.HomeScreen).To(x, NavigationMode.Clear))
 			.Subscribe()
 			.DisposeWith(_disposables);
 
@@ -78,7 +76,7 @@ public partial class WalletPageViewModel : ViewModelBase, IDisposable
 		SetIcon();
 	}
 
-	public IWalletModel WalletModel { get; }
+	public WalletModel WalletModel { get; }
 
 	public Wallet Wallet { get; }
 
@@ -97,8 +95,8 @@ public partial class WalletPageViewModel : ViewModelBase, IDisposable
 	{
 		WalletViewModel =
 			WalletModel.IsHardwareWallet
-			? new HardwareWalletViewModel(UiContext, WalletModel, Wallet)
-			: new WalletViewModel(UiContext, WalletModel, Wallet);
+			? new HardwareWalletViewModel(WalletModel, Wallet)
+			: new WalletViewModel(WalletModel, Wallet);
 
 		// Pass IsSelected down to WalletViewModel.IsSelected
 		this.WhenAnyValue(x => x.IsSelected)

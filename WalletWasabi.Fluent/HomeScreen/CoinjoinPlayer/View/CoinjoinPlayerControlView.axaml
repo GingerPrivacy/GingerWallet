@@ -29,8 +29,8 @@
       <Setter Property="Transitions">
         <Transitions>
           <TransformOperationsTransition Property="RenderTransform"
-                                         Delay="0:0:0.25"
-                                         Duration="0:0:1.25"
+                                         Delay="0:0:0.1"
+                                         Duration="0:0:0.9"
                                          Easing="{StaticResource FluentEasing}" />
         </Transitions>
       </Setter>
@@ -45,14 +45,14 @@
   <Border Name="PART_MainBorder" Margin="3 3 3 0"
           Classes.IsActive="{Binding IsMusicBoxVisible^}"
           TextElement.FontFamily="{StaticResource MonospacedFont}"
-          CornerRadius="4 4 0 0">
+          CornerRadius="15 15 0 0">
     <Border ClipToBounds="True"
-            CornerRadius="4 4 0 0"
+            CornerRadius="15 15 0 0"
             BorderBrush="{DynamicResource GlassEdgeColor}"
             BorderThickness="1,1,1,0">
       <Panel DataContext="{Binding CoinjoinPlayerViewModel}">
         <Panel Background="{DynamicResource TileRegionColor}" Opacity="0.35" />
-        <StackPanel Margin="10 5" Orientation="Horizontal" Spacing="20">
+        <StackPanel Margin="20 5" Orientation="Horizontal" Spacing="20">
           <StackPanel.Styles>
             <Style Selector="Button:disabled PathIcon">
               <Setter Property="Foreground" Value="{DynamicResource TextControlForegroundDisabled}" />
@@ -67,7 +67,7 @@
               </TransitioningContentControl.PageTransition>
               <TransitioningContentControl.DataTemplates>
                 <DataTemplate DataType="x:String">
-                  <TextBlock Text="{Binding .}" />
+                  <TextBlock Text="{Binding .}" TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding .}" />
                 </DataTemplate>
               </TransitioningContentControl.DataTemplates>
             </TransitioningContentControl>
@@ -87,7 +87,7 @@
             </DockPanel>
           </StackPanel>
 
-          <Separator Classes="vertical" />
+          <Separator Classes="vertical" Opacity="0.4" />
 
           <Button Classes="plain"
                   IsVisible="{Binding PlayVisible}"

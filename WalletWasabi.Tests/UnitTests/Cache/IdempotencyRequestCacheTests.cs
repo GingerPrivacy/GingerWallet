@@ -120,7 +120,7 @@ public class IdempotencyRequestCacheTests
 	/// then the second request will try again.
 	/// </summary>
 	[Fact]
-	public async Task FailureIsNotCachedAsync()
+	public async Task ExceptionIsNotIdempotencyCachedAsync()
 	{
 		using MemoryCache memoryCache = new(new MemoryCacheOptions());
 		IdempotencyRequestCache cache = new(memoryCache);

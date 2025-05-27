@@ -27,6 +27,8 @@ public abstract class PeriodicRunner : BackgroundService
 	/// </summary>
 	public event EventHandler<TimeSpan>? Tick;
 
+	public event EventHandler<Exception>? ExceptionThrown;
+
 	public TimeSpan Period { get; }
 
 	private LastExceptionTracker ExceptionTracker { get; }
@@ -105,6 +107,8 @@ public abstract class PeriodicRunner : BackgroundService
 				var info = ExceptionTracker.Process(ex);
 				if (info.IsFirst)
 				{
+					ExceptionThrown?.Invoke(this, ex);
+
 					if (info.Exception is HttpRequestException)
 					{
 						Logger.LogWarning(ex);

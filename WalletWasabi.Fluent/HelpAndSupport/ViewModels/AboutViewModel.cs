@@ -78,7 +78,7 @@ public partial class AboutViewModel : RoutableViewModel
 
 		OpenBrowserCommand = ReactiveCommand.CreateFromTask<string>(x => UiContext.FileSystem.OpenBrowserAsync(x));
 
-		AboutAdvancedInfoDialogCommand = ReactiveCommand.CreateFromTask(async () => await Navigate().To().AboutAdvancedInfo().GetResultAsync());
+		AboutAdvancedInfoDialogCommand = ReactiveCommand.CreateFromTask(async () => await UiContext.Navigate().To().AboutAdvancedInfo().GetResultAsync());
 
 		CopyLinkCommand = ReactiveCommand.CreateFromTask<string>(async (link) => await UiContext.Clipboard.SetTextAsync(link));
 

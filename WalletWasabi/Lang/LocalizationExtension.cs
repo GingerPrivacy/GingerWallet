@@ -26,9 +26,10 @@ public static class LocalizationExtension
 			DisplayLanguage.Hungarian => "Magyar",
 			DisplayLanguage.French => "Français",
 			DisplayLanguage.Chinese => "中文",
-			// DisplayLanguage.German => "Deutsch",
-			// DisplayLanguage.Portuguese => "Português",
-			// DisplayLanguage.Turkish => "Türkçe",
+			DisplayLanguage.German => "Deutsch",
+			DisplayLanguage.Portuguese => "Português",
+			DisplayLanguage.Turkish => "Türkçe",
+			DisplayLanguage.Italian => "Italiano",
 			_ => language.ToString()
 		};
 	}

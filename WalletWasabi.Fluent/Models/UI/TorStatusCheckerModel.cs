@@ -5,8 +5,7 @@ using WalletWasabi.Tor.StatusChecker;
 
 namespace WalletWasabi.Fluent.Models.UI;
 
-[AutoInterface]
-public partial class TorStatusCheckerModel
+public class TorStatusCheckerModel
 {
 	public TorStatusCheckerModel()
 	{

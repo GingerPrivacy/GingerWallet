@@ -7,8 +7,8 @@ using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Fluent.Common.ViewModels;
 using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Models.Wallets;
-using AddressFunc = System.Func<WalletWasabi.Fluent.Models.Wallets.IAddress, System.Threading.Tasks.Task>;
-using AddressAction = System.Action<WalletWasabi.Fluent.Models.Wallets.IAddress>;
+using AddressFunc = System.Func<WalletWasabi.Fluent.Models.Wallets.AddressModel, System.Threading.Tasks.Task>;
+using AddressAction = System.Action<WalletWasabi.Fluent.Models.Wallets.AddressModel>;
 
 namespace WalletWasabi.Fluent.HomeScreen.Receive.ViewModels;
 
@@ -21,26 +21,26 @@ public partial class AddressViewModel : ViewModelBase, IDisposable
 	[AutoNotify] private string _type;
 	[AutoNotify] private string _shortType;
 
-	public AddressViewModel(UiContext context, AddressFunc onEdit, AddressAction onShow, IAddress address)
+	public AddressViewModel(UiContext context, AddressFunc onEdit, AddressAction onShow, AddressModel addressModel)
 	{
 		UiContext = context;
-		Address = address;
-		_addressText = address.Text;
+		AddressModel = addressModel;
+		_addressText = addressModel.Text;
 
-		this.WhenAnyValue(x => x.Address.Labels)
+		this.WhenAnyValue(x => x.AddressModel.Labels)
 			.BindTo(this, viewModel => viewModel.Labels)
 			.DisposeWith(_disposables);
 
-		Type = Address.Type.Name;
-		ShortType = Address.Type.ShortName;
+		_type = AddressModel.Type.Name;
+		_shortType = AddressModel.Type.ShortName;
 
 		CopyAddressCommand = ReactiveCommand.CreateFromTask(() => UiContext.Clipboard.SetTextAsync(AddressText));
 		HideAddressCommand = ReactiveCommand.CreateFromTask(PromptHideAddressAsync);
-		EditLabelCommand = ReactiveCommand.CreateFromTask(() => onEdit(address));
-		NavigateCommand = ReactiveCommand.Create(() => onShow(address));
+		EditLabelCommand = ReactiveCommand.CreateFromTask(() => onEdit(addressModel));
+		NavigateCommand = ReactiveCommand.Create(() => onShow(addressModel));
 	}
 
-	private IAddress Address { get; }
+	private AddressModel AddressModel { get; }
 
 	public ICommand CopyAddressCommand { get; }
 
@@ -52,16 +52,15 @@ public partial class AddressViewModel : ViewModelBase, IDisposable
 
 	private async Task PromptHideAddressAsync()
 	{
-		var result = await UiContext.Navigate().NavigateDialogAsync(new ConfirmHideAddressViewModel(Address.Labels));
-
-		if (result.Result == false)
+		var result = await UiContext.Navigate().To().ConfirmHideAddress(AddressModel.Labels).GetResultAsync();
+		if (result == false)
 		{
 			return;
 		}
 
-		Address.Hide();
+		AddressModel.Hide();
 
-		var isAddressCopied = await UiContext.Clipboard.GetTextAsync() == Address.Text;
+		var isAddressCopied = await UiContext.Clipboard.GetTextAsync() == AddressModel.Text;
 
 		if (isAddressCopied)
 		{

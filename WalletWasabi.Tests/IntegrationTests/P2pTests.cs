@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Caching.Memory;
 using NBitcoin;
 using NBitcoin.Protocol;
 using NBitcoin.Protocol.Behaviors;
@@ -6,8 +7,6 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Caching.Memory;
-using WalletWasabi.Blockchain.Analysis.FeesEstimation;
 using WalletWasabi.Blockchain.Blocks;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Blockchain.Mempool;
@@ -19,11 +18,13 @@ using WalletWasabi.Models;
 using WalletWasabi.Services;
 using WalletWasabi.Stores;
 using WalletWasabi.Tests.Helpers;
+using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.Wallets;
 using WalletWasabi.Wallets.BlockProvider;
 using WalletWasabi.Wallets.FilterProcessor;
 using WalletWasabi.WebClients.Wasabi;
 using Xunit;
+using WalletWasabi.Daemon.FeeRateProviders;
 
 namespace WalletWasabi.Tests.IntegrationTests;
 
@@ -55,7 +56,7 @@ public class P2pTests
 			throw new NotSupportedNetworkException(network);
 		}
 
-		var dataDir = Common.GetWorkDir();
+		var dataDir = TestDirectory.Get();
 
 		SmartHeaderChain smartHeaderChain = new();
 		await using var indexStore = new IndexStore(Path.Combine(dataDir, "indexStore"), network, smartHeaderChain);
@@ -102,7 +103,7 @@ public class P2pTests
 		KeyManager keyManager = KeyManager.CreateNew(out _, "password", network);
 		await using WasabiHttpClientFactory httpClientFactory = new(Common.TorSocks5Endpoint, backendUriGetter: () => new Uri("http://localhost:12345"));
 		using WasabiSynchronizer synchronizer = new(period: TimeSpan.FromSeconds(3), 10000, bitcoinStore, httpClientFactory);
-		var feeProvider = new HybridFeeProvider(synchronizer, null);
+		FeeRateProvider feeProvider = new(httpClientFactory, network);
 
 		ServiceConfiguration serviceConfig = new(new IPEndPoint(IPAddress.Loopback, network.DefaultPort), Money.Coins(Constants.DefaultDustThreshold));
 		using MemoryCache cache = new(new MemoryCacheOptions
@@ -146,7 +147,7 @@ public class P2pTests
 			using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(4));
 			foreach (var hash in blocksToDownload)
 			{
-				downloadTasks.Add(blockDownloadService.TryGetBlockAsync(P2pSourceRequest.Automatic, hash, new Priority(SyncType.Complete), cts.Token));
+				downloadTasks.Add(blockDownloadService.TryGetBlockAsync(P2pSourceRequest.Automatic, hash, new Priority(), cts.Token));
 			}
 
 			await nodeConnectionAwaiter.WaitAsync(TimeSpan.FromMinutes(3));

@@ -11,6 +11,7 @@ using Dispatcher = Avalonia.Threading.Dispatcher;
 
 namespace WalletWasabi.Fluent.AddWallet.ViewModels.Create;
 
+[NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
 public partial class RecoveryWordsViewModel : RoutableViewModel
 {
 	public RecoveryWordsViewModel(WalletCreationOptions.AddNewWallet options)
@@ -26,8 +27,6 @@ public partial class RecoveryWordsViewModel : RoutableViewModel
 		EnableBack = true;
 
 		NextCommand = ReactiveCommand.Create(() => OnNext(options));
-
-		CancelCommand = ReactiveCommand.Create(OnCancel);
 		CopyToClipboardCommand = ReactiveCommand.CreateFromTask(OnCopyToClipboardAsync);
 	}
 
@@ -37,12 +36,7 @@ public partial class RecoveryWordsViewModel : RoutableViewModel
 
 	private void OnNext(WalletCreationOptions.AddNewWallet options)
 	{
-		Navigate().To().ConfirmRecoveryWords(options, MnemonicWords);
-	}
-
-	private void OnCancel()
-	{
-		Navigate().Clear();
+		UiContext.Navigate().To().ConfirmRecoveryWords(options, MnemonicWords);
 	}
 
 	private string GetRecoveryWordsString()

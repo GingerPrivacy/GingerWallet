@@ -14,4 +14,6 @@ public record ApiResponseInfo(HttpStatusCode StatusCode, bool SuccessfulParse, s
 		}
 		return "";
 	}
+
+	public static readonly ApiResponseInfo OK = new(HttpStatusCode.OK, true, "", "");
 }
