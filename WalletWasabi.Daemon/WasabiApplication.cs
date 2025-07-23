@@ -19,6 +19,7 @@ public class WasabiApplication
 	public Global? Global { get; private set; }
 	public string ConfigFilePath { get; }
 	public Config Config { get; }
+	public UiConfig UiConfig { get; }
 	public SingleInstanceChecker SingleInstanceChecker { get; }
 	public TerminateService TerminateService { get; }
 
@@ -32,6 +33,12 @@ public class WasabiApplication
 
 		Directory.CreateDirectory(Config.DataDir);
 		Config = new Config(LoadOrCreateConfigs(migrated), wasabiAppBuilder.Arguments);
+		UiConfig = LoadOrCreateUiConfig(Config.DataDir);
+
+		if (migrated)
+		{
+			UiConfig.Oobe = true;
+		}
 
 		SetupLogger();
 		Logger.LogDebug($"Ginger Wallet was started with these argument(s): {string.Join(" ", AppConfig.Arguments.DefaultIfEmpty("none"))}.");
@@ -104,7 +111,7 @@ public class WasabiApplication
 	}
 
 	private Global CreateGlobal()
-		=> new(Config.DataDir, ConfigFilePath, Config);
+		=> new(Config.DataDir, ConfigFilePath, Config, UiConfig);
 
 	private PersistentConfig LoadOrCreateConfigs(bool migrated)
 	{
@@ -119,6 +126,14 @@ public class WasabiApplication
 		return persistentConfig;
 	}
 
+	private static UiConfig LoadOrCreateUiConfig(string dataDir)
+	{
+		UiConfig uiConfig = new(Path.Combine(dataDir, "UiConfig.json"));
+		uiConfig.LoadFile(createIfMissing: true);
+
+		return uiConfig;
+	}
+
 	private bool MigrateDataFromWasabiWallet()
 	{
 		string wasabiDir = EnvironmentHelpers.GetUncachedDataDir(Path.Combine("WalletWasabi", "Client"), false);
@@ -129,7 +144,6 @@ public class WasabiApplication
 			Logger.LogInfo($"Copying data from {wasabiDir} to {Config.DataDir}");
 			CopyRecursive(wasabiDir, Config.DataDir, "BitcoinP2pNetwork");
 			CopyRecursive(wasabiDir, Config.DataDir, "BitcoinStore");
-			CopyRecursive(wasabiDir, Config.DataDir, "Legal2");
 			CopyRecursive(wasabiDir, Config.DataDir, "Wallets");
 			CopyRecursive(wasabiDir, Config.DataDir, "UiConfig.json");
 			CopyRecursive(wasabiDir, Config.DataDir, "Config.json");

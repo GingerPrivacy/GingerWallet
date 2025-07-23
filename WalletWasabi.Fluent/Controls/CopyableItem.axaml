@@ -17,13 +17,14 @@
       <ControlTemplate>
         <Border x:Name="RootPane" Background="{TemplateBinding Background}">
           <Grid ClipToBounds="False" x:Name="ContentPane"
-                      Background="Transparent"
-                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-            <ContentPresenter
-              Content="{TemplateBinding Content}"
-              ContentTemplate="{TemplateBinding ContentTemplate}" />
-            <ClipboardCopyButton x:Name="CopyButton" Text="{TemplateBinding ContentToCopy}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 -24 -2">
+                Background="Transparent"
+                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+            <ContentPresenter Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}" />
+            <ClipboardCopyButton x:Name="CopyButton" Text="{TemplateBinding ContentToCopy}" HorizontalAlignment="Right"
+                                 VerticalAlignment="Center" Margin="0 0 -24 -2"
+                                 IsVisible="{TemplateBinding CopyButtonEnabled}">
               <ClipboardCopyButton.ShowCopyButton>
                 <MultiBinding Converter="{x:Static converters:BooleanConverters.Or}">
                   <Binding Path="#ContentPane.IsPointerOver" />

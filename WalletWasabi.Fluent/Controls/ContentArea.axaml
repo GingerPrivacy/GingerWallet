@@ -68,13 +68,21 @@
                         </MultiBinding>
                       </FocusOnAttachedBehavior.IsEnabled>
                     </FocusOnAttachedBehavior>
+                    <ExecuteCommandOnKeyDownBehavior Key="Enter" Command="{Binding NextCommand}">
+                      <ExecuteCommandOnKeyDownBehavior.IsEnabled>
+                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                          <Binding Path="IsActive" />
+                          <Binding Path="#PART_NextButton.IsVisible" />
+                        </MultiBinding>
+                      </ExecuteCommandOnKeyDownBehavior.IsEnabled>
+                    </ExecuteCommandOnKeyDownBehavior>
                   </Interaction.Behaviors>
                 </Button>
 
                 <SubActionButton Name="PART_NextSubButton"
+                                 DefaultSource="{TemplateBinding DefaultSubCommandKey}"
                                  Content="{TemplateBinding NextContent}"
                                  SubCommands="{TemplateBinding NextSubCommands}"
-                                 Command="{Binding NextCommand}"
                                  CornerRadius="20 20 20 20">
                   <SubActionButton.IsVisible>
                     <MultiBinding Converter="{x:Static BoolConverters.And}">
@@ -93,8 +101,14 @@
                         </MultiBinding>
                       </FocusOnAttachedBehavior.IsEnabled>
                     </FocusOnAttachedBehavior>
-                    <ExecuteCommandOnKeyDownBehavior Key="Enter" Command="{Binding NextCommand}"
-                                                     IsEnabled="{Binding IsActive}" />
+                    <ExecuteCommandOnKeyDownBehavior Key="Enter" Command="{Binding #PART_NextSubButton.Command}">
+                      <ExecuteCommandOnKeyDownBehavior.IsEnabled>
+                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                          <Binding Path="IsActive" />
+                          <Binding Path="#PART_NextSubButton.IsVisible" />
+                        </MultiBinding>
+                      </ExecuteCommandOnKeyDownBehavior.IsEnabled>
+                    </ExecuteCommandOnKeyDownBehavior>
                   </Interaction.Behaviors>
                 </SubActionButton>
               </StackPanel>

@@ -1,6 +1,7 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi">
+                    xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
+                    xmlns:converters="clr-namespace:WalletWasabi.Fluent.Converters">
 
   <Design.PreviewWith>
     <Border Width="500" Height="500">
@@ -12,13 +13,13 @@
           <SubActionButton Content="Subaction Button" Icon="{StaticResource wallet_action_buy}">
             <SubActionButton.SubCommands>
               <UICommandCollection>
-                <UICommandDesign Name="Command 2">
+                <UICommandDesign Name="Cmd 1" IsDefault="True">
                   <UICommandDesign.Icon>
                     <PathIcon Data="{StaticResource wallet_action_coinjoin}"
                               Classes="Icon" />
                   </UICommandDesign.Icon>
                 </UICommandDesign>
-                <UICommandDesign Name="Command 2">
+                <UICommandDesign Name="Coommmaannd 2" IsDefault="True">
                   <UICommandDesign.Icon>
                     <PathIcon Data="{StaticResource wallet_action_coinjoin}"
                               Classes="Icon" />
@@ -78,15 +79,57 @@
                     <Setter x:DataType="IUICommand" Property="HeaderTemplate">
                       <Setter.Value>
                         <DataTemplate DataType="IUICommand">
-                          <DockPanel>
-                            <Ellipse IsVisible="{Binding IsDefault}" ToolTip.Tip="{x:Static lang:Resources.Default}" DockPanel.Dock="Right" Margin="10 0 0 0" VerticalAlignment="Center" Height="8" Width="8" Fill="{DynamicResource SystemAccentColor}" />
+                          <StackPanel Orientation="Horizontal" Spacing="10">
                             <TextBlock Text="{Binding Name}" />
-                          </DockPanel>
+                            <Ellipse Classes="hide" Classes.show="{Binding IsDefault}"
+                                     ToolTip.Tip="{x:Static lang:Resources.Default}"
+                                     Height="9" Width="9"
+                                     Fill="{DynamicResource SystemAccentColor}">
+                              <Ellipse.Transitions>
+                                <Transitions>
+                                  <TransformOperationsTransition Property="RenderTransform"
+                                                                 Duration="0:0:0.125"
+                                                                 Easing="{StaticResource FluentEasing}" />
+                                  <DoubleTransition Property="Opacity" Duration="0:0:0.125"
+                                                    Easing="{StaticResource FluentEasing}" />
+                                </Transitions>
+                              </Ellipse.Transitions>
+                              <Ellipse.Styles>
+                                <Style Selector="Ellipse.hide">
+                                  <Setter Property="Opacity" Value="0" />
+                                  <Setter Property="RenderTransform" Value="scale(0,0)" />
+                                </Style>
+                                <Style Selector="Ellipse.show">
+                                  <Setter Property="Opacity" Value="1" />
+                                  <Setter Property="RenderTransform" Value="scale(1,1)" />
+                                </Style>
+                              </Ellipse.Styles>
+                            </Ellipse>
+                          </StackPanel>
                         </DataTemplate>
                       </Setter.Value>
                     </Setter>
                     <Setter x:DataType="IUICommand" Property="Icon" Value="{Binding Icon}" />
                     <Setter x:DataType="IUICommand" Property="Command" Value="{Binding Command}" />
+                    <Setter x:DataType="IUICommand" Property="ContextMenu">
+                      <ContextMenu>
+                        <ContextMenu.IsVisible>
+                          <MultiBinding Converter="{x:Static BoolConverters.And}">
+                            <Binding Path="IsDefault" Converter="{x:Static BoolConverters.Not}" />
+                            <Binding Path="Key" Converter="{x:Static StringConverters.IsNotNullOrEmpty}" />
+                            <Binding Path="$parent[SubActionButton].DefaultSource"
+                                     Converter="{x:Static converters:DefaultSourceConverters.NotNone}" />
+                          </MultiBinding>
+                        </ContextMenu.IsVisible>
+                        <MenuItem Header="{x:Static lang:Resources.SetAsDefault}"
+                                  Command="{Binding $parent[SubActionButton].SetDefaultCommand}"
+                                  CommandParameter="{Binding Key}">
+                          <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource star}" Opacity="0.6" Height="18" />
+                          </MenuItem.Icon>
+                        </MenuItem>
+                      </ContextMenu>
+                    </Setter>
                   </ControlTheme>
                 </MenuFlyout.ItemContainerTheme>
               </MenuFlyout>

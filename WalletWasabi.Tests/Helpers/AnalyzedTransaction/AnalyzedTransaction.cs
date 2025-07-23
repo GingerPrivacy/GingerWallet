@@ -7,21 +7,25 @@ using NBitcoin.Crypto;
 using NBitcoin.DataEncoders;
 using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Blockchain.Analysis;
+using GingerCommon.Crypto.Random;
 
 namespace WalletWasabi.Tests.Helpers.AnalyzedTransaction;
 
 public class AnalyzedTransaction : SmartTransaction
 {
-	public AnalyzedTransaction()
+	private GingerRandom _random;
+
+	public AnalyzedTransaction(GingerRandom random)
 		: base(Transaction.Create(Network.Main), 0)
 	{
+		_random = random;
 	}
 
-	private static Key CreateKey(string? label = null)
+	private Key CreateKey(string? label = null)
 	{
 		if (label is null)
 		{
-			return new Key();
+			return new Key(_random.GetBytes(32));
 		}
 		else
 		{
@@ -29,13 +33,13 @@ public class AnalyzedTransaction : SmartTransaction
 		}
 	}
 
-	private static Script CreateScript(string? label = null)
+	private Script CreateScript(string? label = null)
 	{
 		using var k = CreateKey(label);
 		return k.PubKey.WitHash.ScriptPubKey;
 	}
 
-	private static HdPubKey CreateHdPubKey(string? label = null)
+	private HdPubKey CreateHdPubKey(string? label = null)
 	{
 		using var k = CreateKey(label);
 		return new(k.PubKey, new KeyPath("0/0/0/0/0"), LabelsArray.Empty, KeyState.Clean);
@@ -53,9 +57,9 @@ public class AnalyzedTransaction : SmartTransaction
 		return foreignOutput;
 	}
 
-	private static AnalyzedTransaction CreateCoinjoin(int foreignInputs, int foreignOutputs)
+	private AnalyzedTransaction CreateCoinjoin(int foreignInputs, int foreignOutputs)
 	{
-		AnalyzedTransaction transaction = new();
+		AnalyzedTransaction transaction = new(_random);
 		for (int i = 0; i < foreignInputs; i++)
 		{
 			transaction.AddForeignInput();

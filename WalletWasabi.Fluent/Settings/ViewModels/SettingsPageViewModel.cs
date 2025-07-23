@@ -40,7 +40,6 @@ public partial class SettingsPageViewModel : RoutableViewModel
 		GeneralSettingsTab = new GeneralSettingsTabViewModel(UiContext.ApplicationSettings);
 		AppearanceSettingsTab = new AppearanceSettingsTabViewModel(UiContext.ApplicationSettings);
 		BitcoinTabSettings = new BitcoinTabSettingsViewModel(UiContext.ApplicationSettings);
-		AdvancedSettingsTab = new AdvancedSettingsTabViewModel(UiContext.ApplicationSettings);
 		SecuritySettingsTab = new SecuritySettingsTabViewModel(UiContext.ApplicationSettings);
 
 		RestartCommand = ReactiveCommand.Create(() => AppLifetimeHelper.Shutdown(withShutdownPrevention: true, restart: true));
@@ -59,24 +58,15 @@ public partial class SettingsPageViewModel : RoutableViewModel
 				 .Where(x => x && !IsActive && !_isDisplayed && !UiContext.ApplicationSettings.Oobe)
 				 .Do(_ => NotificationHelpers.Show(new RestartViewModel(Resources.ApplyNewSettingRestart)))
 				 .Subscribe();
-
-		OpenSecurityTabCommand = ReactiveCommand.CreateFromTask(async () =>
-		{
-			SelectedTab = 4;
-			await Activate();
-		});
 	}
 
 	public bool IsReadOnly => UiContext.ApplicationSettings.IsOverridden;
-
-	public ICommand OpenSecurityTabCommand { get; }
 
 	public ICommand RestartCommand { get; }
 
 	public GeneralSettingsTabViewModel GeneralSettingsTab { get; }
 	public AppearanceSettingsTabViewModel AppearanceSettingsTab { get; }
 	public BitcoinTabSettingsViewModel BitcoinTabSettings { get; }
-	public AdvancedSettingsTabViewModel AdvancedSettingsTab { get; }
 	public SecuritySettingsTabViewModel SecuritySettingsTab { get; }
 
 	public Task Activate()

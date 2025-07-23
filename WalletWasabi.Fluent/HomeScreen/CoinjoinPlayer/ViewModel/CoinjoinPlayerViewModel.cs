@@ -162,7 +162,7 @@ public partial class CoinjoinPlayerViewModel : ViewModelBase
 
 		NavigateToSettingsCommand = coinJoinSettingsCommand;
 		CanNavigateToCoinjoinSettings = coinJoinSettingsCommand.CanExecute;
-		NavigateToExcludedCoinsCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().ExcludedCoins(_wallet));
+		NavigateToExcludedCoinsCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().ExcludedCoins(_wallet), this.WhenAnyValue(x => x._wallet.Settings.IsRecovering).Select(x => !x));
 	}
 
 	private enum State

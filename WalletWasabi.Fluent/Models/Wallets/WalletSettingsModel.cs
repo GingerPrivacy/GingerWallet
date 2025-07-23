@@ -27,6 +27,7 @@ public partial class WalletSettingsModel : ReactiveObject
 	[AutoNotify] private CoinjoinSkipFactors _coinjoinSkipFactors;
 	[AutoNotify] private int _feeRateMedianTimeFrameHours;
 	[AutoNotify] private WalletId? _outputWalletId;
+	[AutoNotify] private bool _isRecovering;
 
 	[AutoNotify] private bool _useExperimentalCoinSelector;
 	[AutoNotify] private bool _forceUsingLowPrivacyCoins;
@@ -52,6 +53,7 @@ public partial class WalletSettingsModel : ReactiveObject
 		_coinjoinSkipFactors = _keyManager.CoinjoinSkipFactors;
 		_safeMiningFeeRate = _keyManager.SafeMiningFeeRate;
 		_feeRateMedianTimeFrameHours = _keyManager.FeeRateMedianTimeFrameHours;
+		_isRecovering = _keyManager.Attributes.IsRecovering;
 
 		var coinJoinSelectionSettings = _keyManager.Attributes.CoinJoinCoinSelectionSettings;
 		_useExperimentalCoinSelector = coinJoinSelectionSettings.UseExperimentalCoinSelector;
@@ -75,7 +77,9 @@ public partial class WalletSettingsModel : ReactiveObject
 				x => x.PlebStopThreshold,
 				x => x.AnonScoreTarget,
 				x => x.RedCoinIsolation,
-				x => x.FeeRateMedianTimeFrameHours)
+				x => x.FeeRateMedianTimeFrameHours,
+				x => x.IsRecovering,
+				(_, _, _, _, _, _, _, _) => Unit.Default)
 			.Skip(1)
 			.Do(_ => SetValues())
 			.Subscribe();
@@ -140,11 +144,12 @@ public partial class WalletSettingsModel : ReactiveObject
 		_keyManager.Attributes.CoinJoinCoinSelectionSettings.ValueLossRateNormal = ValueLossRateNormal;
 		_keyManager.Attributes.CoinJoinCoinSelectionSettings.TargetCoinCountPerBucket = TargetCoinCountPerBucket;
 		_keyManager.Attributes.CoinJoinCoinSelectionSettings.UseOldCoinSelectorAsFallback = UseOldCoinSelectorAsFallback;
+		_keyManager.Attributes.IsRecovering = IsRecovering;
 		_isDirty = true;
 	}
 
 	public void ResetHeight()
 	{
-		_keyManager.SetBestHeights(0, 0);
+		_keyManager.SetBestHeights(0);
 	}
 }

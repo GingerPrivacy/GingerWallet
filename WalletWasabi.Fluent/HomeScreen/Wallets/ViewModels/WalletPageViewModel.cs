@@ -1,12 +1,15 @@
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using ReactiveUI;
 using WalletWasabi.Fluent.Common.ViewModels;
+using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.HomeScreen.Loading.ViewModels;
 using WalletWasabi.Fluent.Login.ViewModels;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.Models;
 using WalletWasabi.Fluent.Navigation.ViewModels;
+using WalletWasabi.Services;
 using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.HomeScreen.Wallets.ViewModels;
@@ -39,15 +42,9 @@ public partial class WalletPageViewModel : ViewModelBase, IDisposable
 			.Subscribe()
 			.DisposeWith(_disposables);
 
-		// Show Loading page when wallet is logged in
+		// Show wallet home screen
 		this.WhenAnyValue(x => x.IsLoggedIn)
 			.Where(x => x)
-			.Do(_ => ShowWalletLoading())
-			.Subscribe()
-			.DisposeWith(_disposables);
-
-		// Show main Wallet UI when wallet load is completed
-		this.WhenAnyObservable(x => x.WalletModel.Loader.LoadCompleted)
 			.Do(_ => ShowWallet())
 			.Subscribe()
 			.DisposeWith(_disposables);
@@ -85,12 +82,6 @@ public partial class WalletPageViewModel : ViewModelBase, IDisposable
 		CurrentPage = new LoginViewModel(WalletModel);
 	}
 
-	private void ShowWalletLoading()
-	{
-		CurrentPage = new LoadingViewModel(WalletModel);
-		IsLoading = true;
-	}
-
 	private void ShowWallet()
 	{
 		WalletViewModel =
@@ -98,13 +89,16 @@ public partial class WalletPageViewModel : ViewModelBase, IDisposable
 			? new HardwareWalletViewModel(WalletModel, Wallet)
 			: new WalletViewModel(WalletModel, Wallet);
 
+		this.WhenAnyValue(x => x.WalletModel.Loader.IsLoading)
+			.BindTo(this, x => x.IsLoading)
+			.DisposeWith(_disposables);
+
 		// Pass IsSelected down to WalletViewModel.IsSelected
 		this.WhenAnyValue(x => x.IsSelected)
 			.BindTo(WalletViewModel, x => x.IsSelected)
 			.DisposeWith(_disposables);
 
 		CurrentPage = WalletViewModel;
-		IsLoading = false;
 	}
 
 	public void Dispose() => _disposables.Dispose();

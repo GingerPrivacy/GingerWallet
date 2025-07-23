@@ -1,4 +1,4 @@
-namespace WalletWasabi.Fluent.HomeScreen.BuySell.Models;
+namespace WalletWasabi.Daemon.BuySell;
 
 public record BuySellConfiguration(
 	CountrySelection? BuyCountry = null,

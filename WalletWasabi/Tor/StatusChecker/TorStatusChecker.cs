@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using WalletWasabi.Bases;
 using WalletWasabi.Logging;
 using WalletWasabi.Tor.Http;
+using WalletWasabi.Tor.Http.Extensions;
+using WalletWasabi.Tor.StatusChecker.ApiModels;
 
 namespace WalletWasabi.Tor.StatusChecker;
 
@@ -13,13 +15,10 @@ namespace WalletWasabi.Tor.StatusChecker;
 /// </summary>
 public class TorStatusChecker : PeriodicRunner
 {
-	private readonly XmlIssueListParser _parser;
-	private static readonly Uri TorStatusUri = new("https://status.torproject.org/index.xml");
+	private static readonly Uri TorStatusUri = new("https://status.torproject.org/index.json");
 
-	public TorStatusChecker(TimeSpan period, IHttpClient httpClient, XmlIssueListParser parser)
-		: base(period)
+	public TorStatusChecker(TimeSpan period, IHttpClient httpClient) : base(period)
 	{
-		_parser = parser;
 		HttpClient = httpClient;
 	}
 
@@ -35,11 +34,18 @@ public class TorStatusChecker : PeriodicRunner
 			using HttpRequestMessage request = new(HttpMethod.Get, TorStatusUri);
 			using HttpResponseMessage response = await HttpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
-			string xml = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-			var issues = _parser.Parse(xml);
+			var torNetworkStatus = await response.Content.ReadAsJsonAsync<TorNetworkStatus>().ConfigureAwait(false);
+
+			var issues =
+				torNetworkStatus.Systems
+					.Where(x => x.Category == "Tor Network")
+					.Where(x => x.UnresolvedIssues.Count != 0)
+					.SelectMany(x => x.UnresolvedIssues)
+					.Select(x => new Issue(x.Title, x.Resolved))
+					.ToArray();
 
 			// Fire event.
-			StatusEvent?.Invoke(this, issues.ToArray());
+			StatusEvent?.Invoke(this, issues);
 		}
 		catch (Exception ex)
 		{

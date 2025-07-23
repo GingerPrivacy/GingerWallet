@@ -21,13 +21,18 @@ public class AnnouncementManager : PeriodicRunner
 {
 	public event EventHandler<List<Announcement>>? AnnouncementsUpdated;
 
-	public AnnouncementManager(string dataDir, TimeSpan period, DisplayLanguage local, string extraNostrKey, WasabiHttpClientFactory httpClientFactory) : base(period)
+	private DateTimeOffset _startedAt = DateTimeOffset.Now;
+	private TimeSpan _silentPeriod = TimeSpan.FromDays(1);
+	private bool _isFirstRun;
+
+	public AnnouncementManager(string dataDir, TimeSpan period, DisplayLanguage local, string extraNostrKey, WasabiHttpClientFactory httpClientFactory, bool isFirstRun) : base(period)
 	{
 		string publicKey = "npub1ag3rdayfaxgywnwpdkv75mppcqf46nk9he4f4f473pd60rcwdcusw75gl5";
 
 		_local = local.GetDescription() ?? "en-US";
 		_httpClientFactory = httpClientFactory;
 		_nostrSubscriptionID = "";
+		_isFirstRun = isFirstRun;
 
 		string defaultPubKeyHex = NIP19.FromNIP19Npub(publicKey).ToHex();
 		string extraNostrKeyHex = "";
@@ -109,6 +114,10 @@ public class AnnouncementManager : PeriodicRunner
 			{
 				if (!announcement.Saved)
 				{
+					if (_isFirstRun && announcement.CreatedAt < _startedAt - _silentPeriod)
+					{
+						announcement.IsUnread = false;
+					}
 					SaveFile(announcement);
 				}
 			}

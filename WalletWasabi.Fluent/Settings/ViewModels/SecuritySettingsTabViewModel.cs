@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
+using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models;
@@ -18,6 +21,7 @@ public partial class SecuritySettingsTabViewModel : RoutableViewModel
 {
 	[AutoNotify] private bool _twoFactorEnabled;
 	[AutoNotify] private bool _modifyTwoFactorEnabled;
+	[AutoNotify] private bool _modifyTorEnabled;
 
 	public SecuritySettingsTabViewModel(ApplicationSettings settings)
 	{
@@ -40,6 +44,15 @@ public partial class SecuritySettingsTabViewModel : RoutableViewModel
 
 		this.WhenAnyValue(x => x.Settings.UseTor)
 			.Subscribe(x => ModifyTwoFactorEnabled = x != TorMode.Disabled && Settings.GetTorStartupMode() != TorMode.Disabled);
+
+		this.WhenAnyValue(
+				x => x.UiContext.TwoFactorAuthentication.TwoFactorEnabled,
+				x => x.UiContext.ApplicationSettings.Network)
+			.Subscribe(x =>
+			{
+				var (twoFactor, network) = x;
+				ModifyTorEnabled = !twoFactor && network != Network.RegTest;
+			});
 	}
 
 	public bool IsReadOnly => Settings.IsOverridden;
@@ -47,4 +60,7 @@ public partial class SecuritySettingsTabViewModel : RoutableViewModel
 	public ApplicationSettings Settings { get; }
 
 	public ICommand GenerateTwoFactorCommand { get; set; }
+
+	public IEnumerable<TorMode> TorModes =>
+		Enum.GetValues(typeof(TorMode)).Cast<TorMode>();
 }

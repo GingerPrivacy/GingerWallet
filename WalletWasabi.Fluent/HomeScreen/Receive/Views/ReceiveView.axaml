@@ -11,9 +11,12 @@
              x:Class="WalletWasabi.Fluent.HomeScreen.Receive.Views.ReceiveView">
   <UserControl.Styles>
     <Style Selector="ContentArea.taprootSupported">
+      <Setter Property="DefaultSubCommandKey" Value="Receive" />
       <Setter Property="NextSubCommands">
         <UICommandCollection>
-          <UICommand Name="SegWit" Command="{Binding NextCommand}" IsDefault="True">
+          <UICommand Name="SegWit"
+                     Key="SegWit"
+                     Command="{Binding NextCommand}">
             <UICommand.Icon>
               <Border BorderThickness="1"
                       VerticalAlignment="Center"
@@ -24,7 +27,9 @@
               </Border>
             </UICommand.Icon>
           </UICommand>
-          <UICommand Name="Taproot" Command="{Binding NextWithTaprootCommand}">
+          <UICommand Name="Taproot"
+                     Key="Taproot"
+                     Command="{Binding NextWithTaprootCommand}">
             <UICommand.Icon>
               <Border BorderThickness="1"
                       VerticalAlignment="Center"

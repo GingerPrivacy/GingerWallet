@@ -1,15 +1,11 @@
-using Newtonsoft.Json;
 using System.ComponentModel;
-using System.Reactive;
-using System.Reactive.Linq;
-using ReactiveUI;
-using WalletWasabi.Bases;
-using WalletWasabi.Fluent.Converters;
-using System.Runtime.Serialization;
 using System.Runtime.InteropServices;
-using WalletWasabi.Fluent.HomeScreen.BuySell.Models;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using WalletWasabi.Bases;
+using WalletWasabi.Daemon.BuySell;
 
-namespace WalletWasabi.Fluent;
+namespace WalletWasabi.Daemon;
 
 [JsonObject(MemberSerialization.OptIn)]
 public class UiConfig : ConfigBase
@@ -31,6 +27,7 @@ public class UiConfig : ConfigBase
 	private double? _windowHeight;
 	private string _selectedBrowser = "";
 	private BuySellConfiguration _buySellConfiguration = new ();
+	private DefaultCommands _defaultCommands = new();
 
 	public UiConfig() : base()
 	{
@@ -39,35 +36,6 @@ public class UiConfig : ConfigBase
 	public UiConfig(string filePath)
 	{
 		SetFilePath(filePath);
-		this.WhenAnyValue(
-				x => x.Autocopy,
-				x => x.AutoPaste,
-				x => x.IsCustomChangeAddress,
-				x => x.DarkModeEnabled,
-				x => x.FeeDisplayUnit,
-				x => x.LastSelectedWallet,
-				x => x.WindowState,
-				x => x.Oobe,
-				x => x.RunOnSystemStartup,
-				x => x.PrivacyMode,
-				x => x.HideOnClose,
-				x => x.FeeTarget,
-				(_, _, _, _, _, _, _, _, _, _, _, _) => Unit.Default)
-			.Throttle(TimeSpan.FromMilliseconds(500))
-			.Skip(1) // Won't save on UiConfig creation.
-			.ObserveOn(RxApp.MainThreadScheduler)
-			.Subscribe(_ => ToFile());
-
-		this.WhenAnyValue(
-				x => x.SendAmountConversionReversed,
-				x => x.SelectedBrowser,
-				x => x.WindowWidth,
-				x => x.WindowHeight,
-				x => x.BuySellConfiguration)
-			.Throttle(TimeSpan.FromMilliseconds(500))
-			.Skip(1) // Won't save on UiConfig creation.
-			.ObserveOn(RxApp.MainThreadScheduler)
-			.Subscribe(_ => ToFile());
 	}
 
 	[JsonProperty(PropertyName = "Oobe", DefaultValueHandling = DefaultValueHandling.Populate)]
@@ -79,11 +47,10 @@ public class UiConfig : ConfigBase
 	}
 
 	[JsonProperty(PropertyName = "WindowState")]
-	[JsonConverter(typeof(WindowStateAfterStartJsonConverter))]
 	public string WindowState
 	{
 		get => _windowState;
-		internal set => RaiseAndSetIfChanged(ref _windowState, value);
+		set => RaiseAndSetIfChanged(ref _windowState, value);
 	}
 
 	[DefaultValue(2)]
@@ -91,7 +58,7 @@ public class UiConfig : ConfigBase
 	public int FeeTarget
 	{
 		get => _feeTarget;
-		internal set => RaiseAndSetIfChanged(ref _feeTarget, value);
+		set => RaiseAndSetIfChanged(ref _feeTarget, value);
 	}
 
 	[DefaultValue(0)]
@@ -119,7 +86,7 @@ public class UiConfig : ConfigBase
 	}
 
 	[DefaultValue(false)]
-	[JsonProperty(PropertyName = nameof(AutoPaste), DefaultValueHandling = DefaultValueHandling.Populate)]
+	[JsonProperty(PropertyName = "AutoPaste", DefaultValueHandling = DefaultValueHandling.Populate)]
 	public bool AutoPaste
 	{
 		get => _autoPaste;
@@ -180,34 +147,41 @@ public class UiConfig : ConfigBase
 	public bool SendAmountConversionReversed
 	{
 		get => _sendAmountConversionReversed;
-		internal set => RaiseAndSetIfChanged(ref _sendAmountConversionReversed, value);
+		set => RaiseAndSetIfChanged(ref _sendAmountConversionReversed, value);
 	}
 
 	[JsonProperty(PropertyName = "WindowWidth")]
 	public double? WindowWidth
 	{
 		get => _windowWidth;
-		internal set => RaiseAndSetIfChanged(ref _windowWidth, value);
+		set => RaiseAndSetIfChanged(ref _windowWidth, value);
 	}
 
 	[JsonProperty(PropertyName = "WindowHeight")]
 	public double? WindowHeight
 	{
 		get => _windowHeight;
-		internal set => RaiseAndSetIfChanged(ref _windowHeight, value);
+		set => RaiseAndSetIfChanged(ref _windowHeight, value);
 	}
 
 	[JsonProperty(PropertyName = "BuySellConfiguration")]
 	public BuySellConfiguration BuySellConfiguration
 	{
 		get => _buySellConfiguration;
-		internal set => RaiseAndSetIfChanged(ref _buySellConfiguration, value);
+		set => RaiseAndSetIfChanged(ref _buySellConfiguration, value);
+	}
+
+	[JsonProperty(PropertyName = "DefaultCommands")]
+	public DefaultCommands DefaultCommands
+	{
+		get => _defaultCommands;
+		set => RaiseAndSetIfChanged(ref _defaultCommands, value);
 	}
 
 	[OnDeserialized]
 	internal void OnDeserialized(StreamingContext context)
 	{
-		if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) // On win this works perfectly. By default Wasabi will run after startup.
+		if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) // On win this works perfectly. By default Ginger will run after startup.
 		{
 			return;
 		}
@@ -217,7 +191,7 @@ public class UiConfig : ConfigBase
 			return;
 		}
 
-		if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) // On Linux we do not start Wasabi with OS by default - because Linux users knows better.
+		if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) // On Linux we do not start Ginger with OS by default - because Linux users knows better.
 		{
 			RunOnSystemStartup = false;
 		}

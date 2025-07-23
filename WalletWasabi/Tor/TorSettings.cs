@@ -18,11 +18,11 @@ public class TorSettings
 	/// <summary>Tor binary file name without extension.</summary>
 	public const string TorBinaryFileName = "tor";
 
-	/// <summary>Default port assigned to Tor SOCKS5 for the Wasabi's bundled Tor.</summary>
-	public const int DefaultSocksPort = 37150;
+	/// <summary>Default port assigned to Tor SOCKS5 for the Ginger's bundled Tor.</summary>
+	public const int DefaultSocksPort = 17342;
 
-	/// <summary>Default port assigned to Tor control for the Wasabi's bundled Tor.</summary>
-	public const int DefaultControlPort = 37151;
+	/// <summary>Default port assigned to Tor control for the Ginger's bundled Tor.</summary>
+	public const int DefaultControlPort = 17343;
 
 	public TorSettings(
 		string dataDir,

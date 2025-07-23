@@ -6,6 +6,8 @@ using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -136,6 +138,12 @@ public abstract class ExchangeRateProvider
 	public DateTimeOffset CurrenciesLastUpdated { get; protected set; } = new();
 	public ImmutableSortedSet<string> Currencies { get; protected set; } = ImmutableSortedSet<string>.Empty;
 
+	// For testing
+	public void ResetCurrencyUpdate()
+	{
+		CurrenciesLastUpdated = DateTimeOffset.UtcNow - TimeSpan.FromMinutes(20);
+	}
+
 	public virtual async Task<List<string>> QuerySupportedCurrenciesAsync(EndPoint? torEndpoint, CancellationToken cancellationToken)
 	{
 		if (AutoCurrencyRefresh)
@@ -150,4 +158,10 @@ public abstract class ExchangeRateProvider
 	}
 
 	public abstract Task<Dictionary<string, decimal>> QueryRateAsync(string currency, EndPoint? torEndpoint, CancellationToken cancellationToken);
+
+	protected static void AddProductInfo(HttpClient httpClient)
+	{
+		// Might needed or blocked by CloudFlare
+		httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("GingerWallet", "2.0.19+"));
+	}
 }

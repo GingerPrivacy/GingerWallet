@@ -305,8 +305,8 @@ public class ApplicationStateManager : IMainWindowService
 
 	private void SetWindowSize(Window window)
 	{
-		var configWidth = Services.UiConfig.WindowWidth;
-		var configHeight = Services.UiConfig.WindowHeight;
+		var configWidth = UiContext.ApplicationSettings.WindowWidth;
+		var configHeight = UiContext.ApplicationSettings.WindowHeight;
 		var currentScreen = window.Screens.ScreenFromPoint(window.Position);
 
 		if (configWidth is null || configHeight is null || currentScreen is null)
@@ -353,8 +353,8 @@ public class ApplicationStateManager : IMainWindowService
 			.Where(b => b != default && window.WindowState == WindowState.Normal)
 			.Subscribe(b =>
 			{
-				Services.UiConfig.WindowWidth = b.Width;
-				Services.UiConfig.WindowHeight = b.Height;
+				UiContext.ApplicationSettings.WindowWidth = b.Width;
+				UiContext.ApplicationSettings.WindowHeight = b.Height;
 			})
 			.DisposeWith(disposables);
 	}

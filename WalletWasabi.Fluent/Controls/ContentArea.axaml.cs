@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Presenters;
+using Avalonia.Data;
 using Avalonia.Media;
 
 namespace WalletWasabi.Fluent.Controls;
@@ -36,6 +37,9 @@ public class ContentArea : ContentControl
 
 	public static readonly StyledProperty<bool> FocusCancelProperty =
 		AvaloniaProperty.Register<ContentArea, bool>(nameof(FocusCancel));
+
+	public static readonly StyledProperty<DefaultCommandSource> DefaultSubCommandKeyProperty =
+		AvaloniaProperty.Register<ContentArea, DefaultCommandSource>(nameof(DefaultSubCommandKey));
 
 	public static readonly StyledProperty<object> CancelContentProperty =
 		AvaloniaProperty.Register<ContentArea, object>(nameof(CancelContent), Lang.Resources.Cancel);
@@ -115,6 +119,12 @@ public class ContentArea : ContentControl
 	{
 		get => GetValue(FocusCancelProperty);
 		set => SetValue(FocusCancelProperty, value);
+	}
+
+	public DefaultCommandSource DefaultSubCommandKey
+	{
+		get => GetValue(DefaultSubCommandKeyProperty);
+		set => SetValue(DefaultSubCommandKeyProperty, value);
 	}
 
 	public object CancelContent

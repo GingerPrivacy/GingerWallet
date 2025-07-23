@@ -14,8 +14,8 @@ public class AggregatorExchangeRateProvider : ExchangeRateProvider
 	{
 		// In precedence order, 47 currencies supported total via Tor
 		_providers = [
-			new BlockchainInfoExchangeRateProvider(), // 28 currencies
 			new MempoolSpaceExchangeRateProvider(), // 7 currencies (USD, EUR, GBP, CAD, CHF, AUD, JPY)
+			new BlockchainInfoExchangeRateProvider(), // 28 currencies
 			new CoinbaseExchangeRateProvider(), // no tor, 151 currencies,
 			new CoinGeckoExchangeRateProvider(), // 45 currencies, needs User-Agent for the request, single fiat query
 			new CoingateExchangeRateProvider(), // no tor, 40 currencies,

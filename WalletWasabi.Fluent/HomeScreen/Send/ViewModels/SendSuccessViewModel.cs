@@ -18,7 +18,7 @@ public partial class SendSuccessViewModel : RoutableViewModel
 
 		NextCommand = ReactiveCommand.CreateFromTask(OnNextAsync);
 
-		SetupCancel(enableCancel: false, enableCancelOnEscape: true, enableCancelOnPressed: true);
+		SetupCancel(enableCancel: false, enableCancelOnEscape: false, enableCancelOnPressed: false);
 	}
 
 	private async Task OnNextAsync()

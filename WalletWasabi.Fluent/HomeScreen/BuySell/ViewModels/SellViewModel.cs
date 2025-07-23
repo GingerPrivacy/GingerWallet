@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ReactiveUI;
+using WalletWasabi.Daemon.BuySell;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.HomeScreen.BuySell.Models;
 using WalletWasabi.Fluent.Models.Wallets;
@@ -41,7 +42,7 @@ public partial class SellViewModel : RoutableViewModel
 		Title = Resources.SellBitcoin;
 		_selectedCountry = UiContext.ApplicationSettings.GetCurrentSellCountry();
 		ExchangeRate = wallet.AmountProvider.ExchangeRate;
-		_conversionReversed = Services.UiConfig.SendAmountConversionReversed; // must be fixed
+		_conversionReversed = UiContext.ApplicationSettings.SendAmountConversionReversed;
 		FiatTicker = Resources.Culture.GetFiatTicker();
 
 		var nextCanExecute =
@@ -115,6 +116,10 @@ public partial class SellViewModel : RoutableViewModel
 				this.RaisePropertyChanged(nameof(Amount));
 			})
 			.Subscribe();
+
+		this.WhenAnyValue(x => x.ConversionReversed)
+			.Skip(1)
+			.Subscribe(x => UiContext.ApplicationSettings.SendAmountConversionReversed = x);
 	}
 
 	public ICommand SelectCountryCommand { get; }

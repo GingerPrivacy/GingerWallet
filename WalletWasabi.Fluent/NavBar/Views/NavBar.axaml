@@ -87,7 +87,10 @@
     </Style>
 
     <Style Selector="Ellipse.isLoggedIn.isCoinjoining">
-      <Setter Property="Fill" Value="{DynamicResource CoinjoinActiveColor}" />
+      <Setter Property="Fill" Value="{DynamicResource CoinjoinWaveDefaultColor}" />
+    </Style>
+    <Style Selector="Ellipse.isLoggedIn.isCoinjoining.isInCriticalPhase">
+      <Setter Property="Fill" Value="{DynamicResource CoinjoinWaveCriticalColor}" />
     </Style>
 
     <Style Selector="ListBoxItem">
@@ -167,7 +170,8 @@
                 <Ellipse Classes="loadingindicator"
                          Classes.isLoading="{Binding IsLoading}"
                          Classes.isLoggedIn="{Binding IsLoggedIn}"
-                         Classes.isCoinjoining="{Binding WalletViewModel.IsCoinJoining}" />
+                         Classes.isCoinjoining="{Binding WalletViewModel.IsCoinJoining}"
+                         Classes.isInCriticalPhase="{Binding WalletViewModel.CoinjoinPlayerViewModel.IsInCriticalPhase}" />
                 <StackPanel VerticalAlignment="Center" Spacing="2">
                   <PathIcon Classes="new size24 wallet"
                             Classes.isfocused="{Binding $parent[ListBoxItem].IsSelected}" />

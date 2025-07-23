@@ -57,6 +57,8 @@ public class WalletAttributes : IJsonOnSerializing
 
 	public bool RedCoinIsolation { get; set; } = DefaultRedCoinIsolation;
 
+	public bool IsRecovering { get; set; }
+
 	public CoinjoinSkipFactors CoinjoinSkipFactors { get; set; } = CoinjoinSkipFactors.NoSkip;
 
 	public BuySellWalletData BuySellWalletData { get; set; } = new();

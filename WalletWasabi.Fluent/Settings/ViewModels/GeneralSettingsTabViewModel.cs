@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Input;
-using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models;
@@ -9,7 +7,6 @@ using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Lang;
 using WalletWasabi.Logging;
-using WalletWasabi.Models;
 
 namespace WalletWasabi.Fluent.Settings.ViewModels;
 
@@ -22,7 +19,6 @@ namespace WalletWasabi.Fluent.Settings.ViewModels;
 public partial class GeneralSettingsTabViewModel : RoutableViewModel
 {
 	[AutoNotify] private bool _runOnSystemStartup;
-	[AutoNotify] private bool _modifyTorEnabled;
 
 	public GeneralSettingsTabViewModel(ApplicationSettings settings)
 	{
@@ -56,15 +52,6 @@ public partial class GeneralSettingsTabViewModel : RoutableViewModel
 			}
 		}
 
-		this.WhenAnyValue(
-				x => x.UiContext.TwoFactorAuthentication.TwoFactorEnabled,
-				x => x.UiContext.ApplicationSettings.Network)
-			.Subscribe(x =>
-			{
-				var (twoFactor, network) = x;
-				ModifyTorEnabled = !twoFactor && network != Network.RegTest;
-			});
-
 		browserList.Add(BrowserTypeDropdownListEnum.Custom);
 		BrowserList = browserList;
 	}
@@ -74,9 +61,6 @@ public partial class GeneralSettingsTabViewModel : RoutableViewModel
 	public ApplicationSettings Settings { get; }
 
 	public ICommand StartupCommand { get; }
-
-	public IEnumerable<TorMode> TorModes =>
-		Enum.GetValues(typeof(TorMode)).Cast<TorMode>();
 
 	public IEnumerable<BrowserTypeDropdownListEnum> BrowserList { get; }
 }

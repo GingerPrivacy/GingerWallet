@@ -92,9 +92,9 @@ public class App : Application
 	}
 
 	// It begins to show that we're re-inventing DI, aren't we?
-	private static WalletRepository CreateWalletRepository(AmountProvider amountProvider, HardwareWalletInterface hardwareWalletInterface)
+	private static WalletRepository CreateWalletRepository(AmountProvider amountProvider, HardwareWalletInterface hardwareWalletInterface, ApplicationSettings applicationSettings)
 	{
-		return new WalletRepository(amountProvider, hardwareWalletInterface);
+		return new WalletRepository(amountProvider, hardwareWalletInterface, applicationSettings);
 	}
 
 	private static HardwareWalletInterface CreateHardwareWalletInterface(Network network)
@@ -141,7 +141,7 @@ public class App : Application
 			new QrCodeGenerator(),
 			new QrCodeReader(),
 			new UiClipboard(),
-			CreateWalletRepository(amountProvider, hardwareWalletInterface),
+			CreateWalletRepository(amountProvider, hardwareWalletInterface, applicationSettings),
 			new CoinjoinModel(),
 			hardwareWalletInterface,
 			CreateFileSystem(),

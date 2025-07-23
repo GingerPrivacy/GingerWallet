@@ -5,17 +5,26 @@ namespace WalletWasabi.Fluent.Controls;
 
 public class UICommand : AvaloniaObject, IUICommand
 {
+	public static readonly StyledProperty<string?> KeyProperty =
+		AvaloniaProperty.Register<UICommand, string?>(nameof(Key));
+
 	public static readonly StyledProperty<string> NameProperty =
 		AvaloniaProperty.Register<UICommand, string>(nameof(Name));
 
 	public static readonly StyledProperty<object> IconProperty =
 		AvaloniaProperty.Register<UICommand, object>(nameof(Icon));
 
-	public static readonly StyledProperty<ICommand> CommandProperty =
-		AvaloniaProperty.Register<UICommand, ICommand>(nameof(Command));
+	public static readonly StyledProperty<ICommand?> CommandProperty =
+		AvaloniaProperty.Register<UICommand, ICommand?>(nameof(Command));
 
 	public static readonly StyledProperty<bool> IsDefaultProperty =
 		AvaloniaProperty.Register<UICommand, bool>(nameof(IsDefault));
+
+	public string? Key
+	{
+		get => GetValue(KeyProperty);
+		set => SetValue(KeyProperty, value);
+	}
 
 	public string Name
 	{
@@ -29,7 +38,7 @@ public class UICommand : AvaloniaObject, IUICommand
 		set => SetValue(IconProperty, value);
 	}
 
-	public ICommand Command
+	public ICommand? Command
 	{
 		get => GetValue(CommandProperty);
 		set => SetValue(CommandProperty, value);

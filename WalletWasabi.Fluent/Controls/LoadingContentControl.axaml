@@ -1,0 +1,100 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+
+  <Design.PreviewWith>
+    <Border Padding="10" Background="#1F1F1F" Width="200" Height="200">
+      <StackPanel Spacing="10">
+        <LoadingContentControl Content="This is a test."
+                               HorizontalAlignment="Center"
+                               IsLoading="True" />
+        <LoadingContentControl Content="This is a test."
+                               HorizontalAlignment="Center"
+                               IsLoading="False" />
+
+        <LoadingContentControl Content="This is a test."
+                               HorizontalAlignment="Center"
+                               IsLoading="True"
+                               Margin="10 5" />
+        <LoadingContentControl Content="This is a test."
+                               HorizontalAlignment="Center"
+                               IsLoading="False"
+                               Margin="10 5" />
+      </StackPanel>
+    </Border>
+  </Design.PreviewWith>
+
+  <ControlTheme x:Key="{x:Type LoadingContentControl}" TargetType="LoadingContentControl">
+
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel>
+          <ContentPresenter Name="PART_ContentPresenter"
+                            ClipToBounds="{TemplateBinding ClipToBounds}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            TextElement.FontSize="{TemplateBinding FontSize}"
+                            Content="{TemplateBinding Content}"
+                            Padding="{TemplateBinding Padding}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" />
+
+          <Border Name="PART_LoadingElement"
+                  Padding="{TemplateBinding Margin}"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  ClipToBounds="True">
+            <ProgressBar IsVisible="{TemplateBinding LoadingAnimationEnabled}"
+                         Background="Transparent"
+                         VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                         IsIndeterminate="True"
+                         ClipToBounds="True">
+              <ProgressBar.Foreground>
+                <LinearGradientBrush>
+                  <GradientStop Offset="0" Color="{DynamicResource Layer2BackgroundBrush}" />
+                  <GradientStop Offset="0.1" Color="{DynamicResource Layer2BackgroundBrush}" />
+                  <GradientStop Offset="0.5" Color="{DynamicResource Layer2BackgroundBrushLight1}" />
+                  <GradientStop Offset="0.9" Color="{DynamicResource Layer2BackgroundBrush}" />
+                  <GradientStop Offset="1" Color="{DynamicResource Layer2BackgroundBrush}" />
+                </LinearGradientBrush>
+              </ProgressBar.Foreground>
+            </ProgressBar>
+          </Border>
+
+        </Panel>
+
+      </ControlTemplate>
+    </Setter>
+
+    <Style Selector="^ /template/ Border#PART_LoadingElement">
+      <Setter Property="IsVisible" Value="False" />
+      <Setter Property="CornerRadius" Value="30" />
+      <Setter Property="Opacity" Value="0.4" />
+      <Setter Property="Background" Value="{DynamicResource Layer2BackgroundBrush}" />
+    </Style>
+
+    <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Opacity" Value="0" />
+    </Style>
+    <Style Selector="^[IsLoading=False] /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Opacity" Value="1" />
+    </Style>
+
+    <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Transitions">
+        <Transitions>
+          <DoubleTransition Property="Opacity" Duration="0:0:.5" Easing="{StaticResource FluentEasing}" />
+        </Transitions>
+      </Setter>
+    </Style>
+
+    <!-- Loading state -->
+    <Style Selector="^[IsLoading=True] /template/ Border#PART_LoadingElement">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+
+  </ControlTheme>
+
+</ResourceDictionary>

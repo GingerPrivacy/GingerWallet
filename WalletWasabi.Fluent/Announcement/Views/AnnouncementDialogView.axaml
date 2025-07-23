@@ -12,6 +12,11 @@
   <ContentArea Title="{Binding Announcement.Title}"
                Caption="{Binding Announcement.Caption}"
                EnableNext="True" NextContent="{x:Static lang:Resources.Done}">
+    <ContentArea.BottomContent>
+      <TextBlock Text="{Binding Announcement.Date}"
+                 HorizontalAlignment="Center" VerticalAlignment="Center"
+                 Opacity="0.6" />
+    </ContentArea.BottomContent>
     <mdxaml:MarkdownScrollViewer Markdown="{Binding Announcement.MarkdownText}">
       <mdxaml:MarkdownScrollViewer.Styles>
         <StyleInclude Source="avares://WalletWasabi.Fluent/Styles/Markdown.axaml" />

@@ -9,12 +9,6 @@
              x:DataType="viewModels:AnnouncementIconViewModel"
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.Announcement.Views.AnnouncementIcon">
-  <UserControl.Transitions>
-    <Transitions>
-      <TransformOperationsTransition Property="RenderTransform" Duration="0:0:.5" Easing="{StaticResource FluentEasing}" />
-      <DoubleTransition Property="Opacity" Duration="0:0:.5" Easing="{StaticResource FluentEasing}"/>
-    </Transitions>
-  </UserControl.Transitions>
   <UserControl.Styles>
 
     <Style Selector="FlyoutPresenter">
@@ -99,14 +93,15 @@
     <FlyoutBase.AttachedFlyout>
       <Flyout Placement="Bottom" ShowMode="TransientWithDismissOnPointerMoveAway">
         <StackPanel Spacing="10">
-          <DockPanel>
-            <Button Classes="plain" DockPanel.Dock="Right" HorizontalAlignment="Right" ToolTip.Tip="{x:Static lang:Resources.MarkAllAsRead}"
+          <Grid ColumnDefinitions="20,*,20">
+            <TextBlock Grid.Column="1" Text="{x:Static lang:Resources.Announcements}" HorizontalAlignment="Center" />
+            <Button Grid.Column="2" Classes="plain" HorizontalAlignment="Right"
+                    ToolTip.Tip="{x:Static lang:Resources.MarkAllAsRead}"
                     IsVisible="{Binding Announcements.HasUnreadAnnouncements^}"
                     Command="{Binding MarkAllAsReadCommand}">
               <PathIcon Data="{StaticResource mark_all_read}" Opacity="0.6" Height="15" VerticalAlignment="Center"/>
             </Button>
-            <TextBlock Text="{x:Static lang:Resources.Announcements}" HorizontalAlignment="Center" />
-          </DockPanel>
+          </Grid>
           <ListBox ItemsSource="{Binding Announcements.List}" SelectedItem="{Binding SelectedAnnouncement}" MaxHeight="400" Width="350" Margin="0 0 0 10">
             <ListBox.DataTemplates>
 

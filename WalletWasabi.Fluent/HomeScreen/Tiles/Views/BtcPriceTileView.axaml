@@ -17,11 +17,18 @@
         <Setter Property="MaxHeight" Value="25"/>
         <Setter Property="Opacity" Value="0.3"/>
       </Style>
+      <Style Selector="Viewbox.correctedHeight">
+        <Setter Property="MaxHeight" Value="40" />
+        <Setter Property="Opacity" Value="1" />
+      </Style>
     </TileControl.Styles>
     <Viewbox VerticalAlignment="Center" HorizontalAlignment="Center"
-             Classes.small="{Binding !IsRateAvailable}">
-      <TextBlock Classes="h2 monoSpaced bold" TextAlignment="Center"
-                 Text="{Binding ExchangeRateText^}" />
+             Classes.small="{Binding !IsRateAvailable}"
+             Classes.correctedHeight="{Binding IsFetching}">
+      <LoadingContentControl IsLoading="{Binding IsFetching}">
+        <TextBlock Classes="h2 monoSpaced bold" TextAlignment="Center"
+                   Text="{Binding ExchangeRateText^}" />
+      </LoadingContentControl>
     </Viewbox>
   </TileControl>
 </UserControl>

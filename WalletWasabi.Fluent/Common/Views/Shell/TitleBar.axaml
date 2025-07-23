@@ -41,47 +41,11 @@
     <DataTemplate x:Key="AnnouncementIcon">
       <views1:AnnouncementIcon DataContext="{Binding #UserControl.DataContext.AnnouncementIcon}"
                                VerticalAlignment="Center"
+                               Classes="transitionOS hide"
                                Classes.show="{Binding Announcements.HasAny^, Converter={x:Static converters:BoolOpacityConverters.BoolToOpacity}}"
                                IsVisible="{Binding $self.Opacity, Converter={x:Static converters:BoolOpacityConverters.OpacityToBool}}"
                                ClipToBounds="False"
-                               Foreground="{DynamicResource AcrylicTrimForeground}">
-        <views1:AnnouncementIcon.Styles>
-          <Style Selector="views1|AnnouncementIcon">
-            <Setter Property="Opacity" Value="0" />
-            <Setter Property="RenderTransform" Value="scale(0.8,0.8)" />
-          </Style>
-          <Style Selector="views1|AnnouncementIcon.show">
-            <Setter Property="Opacity" Value="1" />
-            <Setter Property="RenderTransform" Value="scale(1,1)" />
-          </Style>
-        </views1:AnnouncementIcon.Styles>
-      </views1:AnnouncementIcon>
-    </DataTemplate>
-
-    <DataTemplate x:Key="TwoFactorBadge">
-      <Panel IsVisible="{Binding !#UserControl.DataContext.SettingsPage.SecuritySettingsTab.TwoFactorEnabled}">
-        <Interaction.Behaviors>
-          <ShowFlyoutOnPointerOverBehavior />
-        </Interaction.Behaviors>
-        <FlyoutBase.AttachedFlyout>
-          <Flyout Placement="Bottom" ShowMode="TransientWithDismissOnPointerMoveAway">
-
-            <DockPanel Margin="10" MaxWidth="250">
-              <Viewbox DockPanel.Dock="Top" Height="40" HorizontalAlignment="Center">
-                <PathIcon Data="{StaticResource warning_regular}" />
-              </Viewbox>
-              <TextBlock Margin="0 10 0 20" DockPanel.Dock="Top" Classes="h8" TextWrapping="Wrap" TextAlignment="Center" Text= "{x:Static lang:Resources.TwoFactorDisabledWarnMessage}" />
-              <Button DockPanel.Dock="Bottom" Focusable="False" Content="{x:Static lang:Resources.TwoFactorDisabledWarnMessageOpenSettings}"
-                      Classes="h8 plain activeHyperLink" Cursor="Hand"
-                      HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                      Command="{Binding #UserControl.DataContext.SettingsPage.OpenSecurityTabCommand}">
-              </Button>
-            </DockPanel>
-          </Flyout>
-        </FlyoutBase.AttachedFlyout>
-
-        <PathIcon Height="20" VerticalAlignment="Center" Data="{StaticResource shield_lock}" Foreground="{DynamicResource WarningMessageForeground}" />
-      </Panel>
+                               Foreground="{DynamicResource AcrylicTrimForeground}" />
     </DataTemplate>
 
     <DataTemplate x:Key="WindowsLayout">
@@ -105,7 +69,6 @@
 
         <StackPanel Spacing="20" Orientation="Horizontal" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 8 0">
           <shell1:NetworkBadge />
-          <ContentControl ContentTemplate="{StaticResource TwoFactorBadge}" />
         </StackPanel>
       </Grid>
     </DataTemplate>
@@ -130,7 +93,6 @@
 
         <StackPanel Spacing="20" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 8 0" Grid.Column="3">
           <shell1:NetworkBadge />
-          <ContentControl ContentTemplate="{StaticResource TwoFactorBadge}" />
         </StackPanel>
       </Grid>
     </DataTemplate>
@@ -154,7 +116,6 @@
 
         <StackPanel Spacing="18" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,0,10,0" Grid.Column="3">
           <shell1:NetworkBadge />
-          <ContentControl ContentTemplate="{StaticResource TwoFactorBadge}" />
           <ContentControl ContentTemplate="{StaticResource StatusIcon}" />
         </StackPanel>
       </Grid>

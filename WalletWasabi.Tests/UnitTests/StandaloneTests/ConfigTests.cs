@@ -35,7 +35,7 @@ public class ConfigTests
 		}
 		{
 			// Change coordination fee rate.
-			config.CoordinationFeeRate = new CoordinationFeeRate(rate: 0.006m, plebsDontPayThreshold: Money.Coins(0.01m));
+			config.CoordinationFeeRate = new CoordinationFeeRate(rate: 0.006m, plebsDontPayThreshold: Money.Coins(0.03m));
 
 			// Change should be detected.
 			Assert.True(ConfigManager.CheckFileChange(configPath, config));
@@ -106,7 +106,7 @@ public class ConfigTests
 			  "RoundDestroyerThreshold": 375,
 			  "CoordinationFeeRate": {
 			    "Rate": {{coordinationFeeRate}},
-			    "PlebsDontPayThreshold": 1000000
+			    "PlebsDontPayThreshold": 3000000
 			  },
 			  "CoordinatorExtPubKey": "xpub6C13JhXzjAhVRgeTcRSWqKEPe1vHi3Tmh2K9PN1cZaZFVjjSaj76y5NNyqYjc2bugj64LVDFYu8NZWtJsXNYKFb9J94nehLAPAKqKiXcebC",
 			  "CoordinatorExtPubKeyCurrentDepth": 1,

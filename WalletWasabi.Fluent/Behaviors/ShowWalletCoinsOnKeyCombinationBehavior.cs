@@ -5,6 +5,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.VisualTree;
 using Avalonia.Xaml.Interactions.Custom;
+using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.HomeScreen.Wallets.ViewModels;
 
 namespace WalletWasabi.Fluent.Behaviors;
@@ -73,7 +74,7 @@ public class ShowWalletCoinsOnKeyCombinationBehavior : AttachedToVisualTreeBehav
 
 		if (_key1Active && _key2Active && _key3Active && Wallet is { IsActive: true })
 		{
-			Wallet.WalletCoinsCommand.Execute(default);
+			Wallet.WalletCoinsCommand.ExecuteIfCan();
 		}
 	}
 

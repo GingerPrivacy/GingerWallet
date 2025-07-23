@@ -19,7 +19,7 @@ public enum WasabiInstanceStatus
 
 public class SingleInstanceChecker : BackgroundService, IAsyncDisposable
 {
-	private const string WasabiMagicString = "InBitcoinWeTrust";
+	private const string GingerMagicString = "PrivacyByDefault";
 	public static readonly TimeSpan ClientTimeOut = TimeSpan.FromSeconds(2);
 
 	/// <summary>Multiplier to be applied to all timeouts in this class.</summary>
@@ -124,7 +124,7 @@ public class SingleInstanceChecker : BackgroundService, IAsyncDisposable
 		await using var writer = new StreamWriter(networkStream, Encoding.UTF8);
 #pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
 
-		await writer.WriteAsync(WasabiMagicString.AsMemory(), cts.Token).ConfigureAwait(false);
+		await writer.WriteAsync(GingerMagicString.AsMemory(), cts.Token).ConfigureAwait(false);
 		await writer.FlushAsync().ConfigureAwait(false);
 		await networkStream.FlushAsync(cts.Token).ConfigureAwait(false);
 
@@ -134,9 +134,9 @@ public class SingleInstanceChecker : BackgroundService, IAsyncDisposable
 
 	private static int NetworkToPort(Network network) => network switch
 	{
-		_ when network == Network.Main => 37129,
-		_ when network == Network.TestNet => 37130,
-		_ when network == Network.RegTest => 37131,
+		_ when network == Network.Main => 37132,
+		_ when network == Network.TestNet => 37133,
+		_ when network == Network.RegTest => 37134,
 		_ => throw new Exception($"Network {network} is unknown")
 	};
 
@@ -178,9 +178,9 @@ public class SingleInstanceChecker : BackgroundService, IAsyncDisposable
 
 					// The read operation cancellation will happen on reader disposal.
 					string answer = await reader.ReadToEndAsync(cts.Token).ConfigureAwait(false);
-					if (answer == WasabiMagicString)
+					if (answer == GingerMagicString)
 					{
-						Logger.LogInfo($"Detected another Ginger/Wasabi instance.");
+						Logger.LogInfo($"Detected another Ginger instance.");
 						OtherInstanceStarted?.Invoke(this, EventArgs.Empty);
 					}
 				}

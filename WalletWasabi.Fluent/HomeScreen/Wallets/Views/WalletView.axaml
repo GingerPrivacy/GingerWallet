@@ -56,7 +56,7 @@
     <ContentArea.TopContent>
       <StackPanel Spacing="20" Orientation="Horizontal" VerticalAlignment="Top">
 
-        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+        <StackPanel HorizontalAlignment="Center" Spacing="1" Orientation="Horizontal">
 
           <!-- Sell -->
           <Panel>
@@ -73,7 +73,7 @@
                      VerticalAlignment="Top" HorizontalAlignment="Left"
                      Width="11" Height="11"
                      Stroke="{DynamicResource RegionBrush}" StrokeThickness="2"
-                     Fill="{DynamicResource WarningMessageForeground}"/>
+                     Fill="{DynamicResource WarningMessageForeground}" />
 
           </Panel>
 
@@ -82,7 +82,8 @@
 
             <Button Theme="{StaticResource SecondaryFunctionButton}"
                     Classes.single="{Binding !IsSendButtonVisible}"
-                    Command="{Binding BuyCommand}">
+                    Command="{Binding BuyCommand}"
+                    IsVisible="{Binding !WalletModel.Settings.IsRecovering}">
               <Button.Styles>
                 <Style Selector="Button">
                   <Setter Property="CornerRadius" Value="0 20 20 0" />
@@ -99,7 +100,7 @@
                      VerticalAlignment="Top" HorizontalAlignment="Right"
                      Width="11" Height="11"
                      Stroke="{DynamicResource RegionBrush}" StrokeThickness="2"
-                     Fill="{DynamicResource WarningMessageForeground}"/>
+                     Fill="{DynamicResource WarningMessageForeground}" />
 
           </Panel>
         </StackPanel>
@@ -120,20 +121,22 @@
 
           <!-- Send -->
           <SubActionButton Content="{x:Static lang:Resources.WalletSend}"
+                           DefaultSource="Send"
                            CornerRadius="20 0 0 20"
                            HorizontalContentAlignment="Center"
-                           Command="{Binding SendCommand}"
                            IsVisible="{Binding IsSendButtonVisible}">
             <SubActionButton.SubCommands>
               <UICommandCollection>
-                <UICommand Name="{x:Static lang:Resources.WalletAutomatic}" Command="{Binding SendCommand}"
-                           IsDefault="True">
+                <UICommand Key="Automatic"
+                           Name="{x:Static lang:Resources.WalletAutomatic}"
+                           Command="{Binding SendCommand}">
                   <UICommand.Icon>
                     <PathIcon Data="{StaticResource automatic_control}"
                               Classes="Icon" />
                   </UICommand.Icon>
                 </UICommand>
-                <UICommand Name="{x:Static lang:Resources.WalletManualControl}"
+                <UICommand Key="Manual"
+                           Name="{x:Static lang:Resources.WalletManualControl}"
                            Command="{Binding SendManualControlCommand}">
                   <UICommand.Icon>
                     <PathIcon Data="{StaticResource manual_control}"
@@ -147,7 +150,8 @@
           <!-- Receive -->
           <Button Theme="{StaticResource FunctionButton}"
                   Classes.single="{Binding !IsSendButtonVisible}"
-                  Command="{Binding ReceiveCommand}">
+                  Command="{Binding ReceiveCommand}"
+                  IsVisible="{Binding !WalletModel.Settings.IsRecovering}">
             <Button.Styles>
               <Style Selector="Button">
                 <Setter Property="CornerRadius" Value="0 20 20 0" />
@@ -166,8 +170,8 @@
     <DockPanel Name="Panel" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
       <views1:WalletTiles DataContext="{Binding Tiles}" DockPanel.Dock="Top" Margin="-6 -6 0 0" />
       <views:HistoryTable Name="HistoryTable"
-                            DataContext="{Binding History}"
-                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                          DataContext="{Binding History}"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
     </DockPanel>
   </ContentArea>
 </UserControl>

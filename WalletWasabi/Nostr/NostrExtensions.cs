@@ -11,32 +11,31 @@ using WalletWasabi.Helpers;
 
 namespace WalletWasabi.Nostr;
 
-public record NostrCoordinator(string Description, string Name, Uri Uri, Network Network)
+public record NostrCoordinator
 {
-	private static NostrCoordinator Ginger = new(
-		Description: "Official Coordinator | FREE Remix, FREE under 0.01 BTC till Wasabi Wallet v2.0.8.1 and for Ginger Wallet | Secure Coinjoin - Illicit actors are not allowed to participate! | gingerwallet.io",
-		Name: "Ginger Coordinator",
-		Uri: new Uri(Constants.BackendUri),
-		Network: Network.Main);
-
-	public static NostrCoordinator GetCoordinator(Network network)
+	public NostrCoordinator(Network network, Money plebsDontPayThreshold)
 	{
-		if (network == Network.Main)
-		{
-			return Ginger;
-		}
+		Network = network;
+		PlebsDontPayThreshold = plebsDontPayThreshold;
+		Description = $"Official Coordinator | FREE Remix, FREE under {PlebsDontPayThreshold.ToString(false, true)} BTC till Wasabi Wallet v2.0.8.1 and for Ginger Wallet | Secure Coinjoin - Illicit actors are not allowed to participate! | gingerwallet.io";
+		Uri = Network == Network.Main
+			? new Uri(Constants.BackendUri)
+			: Network == Network.TestNet
+				? new Uri(Constants.TestnetBackendUri)
+				: new Uri("http://localhost:37127/");
+	}
+	public string Description { get; private set; }
 
-		if (network == Network.TestNet)
-		{
-			return Ginger with { Uri = new Uri(Constants.TestnetBackendUri), Network = Network.TestNet };
-		}
+	public string Name => "Ginger Coordinator";
 
-		if (network == Network.RegTest)
-		{
-			return Ginger with { Uri = new Uri("http://localhost:37127/"), Network = Network.RegTest };
-		}
+	public Uri Uri { get; private set; }
 
-		throw new NotSupportedNetworkException(network);
+	public Network Network { get; private set; }
+	public Money PlebsDontPayThreshold { get; }
+
+	public static NostrCoordinator GetCoordinator(Network network, Money plebsDontPayThreshold)
+	{
+		return new NostrCoordinator(network, plebsDontPayThreshold);
 	}
 };
 

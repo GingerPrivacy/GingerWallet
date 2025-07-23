@@ -24,7 +24,7 @@ public partial class AmountProvider : ReactiveObject
 		ExchangeRateObservable = Observable
 			.FromEventPattern<decimal>(_exchangeRateService, nameof(_exchangeRateService.ExchangeRateChanged))
 			.Select(x => x.EventArgs)
-			.StartWith(exchangeRateService.ExchangeRate?.Value ?? 0)
+			.StartWith(exchangeRateService.ExchangeRate?.Value ?? -1)
 			.ObserveOn(RxApp.MainThreadScheduler)
 			.ReplayLastActive();
 

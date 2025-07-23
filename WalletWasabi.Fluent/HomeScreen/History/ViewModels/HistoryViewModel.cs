@@ -16,6 +16,7 @@ using WalletWasabi.Fluent.Controls.Sorting;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.HomeScreen.History.ViewModels.HistoryItems;
 using WalletWasabi.Fluent.HomeScreen.History.Views.Columns;
+using WalletWasabi.Fluent.HomeScreen.Loading.ViewModels;
 using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.TreeDataGrid;
@@ -26,8 +27,6 @@ namespace WalletWasabi.Fluent.HomeScreen.History.ViewModels;
 [AppLifetime]
 public partial class HistoryViewModel : ActivatableViewModel
 {
-	private readonly WalletModel _wallet;
-
 	[AutoNotify(SetterModifier = AccessModifier.Private)]
 	private HierarchicalTreeDataGridSource<HistoryItemViewModelBase>? _source; // This will get its value as soon as this VM is activated.
 
@@ -39,8 +38,13 @@ public partial class HistoryViewModel : ActivatableViewModel
 
 	public HistoryViewModel(WalletModel wallet)
 	{
-		_wallet = wallet;
+		Wallet = wallet;
+		LoadingViewModel = new LoadingViewModel(wallet);
 	}
+
+	public WalletModel Wallet { get; }
+
+	public LoadingViewModel LoadingViewModel { get; }
 
 	public IObservableCollection<HistoryItemViewModelBase> Transactions { get; } = new ObservableCollectionExtended<HistoryItemViewModelBase>();
 
@@ -170,7 +174,12 @@ public partial class HistoryViewModel : ActivatableViewModel
 	{
 		base.OnActivated(disposables);
 
-		_wallet.Transactions.Cache.Connect()
+		if (!Wallet.IsLoaded)
+		{
+			LoadingViewModel.Activate(disposables);
+		}
+
+		Wallet.Transactions.Cache.Connect()
 			.Transform(x => CreateViewModel(x))
 			.Sort(
 				SortExpressionComparer<HistoryItemViewModelBase>
@@ -180,7 +189,7 @@ public partial class HistoryViewModel : ActivatableViewModel
 			.Subscribe()
 			.DisposeWith(disposables);
 
-		_wallet.Transactions.IsEmpty
+		Wallet.Transactions.IsEmpty
 			.BindTo(this, x => x.IsTransactionHistoryEmpty)
 			.DisposeWith(disposables);
 
@@ -224,14 +233,14 @@ public partial class HistoryViewModel : ActivatableViewModel
 	{
 		HistoryItemViewModelBase viewModel = transaction.Type switch
 		{
-			TransactionType.IncomingTransaction => new TransactionHistoryItemViewModel(_wallet, transaction),
-			TransactionType.OutgoingTransaction => new TransactionHistoryItemViewModel(_wallet, transaction),
-			TransactionType.SelfTransferTransaction => new TransactionHistoryItemViewModel(_wallet, transaction),
-			TransactionType.Coinjoin => new CoinJoinHistoryItemViewModel(_wallet, transaction),
-			TransactionType.CoinjoinGroup => new CoinJoinsHistoryItemViewModel(_wallet, transaction),
-			TransactionType.Cancellation => new TransactionHistoryItemViewModel(_wallet, transaction),
-			TransactionType.CPFP => new SpeedUpHistoryItemViewModel(_wallet, transaction, parent),
-			_ => new TransactionHistoryItemViewModel(_wallet, transaction)
+			TransactionType.IncomingTransaction => new TransactionHistoryItemViewModel(Wallet, transaction),
+			TransactionType.OutgoingTransaction => new TransactionHistoryItemViewModel(Wallet, transaction),
+			TransactionType.SelfTransferTransaction => new TransactionHistoryItemViewModel(Wallet, transaction),
+			TransactionType.Coinjoin => new CoinJoinHistoryItemViewModel(Wallet, transaction),
+			TransactionType.CoinjoinGroup => new CoinJoinsHistoryItemViewModel(Wallet, transaction),
+			TransactionType.Cancellation => new TransactionHistoryItemViewModel(Wallet, transaction),
+			TransactionType.CPFP => new SpeedUpHistoryItemViewModel(Wallet, transaction, parent),
+			_ => new TransactionHistoryItemViewModel(Wallet, transaction)
 		};
 
 		var children = transaction.Children.Reverse();

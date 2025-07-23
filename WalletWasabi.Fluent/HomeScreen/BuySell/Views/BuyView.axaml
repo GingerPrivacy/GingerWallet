@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.HomeScreen.BuySell.ViewModels"
-             xmlns:buySell1="clr-namespace:WalletWasabi.Fluent.HomeScreen.BuySell.Models"
+             xmlns:buySell="clr-namespace:WalletWasabi.Daemon.BuySell;assembly=WalletWasabi.Daemon"
              mc:Ignorable="d"
              x:DataType="viewModels:BuyViewModel"
              x:CompileBindings="True"
@@ -73,7 +73,7 @@
                     Height="38"
                     MinWidth="80">
             <ComboBox.ItemTemplate>
-              <DataTemplate x:DataType="buySell1:CurrencyModel">
+              <DataTemplate x:DataType="buySell:CurrencyModel">
                 <TextBlock Text="{Binding Ticker}" ToolTip.Tip="{Binding Name}" />
               </DataTemplate>
             </ComboBox.ItemTemplate>

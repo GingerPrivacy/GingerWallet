@@ -120,9 +120,6 @@
   <data name="Open" xml:space="preserve">
     <value>Abrir</value>
   </data>
-  <data name="TwoFactorDisabledWarnMessage" xml:space="preserve">
-    <value>La autenticación de dos factores está deshabilitada. Actívala en la Configuración para mayor protección.</value>
-  </data>
   <data name="AddWalletPageViewModelTitle" xml:space="preserve">
     <value>Añadir cartera</value>
   </data>
@@ -285,9 +282,6 @@
   <data name="SettingsPageViewModelTitle" xml:space="preserve">
     <value>Configuración</value>
   </data>
-  <data name="TwoFactorDisabledWarnMessageOpenSettings" xml:space="preserve">
-    <value>Abrir configuración</value>
-  </data>
   <data name="LoadingViewModelPercentCompleted" xml:space="preserve">
     <value>{0}% completado</value>
   </data>
@@ -311,15 +305,6 @@
   </data>
   <data name="Plural" xml:space="preserve">
     <value>\0</value>
-  </data>
-  <data name="LoadingViewDownloadText" xml:space="preserve">
-    <value>Descargando y procesando datos de la red de Bitcoin</value>
-  </data>
-  <data name="LoadingViewThirdparty" xml:space="preserve">
-    <value>Ginger hace esto sin que ningún tercero conozca tu saldo y actividad financiera.</value>
-  </data>
-  <data name="LoadingViewProcessLonger" xml:space="preserve">
-    <value>Este proceso será más largo en el primer lanzamiento, con carteras más grandes o si ha pasado más tiempo entre las sincronizaciones.</value>
   </data>
   <data name="WalletBalance" xml:space="preserve">
     <value>SALDO</value>
@@ -1225,7 +1210,7 @@
     <value>Términos y condiciones</value>
   </data>
   <data name="TermsAndConditionsViewIAgree" xml:space="preserve">
-    <value>Acepto los </value>
+    <value>Acepto los</value>
   </data>
   <data name="ResyncWallet" xml:space="preserve">
     <value>Resincronizar Cartera</value>
@@ -1927,7 +1912,7 @@
     <value>¡Debes aceptar los Términos y Condiciones!</value>
   </data>
   <data name="CompatibilityPassphraseUsed" xml:space="preserve">
-    <value>¡Se utilizó una passphrase de compatibilidad! Por favor, considere generar una nueva billetera para asegurar la recuperabilidad.</value>
+    <value>¡Se utilizó una passphrase de compatibilidad! Por favor, considere generar una nueva billetera para asegurar la recuperabilidad!</value>
   </data>
   <data name="PassphraseTooLong" xml:space="preserve">
     <value>La passphrase es demasiado larga.</value>
@@ -2072,10 +2057,10 @@
 {0}</value>
   </data>
   <data name="DecimalSeparator" xml:space="preserve">
-    <value>Separador Decimal de Números</value>
+    <value>Separador decimal de números</value>
   </data>
   <data name="GroupSeparator" xml:space="preserve">
-    <value>Separador de Grupos de Números</value>
+    <value>Separador de grupos de números</value>
   </data>
   <data name="DotEnum" xml:space="preserve">
     <value>Punto</value>
@@ -2127,5 +2112,11 @@
   </data>
   <data name="CouldntDeleteWalletCheckLogs" xml:space="preserve">
     <value>No se pudo eliminar la cartera, consulta los registros para más detalles.</value>
+  </data>
+    <data name="SyncingYourWallet" xml:space="preserve">
+    <value>Sincronizando tu cartera...</value>
+  </data>
+    <data name="SetAsDefault" xml:space="preserve">
+    <value>Establecer como predeterminado</value>
   </data>
 </root>

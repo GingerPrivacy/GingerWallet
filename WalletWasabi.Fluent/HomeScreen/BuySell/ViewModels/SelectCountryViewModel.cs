@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using ReactiveUI;
+using WalletWasabi.Daemon.BuySell;
 using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
 using WalletWasabi.Fluent.HomeScreen.BuySell.Models;
 using WalletWasabi.Lang;

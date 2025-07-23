@@ -55,6 +55,7 @@ public partial class LoginViewModel : RoutableViewModel
 		var termsAndConditionsAccepted = await TermsAndConditionsViewModel.TryShowAsync(UiContext, walletModel);
 		if (termsAndConditionsAccepted)
 		{
+			await walletModel.Loader.WaitingForBackgroundServicesAsync();
 			walletModel.Auth.CompleteLogin();
 		}
 		else

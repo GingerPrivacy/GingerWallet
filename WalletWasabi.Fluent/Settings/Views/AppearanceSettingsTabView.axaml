@@ -23,7 +23,6 @@
         <Setter Property="DockPanel.Dock" Value="Left"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="Margin" Value="0 0 10 0"/>
-        <Setter Property="FontWeight" Value="Bold"/>
       </Style>
 
       <Style Selector="TextBlock.exampleValue">

@@ -187,7 +187,9 @@ public class KeyManager : IJsonOnSerializing, IJsonOnDeserialized
 	/// </summary>
 	public Money PlebStopThreshold { get => Attributes.PlebStopThreshold; set => Attributes.PlebStopThreshold = value; }
 
+	[JsonInclude]
 	public string? Icon { get => Attributes.Icon; private set => Attributes.Icon = value; }
+
 	public int AnonScoreTarget { get => Attributes.AnonScoreTarget; set => Attributes.AnonScoreTarget = value; }
 
 	public int SafeMiningFeeRate { get => Attributes.SafeMiningFeeRate; set => Attributes.SafeMiningFeeRate = value; }
@@ -201,7 +203,7 @@ public class KeyManager : IJsonOnSerializing, IJsonOnDeserialized
 	public BuySellWalletData BuySellWalletData { get => Attributes.BuySellWalletData; set => Attributes.BuySellWalletData = value; }
 
 	[JsonInclude]
-	private List<HdPubKey> HdPubKeys { get; } = new();
+	private List<HdPubKey> HdPubKeys { get; set; } = new();
 
 	[JsonIgnore]
 	public string? FilePath { get; private set; }
@@ -742,7 +744,7 @@ public class KeyManager : IJsonOnSerializing, IJsonOnDeserialized
 		}
 	}
 
-	public void SetBestHeights(Height height, Height turboSyncHeight)
+	public void SetBestHeights(Height height)
 	{
 		lock (CriticalStateLock)
 		{
@@ -758,7 +760,7 @@ public class KeyManager : IJsonOnSerializing, IJsonOnDeserialized
 			var prevHeight = BlockchainState.Height;
 			if (newHeight < prevHeight)
 			{
-				SetBestHeights(newHeight, newHeight);
+				SetBestHeights(newHeight);
 				Logger.LogWarning($"Wallet ({WalletName}) height has been set back by {prevHeight - (int)newHeight}. From {prevHeight} to {newHeight}.");
 			}
 		}
@@ -793,7 +795,7 @@ public class KeyManager : IJsonOnSerializing, IJsonOnDeserialized
 			if (lastNetwork is null || lastNetwork != expectedNetwork)
 			{
 				BlockchainState.Network = expectedNetwork;
-				SetBestHeights(0, 0);
+				SetBestHeights(0);
 
 				if (lastNetwork is { })
 				{
