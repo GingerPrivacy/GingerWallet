@@ -152,7 +152,7 @@ public static class Program
 					"cmd.exe",
 					@"C:\Program Files (x86)\Microsoft SDKs\ClickOnce\SignTool",  // Set the working directory
 					null,
-					$"/c \"signtool.exe sign /sha1 \"1ea07c6629c5b0b23a4a108e542d77fea9ad3840\" /tr http://time.certum.pl /td sha256 /fd sha256 /v \"{newMsiPath}\" && exit\""
+					$"/c \"signtool.exe sign /sha1 \"11b23b66b96261629cff1b08a28518309352ff7d\" /tr http://time.certum.pl /td sha256 /fd sha256 /v \"{newMsiPath}\" && exit\""
 				);
 
 				await IoHelpers.TryDeleteDirectoryAsync(publishedFolder).ConfigureAwait(false);
