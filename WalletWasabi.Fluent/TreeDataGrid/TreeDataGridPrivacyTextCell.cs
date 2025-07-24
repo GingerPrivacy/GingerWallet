@@ -9,6 +9,7 @@ using Avalonia.Interactivity;
 using Avalonia.Media;
 using ReactiveUI;
 using WalletWasabi.Fluent.Helpers;
+using WalletWasabi.Fluent.Models.UI;
 
 namespace WalletWasabi.Fluent.TreeDataGrid;
 
@@ -110,7 +111,7 @@ public class TreeDataGridPrivacyTextCell : TreeDataGridCell
 
 		_subscription = PrivacyModeHelper.DelayedRevealAndHide(
 				this.WhenAnyValue(x => x.IsPointerOver),
-				Services.UiConfig.WhenAnyValue(x => x.PrivacyMode))
+				UiContext.Default.ApplicationSettings.WhenAnyValue(x => x.PrivacyMode))
 			.ObserveOn(RxApp.MainThreadScheduler)
 			.SkipWhile(_ => _ignorePrivacyMode)
 			.Do(SetContentVisible)

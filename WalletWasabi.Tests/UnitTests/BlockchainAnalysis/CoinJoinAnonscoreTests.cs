@@ -4,6 +4,7 @@ using WalletWasabi.Blockchain.Analysis;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Tests.Helpers;
 using WalletWasabi.Tests.Helpers.AnalyzedTransaction;
+using WalletWasabi.Tests.TestCommon;
 using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests.BlockchainAnalysis;
@@ -416,13 +417,14 @@ public class CoinJoinAnonScoreTests
 	[Fact]
 	public void SiblingCoinjoinDoesntContributeToAnonScore()
 	{
-		var tx1 = new AnalyzedTransaction();
+		var rnd = TestRandom.Get();
+		var tx1 = new AnalyzedTransaction(rnd);
 		tx1.AddForeignInput();
 		tx1.AddWalletInput();
 		var a = tx1.AddForeignOutput();
 		var b = tx1.AddWalletOutput();
 
-		var tx2 = new AnalyzedTransaction();
+		var tx2 = new AnalyzedTransaction(rnd);
 		tx2.AddForeignInput(a);
 		tx2.AddWalletInput(b);
 		tx2.AddForeignOutput();
@@ -437,20 +439,21 @@ public class CoinJoinAnonScoreTests
 	[Fact]
 	public void EarlierSiblingCoinjoinDoesntContributeToAnonScore()
 	{
-		var tx1 = new AnalyzedTransaction();
+		var rnd = TestRandom.Get();
+		var tx1 = new AnalyzedTransaction(rnd);
 		tx1.AddForeignInput();
 		tx1.AddWalletInput(anonymity: 10);
 		var a = tx1.AddForeignOutput();
 		var b = tx1.AddWalletOutput();
 
-		var tx2 = new AnalyzedTransaction();
+		var tx2 = new AnalyzedTransaction(rnd);
 		tx2.AddForeignInput();
 		tx2.AddWalletInput(b);
 		var c = tx2.AddForeignOutput();
 		var d = tx2.AddWalletOutput();
 		var e = tx2.AddWalletOutput();
 
-		var tx3 = new AnalyzedTransaction();
+		var tx3 = new AnalyzedTransaction(rnd);
 		tx3.AddForeignInput(a);
 		tx3.AddForeignInput(c);
 		tx3.AddWalletInput(d);

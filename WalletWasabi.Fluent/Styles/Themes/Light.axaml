@@ -42,7 +42,7 @@
   <Color x:Key="SystemAccentColorDark3">#FF715529</Color>
   <Color x:Key="SystemAccentCustomColorLight">#FF947A52</Color>
   <Color x:Key="SystemAccentCustomColorDark">#FFB29B78</Color>
-  <Color x:Key="SystemFadedAccentCustom">#17A68D67</Color>
+  <Color x:Key="SystemFadedAccentCustom">#26A68D67</Color>
   <Color x:Key="SystemFadedAccentCustomLight">#36947A52</Color>
   <Color x:Key="SystemFadedAccentCustomDark">#40B29B78</Color>
 

@@ -72,7 +72,7 @@ public partial class SendViewModel : RoutableViewModel
 		_continueWithFixedAmount = continueWithFixedAmount;
 		_coinJoinManager = Services.HostedServices.GetOrDefault<CoinJoinManager>();
 
-		_conversionReversed = Services.UiConfig.SendAmountConversionReversed;
+		_conversionReversed = UiContext.ApplicationSettings.SendAmountConversionReversed;
 
 		ExchangeRate = _walletModel.AmountProvider.ExchangeRate;
 		FiatTicker = Resources.Culture.GetFiatTicker();
@@ -122,7 +122,7 @@ public partial class SendViewModel : RoutableViewModel
 
 		this.WhenAnyValue(x => x.ConversionReversed)
 			.Skip(1)
-			.Subscribe(x => Services.UiConfig.SendAmountConversionReversed = x);
+			.Subscribe(x => UiContext.ApplicationSettings.SendAmountConversionReversed = x);
 
 		_clipboardObserver = new ClipboardObserver(Balance);
 	}

@@ -1,34 +1,32 @@
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using WalletWasabi.Fluent.Common.ViewModels;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.Models.Wallets;
-using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.HomeScreen.Loading.ViewModels;
 
-[NavigationMetaData(NavigationTarget = NavigationTarget.HomeScreen)]
-public partial class LoadingViewModel : RoutableViewModel
+public partial class LoadingViewModel : ActivatableViewModel
 {
-	private readonly WalletModel _wallet;
-
 	[AutoNotify] private double _percent;
 	[AutoNotify] private string _statusText = " "; // Should not be empty as we have to preserve the space in the view.
-	[AutoNotify] private bool _isLoading;
 
 	public LoadingViewModel(WalletModel wallet)
 	{
-		_wallet = wallet;
+		Wallet = wallet;
 	}
 
-	public string WalletName => _wallet.Name;
+	public WalletModel Wallet { get; }
 
-	protected override void OnNavigatedTo(bool isInHistory, CompositeDisposable disposables)
+	protected override void OnActivated(CompositeDisposable disposables)
 	{
-		_wallet.Loader.Progress
-					  .Do(p => UpdateStatus(p.PercentComplete, p.TimeRemaining))
-					  .Subscribe()
-					  .DisposeWith(disposables);
+		base.OnActivated(disposables);
+
+		Wallet.Loader.Progress
+			.Do(p => UpdateStatus(p.PercentComplete, p.TimeRemaining))
+			.Subscribe()
+			.DisposeWith(disposables);
 	}
 
 	private void UpdateStatus(double percent, TimeSpan remainingTimeSpan)

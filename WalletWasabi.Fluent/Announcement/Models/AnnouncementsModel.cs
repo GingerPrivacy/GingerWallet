@@ -75,8 +75,11 @@ public class AnnouncementsModel
 			.StartWith(_announcementManager.GetAnnouncement())
 			.Do(announcements =>
 			{
-				_listCache.Clear();
-				_listCache.AddOrUpdate(announcements.Select(x => new AnnouncementModel(x)));
+				_listCache.Edit(list =>
+				{
+					list.Clear();
+					list.AddOrUpdate(announcements.Select(x => new AnnouncementModel(x)));
+				});
 			})
 			.Subscribe();
 

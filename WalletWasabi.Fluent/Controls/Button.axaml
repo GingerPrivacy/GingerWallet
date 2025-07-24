@@ -177,24 +177,16 @@
 
   <ControlTheme x:Key="SecondaryFunctionButton" TargetType="Button" BasedOn="{StaticResource FunctionButton}">
     <Setter Property="Background" Value="{DynamicResource SystemFadedAccentCustom}" />
-    <Setter Property="Foreground" Value="{DynamicResource SystemAccentColor}" />
-    <Setter Property="BorderThickness" Value="1" />
-    <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentColor}" />
+    <Setter Property="Foreground" Value="{DynamicResource SystemAccentColorLight2}" />
     <Style Selector="^:pointerover /template/ ContentPresenter">
-      <Setter Property="BorderThickness" Value="1" />
-      <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentColor}" />
       <Setter Property="Background" Value="{DynamicResource SystemFadedAccentCustomLight}" />
       <Setter Property="Foreground" Value="{DynamicResource SystemAccentColorLight3}" />
     </Style>
     <Style Selector="^:pressed /template/ ContentPresenter">
-      <Setter Property="BorderThickness" Value="1" />
-      <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentColor}" />
       <Setter Property="Background" Value="{DynamicResource SystemFadedAccentCustomDark}" />
-      <Setter Property="Foreground" Value="{DynamicResource SystemAccentColorLight2}" />
+      <Setter Property="Foreground" Value="{DynamicResource SystemAccentColorLight1}" />
     </Style>
     <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
-      <Setter Property="BorderThickness" Value="1" />
-      <Setter Property="BorderBrush" Value="{DynamicResource ActionButtonDisabledBackgroundColor}" />
       <Setter Property="Background" Value="{DynamicResource SystemFadedAccentCustom}" />
       <Setter Property="Foreground" Value="{DynamicResource ActionButtonDisabledBackgroundColor}" />
     </Style>

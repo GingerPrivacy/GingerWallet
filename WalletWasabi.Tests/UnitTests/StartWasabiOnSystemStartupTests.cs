@@ -1,6 +1,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using WalletWasabi.Daemon;
 using WalletWasabi.Fluent;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Helpers;

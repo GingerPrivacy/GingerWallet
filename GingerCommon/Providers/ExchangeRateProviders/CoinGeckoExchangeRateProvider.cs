@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using System.Net;
-using System.Net.Http.Headers;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Text.Json;
@@ -50,12 +48,6 @@ public class CoinGeckoExchangeRateProvider : ExchangeRateProvider
 			}
 		}
 		return null;
-	}
-
-	private static void AddProductInfo(HttpClient httpClient)
-	{
-		// Needed or blocked by CloudFlare
-		httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("GingerWallet", "2.0.17+"));
 	}
 
 	private class JsonRateInfo

@@ -58,12 +58,6 @@
           </ScrollViewer>
         </TabItem>
 
-        <TabItem Header="{x:Static lang:Resources.Advanced}">
-          <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-            <views:AdvancedSettingsTabView DataContext="{Binding AdvancedSettingsTab}" IsEnabled="{Binding !IsReadOnly}" />
-          </ScrollViewer>
-        </TabItem>
-
         <TabItem Header="{x:Static lang:Resources.Security}">
           <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
             <views:SecuritySettingsTabView DataContext="{Binding SecuritySettingsTab}" IsEnabled="{Binding !IsReadOnly}" />

@@ -13,15 +13,18 @@
                NextContent="{x:Static lang:Resources.WalletSend}" EnableNext="True"
                EnableCancel="{Binding EnableCancel}"
                EnableBack="{Binding EnableBack}"
-               IsBusy="{Binding IsBusy}">
+               IsBusy="{Binding IsBusy}"
+               DefaultSubCommandKey="Send">
     <ContentArea.NextSubCommands>
       <UICommandCollection>
-        <UICommand Name="{x:Static lang:Resources.WalletAutomatic}" Command="{Binding NextCommand}" IsDefault="True">
+        <UICommand Name="{x:Static lang:Resources.WalletAutomatic}" Command="{Binding NextCommand}"
+                   Key="Automatic">
           <UICommand.Icon>
             <PathIcon Data="{StaticResource automatic_control}" Classes="Icon" />
           </UICommand.Icon>
         </UICommand>
-        <UICommand Name="{x:Static lang:Resources.WalletManualControl}" Command="{Binding SendManualControlCommand}">
+        <UICommand Name="{x:Static lang:Resources.WalletManualControl}" Command="{Binding SendManualControlCommand}"
+                   Key="Manual">
           <UICommand.Icon>
             <PathIcon Data="{StaticResource manual_control}" Classes="Icon" />
           </UICommand.Icon>

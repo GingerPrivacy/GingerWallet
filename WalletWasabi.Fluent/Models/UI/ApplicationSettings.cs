@@ -7,6 +7,7 @@ using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Bases;
 using WalletWasabi.Daemon;
+using WalletWasabi.Daemon.BuySell;
 using WalletWasabi.Daemon.FeeRateProviders;
 using WalletWasabi.Exceptions;
 using WalletWasabi.Fluent.Extensions;
@@ -80,6 +81,13 @@ public partial class ApplicationSettings : ReactiveObject
 	//Buy Sell
 	[AutoNotify] private BuySellConfiguration _buySellConfiguration;
 
+	[AutoNotify] private int _feeTarget;
+	[AutoNotify] private string? _lastSelectedWallet;
+	[AutoNotify] private bool _sendAmountConversionReversed;
+	[AutoNotify] private double? _windowWidth;
+	[AutoNotify] private double? _windowHeight;
+	[AutoNotify] private DefaultCommands _defaultCommands;
+
 	public ApplicationSettings(string persistentConfigFilePath, PersistentConfig persistentConfig, Config config, UiConfig uiConfig, TwoFactorAuthentication twoFactorAuthentication)
 	{
 		_persistentConfigFilePath = persistentConfigFilePath;
@@ -131,8 +139,14 @@ public partial class ApplicationSettings : ReactiveObject
 		// Buy Sell
 		_buySellConfiguration = _uiConfig.BuySellConfiguration;
 
+		_feeTarget = _uiConfig.FeeTarget;
 		_oobe = _uiConfig.Oobe;
-		_windowState = (WindowState)Enum.Parse(typeof(WindowState), _uiConfig.WindowState);
+		_windowState = ApplicationHelper.ParseAndCorrectWindowState(_uiConfig);
+		_lastSelectedWallet = _uiConfig.LastSelectedWallet;
+		_sendAmountConversionReversed = _uiConfig.SendAmountConversionReversed;
+		_windowWidth = _uiConfig.WindowWidth;
+		_windowHeight = _uiConfig.WindowHeight;
+		_defaultCommands = _uiConfig.DefaultCommands;
 
 		// Save on change
 		this.WhenAnyValue(
@@ -168,16 +182,32 @@ public partial class ApplicationSettings : ReactiveObject
 
 		// Save UiConfig on change
 		this.WhenAnyValue(
-				x => x.DarkModeEnabled,
+				x => x.Oobe,
+				x => x.WindowState,
+				x => x.FeeTarget,
+				x => x.SelectedFeeDisplayUnit,
 				x => x.AutoCopy,
 				x => x.AutoPaste,
 				x => x.CustomChangeAddress,
-				x => x.SelectedFeeDisplayUnit,
+				x => x.PrivacyMode,
+				x => x.DarkModeEnabled,
+				x => x.LastSelectedWallet,
 				x => x.RunOnSystemStartup,
 				x => x.HideOnClose,
-				x => x.Oobe,
-				x => x.WindowState,
-				x => x.BuySellConfiguration)
+				(_, _, _, _, _, _, _, _, _, _, _, _) => Unit.Default)
+			.Skip(1)
+			.Throttle(TimeSpan.FromMilliseconds(ThrottleTime))
+			.Do(_ => ApplyUiConfigChanges())
+			.Subscribe();
+
+		this.WhenAnyValue(
+				x => x.SendAmountConversionReversed,
+				x => x.WindowWidth,
+				x => x.WindowHeight,
+				x => x.SelectedBrowser,
+				x => x.BrowserPath,
+				x => x.BuySellConfiguration,
+				x => x.DefaultCommands)
 			.Skip(1)
 			.Throttle(TimeSpan.FromMilliseconds(ThrottleTime))
 			.Do(_ => ApplyUiConfigChanges())
@@ -186,13 +216,6 @@ public partial class ApplicationSettings : ReactiveObject
 		// Saving is not necessary; this call is only for evaluating if a restart is needed.
 		this.WhenAnyValue(x => x._twoFactorAuthentication.TwoFactorEnabled)
 			.Subscribe(_ => Save());
-
-		// Save UiConfig on change without throttling
-		this.WhenAnyValue(
-				x => x.PrivacyMode)
-			.Skip(1)
-			.Do(_ => ApplyUiConfigPrivacyModeChange())
-			.Subscribe();
 
 		// Set Default BitcoinCoreDataDir if required
 		this.WhenAnyValue(x => x.StartLocalBitcoinCoreOnStartup)
@@ -208,43 +231,6 @@ public partial class ApplicationSettings : ReactiveObject
 		// Apply DoUpdateOnClose
 		this.WhenAnyValue(x => x.DoUpdateOnClose)
 			.Do(x => Services.UpdateManager.DoUpdateOnClose = x)
-			.Subscribe();
-
-		// Save browser settings
-		this.WhenAnyValue(
-			x => x.SelectedBrowser,
-			x => x.BrowserPath)
-			.Skip(1)
-			.Throttle(TimeSpan.FromMilliseconds(ThrottleTime))
-			.Do(_ =>
-			{
-				switch (SelectedBrowser)
-				{
-					case BrowserTypeDropdownListEnum.SystemDefault:
-						_uiConfig.SelectedBrowser = "";
-						BrowserPath = "";
-						break;
-
-					case BrowserTypeDropdownListEnum.Custom:
-						_uiConfig.SelectedBrowser = BrowserPath;
-						break;
-
-					default:
-						{
-							BrowserPath = "";
-							if (Enum.TryParse<BrowserType>(SelectedBrowser.ToString(), out var result))
-							{
-								_uiConfig.SelectedBrowser = result.ToString();
-							}
-							else
-							{
-								// Something went wrong, use default.
-								_uiConfig.SelectedBrowser = "";
-							}
-						}
-						break;
-				}
-			})
 			.Subscribe();
 	}
 
@@ -396,16 +382,26 @@ public partial class ApplicationSettings : ReactiveObject
 
 	private void ApplyUiConfigChanges()
 	{
-		_uiConfig.DarkModeEnabled = DarkModeEnabled;
+		_uiConfig.Oobe = Oobe;
+		_uiConfig.WindowState = WindowState.ToString();
+		_uiConfig.FeeTarget = FeeTarget;
+		_uiConfig.FeeDisplayUnit = (int)SelectedFeeDisplayUnit;
+		SetSelectedBrowser(SelectedBrowser);
 		_uiConfig.Autocopy = AutoCopy;
 		_uiConfig.AutoPaste = AutoPaste;
 		_uiConfig.IsCustomChangeAddress = CustomChangeAddress;
-		_uiConfig.FeeDisplayUnit = (int)SelectedFeeDisplayUnit;
+		_uiConfig.PrivacyMode = PrivacyMode;
+		_uiConfig.DarkModeEnabled = DarkModeEnabled;
+		_uiConfig.LastSelectedWallet = LastSelectedWallet;
 		_uiConfig.RunOnSystemStartup = RunOnSystemStartup;
 		_uiConfig.HideOnClose = HideOnClose;
-		_uiConfig.Oobe = Oobe;
-		_uiConfig.WindowState = WindowState.ToString();
+		_uiConfig.SendAmountConversionReversed = SendAmountConversionReversed;
+		_uiConfig.WindowWidth = WindowWidth;
+		_uiConfig.WindowHeight = WindowHeight;
 		_uiConfig.BuySellConfiguration = BuySellConfiguration;
+		_uiConfig.DefaultCommands = DefaultCommands;
+
+		_uiConfig.ToFile();
 	}
 
 	public void SetBuyCountry(CountrySelection country)
@@ -472,8 +468,33 @@ public partial class ApplicationSettings : ReactiveObject
 		BuySellConfiguration = current;
 	}
 
-	private void ApplyUiConfigPrivacyModeChange()
+	private void SetSelectedBrowser(BrowserTypeDropdownListEnum selectedBrowserType)
 	{
-		_uiConfig.PrivacyMode = PrivacyMode;
+		switch (selectedBrowserType)
+		{
+			case BrowserTypeDropdownListEnum.SystemDefault:
+				_uiConfig.SelectedBrowser = "";
+				BrowserPath = "";
+				break;
+
+			case BrowserTypeDropdownListEnum.Custom:
+				_uiConfig.SelectedBrowser = BrowserPath;
+				break;
+
+			default:
+			{
+				BrowserPath = "";
+				if (Enum.TryParse<BrowserType>(SelectedBrowser.ToString(), out var result))
+				{
+					_uiConfig.SelectedBrowser = result.ToString();
+				}
+				else
+				{
+					// Something went wrong, use default.
+					_uiConfig.SelectedBrowser = "";
+				}
+			}
+				break;
+		}
 	}
 }

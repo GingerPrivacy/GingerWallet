@@ -5,10 +5,13 @@ namespace WalletWasabi.Fluent.HomeScreen.Tiles.ViewModels;
 
 public class WalletBalanceTileViewModel : ActivatableViewModel
 {
-	public WalletBalanceTileViewModel(IObservable<Amount> amounts)
+	public WalletBalanceTileViewModel(WalletModel wallet)
 	{
-		Amounts = amounts;
+		Wallet = wallet;
+		Amounts = wallet.Balances;
 	}
+
+	public WalletModel Wallet { get; }
 
 	public IObservable<Amount> Amounts { get; }
 }

@@ -184,7 +184,7 @@ public static class WasabiAppExtensions
 
 				Logger.LogInfo("Wasabi GUI started.");
 				bool runGuiInBackground = app.AppConfig.Arguments.Any(arg => arg.Contains(StartupHelper.SilentArgument));
-				UiConfig uiConfig = LoadOrCreateUiConfig(Config.DataDir);
+				UiConfig uiConfig = app.Global!.UiConfig;
 				uiConfig
 					.WhenAnyValue(x => x.SelectedBrowser)
 					.Do(x => WebBrowserService.Instance.SetConfig(x))
@@ -239,15 +239,5 @@ public static class WasabiAppExtensions
 
 				return Task.CompletedTask;
 			});
-	}
-
-	private static UiConfig LoadOrCreateUiConfig(string dataDir)
-	{
-		Directory.CreateDirectory(dataDir);
-
-		UiConfig uiConfig = new(Path.Combine(dataDir, "UiConfig.json"));
-		uiConfig.LoadFile(createIfMissing: true);
-
-		return uiConfig;
 	}
 }

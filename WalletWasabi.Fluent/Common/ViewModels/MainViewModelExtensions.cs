@@ -32,15 +32,9 @@ public static class MainViewModelExtensions
 			return mainViewModel.SettingsPage;
 		});
 
-		AdvancedSettingsTabViewModel.RegisterLazy(() =>
-		{
-			mainViewModel.SettingsPage.SelectedTab = 3;
-			return mainViewModel.SettingsPage;
-		});
-
 		SecuritySettingsTabViewModel.RegisterLazy(() =>
 		{
-			mainViewModel.SettingsPage.SelectedTab = 4;
+			mainViewModel.SettingsPage.SelectedTab = 3;
 			return mainViewModel.SettingsPage;
 		});
 

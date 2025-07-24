@@ -42,7 +42,7 @@
   <Color x:Key="SystemAccentColorLight3">#FFCBB899</Color>
   <Color x:Key="SystemAccentCustomColorLight">#FFB29B78</Color>
   <Color x:Key="SystemAccentCustomColorDark">#FF947A52</Color>
-  <Color x:Key="SystemFadedAccentCustom">#17A68D67</Color>
+  <Color x:Key="SystemFadedAccentCustom">#26A68D67</Color>
   <Color x:Key="SystemFadedAccentCustomLight">#40B29B78</Color>
   <Color x:Key="SystemFadedAccentCustomDark">#36947A52</Color>
 
@@ -89,7 +89,7 @@
   <Color x:Key="OfferBorderColor">#27757575</Color>
 
   <SolidColorBrush x:Key="PrivacyControlWhiteListHeaderForeground" Color="#FFFFFF" />
-  <SolidColorBrush x:Key="PrivacyControlWhiteListBackground" Color="{StaticResource SystemAccentCustomColorDark}" Opacity="0.5" />
+  <SolidColorBrush x:Key="PrivacyControlWhiteListBackground" Color="{StaticResource SystemAccentCustomColorDark}" Opacity="0.1" />
   <SolidColorBrush x:Key="PrivacyControlBlackListBackground" Color="Transparent" />
   <SolidColorBrush x:Key="PrivacyControlItemBackground" Color="#2FFFFFFF" />
 

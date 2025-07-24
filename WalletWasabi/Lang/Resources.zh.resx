@@ -120,9 +120,6 @@
   <data name="Open" xml:space="preserve">
     <value>打开</value>
   </data>
-  <data name="TwoFactorDisabledWarnMessage" xml:space="preserve">
-    <value>两步验证已禁用。在设置中启用以获得更高的保护。</value>
-  </data>
   <data name="AddWalletPageViewModelTitle" xml:space="preserve">
     <value>添加钱包</value>
   </data>
@@ -133,7 +130,7 @@
     <value>钱包，添加，创建，新建，恢复，导入，连接，硬件，ColdCard，Trezor，Ledger</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>常规</value>
+    <value>通用</value>
   </data>
   <data name="Wallet" xml:space="preserve">
     <value>钱包</value>
@@ -145,25 +142,25 @@
     <value>设置</value>
   </data>
   <data name="GeneralSettingsTabViewModelTitle" xml:space="preserve">
-    <value>常规</value>
+    <value>通用</value>
   </data>
   <data name="GeneralSettingsTabViewModelCaption" xml:space="preserve">
-    <value>管理常规设置</value>
+    <value>管理通用设置</value>
   </data>
   <data name="GeneralSettingsTabViewModelKeywords" xml:space="preserve">
-    <value>设置，常规，比特币，运行，Ginger，计算机，系统，开始，背景，关闭，自动，复制，粘贴，地址，自定义，改变，地址，浏览器</value>
+    <value>设置，通用，比特币，运行，Ginger，计算机，系统，启动，后台，关闭，自动，复制，粘贴，地址，自定义，找零，地址，浏览器</value>
   </data>
   <data name="BitcoinTabSettingsViewModelCaption" xml:space="preserve">
     <value>管理比特币设置</value>
   </data>
   <data name="BitcoinTabSettingsViewModelKeywords" xml:space="preserve">
-    <value>设置，比特币，网络，主网，测试网，回归测试网，运行，节点，Core，Knots，版本，启动，P2P，端点，微尘，阈值，BTC</value>
+    <value>设置，比特币，网络，主网，测试网，回归测试网，运行，节点，Core，核心，Knots，版本，启动，P2P，点对点，端点，Dust，粉尘，阈值，BTC</value>
   </data>
   <data name="AdvancedSettingsTabViewModelTitle" xml:space="preserve">
     <value>高级</value>
   </data>
   <data name="AdvancedSettingsTabViewModelKeywords" xml:space="preserve">
-    <value>设置，高级，启用，GPU</value>
+    <value>设置，高级，启用，GPU，显卡</value>
   </data>
   <data name="SecuritySettingsTabViewModelTitle" xml:space="preserve">
     <value>安全</value>
@@ -187,10 +184,10 @@
     <value>管理高级设置</value>
   </data>
   <data name="SecuritySettingsTabViewModelKeywords" xml:space="preserve">
-    <value>安全，设置，2FA，两步验证，验证，两步，因素</value>
+    <value>安全，设置，2FA，双重身份验证，验证，两个，因素</value>
   </data>
   <data name="AboutViewModelKeywords" xml:space="preserve">
-    <value>关于，软件，版本，源代码，Github，网站，协调器，统计，Tor，洋葱，用户，支持，错误，报告，FAQ，问题，文档，文档，许可，高级，信息，硬件，钱包</value>
+    <value>关于，软件，版本，来源，代码，Github，网站，协调器，统计，Tor, 洋葱路由器，Onion, 洋葱，用户，支持，错误，报告，常见问题，问题，文档，文档，许可，高级，信息，硬件，钱包</value>
   </data>
   <data name="BroadcasterViewModelTitle" xml:space="preserve">
     <value>广播</value>
@@ -214,7 +211,7 @@
     <value>用户支持</value>
   </data>
   <data name="UserSupportViewModelCaption" xml:space="preserve">
-    <value>打开 Ginger Wallet 的用户支持网站</value>
+    <value>打开Ginger Wallet客服页面</value>
   </data>
   <data name="UserSupportViewModelKeywords" xml:space="preserve">
     <value>用户，支持，网站</value>
@@ -229,13 +226,13 @@
     <value>支持，网站，错误，报告</value>
   </data>
   <data name="DocsLinkViewModelTitle" xml:space="preserve">
-    <value>用户指南/FAQ</value>
+    <value>用户指南/FAQ常见问题解答</value>
   </data>
   <data name="DocsLinkViewModelCaption" xml:space="preserve">
-    <value>打开 Ginger Wallet 的 FAQ 网站</value>
+    <value>打开 Ginger Wallet 的 FAQ 常见问题解答网站</value>
   </data>
   <data name="DocsLinkViewModelKeywords" xml:space="preserve">
-    <value>用户，支持，网站，文档，文档，指南</value>
+    <value>用户，支持，网站，文档，技术文档，指南</value>
   </data>
   <data name="OpenDataFolderViewModelTitle" xml:space="preserve">
     <value>数据文件夹</value>
@@ -274,19 +271,16 @@
     <value>密码短语</value>
   </data>
   <data name="DiscreetMode" xml:space="preserve">
-    <value>隐私模式</value>
+    <value>无痕模式/隐私保护模式</value>
   </data>
   <data name="SettingsPageViewModelKeywords" xml:space="preserve">
-    <value>设置，常规，用户，界面，高级</value>
+    <value>设置，通用，账户，界面，高级</value>
   </data>
   <data name="SettingsPageViewModelCaption" xml:space="preserve">
-    <value>管理常规、高级和其他设置</value>
+    <value>管理通用、高级及扩展配置</value>
   </data>
   <data name="SettingsPageViewModelTitle" xml:space="preserve">
     <value>设置</value>
-  </data>
-  <data name="TwoFactorDisabledWarnMessageOpenSettings" xml:space="preserve">
-    <value>打开设置</value>
   </data>
   <data name="LoadingViewModelPercentCompleted" xml:space="preserve">
     <value>{0}% 已完成</value>
@@ -309,26 +303,17 @@
   <data name="LoadingViewModelTimeRemaining" xml:space="preserve">
     <value>- 剩余 {0}</value>
   </data>
-  <data name="LoadingViewDownloadText" xml:space="preserve">
-    <value>下载并处理比特币网络数据</value>
-  </data>
-  <data name="LoadingViewThirdparty" xml:space="preserve">
-    <value>Ginger 在不让第三方知道您的余额和财务活动的情况下完成此操作。</value>
-  </data>
-  <data name="LoadingViewProcessLonger" xml:space="preserve">
-    <value>此过程在首次启动、大型钱包或同步间隔较长时会更耗时。</value>
-  </data>
   <data name="WalletBalance" xml:space="preserve">
     <value>余额</value>
   </data>
   <data name="WalletPrivacyProgress" xml:space="preserve">
-    <value>隐私进度</value>
+    <value>隐私状态</value>
   </data>
   <data name="WalletExchangeRate" xml:space="preserve">
     <value>汇率</value>
   </data>
   <data name="WalletTransactions" xml:space="preserve">
-    <value>交易</value>
+    <value>交易记录</value>
   </data>
   <data name="Sorting" xml:space="preserve">
     <value>排序</value>
@@ -349,10 +334,10 @@
     <value>发送</value>
   </data>
   <data name="WalletAutomatic" xml:space="preserve">
-    <value>自动</value>
+    <value>自动模式</value>
   </data>
   <data name="WalletManualControl" xml:space="preserve">
-    <value>手动控制</value>
+    <value>手动选择</value>
   </data>
   <data name="SpeedUpTransaction" xml:space="preserve">
     <value>加速交易</value>
@@ -367,34 +352,34 @@
     <value>钱包设置</value>
   </data>
   <data name="WalletCoinsViewModelTitle" xml:space="preserve">
-    <value>钱包硬币</value>
+    <value>钱包代币</value>
   </data>
   <data name="WalletStatsViewModelTitle" xml:space="preserve">
-    <value>钱包统计</value>
+    <value>钱包数据统计</value>
   </data>
   <data name="WalletInfoViewModelTitle" xml:space="preserve">
     <value>钱包信息</value>
   </data>
   <data name="WalletReceive" xml:space="preserve">
-    <value>接收</value>
+    <value>收款</value>
   </data>
   <data name="ExcludedCoinsViewModelTitle" xml:space="preserve">
-    <value>排除硬币</value>
+    <value>排除代币</value>
   </data>
   <data name="CoinjoinSettings" xml:space="preserve">
-    <value>Coinjoin 设置</value>
+    <value>Coinjoin 混币设置</value>
   </data>
   <data name="CountDownMessage" xml:space="preserve">
     <value>等待 Coinjoin 自动启动</value>
   </data>
   <data name="WaitingMessage" xml:space="preserve">
-    <value>等待 Coinjoin</value>
+    <value>等待 Coinjoin混币</value>
   </data>
   <data name="UneconomicalRoundMessage" xml:space="preserve">
-    <value>等待更便宜的 Coinjoin</value>
+    <value>等待coinjoin混币手续费降低</value>
   </data>
   <data name="RandomlySkippedRoundMessage" xml:space="preserve">
-    <value>跳过一轮以获得更好的隐私</value>
+    <value>为了更好的匿名性/隐私，跳过一轮</value>
   </data>
   <data name="PauseMessage" xml:space="preserve">
     <value>Coinjoin 已暂停</value>
@@ -403,73 +388,73 @@
     <value>Coinjoin 已停止</value>
   </data>
   <data name="PressPlayToStartMessage" xml:space="preserve">
-    <value>按播放键开始</value>
+    <value>点击[Play]按钮开始</value>
   </data>
   <data name="RoundSucceedMessage" xml:space="preserve">
-    <value>Coinjoin 成功！继续...</value>
+    <value>Coinjoin 成功！继续进行…</value>
   </data>
   <data name="RoundFinishedMessage" xml:space="preserve">
-    <value>本轮结束，等待下一轮</value>
+    <value>本轮已结束，等待下一轮开始</value>
   </data>
   <data name="AbortedNotEnoughAlicesMessage" xml:space="preserve">
-    <value>参与者不足，重试中...</value>
+    <value>人数不足，重试中...</value>
   </data>
   <data name="CoinJoinInProgress" xml:space="preserve">
     <value>Coinjoin 进行中</value>
   </data>
   <data name="InputRegistrationMessage" xml:space="preserve">
-    <value>等待其他参与者</value>
+    <value>等待其他参与方处理</value>
   </data>
   <data name="WaitingForBlameRoundMessage" xml:space="preserve">
-    <value>等待重复回合</value>
+    <value>等待重试轮次</value>
   </data>
   <data name="WaitingRoundMessage" xml:space="preserve">
-    <value>等待一轮</value>
+    <value>等待新轮次</value>
   </data>
   <data name="PlebStopMessage" xml:space="preserve">
-    <value>Coinjoin 可能不经济</value>
+    <value>目前使用 CoinJoin 可能不划算</value>
   </data>
   <data name="PlebStopMessageBelow" xml:space="preserve">
-    <value>添加更多资金，或按播放键继续</value>
+    <value>请充值余额，或点击[Play]按钮继续</value>
   </data>
   <data name="NoCoinsEligibleToMixMessage" xml:space="preserve">
-    <value>没有足够的资金可用于 Coinjoin</value>
+    <value>可用于 CoinJoin 的资金不足。</value>
   </data>
   <data name="UserInSendWorkflowMessage" xml:space="preserve">
-    <value>等待发送对话框关闭</value>
+    <value>等待发送窗口关闭</value>
   </data>
   <data name="AllPrivateMessage" xml:space="preserve">
-    <value>太好了！您的所有资金都是匿名的！</value>
+    <value>太棒了！您的所有资产已完全匿名化！</value>
   </data>
   <data name="BackendNotConnected" xml:space="preserve">
-    <value>等待连接</value>
+    <value>等待连接中</value>
   </data>
   <data name="GeneralErrorMessage" xml:space="preserve">
-    <value>等待有效条件</value>
+    <value>等待满足条件</value>
   </data>
   <data name="WaitingForConfirmedFunds" xml:space="preserve">
     <value>等待确认的资金</value>
   </data>
   <data name="CoinsRejectedMessage" xml:space="preserve">
-    <value>某些资金被拒绝参与 Coinjoin</value>
+    <value>部分资金被拒绝参与 Coinjoin混币</value>
   </data>
   <data name="OnlyImmatureCoinsAvailableMessage" xml:space="preserve">
-    <value>仅有未成熟的资金可用</value>
+    <value>仅提供尚未最终确认的硬币</value>
   </data>
   <data name="OnlyExcludedCoinsAvailableMessage" xml:space="preserve">
-    <value>仅有排除的资金可用</value>
+    <value>仅提供已排除的硬币</value>
   </data>
   <data name="MiningFeeRateTooHighMessage" xml:space="preserve">
     <value>矿工费率过高</value>
   </data>
   <data name="CoordinationFeeRateTooHighMessage" xml:space="preserve">
-    <value>协调费率过高</value>
+    <value>服务费率过高</value>
   </data>
   <data name="MinInputCountTooLowMessage" xml:space="preserve">
-    <value>最小输入数量过低</value>
+    <value>输入数量低于最小要求</value>
   </data>
   <data name="ServerDidNotGiveFeeExemptionMessage" xml:space="preserve">
-    <value>服务器未给予重新混合费用豁免</value>
+    <value>服务器未授予混币手续费豁免权限</value>
   </data>
   <data name="WaitingForResponse" xml:space="preserve">
     <value>等待响应</value>
@@ -493,7 +478,7 @@
     <value>名称</value>
   </data>
   <data name="PSBTworkflow" xml:space="preserve">
-    <value>PSBT 工作流程</value>
+    <value>PSBT 签名流程</value>
   </data>
   <data name="AutomaticallyStartCoinjoin" xml:space="preserve">
     <value>自动开始 Coinjoin</value>
@@ -502,10 +487,10 @@
     <value>Coinjoin 到此钱包</value>
   </data>
   <data name="CoinjoinToOtherWalletRestrictions1" xml:space="preserve">
-    <value>- 仅已加载的钱包可以被选择。</value>
+    <value>- 仅可选择已加载的钱包。</value>
   </data>
   <data name="CoinjoinToOtherWalletRestrictions2" xml:space="preserve">
-    <value>- 来自 Coinjoin 交易的硬币将被此钱包接收。但是，此设置将在 Ginger 重启后重置。</value>
+    <value>- 来自 Coinjoin 交易的硬币将转入此钱包接收。不过，此设置在 Ginger 重启后会重置。</value>
   </data>
   <data name="CoinjoinToOtherWalletRestrictions3" xml:space="preserve">
     <value>- 当 Coinjoin 正在进行时，无法更改所选钱包。</value>
@@ -514,55 +499,55 @@
     <value>当钱包余额低于此值时，Coinjoin 将自动停止。</value>
   </data>
   <data name="PlebStopThreshold" xml:space="preserve">
-    <value>停止 Coinjoin 的阈值</value>
+    <value>CoinJoin 停用阈值</value>
   </data>
   <data name="WalletToolsRecommend" xml:space="preserve">
-    <value>建议您不时验证钱包恢复词。</value>
+    <value>建议定期验证助记词有效性。</value>
   </data>
   <data name="WalletToolsDoNotForget" xml:space="preserve">
-    <value>恢复钱包还需要您的密码，请不要忘记。</value>
+    <value>请注意：恢复钱包时还需要密钥 passphrase。</value>
   </data>
   <data name="WalletToolsVerifyRecoveryWords" xml:space="preserve">
-    <value>验证恢复词</value>
+    <value>助记词验证</value>
   </data>
   <data name="WalletCoinJoinSettingsViewModelTitle" xml:space="preserve">
     <value>Coinjoin 设置</value>
   </data>
   <data name="WalletCoinJoinSettingsViewModelCaption" xml:space="preserve">
-    <value>显示钱包 Coinjoin 设置</value>
+    <value>显示钱包 Coinjoin混币设置</value>
   </data>
   <data name="WalletCoinJoinSettingsViewModelKeywords" xml:space="preserve">
     <value>钱包，设置</value>
   </data>
   <data name="CoinJoinProfilesCaption" xml:space="preserve">
-    <value>Ginger通过自动将您的所有资金进行Coinjoin，并收取固定的0.3%的协调费用及矿工费用，来保护您的财务隐私。为了方便使用，我们已经预先应用了默认配置。</value>
+    <value>Ginger 自动为您的所有代币提供混币(CoinJoin)隐私保护，仅收取固定的0.3%协调费+矿工费。我们已预设最优配置，您无需复杂设置即可轻松守护财务匿名性。</value>
   </data>
   <data name="Done" xml:space="preserve">
     <value>完成</value>
   </data>
   <data name="RedcoinText" xml:space="preserve">
-    <value>单个非隐私币限制</value>
+    <value>限制单个非匿名币</value>
   </data>
   <data name="RedcoinToolTip" xml:space="preserve">
-    <value>仅允许匿名评分为 1 的单个硬币进入 Coinjoin 注册。</value>
+    <value>在 CoinJoin 注册中，只允许一枚匿名级别为1的代币。</value>
   </data>
   <data name="AnonTargetText" xml:space="preserve">
-    <value>匿名评分目标</value>
+    <value>匿名评分目标/目标匿名强度 /目标匿名级别</value>
   </data>
   <data name="AnonTargetTooltip" xml:space="preserve">
-    <value>硬币被视为私密所需的最低匿名评分。</value>
+    <value>硬币被视为私密所需的最低匿名评分。/当代币（货币）评分达到此值，即视为匿名资产</value>
   </data>
   <data name="SafeFeeText" xml:space="preserve">
-    <value>忽略低于的Coinjoin时间偏好</value>
+    <value>在低于该值时忽略 CoinJoin 时间偏好</value>
   </data>
   <data name="SafeFeeToolTip" xml:space="preserve">
-    <value>当费率低于此值时始终进行 Coinjoin（优先于 Coinjoin 时间偏好）。</value>
+    <value>如果手续费率低于此值，则始终执行 CoinJoin（优先于 CoinJoin 的时间偏好）。</value>
   </data>
   <data name="CoinJoinTimePrefText" xml:space="preserve">
     <value>Coinjoin 时间偏好</value>
   </data>
   <data name="CoinJoinTimePrefToolTip" xml:space="preserve">
-    <value>仅当费率低于此时间段的中位数时才进行 Coinjoin。</value>
+    <value>仅当费率低于此时间段的中位数时才进行 Coinjoin混币。</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
@@ -589,7 +574,7 @@
     <value>您可以修改钱包名称</value>
   </data>
   <data name="TypeInWalletName" xml:space="preserve">
-    <value>输入钱包名称</value>
+    <value>请输入钱包名称</value>
   </data>
   <data name="Continue" xml:space="preserve">
     <value>继续</value>
@@ -598,52 +583,52 @@
     <value>成功</value>
   </data>
   <data name="UnexpextedError" xml:space="preserve">
-    <value>发生意外错误。请重试或联系支持。</value>
+    <value>发生未知错误，请重试或联系客服。</value>
   </data>
   <data name="SomethingWrong" xml:space="preserve">
-    <value>出现问题。请重试。</value>
+    <value>发生未知错误，请稍后重试。</value>
   </data>
   <data name="PermissionError" xml:space="preserve">
-    <value>由于权限不足，Ginger Wallet 无法执行此操作。</value>
+    <value>因权限不足，Ginger Wallet 未能执行此操作。</value>
   </data>
   <data name="HardwareWalletNotFound" xml:space="preserve">
-    <value>找不到硬件钱包。请确保它已连接。</value>
+    <value>未检测到硬件钱包，请检查设备连接。</value>
   </data>
   <data name="TransactionCanceledOnDevice" xml:space="preserve">
-    <value>操作在设备上被取消。</value>
+    <value>操作已在设备上取消。</value>
   </data>
   <data name="UnknownErrorDeviceCheck" xml:space="preserve">
-    <value>未知错误。请确保设备已连接且未繁忙，然后重试。</value>
+    <value>未知错误：请确认设备已连接且未占用，然后重试。</value>
   </data>
   <data name="CoinAlreadySpent" xml:space="preserve">
-    <value>至少有一个您试图花费的硬币已经被使用。</value>
+    <value>您尝试花费的代币至少有一枚已被花费。</value>
   </data>
   <data name="CoinInUnconfirmedChain" xml:space="preserve">
-    <value>至少有一个您试图花费的硬币属于未确认交易的长链或重链的一部分。您必须等待某些先前的交易被确认。</value>
+    <value>当前有未完成的交易关联这些资产，请您等待先前的交易被确认。</value>
   </data>
   <data name="TransactionDuplicatedInputs" xml:space="preserve">
-    <value>交易包含重复的输入。</value>
+    <value>交易包含重复输入项</value>
   </data>
   <data name="TransactionNotFinal" xml:space="preserve">
     <value>交易未完成，无法广播。</value>
   </data>
   <data name="TransactionTooBig" xml:space="preserve">
-    <value>交易过大。</value>
+    <value>交易体积过大。</value>
   </data>
   <data name="WrongPassphrase" xml:space="preserve">
-    <value>密码错误。</value>
+    <value>密码密钥错误。</value>
   </data>
   <data name="InvalidWalletName" xml:space="preserve">
-    <value>无效的钱包名称。</value>
+    <value>钱包名称无效。</value>
   </data>
   <data name="WalletNameTaken" xml:space="preserve">
-    <value>钱包名称已被占用。</value>
+    <value>该钱包名称已被占用。</value>
   </data>
   <data name="BalanceNotAccurateServerConnection" xml:space="preserve">
-    <value>报告的余额可能不准确，并且某些其他功能可能不可用，因为 Ginger 无法连接到服务器。正在重试连接。</value>
+    <value>Ginger服务器连接异常，账户余额或存在误差，部分功能受限。正在重新连接中，请稍候。</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
-    <value>有更新可用。</value>
+    <value>有可用更新。</value>
   </data>
   <data name="CloseAndUpdate" xml:space="preserve">
     <value>关闭并更新。</value>
@@ -652,7 +637,7 @@
     <value>更新</value>
   </data>
   <data name="AskMeLater" xml:space="preserve">
-    <value>稍后再问</value>
+    <value>稍后询问</value>
   </data>
   <data name="IsRunning" xml:space="preserve">
     <value>正在运行</value>
@@ -670,25 +655,25 @@
     <value>未连接</value>
   </data>
   <data name="FullNodeConnecting" xml:space="preserve">
-    <value>完整节点正在连接...</value>
+    <value>全节点连接中…</value>
   </data>
   <data name="FullNodeSynchronized" xml:space="preserve">
-    <value>完整节点已同步</value>
+    <value>全节点已完成同步</value>
   </data>
   <data name="FullNodeDownloadingBlocks" xml:space="preserve">
-    <value>完整节点正在下载 {0} 个区块...</value>
+    <value>全节点正在下载 {0} 个区块...</value>
   </data>
   <data name="FullNodeUnresponsive" xml:space="preserve">
-    <value>完整节点无响应</value>
+    <value>全节点无响应</value>
   </data>
   <data name="ApplicationRestartApplyChanges" xml:space="preserve">
-    <value>按继续后，应用程序将重新启动以应用更改。</value>
+    <value>点击「继续」后，应用程序将重启以应用更改。</value>
   </data>
   <data name="WelcomeToGingerWallet" xml:space="preserve">
-    <value>欢迎来到 Ginger Wallet</value>
+    <value>欢迎使用Ginger Wallet</value>
   </data>
   <data name="SelectPreferredLanguage" xml:space="preserve">
-    <value>选择您偏好的语言：</value>
+    <value>请选择您偏好的语言：</value>
   </data>
   <data name="CoinjoinFees" xml:space="preserve">
     <value>Coinjoin 费用</value>
@@ -697,13 +682,13 @@
     <value>您只需为新加入 Coinjoin 的硬币支付 0.3% 的费用。</value>
   </data>
   <data name="CoordinationFee" xml:space="preserve">
-    <value>协调费</value>
+    <value>服务费</value>
   </data>
   <data name="TransactionFee" xml:space="preserve">
-    <value>交易费</value>
+    <value>交易/矿工费</value>
   </data>
   <data name="TransactionFeeInfo" xml:space="preserve">
-    <value>您需要为每次 Coinjoin 支付矿工费。</value>
+    <value>每次coinjoin混币交易后需支付交易/矿工费。</value>
   </data>
   <data name="PlebsDontPay" xml:space="preserve">
     <value>普通用户免付费</value>
@@ -712,25 +697,25 @@
     <value>对于小于或等于 0.01 BTC 的硬币，您无需支付协调费。</value>
   </data>
   <data name="FriendsDontPay" xml:space="preserve">
-    <value>朋友免付费</value>
+    <value>朋友间转账免手续费</value>
   </data>
   <data name="FriendsDontPayInfo" xml:space="preserve">
-    <value>对于从其他 Ginger Coinjoin 收到的硬币，您无需支付协调费。</value>
+    <value>您无需为来源于其他Ginger混币操作的代币支付协调服务费。</value>
   </data>
   <data name="GetStarted" xml:space="preserve">
-    <value>开始</value>
+    <value>开始使用</value>
   </data>
   <data name="AddressesAwaitingPayment" xml:space="preserve">
     <value>等待付款的地址</value>
   </data>
   <data name="EnterNamesForAddress" xml:space="preserve">
-    <value>输入您将提供此地址的人员或公司的名称</value>
+    <value>请输入可接收此钱包地址的个人或公司名称</value>
   </data>
   <data name="ReceiveViewModelTitle" xml:space="preserve">
     <value>接收</value>
   </data>
   <data name="ReceiveViewModelCaption" xml:space="preserve">
-    <value>显示钱包接收对话框</value>
+    <value>显示钱包接收窗口</value>
   </data>
   <data name="ReceiveViewModelKeywords" xml:space="preserve">
     <value>钱包，接收，操作</value>
@@ -745,7 +730,7 @@
     <value>复制</value>
   </data>
   <data name="UnableToSendAddressToDevice" xml:space="preserve">
-    <value>无法将地址发送到设备</value>
+    <value>无法向设备发送钱包地址</value>
   </data>
   <data name="ChooseHideModifyDisplayAddresses" xml:space="preserve">
     <value>您可以选择隐藏、修改或显示以下列出的地址</value>
@@ -766,7 +751,7 @@
     <value>二维码</value>
   </data>
   <data name="WishToHideAddressWithLabels" xml:space="preserve">
-    <value>您是否希望隐藏以下标签的地址？</value>
+    <value>您是否希望隐藏含以下标签的钱包地址？</value>
   </data>
   <data name="ThisCannotBeUndone" xml:space="preserve">
     <value>此操作无法撤销。</value>
@@ -778,7 +763,7 @@
     <value>否</value>
   </data>
   <data name="EditSelectedAddressLabels" xml:space="preserve">
-    <value>在此编辑选定地址的标签：</value>
+    <value>在此处可编辑所选钱包地址的标签：</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>保存</value>
@@ -790,7 +775,7 @@
     <value>重新启动应用程序</value>
   </data>
   <data name="ModifyingSettingsNotPossible" xml:space="preserve">
-    <value>由于某些参数在启动时被覆盖，无法修改设置。</value>
+    <value>由于某些参数在启动时被覆盖，当前无法修改配置项。</value>
   </data>
   <data name="Advanced" xml:space="preserve">
     <value>高级</value>
@@ -799,16 +784,16 @@
     <value>安全</value>
   </data>
   <data name="ApplyNewSettingRestart" xml:space="preserve">
-    <value>要应用新设置，需要重新启动 Ginger Wallet。</value>
+    <value>应用新设置需重启 Ginger 钱包。</value>
   </data>
   <data name="DarkMode" xml:space="preserve">
     <value>深色模式</value>
   </data>
   <data name="RunAtStartup" xml:space="preserve">
-    <value>计算机启动时运行 Ginger</value>
+    <value>在电脑启动时运行 Ginger</value>
   </data>
   <data name="RunInBackgroundWhenClosed" xml:space="preserve">
-    <value>窗口关闭时在后台运行</value>
+    <value>关闭窗口时保持后台运行</value>
   </data>
   <data name="AutoCopyAddresses" xml:space="preserve">
     <value>自动复制地址</value>
@@ -823,7 +808,7 @@
     <value>启用两步验证时无法修改。</value>
   </data>
   <data name="TerminateTorWhenShutdown" xml:space="preserve">
-    <value>Ginger 关闭时终止 Tor</value>
+    <value>在关闭 Ginger 时关闭 Tor</value>
   </data>
   <data name="AutoDownloadNewVersion" xml:space="preserve">
     <value>自动下载新版本</value>
@@ -832,7 +817,7 @@
     <value>费用显示单位</value>
   </data>
   <data name="SetPreferredBrowserPath" xml:space="preserve">
-    <value>设置首选浏览器的完整路径</value>
+    <value>请设置默认浏览器的完整安装路径</value>
   </data>
   <data name="CustomBrowserPath" xml:space="preserve">
     <value>自定义浏览器路径</value>
@@ -844,7 +829,7 @@
     <value>语言</value>
   </data>
   <data name="CouldNotSaveChange" xml:space="preserve">
-    <value>无法保存更改，请查看日志以获取更多信息。</value>
+    <value>未能保存您的更改，请查看日志获取详细信息。</value>
   </data>
   <data name="Network" xml:space="preserve">
     <value>网络</value>
@@ -853,7 +838,7 @@
     <value>（实验性）启动时运行 Bitcoin Knots</value>
   </data>
   <data name="StopBitcoinKnotsOnShutdown" xml:space="preserve">
-    <value>关闭时停止 Bitcoin Knots</value>
+    <value>在程序关闭时关闭 Bitcoin Knots</value>
   </data>
   <data name="LocalBitcoinCoreKnotsVersion" xml:space="preserve">
     <value>本地 Bitcoin Core/Knots 版本</value>
@@ -862,34 +847,34 @@
     <value>Bitcoin Core/Knots 数据文件夹</value>
   </data>
   <data name="WasabiDownloadBlocksFromFullNode" xml:space="preserve">
-    <value>Ginger 将从您控制的完整节点下载区块。</value>
+    <value>Ginger从您控制的全节点同步区块数据。</value>
   </data>
   <data name="BitcoinP2PEndpoint" xml:space="preserve">
-    <value>Bitcoin P2P 端点</value>
+    <value>Bitcoin P2P 节点地址</value>
   </data>
   <data name="CoinsReceivedFromOthers" xml:space="preserve">
-    <value>从其他人接收的硬币到已使用地址的金额低于此值将不会显示。防止潜在的灰尘攻击。</value>
+    <value>为防范粉尘攻击，通过历史地址收到的代币若低于此金额将自动隐藏。</value>
   </data>
   <data name="DustThreshold" xml:space="preserve">
-    <value>灰尘阈值</value>
+    <value>粉尘阈值</value>
   </data>
   <data name="InvalidEndpoint" xml:space="preserve">
-    <value>无效的端点。</value>
+    <value>无效端点。</value>
   </data>
   <data name="UseDecimalPoint" xml:space="preserve">
-    <value>使用小数点代替逗号。</value>
+    <value>请使用小数点代替逗号。</value>
   </data>
   <data name="InvalidDustThreshold" xml:space="preserve">
-    <value>无效的灰尘阈值。</value>
+    <value>无效的粉尘攻击阈值。</value>
   </data>
   <data name="EnableGPURendering" xml:space="preserve">
-    <value>启用时，使用显卡 (GPU) 渲染用户界面。使用 GPU 而不是 CPU 可以提高性能。</value>
+    <value>若启用，系统将使用显卡（GPU）渲染用户界面。使用 GPU 替代 CPU 可提升性能。</value>
   </data>
   <data name="EnableGPU" xml:space="preserve">
     <value>启用 GPU</value>
   </data>
   <data name="TwoFactorAuthentication" xml:space="preserve">
-    <value>两步验证</value>
+    <value>双重验证</value>
   </data>
   <data name="OnlyAvailableWhenTorEnabled" xml:space="preserve">
     <value>仅在启用 Tor 时可用。</value>
@@ -907,7 +892,7 @@
     <value>到：</value>
   </data>
   <data name="ExampleBitcoinAddressOrPayjoinURI" xml:space="preserve">
-    <value>（例如，Bitcoin 地址或 payjoin URI）</value>
+    <value>（例如，Bitcoin 比特币地址或 payjoin URI）</value>
   </data>
   <data name="Paste" xml:space="preserve">
     <value>粘贴</value>
@@ -925,7 +910,7 @@
     <value>发送</value>
   </data>
   <data name="SendViewModelCaption" xml:space="preserve">
-    <value>显示钱包发送对话框</value>
+    <value>显示发送窗口</value>
   </data>
   <data name="SendViewModelKeywords" xml:space="preserve">
     <value>钱包，发送，操作</value>
@@ -934,7 +919,7 @@
     <value>立即发送</value>
   </data>
   <data name="PreviewTransaction" xml:space="preserve">
-    <value>交易预览</value>
+    <value>交易概览</value>
   </data>
   <data name="PrivacyProtectedWithPayjoin" xml:space="preserve">
     <value>您的隐私受到 payjoin 的保护。</value>
@@ -943,49 +928,49 @@
     <value>撤销上次修改</value>
   </data>
   <data name="TransactionInterlinksLabels" xml:space="preserve">
-    <value>交易链接标签：</value>
+    <value>本交易关联以下标签</value>
   </data>
   <data name="TransactionKnownAsYoursBy" xml:space="preserve">
-    <value>已知这是您的交易的实体：</value>
+    <value>可识别此交易归属方的实体：</value>
   </data>
   <data name="EntitiesKnowThisIsYourTransaction" xml:space="preserve">
-    <value>这些实体知道这是您的交易。请多次进行 Coinjoin，或使用标签管理工具仔细选择谁会知道这笔交易属于您。</value>
+    <value>监测机构已确认此交易归属您名下。请执行更多混币操作（CoinJoin），或谨慎使用标签管理工具限定交易知情方范围。</value>
   </data>
   <data name="TransactionUsesNonPrivateCoins" xml:space="preserve">
-    <value>交易使用非私密硬币。</value>
+    <value>交易使用非私密/匿名的代币。</value>
   </data>
   <data name="EntitiesCanDeanonymizeTransaction" xml:space="preserve">
-    <value>某些实体可能会去匿名化此交易，因为它花费了没有隐私的硬币。请多次进行 Coinjoin，以便为此交易提供足够的私密硬币。</value>
+    <value>部分机构可追溯此交易，因其消费不是隐私代币。请执行更多混币操作（CoinJoin），为本交易积累足够隐私代币。</value>
   </data>
   <data name="TransactionUsesSemiPrivateCoins" xml:space="preserve">
-    <value>交易使用半私密硬币。</value>
+    <value>交易使用部分私密/匿名的代币。</value>
   </data>
   <data name="TransactionNotPrivateEnough" xml:space="preserve">
-    <value>此交易不够私密，因为它花费了不完全私密的硬币。请多次进行 Coinjoin，以便为此交易提供足够的私密硬币。</value>
+    <value>交易匿名性不足，消费了非完全匿名代币。请多次进行 Coinjoin混币，以便为此交易提供足够的私密代币。</value>
   </data>
   <data name="TransactionCreatesChange" xml:space="preserve">
-    <value>交易产生找零。</value>
+    <value>本次交易将产生找零。</value>
   </data>
   <data name="ChangeCanLinkTransactions" xml:space="preserve">
-    <value>找零可能会将此交易与使用该找零的下一个交易相关联。如果收件人同意，使用避免找零的建议稍多或稍少发送，或者稍后对找零进行 Coinjoin。</value>
+    <value>该找零地址可能关联后续交易。若接收方接受金额微调，请采用「找零规避」方案适当增减支付额；或通过混币(CoinJoin)后续处理找零以隔离交易链。</value>
   </data>
   <data name="TransactionConsolidatesCoins" xml:space="preserve">
-    <value>交易合并超过 {0} 个硬币。</value>
+    <value>该交易合并超过 {0} 个硬币。</value>
   </data>
   <data name="ReducePrivacyOfTransaction" xml:space="preserve">
-    <value>这可能会降低您的交易隐私。</value>
+    <value>这可能会降低你的交易匿名性隐私。</value>
   </data>
   <data name="TransactionUsesUnconfirmedCoins" xml:space="preserve">
-    <value>交易使用未确认的硬币。</value>
+    <value>交易使用未确认的代币。</value>
   </data>
   <data name="UnconfirmedCoinsMayCauseIssues" xml:space="preserve">
-    <value>这可能导致您的交易被拒绝、确认延迟，或花费超过预期以在所需时间内完成确认。请等待确认，仅使用已确认的硬币。</value>
+    <value>此交易可能导致拒绝/延迟确认，或需超额手续费才能及时确认。请等待确认后再使用已验证的代币。</value>
   </data>
   <data name="TransactionUsesCoinjoiningCoins" xml:space="preserve">
-    <value>交易使用 Coinjoin 硬币。</value>
+    <value>交易使用正在混币中的代币。</value>
   </data>
   <data name="TransactionMayBeReplacedByCoinjoin" xml:space="preserve">
-    <value>这可能导致您的交易被 Coinjoin 替换。请考虑等待当前的 Coinjoin 完成后再发送此交易。</value>
+    <value>这可能导致您的交易被 Coinjoin混币替换。请考虑等待当前的 Coinjoin 完成后再发送此交易。</value>
   </data>
   <data name="ImproveThisTransaction" xml:space="preserve">
     <value>优化此交易：</value>
@@ -997,13 +982,13 @@
     <value>选择要与此交易关联的标签。</value>
   </data>
   <data name="FullPrivacy" xml:space="preserve">
-    <value>完全隐私</value>
+    <value>完全匿名性</value>
   </data>
   <data name="SendSuggestion" xml:space="preserve">
     <value>发送</value>
   </data>
   <data name="BetterPrivacy" xml:space="preserve">
-    <value>更好的隐私</value>
+    <value>隐私强化</value>
   </data>
   <data name="ChangeAvoidance" xml:space="preserve">
     <value>避免找零</value>
@@ -1012,7 +997,7 @@
     <value>此交易已优化良好。</value>
   </data>
   <data name="ReviewCoins" xml:space="preserve">
-    <value>查看硬币</value>
+    <value>代币概览</value>
   </data>
   <data name="Amount" xml:space="preserve">
     <value>金额</value>
@@ -1039,22 +1024,22 @@
     <value>确认</value>
   </data>
   <data name="TransactionExport" xml:space="preserve">
-    <value>交易导出</value>
+    <value>导出交易记录</value>
   </data>
   <data name="UnableToExportPSBT" xml:space="preserve">
-    <value>Ginger Wallet 无法导出 PSBT。</value>
+    <value>Ginger Wallet 无法导出 PSBT。（PSBT=部分签名比特币交易）</value>
   </data>
   <data name="TransactionBuilding" xml:space="preserve">
     <value>交易构建</value>
   </data>
   <data name="TransactionFeeExceedsPaymentAmount" xml:space="preserve">
-    <value>无法发送交易，因为费用超过了支付金额。</value>
+    <value>无法发送交易，手续费超过支付金额。</value>
   </data>
   <data name="UnableToCreateTransaction" xml:space="preserve">
     <value>Ginger Wallet 无法创建您的交易。</value>
   </data>
   <data name="InsufficientFundsForTransactionFee" xml:space="preserve">
-    <value>资金不足，无法覆盖交易费用。</value>
+    <value>账户余额不足以支付交易手续费。</value>
   </data>
   <data name="Transaction" xml:space="preserve">
     <value>交易</value>
@@ -1066,22 +1051,22 @@
     <value>相机</value>
   </data>
   <data name="InternalError" xml:space="preserve">
-    <value>内部错误。</value>
+    <value>系统内部错误。</value>
   </data>
   <data name="InvalidInputLength" xml:space="preserve">
-    <value>输入长度无效。</value>
+    <value>您输入的内容过长，输入内容长度不符合要求。</value>
   </data>
   <data name="InputTooLong" xml:space="preserve">
-    <value>输入太长。</value>
+    <value>输入内容过长</value>
   </data>
   <data name="LightningAddressesNotSupported" xml:space="preserve">
-    <value>不支持 Lightning 地址。</value>
+    <value>不支持Lightning闪电网络地址。</value>
   </data>
   <data name="BitcoinAddressValidity" xml:space="preserve">
-    <value>Bitcoin 地址适用于 {0}，不适用于 {1}。</value>
+    <value>该比特币地址仅适用于{0}，不支持{1}。</value>
   </data>
   <data name="SetTransactionConfirmationPreference" xml:space="preserve">
-    <value>设置您希望交易被确认的速度偏好。</value>
+    <value>设置您偏好的交易确认速度。</value>
   </data>
   <data name="FeeRateSatPerVByte" xml:space="preserve">
     <value>费用率 (sat/vByte)</value>
@@ -1090,61 +1075,61 @@
     <value>预计确认时间</value>
   </data>
   <data name="TransactionFeeEstimationsUnavailable" xml:space="preserve">
-    <value>目前无法估算交易费用。请稍后重试，或者您可以手动输入费用率。</value>
+    <value>目前无法估算交易/矿工费用。请稍后重试，或手动输入费率。</value>
   </data>
   <data name="ChooseTransactionVisibility" xml:space="preserve">
     <value>选择谁可以看到此交易，以及谁不能看到此交易。</value>
   </data>
   <data name="CouldSeeThisTransaction" xml:space="preserve">
-    <value>可以看到此交易的：</value>
+    <value>可查看该交易：</value>
   </data>
   <data name="CantSeeThisTransaction" xml:space="preserve">
-    <value>不能看到此交易的：</value>
+    <value>无法查询到该交易：</value>
   </data>
   <data name="NoInformationAboutPeople" xml:space="preserve">
-    <value>没有关于这些人的信息，仅在必要时使用！</value>
+    <value>无相关人员信息记录，非必要不使用！</value>
   </data>
   <data name="CoinControl" xml:space="preserve">
-    <value>币控制</value>
+    <value>代币管理</value>
   </data>
   <data name="RecoveryWordsViewCaption" xml:space="preserve">
-    <value>按正确顺序写下恢复词并将其存放在安全的地方。这些是恢复钱包所需的。</value>
+    <value>按正确顺序写下助记词，并妥善保存在安全位置。此助记词是恢复数字钱包的凭证。</value>
   </data>
   <data name="RecoveryWordsViewCopyRecoveryWords" xml:space="preserve">
-    <value>复制恢复词</value>
+    <value>复制助记词</value>
   </data>
   <data name="RecoveryWordsViewNotSeeAfter" xml:space="preserve">
     <value>钱包创建后，您将无法再次查看这些词语。</value>
   </data>
   <data name="ConfirmRecoveryWordsViewModel" xml:space="preserve">
-    <value>确认恢复词</value>
+    <value>确认恢复短语/助记词</value>
   </data>
   <data name="ConfirmRecoveryWordsViewModelStoreSafely" xml:space="preserve">
-    <value>请安全存储您的密码短语；如果丢失，将无法恢复。它用于打开和恢复您的钱包，并通过扩展恢复词提供额外保护。</value>
+    <value>请安全保管您的加密口令（Passphrase），一旦丢失将无法恢复。该口令用于开启和恢复钱包，并通过加密口令来多一层保护。</value>
   </data>
   <data name="ConfirmRecoveryWordsViewModelClickRecovery" xml:space="preserve">
-    <value>点击恢复词 #{0}</value>
+    <value>点击恢复短语/助记词 #{0}</value>
   </data>
   <data name="RecoveryWords" xml:space="preserve">
-    <value>恢复词</value>
+    <value>助记词</value>
   </data>
   <data name="VerifyRecoveryWords" xml:space="preserve">
-    <value>验证恢复词</value>
+    <value>助记词校验</value>
   </data>
   <data name="CreatePasswordDialogTypePassphrase" xml:space="preserve">
-    <value>输入密码</value>
+    <value>输入密码/加密口令</value>
   </data>
   <data name="CreatePasswordDialogConfirmPassphrase" xml:space="preserve">
-    <value>确认密码</value>
+    <value>确认密码/加密口令</value>
   </data>
   <data name="PassphrasesNotMatch" xml:space="preserve">
     <value>密码不匹配。</value>
   </data>
   <data name="TrimWarnMessage" xml:space="preserve">
-    <value>前后空格将被移除！</value>
+    <value>首尾空格将被自动清除！</value>
   </data>
   <data name="WhitespaceMessage" xml:space="preserve">
-    <value>前后空格不允许！</value>
+    <value>不允许开头或结尾包含空格！</value>
   </data>
   <data name="AddPassphrase" xml:space="preserve">
     <value>添加密码</value>
@@ -1153,13 +1138,13 @@
     <value>硬件钱包</value>
   </data>
   <data name="ConnectHardwareWalletViewModelCaption" xml:space="preserve">
-    <value>将您的硬件钱包连接到电脑</value>
+    <value>将您的硬件钱包/冷钱包连接到电脑</value>
   </data>
   <data name="ConnectHardwareWalletViewModelEnterPassphrase" xml:space="preserve">
     <value>如果需要，请在硬件钱包上输入密码。</value>
   </data>
   <data name="HardwareWalletAuthDialogViewModelCaption" xml:space="preserve">
-    <value>连接您的硬件钱包，按继续，然后按照设备上的说明操作。</value>
+    <value>连接您的硬件钱包，点击‘继续’，然后按照设备上的提示操作即可。</value>
   </data>
   <data name="Rescan" xml:space="preserve">
     <value>重新扫描</value>
@@ -1168,34 +1153,34 @@
     <value>打开钱包</value>
   </data>
   <data name="ConnectHardwareWalletViewModelConnectPc" xml:space="preserve">
-    <value>将硬件钱包连接到电脑 / 在设备上输入 PIN。</value>
+    <value>将硬件钱包/冷钱包连接到电脑 / 在设备上输入 PIN。</value>
   </data>
   <data name="ConnectHardwareWalletViewModelMakeSureOnlyOne" xml:space="preserve">
-    <value>确保电脑上只连接了一个硬件钱包。</value>
+    <value>请确保电脑仅连接一个硬件钱包设备。</value>
   </data>
   <data name="ConnectHardwareWalletViewModelAlreadyAdded" xml:space="preserve">
-    <value>已连接的硬件钱包已添加到软件中，点击下方打开，或点击重新扫描以再次搜索。</value>
+    <value>该硬件钱包/冷钱包已添加到软件中，点击下方打开，或点击重新扫描以再次搜索。</value>
   </data>
   <data name="ConnectHardwareWalletViewModelEnterPassphraseOnDevice" xml:space="preserve">
-    <value>在设备上输入您的密码。</value>
+    <value>请在您的设备上输入加密口令（Passphrase）。</value>
   </data>
   <data name="ConnectHardwareWalletViewModelEnterPin" xml:space="preserve">
-    <value>在设备上输入您的 PIN。</value>
+    <value>请在您的设备上输入PIN码。</value>
   </data>
   <data name="TypeInYourRecoveryWords" xml:space="preserve">
-    <value>按正确顺序输入恢复词</value>
+    <value>按正确顺序输入助记词</value>
   </data>
   <data name="EnterPassphrase" xml:space="preserve">
-    <value>输入密码短语</value>
+    <value>输入密码加密口令</value>
   </data>
   <data name="RecoverWalletViewModelPassphraseMessage" xml:space="preserve">
-    <value>如果您在创建钱包时使用了密码，则必须在下方输入，否则请留空。</value>
+    <value>若创建钱包时使用了密码短语（passphrase），请在下方输入，否则请留空。</value>
   </data>
   <data name="AdvancedRecoveryOptionsViewModelTitle" xml:space="preserve">
     <value>高级恢复选项</value>
   </data>
   <data name="AdvancedRecoveryOptionsViewModelMinimumGapLimit" xml:space="preserve">
-    <value>最小 间隙限制：</value>
+    <value>使用最低条件搜索：</value>
   </data>
   <data name="PeersConnected" xml:space="preserve">
     <value>{0} 已连接</value>
@@ -1204,13 +1189,13 @@
     <value>金额必须小于 BTC 的总供应量。</value>
   </data>
   <data name="InsufficientFunds" xml:space="preserve">
-    <value>没有足够的资金来覆盖请求的金额。</value>
+    <value>账户余额不足。</value>
   </data>
   <data name="AmountMoreThanZero" xml:space="preserve">
     <value>金额必须大于 0 BTC。</value>
   </data>
   <data name="InvalidBTCAddressOrURI" xml:space="preserve">
-    <value>输入有效的 BTC 地址或 URI。</value>
+    <value>请输入有效的 BTC 地址或 URI。</value>
   </data>
   <data name="PayjoinNotPossibleWithHardwareWallets" xml:space="preserve">
     <value>硬件钱包不支持 Payjoin。</value>
@@ -1222,16 +1207,16 @@
     <value>条款和条件</value>
   </data>
   <data name="TermsAndConditionsViewIAgree" xml:space="preserve">
-    <value>我同意 </value>
+    <value>我同意</value>
   </data>
   <data name="ResyncWallet" xml:space="preserve">
-    <value>重新同步钱包</value>
+    <value>钱包重新同步</value>
   </data>
   <data name="ApplicationRestartRescan" xml:space="preserve">
-    <value>应用程序将重新启动，并在重新打开钱包时开始重新扫描。此过程可能需要一些时间，具体取决于钱包中的交易数量。</value>
+    <value>应用程序将重新启动，当您重新打开钱包时系统会开始重新扫描。此过程可能需要一些时间，具体取决于钱包中的交易数量。</value>
   </data>
   <data name="ProceedConfirmation" xml:space="preserve">
-    <value>您想继续吗？</value>
+    <value>要继续操作吗？</value>
   </data>
   <data name="TransactionID" xml:space="preserve">
     <value>交易 ID</value>
@@ -1240,13 +1225,13 @@
     <value>索引</value>
   </data>
   <data name="CoinDetails" xml:space="preserve">
-    <value>币详情</value>
+    <value>代币详情</value>
   </data>
   <data name="SelfCoinJoinToolTip" xml:space="preserve">
-    <value>在此 Coinjoin 中，大多数硬币属于您。这将显著降低您的隐私进度。请考虑使用更少的钱包参与，直到有更多的参与者加入。</value>
+    <value>在此 Coinjoin 中，大多数硬币属于您。这将显著降低您的隐私进度。请考虑在参与钱包数量减少时进行，直到有更多的参与者加入。</value>
   </data>
   <data name="AuthCodePrompt" xml:space="preserve">
-    <value>使用您首选的身份验证应用扫描下面的二维码，然后输入验证码。</value>
+    <value>请您使用常用验证器扫描下方二维码，并输入收到的验证码。</value>
   </data>
   <data name="Verify" xml:space="preserve">
     <value>验证</value>
@@ -1255,49 +1240,49 @@
     <value>双重身份验证设置</value>
   </data>
   <data name="TokenVerificationFailed" xml:space="preserve">
-    <value>无法验证令牌，请查看日志以获取更多信息。</value>
+    <value>无法验证令牌（token），请查看日志以获取更多信息。</value>
   </data>
   <data name="TwoFactorAuthenticationWithCapitals" xml:space="preserve">
-    <value>双重身份验证</value>
+    <value>双重验证</value>
   </data>
   <data name="TransactionFeeRate" xml:space="preserve">
-    <value>交易费用率：</value>
+    <value>交易费率：</value>
   </data>
   <data name="InvalidFee" xml:space="preserve">
-    <value>输入的费用无效。</value>
+    <value>手续费超出允许范围。</value>
   </data>
   <data name="MinFeeLimit" xml:space="preserve">
     <value>不能少于 1 sat/vByte。</value>
   </data>
   <data name="FeeTooHigh" xml:space="preserve">
-    <value>输入的费用过高。</value>
+    <value>设置的手续费过高。</value>
   </data>
   <data name="ExcludedCoinsViewModelCaption" xml:space="preserve">
-    <value>显示排除的硬币</value>
+    <value>显示已排除代币</value>
   </data>
   <data name="ExcludedCoinsViewModelKeywords" xml:space="preserve">
-    <value>钱包, 排除, 硬币, Coinjoin, 冻结, UTXO</value>
+    <value>钱包, 排除, 代币, Coinjoin, 混币，冻结,锁定， UTXO，未消费交易输出</value>
   </data>
   <data name="WalletCoinsViewModelCaption" xml:space="preserve">
-    <value>显示钱包硬币</value>
+    <value>查看钱包代币</value>
   </data>
   <data name="WalletCoinsViewModelKeywords" xml:space="preserve">
     <value>钱包, 硬币, UTXO</value>
   </data>
   <data name="WalletStatsViewModelCaption" xml:space="preserve">
-    <value>显示钱包统计数据</value>
+    <value>查看钱包统计数据</value>
   </data>
   <data name="WalletStatsViewModelKeywords" xml:space="preserve">
     <value>钱包, 统计数据</value>
   </data>
   <data name="WalletInfoViewModelCaption" xml:space="preserve">
-    <value>显示钱包信息</value>
+    <value>查看钱包信息</value>
   </data>
   <data name="WalletInfoViewModelKeywords" xml:space="preserve">
     <value>钱包, 信息</value>
   </data>
   <data name="ExcludeCoinjoinDescription" xml:space="preserve">
-    <value>选择的硬币将被排除在Coinjoin之外。需要注意的是，这些硬币的隐私不会增加。</value>
+    <value>所选代币将被排除在混币操作外；请注意：这些代币的隐私性不会因此提升。</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>状态</value>
@@ -1306,10 +1291,10 @@
     <value>日期</value>
   </data>
   <data name="WalletCoinsDescription" xml:space="preserve">
-    <value>您拥有的硬币列表。</value>
+    <value>持有代币列表</value>
   </data>
   <data name="NumberOfCoins" xml:space="preserve">
-    <value>硬币数量（UTXOs）</value>
+    <value>未花費的交易輸出（UTXOs）</value>
   </data>
   <data name="UnconfirmedBalance" xml:space="preserve">
     <value>未确认余额</value>
@@ -1321,34 +1306,34 @@
     <value>总余额</value>
   </data>
   <data name="TotalTransactions" xml:space="preserve">
-    <value>交易总数</value>
+    <value>总交易笔数</value>
   </data>
   <data name="NonCoinjoinTransactions" xml:space="preserve">
     <value>非Coinjoin交易数量</value>
   </data>
   <data name="CoinjoinTransactions" xml:space="preserve">
-    <value>Coinjoin交易数量</value>
+    <value>Coinjoin交易次数</value>
   </data>
   <data name="NumberOfAddresses" xml:space="preserve">
     <value>地址数量</value>
   </data>
   <data name="NumberOfCleanAddresses" xml:space="preserve">
-    <value>清洁地址数量</value>
+    <value>干净地址数量</value>
   </data>
   <data name="NumberOfLockedAddresses" xml:space="preserve">
-    <value>锁定地址数量</value>
+    <value>已锁定的钱包地址数量</value>
   </data>
   <data name="NumberOfUsedAddresses" xml:space="preserve">
-    <value>已使用地址数量</value>
+    <value>已使用的钱包地址数量</value>
   </data>
   <data name="ExtendedMasterPrivateKey" xml:space="preserve">
     <value>扩展主私钥</value>
   </data>
   <data name="ExtendedMasterZprv" xml:space="preserve">
-    <value>扩展主 zprv 私钥</value>
+    <value>扩展主私钥 (zprv)</value>
   </data>
   <data name="ExtendedMasterFingerprint" xml:space="preserve">
-    <value>扩展主指纹</value>
+    <value>扩展主密钥指纹</value>
   </data>
   <data name="AccountKeyPathSegWit" xml:space="preserve">
     <value>账户密钥路径（SegWit）</value>
@@ -1357,7 +1342,7 @@
     <value>账户密钥路径（Taproot）</value>
   </data>
   <data name="ExtendedAccountPrivateKeyXpriv" xml:space="preserve">
-    <value>扩展账户私钥 xpriv</value>
+    <value>扩展账户钱包私钥 (xpriv)</value>
   </data>
   <data name="PublicExternalOutputDescriptor" xml:space="preserve">
     <value>公共外部输出描述符</value>
@@ -1372,13 +1357,13 @@
     <value>私有内部输出描述符</value>
   </data>
   <data name="ExtendedAccountPublicKeySegWit" xml:space="preserve">
-    <value>扩展账户公钥（SegWit）</value>
+    <value>扩展账户钱包公钥（SegWit）</value>
   </data>
   <data name="ExtendedAccountPublicKeyTaproot" xml:space="preserve">
-    <value>扩展账户公钥（Taproot）</value>
+    <value>扩展账户钱包公钥（Taproot）</value>
   </data>
   <data name="HideSensitiveData" xml:space="preserve">
-    <value>隐藏敏感数据</value>
+    <value>隐藏敏感信息</value>
   </data>
   <data name="ShowSensitiveData" xml:space="preserve">
     <value>显示敏感数据</value>
@@ -1387,7 +1372,7 @@
     <value>日期 / 时间</value>
   </data>
   <data name="DestinationAddresses" xml:space="preserve">
-    <value>目标地址</value>
+    <value>收款地址</value>
   </data>
   <data name="FeeRate" xml:space="preserve">
     <value>手续费率</value>
@@ -1402,19 +1387,19 @@
     <value>({0} 次确认)</value>
   </data>
   <data name="BlockHash" xml:space="preserve">
-    <value>块哈希</value>
+    <value>区块哈希</value>
   </data>
   <data name="BlockHeight" xml:space="preserve">
-    <value>块高度</value>
+    <value>区块高度</value>
   </data>
   <data name="TransactionDetails" xml:space="preserve">
     <value>交易详情</value>
   </data>
   <data name="AmountSent" xml:space="preserve">
-    <value>发送金额</value>
+    <value>汇出金额</value>
   </data>
   <data name="AmountReceived" xml:space="preserve">
-    <value>收到金额</value>
+    <value>到账金额</value>
   </data>
   <data name="Fees" xml:space="preserve">
     <value>手续费</value>
@@ -1429,16 +1414,16 @@
     <value>交易ID</value>
   </data>
   <data name="Incoming" xml:space="preserve">
-    <value>传入</value>
+    <value>收入</value>
   </data>
   <data name="Outgoing" xml:space="preserve">
-    <value>外发</value>
+    <value>支出</value>
   </data>
   <data name="SelfTransfer" xml:space="preserve">
-    <value>自我转账</value>
+    <value>钱包内转账</value>
   </data>
   <data name="Coinjoins" xml:space="preserve">
-    <value>Coinjoin</value>
+    <value>Coinjoin，混币</value>
   </data>
   <data name="Cancellation" xml:space="preserve">
     <value>取消</value>
@@ -1462,7 +1447,7 @@
     <value>已确认（{0} 次确认{1}）</value>
   </data>
   <data name="LessThan" xml:space="preserve">
-    <value>小于</value>
+    <value>低于：</value>
   </data>
   <data name="More" xml:space="preserve">
     <value>更多</value>
@@ -1477,22 +1462,22 @@
     <value>编辑标签</value>
   </data>
   <data name="UnknownPeople" xml:space="preserve">
-    <value>未知人物</value>
+    <value>匿名关联方</value>
   </data>
   <data name="PrivateCoins" xml:space="preserve">
-    <value>私人币</value>
+    <value>匿名币</value>
   </data>
   <data name="SemiPrivateCoins" xml:space="preserve">
-    <value>半私人币</value>
+    <value>部分匿名币</value>
   </data>
   <data name="Coinjoining" xml:space="preserve">
     <value>Coinjoining</value>
   </data>
   <data name="NotCoinjoining" xml:space="preserve">
-    <value>Not coinjoining</value>
+    <value>不进行 CoinJoin混币</value>
   </data>
   <data name="ExcludedFromCoinjoins" xml:space="preserve">
-    <value>排除在 Coinjoin 之外</value>
+    <value>排除在 Coinjoin 混币之外</value>
   </data>
   <data name="ConfirmationCount" xml:space="preserve">
     <value>{0} 次确认{1}</value>
@@ -1525,7 +1510,7 @@
     <value>已启用（仅连接模式）</value>
   </data>
   <data name="WouldYouLikeToPersonalizeIt" xml:space="preserve">
-    <value>您想个性化设置吗？</value>
+    <value>需要个性化设置吗？</value>
   </data>
   <data name="Disabled" xml:space="preserve">
     <value>已禁用</value>
@@ -1537,7 +1522,7 @@
     <value>隐私</value>
   </data>
   <data name="CostEfficiency" xml:space="preserve">
-    <value>成本效益</value>
+    <value>成本效益/手续费使用效率</value>
   </data>
   <data name="Other" xml:space="preserve">
     <value>其他</value>
@@ -1555,7 +1540,7 @@
     <value>有时</value>
   </data>
   <data name="Rarely" xml:space="preserve">
-    <value>很少</value>
+    <value>很少/偶尔</value>
   </data>
   <data name="Days" xml:space="preserve">
     <value>天</value>
@@ -1576,43 +1561,43 @@
     <value>不是一个数字。</value>
   </data>
   <data name="ValidationErrorNotInRange" xml:space="preserve">
-    <value>值必须在 {0} 和 {1} 之间。</value>
+    <value>数值必须在 {0} 和 {1} 之间。</value>
   </data>
   <data name="CoinJoinCoinSelection" xml:space="preserve">
-    <value>硬币选择</value>
+    <value>代币选择</value>
   </data>
   <data name="ExperimentalCoinJoinCoinSelector" xml:space="preserve">
-    <value>实验性）改进的币选择</value>
+    <value>(实验性) 优化代币选择算法</value>
   </data>
   <data name="ForceUsingLowPrivacyCoinsInCoinJoinCoinSelector" xml:space="preserve">
-    <value>强制使用低隐私硬币</value>
+    <value>强制使用低匿名性代币（存在隐私风险）</value>
   </data>
   <data name="ForceUsingLowPrivacyCoinsInCoinJoinCoinSelectorToolTip" xml:space="preserve">
-    <value>选择中应至少包含一枚隐私度最低的硬币。</value>
+    <value>代币选择必须包含至少一个低匿名性代币。</value>
   </data>
   <data name="WeightedAnonymityLossNormalInCoinJoinCoinSelector" xml:space="preserve">
-    <value>硬币隐私差异的标准化用于分数计算</value>
+    <value>代币匿名性差异标准化评分</value>
   </data>
   <data name="WeightedAnonymityLossNormalInCoinJoinCoinSelectorToolTip" xml:space="preserve">
-    <value>值较低时，硬币选择器会偏好隐私分数差异较小的硬币。</value>
+    <value>值较低时，硬币选择器会优先选择匿名评分差异较小的代币。</value>
   </data>
   <data name="ValueLossRateNormalInCoinJoinCoinSelector" xml:space="preserve">
-    <value>金额损失的标准化用于分数计算</value>
+    <value>用于计算评分的价值损失归一化</value>
   </data>
   <data name="ValueLossRateNormalInCoinJoinCoinSelectorToolTip" xml:space="preserve">
-    <value>值较低时，硬币选择器会偏好金额损失比例较低的选择。</value>
+    <value>当值较低时，硬币选择器会优先选择价值损失率较低的代币。</value>
   </data>
   <data name="TargetCoinCountPerBucketInCoinJoinCoinSelector" xml:space="preserve">
-    <value>每个钱包分组的目标硬币数量</value>
+    <value>每个钱包组的目标币数</value>
   </data>
   <data name="TargetCoinCountPerBucketInCoinJoinCoinSelectorToolTip" xml:space="preserve">
-    <value>币选择器会优先选择来自过多硬币分组的硬币（如 10k、20k、40k satoshi 范围的硬币）。</value>
+    <value>优先从已超额的组别（如 10k、20k、40k 等 satoshi 范围）中分配币。</value>
   </data>
   <data name="UseOldCoinSelectorAsFallbackInCoinJoinCoinSelector" xml:space="preserve">
-    <value>使用舊版選幣器作為後備</value>
+    <value>启用旧版币选择器作为备选方案</value>
   </data>
   <data name="UseOldCoinSelectorAsFallbackInCoinJoinCoinSelectorToolTip" xml:space="preserve">
-    <value>将同时使用旧的和新的币选择器，并选择更好的结果。</value>
+    <value>新旧币选择器将并行运行，并自动选取更优结果。</value>
   </data>
   <data name="Configuration" xml:space="preserve">
     <value>配置</value>
@@ -1621,7 +1606,7 @@
     <value>出售</value>
   </data>
   <data name="CountryOfResidenceRequired" xml:space="preserve">
-    <value>您的居住国家是监管合规和交易处理所需的</value>
+    <value>根据监管要求及交易处理需要，平台需获取您的居住国信息</value>
   </data>
   <data name="RegionSelection" xml:space="preserve">
     <value>区域选择</value>
@@ -1636,34 +1621,34 @@
     <value>购买</value>
   </data>
   <data name="NoOfferForAmount" xml:space="preserve">
-    <value>找不到指定金额的任何优惠。</value>
+    <value>未找到符合指定金额的报价。</value>
   </data>
   <data name="AmountCannotExceed" xml:space="preserve">
     <value>金额不能超过 {0}。</value>
   </data>
   <data name="AmountMustBeAtLeast" xml:space="preserve">
-    <value>金额必须至少为 {0}。</value>
+    <value>金额必须 ≥ {0}/ 最低支付金额{0}。</value>
   </data>
   <data name="ServiceNotAvailable" xml:space="preserve">
-    <value>服务目前不可用。稍后再试。</value>
+    <value>服务当前不可用，请稍后重试</value>
   </data>
   <data name="EnterAmountForOffers" xml:space="preserve">
-    <value>输入金额，我们将为您计算最佳优惠。</value>
+    <value>输入金额，我们将为您计算最优方案。</value>
   </data>
   <data name="BuyAmountWatermark" xml:space="preserve">
     <value>在此输入金额...</value>
   </data>
   <data name="PreviousOrders" xml:space="preserve">
-    <value>之前的订单</value>
+    <value>历史订单</value>
   </data>
   <data name="All" xml:space="preserve">
     <value>所有</value>
   </data>
   <data name="Offers" xml:space="preserve">
-    <value>提供</value>
+    <value>报价</value>
   </data>
   <data name="InvalidBTCAddress" xml:space="preserve">
-    <value>地址不是有效的BTC地址。</value>
+    <value>该地址不是有效的比特币地址。</value>
   </data>
   <data name="Browser" xml:space="preserve">
     <value>浏览器</value>
@@ -1672,7 +1657,7 @@
     <value>Ginger Wallet 无法打开浏览器，请检查日志以获取更多详细信息。</value>
   </data>
   <data name="AMLKYCNotice" xml:space="preserve">
-    <value>点击接受，我承认该交易以后可能需要第三方提供商进行AML/KYC验证。</value>
+    <value>点击「接受」即表示：本人知悉本次交易后续可能需要第三方服务商进行反洗钱/身份认证审核。</value>
   </data>
   <data name="Accept" xml:space="preserve">
     <value>接受</value>
@@ -1681,22 +1666,22 @@
     <value>支付</value>
   </data>
   <data name="Provider" xml:space="preserve">
-    <value>提供商</value>
+    <value>服务商</value>
   </data>
   <data name="PastOrdersDetails" xml:space="preserve">
-    <value>您可以跟踪、管理并查看过去订单的详细信息。</value>
+    <value>您可以跟踪、管理并查看历史订单的详细信息。</value>
   </data>
   <data name="Created" xml:space="preserve">
     <value>已创建</value>
   </data>
   <data name="TransactionOnHold" xml:space="preserve">
-    <value>您的交易正在处理中，请联系支持。</value>
+    <value>您的交易处于待处理状态，请联系客服中心（support）。</value>
   </data>
   <data name="Refunded" xml:space="preserve">
     <value>已退款</value>
   </data>
   <data name="Expired" xml:space="preserve">
-    <value>已过期</value>
+    <value>已失效</value>
   </data>
   <data name="Failed" xml:space="preserve">
     <value>失败</value>
@@ -1714,7 +1699,7 @@
     <value>国家:</value>
   </data>
   <data name="StateWithColon" xml:space="preserve">
-    <value>州:</value>
+    <value>状态</value>
   </data>
   <data name="TotalCostIncludesFee" xml:space="preserve">
     <value>{0} 的总费用包括 {1} 的手续费。</value>
@@ -1723,7 +1708,7 @@
     <value>出售比特币</value>
   </data>
   <data name="ReceiveInWithColom" xml:space="preserve">
-    <value>接收至：</value>
+    <value>在此接收：</value>
   </data>
   <data name="SellSuccessText1" xml:space="preserve">
     <value>按照提供商页面上的说明进行操作。在某个时候，您将收到一个</value>
@@ -1747,7 +1732,7 @@
     <value>生成</value>
   </data>
   <data name="ErrorAddingWallet" xml:space="preserve">
-    <value>添加您的钱包时发生错误。</value>
+    <value>添加钱包时发生错误。</value>
   </data>
   <data name="DetectedConfirmation" xml:space="preserve">
     <value>检测到 {0}。这是正确的吗？</value>
@@ -1759,19 +1744,19 @@
     <value>Ginger Wallet 无法导入您的钱包。</value>
   </data>
   <data name="AllCoinsConfirmed" xml:space="preserve">
-    <value>所有币均已确认。</value>
+    <value>所有硬币均已确认。</value>
   </data>
   <data name="CoinsWaitingForConfirmation" xml:space="preserve">
     <value>{0} 枚币正在等待确认。</value>
   </data>
   <data name="CoinsCantParticipateCoinJoin" xml:space="preserve">
-    <value>部分币无法参与 Coinjoin。</value>
+    <value>部分代币无法参与 Coinjoin混币。</value>
   </data>
   <data name="SourceCodeGitHub" xml:space="preserve">
     <value>源代码（GitHub）</value>
   </data>
   <data name="WebsiteClearnet" xml:space="preserve">
-    <value>网站（Clearnet）</value>
+    <value>官方网站（明网Clearnet）</value>
   </data>
   <data name="BugReport" xml:space="preserve">
     <value>错误报告</value>
@@ -1795,67 +1780,67 @@
     <value>兼容的 Bitcoin Core 和 Bitcoin Knots 版本</value>
   </data>
   <data name="CompatibleHardwareWalletInterfaceVersion" xml:space="preserve">
-    <value>兼容的硬件钱包接口版本</value>
+    <value>兼容的HIW（硬件钱包接口）版本</value>
   </data>
   <data name="PrivacyProgress" xml:space="preserve">
     <value>隐私进展</value>
   </data>
   <data name="HoverOverRingSegments" xml:space="preserve">
-    <value>将鼠标悬停在环形段上以查看币的详细信息</value>
+    <value>将鼠标指向在环形板块上，即可查看币种详情</value>
   </data>
   <data name="Private" xml:space="preserve">
     <value>私密</value>
   </data>
   <data name="SemiPrivate" xml:space="preserve">
-    <value>半私密</value>
+    <value>部分匿名</value>
   </data>
   <data name="NonPrivate" xml:space="preserve">
     <value>非私密</value>
   </data>
   <data name="PleaseWaitToShutDown" xml:space="preserve">
-    <value>关机进行中</value>
+    <value>正在关闭中</value>
   </data>
   <data name="GingerUnableToCloseCoinJoinInProgress" xml:space="preserve">
-    <value>Ginger 现在无法关闭。CoinJoin 正在进行中。</value>
+    <value>Ginger 当前无法关闭：混币操作正在进行中。</value>
   </data>
   <data name="ThisMayTakeAFewMinutes" xml:space="preserve">
     <value>这可能需要几分钟。完成后，Ginger 将自动关闭。</value>
   </data>
   <data name="TransactionAlreadyConfirmed" xml:space="preserve">
-    <value>交易已经确认。</value>
+    <value>这笔交易已经确认。</value>
   </data>
   <data name="GingerWalletUnableToSpeedUpTransaction" xml:space="preserve">
-    <value>Ginger Wallet 无法加速您的交易。</value>
+    <value>Ginger wallet无法加速该交易。</value>
   </data>
   <data name="SpeedingUpTransactionCostAmount" xml:space="preserve">
-    <value>加速此交易将收费</value>
+    <value>交易加速所需附加费用为</value>
   </data>
   <data name="SpeedingUpTransactionDeductFromRecipient" xml:space="preserve">
-    <value>加速此交易将从收款人的金额中扣除</value>
+    <value>加速交易将从收款人金额中扣除以下费用</value>
   </data>
   <data name="Appearance" xml:space="preserve">
-    <value>外观</value>
+    <value>显示设置</value>
   </data>
   <data name="AppearanceThemeKeywords" xml:space="preserve">
-    <value>黑色, 白色, 主题, 黑暗, 明亮</value>
+    <value>纯黑, 纯白, 主题, 深色模式，浅色模式</value>
   </data>
   <data name="RunInBackgroundKeywords" xml:space="preserve">
     <value>隐藏, 托盘</value>
   </data>
   <data name="RunAtStartupKeywords" xml:space="preserve">
-    <value>启动, 启动</value>
+    <value>启动, 开机</value>
   </data>
   <data name="NoResults" xml:space="preserve">
-    <value>没有结果</value>
+    <value>未找到结果</value>
   </data>
   <data name="CriticalUpdateRequired" xml:space="preserve">
-    <value>需要关键更新</value>
+    <value>需要执行关键更新</value>
   </data>
   <data name="VersionReadyToInstall" xml:space="preserve">
     <value>{0} 版本现在可以安装</value>
   </data>
   <data name="VersionAvailable" xml:space="preserve">
-    <value>{0} 版本现已可用</value>
+    <value>{0}版本已发布</value>
   </data>
   <data name="Peers" xml:space="preserve">
     <value>对等节点</value>
@@ -1876,13 +1861,13 @@
     <value>剪贴板为空！</value>
   </data>
   <data name="UnableToPasteTransaction" xml:space="preserve">
-    <value>无法粘贴交易。</value>
+    <value>无法粘贴交易数据。</value>
   </data>
   <data name="CancellationFailed" xml:space="preserve">
     <value>取消失败</value>
   </data>
   <data name="GingerWalletUnableToCancelTransaction" xml:space="preserve">
-    <value>Ginger Wallet 无法取消您的交易。</value>
+    <value>Ginger wallet无法撤销该交易。</value>
   </data>
   <data name="SpeedUpFailed" xml:space="preserve">
     <value>加速失败</value>
@@ -1891,40 +1876,40 @@
     <value>授权失败，请重试。</value>
   </data>
   <data name="AuthorizeWithHardwareWallet" xml:space="preserve">
-    <value>使用硬件钱包授权</value>
+    <value>通过硬件钱包授权</value>
   </data>
   <data name="AuthorizationFailedWithDeviceCheck" xml:space="preserve">
     <value>授权失败。{0}请检查您的设备并重试。</value>
   </data>
   <data name="EnterPassphraseAuth" xml:space="preserve">
-    <value>输入您的密码短语</value>
+    <value>输入您的密码加密口令</value>
   </data>
   <data name="IncorrectPassphrase" xml:space="preserve">
-    <value>密码短语不正确。{0}请重试。</value>
+    <value>密码加密口令不正确。{0}请重试。</value>
   </data>
   <data name="SelectAllowedCoins" xml:space="preserve">
-    <value>选择允许用于交易的币种</value>
+    <value>请选择那些允许用于此交易的币</value>
   </data>
   <data name="RenameWallet" xml:space="preserve">
     <value>重命名钱包</value>
   </data>
   <data name="WalletCannotBeRenamed" xml:space="preserve">
-    <value>钱包无法重命名为 {0}</value>
+    <value>无法将钱包重命名为 {0}</value>
   </data>
   <data name="GingerWalletUnableToOpenFile" xml:space="preserve">
-    <value>Ginger Wallet 无法打开文件。</value>
+    <value>Ginger Wallet无法打开文件。</value>
   </data>
   <data name="FoundIn" xml:space="preserve">
     <value>在 "{0}" 中找到</value>
   </data>
   <data name="IncorrectPassphraseRetry" xml:space="preserve">
-    <value>密码短语不正确！请重试。</value>
+    <value>密码加密口令不正确！请重试。</value>
   </data>
   <data name="AcceptTermsAndConditions" xml:space="preserve">
     <value>您必须接受条款和条件！</value>
   </data>
   <data name="CompatibilityPassphraseUsed" xml:space="preserve">
-    <value>使用了兼容性密码短语！请考虑生成一个新钱包以确保可恢复性！</value>
+    <value>使用了兼容性密码！请考虑生成一个新的钱包以确保可恢复性！</value>
   </data>
   <data name="PassphraseTooLong" xml:space="preserve">
     <value>密码短语太长。</value>
@@ -1936,25 +1921,25 @@
     <value>错误</value>
   </data>
   <data name="VerifyRecoveryWordsErrorMessage" xml:space="preserve">
-    <value>请再试一次，但如果您无法验证恢复词，您必须尽快将资金转移到一个新钱包中。</value>
+    <value>请重试，若无法验证助记词，请立即将资产转移至新钱包。</value>
   </data>
   <data name="VerifyRecoveryWordsErrorCaption" xml:space="preserve">
-    <value>您输入的恢复词不正确。</value>
+    <value>您输入的助记词错误。</value>
   </data>
   <data name="InvalidRecoveryWords" xml:space="preserve">
-    <value>恢复词无效。</value>
+    <value>助记词验证失败。</value>
   </data>
   <data name="UnableToVerifyRecoveryWords" xml:space="preserve">
-    <value>Ginger Wallet 无法验证恢复词。</value>
+    <value>Ginger Wallet 助记词验证失败。</value>
   </data>
   <data name="AfterDeductingFee" xml:space="preserve">
     <value>扣除 {0} 手续费后，您将收到 {1} — 不会产生其他费用。</value>
   </data>
   <data name="UnableToRecoverWallet" xml:space="preserve">
-    <value>Ginger Wallet 无法恢复钱包。</value>
+    <value>Ginger Wallet 恢复失败。</value>
   </data>
   <data name="InvalidSetRecoveryWords" xml:space="preserve">
-    <value>无效的恢复词组。确保您按正确的顺序输入了所有恢复词。</value>
+    <value>您输入的恢复助记词无效或顺序错误，请检查拼写和顺序。</value>
   </data>
   <data name="FailedToGetLegalDocuments" xml:space="preserve">
     <value>获取法律文件失败。</value>
@@ -1969,10 +1954,10 @@
     <value>检查您的设备并完成初始化。</value>
   </data>
   <data name="SomethingHappenedWithDevice" xml:space="preserve">
-    <value>设备出现问题，请使用您的PIN码/密码解锁，或重新连接到PC。</value>
+    <value>设备出现异常，请使用 PIN 码/助记词密钥解锁，或重新连接至电脑。</value>
   </data>
   <data name="ExportTransaction" xml:space="preserve">
-    <value>导出交易</value>
+    <value>导出交易记录</value>
   </data>
   <data name="SaveQRCode" xml:space="preserve">
     <value>保存二维码</value>
@@ -1981,22 +1966,22 @@
     <value>增加 {0}</value>
   </data>
   <data name="AppearanceSettingsTabViewModelTitle" xml:space="preserve">
-    <value>外观</value>
+    <value>显示设置</value>
   </data>
   <data name="AppearanceSettingsTabViewModelCaption" xml:space="preserve">
-    <value>管理外观设置</value>
+    <value>管理显示设置</value>
   </data>
   <data name="AppearanceSettingsTabViewModelKeywords" xml:space="preserve">
-    <value>设置，外观，比特币，暗，模式，费用，显示，格式，BTC，sats，交换，货币</value>
+    <value>设置，显示设置，比特币，深色模式，模式，费用，显示，格式，BTC，比特币，sats，聪，兑换/交易所（数字资产交易平台），汇率</value>
   </data>
   <data name="ExchangeCurrency" xml:space="preserve">
-    <value>兑换货币</value>
+    <value>兑换/汇率货币</value>
   </data>
   <data name="Cut" xml:space="preserve">
     <value>剪切</value>
   </data>
   <data name="ThisOpenSourceSoftwareIsLicensedWith" xml:space="preserve">
-    <value>此开源软件的许可为 </value>
+    <value>此开源软件遵循以下许可证： </value>
   </data>
   <data name="CancellingThisTransactionWillCostYou" xml:space="preserve">
     <value>取消此交易将花费您</value>
@@ -2005,7 +1990,7 @@
     <value>确定</value>
   </data>
   <data name="TorNetworkIssues" xml:space="preserve">
-    <value>Tor 网络出现问题：</value>
+    <value>Tor 网络遇到问题：</value>
   </data>
   <data name="ClickIconForDetails" xml:space="preserve">
     <value>点击此图标查看详细信息</value>
@@ -2032,10 +2017,10 @@
     <value>非私密资金</value>
   </data>
   <data name="SemiPrivateFunds" xml:space="preserve">
-    <value>半私密资金</value>
+    <value>部分匿名币</value>
   </data>
   <data name="PrivateFunds" xml:space="preserve">
-    <value>私密资金</value>
+    <value>匿名代币</value>
   </data>
   <data name="CustomFeeRate" xml:space="preserve">
     <value>自定义费率</value>
@@ -2050,10 +2035,10 @@
     <value>选定的钱包名称无效。请尝试使用其他名称。</value>
   </data>
   <data name="AcceptingOfferRedirect" xml:space="preserve">
-    <value>接受报价将把您重定向到提供商页面以完成流程。</value>
+    <value>接受该报价后，系统将跳转至服务提供商的页面以完成后续流程。</value>
   </data>
   <data name="ImportOrPasteTransactionHex" xml:space="preserve">
-    <value>导入或粘贴交易十六进制并将其广播到网络。</value>
+    <value>导入或粘贴交易十六进制代码，并广播至网络。</value>
   </data>
   <data name="UnselectAll" xml:space="preserve">
     <value>取消全选</value>
@@ -2069,7 +2054,7 @@
     <value>数字小数分隔符</value>
   </data>
   <data name="GroupSeparator" xml:space="preserve">
-    <value>数字分组分隔符</value>
+    <value>数字分组符号</value>
   </data>
   <data name="DotEnum" xml:space="preserve">
     <value>点</value>
@@ -2084,7 +2069,7 @@
     <value>空格</value>
   </data>
   <data name="BitcoinFractionGrouping" xml:space="preserve">
-    <value>比特币小数分组</value>
+    <value>比特币小数分组，分形比特币</value>
   </data>
   <data name="ApostropheEnum" xml:space="preserve">
     <value>省略符 (撇号)</value>
@@ -2093,10 +2078,10 @@
     <value>不可用</value>
   </data>
   <data name="NoProgressYet" xml:space="preserve">
-    <value>还没有进展</value>
+    <value>尚无进展</value>
   </data>
   <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
-    <value>开始进行 CoinJoin 以获得隐私</value>
+    <value>立即开启混币流程，提升您的隐私等级</value>
   </data>
   <data name="Plural" xml:space="preserve">
     <value>\0</value>
@@ -2124,5 +2109,29 @@
   </data>
   <data name="CouldntDeleteWalletCheckLogs" xml:space="preserve">
     <value>无法删除钱包，请检查日志以获取更多详细信息。</value>
+  </data>
+    <data name="SyncingYourWallet" xml:space="preserve">
+    <value>正在同步您的钱包...</value>
+  </data>
+    <data name="SetAsDefault" xml:space="preserve">
+    <value>设为默认</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>隐藏</value>
+  </data>
+  <data name="LoadingViewDownloadText" xml:space="preserve">
+    <value>比特币网络数据下载与处理</value>
+  </data>
+  <data name="LoadingViewProcessLonger" xml:space="preserve">
+    <value>首次启动、大型钱包或距上次同步间隔较久时，此过程可能需要更长时间。</value>
+  </data>
+  <data name="LoadingViewThirdparty" xml:space="preserve">
+    <value>Ginger 通过这种方式确保第三方无法获知你的账户余额和财务活动。</value>
+  </data>
+  <data name="TwoFactorDisabledWarnMessage" xml:space="preserve">
+    <value>双重验证已关闭。请至设置开启增强防护。</value>
+  </data>
+  <data name="TwoFactorDisabledWarnMessageOpenSettings" xml:space="preserve">
+    <value>打开设置</value>
   </data>
 </root>

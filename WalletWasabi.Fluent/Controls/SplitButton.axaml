@@ -44,7 +44,19 @@
                   Focusable="False"
                   KeyboardNavigation.IsTabStop="False">
             <Viewbox Height="16" Margin="2 0 0 0">
-              <PathIcon Foreground="{Binding #PART_PrimaryButton.Foreground}" Margin="6" Data="M1939 486L2029 576L1024 1581L19 576L109 486L1024 1401L1939 486Z" />
+              <Viewbox.Styles>
+                <Style Selector="PathIcon">
+                  <Setter Property="RenderTransform" Value="rotate(0)" />
+                  <Setter Property="Transitions">
+                    <Transitions>
+                      <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.15" />
+                    </Transitions>
+                  </Setter>
+                </Style>
+              </Viewbox.Styles>
+              <PathIcon x:Name="PART_ArrowIcon" Foreground="{Binding #PART_PrimaryButton.Foreground}" Margin="6"
+                        Data="M1939 486L2029 576L1024 1581L19 576L109 486L1024 1401L1939 486Z">
+              </PathIcon>
             </Viewbox>
           </Button>
 
@@ -68,6 +80,10 @@
         </DockPanel>
       </ControlTemplate>
     </Setter>
+
+    <Style Selector="^:flyout-open /template/ PathIcon#PART_ArrowIcon">
+      <Setter Property="RenderTransform" Value="rotate(-180deg)" />
+    </Style>
 
     <Style Selector="^:flyout-open /template/ Button">
       <Setter Property="Tag" Value="flyout-open" />

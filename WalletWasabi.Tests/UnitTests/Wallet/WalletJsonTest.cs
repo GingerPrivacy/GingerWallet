@@ -275,6 +275,7 @@ public class WalletJsonTest
 		  "FeeRateMedianTimeFrameHours": 0,
 		  "IsCoinjoinProfileSelected": false,
 		  "RedCoinIsolation": false,
+		  "IsRecovering": false,
 		  "CoinjoinSkipFactors": "1_1_1",
 		  "BuySellWalletData": {
 		    "Orders": [

@@ -352,7 +352,7 @@ public class TorTests : IAsyncLifetime
 	{
 		using CancellationTokenSource ctsTimeout = new(TimeSpan.FromMinutes(2));
 
-		TorTcpConnectionFactory client1 = new(new IPEndPoint(IPAddress.Loopback, 37150));
+		TorTcpConnectionFactory client1 = new(new IPEndPoint(IPAddress.Loopback, TorSettings.DefaultSocksPort));
 		Assert.True(await client1.IsTorRunningAsync(ctsTimeout.Token));
 
 		TorTcpConnectionFactory client2 = new(new IPEndPoint(IPAddress.Loopback, 9054));

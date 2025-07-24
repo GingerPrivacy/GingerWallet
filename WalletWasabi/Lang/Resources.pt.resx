@@ -313,7 +313,7 @@
         <value>Pasta de Dados do Bitcoin Core/Knots</value>
     </data>
     <data name="BitcoinFractionGrouping" xml:space="preserve">
-        <value>Agrupamento de Frações de Bitcoin</value>
+        <value>Agrupamento de frações de Bitcoin</value>
     </data>
     <data name="BitcoinP2PEndpoint" xml:space="preserve">
         <value>Ponto de Extremidade P2P do Bitcoin</value>
@@ -673,7 +673,7 @@
         <value>Dias</value>
     </data>
     <data name="DecimalSeparator" xml:space="preserve">
-        <value>Separador Decimal de Número</value>
+        <value>Separador decimal de número</value>
     </data>
     <data name="Default" xml:space="preserve">
         <value>Padrão</value>
@@ -910,7 +910,7 @@
         <value>O Ginger Wallet não conseguiu acelerar sua transação.</value>
     </data>
     <data name="GroupSeparator" xml:space="preserve">
-        <value>Separador de Grupo de Número</value>
+        <value>Separador de grupo de número</value>
     </data>
     <data name="HardwareWallet" xml:space="preserve">
         <value>Carteira de Hardware</value>
@@ -1059,20 +1059,11 @@
     <data name="LightningAddressesNotSupported" xml:space="preserve">
         <value>Endereços Lightning não são suportados.</value>
     </data>
-    <data name="LoadingViewDownloadText" xml:space="preserve">
-        <value>Baixando e processando dados da rede Bitcoin</value>
-    </data>
     <data name="LoadingViewModelPercentCompleted" xml:space="preserve">
         <value>{0}% concluído</value>
     </data>
     <data name="LoadingViewModelTimeRemaining" xml:space="preserve">
         <value>- {0} restante</value>
-    </data>
-    <data name="LoadingViewProcessLonger" xml:space="preserve">
-        <value>Este processo será mais longo no primeiro lançamento, com carteiras maiores ou após longos intervalos entre sincronizações.</value>
-    </data>
-    <data name="LoadingViewThirdparty" xml:space="preserve">
-        <value>O Ginger faz isso sem que qualquer terceiro saiba sobre seu saldo e atividade financeira.</value>
     </data>
     <data name="LocalBitcoinCoreKnotsVersion" xml:space="preserve">
         <value>Versão local do Bitcoin Core/Knots</value>
@@ -1670,7 +1661,7 @@
         <value>Para continuar usando o Ginger, por favor aceite os termos e condições</value>
     </data>
     <data name="TermsAndConditionsViewIAgree" xml:space="preserve">
-        <value>Eu _concordo com os </value>
+        <value>Eu _concordo com os</value>
     </data>
     <data name="TermsAndConditionsViewTermsAndConditions" xml:space="preserve">
         <value>Termos e condições</value>
@@ -1803,12 +1794,6 @@
     </data>
     <data name="TwoFactorAuthenticationWithCapitals" xml:space="preserve">
         <value>Autenticação de dois fatores</value>
-    </data>
-    <data name="TwoFactorDisabledWarnMessage" xml:space="preserve">
-        <value>A autenticação de dois fatores está desativada. Ative-a nas Configurações para maior proteção.</value>
-    </data>
-    <data name="TwoFactorDisabledWarnMessageOpenSettings" xml:space="preserve">
-        <value>Abrir Configurações</value>
     </data>
     <data name="TwoFactorSetup" xml:space="preserve">
         <value>Configuração da Autenticação de Dois Fatores</value>
@@ -2127,5 +2112,11 @@
     </data>
     <data name="CouldntDeleteWalletCheckLogs" xml:space="preserve">
         <value>Não foi possível excluir a carteira, verifique os logs para mais detalhes.</value>
+    </data>
+    <data name="SyncingYourWallet" xml:space="preserve">
+        <value>Sincronizando sua carteira...</value>
+    </data>
+    <data name="SetAsDefault" xml:space="preserve">
+        <value>Definir como padrão</value>
     </data>
 </root>

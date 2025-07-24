@@ -121,10 +121,6 @@
     <value>Open</value>
     <comment>This is a button which is used to open your bitcoin wallet. One word only. </comment>
   </data>
-  <data name="TwoFactorDisabledWarnMessage" xml:space="preserve">
-    <value>Two-Factor authentication is disabled. Enable it in the Settings for greater protection.</value>
-    <comment>This is a notification message to the user that the two-factor authentication is disabled and consider enabling it. </comment>
-  </data>
   <data name="AddWalletPageViewModelTitle" xml:space="preserve">
     <value>Add Wallet</value>
   </data>
@@ -287,9 +283,6 @@
   <data name="SettingsPageViewModelTitle" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="TwoFactorDisabledWarnMessageOpenSettings" xml:space="preserve">
-    <value>Open Settings</value>
-  </data>
   <data name="LoadingViewModelPercentCompleted" xml:space="preserve">
     <value>{0}% completed</value>
   </data>
@@ -313,15 +306,6 @@
   </data>
   <data name="Plural" xml:space="preserve">
     <value>s</value>
-  </data>
-  <data name="LoadingViewDownloadText" xml:space="preserve">
-    <value>Downloading and processing Bitcoin network data</value>
-  </data>
-  <data name="LoadingViewThirdparty" xml:space="preserve">
-    <value>Ginger does this without any third party knowing about your balance and financial activity.</value>
-  </data>
-  <data name="LoadingViewProcessLonger" xml:space="preserve">
-    <value>This process will be longer on first launch, with larger wallets, or after long gaps between synchronizations.</value>
   </data>
   <data name="WalletBalance" xml:space="preserve">
     <value>BALANCE</value>
@@ -1228,7 +1212,7 @@
     <value>Terms and conditions</value>
   </data>
   <data name="TermsAndConditionsViewIAgree" xml:space="preserve">
-    <value>I _agree to the </value>
+    <value>I _agree to the</value>
   </data>
   <data name="ResyncWallet" xml:space="preserve">
     <value>Resync Wallet</value>
@@ -2075,10 +2059,10 @@
 {0}</value>
   </data>
   <data name="DecimalSeparator" xml:space="preserve">
-    <value>Number Decimal Separator</value>
+    <value>Number decimal separator</value>
   </data>
   <data name="GroupSeparator" xml:space="preserve">
-    <value>Number Group Separator</value>
+    <value>Number group separator</value>
   </data>
   <data name="DotEnum" xml:space="preserve">
     <value>Dot</value>
@@ -2093,7 +2077,7 @@
     <value>Space</value>
   </data>
   <data name="BitcoinFractionGrouping" xml:space="preserve">
-    <value>Bitcoin Fraction Grouping</value>
+    <value>Bitcoin fraction grouping</value>
   </data>
   <data name="ApostropheEnum" xml:space="preserve">
     <value>Apostrophe</value>
@@ -2130,5 +2114,11 @@
   </data>
   <data name="CouldntDeleteWalletCheckLogs" xml:space="preserve">
     <value>Couldn't delete the wallet, check logs for more details.</value>
+  </data>
+    <data name="SyncingYourWallet" xml:space="preserve">
+    <value>Syncing your wallet...</value>
+  </data>
+    <data name="SetAsDefault" xml:space="preserve">
+    <value>Set as Default</value>
   </data>
 </root>

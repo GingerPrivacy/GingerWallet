@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Fluent.AddWallet.Models;
 using WalletWasabi.Fluent.Extensions;
+using WalletWasabi.Fluent.Models.UI;
 using WalletWasabi.Helpers;
 using WalletWasabi.Hwi.Models;
 using WalletWasabi.Lang;
@@ -22,13 +23,15 @@ public class WalletRepository : ReactiveObject
 {
 	private readonly AmountProvider _amountProvider;
 	private readonly HardwareWalletInterface _hardwareWalletInterface;
+	private readonly ApplicationSettings _settings;
 	private readonly Dictionary<WalletId, WalletModel> _walletDictionary = new();
 	private readonly CompositeDisposable _disposable = new();
 
-	public WalletRepository(AmountProvider amountProvider, HardwareWalletInterface hardwareWalletInterface)
+	public WalletRepository(AmountProvider amountProvider, HardwareWalletInterface hardwareWalletInterface, ApplicationSettings settings)
 	{
 		_amountProvider = amountProvider;
 		_hardwareWalletInterface = hardwareWalletInterface;
+		_settings = settings;
 
 		var walletAdded = Observable.FromEventPattern<Wallet>(Services.WalletManager, nameof(WalletManager.WalletAdded)).ToSignal();
 		var walletRemoved = Observable.FromEventPattern<Wallet>(Services.WalletManager, nameof(WalletManager.WalletRemoved)).ToSignal();
@@ -43,7 +46,7 @@ public class WalletRepository : ReactiveObject
 				   .AsObservableCache()
 				   .DisposeWith(_disposable);
 
-		DefaultWalletName = Services.UiConfig.LastSelectedWallet;
+		DefaultWalletName = _settings.LastSelectedWallet;
 	}
 
 	public IObservableCache<WalletModel, WalletId> Wallets { get; }
@@ -55,7 +58,7 @@ public class WalletRepository : ReactiveObject
 
 	public void StoreLastSelectedWallet(WalletModel wallet)
 	{
-		Services.UiConfig.LastSelectedWallet = wallet.Name;
+		_settings.LastSelectedWallet = wallet.Name;
 	}
 
 	public string GetNextWalletName()
@@ -141,6 +144,7 @@ public class WalletRepository : ReactiveObject
 		var walletFilePath = Services.WalletManager.WalletDirectories.GetWalletFilePaths(walletName).walletFilePath;
 		var keyManager = await _hardwareWalletInterface.GenerateWalletAsync(device, walletFilePath, cancelToken.Value);
 		keyManager.SetIcon(device.WalletType);
+		keyManager.Attributes.IsRecovering = true;
 
 		var result = new WalletSettingsModel(keyManager, true);
 		return result;
@@ -180,6 +184,7 @@ public class WalletRepository : ReactiveObject
 				minGapLimit.Value);
 
 			result.AutoCoinJoin = true;
+			result.Attributes.IsRecovering = true;
 
 			// Set the filepath but we will only write the file later when the Ui workflow is done.
 			result.SetFilePath(walletFilePath);

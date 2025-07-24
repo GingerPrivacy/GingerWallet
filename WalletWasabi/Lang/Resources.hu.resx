@@ -120,9 +120,6 @@
   <data name="Open" xml:space="preserve">
     <value>Megnyitás</value>
   </data>
-  <data name="TwoFactorDisabledWarnMessage" xml:space="preserve">
-    <value>A kétlépcsős hitelesítés ki van kapcsolva. Engedélyezd a Beállításokban a fokozott védelem érdekében.</value>
-  </data>
   <data name="AddWalletPageViewModelTitle" xml:space="preserve">
     <value>Új tárca</value>
   </data>
@@ -285,9 +282,6 @@
   <data name="SettingsPageViewModelTitle" xml:space="preserve">
     <value>Beállítások</value>
   </data>
-  <data name="TwoFactorDisabledWarnMessageOpenSettings" xml:space="preserve">
-    <value>Beállítások megnyitása</value>
-  </data>
   <data name="LoadingViewModelPercentCompleted" xml:space="preserve">
     <value>{0}% kész</value>
   </data>
@@ -308,15 +302,6 @@
   </data>
   <data name="and" xml:space="preserve">
     <value>és</value>
-  </data>
-  <data name="LoadingViewDownloadText" xml:space="preserve">
-    <value>Bitcoin-hálózati adatok letöltése és feldolgozása</value>
-  </data>
-  <data name="LoadingViewThirdparty" xml:space="preserve">
-    <value>A Ginger ezt úgy teszi, hogy harmadik fél nem szerez tudomást az egyenlegedről és pénzügyi tevékenységedről.</value>
-  </data>
-  <data name="LoadingViewProcessLonger" xml:space="preserve">
-    <value>Ez a folyamat tovább tarthat az első indításkor, nagyobb tárcáknál vagy ha hosszabb idő telt el az utolsó szinkronizálás óta.</value>
   </data>
   <data name="WalletBalance" xml:space="preserve">
     <value>EGYENLEG</value>
@@ -1222,7 +1207,7 @@
     <value>Felhasználási feltételeket</value>
   </data>
   <data name="TermsAndConditionsViewIAgree" xml:space="preserve">
-    <value>Elfogadom a </value>
+    <value>Elfogadom a</value>
   </data>
   <data name="ResyncWallet" xml:space="preserve">
     <value>Tárca újraszinkronizálása</value>
@@ -2127,5 +2112,11 @@
   </data>
   <data name="CouldntDeleteWalletCheckLogs" xml:space="preserve">
     <value>Nem sikerült törölni a tárcát, a részletekért nézd meg a naplófájlt.</value>
+  </data>
+    <data name="SyncingYourWallet" xml:space="preserve">
+    <value>A tárcád szinkronizálása folyamatban...</value>
+  </data>
+    <data name="SetAsDefault" xml:space="preserve">
+    <value>Beállítás alapértelmezettként</value>
   </data>
 </root>

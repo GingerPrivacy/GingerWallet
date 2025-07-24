@@ -20,6 +20,7 @@ public class HostedServices : IDisposable
 	private bool IsStartAllAsyncStarted { get; set; } = false;
 	private bool IsStopAllAsyncStarted { get; set; } = false;
 	private bool IsStartAllAsyncFinished { get; set; } = false;
+	public TaskCompletionSource<bool> IsStartAllAsyncFinishedTcs { get; } = new();
 
 	private record LateCall(Type Type, Delegate Action, bool AfterAsyncStart);
 	private List<LateCall> _lateCalls = new();
@@ -174,6 +175,7 @@ public class HostedServices : IDisposable
 				_services = services.ToImmutableDictionary(x => x.Type);
 			}
 			IsStartAllAsyncFinished = true;
+			IsStartAllAsyncFinishedTcs.TrySetResult(true);
 			lateCalls = _lateCalls;
 			_lateCalls = new();
 		}

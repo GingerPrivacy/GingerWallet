@@ -9,6 +9,7 @@ using Avalonia.Input.Platform;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
 using ReactiveUI;
+using WalletWasabi.Daemon;
 
 namespace WalletWasabi.Fluent.Helpers;
 
@@ -74,6 +75,25 @@ public class ApplicationHelper
 		.Select(_ => Observable.FromAsync(GetTextAsync, RxApp.MainThreadScheduler))
 		.Merge(1)
 		.DistinctUntilChanged();
+
+	public static WindowState ParseAndCorrectWindowState(UiConfig config)
+	{
+		try
+		{
+			// If minimized, then go with Maximized, because at start it shouldn't run with minimized.
+			if (Enum.TryParse(config.WindowState, out WindowState ws) && ws != WindowState.Minimized)
+			{
+				return ws;
+			}
+		}
+		catch
+		{
+			// ignored
+		}
+
+		config.WindowState = WindowState.Maximized.ToString();
+		return WindowState.Maximized;
+	}
 
 	private static IClipboard? GetClipboard()
 	{

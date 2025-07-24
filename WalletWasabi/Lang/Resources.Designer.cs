@@ -645,7 +645,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bitcoin Fraction Grouping.
+        ///   Looks up a localized string similar to Bitcoin fraction grouping.
         /// </summary>
         public static string BitcoinFractionGrouping {
             get {
@@ -1734,7 +1734,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Number Decimal Separator.
+        ///   Looks up a localized string similar to Number decimal separator.
         /// </summary>
         public static string DecimalSeparator {
             get {
@@ -2472,7 +2472,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Number Group Separator.
+        ///   Looks up a localized string similar to Number group separator.
         /// </summary>
         public static string GroupSeparator {
             get {
@@ -2931,15 +2931,6 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downloading and processing Bitcoin network data.
-        /// </summary>
-        public static string LoadingViewDownloadText {
-            get {
-                return ResourceManager.GetString("LoadingViewDownloadText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to {0}% completed.
         /// </summary>
         public static string LoadingViewModelPercentCompleted {
@@ -2954,24 +2945,6 @@ namespace WalletWasabi.Lang {
         public static string LoadingViewModelTimeRemaining {
             get {
                 return ResourceManager.GetString("LoadingViewModelTimeRemaining", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This process will be longer on first launch, with larger wallets, or after long gaps between synchronizations..
-        /// </summary>
-        public static string LoadingViewProcessLonger {
-            get {
-                return ResourceManager.GetString("LoadingViewProcessLonger", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ginger does this without any third party knowing about your balance and financial activity..
-        /// </summary>
-        public static string LoadingViewThirdparty {
-            get {
-                return ResourceManager.GetString("LoadingViewThirdparty", resourceCulture);
             }
         }
         
@@ -4507,6 +4480,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set as Default.
+        /// </summary>
+        public static string SetAsDefault {
+            get {
+                return ResourceManager.GetString("SetAsDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set the full path of the preferred browser.
         /// </summary>
         public static string SetPreferredBrowserPath {
@@ -4750,6 +4732,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Syncing your wallet....
+        /// </summary>
+        public static string SyncingYourWallet {
+            get {
+                return ResourceManager.GetString("SyncingYourWallet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to System Default.
         /// </summary>
         public static string SystemDefaultEnum {
@@ -4804,7 +4795,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I _agree to the .
+        ///   Looks up a localized string similar to I _agree to the.
         /// </summary>
         public static string TermsAndConditionsViewIAgree {
             get {
@@ -5205,24 +5196,6 @@ namespace WalletWasabi.Lang {
         public static string TwoFactorAuthenticationWithCapitals {
             get {
                 return ResourceManager.GetString("TwoFactorAuthenticationWithCapitals", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Two-Factor authentication is disabled. Enable it in the Settings for greater protection..
-        /// </summary>
-        public static string TwoFactorDisabledWarnMessage {
-            get {
-                return ResourceManager.GetString("TwoFactorDisabledWarnMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Open Settings.
-        /// </summary>
-        public static string TwoFactorDisabledWarnMessageOpenSettings {
-            get {
-                return ResourceManager.GetString("TwoFactorDisabledWarnMessageOpenSettings", resourceCulture);
             }
         }
         

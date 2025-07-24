@@ -37,6 +37,7 @@ public class WalletTransactionsModel : ReactiveObject, IDisposable
 				.FromEventPattern<ProcessedResult?>(wallet, nameof(wallet.WalletRelevantTransactionProcessed)).ToSignal()
 				.Merge(Observable.FromEventPattern(wallet, nameof(wallet.NewFiltersProcessed)).ToSignal())
 				.Sample(TimeSpan.FromSeconds(1))
+				.Merge(this.WhenAnyValue(x => x._walletModel.IsLoaded).ToSignal())
 				.ObserveOn(RxApp.MainThreadScheduler)
 				.StartWith(Unit.Default);
 

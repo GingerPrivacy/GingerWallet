@@ -53,7 +53,7 @@ public partial class SendFeeViewModel : DialogViewModelBase<FeeRate?>
 	{
 		var blockTarget = FeeChart.CurrentConfirmationTarget;
 		_transactionInfo.ConfirmationTimeSpan = TransactionFeeHelper.CalculateConfirmationTime(blockTarget);
-		Services.UiConfig.FeeTarget = (int)blockTarget;
+		UiContext.ApplicationSettings.FeeTarget = (int)blockTarget;
 		Close(DialogResultKind.Normal, new FeeRate(FeeChart.GetSatoshiPerByte(blockTarget)));
 	}
 
@@ -126,7 +126,7 @@ public partial class SendFeeViewModel : DialogViewModelBase<FeeRate?>
 
 		try
 		{
-			feeEstimates = await _wallet.FeeProvider.GetAllFeeEstimateAsync(cancelTokenSource.Token);
+			feeEstimates = await TransactionFeeHelper.GetFeeEstimatesAsync(_wallet.FeeProvider, _wallet.Network, cancelTokenSource.Token);
 		}
 		catch (Exception ex)
 		{

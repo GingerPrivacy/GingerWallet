@@ -45,11 +45,12 @@ public class Global
 	/// <remarks>Use this variable as a guard to prevent touching <see cref="StoppingCts"/> that might have already been disposed.</remarks>
 	private volatile bool _disposeRequested;
 
-	public Global(string dataDir, string configFilePath, Config config)
+	public Global(string dataDir, string configFilePath, Config config, UiConfig uiConfig)
 	{
 		DataDir = dataDir;
 		ConfigFilePath = configFilePath;
 		Config = config;
+		UiConfig = uiConfig;
 		TorSettings = new TorSettings(
 			DataDir,
 			distributionFolderPath: EnvironmentHelpers.GetFullBaseDirectory(),
@@ -88,7 +89,7 @@ public class Global
 
 		LegalChecker = new(DataDir, updateChecker);
 		UpdateManager = new(DataDir, Config.DownloadNewVersion, HttpClientFactory.NewHttpClient(Mode.DefaultCircuit, maximumRedirects: 10), updateChecker);
-		TorStatusChecker = new TorStatusChecker(TimeSpan.FromHours(6), HttpClientFactory.NewHttpClient(Mode.DefaultCircuit), new XmlIssueListParser());
+		TorStatusChecker = new TorStatusChecker(TimeSpan.FromHours(6), HttpClientFactory.NewHttpClient(Mode.DefaultCircuit));
 
 		RoundStateUpdaterCircuit = new PersonCircuit();
 
@@ -166,6 +167,7 @@ public class Global
 	public LegalChecker LegalChecker { get; private set; }
 	public string ConfigFilePath { get; }
 	public Config Config { get; }
+	public UiConfig UiConfig { get; }
 	public WalletManager WalletManager { get; }
 	public TransactionBroadcaster TransactionBroadcaster { get; set; }
 	public CoinJoinProcessor? CoinJoinProcessor { get; set; }
@@ -216,6 +218,8 @@ public class Global
 				return;
 			}
 
+			var isFirstRun = UiConfig.Oobe;
+
 			try
 			{
 				var bitcoinStoreInitTask = BitcoinStore.InitializeAsync(cancel);
@@ -254,7 +258,7 @@ public class Global
 					await CreateSleepInhibitorAsync().ConfigureAwait(false);
 				}
 
-				HostedServices.Register<AnnouncementManager>(() => new AnnouncementManager(DataDir, TimeSpan.FromMinutes(.5), (DisplayLanguage)Config.Language, Config.PersistentConfig.ExtraNostrPubKey, HttpClientFactory), nameof(AnnouncementManager));
+				HostedServices.Register<AnnouncementManager>(() => new AnnouncementManager(DataDir, TimeSpan.FromMinutes(.5), (DisplayLanguage)Config.Language, Config.PersistentConfig.ExtraNostrPubKey, HttpClientFactory, isFirstRun), nameof(AnnouncementManager));
 
 				HostedServices.Register<BuySellManager>(() => new BuySellManager(BuysellClient, WalletManager, TimeSpan.FromSeconds(10)), nameof(BuySellManager));
 

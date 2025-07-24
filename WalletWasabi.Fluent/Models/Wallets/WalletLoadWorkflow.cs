@@ -48,6 +48,11 @@ public partial class WalletLoadWorkflow
 
 	private uint RemainingFiltersToDownload => (uint)Services.SmartHeaderChain.HashesLeft;
 
+	public async Task WaitingForBackgroundServicesAsync()
+	{
+		await Services.HostedServices.IsStartAllAsyncFinishedTcs.Task;
+	}
+
 	public void Start()
 	{
 		_stopwatch = Stopwatch.StartNew();
@@ -102,6 +107,10 @@ public partial class WalletLoadWorkflow
 		catch (Exception ex)
 		{
 			Logger.LogError(ex);
+		}
+		finally
+		{
+			IsLoading = false;
 		}
 	}
 

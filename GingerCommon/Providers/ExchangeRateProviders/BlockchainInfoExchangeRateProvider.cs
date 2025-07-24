@@ -1,3 +1,4 @@
+using GingerCommon.Logging;
 using GingerCommon.Static;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,11 @@ public class BlockchainInfoExchangeRateProvider : ExchangeRateProvider
 	public override async Task<Dictionary<string, decimal>> QueryRateAsync(string currency, EndPoint? torEndpoint, CancellationToken cancellationToken)
 	{
 		var contentString = await HttpUtils.HttpGetAsync(ApiUrl, $"ticker", torEndpoint, null, cancellationToken);
+		if (!contentString.SafeTrim().StartsWith('{'))
+		{
+			Logger.LogError($"The site {ApiUrl} gave back '{contentString}' as response.");
+			return [];
+		}
 		var rates = JsonSerializer.Deserialize<Dictionary<string, JsonRateInfo>>(contentString, JsonUtils.OptionCaseInsensitive);
 		Dictionary<string, decimal> result = rates?.Select(x => (x.Key, x.Value.Sell)).ToDictionary() ?? new();
 		return result;

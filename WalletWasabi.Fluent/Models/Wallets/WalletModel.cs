@@ -73,6 +73,15 @@ public partial class WalletModel : ReactiveObject, IDisposable
 			.Select(x => x == WalletState.Started)
 			.BindTo(this, x => x.IsLoaded)
 			.DisposeWith(_disposable);
+
+		this.WhenAnyValue(x => x.IsLoaded)
+			.Where(x => x)
+			.Take(1)
+			.Subscribe(_ =>
+			{
+				Settings.IsRecovering = false;
+				Settings.Save();
+			});
 	}
 
 	public AddressesModel Addresses { get; }

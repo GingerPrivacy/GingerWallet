@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using WalletWasabi.BuySell;
+using WalletWasabi.Daemon.BuySell;
 using WalletWasabi.Fluent.HomeScreen.BuySell.Models;
 
 namespace WalletWasabi.Fluent.HomeScreen.BuySell.Extensions;

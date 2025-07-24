@@ -46,6 +46,7 @@
         <MergeResourceInclude Source="avares://WalletWasabi.Fluent/Controls/SubActionButton.axaml" />
         <MergeResourceInclude Source="avares://WalletWasabi.Fluent/Controls/Button.axaml" />
         <MergeResourceInclude Source="avares://WalletWasabi.Fluent/Controls/SplitButton.axaml" />
+        <MergeResourceInclude Source="avares://WalletWasabi.Fluent/Controls/LoadingContentControl.axaml" />
         <MergeResourceInclude Source="avares://WalletWasabi.Fluent/TwoFactor/Controls/TwoFactorEntryBox.axaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>

@@ -4,7 +4,9 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using ReactiveUI;
+using WalletWasabi.Daemon;
 using WalletWasabi.Fluent.Helpers;
+using WalletWasabi.Fluent.Models.UI;
 
 namespace WalletWasabi.Fluent.Controls;
 
@@ -30,7 +32,7 @@ public class PrivacyContentControl : ContentControl
 
 	private readonly CompositeDisposable _disposables = new();
 
-	private readonly UiConfig _uiConfig = Services.UiConfig;
+	private readonly ApplicationSettings _applicationSettings = UiContext.Default.ApplicationSettings;
 
 	public PrivacyContentControl()
 	{
@@ -41,7 +43,7 @@ public class PrivacyContentControl : ContentControl
 
 		var isContentRevealed = PrivacyModeHelper.DelayedRevealAndHide(
 				this.WhenAnyValue(x => x.IsPointerOver),
-				this.WhenAnyValue(x => x._uiConfig.PrivacyMode),
+				this.WhenAnyValue(x => x._applicationSettings.PrivacyMode),
 				this.WhenAnyValue(x => x.ForceShow))
 			.Replay();
 

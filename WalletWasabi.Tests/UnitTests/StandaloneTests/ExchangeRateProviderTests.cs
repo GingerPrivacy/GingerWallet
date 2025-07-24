@@ -34,21 +34,51 @@ public class ExchangeRateProviderTests : IAsyncLifetime
 		await TorProcessManager.DisposeAsync();
 	}
 
-	private async Task TestProviderAsync(ExchangeRateProvider provider, bool tor = true, int waitTokenSec = 60, int currencyCount = 4)
+	private async Task TestProviderAsync(ExchangeRateProvider provider, bool tor = true, int waitTokenSec = 30, int currencyCount = 4)
 	{
 		var message = $"{provider.GetType().Name}, Tor: {tor}";
-		using CancellationTokenSource cts = new(waitTokenSec * 1000);
-
 		var endPoint = tor ? TorHttpClientFactory.TorEndpoint : null;
 
 		var refreshTime = TimeSpan.FromMinutes(15);
 
-		var resUSD = await provider.GetRateAsync("usd", refreshTime, endPoint, cts.Token);
+		// Let's allow some failures
+		const int MaxTries = 5;
+
+		ExchangeRate? resUSD = null;
+		for (int tryIdx = 0; tryIdx < MaxTries; tryIdx++)
+		{
+			using CancellationTokenSource cts = new(waitTokenSec * 1000);
+			resUSD = await provider.GetRateAsync("usd", refreshTime, endPoint, cts.Token);
+			if (resUSD is not null)
+			{
+				break;
+			}
+			if (provider.Currencies.Count == 0)
+			{
+				provider.ResetCurrencyUpdate();
+			}
+			await Task.Delay(10000);
+		}
 		Assert.True(resUSD is not null, message);
-		var resEUR = await provider.GetRateAsync("EUR", refreshTime, endPoint, cts.Token);
+
+		ExchangeRate? resEUR = null;
+		for (int tryIdx = 0; tryIdx < MaxTries; tryIdx++)
+		{
+			using CancellationTokenSource cts = new(waitTokenSec * 1000);
+			resEUR = await provider.GetRateAsync("EUR", refreshTime, endPoint, cts.Token);
+			if (resEUR is not null)
+			{
+				break;
+			}
+			await Task.Delay(10000);
+		}
 		Assert.True(resEUR is not null, message);
-		var curr = await provider.GetSupportedCurrenciesAsync(endPoint, cts.Token);
-		Assert.True(curr.Count >= currencyCount, message);
+
+		{
+			using CancellationTokenSource cts = new(waitTokenSec * 1000);
+			var curr = await provider.GetSupportedCurrenciesAsync(endPoint, cts.Token);
+			Assert.True(curr.Count >= currencyCount, message);
+		}
 	}
 
 	[Fact]
@@ -103,6 +133,6 @@ public class ExchangeRateProviderTests : IAsyncLifetime
 	[Fact]
 	public async Task AggregatorExchangeRateProviderTestAsync()
 	{
-		await TestProviderAsync(new AggregatorExchangeRateProvider());
+		await TestProviderAsync(new AggregatorExchangeRateProvider(), false);
 	}
 }

@@ -22,7 +22,7 @@
           <ExecuteCommandOnKeyDownBehavior Command="{Binding NextCommand}" IsEnabled="{Binding IsAgreed}" Key="Enter"
                                            EventRoutingStrategy="Tunnel" />
         </Interaction.Behaviors>
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" Spacing="5">
           <Label Content="{x:Static lang:Resources.TermsAndConditionsViewIAgree}" Target="CheckBox_Agree"
                  FontWeight="Normal" Margin="0"
                  Padding="0" IsHitTestVisible="False" />

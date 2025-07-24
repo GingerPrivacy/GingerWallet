@@ -32,7 +32,6 @@ public partial class WalletViewModel : RoutableViewModel
 {
 	[AutoNotify(SetterModifier = AccessModifier.Protected)] private bool _isCoinJoining;
 
-	[AutoNotify(SetterModifier = AccessModifier.Protected)] private bool _isLoading;
 	[AutoNotify] private bool _isPointerOver;
 	[AutoNotify] private bool _isSelected;
 	[AutoNotify] private bool _hasBuyOrderOnHold;
@@ -50,7 +49,10 @@ public partial class WalletViewModel : RoutableViewModel
 		Settings = new WalletSettingsViewModel(WalletModel);
 		History = new HistoryViewModel(WalletModel);
 		var searchItems = CreateSearchItems();
-		this.WhenAnyValue(x => x.IsSelected)
+		this.WhenAnyValue(
+				x => x.IsSelected,
+				x => x.WalletModel.IsLoaded,
+				((isSelected, isLoaded) => isSelected && isLoaded))
 			.Do(shouldDisplay => UiContext.EditableSearchSource.Toggle(searchItems, shouldDisplay))
 			.Subscribe();
 
@@ -66,25 +68,36 @@ public partial class WalletViewModel : RoutableViewModel
 		walletModel.Coinjoin.IsRunning
 			.BindTo(this, x => x.IsCoinJoining);
 
-		this.WhenAnyValue(x => x.IsWalletBalanceZero)
-			.Subscribe(_ => IsSendButtonVisible = !IsWalletBalanceZero && (!WalletModel.IsWatchOnlyWallet || WalletModel.IsHardwareWallet));
+		this.WhenAnyValue(
+				x => x.IsWalletBalanceZero,
+				x => x.WalletModel.Loader.IsLoading)
+			.Subscribe(_ => IsSendButtonVisible = !WalletModel.Loader.IsLoading && !IsWalletBalanceZero && (!WalletModel.IsWatchOnlyWallet || WalletModel.IsHardwareWallet));
 
 		IsMusicBoxVisible =
-			this.WhenAnyValue(x => x.IsSelected, x => x.IsWalletBalanceZero, x => x.CoinjoinPlayerViewModel.AreAllCoinsPrivate, x => x.IsPointerOver)
+			this.WhenAnyValue(
+					x => x.IsSelected,
+					x => x.IsWalletBalanceZero,
+					x => x.CoinjoinPlayerViewModel.AreAllCoinsPrivate,
+					x => x.IsPointerOver,
+					x => x.WalletModel.IsLoaded)
 				.Throttle(TimeSpan.FromMilliseconds(200), RxApp.MainThreadScheduler)
 				.Select(tuple =>
 				{
-					var (isSelected, isWalletBalanceZero, areAllCoinsPrivate, pointerOver) = tuple;
-					return (isSelected && !isWalletBalanceZero && (!areAllCoinsPrivate || pointerOver)) && !WalletModel.IsWatchOnlyWallet;
+					var (isSelected, isWalletBalanceZero, areAllCoinsPrivate, pointerOver, isLoaded) = tuple;
+					return (isLoaded && isSelected && !isWalletBalanceZero && (!areAllCoinsPrivate || pointerOver)) && !WalletModel.IsWatchOnlyWallet;
 				});
 
-		BuyCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().Buy(walletModel));
-		SellCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().Sell(walletModel));
+		var isNotRecovering = this.WhenAnyValue(x => x.WalletModel.Settings.IsRecovering).Select(x => !x);
+		var isLoaded = this.WhenAnyValue(x => x.WalletModel.IsLoaded).Select(x => x);
+		var isNotRecoveringAndIsLoading = isNotRecovering.Merge(isLoaded);
 
-		SendCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().Send(walletModel, new SendFlowModel(wallet, walletModel)));
-		SendManualControlCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().ManualControlDialog(walletModel, wallet));
+		BuyCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().Buy(walletModel), isNotRecovering);
+		SellCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().Sell(walletModel), isNotRecoveringAndIsLoading);
 
-		ReceiveCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().Receive(WalletModel));
+		SendCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().Send(walletModel, new SendFlowModel(wallet, walletModel)), isNotRecoveringAndIsLoading);
+		SendManualControlCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().ManualControlDialog(walletModel, wallet), isNotRecoveringAndIsLoading);
+
+		ReceiveCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().Receive(WalletModel), isNotRecovering);
 
 		WalletInfoCommand = ReactiveCommand.CreateFromTask(async () =>
 		{
@@ -94,23 +107,21 @@ public partial class WalletViewModel : RoutableViewModel
 			}
 		});
 
-		WalletStatsCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().WalletStats(WalletModel));
+		WalletStatsCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().WalletStats(WalletModel), isNotRecovering);
 
-		WalletSettingsCommand = ReactiveCommand.Create(
-			() =>
-			{
-				Settings.SelectedTab = 0;
-				UiContext.Navigate().Navigate(Settings.DefaultTarget).To(Settings);
-			});
+		WalletSettingsCommand = ReactiveCommand.Create(() =>
+		{
+			Settings.SelectedTab = 0;
+			UiContext.Navigate().Navigate(Settings.DefaultTarget).To(Settings);
+		});
 
-		CoinJoinSettingsCommand = ReactiveCommand.Create(
-			() =>
-			{
-				Settings.SelectedTab = 1;
-				UiContext.Navigate().Navigate(Settings.DefaultTarget).To(Settings);
-			});
+		CoinJoinSettingsCommand = ReactiveCommand.Create(() =>
+		{
+			Settings.SelectedTab = 1;
+			UiContext.Navigate().Navigate(Settings.DefaultTarget).To(Settings);
+		});
 
-		WalletCoinsCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().WalletCoins(WalletModel));
+		WalletCoinsCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().WalletCoins(WalletModel), isNotRecovering);
 
 		CoinjoinPlayerViewModel = new CoinjoinPlayerViewModel(WalletModel, Settings);
 
@@ -230,7 +241,7 @@ public partial class WalletViewModel : RoutableViewModel
 
 	private IEnumerable<ActivatableViewModel> GetTiles()
 	{
-		yield return new WalletBalanceTileViewModel(WalletModel.Balances);
+		yield return new WalletBalanceTileViewModel(WalletModel);
 
 		if (!IsWatchOnly)
 		{

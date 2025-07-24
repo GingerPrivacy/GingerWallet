@@ -1,3 +1,5 @@
+using WalletWasabi.Fluent.Extensions;
+
 namespace WalletWasabi.Fluent.Announcement.Models;
 
 public partial class AnnouncementModel
@@ -15,6 +17,7 @@ public partial class AnnouncementModel
 	public long OrderNumber => Announcement.OrderNumber;
 	public string Title => Announcement.Localized.Title;
 	public string Caption => Announcement.Localized.Caption;
+	public string Date => Announcement.CreatedAt.ToLocalTime().ToUserFacingString(withTime: false);
 	public bool IsImportant => Announcement.IsImportant;
 	public string MarkdownText => Announcement.Localized.Content;
 }
