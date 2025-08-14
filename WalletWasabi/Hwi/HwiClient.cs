@@ -159,6 +159,22 @@ public class HwiClient
 		return address;
 	}
 
+	public async Task<string> SignMessageAsync(HDFingerprint fingerprint, KeyPath keyPath, string message, CancellationToken cancel)
+	{
+		var keyPathString = keyPath.ToString(true, "h");
+
+		var response = await SendCommandAsync(
+			options: BuildOptions(deviceType: null, devicePath: null, fingerprint: fingerprint),
+			command: HwiCommands.SignMessage,
+			commandArguments: $"\"{message}\" {keyPathString}",
+			openConsole: false,
+			cancel).ConfigureAwait(false);
+
+		return HwiParser.ParseSignMessageResponse(response);
+	}
+
+
+
 	public async Task<PSBT> SignTxAsync(HardwareWalletModels deviceType, string? devicePath, PSBT psbt, CancellationToken cancel)
 		=> await SignTxImplAsync(deviceType, devicePath, null, psbt, cancel).ConfigureAwait(false);
 

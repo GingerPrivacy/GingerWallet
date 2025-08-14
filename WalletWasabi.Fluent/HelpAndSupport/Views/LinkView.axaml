@@ -17,9 +17,9 @@
             IsEnabled="{Binding IsClickable}" />
 
     <AnimatedButton ToolTip.Tip="{x:Static lang:Resources.CopyLink}"
-                             Command="{Binding CopyLinkCommand}"
-                             CommandParameter="{Binding Link}"
-                             NormalIcon="{StaticResource copy_regular}"
-                             ClickIcon="{StaticResource copy_confirmed}" />
+                    Command="{Binding CopyLinkCommand}"
+                    CommandParameter="{Binding Link}"
+                    NormalIcon="{StaticResource copy_regular}"
+                    ClickIcon="{StaticResource copy_confirmed}" />
   </StackPanel>
 </UserControl>

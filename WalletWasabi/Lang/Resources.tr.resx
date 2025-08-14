@@ -2119,4 +2119,70 @@
     <data name="SetAsDefault" xml:space="preserve">
         <value>Varsayılan olarak ayarla</value>
     </data>
+    <data name="SignMessage" xml:space="preserve">
+        <value>Mesaj imzala</value>
+    </data>
+    <data name="InvalidBitcoinAddress" xml:space="preserve">
+        <value>Geçersiz Bitcoin adresi.</value>
+    </data>
+    <data name="TheAddressDoesNotBelongToThisWallet" xml:space="preserve">
+        <value>Adres bu cüzdana ait değil.</value>
+    </data>
+    <data name="SignWithHardwareWallet" xml:space="preserve">
+        <value>Donanım cüzdanı ile imzala</value>
+    </data>
+    <data name="SignMessageToVerifyYouOwnAddressForExchange" xml:space="preserve">
+        <value>Borsada adresin size ait olduğunu doğrulamak için bir mesaj imzalayın</value>
+    </data>
+    <data name="AddressWithColon" xml:space="preserve">
+        <value>Adres:</value>
+    </data>
+    <data name="PasteTheAddressProvidedByTheExchange" xml:space="preserve">
+        <value>Döviz bozdurma hizmeti tarafından verilen adresi yapıştırın</value>
+    </data>
+    <data name="MessageWithColon" xml:space="preserve">
+        <value>Mesaj:</value>
+    </data>
+    <data name="EnterTheMessageYouWishToSign" xml:space="preserve">
+        <value>İmzalamak istediğiniz mesajı girin</value>
+    </data>
+    <data name="Signature" xml:space="preserve">
+        <value>İmza</value>
+    </data>
+    <data name="Reason" xml:space="preserve">
+        <value>Sebep: {0}</value>
+    </data>
+    <data name="UnknownEnum" xml:space="preserve">
+        <value>Bilinmiyor</value>
+    </data>
+    <data name="BackendStabilitySafetyEnum" xml:space="preserve">
+        <value>Geçici sunucu sorunu</value>
+    </data>
+    <data name="CheatingEnum" xml:space="preserve">
+        <value>Protokol ihlali</value>
+    </data>
+    <data name="RoundDisruption" xml:space="preserve">
+        <value>Turun kesilmesi</value>
+    </data>
+    <data name="FailedToVerifyEnum" xml:space="preserve">
+        <value>Potansiyel risk</value>
+    </data>
+    <data name="InheritedEnum" xml:space="preserve">
+        <value>(Başka bir madenden devralındı)</value>
+    </data>
+    <data name="LocalCoinVerifierEnum" xml:space="preserve">
+        <value>Geçici kısıtlama</value>
+    </data>
+    <data name="RoundDisruptionMethodDidNotConfirmEnum" xml:space="preserve">
+        <value>Turun kesilmesi</value>
+    </data>
+    <data name="RoundDisruptionMethodDidNotSignEnum" xml:space="preserve">
+        <value>Turun kesilmesi</value>
+    </data>
+    <data name="RoundDisruptionMethodDoubleSpentEnum" xml:space="preserve">
+        <value>Tur sırasında madeni para harcandı</value>
+    </data>
+    <data name="RoundDisruptionMethodDidNotSignalReadyToSignEnum" xml:space="preserve">
+        <value>Turun kesilmesi</value>
+    </data>
 </root>

@@ -10,7 +10,6 @@ using WalletWasabi.BuySell;
 using WalletWasabi.Daemon.BuySell;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.HomeScreen.BuySell.Extensions;
-using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Logging;
 using WalletWasabi.Wallets;
 

@@ -10,26 +10,30 @@
     <Border Padding="20">
       <StackPanel Orientation="Horizontal" Spacing="20">
         <StackPanel Spacing="20">
-          <ScrollBar Orientation="Horizontal" AllowAutoHide="False" VerticalAlignment="Center" Width="150"/>
-          <ScrollBar Orientation="Horizontal" AllowAutoHide="False" VerticalAlignment="Center" Width="150" IsEnabled="False"/>
-          <ScrollBar Orientation="Horizontal" AllowAutoHide="True" VerticalAlignment="Center" Width="150"/>
-          <ScrollBar Orientation="Horizontal" AllowAutoHide="True" VerticalAlignment="Center" Width="150" IsEnabled="False"/>
+          <ScrollBar Orientation="Horizontal" AllowAutoHide="False" VerticalAlignment="Center" Width="150" />
+          <ScrollBar Orientation="Horizontal" AllowAutoHide="False" VerticalAlignment="Center" Width="150"
+                     IsEnabled="False" />
+          <ScrollBar Orientation="Horizontal" AllowAutoHide="True" VerticalAlignment="Center" Width="150" />
+          <ScrollBar Orientation="Horizontal" AllowAutoHide="True" VerticalAlignment="Center" Width="150"
+                     IsEnabled="False" />
         </StackPanel>
-        <ScrollBar Orientation="Vertical" AllowAutoHide="False" HorizontalAlignment="Center" Height="150"/>
-        <ScrollBar Orientation="Vertical" AllowAutoHide="False" HorizontalAlignment="Center" Height="150" IsEnabled="False"/>
-        <ScrollBar Orientation="Vertical" AllowAutoHide="True" HorizontalAlignment="Center" Height="150"/>
-        <ScrollBar Orientation="Vertical" AllowAutoHide="True" HorizontalAlignment="Center" Height="150" IsEnabled="False"/>
+        <ScrollBar Orientation="Vertical" AllowAutoHide="False" HorizontalAlignment="Center" Height="150" />
+        <ScrollBar Orientation="Vertical" AllowAutoHide="False" HorizontalAlignment="Center" Height="150"
+                   IsEnabled="False" />
+        <ScrollBar Orientation="Vertical" AllowAutoHide="True" HorizontalAlignment="Center" Height="150" />
+        <ScrollBar Orientation="Vertical" AllowAutoHide="True" HorizontalAlignment="Center" Height="150"
+                   IsEnabled="False" />
       </StackPanel>
     </Border>
   </Design.PreviewWith>
 
   <ControlTheme x:Key="FluentScrollBarThumb" TargetType="Thumb">
-    <Setter Property="Background" Value="{DynamicResource ScrollBarPanningThumbBackground}"/>
+    <Setter Property="Background" Value="{DynamicResource ScrollBarPanningThumbBackground}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate>
           <Border Background="{TemplateBinding Background}"
-							CornerRadius="{TemplateBinding CornerRadius}"/>
+                  CornerRadius="{TemplateBinding CornerRadius}" />
         </ControlTemplate>
       </Setter.Value>
     </Setter>
@@ -65,13 +69,13 @@
 
   <ControlTheme x:Key="FluentScrollBarLineButton" TargetType="RepeatButton">
     <Setter Property="Opacity" Value="0" />
-    <Setter Property="TextElement.Foreground" Value="{DynamicResource ScrollBarButtonArrowForeground}"/>
+    <Setter Property="TextElement.Foreground" Value="{DynamicResource ScrollBarButtonArrowForeground}" />
     <Setter Property="Template">
       <ControlTemplate>
         <ContentPresenter x:Name="PART_ContentPresenter"
-								  Background="{DynamicResource ScrollBarButtonBackground}"
-								  BorderBrush="{DynamicResource ScrollBarButtonBorderBrush}"
-								  Content="{TemplateBinding Content}"/>
+                          Background="{DynamicResource ScrollBarButtonBackground}"
+                          BorderBrush="{DynamicResource ScrollBarButtonBorderBrush}"
+                          Content="{TemplateBinding Content}" />
       </ControlTemplate>
     </Setter>
     <Setter Property="Transitions">
@@ -81,27 +85,27 @@
     </Setter>
 
     <Style Selector="^:pointerover">
-      <Setter Property="TextElement.Foreground" Value="{DynamicResource ScrollBarButtonArrowForegroundPointerOver}"/>
+      <Setter Property="TextElement.Foreground" Value="{DynamicResource ScrollBarButtonArrowForegroundPointerOver}" />
 
-      <Style Selector="^ /template/ ContentPresenter" >
+      <Style Selector="^ /template/ ContentPresenter">
         <Setter Property="Background" Value="{DynamicResource ScrollBarButtonBackgroundPointerOver}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ScrollBarButtonBorderBrushPointerOver}" />
       </Style>
     </Style>
 
     <Style Selector="^:pressed">
-      <Setter Property="TextElement.Foreground" Value="{DynamicResource ScrollBarButtonArrowForegroundPressed}"/>
+      <Setter Property="TextElement.Foreground" Value="{DynamicResource ScrollBarButtonArrowForegroundPressed}" />
 
-      <Style Selector="^ /template/ ContentPresenter" >
+      <Style Selector="^ /template/ ContentPresenter">
         <Setter Property="Background" Value="{DynamicResource ScrollBarButtonBackgroundPressed}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ScrollBarButtonBorderBrushPressed}" />
       </Style>
     </Style>
 
     <Style Selector="^:disabled">
-      <Setter Property="TextElement.Foreground" Value="{DynamicResource ScrollBarButtonArrowForegroundDisabled}"/>
+      <Setter Property="TextElement.Foreground" Value="{DynamicResource ScrollBarButtonArrowForegroundDisabled}" />
 
-      <Style Selector="^ /template/ ContentPresenter" >
+      <Style Selector="^ /template/ ContentPresenter">
         <Setter Property="Background" Value="{DynamicResource ScrollBarButtonBackgroundDisabled}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ScrollBarButtonBorderBrushDisabled}" />
       </Style>
@@ -120,7 +124,7 @@
       <Setter Property="Template">
         <ControlTemplate>
           <Panel ClipToBounds="False">
-            <Border x:Name="Hitbox" Margin="-4" Background="Transparent"/>
+            <Border x:Name="Hitbox" Margin="-4" Background="Transparent" />
             <Grid x:Name="Root">
               <Border x:Name="VerticalRoot"
                       Background="{TemplateBinding Background}"
@@ -203,7 +207,7 @@
       <Setter Property="Template">
         <ControlTemplate>
           <Panel>
-            <Border x:Name="Hitbox" Margin="-4" Background="Transparent"/>
+            <Border x:Name="Hitbox" Margin="-4" Background="Transparent" />
             <Grid x:Name="Root">
               <Border x:Name="HorizontalRoot"
                       Background="{TemplateBinding Background}"

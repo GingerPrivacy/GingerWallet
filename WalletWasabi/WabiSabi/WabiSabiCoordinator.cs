@@ -119,18 +119,25 @@ public class WabiSabiCoordinator : BackgroundService
 	{
 		var now = DateTimeOffset.UtcNow;
 
-		bool IsInputBanned(TxIn input) => Warden.Prison.IsBanned(input.PrevOut, Config.GetDoSConfiguration(), now);
-		OutPoint[] BannedInputs(Transaction tx) => tx.Inputs.Where(IsInputBanned).Select(x => x.PrevOut).ToArray();
+		bool IsInputBanned(BanItem banItem) => banItem.BanningTime.Includes(now);
+		BanItem GetBan(TxIn input) => Warden.Prison.GetBan(input.PrevOut, Config.GetDoSConfiguration());
+
+		BanItem[] BannedInputs(Transaction tx) =>
+			tx.Inputs
+				.Select(GetBan)
+				.Where(IsInputBanned)
+				.Where(b => b.Reasons.Contains(Models.InputBannedReasonEnum.RoundDisruptionMethodDoubleSpent))
+				.ToArray();
 
 		var outpointsToBan = block.Transactions
 			.Where(tx => !DescendantCoinJoinCheck(tx))  // We don't ban coinjoin outputs
 			.Select(tx => (Tx: tx, BannedInputs: BannedInputs(tx)))
 			.Where(x => x.BannedInputs.Length != 0)
-			.SelectMany(x => x.Tx.Outputs.Select((_, i) => (new OutPoint(x.Tx, i), x.BannedInputs)));
+			.SelectMany(x => x.Tx.Outputs.Select((_, i) => (new OutPoint(x.Tx, i), x.Tx.Inputs.Select(tx => tx.PrevOut).ToArray(), x.BannedInputs)));
 
-		foreach (var (outpoint, ancestors) in outpointsToBan)
+		foreach (var (outpoint, ancestors, banItems) in outpointsToBan)
 		{
-			Warden.Prison.InheritPunishment(outpoint, ancestors);
+			Warden.Prison.InheritPunishment(outpoint, ancestors, banItems.SelectMany(bi => bi.Reasons).ToArray());
 		}
 	}
 

@@ -60,13 +60,12 @@ public class App : Application
 					uiContext.HealthMonitor.Dispose();
 				};
 
-				RxApp.MainThreadScheduler.Schedule(
-					async () =>
-					{
-						await _backendInitialiseAsync!(); // Guaranteed not to be null when not in designer.
+				RxApp.MainThreadScheduler.Schedule(async () =>
+				{
+					await _backendInitialiseAsync!(); // Guaranteed not to be null when not in designer.
 
-						MainViewModel.Instance.Initialize();
-					});
+					MainViewModel.Instance.Initialize();
+				});
 
 				InitializeTrayIcons();
 			}

@@ -119,6 +119,7 @@ public class LabelsPanel : Panel
 				num2 = Math.Max(num2, layoutable.DesiredSize.Height);
 			}
 		}
+
 		return new Size(num1, num2);
 	}
 

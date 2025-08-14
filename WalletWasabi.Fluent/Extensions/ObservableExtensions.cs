@@ -31,15 +31,15 @@ public static class ObservableExtensions
 	}
 
 	public static IObservable<(T1, T2, T3, T4, T5, T6, T7, T8)> WhenAnyValue<TSender, T1, T2, T3, T4, T5, T6, T7, T8>(
-			this TSender sender,
-						Expression<Func<TSender, T1>> property1,
-						Expression<Func<TSender, T2>> property2,
-						Expression<Func<TSender, T3>> property3,
-						Expression<Func<TSender, T4>> property4,
-						Expression<Func<TSender, T5>> property5,
-						Expression<Func<TSender, T6>> property6,
-						Expression<Func<TSender, T7>> property7,
-						Expression<Func<TSender, T8>> property8)
+		this TSender sender,
+		Expression<Func<TSender, T1>> property1,
+		Expression<Func<TSender, T2>> property2,
+		Expression<Func<TSender, T3>> property3,
+		Expression<Func<TSender, T4>> property4,
+		Expression<Func<TSender, T5>> property5,
+		Expression<Func<TSender, T6>> property6,
+		Expression<Func<TSender, T7>> property7,
+		Expression<Func<TSender, T8>> property8)
 	{
 		return sender.WhenAny(
 			property1,
@@ -54,16 +54,16 @@ public static class ObservableExtensions
 	}
 
 	public static IObservable<(T1, T2, T3, T4, T5, T6, T7, T8, T9)> WhenAnyValue<TSender, T1, T2, T3, T4, T5, T6, T7, T8, T9>(
-			this TSender sender,
-						Expression<Func<TSender, T1>> property1,
-						Expression<Func<TSender, T2>> property2,
-						Expression<Func<TSender, T3>> property3,
-						Expression<Func<TSender, T4>> property4,
-						Expression<Func<TSender, T5>> property5,
-						Expression<Func<TSender, T6>> property6,
-						Expression<Func<TSender, T7>> property7,
-						Expression<Func<TSender, T8>> property8,
-						Expression<Func<TSender, T9>> property9)
+		this TSender sender,
+		Expression<Func<TSender, T1>> property1,
+		Expression<Func<TSender, T2>> property2,
+		Expression<Func<TSender, T3>> property3,
+		Expression<Func<TSender, T4>> property4,
+		Expression<Func<TSender, T5>> property5,
+		Expression<Func<TSender, T6>> property6,
+		Expression<Func<TSender, T7>> property7,
+		Expression<Func<TSender, T8>> property8,
+		Expression<Func<TSender, T9>> property9)
 	{
 		return sender.WhenAny(
 			property1,
@@ -79,17 +79,17 @@ public static class ObservableExtensions
 	}
 
 	public static IObservable<(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10)> WhenAnyValue<TSender, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(
-			this TSender sender,
-						Expression<Func<TSender, T1>> property1,
-						Expression<Func<TSender, T2>> property2,
-						Expression<Func<TSender, T3>> property3,
-						Expression<Func<TSender, T4>> property4,
-						Expression<Func<TSender, T5>> property5,
-						Expression<Func<TSender, T6>> property6,
-						Expression<Func<TSender, T7>> property7,
-						Expression<Func<TSender, T8>> property8,
-						Expression<Func<TSender, T9>> property9,
-						Expression<Func<TSender, T10>> property10)
+		this TSender sender,
+		Expression<Func<TSender, T1>> property1,
+		Expression<Func<TSender, T2>> property2,
+		Expression<Func<TSender, T3>> property3,
+		Expression<Func<TSender, T4>> property4,
+		Expression<Func<TSender, T5>> property5,
+		Expression<Func<TSender, T6>> property6,
+		Expression<Func<TSender, T7>> property7,
+		Expression<Func<TSender, T8>> property8,
+		Expression<Func<TSender, T9>> property9,
+		Expression<Func<TSender, T10>> property10)
 	{
 		return sender.WhenAny(
 			property1,
@@ -112,8 +112,8 @@ public static class ObservableExtensions
 		where TKey : notnull where TObject : notnull
 	{
 		return signal.Select(_ => source())
-					 .EditDiff(keySelector, equalityComparer)
-					 .DisposeMany()
-					 .AsObservableCache();
+			.EditDiff(keySelector, equalityComparer)
+			.DisposeMany()
+			.AsObservableCache();
 	}
 }

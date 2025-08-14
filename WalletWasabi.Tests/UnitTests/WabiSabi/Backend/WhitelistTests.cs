@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using WalletWasabi.Tests.Helpers;
-using WalletWasabi.WabiSabi.Backend;
 using WalletWasabi.WabiSabi.Backend.Banning;
 using Xunit;
 

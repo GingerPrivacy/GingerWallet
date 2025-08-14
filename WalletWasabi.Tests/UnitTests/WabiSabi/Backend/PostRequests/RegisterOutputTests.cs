@@ -7,7 +7,6 @@ using WalletWasabi.Tests.Helpers;
 using WalletWasabi.WabiSabi.Backend;
 using WalletWasabi.WabiSabi.Backend.Models;
 using WalletWasabi.WabiSabi.Backend.Rounds;
-using WalletWasabi.WabiSabi.Models.MultipartyTransaction;
 using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests.WabiSabi.Backend.PostRequests;

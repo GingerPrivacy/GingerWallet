@@ -3,6 +3,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using NBitcoin;
 using ReactiveUI;
+using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.HomeScreen.BuySell.Models;
 using WalletWasabi.Fluent.HomeScreen.Labels.Models;
@@ -42,8 +43,8 @@ public partial class WalletModel : ReactiveObject, IDisposable
 
 		State =
 			Observable.FromEventPattern<WalletState>(Wallet, nameof(Wallet.StateChanged))
-					  .ObserveOn(RxApp.MainThreadScheduler)
-					  .Select(_ => Wallet.State);
+				.ObserveOn(RxApp.MainThreadScheduler)
+				.Select(_ => Wallet.State);
 
 		Privacy = new WalletPrivacyModel(this, Wallet);
 
@@ -62,8 +63,8 @@ public partial class WalletModel : ReactiveObject, IDisposable
 
 		// Stop the loader after load is completed
 		State.Where(x => x == WalletState.Started)
-			 .Do(_ => Loader.Stop())
-			 .Subscribe();
+			.Do(_ => Loader.Stop())
+			.Subscribe();
 
 		this.WhenAnyValue(x => x.Auth.IsLoggedIn)
 			.BindTo(this, x => x.IsLoggedIn)
@@ -143,6 +144,11 @@ public partial class WalletModel : ReactiveObject, IDisposable
 	public PrivacySuggestionsModel GetPrivacySuggestionsModel(SendFlowModel sendFlow)
 	{
 		return new PrivacySuggestionsModel(sendFlow);
+	}
+
+	public string SignMessage(string messageToSign, HdPubKey hdPubKey)
+	{
+		return Wallet.KeyChain.SignMessage(messageToSign, hdPubKey);
 	}
 
 	public void Rename(string newWalletName)

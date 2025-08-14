@@ -191,8 +191,9 @@
           <Border Classes="warning">
             <DockPanel>
               <PathIcon />
-              <TextBlock Text="{Binding CoinCount, StringFormat={x:Static lang:Resources.TransactionConsolidatesCoins}}"
-                         ToolTip.Tip="{x:Static lang:Resources.ReducePrivacyOfTransaction}" />
+              <TextBlock
+                Text="{Binding CoinCount, StringFormat={x:Static lang:Resources.TransactionConsolidatesCoins}}"
+                ToolTip.Tip="{x:Static lang:Resources.ReducePrivacyOfTransaction}" />
             </DockPanel>
           </Border>
         </DataTemplate>
@@ -255,7 +256,8 @@
                   <TextBlock Text="{x:Static lang:Resources.SendSuggestion}" />
                   <TextBlock Text="{Binding DifferenceText}"
                              Foreground="{DynamicResource SystemAccentColor}" />
-                  <TextBlock Text="{Binding DifferenceAmountText, StringFormat={x:Static lang:Resources.ByAmount}}" IsVisible="{Binding !IsSameAmount}" />
+                  <TextBlock Text="{Binding DifferenceAmountText, StringFormat={x:Static lang:Resources.ByAmount}}"
+                             IsVisible="{Binding !IsSameAmount}" />
                 </StackPanel>
               </StackPanel>
             </DockPanel>
@@ -273,7 +275,8 @@
                   <TextBlock Text="{x:Static lang:Resources.SendSuggestion}" />
                   <TextBlock Text="{Binding DifferenceText}"
                              Foreground="{DynamicResource SystemAccentColor}" />
-                  <TextBlock Text="{Binding DifferenceAmountText, StringFormat={x:Static lang:Resources.ByAmount}}" IsVisible="{Binding !IsSameAmount}" />
+                  <TextBlock Text="{Binding DifferenceAmountText, StringFormat={x:Static lang:Resources.ByAmount}}"
+                             IsVisible="{Binding !IsSameAmount}" />
                 </StackPanel>
               </StackPanel>
             </DockPanel>
@@ -303,7 +306,8 @@
                   <TextBlock Text="{x:Static lang:Resources.SendSuggestion}" />
                   <TextBlock Text="{Binding DifferenceText}"
                              Foreground="{DynamicResource SystemAccentColor}" />
-                  <TextBlock Text="{Binding DifferenceAmountText, StringFormat={x:Static lang:Resources.ByAmount}}" IsVisible="{Binding !IsSameAmount}" />
+                  <TextBlock Text="{Binding DifferenceAmountText, StringFormat={x:Static lang:Resources.ByAmount}}"
+                             IsVisible="{Binding !IsSameAmount}" />
                 </StackPanel>
               </StackPanel>
             </DockPanel>

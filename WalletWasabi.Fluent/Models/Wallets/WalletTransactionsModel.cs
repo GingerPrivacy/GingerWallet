@@ -126,6 +126,7 @@ public class WalletTransactionsModel : ReactiveObject, IDisposable
 		{
 			targetTransaction = largestCpfp;
 		}
+
 		var boostingTransaction = _wallet.SpeedUpTransaction(targetTransaction);
 
 		var fee = _walletModel.AmountProvider.Create(GetFeeDifference(targetTransaction, boostingTransaction));

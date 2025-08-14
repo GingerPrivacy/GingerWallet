@@ -85,16 +85,15 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 
 		AdjustFeeCommand = ReactiveCommand.CreateFromTask(OnAdjustFeeAsync);
 
-		UndoCommand = ReactiveCommand.Create(
-				() =>
-				{
-					if (_undoHistory.TryPop(out var previous))
-					{
-						_info = previous.Item2;
-						UpdateTransaction(CurrentTransactionSummary, previous.Item1, false);
-						CanUndo = _undoHistory.Count != 0;
-					}
-				});
+		UndoCommand = ReactiveCommand.Create(() =>
+		{
+			if (_undoHistory.TryPop(out var previous))
+			{
+				_info = previous.Item2;
+				UpdateTransaction(CurrentTransactionSummary, previous.Item1, false);
+				CanUndo = _undoHistory.Count != 0;
+			}
+		});
 
 		ChangeCoinsCommand = ReactiveCommand.CreateFromTask(OnChangeCoinsAsync);
 	}
@@ -305,52 +304,48 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 		base.OnNavigatedTo(isInHistory, disposables);
 
 		PrivacySuggestions.WhenAnyValue(x => x.PreviewSuggestion)
-			.DoAsync(
-				async x =>
+			.DoAsync(async x =>
+			{
+				if (x?.Transaction is { } transaction)
 				{
-					if (x?.Transaction is { } transaction)
-					{
-						UpdateTransaction(PreviewTransactionSummary, transaction);
-						await PrivacySuggestions.UpdatePreviewWarningsAsync(_info, transaction, _cancellationTokenSource.Token);
-					}
-					else
-					{
-						DisplayedTransactionSummary = CurrentTransactionSummary;
-						PrivacySuggestions.ClearPreviewWarnings();
-					}
-				})
+					UpdateTransaction(PreviewTransactionSummary, transaction);
+					await PrivacySuggestions.UpdatePreviewWarningsAsync(_info, transaction, _cancellationTokenSource.Token);
+				}
+				else
+				{
+					DisplayedTransactionSummary = CurrentTransactionSummary;
+					PrivacySuggestions.ClearPreviewWarnings();
+				}
+			})
 			.Subscribe()
 			.DisposeWith(disposables);
 
 		PrivacySuggestions.WhenAnyValue(x => x.SelectedSuggestion)
-			.SubscribeAsync(
-				async suggestion =>
-				{
-					PrivacySuggestions.SelectedSuggestion = null;
+			.SubscribeAsync(async suggestion =>
+			{
+				PrivacySuggestions.SelectedSuggestion = null;
 
-					if (suggestion is { })
-					{
-						await ApplyPrivacySuggestionAsync(suggestion);
-					}
-				})
+				if (suggestion is { })
+				{
+					await ApplyPrivacySuggestionAsync(suggestion);
+				}
+			})
 			.DisposeWith(disposables);
 
 		this.WhenAnyValue(x => x.Transaction)
 			.WhereNotNull()
 			.Throttle(TimeSpan.FromMilliseconds(100))
 			.ObserveOn(RxApp.MainThreadScheduler)
-			.Do(
-				_ =>
-				{
-					_cancellationTokenSource.Cancel();
-					_cancellationTokenSource = new();
-				})
-			.DoAsync(
-				async transaction =>
-				{
-					await CheckChangePocketAvailableAsync(transaction);
-					await PrivacySuggestions.BuildPrivacySuggestionsAsync(_info, transaction, _cancellationTokenSource.Token);
-				})
+			.Do(_ =>
+			{
+				_cancellationTokenSource.Cancel();
+				_cancellationTokenSource = new();
+			})
+			.DoAsync(async transaction =>
+			{
+				await CheckChangePocketAvailableAsync(transaction);
+				await PrivacySuggestions.BuildPrivacySuggestionsAsync(_info, transaction, _cancellationTokenSource.Token);
+			})
 			.Subscribe()
 			.DisposeWith(disposables);
 
@@ -476,48 +471,48 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 		switch (suggestion)
 		{
 			case LabelManagementSuggestion:
+			{
+				var newCoins = await UiContext.Navigate().To().PrivacyControl(_wallet, _sendFlow, _info, Transaction?.SpentCoins, false).GetResultAsync();
+				if (newCoins is not null)
 				{
-					var newCoins = await UiContext.Navigate().To().PrivacyControl(_wallet, _sendFlow, _info, Transaction?.SpentCoins, false).GetResultAsync();
-					if (newCoins is not null)
-					{
-						_info.Coins = newCoins;
-						await BuildAndUpdateAsync();
-					}
-
-					break;
+					_info.Coins = newCoins;
+					await BuildAndUpdateAsync();
 				}
+
+				break;
+			}
 
 			case ChangeAvoidanceSuggestion { Transaction: { } txn }:
 				_info.ChangelessCoins = txn.SpentCoins;
 				break;
 
 			case FullPrivacySuggestion fullPrivacySuggestion:
+			{
+				if (fullPrivacySuggestion.IsChangeless)
 				{
-					if (fullPrivacySuggestion.IsChangeless)
-					{
-						_info.ChangelessCoins = fullPrivacySuggestion.Coins;
-					}
-					else
-					{
-						_info.Coins = fullPrivacySuggestion.Coins;
-					}
-
-					break;
+					_info.ChangelessCoins = fullPrivacySuggestion.Coins;
 				}
+				else
+				{
+					_info.Coins = fullPrivacySuggestion.Coins;
+				}
+
+				break;
+			}
 
 			case BetterPrivacySuggestion betterPrivacySuggestion:
+			{
+				if (betterPrivacySuggestion.IsChangeless)
 				{
-					if (betterPrivacySuggestion.IsChangeless)
-					{
-						_info.ChangelessCoins = betterPrivacySuggestion.Coins;
-					}
-					else
-					{
-						_info.Coins = betterPrivacySuggestion.Coins;
-					}
-
-					break;
+					_info.ChangelessCoins = betterPrivacySuggestion.Coins;
 				}
+				else
+				{
+					_info.Coins = betterPrivacySuggestion.Coins;
+				}
+
+				break;
+			}
 		}
 
 		if (suggestion.Transaction is { } transaction)

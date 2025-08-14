@@ -398,4 +398,20 @@ public static class HwiParser
 	{
 		return me.ToString().ToLowerInvariant();
 	}
+
+	public static string ParseSignMessageResponse(string json)
+	{
+		if (JsonHelpers.TryParseJToken(json, out JToken? token))
+		{
+			string? signature = token["signature"]?.ToString()?.Trim()
+			                    ?? throw new ArgumentNullException("Signature is null.");
+
+			return signature;
+		}
+		else
+		{
+			throw new FormatException($"Could not parse signature: {json}.");
+		}
+	}
+
 }

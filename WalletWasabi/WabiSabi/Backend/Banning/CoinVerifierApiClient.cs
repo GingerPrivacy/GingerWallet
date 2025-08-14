@@ -32,7 +32,7 @@ public class CoinVerifierApiClient : IAsyncDisposable
 				return response;
 			}
 		}
-		response ??= new(ApiResponseInfo.OK, "none", true, true, "No providers");
+		response ??= new(ApiResponseInfo.OK, "none", true, true, "No providers", TimeSpan.FromHours(1));
 		return response;
 	}
 

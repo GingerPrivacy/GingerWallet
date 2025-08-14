@@ -89,7 +89,9 @@ public class TreeDataGridPrivacyTextCell : TreeDataGridCell
 
 		var formattedText = !_isContentVisible
 			? _privacyFormattedText
-			: _haveText ? _formattedText : null;
+			: _haveText
+				? _formattedText
+				: null;
 
 		if (formattedText is null)
 		{

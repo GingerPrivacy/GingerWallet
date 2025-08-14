@@ -20,10 +20,11 @@
             <UICommand.Icon>
               <Border BorderThickness="1"
                       VerticalAlignment="Center"
-                      BorderBrush="{DynamicResource TextControlForeground}" Opacity="0.6" CornerRadius="4" Padding="2 3">
+                      BorderBrush="{DynamicResource TextControlForeground}" Opacity="0.6" CornerRadius="4"
+                      Padding="2 3">
                 <TextBlock FontSize="9"
                            Text="{Binding ShortName, Source={x:Static wallets:ScriptType.SegWit}}"
-                           ToolTip.Tip="{Binding Name, Source={x:Static wallets:ScriptType.SegWit}}"/>
+                           ToolTip.Tip="{Binding Name, Source={x:Static wallets:ScriptType.SegWit}}" />
               </Border>
             </UICommand.Icon>
           </UICommand>
@@ -36,7 +37,7 @@
                       BorderBrush="{DynamicResource TextControlForeground}" Opacity="0.6" CornerRadius="4" Padding="2">
                 <TextBlock FontSize="9"
                            Text="{Binding ShortName, Source={x:Static wallets:ScriptType.Taproot}}"
-                           ToolTip.Tip="{Binding Name, Source={x:Static wallets:ScriptType.Taproot}}"/>
+                           ToolTip.Tip="{Binding Name, Source={x:Static wallets:ScriptType.Taproot}}" />
               </Border>
             </UICommand.Icon>
           </UICommand>

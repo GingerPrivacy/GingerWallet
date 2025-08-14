@@ -77,8 +77,8 @@ public partial class MainViewModel : ViewModelBase
 
 		NetworkBadgeName =
 			UiContext.ApplicationSettings.Network == Network.Main
-			? ""
-			: UiContext.ApplicationSettings.Network.Name;
+				? ""
+				: UiContext.ApplicationSettings.Network.Name;
 
 		RxApp.MainThreadScheduler.Schedule(async () =>
 		{

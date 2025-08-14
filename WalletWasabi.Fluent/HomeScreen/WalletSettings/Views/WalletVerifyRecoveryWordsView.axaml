@@ -12,15 +12,15 @@
                NextContent="Verify" EnableNext="True" EnableBack="True" EnableCancel="True">
     <DockPanel VerticalAlignment="Top">
       <TagsBox DockPanel.Dock="Left"
-                        ItemCountLimit="24"
-                        SuggestionsAreCaseSensitive="False"
-                        RestrictInputToSuggestions="True"
-                        Items="{Binding Mnemonics}"
-                        Suggestions="{Binding Suggestions}"
-                        Watermark="{x:Static lang:Resources.TypeInYourRecoveryWords}"
-                        AllowDuplication="True"
-                        EnableCounter="True"
-                        EnableDelete="False">
+               ItemCountLimit="24"
+               SuggestionsAreCaseSensitive="False"
+               RestrictInputToSuggestions="True"
+               Items="{Binding Mnemonics}"
+               Suggestions="{Binding Suggestions}"
+               Watermark="{x:Static lang:Resources.TypeInYourRecoveryWords}"
+               AllowDuplication="True"
+               EnableCounter="True"
+               EnableDelete="False">
         <Interaction.Behaviors>
           <FocusOnAttachedBehavior />
         </Interaction.Behaviors>

@@ -8,7 +8,8 @@
              x:DataType="viewModels:CoinListItem"
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.CoinList.Views.Core.Cells.AnonymityScoreCellView">
-  <InvalidatingStackPanel IsVisible="{Binding !!AnonymityScore}" Orientation="Horizontal" Margin="20 0" Spacing="2" HorizontalAlignment="Left" ToolTip.Tip="{x:Static lang:Resources.AnonymityScore}">
+  <InvalidatingStackPanel IsVisible="{Binding !!AnonymityScore}" Orientation="Horizontal" Margin="20 0" Spacing="2"
+                          HorizontalAlignment="Left" ToolTip.Tip="{x:Static lang:Resources.AnonymityScore}">
     <PathIcon Data="{StaticResource anonscore}" VerticalAlignment="Center" Opacity="0.6" Height="15" />
     <TextBlock Text="{Binding AnonymityScore}" VerticalAlignment="Center" FontWeight="Bold" />
   </InvalidatingStackPanel>

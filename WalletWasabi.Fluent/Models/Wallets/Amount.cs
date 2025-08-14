@@ -25,14 +25,14 @@ public class Amount
 	{
 		Btc = money;
 		Fiat = exchangeRateProvider.ExchangeRateObservable.Select(x => x * Btc.ToDecimal(MoneyUnit.BTC));
-		HasFiatBalance = Fiat.Select(x => x != 0m);
+		HasFiatBalance = Fiat.Select(x => x > 0m);
 	}
 
 	public Amount(decimal amount, AmountProvider exchangeRateProvider)
 	{
 		Btc = Money.Coins(amount);
 		Fiat = exchangeRateProvider.ExchangeRateObservable.Select(x => x * Btc.ToDecimal(MoneyUnit.BTC));
-		HasFiatBalance = Fiat.Select(x => x != 0m);
+		HasFiatBalance = Fiat.Select(x => x > 0m);
 	}
 
 	public Amount(decimal amount)

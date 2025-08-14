@@ -9,5 +9,5 @@ public class UiClipboard
 
 	public async Task SetTextAsync(string? text) => await ApplicationHelper.SetTextAsync(text);
 
-	public async Task ClearAsync() => await ApplicationHelper.ClearAsync();
+	public async Task ClearAsync() => await ApplicationHelper.ClearClipboardAsync();
 }

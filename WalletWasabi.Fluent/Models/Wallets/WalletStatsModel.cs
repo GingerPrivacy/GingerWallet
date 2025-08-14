@@ -29,9 +29,9 @@ public partial class WalletStatsModel : ReactiveObject, IDisposable
 		_unconfirmedBalance = Amount.Zero;
 
 		walletModel.Transactions.TransactionProcessed
-								.Do(_ => Update(walletModel, wallet))
-								.Subscribe()
-								.DisposeWith(_disposables);
+			.Do(_ => Update(walletModel, wallet))
+			.Subscribe()
+			.DisposeWith(_disposables);
 	}
 
 	public void Dispose()
@@ -60,19 +60,19 @@ public partial class WalletStatsModel : ReactiveObject, IDisposable
 
 		var singleCoinjoins =
 			walletModel.Transactions.Cache.Items
-									.Where(x => x.Type == TransactionType.Coinjoin)
-									.ToList();
+				.Where(x => x.Type == TransactionType.Coinjoin)
+				.ToList();
 
 		var groupedCoinjoins =
 			walletModel.Transactions.Cache.Items
-									.Where(x => x.Type == TransactionType.CoinjoinGroup)
-									.ToList();
+				.Where(x => x.Type == TransactionType.CoinjoinGroup)
+				.ToList();
 
 		var nestedCoinjoins = groupedCoinjoins.SelectMany(x => x.Children).ToList();
 		var nonCoinjoins =
 			walletModel.Transactions.Cache.Items
-									.Where(x => !x.IsCoinjoin)
-									.ToList();
+				.Where(x => !x.IsCoinjoin)
+				.ToList();
 
 		TotalTransactionCount = singleCoinjoins.Count + nestedCoinjoins.Count + nonCoinjoins.Count;
 		NonCoinjointransactionCount = nonCoinjoins.Count;

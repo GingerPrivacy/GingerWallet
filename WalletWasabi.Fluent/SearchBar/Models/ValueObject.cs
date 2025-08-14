@@ -85,14 +85,14 @@ public abstract class ValueObject : IComparable, IComparable<ValueObject>
 		{
 			_cachedHashCode = GetEqualityComponents()
 				.Aggregate(
-				1,
-				(current, obj) =>
-				{
-					unchecked
+					1,
+					(current, obj) =>
 					{
-						return (current * 23) + (obj?.GetHashCode() ?? 0);
-					}
-				});
+						unchecked
+						{
+							return (current * 23) + (obj?.GetHashCode() ?? 0);
+						}
+					});
 		}
 
 		return _cachedHashCode.Value;

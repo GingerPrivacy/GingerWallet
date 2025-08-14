@@ -39,17 +39,17 @@ public partial class ManualControlDialogViewModel : DialogViewModelBase<IEnumera
 
 		var nextCommandCanExecute =
 			CoinList.Selection
-					.ToObservableChangeSet()
-					.ToCollection()
-					.Select(c => c.Count > 0);
+				.ToObservableChangeSet()
+				.ToCollection()
+				.Select(c => c.Count > 0);
 
 		NextCommand = ReactiveCommand.Create(OnNext, nextCommandCanExecute);
 
 		SelectedAmount =
 			CoinList.Selection
-					.ToObservableChangeSet()
-					.ToCollection()
-					.Select(c => c.Any() ? walletModel.AmountProvider.Create(c.TotalAmount()) : null);
+				.ToObservableChangeSet()
+				.ToCollection()
+				.Select(c => c.Any() ? walletModel.AmountProvider.Create(c.TotalAmount()) : null);
 
 		ToggleSelectionCommand = ReactiveCommand.Create(() => SelectAll(!CoinList.Selection.Any()));
 
@@ -69,11 +69,11 @@ public partial class ManualControlDialogViewModel : DialogViewModelBase<IEnumera
 	protected override void OnNavigatedTo(bool isInHistory, CompositeDisposable disposables)
 	{
 		CoinList.CoinItems
-				.ToObservableChangeSet()
-				.WhenPropertyChanged(x => x.IsSelected)
-				.Select(_ => CoinList.Selection.Count > 0)
-				.BindTo(this, x => x.HasSelection)
-				.DisposeWith(disposables);
+			.ToObservableChangeSet()
+			.WhenPropertyChanged(x => x.IsSelected)
+			.Select(_ => CoinList.Selection.Count > 0)
+			.BindTo(this, x => x.HasSelection)
+			.DisposeWith(disposables);
 	}
 
 	protected override void OnNavigatedFrom(bool isInHistory)

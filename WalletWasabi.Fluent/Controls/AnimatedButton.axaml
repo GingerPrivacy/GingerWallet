@@ -16,8 +16,10 @@
                 Classes="plain">
           <Interaction.Behaviors>
             <EventTriggerBehavior EventName="Click">
-              <ChangePropertyAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}" PropertyName="AnimateIcon" Value="False" />
-              <ChangePropertyAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}" PropertyName="AnimateIcon" Value="True" />
+              <ChangePropertyAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                    PropertyName="AnimateIcon" Value="False" />
+              <ChangePropertyAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                    PropertyName="AnimateIcon" Value="True" />
             </EventTriggerBehavior>
           </Interaction.Behaviors>
           <Panel>
@@ -45,7 +47,8 @@
       <Style.Animations>
         <Animation Duration="0:0:1.4" Easing="{StaticResource FluentEasing}">
           <KeyFrame KeyTime="0:0:0.0">
-            <Setter Property="Opacity" Value="{Binding PointerOverOpacity, RelativeSource={RelativeSource TemplatedParent}}" />
+            <Setter Property="Opacity"
+                    Value="{Binding PointerOverOpacity, RelativeSource={RelativeSource TemplatedParent}}" />
           </KeyFrame>
           <KeyFrame KeyTime="0:0:0.2">
             <Setter Property="Opacity" Value="0.0" />
@@ -56,7 +59,8 @@
             <Setter Property="IsVisible" Value="True" />
           </KeyFrame>
           <KeyFrame KeyTime="0:0:1.4">
-            <Setter Property="Opacity" Value="{Binding PointerOverOpacity, RelativeSource={RelativeSource TemplatedParent}}" />
+            <Setter Property="Opacity"
+                    Value="{Binding PointerOverOpacity, RelativeSource={RelativeSource TemplatedParent}}" />
           </KeyFrame>
         </Animation>
       </Style.Animations>
@@ -69,10 +73,12 @@
             <Setter Property="IsVisible" Value="True" />
           </KeyFrame>
           <KeyFrame KeyTime="0:0:0.2">
-            <Setter Property="Opacity" Value="{Binding PointerOverOpacity, RelativeSource={RelativeSource TemplatedParent}}" />
+            <Setter Property="Opacity"
+                    Value="{Binding PointerOverOpacity, RelativeSource={RelativeSource TemplatedParent}}" />
           </KeyFrame>
           <KeyFrame KeyTime="0:0:0.8">
-            <Setter Property="Opacity" Value="{Binding PointerOverOpacity, RelativeSource={RelativeSource TemplatedParent}}" />
+            <Setter Property="Opacity"
+                    Value="{Binding PointerOverOpacity, RelativeSource={RelativeSource TemplatedParent}}" />
           </KeyFrame>
           <KeyFrame KeyTime="0:0:1.0">
             <Setter Property="Opacity" Value="0.0" />

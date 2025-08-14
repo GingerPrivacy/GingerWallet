@@ -31,8 +31,8 @@
       <!-- CJ active -->
       <Panel.IsVisible>
         <MultiBinding Converter="{x:Static BoolConverters.And}">
-          <Binding Path="!IsBanned"/>
-          <Binding Path="!IsExcludedFromCoinJoin"/>
+          <Binding Path="!IsBanned" />
+          <Binding Path="!IsExcludedFromCoinJoin" />
         </MultiBinding>
       </Panel.IsVisible>
       <PathIcon IsVisible="{Binding IsCoinjoining}"
@@ -57,8 +57,8 @@
               ToolTip.Tip="{Binding BannedUntilUtcToolTip}">
       <PathIcon.IsVisible>
         <MultiBinding Converter="{x:Static BoolConverters.And}">
-          <Binding Path="IsBanned"/>
-          <Binding Path="!IsExcludedFromCoinJoin"/>
+          <Binding Path="IsBanned" />
+          <Binding Path="!IsExcludedFromCoinJoin" />
         </MultiBinding>
       </PathIcon.IsVisible>
     </PathIcon>

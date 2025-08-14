@@ -82,6 +82,7 @@ public class FeeRateProvider : IWalletFeeRateProvider
 	/// </summary>
 	public FeeRateProvider(WasabiHttpClientFactory httpClientFactory, Network network) : this(httpClientFactory, FeeRateProviderSource.BlockstreamInfo, network)
 	{
+		Initialize(null);
 	}
 
 	public AllFeeEstimate GetAllFeeEstimate()

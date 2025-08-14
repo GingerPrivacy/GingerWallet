@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using NBitcoin;
 using NBitcoin.Secp256k1;
 using NNostr.Client;
-using WalletWasabi.Exceptions;
 using WalletWasabi.Helpers;
 
 namespace WalletWasabi.Nostr;

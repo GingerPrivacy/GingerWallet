@@ -63,7 +63,8 @@
           <StackPanel Spacing="5">
             <TransitioningContentControl MinWidth="350" MaxWidth="350" MinHeight="18" Content="{Binding CurrentStatus}">
               <TransitioningContentControl.PageTransition>
-                <PageSlide Duration="0:0:0.125" Orientation="Vertical" SlideInEasing="0.4,0,0.6,1" SlideOutEasing="0.4,0,0.6,1" />
+                <PageSlide Duration="0:0:0.125" Orientation="Vertical" SlideInEasing="0.4,0,0.6,1"
+                           SlideOutEasing="0.4,0,0.6,1" />
               </TransitioningContentControl.PageTransition>
               <TransitioningContentControl.DataTemplates>
                 <DataTemplate DataType="x:String">
@@ -72,7 +73,8 @@
               </TransitioningContentControl.DataTemplates>
             </TransitioningContentControl>
 
-            <ProgressBar Minimum="0" Maximum="100" IsIndeterminate="{Binding IsCountDownDelayHappening}" Value="{Binding ProgressValue}">
+            <ProgressBar Minimum="0" Maximum="100" IsIndeterminate="{Binding IsCountDownDelayHappening}"
+                         Value="{Binding ProgressValue}">
               <ProgressBar.Foreground>
                 <SolidColorBrush Color="{DynamicResource SystemAccentColorLight3}" Opacity="0.8" />
               </ProgressBar.Foreground>
@@ -110,12 +112,14 @@
           <Button Classes="plain" IsVisible="{Binding CanNavigateToCoinjoinSettings^}">
             <Button.Flyout>
               <MenuFlyout Placement="Top">
-                <MenuItem Header="{x:Static lang:Resources.CoinjoinSettings}" Command="{Binding NavigateToSettingsCommand}">
+                <MenuItem Header="{x:Static lang:Resources.CoinjoinSettings}"
+                          Command="{Binding NavigateToSettingsCommand}">
                   <MenuItem.Icon>
                     <PathIcon Data="{StaticResource settings_general_regular}" />
                   </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="{x:Static lang:Resources.ExcludedCoinsViewModelTitle}" Command="{Binding NavigateToExcludedCoinsCommand}">
+                <MenuItem Header="{x:Static lang:Resources.ExcludedCoinsViewModelTitle}"
+                          Command="{Binding NavigateToExcludedCoinsCommand}">
                   <MenuItem.Icon>
                     <PathIcon Data="{StaticResource exclude_coins}" />
                   </MenuItem.Icon>

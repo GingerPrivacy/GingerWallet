@@ -101,10 +101,10 @@ public partial class TransactionDetailsViewModel : RoutableViewModel
 		base.OnNavigatedTo(isInHistory, disposables);
 
 		_wallet.Transactions.Cache
-							.Connect()
-							.Do(_ => UpdateCurrentTransaction())
-							.Subscribe()
-							.DisposeWith(disposables);
+			.Connect()
+			.Do(_ => UpdateCurrentTransaction())
+			.Subscribe()
+			.DisposeWith(disposables);
 	}
 
 	private void UpdateCurrentTransaction()

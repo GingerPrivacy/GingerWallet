@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using WalletWasabi.Blockchain.Keys;
@@ -404,9 +403,12 @@ public class WalletManager : IWalletProvider
 					if (wallet.State >= WalletState.Initialized)
 					{
 						var keyManager = wallet.KeyManager;
-						string backupWalletFilePath = WalletDirectories.GetWalletFilePaths(Path.GetFileName(keyManager.FilePath)!).walletBackupFilePath;
-						keyManager.ToFile(backupWalletFilePath);
-						Logger.LogInfo($"{nameof(wallet.KeyManager)} backup saved to `{backupWalletFilePath}`.");
+						if (keyManager.FilePath is not null)
+						{
+							string backupWalletFilePath = WalletDirectories.GetWalletFilePaths(Path.GetFileName(keyManager.FilePath)!).walletBackupFilePath;
+							keyManager.ToFile(backupWalletFilePath);
+							Logger.LogInfo($"{nameof(wallet.KeyManager)} backup saved to `{backupWalletFilePath}`.");
+						}
 						await wallet.StopAsync(cancel).ConfigureAwait(false);
 						Logger.LogInfo($"'{wallet.WalletName}' wallet is stopped.");
 					}

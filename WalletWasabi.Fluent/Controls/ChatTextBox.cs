@@ -3,7 +3,7 @@ using Avalonia.Input;
 
 namespace WalletWasabi.Fluent.Controls;
 
-public class ChatTextBox: TextBox
+public class ChatTextBox : TextBox
 {
 	protected override Type StyleKeyOverride => typeof(TextBox);
 

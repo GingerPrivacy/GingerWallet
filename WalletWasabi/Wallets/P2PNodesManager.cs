@@ -1,7 +1,7 @@
-using System.Threading;
-using System.Threading.Tasks;
 using NBitcoin;
 using NBitcoin.Protocol;
+using System.Threading;
+using System.Threading.Tasks;
 using WabiSabi.Crypto.Randomness;
 using WalletWasabi.Extensions;
 using WalletWasabi.Helpers;
@@ -26,18 +26,30 @@ public class P2PNodesManager
 
 	public async Task<Node?> GetNodeAsync(CancellationToken cancellationToken)
 	{
-		while (Nodes.ConnectedNodes.Count == 0)
+		do
 		{
-			await Task.Delay(100, cancellationToken).ConfigureAwait(false);
-		}
+			if (Nodes.ConnectedNodes.Count > 0)
+			{
+				var node = Nodes.ConnectedNodes.RandomElement(SecureRandom.Instance);
 
-		// Select a random node we are connected to.
-		return Nodes.ConnectedNodes.RandomElement(SecureRandom.Instance);
+				if (node is not null && node.IsConnected)
+				{
+					return node;
+				}
+
+				Logger.LogTrace($"Selected node is null or disconnected.");
+			}
+
+			await Task.Delay(TimeSpan.FromMilliseconds(50), cancellationToken).ConfigureAwait(false);
+
+			cancellationToken.ThrowIfCancellationRequested();
+		}
+		while (true);
 	}
 
 	public void DisconnectNodeIfEnoughPeers(Node node, string reason)
 	{
-		if (Nodes.ConnectedNodes.Count > 3)
+		if (Nodes.ConnectedNodes.Count > 5)
 		{
 			DisconnectNode(node, reason);
 		}

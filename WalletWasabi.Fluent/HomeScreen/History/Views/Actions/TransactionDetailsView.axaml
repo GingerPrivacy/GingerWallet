@@ -38,7 +38,8 @@
       <!-- Destination Address -->
       <PreviewItem Name="DestinationSection" Icon="{StaticResource transceive_regular}"
                    CopyableContent="{Binding SingleAddress}"
-                   Label="{x:Static lang:Resources.DestinationAddresses}" IsVisible="{Binding !!DestinationAddresses.Count}">
+                   Label="{x:Static lang:Resources.DestinationAddresses}"
+                   IsVisible="{Binding !!DestinationAddresses.Count}">
         <ItemsControl ItemsSource="{Binding DestinationAddresses}">
           <ItemsControl.ItemTemplate>
             <DataTemplate>

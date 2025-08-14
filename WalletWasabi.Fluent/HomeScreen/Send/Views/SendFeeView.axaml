@@ -223,7 +223,8 @@
                 <Setter Property="FontSize" Value="{StaticResource FontSizeH8}" />
               </Style>
             </StackPanel.Styles>
-            <TextBlock Text="{Binding CurrentSatoshiPerByte, Mode=OneWay, StringFormat={x:Static lang:Resources.FeeRateFormatted}}" />
+            <TextBlock
+              Text="{Binding CurrentSatoshiPerByte, Mode=OneWay, StringFormat={x:Static lang:Resources.FeeRateFormatted}}" />
             <TextBlock
               Text="{Binding CurrentConfirmationTargetString, Mode=OneWay, StringFormat={x:Static lang:Resources.EstimatedConfirmationTimeWithValue}}" />
           </StackPanel>

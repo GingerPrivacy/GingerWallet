@@ -8,7 +8,8 @@
              x:DataType="viewModels:OrderViewModel"
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.HomeScreen.BuySell.Views.Columns.OrderActionsColumnView">
-  <Border CornerRadius="30" HorizontalAlignment="Right" Margin="0 0 2 0" Background="{DynamicResource Layer2BackgroundBrush}">
+  <Border CornerRadius="30" HorizontalAlignment="Right" Margin="0 0 2 0"
+          Background="{DynamicResource Layer2BackgroundBrush}">
     <Border.Styles>
       <Style Selector="AnimatedButton /template/ PathIcon">
         <Setter Property="Height" Value="15" />

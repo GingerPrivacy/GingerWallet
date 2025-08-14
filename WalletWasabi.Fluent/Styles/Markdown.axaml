@@ -63,38 +63,38 @@
   </Style>
 
   <Style Selector="ctxt|CHyperlink:pointerover">
-    <Setter Property="Foreground" Value="{DynamicResource SystemAccentColorLight3}"/>
+    <Setter Property="Foreground" Value="{DynamicResource SystemAccentColorLight3}" />
   </Style>
 
   <Style Selector="Border.Table">
-    <Setter Property="Padding" Value="2"/>
-    <Setter Property="CornerRadius" Value="{DynamicResource OverlayCornerRadius}"/>
-    <Setter Property="BorderThickness" Value="0"/>
+    <Setter Property="Padding" Value="2" />
+    <Setter Property="CornerRadius" Value="{DynamicResource OverlayCornerRadius}" />
+    <Setter Property="BorderThickness" Value="0" />
   </Style>
 
   <Style Selector="Grid.Table">
-    <Setter Property="Background" Value="{DynamicResource Layer1BackgroundBrush}"/>
+    <Setter Property="Background" Value="{DynamicResource Layer1BackgroundBrush}" />
   </Style>
 
   <Style Selector="Border.TableHeader">
-    <Setter Property="Margin" Value="1 0"/>
-    <Setter Property="BorderThickness" Value="0"/>
-    <Setter Property="Background" Value="{DynamicResource Layer1BackgroundBrush}"/>
+    <Setter Property="Margin" Value="1 0" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Background" Value="{DynamicResource Layer1BackgroundBrush}" />
   </Style>
 
   <Style Selector="Border.OddTableRow">
-    <Setter Property="Margin" Value="1 1"/>
-    <Setter Property="BorderThickness" Value="0"/>
-    <Setter Property="Background" Value="{DynamicResource Layer2BackgroundBrush}"/>
+    <Setter Property="Margin" Value="1 1" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Background" Value="{DynamicResource Layer2BackgroundBrush}" />
   </Style>
 
   <Style Selector="Border.EvenTableRow">
-    <Setter Property="Margin" Value="1 1"/>
-    <Setter Property="BorderThickness" Value="0"/>
-    <Setter Property="Background" Value="{DynamicResource Layer2BackgroundBrush}"/>
+    <Setter Property="Margin" Value="1 1" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Background" Value="{DynamicResource Layer2BackgroundBrush}" />
   </Style>
 
   <Style Selector="Border.TableHeader ctxt|CTextBlock">
-    <Setter Property="FontWeight" Value="Bold"/>
+    <Setter Property="FontWeight" Value="Bold" />
   </Style>
 </Styles>

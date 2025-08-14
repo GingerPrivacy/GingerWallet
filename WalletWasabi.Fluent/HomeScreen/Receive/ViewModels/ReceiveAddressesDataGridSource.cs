@@ -35,7 +35,6 @@ public static class ReceiveAddressesDataGridSource
 				CanUserSortColumn = true,
 				CompareAscending = Sort<AddressViewModel>.Ascending(x => x.Type),
 				CompareDescending = Sort<AddressViewModel>.Descending(x => x.Type)
-
 			},
 			width: new GridLength(0, GridUnitType.Auto));
 	}

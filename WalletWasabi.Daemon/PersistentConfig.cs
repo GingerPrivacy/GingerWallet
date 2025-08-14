@@ -252,6 +252,16 @@ public record PersistentConfig : IConfigNg
 			};
 		}
 
+		// Previous imports from Wasabi could increase this to 100. We do want to check and change this, even if we are not readFromWasabi.
+		if (config.AbsoluteMinInputCount > Constants.DefaultAbsoluteMinInputCount)
+		{
+			hasChanged = true;
+			config = config with
+			{
+				AbsoluteMinInputCount = Constants.DefaultAbsoluteMinInputCount
+			};
+		}
+
 		if (readFromWasabi)
 		{
 			var torMode = Config.ObjectToTorMode(config.UseTor);

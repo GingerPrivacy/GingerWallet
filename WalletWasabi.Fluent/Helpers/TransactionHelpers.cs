@@ -68,7 +68,7 @@ public static class TransactionHelpers
 			var network = keyManager.GetNetwork();
 			var builder = new TransactionFactory(network, keyManager, allCoins, new EmptyTransactionStore(network), password);
 
-			TransactionParameters parameters = new (
+			TransactionParameters parameters = new(
 				intent,
 				transactionInfo.FeeRate,
 				AllowUnconfirmed: true,
@@ -150,6 +150,7 @@ public static class TransactionHelpers
 			{
 				filePath = $"{filePath}.{psbtExtension}";
 			}
+
 			await File.WriteAllBytesAsync(filePath, transaction.Psbt.ToBytes());
 
 			return true;

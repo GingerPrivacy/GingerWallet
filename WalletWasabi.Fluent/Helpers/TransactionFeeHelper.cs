@@ -88,6 +88,7 @@ public static class TransactionFeeHelper
 		catch
 		{
 		}
+
 		return false;
 	}
 

@@ -35,12 +35,11 @@ public partial class WelcomePageViewModel : DialogViewModelBase<Unit>
 		_selectedDisplayLanguage = Settings.SelectedDisplayLanguage;
 
 		this.WhenAnyValue(x => x.SelectedIndex)
-			.Subscribe(
-				x =>
-				{
-					NextLabel = x < NumberOfPages - 1 ? Resources.Continue : Resources.GetStarted;
-					EnableNextKey = x < NumberOfPages - 1;
-				});
+			.Subscribe(x =>
+			{
+				NextLabel = x < NumberOfPages - 1 ? Resources.Continue : Resources.GetStarted;
+				EnableNextKey = x < NumberOfPages - 1;
+			});
 
 		this.WhenAnyValue(x => x.IsActive)
 			.Skip(1)

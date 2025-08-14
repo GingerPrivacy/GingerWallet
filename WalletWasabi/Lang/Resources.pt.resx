@@ -2119,4 +2119,70 @@
     <data name="SetAsDefault" xml:space="preserve">
         <value>Definir como padrão</value>
     </data>
+    <data name="SignMessage" xml:space="preserve">
+        <value>Assinar mensagem</value>
+    </data>
+    <data name="InvalidBitcoinAddress" xml:space="preserve">
+        <value>Endereço de Bitcoin inválido.</value>
+    </data>
+    <data name="TheAddressDoesNotBelongToThisWallet" xml:space="preserve">
+        <value>O endereço não pertence a esta carteira.</value>
+    </data>
+    <data name="SignWithHardwareWallet" xml:space="preserve">
+        <value>Assinar com carteira de hardware</value>
+    </data>
+    <data name="SignMessageToVerifyYouOwnAddressForExchange" xml:space="preserve">
+        <value>Assine uma mensagem para verificar que você possui o endereço para a troca</value>
+    </data>
+    <data name="AddressWithColon" xml:space="preserve">
+        <value>Endereço:</value>
+    </data>
+    <data name="PasteTheAddressProvidedByTheExchange" xml:space="preserve">
+        <value>Cole o endereço fornecido pelo serviço de câmbio</value>
+    </data>
+    <data name="MessageWithColon" xml:space="preserve">
+        <value>Mensagem:</value>
+    </data>
+    <data name="EnterTheMessageYouWishToSign" xml:space="preserve">
+        <value>Insira a mensagem que deseja assinar</value>
+    </data>
+    <data name="Signature" xml:space="preserve">
+        <value>Assinatura</value>
+    </data>
+    <data name="Reason" xml:space="preserve">
+        <value>Motivo: {0}</value>
+    </data>
+    <data name="UnknownEnum" xml:space="preserve">
+        <value>Desconhecido</value>
+    </data>
+    <data name="BackendStabilitySafetyEnum" xml:space="preserve">
+        <value>Problema temporário no servidor</value>
+    </data>
+    <data name="CheatingEnum" xml:space="preserve">
+        <value>Violação de protocolo</value>
+    </data>
+    <data name="RoundDisruption" xml:space="preserve">
+        <value>Interrupção da rodada</value>
+    </data>
+    <data name="FailedToVerifyEnum" xml:space="preserve">
+        <value>Risco potencial</value>
+    </data>
+    <data name="InheritedEnum" xml:space="preserve">
+        <value>(Herdado de outra moeda)</value>
+    </data>
+    <data name="LocalCoinVerifierEnum" xml:space="preserve">
+        <value>Restrição temporária</value>
+    </data>
+    <data name="RoundDisruptionMethodDidNotConfirmEnum" xml:space="preserve">
+        <value>Interrupção da rodada</value>
+    </data>
+    <data name="RoundDisruptionMethodDidNotSignEnum" xml:space="preserve">
+        <value>Interrupção da rodada</value>
+    </data>
+    <data name="RoundDisruptionMethodDoubleSpentEnum" xml:space="preserve">
+        <value>A moeda foi gasta durante a rodada</value>
+    </data>
+    <data name="RoundDisruptionMethodDidNotSignalReadyToSignEnum" xml:space="preserve">
+        <value>Interrupção da rodada</value>
+    </data>
 </root>

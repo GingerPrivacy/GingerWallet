@@ -115,9 +115,10 @@
             </ScrollContentPresenter.Styles>
 
             <ScrollContentPresenter.GestureRecognizers>
-              <ScrollGestureRecognizer CanHorizontallyScroll="{Binding CanHorizontallyScroll, ElementName=PART_ContentPresenter}"
-                                       CanVerticallyScroll="{Binding CanVerticallyScroll, ElementName=PART_ContentPresenter}"
-                                       IsScrollInertiaEnabled="{Binding IsScrollInertiaEnabled, RelativeSource={RelativeSource TemplatedParent}}" />
+              <ScrollGestureRecognizer
+                CanHorizontallyScroll="{Binding CanHorizontallyScroll, ElementName=PART_ContentPresenter}"
+                CanVerticallyScroll="{Binding CanVerticallyScroll, ElementName=PART_ContentPresenter}"
+                IsScrollInertiaEnabled="{Binding IsScrollInertiaEnabled, RelativeSource={RelativeSource TemplatedParent}}" />
             </ScrollContentPresenter.GestureRecognizers>
           </ScrollContentPresenter>
 
@@ -140,7 +141,8 @@
 
           <!-- Scroll cues (hints)  -->
           <!-- They are disabled for now. If we want to enable them, just remove the IsVisible="False" attribute below -->
-          <Panel x:Name="ScrollCues" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="0" IsVisible="False">
+          <Panel x:Name="ScrollCues" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="0"
+                 IsVisible="False">
             <RepeatButton x:Name="TopCue"
                           VerticalAlignment="Top"
                           Command="{Binding LineUp, RelativeSource={RelativeSource TemplatedParent}}">

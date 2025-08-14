@@ -16,7 +16,7 @@ public static class EnumerableExtensions
 		{
 			yield return item;
 		}
-		
+
 		foreach (T item in source.Skip(1))
 		{
 			yield return delimiter;

@@ -29,26 +29,26 @@ public partial class WalletCoinjoinModel : ReactiveObject, IDisposable
 
 		StatusUpdated =
 			Observable.FromEventPattern<StatusChangedEventArgs>(_coinJoinManager, nameof(CoinJoinManager.StatusChanged))
-					  .Where(x => x.EventArgs.Wallet == wallet)
-					  .Select(x => x.EventArgs)
-					  .Where(x => x is WalletStartedCoinJoinEventArgs or WalletStoppedCoinJoinEventArgs or StartErrorEventArgs or CoinJoinStatusEventArgs or CompletedEventArgs or StartedEventArgs)
-					  .ObserveOn(RxApp.MainThreadScheduler);
+				.Where(x => x.EventArgs.Wallet == wallet)
+				.Select(x => x.EventArgs)
+				.Where(x => x is WalletStartedCoinJoinEventArgs or WalletStoppedCoinJoinEventArgs or StartErrorEventArgs or CoinJoinStatusEventArgs or CompletedEventArgs or StartedEventArgs)
+				.ObserveOn(RxApp.MainThreadScheduler);
 
 		settings.WhenAnyValue(x => x.AutoCoinjoin)
-				.Skip(1) // The first one is triggered at the creation.
-				.DoAsync(async (autoCoinJoin) =>
+			.Skip(1) // The first one is triggered at the creation.
+			.DoAsync(async (autoCoinJoin) =>
+			{
+				if (autoCoinJoin)
 				{
-					if (autoCoinJoin)
-					{
-						await StartAsync(stopWhenAllMixed: false, false);
-					}
-					else
-					{
-						await StopAsync();
-					}
-				})
-				.Subscribe()
-				.DisposeWith(_disposable);
+					await StartAsync(stopWhenAllMixed: false, false);
+				}
+				else
+				{
+					await StopAsync();
+				}
+			})
+			.Subscribe()
+			.DisposeWith(_disposable);
 
 		var coinjoinInputStarted =
 			StatusUpdated

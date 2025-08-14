@@ -25,37 +25,37 @@
                     BorderThickness="2"
                     CornerRadius="{TemplateBinding CornerRadius}"
                     ClipToBounds="True">
-                <Panel>
+              <Panel>
 
-                  <!-- Content -->
-                  <ContentPresenter Name="PART_ContentPresenter" MinHeight="64" Content="{TemplateBinding Content}" />
+                <!-- Content -->
+                <ContentPresenter Name="PART_ContentPresenter" MinHeight="64" Content="{TemplateBinding Content}" />
 
-                  <!-- WARNING: corner radius must be original -1 for perfect rendering -->
-                  <Border CornerRadius="9"
-                          BorderThickness="0"
-                          ClipToBounds="True">
-                    <Panel>
+                <!-- WARNING: corner radius must be original -1 for perfect rendering -->
+                <Border CornerRadius="9"
+                        BorderThickness="0"
+                        ClipToBounds="True">
+                  <Panel>
 
-                      <!-- Close button -->
-                      <Button Theme="{StaticResource TransparentFunction}"
-                              CornerRadius="0 0 0 5"
-                              BorderThickness="0"
-                              Padding="0 4"
-                              HorizontalAlignment="Right" VerticalAlignment="Top">
-                        <Interaction.Behaviors>
-                          <NotificationCloseBehavior />
-                        </Interaction.Behaviors>
-                        <PathIcon Height="8" Opacity="0.4" Data="{StaticResource dismiss_light}" />
-                      </Button>
+                    <!-- Close button -->
+                    <Button Theme="{StaticResource TransparentFunction}"
+                            CornerRadius="0 0 0 5"
+                            BorderThickness="0"
+                            Padding="0 4"
+                            HorizontalAlignment="Right" VerticalAlignment="Top">
+                      <Interaction.Behaviors>
+                        <NotificationCloseBehavior />
+                      </Interaction.Behaviors>
+                      <PathIcon Height="8" Opacity="0.4" Data="{StaticResource dismiss_light}" />
+                    </Button>
 
-                      <!-- Timer bar -->
-                      <Panel x:Name="PART_TimerBar"
-                             Height="4"
-                             VerticalAlignment="Bottom"
-                             Background="{DynamicResource Layer2BackgroundBrushLight1}" />
-                    </Panel>
-                  </Border>
-                </Panel>
+                    <!-- Timer bar -->
+                    <Panel x:Name="PART_TimerBar"
+                           Height="4"
+                           VerticalAlignment="Bottom"
+                           Background="{DynamicResource Layer2BackgroundBrushLight1}" />
+                  </Panel>
+                </Border>
+              </Panel>
             </Border>
           </Border>
         </LayoutTransformControl>

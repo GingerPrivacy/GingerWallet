@@ -114,8 +114,10 @@
   <BoxShadows x:Key="OptimizePrivacyOptionBoxShadow2">0 4 10 0 #4A000000</BoxShadows>
 
   <!-- Invisible function button -->
-  <SolidColorBrush x:Key="InvisibleButtonPointerOverBackgroundColor" Opacity="0.25" Color="{StaticResource SystemBaseHighColor}" />
-  <SolidColorBrush x:Key="InvisibleButtonPressedBackgroundColor" Opacity="0.15" Color="{StaticResource SystemBaseHighColor}" />
+  <SolidColorBrush x:Key="InvisibleButtonPointerOverBackgroundColor" Opacity="0.25"
+                   Color="{StaticResource SystemBaseHighColor}" />
+  <SolidColorBrush x:Key="InvisibleButtonPressedBackgroundColor" Opacity="0.15"
+                   Color="{StaticResource SystemBaseHighColor}" />
 
   <!-- LineChart -->
   <StaticResource x:Key="LineChartAreaGradientStartStopColor" ResourceKey="SystemAccentCustomColorDark" />

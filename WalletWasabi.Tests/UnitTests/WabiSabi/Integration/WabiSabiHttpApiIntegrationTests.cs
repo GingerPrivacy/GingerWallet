@@ -89,7 +89,7 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 				services.AddScoped<IRPCClient>(s => rpc);
 
 				var prison = WabiSabiTestFactory.CreatePrison();
-				prison.FailedVerification(bannedOutPoint, uint256.One);
+				prison.FailedVerification(bannedOutPoint, uint256.One, TimeSpan.Zero, "");
 				services.AddScoped(_ => prison);
 			})).CreateClient();
 

@@ -29,7 +29,7 @@
               Theme="{StaticResource OutlineButton}">
         <StackPanel Orientation="Horizontal">
           <TextBlock Opacity="0.8" FontSize="12" Text="{Binding SelectedCountry.StateName, StringFormat='{}{0}, '}"
-                     IsVisible="{Binding SelectedCountry.StateName, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+                     IsVisible="{Binding SelectedCountry.StateName, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
           <TextBlock Opacity="0.8" FontSize="12" Text="{Binding SelectedCountry.CountryName}" />
         </StackPanel>
       </Button>

@@ -19,7 +19,8 @@
                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                             Background="Transparent" />
 
-          <Panel Name="PART_PrivacyReplacement" IsVisible="{Binding !IsContentRevealed^, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+          <Panel Name="PART_PrivacyReplacement"
+                 IsVisible="{Binding !IsContentRevealed^, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                  HorizontalAlignment="Stretch"
                  Background="Transparent">
@@ -27,7 +28,7 @@
               <PathIcon Data="{StaticResource eye_hide_regular}" />
             </Viewbox>
             <PrivacyTextPresenter Name="PART_PrivacyText"
-                                           MaxPrivacyChars="{TemplateBinding MaxPrivacyChars}"/>
+                                  MaxPrivacyChars="{TemplateBinding MaxPrivacyChars}" />
           </Panel>
         </Panel>
       </ControlTemplate>
@@ -56,14 +57,18 @@
 
     <!-- UseOpacity = true -->
     <Style Selector="^[UseOpacity=True] /template/ ContentPresenter#PART_ContentPresenter">
-      <Setter Property="Opacity" Value="{Binding IsContentRevealed^, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static conv:BoolOpacityConverters.BoolToOpacity}}" />
-      <Setter Property="IsEnabled" Value="{Binding IsContentRevealed^, RelativeSource={RelativeSource TemplatedParent}}" />
-      <Setter Property="IsHitTestVisible" Value="{Binding IsContentRevealed^, RelativeSource={RelativeSource TemplatedParent}}" />
+      <Setter Property="Opacity"
+              Value="{Binding IsContentRevealed^, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static conv:BoolOpacityConverters.BoolToOpacity}}" />
+      <Setter Property="IsEnabled"
+              Value="{Binding IsContentRevealed^, RelativeSource={RelativeSource TemplatedParent}}" />
+      <Setter Property="IsHitTestVisible"
+              Value="{Binding IsContentRevealed^, RelativeSource={RelativeSource TemplatedParent}}" />
     </Style>
 
     <!-- UseOpacity = false -->
     <Style Selector="^[UseOpacity=False] /template/ ContentPresenter#PART_ContentPresenter">
-      <Setter Property="IsVisible" Value="{Binding IsContentRevealed^, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+      <Setter Property="IsVisible"
+              Value="{Binding IsContentRevealed^, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
     </Style>
 
   </ControlTheme>

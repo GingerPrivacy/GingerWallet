@@ -65,14 +65,13 @@ public partial class ReceiveAddressViewModel : RoutableViewModel
 		_wallet.Addresses.Unused
 			.ToObservableChangeSet()
 			.ObserveOn(RxApp.MainThreadScheduler)
-			.OnItemRemoved(
-				address =>
+			.OnItemRemoved(address =>
+			{
+				if (Equals(address, Model))
 				{
-					if (Equals(address, Model))
-					{
-						UiContext.Navigate(CurrentTarget).BackTo<ReceiveViewModel>();
-					}
-				})
+					UiContext.Navigate(CurrentTarget).BackTo<ReceiveViewModel>();
+				}
+			})
 			.Subscribe()
 			.DisposeWith(disposables);
 

@@ -4,7 +4,7 @@
   <Design.PreviewWith>
     <StackPanel Spacing="4" Width="300">
 
-      <CurrencyEntryBox Text="{Binding $self.Bounds.Height}"/>
+      <CurrencyEntryBox Text="{Binding $self.Bounds.Height}" />
       <CurrencyEntryBox Watermark="{Binding $self.Bounds.Height}" />
       <CurrencyEntryBox Classes="standalone" Text="{Binding $self.Bounds.Height}" CurrencyCode="BTC" />
 
@@ -36,9 +36,13 @@
 
     <Setter Property="ContextFlyout">
       <MenuFlyout>
-        <MenuItem Header="{x:Static lang:Resources.Cut}" Command="{Binding $parent[TextBox].Cut}" IsEnabled="{Binding $parent[TextBox].CanCut}" InputGesture="{x:Static TextBox.CutGesture}" />
-        <MenuItem Header="{x:Static lang:Resources.Copy}" Command="{Binding $parent[TextBox].Copy}" IsEnabled="{Binding $parent[TextBox].CanCopy}" InputGesture="{x:Static TextBox.CopyGesture}"/>
-        <MenuItem Header="{x:Static lang:Resources.Paste}" Command="{Binding $parent[CurrencyEntryBox].ModifiedPasteAsync}" IsEnabled="{Binding $parent[TextBox].CanPaste}" InputGesture="{x:Static TextBox.PasteGesture}"/>
+        <MenuItem Header="{x:Static lang:Resources.Cut}" Command="{Binding $parent[TextBox].Cut}"
+                  IsEnabled="{Binding $parent[TextBox].CanCut}" InputGesture="{x:Static TextBox.CutGesture}" />
+        <MenuItem Header="{x:Static lang:Resources.Copy}" Command="{Binding $parent[TextBox].Copy}"
+                  IsEnabled="{Binding $parent[TextBox].CanCopy}" InputGesture="{x:Static TextBox.CopyGesture}" />
+        <MenuItem Header="{x:Static lang:Resources.Paste}"
+                  Command="{Binding $parent[CurrencyEntryBox].ModifiedPasteAsync}"
+                  IsEnabled="{Binding $parent[TextBox].CanPaste}" InputGesture="{x:Static TextBox.PasteGesture}" />
       </MenuFlyout>
     </Setter>
 
@@ -171,7 +175,7 @@
                                      SelectionForegroundBrush="{TemplateBinding SelectionForegroundBrush}"
                                      CaretBrush="{TemplateBinding CaretBrush}"
                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                       <TextBlock Margin="5 0 0 0"
                                  Text="{TemplateBinding CurrencyCode}"
                                  IsVisible="{TemplateBinding Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"

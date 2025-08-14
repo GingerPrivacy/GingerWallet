@@ -22,7 +22,8 @@
     <StackPanel DockPanel.Dock="Bottom" Spacing="8" IsVisible="{Binding HasPrivateBalance}">
       <Interaction.Behaviors>
         <AdaptiveBehavior>
-          <AdaptiveClassSetter MinWidth="0" MaxWidth="190" MaxWidthOperator="LessThanOrEqual" ClassName="small" TargetControl="{Binding #Balance}" />
+          <AdaptiveClassSetter MinWidth="0" MaxWidth="190" MaxWidthOperator="LessThanOrEqual" ClassName="small"
+                               TargetControl="{Binding #Balance}" />
         </AdaptiveBehavior>
       </Interaction.Behaviors>
 
@@ -32,12 +33,13 @@
 
         <Border VerticalAlignment="Center" BorderThickness="1" CornerRadius="2"
                 BorderBrush="{DynamicResource ButtonForeground}" HorizontalAlignment="Center">
-          <TextBlock Text="{x:Static lang:Resources.Private}" Classes="bold" Margin="4 2 " VerticalAlignment="Center" HorizontalAlignment="Center" />
+          <TextBlock Text="{x:Static lang:Resources.Private}" Classes="bold" Margin="4 2 " VerticalAlignment="Center"
+                     HorizontalAlignment="Center" />
         </Border>
         <PrivacyContentControl Classes="bold"
-                                        VerticalAlignment="Center" HorizontalAlignment="Center"
-                                        VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                        Content="{Binding PrivateAmount^.Btc, Converter={x:Static converters:MoneyConverters.ToBtc}}" />
+                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                               VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                               Content="{Binding PrivateAmount^.Btc, Converter={x:Static converters:MoneyConverters.ToBtc}}" />
       </StackPanel>
     </StackPanel>
 

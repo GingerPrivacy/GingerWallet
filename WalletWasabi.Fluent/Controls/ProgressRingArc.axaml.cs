@@ -177,10 +177,10 @@ public class ProgressRingArc : TemplatedControl
 		base.OnPropertyChanged(e);
 
 		if (e.Property == SegmentColorProperty ||
-			e.Property == StrokeThicknessProperty ||
-			e.Property == PercentageProperty ||
-			e.Property == StrokeBorderThicknessProperty ||
-			e.Property == PercentageProperty)
+		    e.Property == StrokeThicknessProperty ||
+		    e.Property == PercentageProperty ||
+		    e.Property == StrokeBorderThicknessProperty ||
+		    e.Property == PercentageProperty)
 		{
 			ShowArc = Percentage > 0;
 			ShowSegmentBorder = StrokeBorderThickness != 0;
@@ -221,7 +221,7 @@ public class ProgressRingArc : TemplatedControl
 		PathFigureStartPoint = startPoint;
 
 		if (Math.Abs(startPoint.X - Math.Round(endPoint.X)) < 0.01 &&
-			Math.Abs(startPoint.Y - Math.Round(endPoint.Y)) < 0.01)
+		    Math.Abs(startPoint.Y - Math.Round(endPoint.Y)) < 0.01)
 		{
 			endPoint -= new Point(0.01, 0);
 		}

@@ -33,7 +33,7 @@
       <ControlTemplate>
         <Border x:Name="PART_SelectionIndicator">
           <Panel>
-            <Border Name="BackgroundRectangle" Margin="{StaticResource TreeDataGridMarginFix}"/>
+            <Border Name="BackgroundRectangle" Margin="{StaticResource TreeDataGridMarginFix}" />
             <TreeDataGridCellsPresenter Name="PART_CellsPresenter"
                                         ElementFactory="{TemplateBinding ElementFactory}"
                                         Items="{TemplateBinding Columns}"
@@ -134,7 +134,8 @@
 
   <!-- TreeDataGridExpanderCell: HistoryTable.axaml -->
 
-  <ControlTheme x:Key="HistoryTableTreeDataGridRow" TargetType="TreeDataGridRow" BasedOn="{StaticResource GenericTreeDataGridRow}">
+  <ControlTheme x:Key="HistoryTableTreeDataGridRow" TargetType="TreeDataGridRow"
+                BasedOn="{StaticResource GenericTreeDataGridRow}">
 
     <Setter Property="Focusable" Value="False" />
 
@@ -173,7 +174,7 @@
                     Classes.isChild="{Binding IsChild}"
                     Classes.isLastChild="{Binding IsLastChild}"
                     IsHitTestVisible="False"
-                    Margin="{StaticResource TreeDataGridMarginFix}"/>
+                    Margin="{StaticResource TreeDataGridMarginFix}" />
           </Panel>
         </Border>
       </ControlTemplate>
@@ -267,7 +268,8 @@
 
   <!-- TreeDataGridRow: SelectCoinsDialogView.axaml -->
 
-  <ControlTheme x:Key="SelectCoinsDialogViewTreeDataGridRow" TargetType="TreeDataGridRow" BasedOn="{StaticResource GenericTreeDataGridRow}">
+  <ControlTheme x:Key="SelectCoinsDialogViewTreeDataGridRow" TargetType="TreeDataGridRow"
+                BasedOn="{StaticResource GenericTreeDataGridRow}">
     <Setter Property="Focusable" Value="False" />
 
     <Setter Property="Template">
@@ -306,7 +308,8 @@
 
   <!-- TreeDataGridRow: ReceiveAddressesView.axaml -->
 
-  <ControlTheme x:Key="ReceiveAddressesViewTreeDataGridRow" TargetType="TreeDataGridRow" BasedOn="{StaticResource GenericTreeDataGridRow}">
+  <ControlTheme x:Key="ReceiveAddressesViewTreeDataGridRow" TargetType="TreeDataGridRow"
+                BasedOn="{StaticResource GenericTreeDataGridRow}">
 
     <Setter Property="Focusable" Value="False" />
 
@@ -330,7 +333,8 @@
     </Setter>
   </ControlTheme>
 
-  <ControlTheme x:Key="OrdersViewTreeDataGridRow" TargetType="TreeDataGridRow" BasedOn="{StaticResource GenericTreeDataGridRow}">
+  <ControlTheme x:Key="OrdersViewTreeDataGridRow" TargetType="TreeDataGridRow"
+                BasedOn="{StaticResource GenericTreeDataGridRow}">
 
     <Setter Property="Focusable" Value="False" />
 
@@ -342,7 +346,7 @@
           <!--   <ExecuteCommandOnDoubleTappedBehavior Command="{Binding NavigateCommand, Mode=OneWay}" /> -->
           <!-- </i:Interaction.Behaviors> -->
           <Panel>
-            <Border Name="BackgroundRectangle" Margin="{StaticResource TreeDataGridMarginFix}"/>
+            <Border Name="BackgroundRectangle" Margin="{StaticResource TreeDataGridMarginFix}" />
             <TreeDataGridCellsPresenter Name="PART_CellsPresenter"
                                         ElementFactory="{TemplateBinding ElementFactory}"
                                         Items="{TemplateBinding Columns}"

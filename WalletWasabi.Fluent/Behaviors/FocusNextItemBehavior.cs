@@ -23,25 +23,24 @@ internal class FocusNextItemBehavior : DisposingBehavior<Control>
 	{
 		this.WhenAnyValue(x => x.IsFocused)
 			.Where(x => x == false)
-			.Subscribe(
-				_ =>
+			.Subscribe(_ =>
+			{
+				var parentControl = AssociatedObject.FindLogicalAncestorOfType<ItemsControl>();
+
+				if (parentControl is { })
 				{
-					var parentControl = AssociatedObject.FindLogicalAncestorOfType<ItemsControl>();
-
-					if (parentControl is { })
+					foreach (var item in parentControl.GetLogicalChildren())
 					{
-						foreach (var item in parentControl.GetLogicalChildren())
+						if (item.FindLogicalDescendantOfType<TextBox>() is { IsEnabled: true } nextToFocus)
 						{
-							if (item.FindLogicalDescendantOfType<TextBox>() is { IsEnabled: true } nextToFocus)
-							{
-								nextToFocus.Focus();
-								return;
-							}
+							nextToFocus.Focus();
+							return;
 						}
-
-						parentControl.Focus();
 					}
-				})
+
+					parentControl.Focus();
+				}
+			})
 			.DisposeWith(disposables);
 	}
 }

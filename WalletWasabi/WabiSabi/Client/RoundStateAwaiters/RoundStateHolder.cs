@@ -7,8 +7,6 @@ using WalletWasabi.WabiSabi.Models;
 using WalletWasabi.WabiSabi.Models.MultipartyTransaction;
 using WalletWasabi.WabiSabi.Models.Serialization;
 using WalletWasabi.WabiSabi.Backend.Rounds;
-using NBitcoin;
-using WalletWasabi.WabiSabi.Crypto;
 
 namespace WalletWasabi.WabiSabi.Client.RoundStateAwaiters;
 

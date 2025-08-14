@@ -6,14 +6,15 @@ using System.Linq;
 using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Helpers;
 using WalletWasabi.Logging;
+using WalletWasabi.WabiSabi.Models;
 using WalletWasabi.Wallets;
 
 namespace WalletWasabi.WabiSabi.Client.Banning;
 
 public class CoinPrison : IDisposable
 {
-	// Coins with banning time longer than this will be reduced to a random value between 2 and 4 days.
-	private static readonly int MaxDaysToTrustLocalPrison = 4;
+	// Coins with banning time longer than this will be reduced to a random value between 1 and 2 days.
+	private static readonly int MaxDaysToTrustLocalPrison = 2;
 
 	public CoinPrison(string filePath)
 	{
@@ -24,16 +25,16 @@ public class CoinPrison : IDisposable
 	private string FilePath { get; }
 	private object Lock { get; set; } = new();
 
-	public bool TryGetOrRemoveBannedCoin(SmartCoin coin, [NotNullWhen(true)] out DateTimeOffset? bannedUntil)
+	public bool TryGetOrRemoveBannedCoin(SmartCoin coin, [NotNullWhen(true)] out PrisonedCoinRecord? prisonedCoin)
 	{
 		lock (Lock)
 		{
-			bannedUntil = null;
-			if (BannedCoins.SingleOrDefault(record => record.Outpoint == coin.Outpoint) is { } record)
+			prisonedCoin = null;
+			if (BannedCoins.SingleOrDefault(x => x.Outpoint == coin.Outpoint) is { } record)
 			{
 				if (DateTimeOffset.UtcNow < record.BannedUntil)
 				{
-					bannedUntil = record.BannedUntil;
+					prisonedCoin = record;
 					return true;
 				}
 				RemoveBannedCoinNoLock(coin);
@@ -42,7 +43,7 @@ public class CoinPrison : IDisposable
 		}
 	}
 
-	public void Ban(SmartCoin coin, DateTimeOffset until)
+	public void Ban(SmartCoin coin, DateTimeOffset until, InputBannedReasonEnum[] reasons)
 	{
 		lock (Lock)
 		{
@@ -52,8 +53,9 @@ public class CoinPrison : IDisposable
 			}
 
 			until = ReduceBanningTimeIfNeeded(until);
-			BannedCoins.Add(new(coin.Outpoint, until));
+			BannedCoins.Add(new(coin.Outpoint, until, reasons));
 			coin.BannedUntilUtc = until;
+			coin.BanReasons = reasons;
 			ToFile();
 		}
 	}
@@ -86,7 +88,7 @@ public class CoinPrison : IDisposable
 	/// <summary>
 	///	Reduces local banning time, which we save to disk, if it's longer than the <see cref="MaxDaysToTrustLocalPrison"/>.
 	///	This is to avoid saving absurd long banning times like 1-2 years.
-	///	With this, the coin will retry to participate in a CJ in every 2-4 days and see if the coin is still banned or not according to the backend.
+	///	With this, the coin will retry to participate in a CJ in every 1-2 days and see if the coin is still banned or not according to the backend.
 	///	Random values are used for the new banning period so we don't leak information to the coordinator when the coins get released from the local prison.
 	/// </summary>
 	/// <param name="bannedUntil">Banning time according to the backend.</param>
@@ -144,9 +146,10 @@ public class CoinPrison : IDisposable
 	{
 		foreach (var coin in wallet.Coins)
 		{
-			if (TryGetOrRemoveBannedCoin(coin, out var bannedUntil))
+			if (TryGetOrRemoveBannedCoin(coin, out var prisonedCoin))
 			{
-				coin.BannedUntilUtc = bannedUntil;
+				coin.BannedUntilUtc = prisonedCoin.BannedUntil;
+				coin.BanReasons = prisonedCoin.Reasons;
 			}
 		}
 	}

@@ -133,7 +133,7 @@
 
       <TextBox.Transitions>
         <Transitions>
-          <DoubleTransition Property="MaxWidth" Duration="0:0:0.2" Easing="CubicEaseOut"/>
+          <DoubleTransition Property="MaxWidth" Duration="0:0:0.2" Easing="CubicEaseOut" />
         </Transitions>
       </TextBox.Transitions>
 
@@ -151,7 +151,8 @@
         <PathIcon Name="LeftIcon" Data="{DynamicResource search_regular}" />
       </TextBox.InnerLeftContent>
     </TextBox>
-    <SearchBarPopup x:Name="SearchResultsPopup" PlacementTarget="SearchBox" Placement="BottomEdgeAlignedLeft" VerticalOffset="-13">
+    <SearchBarPopup x:Name="SearchResultsPopup" PlacementTarget="SearchBox" Placement="BottomEdgeAlignedLeft"
+                    VerticalOffset="-13">
       <SearchBarPopup.IsCustomOpen>
         <MultiBinding Converter="{x:Static BoolConverters.And}">
           <MultiBinding Converter="{x:Static BoolConverters.Or}">

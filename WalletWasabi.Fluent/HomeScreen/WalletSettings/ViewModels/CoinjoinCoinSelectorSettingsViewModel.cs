@@ -104,6 +104,7 @@ public partial class CoinjoinCoinSelectorSettingsViewModel : DialogViewModelBase
 			errors.Add(ErrorSeverity.Error, Resources.ValidationErrorNotNumber);
 			return;
 		}
+
 		if (result < min || result > max)
 		{
 			errors.Add(ErrorSeverity.Error, error: Resources.ValidationErrorNotInRange.SafeInject(min, max));

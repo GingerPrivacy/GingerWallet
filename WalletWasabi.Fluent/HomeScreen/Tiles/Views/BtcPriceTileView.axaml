@@ -11,11 +11,11 @@
   <TileControl Title="{x:Static lang:Resources.WalletExchangeRate}" IsBottomContentVisible="False">
     <TileControl.Styles>
       <Style Selector="Viewbox">
-        <Setter Property="MaxHeight" Value="40"/>
+        <Setter Property="MaxHeight" Value="40" />
       </Style>
       <Style Selector="Viewbox.small">
-        <Setter Property="MaxHeight" Value="25"/>
-        <Setter Property="Opacity" Value="0.3"/>
+        <Setter Property="MaxHeight" Value="25" />
+        <Setter Property="Opacity" Value="0.3" />
       </Style>
       <Style Selector="Viewbox.correctedHeight">
         <Setter Property="MaxHeight" Value="40" />

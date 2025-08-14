@@ -100,8 +100,8 @@ public class PasteButtonFlashBehavior : AttachedToVisualTreeBehavior<AnimatedBut
 		// ClipboardValue might not match CurrentAddress, but it might be a PayJoin address pointing to the CurrentAddress
 		// Hence we need to compare both string value and parse result
 		if (clipboardValue != CurrentAddress &&
-			AddressStringParser.TryParse(clipboardValue, Services.WalletManager.Network, out var address) &&
-			address?.Address?.ToString() != CurrentAddress)
+		    AddressStringParser.TryParse(clipboardValue, Services.WalletManager.Network, out var address) &&
+		    address?.Address?.ToString() != CurrentAddress)
 		{
 			AssociatedObject.Classes.Add(FlashAnimation);
 			_lastFlashedOn = clipboardValue;

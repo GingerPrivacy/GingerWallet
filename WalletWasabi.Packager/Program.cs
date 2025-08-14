@@ -8,7 +8,6 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using WalletWasabi.Helpers;
-using WalletWasabi.Userfacing;
 
 namespace WalletWasabi.Packager;
 
@@ -32,7 +31,6 @@ public static class Program
 	private static readonly string GingerFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Documents", "ginger");
 	private static readonly string WasabiPrivateKeyFilePath = Path.Combine(GingerFolderPath, "Ginger.privkey");
 	private static readonly string WasabiPublicKeyFilePath = Path.Combine(GingerFolderPath, "Ginger.pubkey");
-
 
 	/// <remarks>Only 64-bit platforms are supported for now.</remarks>
 	/// <seealso href="https://docs.microsoft.com/en-us/dotnet/articles/core/rid-catalog"/>
@@ -61,7 +59,6 @@ public static class Program
 	/// </summary>
 	private static async Task Main(string[] args)
 	{
-
 		var argsProcessor = new ArgsProcessor(args);
 
 		// For now this is enough. If you run it on macOS you want to sign.
@@ -646,7 +643,6 @@ public static class Program
 
 		return output;
 	}
-
 
 	private static bool TryStartProcessAndWaitForExit(string command, string workingDirectory, [NotNullWhen(true)] out string? result, string? writeToStandardInput = null, string? arguments = null, bool redirectStandardOutput = false)
 	{

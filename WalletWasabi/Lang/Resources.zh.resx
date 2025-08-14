@@ -2134,4 +2134,70 @@
   <data name="TwoFactorDisabledWarnMessageOpenSettings" xml:space="preserve">
     <value>打开设置</value>
   </data>
+    <data name="SignMessage" xml:space="preserve">
+    <value>签署消息</value>
+  </data>
+    <data name="InvalidBitcoinAddress" xml:space="preserve">
+    <value>无效的比特币地址。</value>
+  </data>
+    <data name="TheAddressDoesNotBelongToThisWallet" xml:space="preserve">
+    <value>该地址不属于此钱包。</value>
+  </data>
+    <data name="SignWithHardwareWallet" xml:space="preserve">
+    <value>使用硬件钱包签名</value>
+  </data>
+    <data name="SignMessageToVerifyYouOwnAddressForExchange" xml:space="preserve">
+    <value>签署一条消息以验证您拥有用于交易所的地址</value>
+  </data>
+    <data name="AddressWithColon" xml:space="preserve">
+    <value>地址：</value>
+  </data>
+    <data name="PasteTheAddressProvidedByTheExchange" xml:space="preserve">
+    <value>粘贴兑换服务提供的地址</value>
+  </data>
+    <data name="MessageWithColon" xml:space="preserve">
+    <value>消息：</value>
+  </data>
+    <data name="EnterTheMessageYouWishToSign" xml:space="preserve">
+    <value>输入您想要签名的消息</value>
+  </data>
+    <data name="Signature" xml:space="preserve">
+    <value>签名</value>
+  </data>
+    <data name="Reason" xml:space="preserve">
+    <value>原因：{0}</value>
+  </data>
+    <data name="UnknownEnum" xml:space="preserve">
+    <value>未知</value>
+  </data>
+  <data name="BackendStabilitySafetyEnum" xml:space="preserve">
+    <value>临时服务器问题</value>
+  </data>
+  <data name="CheatingEnum" xml:space="preserve">
+    <value>协议违规</value>
+  </data>
+  <data name="RoundDisruption" xml:space="preserve">
+    <value>回合中断</value>
+  </data>
+  <data name="FailedToVerifyEnum" xml:space="preserve">
+    <value>潜在风险</value>
+  </data>
+  <data name="InheritedEnum" xml:space="preserve">
+    <value>（继承自另一枚币）</value>
+  </data>
+  <data name="LocalCoinVerifierEnum" xml:space="preserve">
+    <value>临时限制</value>
+  </data>
+  <data name="RoundDisruptionMethodDidNotConfirmEnum" xml:space="preserve">
+    <value>回合中断</value>
+  </data>
+  <data name="RoundDisruptionMethodDidNotSignEnum" xml:space="preserve">
+    <value>回合中断</value>
+  </data>
+  <data name="RoundDisruptionMethodDoubleSpentEnum" xml:space="preserve">
+    <value>硬币在回合中已被花费</value>
+  </data>
+  <data name="RoundDisruptionMethodDidNotSignalReadyToSignEnum" xml:space="preserve">
+    <value>回合中断</value>
+  </data>
 </root>

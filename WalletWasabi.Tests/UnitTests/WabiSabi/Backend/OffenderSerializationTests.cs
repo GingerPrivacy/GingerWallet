@@ -2,6 +2,7 @@ using System.Linq;
 using NBitcoin;
 using WalletWasabi.Tests.Helpers;
 using WalletWasabi.WabiSabi.Backend.DoSPrevention;
+using WalletWasabi.WabiSabi.Models;
 using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests.WabiSabi.Backend;
@@ -41,13 +42,13 @@ public class OffenderSerializationTests
 		Assert.Equal(offender3xstr, Offender.FromStringLine(offender3xstr).ToStringLine());
 
 		// Fail to verify
-		var offender4 = new Offender(outpoint, now, new FailedToVerify(roundId));
+		var offender4 = new Offender(outpoint, now, new FailedToVerify(roundId, TimeSpan.Zero, "local"));
 		var offender4str = offender4.ToStringLine();
 		Assert.Equal(offender4str, Offender.FromStringLine(offender4str).ToStringLine());
 
 		// Fail to verify
 		var ancestors = Enumerable.Range(0, 3).Select(_ => BitcoinFactory.CreateOutPoint()).ToArray();
-		var offender5 = new Offender(outpoint, now, new Inherited(ancestors));
+		var offender5 = new Offender(outpoint, now, new Inherited(ancestors, [InputBannedReasonEnum.RoundDisruptionMethodDoubleSpent, InputBannedReasonEnum.Inherited]));
 		var offender5str = offender5.ToStringLine();
 		Assert.Equal(offender5str, Offender.FromStringLine(offender5str).ToStringLine());
 

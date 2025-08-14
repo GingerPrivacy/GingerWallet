@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using WalletWasabi.Extensions;
 using WalletWasabi.Tests.Helpers;
-using WalletWasabi.WabiSabi.Backend;
 using WalletWasabi.WabiSabi.Client;
 using WalletWasabi.WabiSabi.Client.Batching;
 using WalletWasabi.WabiSabi.Recommendation;

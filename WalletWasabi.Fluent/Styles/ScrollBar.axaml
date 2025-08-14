@@ -3,7 +3,7 @@
   <Design.PreviewWith>
     <Border Padding="20">
       <ScrollViewer Width="150" Height="150">
-        <Panel Background="Red" Width="200" Height="200"  />
+        <Panel Background="Red" Width="200" Height="200" />
       </ScrollViewer>
     </Border>
   </Design.PreviewWith>

@@ -60,7 +60,9 @@ public partial class SendViewModel : RoutableViewModel
 	[AutoNotify] private bool _isPayJoin;
 	[AutoNotify] private string? _payJoinEndPoint;
 	[AutoNotify] private bool _conversionReversed;
-	[AutoNotify(SetterModifier = AccessModifier.Private)] private SuggestionLabelsViewModel _suggestionLabels;
+
+	[AutoNotify(SetterModifier = AccessModifier.Private)]
+	private SuggestionLabelsViewModel _suggestionLabels;
 
 	public SendViewModel(WalletModel walletModel, SendFlowModel parameters, LabelsArray? preLabel = null, bool continueWithFixedAmount = false)
 	{
@@ -79,8 +81,8 @@ public partial class SendViewModel : RoutableViewModel
 
 		Balance =
 			_parameters.IsManual
-			? Observable.Return(_walletModel.AmountProvider.Create(_parameters.AvailableAmount))
-			: _walletModel.Balances;
+				? Observable.Return(_walletModel.AmountProvider.Create(_parameters.AvailableAmount))
+				: _walletModel.Balances;
 
 		_suggestionLabels = new SuggestionLabelsViewModel(_walletModel, Intent.Send, 3, preLabel);
 
@@ -200,7 +202,7 @@ public partial class SendViewModel : RoutableViewModel
 	private IPayjoinClient? GetPayjoinClient(string? endPoint)
 	{
 		if (!string.IsNullOrWhiteSpace(endPoint) &&
-			Uri.IsWellFormedUriString(endPoint, UriKind.Absolute))
+		    Uri.IsWellFormedUriString(endPoint, UriKind.Absolute))
 		{
 			var payjoinEndPointUri = new Uri(endPoint);
 			if (Services.Config.UseTor != TorMode.Disabled)
@@ -320,10 +322,10 @@ public partial class SendViewModel : RoutableViewModel
 			if (parserResult.Label is { } parsedLabel)
 			{
 				SuggestionLabels = new SuggestionLabelsViewModel(
-				_walletModel,
-				Intent.Send,
-				3,
-				[parsedLabel]);
+					_walletModel,
+					Intent.Send,
+					3,
+					[parsedLabel]);
 			}
 		}
 		else
@@ -354,8 +356,8 @@ public partial class SendViewModel : RoutableViewModel
 		_suggestionLabels.Activate(disposables);
 
 		_walletModel.AmountProvider.ExchangeRateObservable
-								   .BindTo(this, x => x.ExchangeRate)
-								   .DisposeWith(disposables);
+			.BindTo(this, x => x.ExchangeRate)
+			.DisposeWith(disposables);
 
 		RxApp.MainThreadScheduler.Schedule(async () => await OnAutoPasteAsync());
 

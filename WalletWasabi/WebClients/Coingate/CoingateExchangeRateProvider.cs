@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using GingerCommon.Logging;
 using WalletWasabi.Backend.Models;
 using WalletWasabi.Interfaces;
 

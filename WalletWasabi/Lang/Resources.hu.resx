@@ -2119,4 +2119,70 @@
     <data name="SetAsDefault" xml:space="preserve">
     <value>Beállítás alapértelmezettként</value>
   </data>
+    <data name="SignMessage" xml:space="preserve">
+    <value>Üzenet aláírása</value>
+  </data>
+    <data name="InvalidBitcoinAddress" xml:space="preserve">
+    <value>Érvénytelen Bitcoin-cím.</value>
+  </data>
+    <data name="TheAddressDoesNotBelongToThisWallet" xml:space="preserve">
+    <value>A cím nem ehhez a pénztárcához tartozik.</value>
+  </data>
+    <data name="SignWithHardwareWallet" xml:space="preserve">
+    <value>Aláírás hardveres pénztárcával</value>
+  </data>
+    <data name="SignMessageToVerifyYouOwnAddressForExchange" xml:space="preserve">
+    <value>Írj alá egy üzenetet annak igazolására, hogy a váltó számára te birtoklod a címet</value>
+  </data>
+    <data name="AddressWithColon" xml:space="preserve">
+    <value>Cím:</value>
+  </data>
+    <data name="PasteTheAddressProvidedByTheExchange" xml:space="preserve">
+    <value>Illeszd be a váltó által megadott címet</value>
+  </data>
+    <data name="MessageWithColon" xml:space="preserve">
+    <value>Üzenet:</value>
+  </data>
+    <data name="EnterTheMessageYouWishToSign" xml:space="preserve">
+    <value>Add meg az üzenetet, amelyet alá szeretnél írni</value>
+  </data>
+    <data name="Signature" xml:space="preserve">
+    <value>Aláírás</value>
+  </data>
+    <data name="Reason" xml:space="preserve">
+    <value>Ok: {0}</value>
+  </data>
+    <data name="UnknownEnum" xml:space="preserve">
+    <value>Ismeretlen</value>
+  </data>
+  <data name="BackendStabilitySafetyEnum" xml:space="preserve">
+    <value>Átmeneti szerverhiba</value>
+  </data>
+  <data name="CheatingEnum" xml:space="preserve">
+    <value>Protokoll megsértése</value>
+  </data>
+  <data name="RoundDisruption" xml:space="preserve">
+    <value>Kör megszakítása</value>
+  </data>
+  <data name="FailedToVerifyEnum" xml:space="preserve">
+    <value>Lehetséges kockázat</value>
+  </data>
+  <data name="InheritedEnum" xml:space="preserve">
+    <value>(Egy másik érmétől örökölve)</value>
+  </data>
+  <data name="LocalCoinVerifierEnum" xml:space="preserve">
+    <value>Átmeneti korlátozás</value>
+  </data>
+  <data name="RoundDisruptionMethodDidNotConfirmEnum" xml:space="preserve">
+    <value>Kör megszakítása</value>
+  </data>
+  <data name="RoundDisruptionMethodDidNotSignEnum" xml:space="preserve">
+    <value>Kör megszakítása</value>
+  </data>
+  <data name="RoundDisruptionMethodDoubleSpentEnum" xml:space="preserve">
+    <value>Az érme elköltésre került a kör során</value>
+  </data>
+  <data name="RoundDisruptionMethodDidNotSignalReadyToSignEnum" xml:space="preserve">
+    <value>Kör megszakítása</value>
+  </data>
 </root>

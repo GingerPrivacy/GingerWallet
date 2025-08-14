@@ -93,10 +93,10 @@ public abstract partial class RoutableViewModel : ViewModelBase, INavigatable
 	{
 		var target =
 			navigationTarget != NavigationTarget.Unspecified
-			? navigationTarget
-			: CurrentTarget == NavigationTarget.CompactDialogScreen
-				? NavigationTarget.CompactDialogScreen
-				: NavigationTarget.DialogScreen;
+				? navigationTarget
+				: CurrentTarget == NavigationTarget.CompactDialogScreen
+					? NavigationTarget.CompactDialogScreen
+					: NavigationTarget.DialogScreen;
 
 		await UiContext.Navigate().Navigate(target).To().ShowErrorDialog(message, title, caption).GetResultAsync();
 	}

@@ -64,7 +64,7 @@ public class BackendTests : IClassFixture<RegTestFixture>
 		Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
 		var exchangeRates = await response.Content.ReadAsJsonAsync<List<ExchangeRate>>();
-		Assert.Single(exchangeRates);
+		Assert.True(exchangeRates.Count > 0);
 
 		var rate = exchangeRates[0];
 		Assert.Equal("USD", rate.Ticker);

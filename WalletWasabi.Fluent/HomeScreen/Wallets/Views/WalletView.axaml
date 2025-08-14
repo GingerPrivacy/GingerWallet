@@ -44,6 +44,26 @@
                   <PathIcon Data="{StaticResource info_regular}" />
                 </MenuItem.Icon>
               </MenuItem>
+              <Separator Margin="0 2">
+                <Separator.IsVisible>
+                  <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                    <Binding Path="WalletModel.IsWatchOnlyWallet" Converter="{x:Static BoolConverters.Not}" />
+                    <Binding Path="WalletModel.IsHardwareWallet" />
+                  </MultiBinding>
+                </Separator.IsVisible>
+              </Separator>
+              <MenuItem Header="{x:Static lang:Resources.SignMessage}"
+                        Command="{Binding SignMessageCommand}">
+                <MenuItem.IsVisible>
+                  <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                    <Binding Path="WalletModel.IsWatchOnlyWallet" Converter="{x:Static BoolConverters.Not}" />
+                    <Binding Path="WalletModel.IsHardwareWallet" />
+                  </MultiBinding>
+                </MenuItem.IsVisible>
+                <MenuItem.Icon>
+                  <PathIcon Data="{StaticResource signature}" />
+                </MenuItem.Icon>
+              </MenuItem>
             </MenuFlyout>
           </Button.Flyout>
           <PathIcon Data="{StaticResource more_regular}" Opacity="0.6" />

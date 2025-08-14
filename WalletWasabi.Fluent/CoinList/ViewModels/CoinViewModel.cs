@@ -34,12 +34,12 @@ public class CoinViewModel : CoinListItem
 			.Do(_ => IsSelected = false)
 			.Subscribe();
 
-        if (!canSelectWhenCoinjoining)
-        {
-            this.WhenAnyValue(x => x.Coin.IsCoinJoinInProgress, b => !b).BindTo(this, x => x.CanBeSelected).DisposeWith(_disposables);
-        }
+		if (!canSelectWhenCoinjoining)
+		{
+			this.WhenAnyValue(x => x.Coin.IsCoinJoinInProgress, b => !b).BindTo(this, x => x.CanBeSelected).DisposeWith(_disposables);
+		}
 
-        ShowDetailsCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().CoinDetails(coin));
+		ShowDetailsCommand = ReactiveCommand.Create(() => UiContext.Navigate().To().CoinDetails(coin));
 	}
 
 	public CoinModel Coin { get; }

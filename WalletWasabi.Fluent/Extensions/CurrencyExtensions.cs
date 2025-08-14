@@ -68,7 +68,7 @@ public static class CurrencyExtensions
 
 	public static decimal WithFriendlyDecimals(this double n)
 	{
-		return WithFriendlyDecimals((decimal) n);
+		return WithFriendlyDecimals((decimal)n);
 	}
 
 	public static decimal WithFriendlyDecimals(this decimal n)

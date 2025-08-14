@@ -174,10 +174,7 @@ public partial class WalletCoinJoinSettingsViewModel : RoutableViewModel
 		this.WhenAnyValue(x => x.SelectedTimeFrame)
 			.Skip(1)
 			.ObserveOn(RxApp.TaskpoolScheduler)
-			.Subscribe(x =>
-			{
-				IgnoreCostOptimizationVisible = x.Value != 0;
-			});
+			.Subscribe(x => { IgnoreCostOptimizationVisible = x.Value != 0; });
 
 		this.WhenAnyValue(x => x.SelectedSkipFactors)
 			.Skip(1)
@@ -213,9 +210,10 @@ public partial class WalletCoinJoinSettingsViewModel : RoutableViewModel
 			errors.Add(ErrorSeverity.Error, Resources.ValidationErrorNotNumber);
 			return;
 		}
+
 		if (result < min || result > max)
 		{
-			errors.Add(ErrorSeverity.Error, error:Resources.ValidationErrorNotInRange.SafeInject(min, max));
+			errors.Add(ErrorSeverity.Error, error: Resources.ValidationErrorNotInRange.SafeInject(min, max));
 			return;
 		}
 	}

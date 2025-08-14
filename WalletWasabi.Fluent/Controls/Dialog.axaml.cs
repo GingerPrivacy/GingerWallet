@@ -89,11 +89,11 @@ public class Dialog : ContentControl
 				var increasedHeightThreshold = IncreasedHeightThreshold;
 				var fullScreenHeightThreshold = FullScreenHeightThreshold;
 				var canIncreasedWidth = !double.IsNaN(increasedWidthThreshold)
-										&& width < increasedWidthThreshold;
+				                        && width < increasedWidthThreshold;
 				var canIncreasedHeight = !double.IsNaN(increasedHeightThreshold)
-										 && height < increasedHeightThreshold;
+				                         && height < increasedHeightThreshold;
 				var canGoToFullScreen = !double.IsNaN(fullScreenHeightThreshold)
-										&& height < fullScreenHeightThreshold;
+				                        && height < fullScreenHeightThreshold;
 				IncreasedWidthEnabled = canIncreasedWidth && !canIncreasedHeight;
 				IncreasedHeightEnabled = !canIncreasedWidth && canIncreasedHeight;
 				IncreasedSizeEnabled = canIncreasedWidth && canIncreasedHeight;
@@ -334,13 +334,13 @@ public class Dialog : ContentControl
 		}
 
 		if (IsDialogOpen
-			&& IsActive
-			&& EnableCancelOnPressed
-			&& !IsBusy
-			&& _dismissPanel is { }
-			&& _overlayPanel is { }
-			&& _canCancelOpenedOnPointerPressed
-			&& _canCancelActivatedOnPointerPressed)
+		    && IsActive
+		    && EnableCancelOnPressed
+		    && !IsBusy
+		    && _dismissPanel is { }
+		    && _overlayPanel is { }
+		    && _canCancelOpenedOnPointerPressed
+		    && _canCancelActivatedOnPointerPressed)
 		{
 			var point = e.GetPosition(_dismissPanel);
 			var isPressedOnTitleBar = e.GetPosition(_overlayPanel).Y < 30;

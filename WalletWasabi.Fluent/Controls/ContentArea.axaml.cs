@@ -1,7 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Presenters;
-using Avalonia.Data;
 using Avalonia.Media;
 
 namespace WalletWasabi.Fluent.Controls;

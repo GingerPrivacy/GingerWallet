@@ -9,12 +9,12 @@
              xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.AddWallet.ViewModels"
              x:Class="WalletWasabi.Fluent.AddWallet.Views.RecoverWalletView">
   <ContentArea x:Name="RecoveryPageRoot"
-                 Title="{Binding Title}"
-                 CancelContent="{x:Static lang:Resources.Cancel}"
-                 EnableCancel="{Binding EnableCancel}"
-                 EnableBack="{Binding EnableBack}"
-                 EnableNext="True" NextContent="{x:Static lang:Resources.Continue}"
-                 IsBusy="{Binding IsBusy}">
+               Title="{Binding Title}"
+               CancelContent="{x:Static lang:Resources.Cancel}"
+               EnableCancel="{Binding EnableCancel}"
+               EnableBack="{Binding EnableBack}"
+               EnableNext="True" NextContent="{x:Static lang:Resources.Continue}"
+               IsBusy="{Binding IsBusy}">
     <DockPanel>
       <DockPanel DockPanel.Dock="Top">
         <PathIcon Name="IconCheckmark"
@@ -24,15 +24,15 @@
                   DockPanel.Dock="Right"
                   Opacity="{Binding IsMnemonicsValid}" />
         <TagsBox DockPanel.Dock="Left"
-                   ItemCountLimit="24"
-                   SuggestionsAreCaseSensitive="False"
-                   RestrictInputToSuggestions="True"
-                   Items="{Binding Mnemonics}"
-                   Suggestions="{Binding Suggestions}"
-                   Watermark="{x:Static lang:Resources.TypeInYourRecoveryWords}"
-                   AllowDuplication="True"
-                   EnableCounter="True"
-                   EnableDelete="False">
+                 ItemCountLimit="24"
+                 SuggestionsAreCaseSensitive="False"
+                 RestrictInputToSuggestions="True"
+                 Items="{Binding Mnemonics}"
+                 Suggestions="{Binding Suggestions}"
+                 Watermark="{x:Static lang:Resources.TypeInYourRecoveryWords}"
+                 AllowDuplication="True"
+                 EnableCounter="True"
+                 EnableDelete="False">
           <TagsBox.Styles>
             <Style Selector="TagsBox AutoCompleteBox">
               <Setter Property="MinimumPrefixLength" Value="0" />

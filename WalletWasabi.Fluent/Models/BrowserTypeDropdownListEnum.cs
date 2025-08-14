@@ -4,8 +4,7 @@ namespace WalletWasabi.Fluent.Models;
 
 public enum BrowserTypeDropdownListEnum
 {
-	[FriendlyName(isLocalized: true)]
-	SystemDefault,
+	[FriendlyName(isLocalized: true)] SystemDefault,
 
 	Tor,
 	Brave,
@@ -13,11 +12,9 @@ public enum BrowserTypeDropdownListEnum
 	Chrome,
 	Opera,
 
-	[FriendlyName("Internet Explorer")]
-	InternetExplorer,
+	[FriendlyName("Internet Explorer")] InternetExplorer,
 
 	Safari,
 
-	[FriendlyName(isLocalized: true)]
-	Custom
+	[FriendlyName(isLocalized: true)] Custom
 }

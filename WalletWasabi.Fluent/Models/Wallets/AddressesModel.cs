@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -77,6 +78,15 @@ public class AddressesModel : IDisposable
 		{
 			_source.Remove(item);
 		}
+	}
+
+	public bool TryGetHdPubKey(string address, [NotNullWhen(true)] out HdPubKey? hdPubKey)
+	{
+		hdPubKey = _wallet.KeyManager
+			.GetKeys(x => x is { IsInternal: false })
+			.FirstOrDefault(x => x.GetAddress(_wallet.Network).ToString() == address);
+
+		return hdPubKey is not null;
 	}
 
 	public void Dispose()

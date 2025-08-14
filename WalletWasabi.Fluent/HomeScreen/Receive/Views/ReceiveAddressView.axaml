@@ -46,7 +46,7 @@
       <DockPanel VerticalAlignment="Center">
 
         <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold"
-                   Opacity="0.8" Text="{Binding Type}"/>
+                   Opacity="0.8" Text="{Binding Type}" />
 
         <AdorningContentControl HorizontalAlignment="Center" VerticalAlignment="Center" ClipToBounds="False">
           <AdorningContentControl.Adornment>

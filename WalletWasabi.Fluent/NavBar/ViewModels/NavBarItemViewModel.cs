@@ -37,6 +37,7 @@ public partial class NavBarItemViewModel : RoutableViewModel
 		{
 			toggle.Toggle();
 		}
+
 		if (_item is INavBarButton button)
 		{
 			await button.Activate();

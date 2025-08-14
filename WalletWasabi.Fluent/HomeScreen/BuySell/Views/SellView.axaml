@@ -23,7 +23,7 @@
               Theme="{StaticResource OutlineButton}">
         <StackPanel Orientation="Horizontal">
           <TextBlock Opacity="0.8" FontSize="12" Text="{Binding SelectedCountry.StateName, StringFormat='{}{0}, '}"
-                     IsVisible="{Binding SelectedCountry.StateName, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+                     IsVisible="{Binding SelectedCountry.StateName, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
           <TextBlock Opacity="0.8" FontSize="12" Text="{Binding SelectedCountry.CountryName}" />
         </StackPanel>
       </Button>
@@ -55,7 +55,8 @@
 
         <!-- Amount -->
         <Label Grid.Row="0" Grid.Column="0"
-               Margin="0 8 0 0" VerticalAlignment="Top" Content="{x:Static lang:Resources.AmountWithColom}" Target="amountTb" />
+               Margin="0 8 0 0" VerticalAlignment="Top" Content="{x:Static lang:Resources.AmountWithColom}"
+               Target="amountTb" />
         <DualCurrencyEntryBox Grid.Row="0" Grid.Column="2"
                               x:Name="amountTb"
                               AmountBtc="{Binding Amount}"
@@ -96,7 +97,8 @@
             </ComboBox.ItemTemplate>
           </ComboBox>
 
-          <Viewbox Margin="5 0 0 0" DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Center" Height="25" IsVisible="{Binding FetchingLimits}">
+          <Viewbox Margin="5 0 0 0" DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Center"
+                   Height="25" IsVisible="{Binding FetchingLimits}">
             <ProgressRing Height="46" Width="46" Margin="10 0" IsIndeterminate="{Binding FetchingLimits}" />
           </Viewbox>
 

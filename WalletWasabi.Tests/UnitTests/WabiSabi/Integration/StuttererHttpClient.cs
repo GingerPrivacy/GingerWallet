@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Hosting;
-using NBitcoin;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;

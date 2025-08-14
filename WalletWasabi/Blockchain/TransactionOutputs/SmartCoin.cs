@@ -6,6 +6,7 @@ using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Blockchain.Transactions;
 using WalletWasabi.Extensions;
 using WalletWasabi.Models;
+using WalletWasabi.WabiSabi.Models;
 
 namespace WalletWasabi.Blockchain.TransactionOutputs;
 
@@ -23,6 +24,7 @@ public class SmartCoin : NotifyPropertyChangedBase, IEquatable<SmartCoin>, IDest
 
 	private bool _confirmed;
 	private bool _isBanned;
+	private InputBannedReasonEnum[]? _reasons;
 	private bool _isExcludedFromCoinJoin;
 	private bool _isCoinJoinOutput;
 
@@ -101,6 +103,12 @@ public class SmartCoin : NotifyPropertyChangedBase, IEquatable<SmartCoin>, IDest
 		}
 	}
 
+	public InputBannedReasonEnum[]? BanReasons
+	{
+		get => _reasons;
+		set => RaiseAndSetIfChanged(ref _reasons, value);
+	}
+
 	/// <summary>
 	/// If the backend thinks it's spent, but Wasabi does not yet know.
 	/// </summary>
@@ -153,6 +161,7 @@ public class SmartCoin : NotifyPropertyChangedBase, IEquatable<SmartCoin>, IDest
 
 		IsBanned = false;
 		BannedUntilUtc = null;
+		BanReasons = null;
 
 		return false;
 	}

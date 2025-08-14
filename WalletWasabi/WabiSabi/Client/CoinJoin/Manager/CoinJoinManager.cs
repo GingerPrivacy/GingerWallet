@@ -572,7 +572,7 @@ public class CoinJoinManager : BackgroundService
 		{
 			foreach (var info in finishedCoinJoin.BannedCoins)
 			{
-				CoinPrison.Ban(info.Coin, info.BanUntilUtc);
+				CoinPrison.Ban(info.Coin, info.BanUntilUtc, info.Reasons);
 			}
 		}
 

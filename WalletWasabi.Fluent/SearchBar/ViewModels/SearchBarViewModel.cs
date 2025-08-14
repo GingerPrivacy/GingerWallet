@@ -21,7 +21,7 @@ public partial class SearchBarViewModel : ReactiveObject
 	public SearchBarViewModel(ISearchSource searchSource)
 	{
 		searchSource.Changes
-            .DisposeMany()
+			.DisposeMany()
 			.Group(s => s.Category)
 			.Transform(group => new SearchItemGroup(group.Key, group.Cache.Connect()))
 			.Sort(SortExpressionComparer<SearchItemGroup>.Ascending(x => x.Title))
@@ -30,15 +30,14 @@ public partial class SearchBarViewModel : ReactiveObject
 			.ObserveOn(RxApp.MainThreadScheduler)
 			.Subscribe();
 
-		var activateFirstItemCommand = ReactiveCommand.Create(
-			() =>
+		var activateFirstItemCommand = ReactiveCommand.Create(() =>
+		{
+			if (_groups is [{ Items: [IActionableItem item] }])
 			{
-				if (_groups is [{ Items: [IActionableItem item] }])
-				{
-					item.Activate();
-					SearchText = "";
-				}
-			});
+				item.Activate();
+				SearchText = "";
+			}
+		});
 
 		ActivateFirstItemCommand = activateFirstItemCommand;
 		CommandActivated = activateFirstItemCommand.ToSignal();

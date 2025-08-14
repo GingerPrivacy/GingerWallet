@@ -12,7 +12,6 @@ using WalletWasabi.Daemon.FeeRateProviders;
 using WalletWasabi.Exceptions;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
-using WalletWasabi.Fluent.HomeScreen.BuySell.Models;
 using WalletWasabi.Fluent.Infrastructure;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Helpers;
@@ -268,22 +267,21 @@ public partial class ApplicationSettings : ReactiveObject
 
 	private void Save()
 	{
-		RxApp.MainThreadScheduler.Schedule(
-			() =>
+		RxApp.MainThreadScheduler.Schedule(() =>
+		{
+			try
 			{
-				try
-				{
-					PersistentConfig currentConfig = ConfigManagerNg.LoadFile<PersistentConfig>(_persistentConfigFilePath);
-					PersistentConfig newConfig = ApplyChanges(currentConfig);
-					ConfigManagerNg.ToFile(_persistentConfigFilePath, newConfig);
+				PersistentConfig currentConfig = ConfigManagerNg.LoadFile<PersistentConfig>(_persistentConfigFilePath);
+				PersistentConfig newConfig = ApplyChanges(currentConfig);
+				ConfigManagerNg.ToFile(_persistentConfigFilePath, newConfig);
 
-					_isRestartNeeded.OnNext(CheckIfRestartIsNeeded(newConfig));
-				}
-				catch (Exception ex)
-				{
-					Logger.LogDebug(ex);
-				}
-			});
+				_isRestartNeeded.OnNext(CheckIfRestartIsNeeded(newConfig));
+			}
+			catch (Exception ex)
+			{
+				Logger.LogDebug(ex);
+			}
+		});
 	}
 
 	private PersistentConfig ApplyChanges(PersistentConfig config)

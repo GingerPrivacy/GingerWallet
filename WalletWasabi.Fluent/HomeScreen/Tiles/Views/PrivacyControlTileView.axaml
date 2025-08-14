@@ -118,7 +118,8 @@
                                            Content="{Binding PrivateAmount^.Btc, Converter={x:Static converters:MoneyConverters.ToBtc}}" />
                   </Viewbox>
                 </CopyableItem>
-                <CopyableItem ContentToCopy="{Binding PrivateAmount^.Fiat^, Converter={x:Static converters:MoneyConverters.ToFiatAmountFormattedWithoutSpaces}}">
+                <CopyableItem
+                  ContentToCopy="{Binding PrivateAmount^.Fiat^, Converter={x:Static converters:MoneyConverters.ToFiatAmountFormattedWithoutSpaces}}">
                   <Viewbox Classes="usd">
                     <PrivacyContentControl Classes="usd monoSpaced"
                                            Content="{Binding PrivateAmount^.Fiat^, Converter={x:Static converters:MoneyConverters.ToFiatApprox}}" />
@@ -139,7 +140,8 @@
                                            Content="{Binding SemiPrivateAmount^.Btc, Converter={x:Static converters:MoneyConverters.ToBtc}}" />
                   </Viewbox>
                 </CopyableItem>
-                <CopyableItem ContentToCopy="{Binding SemiPrivateAmount^.Fiat^, Converter={x:Static converters:MoneyConverters.ToFiatAmountFormattedWithoutSpaces}}">
+                <CopyableItem
+                  ContentToCopy="{Binding SemiPrivateAmount^.Fiat^, Converter={x:Static converters:MoneyConverters.ToFiatAmountFormattedWithoutSpaces}}">
                   <Viewbox Classes="usd">
                     <PrivacyContentControl Classes="usd monoSpaced"
                                            Content="{Binding SemiPrivateAmount^.Fiat^, Converter={x:Static converters:MoneyConverters.ToFiatApprox}}" />

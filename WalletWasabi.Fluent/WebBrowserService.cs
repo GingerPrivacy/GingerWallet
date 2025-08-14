@@ -16,14 +16,12 @@ public sealed class WebBrowserService
 	private BrowserType? PreferredBrowserType { get; set; } = null;
 
 	private WebBrowserService()
-	{ }
+	{
+	}
 
 	public static WebBrowserService Instance
 	{
-		get
-		{
-			return LazyInstance.Value;
-		}
+		get { return LazyInstance.Value; }
 	}
 
 	public void SetConfig(string filePathOrEnumValueThatIsInConfig)
@@ -124,8 +122,10 @@ public sealed class WebBrowserService
 						Process.Start(iePath, url);
 						return true;
 					}
+
 					return true;
 				}
+
 				break;
 
 			case BrowserType.Safari:
@@ -134,6 +134,7 @@ public sealed class WebBrowserService
 					OpenInBrowser(url, "open"); // Safari uses the 'open' command
 					return true;
 				}
+
 				break;
 
 			case BrowserType.Firefox:
@@ -142,8 +143,10 @@ public sealed class WebBrowserService
 					OpenInBrowser(url, GetFirefoxPath());
 					return true;
 				}
+
 				break;
 		}
+
 		return false;
 	}
 
@@ -155,6 +158,7 @@ public sealed class WebBrowserService
 			Process.Start(torBrowserPath, url);
 			return true;
 		}
+
 		return false;
 	}
 
@@ -166,6 +170,7 @@ public sealed class WebBrowserService
 			Process.Start(chromePath, url);
 			return true;
 		}
+
 		return false;
 	}
 
@@ -177,6 +182,7 @@ public sealed class WebBrowserService
 			Process.Start(bravePath, url);
 			return true;
 		}
+
 		return false;
 	}
 
@@ -188,6 +194,7 @@ public sealed class WebBrowserService
 			Process.Start(operaPath, url);
 			return true;
 		}
+
 		return false;
 	}
 
@@ -212,6 +219,7 @@ public sealed class WebBrowserService
 		{
 			return Path.Combine(Environment.GetEnvironmentVariable("HOME") ?? "", "tor-browser", "Browser", "firefox");
 		}
+
 		return string.Empty;
 	}
 
@@ -229,6 +237,7 @@ public sealed class WebBrowserService
 		{
 			return "/usr/bin/google-chrome";
 		}
+
 		return string.Empty;
 	}
 
@@ -246,6 +255,7 @@ public sealed class WebBrowserService
 		{
 			return "/usr/bin/brave-browser";
 		}
+
 		return string.Empty;
 	}
 
@@ -263,6 +273,7 @@ public sealed class WebBrowserService
 		{
 			return "/usr/bin/opera";
 		}
+
 		return string.Empty;
 	}
 
@@ -276,6 +287,7 @@ public sealed class WebBrowserService
 		{
 			return "/usr/bin/firefox";
 		}
+
 		return string.Empty;
 	}
 
@@ -287,26 +299,32 @@ public sealed class WebBrowserService
 		{
 			availableBrowsers.Add(BrowserType.Tor);
 		}
+
 		if (!string.IsNullOrEmpty(GetChromePath()) && File.Exists(GetChromePath()))
 		{
 			availableBrowsers.Add(BrowserType.Chrome);
 		}
+
 		if (!string.IsNullOrEmpty(GetBravePath()) && File.Exists(GetBravePath()))
 		{
 			availableBrowsers.Add(BrowserType.Brave);
 		}
+
 		if (!string.IsNullOrEmpty(GetOperaPath()) && File.Exists(GetOperaPath()))
 		{
 			availableBrowsers.Add(BrowserType.Opera);
 		}
+
 		if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && File.Exists(InternetExplorerDefaultPath))
 		{
 			availableBrowsers.Add(BrowserType.InternetExplorer);
 		}
+
 		if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) && File.Exists("/Applications/Safari.app"))
 		{
 			availableBrowsers.Add(BrowserType.Safari);
 		}
+
 		if (!string.IsNullOrEmpty(GetFirefoxPath()) && File.Exists(GetFirefoxPath()))
 		{
 			availableBrowsers.Add(BrowserType.Firefox);
@@ -323,8 +341,8 @@ public sealed class WebBrowserService
 		}
 
 		if (customBrowserPath.Contains("firefox") &&
-			customBrowserPath.Contains("tor", StringComparison.InvariantCultureIgnoreCase) &&
-			customBrowserPath.Contains("browser", StringComparison.InvariantCultureIgnoreCase))
+		    customBrowserPath.Contains("tor", StringComparison.InvariantCultureIgnoreCase) &&
+		    customBrowserPath.Contains("browser", StringComparison.InvariantCultureIgnoreCase))
 		{
 			return true;
 		}

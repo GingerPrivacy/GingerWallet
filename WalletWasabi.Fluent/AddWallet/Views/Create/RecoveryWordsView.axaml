@@ -9,12 +9,12 @@
              xmlns:create="clr-namespace:WalletWasabi.Fluent.AddWallet.ViewModels.Create"
              x:Class="WalletWasabi.Fluent.AddWallet.Views.Create.RecoveryWordsView">
   <ContentArea Title="{Binding Title}"
-                 Caption="{x:Static lang:Resources.RecoveryWordsViewCaption}"
-                 CancelContent="{x:Static lang:Resources.Cancel}"
-                 EnableCancel="{Binding EnableCancel}"
-                 EnableBack="{Binding EnableBack}"
-                 EnableNext="True" NextContent="{x:Static lang:Resources.Continue}" FocusNext="True"
-                 ScrollViewer.HorizontalScrollBarVisibility="Auto">
+               Caption="{x:Static lang:Resources.RecoveryWordsViewCaption}"
+               CancelContent="{x:Static lang:Resources.Cancel}"
+               EnableCancel="{Binding EnableCancel}"
+               EnableBack="{Binding EnableBack}"
+               EnableNext="True" NextContent="{x:Static lang:Resources.Continue}" FocusNext="True"
+               ScrollViewer.HorizontalScrollBarVisibility="Auto">
     <Grid>
       <Grid.RowDefinitions>
         <RowDefinition MinHeight="70" Height="*" />
@@ -64,8 +64,8 @@
       </Panel>
 
       <InfoMessage Opacity="0.5"
-                     HorizontalAlignment="Center"
-                     Grid.Row="4">
+                   HorizontalAlignment="Center"
+                   Grid.Row="4">
         <TextBlock Text="{x:Static lang:Resources.RecoveryWordsViewNotSeeAfter}" />
       </InfoMessage>
     </Grid>

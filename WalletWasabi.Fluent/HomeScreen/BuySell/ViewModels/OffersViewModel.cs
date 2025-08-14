@@ -29,7 +29,7 @@ public abstract partial class OffersViewModel : RoutableViewModel
 		Title = Resources.Offers;
 		_wallet = wallet;
 
-		PaymentMethods = new []{_allText}.Concat(offers.Select(x => x.MethodName).Order()).Distinct();
+		PaymentMethods = new[] { _allText }.Concat(offers.Select(x => x.MethodName).Order()).Distinct();
 
 		_selectedPaymentMethod = UiContext.ApplicationSettings.BuySellConfiguration.BuyPaymentMethod ?? "";
 		if (string.IsNullOrEmpty(_selectedPaymentMethod) || !PaymentMethods.Contains(_selectedPaymentMethod))

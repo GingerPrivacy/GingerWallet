@@ -81,62 +81,62 @@ public class SpectrumControl : TemplatedControl
 		_state.Render(context);
 	}
 #else
-    protected override void OnLoaded(RoutedEventArgs routedEventArgs)
-    {
-        base.OnLoaded(routedEventArgs);
+	protected override void OnLoaded(RoutedEventArgs routedEventArgs)
+	{
+		base.OnLoaded(routedEventArgs);
 
-        var elemVisual = ElementComposition.GetElementVisual(this);
-        var compositor = elemVisual?.Compositor;
-        if (compositor is null)
-        {
-            return;
-        }
+		var elemVisual = ElementComposition.GetElementVisual(this);
+		var compositor = elemVisual?.Compositor;
+		if (compositor is null)
+		{
+			return;
+		}
 
-        _customVisual = compositor.CreateCustomVisual(new DrawCompositionCustomVisualHandler());
-        ElementComposition.SetElementChildVisual(this, _customVisual);
+		_customVisual = compositor.CreateCustomVisual(new DrawCompositionCustomVisualHandler());
+		ElementComposition.SetElementChildVisual(this, _customVisual);
 
-        LayoutUpdated += OnLayoutUpdated;
+		LayoutUpdated += OnLayoutUpdated;
 
-        _customVisual.Size = new Vector2((float)Bounds.Size.Width, (float)Bounds.Size.Height);
-        _customVisual.SendHandlerMessage(new DrawPayload(HandlerCommand.Update, _spectrumDrawHandler));
+		_customVisual.Size = new Vector2((float)Bounds.Size.Width, (float)Bounds.Size.Height);
+		_customVisual.SendHandlerMessage(new DrawPayload(HandlerCommand.Update, _spectrumDrawHandler));
 
-        // TODO: Start();
-    }
+		// TODO: Start();
+	}
 
-    protected override void OnUnloaded(RoutedEventArgs routedEventArgs)
-    {
-        base.OnUnloaded(routedEventArgs);
+	protected override void OnUnloaded(RoutedEventArgs routedEventArgs)
+	{
+		base.OnUnloaded(routedEventArgs);
 
-        LayoutUpdated -= OnLayoutUpdated;
+		LayoutUpdated -= OnLayoutUpdated;
 
-        Stop();
-        DisposeImpl();
-    }
+		Stop();
+		DisposeImpl();
+	}
 
-    private void OnLayoutUpdated(object? sender, EventArgs e)
-    {
-        if (_customVisual == null)
-        {
-            return;
-        }
+	private void OnLayoutUpdated(object? sender, EventArgs e)
+	{
+		if (_customVisual == null)
+		{
+			return;
+		}
 
-        _customVisual.Size = new Vector2((float)Bounds.Size.Width, (float)Bounds.Size.Height);
-        _customVisual.SendHandlerMessage(new DrawPayload(HandlerCommand.Update, _spectrumDrawHandler, Bounds));
-    }
+		_customVisual.Size = new Vector2((float)Bounds.Size.Width, (float)Bounds.Size.Height);
+		_customVisual.SendHandlerMessage(new DrawPayload(HandlerCommand.Update, _spectrumDrawHandler, Bounds));
+	}
 
-    public void Start()
-    {
-        _customVisual?.SendHandlerMessage(new DrawPayload(HandlerCommand.Start, _spectrumDrawHandler, Bounds));
-    }
+	public void Start()
+	{
+		_customVisual?.SendHandlerMessage(new DrawPayload(HandlerCommand.Start, _spectrumDrawHandler, Bounds));
+	}
 
-    public void Stop()
-    {
-        _customVisual?.SendHandlerMessage(new DrawPayload(HandlerCommand.Stop));
-    }
+	public void Stop()
+	{
+		_customVisual?.SendHandlerMessage(new DrawPayload(HandlerCommand.Stop));
+	}
 
-    private void DisposeImpl()
-    {
-        _customVisual?.SendHandlerMessage(new DrawPayload(HandlerCommand.Dispose));
-    }
+	private void DisposeImpl()
+	{
+		_customVisual?.SendHandlerMessage(new DrawPayload(HandlerCommand.Dispose));
+	}
 #endif
 }

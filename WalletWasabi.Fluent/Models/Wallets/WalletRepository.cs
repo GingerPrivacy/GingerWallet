@@ -39,12 +39,12 @@ public class WalletRepository : ReactiveObject
 
 		Wallets =
 			signals.Fetch(() => Services.WalletManager.GetWallets(), x => x.WalletId)
-				   .DisposeWith(_disposable)
-				   .Connect()
-				   .TransformWithInlineUpdate(CreateWalletModel, (_, _) => { })
-				   .DisposeMany()
-				   .AsObservableCache()
-				   .DisposeWith(_disposable);
+				.DisposeWith(_disposable)
+				.Connect()
+				.TransformWithInlineUpdate(CreateWalletModel, (_, _) => { })
+				.DisposeMany()
+				.AsObservableCache()
+				.DisposeWith(_disposable);
 
 		DefaultWalletName = _settings.LastSelectedWallet;
 	}
@@ -108,6 +108,7 @@ public class WalletRepository : ReactiveObject
 		{
 			return GetById(existingWallet.WalletId);
 		}
+
 		return null;
 	}
 
@@ -118,17 +119,16 @@ public class WalletRepository : ReactiveObject
 		ArgumentException.ThrowIfNullOrEmpty(walletName);
 		ArgumentNullException.ThrowIfNull(password);
 
-		var (keyManager, _) = await Task.Run(
-				() =>
-				{
-					var walletGenerator = new WalletGenerator(
-						Services.WalletManager.WalletDirectories.WalletsDir,
-						Services.WalletManager.Network)
-					{
-						TipHeight = Services.SmartHeaderChain.TipHeight
-					};
-					return walletGenerator.GenerateWallet(walletName, password, mnemonic);
-				});
+		var (keyManager, _) = await Task.Run(() =>
+		{
+			var walletGenerator = new WalletGenerator(
+				Services.WalletManager.WalletDirectories.WalletsDir,
+				Services.WalletManager.Network)
+			{
+				TipHeight = Services.SmartHeaderChain.TipHeight
+			};
+			return walletGenerator.GenerateWallet(walletName, password, mnemonic);
+		});
 
 		return new WalletSettingsModel(keyManager, true);
 	}
@@ -199,8 +199,8 @@ public class WalletRepository : ReactiveObject
 	{
 		return
 			_walletDictionary.TryGetValue(id, out var wallet)
-			? wallet
-			: throw new InvalidOperationException($"Wallet not found: {id}");
+				? wallet
+				: throw new InvalidOperationException($"Wallet not found: {id}");
 	}
 
 	private WalletModel CreateWalletModel(Wallet wallet)
@@ -211,13 +211,14 @@ public class WalletRepository : ReactiveObject
 			{
 				throw new InvalidOperationException($"Different instance of: {wallet.WalletName}");
 			}
+
 			return existing;
 		}
 
 		var result =
 			wallet.KeyManager.IsHardwareWallet
-			? new HardwareWalletModel(wallet, _amountProvider)
-			: new WalletModel(wallet, _amountProvider);
+				? new HardwareWalletModel(wallet, _amountProvider)
+				: new WalletModel(wallet, _amountProvider);
 
 		_walletDictionary[wallet.WalletId] = result;
 

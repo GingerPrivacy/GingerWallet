@@ -76,18 +76,18 @@ public partial class PrivacyRingViewModel : RoutableViewModel
 
 		var coinsList =
 			_wallet.Coins.List
-						 .Connect(suppressEmptyChangeSets: false)
-						 .OnItemAdded(c => c.SubscribeToCoinChanges(disposables)) // Subscribe to SmartCoin changes for dynamic updates
-						 .ToCollection()
-						 .Select(x => x.Distinct());
+				.Connect(suppressEmptyChangeSets: false)
+				.OnItemAdded(c => c.SubscribeToCoinChanges(disposables)) // Subscribe to SmartCoin changes for dynamic updates
+				.ToCollection()
+				.Select(x => x.Distinct());
 
 		_wallet.Privacy.ProgressUpdated
-					   .Merge(sizeTrigger)
-					   .WithLatestFrom(coinsList)
-					   .ObserveOn(RxApp.MainThreadScheduler)
-					   .Do(t => RenderRing(itemsSourceList, t.Second))
-					   .Subscribe()
-					   .DisposeWith(disposables);
+			.Merge(sizeTrigger)
+			.WithLatestFrom(coinsList)
+			.ObserveOn(RxApp.MainThreadScheduler)
+			.Do(t => RenderRing(itemsSourceList, t.Second))
+			.Subscribe()
+			.DisposeWith(disposables);
 
 		PrivacyTile.Activate(disposables);
 	}
@@ -116,8 +116,8 @@ public partial class PrivacyRingViewModel : RoutableViewModel
 
 		var result =
 			shouldCreateSegmentsByCoin
-			? CreateSegmentsByCoin(coins)
-			: CreateSegmentsByPrivacyLevel(coins);
+				? CreateSegmentsByCoin(coins)
+				: CreateSegmentsByPrivacyLevel(coins);
 
 		list.AddRange(result);
 	}
@@ -126,8 +126,8 @@ public partial class PrivacyRingViewModel : RoutableViewModel
 	{
 		var groupsByPrivacy =
 			coins.GroupBy(x => x.PrivacyLevel)
-				 .OrderBy(x => (int)x.Key)
-				 .ToList();
+				.OrderBy(x => (int)x.Key)
+				.ToList();
 
 		var total = coins.TotalBtcAmount();
 		var start = 0.0m;
@@ -156,8 +156,8 @@ public partial class PrivacyRingViewModel : RoutableViewModel
 
 		var groupsByPrivacy =
 			coins.GroupBy(x => x.PrivacyLevel)
-				 .OrderBy(x => (int)x.Key)
-				 .ToList();
+				.OrderBy(x => (int)x.Key)
+				.ToList();
 
 		foreach (var group in groupsByPrivacy)
 		{
@@ -171,8 +171,8 @@ public partial class PrivacyRingViewModel : RoutableViewModel
 
 			var anonScoreText =
 				maxAnonScore == minAnonScore
-				? $"{minAnonScore}"
-				: $"{minAnonScore}-{maxAnonScore}";
+					? $"{minAnonScore}"
+					: $"{minAnonScore}-{maxAnonScore}";
 
 			var item = new PrivacyRingItemViewModel(this, group.Key, new Money(groupAmount, MoneyUnit.BTC), (double)start, (double)end, anonScoreText);
 

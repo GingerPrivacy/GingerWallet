@@ -9,7 +9,7 @@
   <Design.PreviewWith>
     <StackPanel Spacing="4" Width="300">
 
-      <TextBox Text="{Binding $self.Bounds.Height}"/>
+      <TextBox Text="{Binding $self.Bounds.Height}" />
       <TextBox Watermark="{Binding $self.Bounds.Height}" />
     </StackPanel>
   </Design.PreviewWith>
@@ -18,9 +18,12 @@
 
     <Setter Property="ContextMenu">
       <ContextMenu>
-        <MenuItem Header="{x:Static lang:Resources.Cut}" Command="{Binding $parent[TextBox].Cut}" IsEnabled="{Binding $parent[TextBox].CanCut}" InputGesture="{x:Static TextBox.CutGesture}" />
-        <MenuItem Header="{x:Static lang:Resources.Copy}" Command="{Binding $parent[TextBox].Copy}" IsEnabled="{Binding $parent[TextBox].CanCopy}" InputGesture="{x:Static TextBox.CopyGesture}"/>
-        <MenuItem Header="{x:Static lang:Resources.Paste}" Command="{Binding $parent[TextBox].Paste}" IsEnabled="{Binding $parent[TextBox].CanPaste}" InputGesture="{x:Static TextBox.PasteGesture}"/>
+        <MenuItem Header="{x:Static lang:Resources.Cut}" Command="{Binding $parent[TextBox].Cut}"
+                  IsEnabled="{Binding $parent[TextBox].CanCut}" InputGesture="{x:Static TextBox.CutGesture}" />
+        <MenuItem Header="{x:Static lang:Resources.Copy}" Command="{Binding $parent[TextBox].Copy}"
+                  IsEnabled="{Binding $parent[TextBox].CanCopy}" InputGesture="{x:Static TextBox.CopyGesture}" />
+        <MenuItem Header="{x:Static lang:Resources.Paste}" Command="{Binding $parent[TextBox].Paste}"
+                  IsEnabled="{Binding $parent[TextBox].CanPaste}" InputGesture="{x:Static TextBox.PasteGesture}" />
       </ContextMenu>
     </Setter>
 
@@ -51,15 +54,17 @@
             <Border Margin="{TemplateBinding BorderThickness}">
               <Grid ColumnDefinitions="Auto,*,Auto">
                 <ContentPresenter Grid.Column="0" Grid.ColumnSpan="1" Content="{TemplateBinding InnerLeftContent}" />
-                <DockPanel x:Name="PART_InnerDockPanel" Grid.Column="1" Grid.ColumnSpan="1" Margin="{TemplateBinding Padding}">
+                <DockPanel x:Name="PART_InnerDockPanel" Grid.Column="1" Grid.ColumnSpan="1"
+                           Margin="{TemplateBinding Padding}">
                   <TextBlock Name="PART_FloatingWatermark"
                              Foreground="{DynamicResource SystemAccentColor}"
                              FontSize="{TemplateBinding FontSize}"
                              Text="{TemplateBinding Watermark}"
                              IsVisible="{TemplateBinding UseFloatingWatermark}"
                              DockPanel.Dock="Top" />
-                  <ScrollViewer HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
-                                VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
+                  <ScrollViewer
+                    HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
+                    VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
                     <Panel>
                       <TextBlock Name="PART_Watermark"
                                  Opacity="0.5"
@@ -95,14 +100,14 @@
                 </DockPanel>
                 <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10">
                   <Panel x:Name="CheckmarkHost">
-                    <PathIcon  Classes="checkMark" VerticalAlignment="Center">
+                    <PathIcon Classes="checkMark" VerticalAlignment="Center">
                       <Interaction.Behaviors>
                         <CheckMarkVisibilityBehavior />
                       </Interaction.Behaviors>
                     </PathIcon>
                   </Panel>
-                    <ContentPresenter Content="{TemplateBinding InnerRightContent}" />
-                  </StackPanel>
+                  <ContentPresenter Content="{TemplateBinding InnerRightContent}" />
+                </StackPanel>
               </Grid>
             </Border>
           </Panel>
@@ -124,7 +129,8 @@
       <Setter Property="RenderTransformOrigin" Value="0.5,0" />
       <Setter Property="Transitions">
         <Transitions>
-          <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1" Delay="0:0:0.1" Easing="{StaticResource FluentEasing}" />
+          <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1" Delay="0:0:0.1"
+                                         Easing="{StaticResource FluentEasing}" />
           <ThicknessTransition Property="Margin" Duration="0:0:0.1" Easing="{StaticResource FluentEasing}" />
         </Transitions>
       </Setter>
@@ -143,10 +149,10 @@
             <Panel>
               <PathIcon Data="{StaticResource PasswordBoxRevealButtonData}"
                         Height="8" Width="12"
-                        IsVisible="{Binding !$parent[ToggleButton].IsChecked}"/>
+                        IsVisible="{Binding !$parent[ToggleButton].IsChecked}" />
               <PathIcon Data="{StaticResource PasswordBoxHideButtonData}"
                         Height="12" Width="12"
-                        IsVisible="{Binding $parent[ToggleButton].IsChecked}"/>
+                        IsVisible="{Binding $parent[ToggleButton].IsChecked}" />
             </Panel>
           </ToggleButton>
         </Template>
@@ -155,50 +161,51 @@
 
   </ControlTheme>
 
-  <ControlTheme  x:Key="SelectableTextBlockTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+  <ControlTheme x:Key="SelectableTextBlockTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
 
-      <Setter Property="IsReadOnly" Value="True" />
-      <Setter Property="Margin" Value="0" />
-      <Setter Property="Padding" Value="0" />
-      <Setter Property="Background" Value="Transparent" />
-      <Setter Property="BorderThickness" Value="0" />
-      <Setter Property="MinHeight" Value="0" />
-      <Setter Property="MinWidth" Value="0" />
-      <Setter Property="CaretBrush" Value="Transparent" />
-      <Setter Property="TextWrapping" Value="Wrap" />
+    <Setter Property="IsReadOnly" Value="True" />
+    <Setter Property="Margin" Value="0" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="MinWidth" Value="0" />
+    <Setter Property="CaretBrush" Value="Transparent" />
+    <Setter Property="TextWrapping" Value="Wrap" />
 
-      <Setter Property="ContextMenu">
-        <ContextMenu>
-          <MenuItem Header="{x:Static lang:Resources.Copy}" Command="{Binding $parent[TextBox].Copy}" IsEnabled="{Binding $parent[TextBox].CanCopy}" InputGesture="{x:Static TextBox.CopyGesture}" />
-        </ContextMenu>
-      </Setter>
+    <Setter Property="ContextMenu">
+      <ContextMenu>
+        <MenuItem Header="{x:Static lang:Resources.Copy}" Command="{Binding $parent[TextBox].Copy}"
+                  IsEnabled="{Binding $parent[TextBox].CanCopy}" InputGesture="{x:Static TextBox.CopyGesture}" />
+      </ContextMenu>
+    </Setter>
 
-      <Setter Property="Template">
-        <ControlTemplate>
-          <ScrollViewer HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
-                        VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
-            <TextPresenter Name="PART_TextPresenter"
-                           Text="{TemplateBinding Text, Mode=TwoWay}"
-                           CaretIndex="{TemplateBinding CaretIndex}"
-                           SelectionStart="{TemplateBinding SelectionStart}"
-                           SelectionEnd="{TemplateBinding SelectionEnd}"
-                           TextAlignment="{TemplateBinding TextAlignment}"
-                           TextWrapping="{TemplateBinding TextWrapping}"
-                           PasswordChar="{TemplateBinding PasswordChar}"
-                           RevealPassword="{TemplateBinding RevealPassword}"
-                           SelectionBrush="{TemplateBinding SelectionBrush}"
-                           SelectionForegroundBrush="{TemplateBinding SelectionForegroundBrush}"
-                           CaretBrush="{TemplateBinding CaretBrush}"
-                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-            <ScrollViewer.Styles>
-              <Style Selector="ScrollContentPresenter#PART_ContentPresenter">
-                <Setter Property="Cursor" Value="IBeam" />
-              </Style>
-            </ScrollViewer.Styles>
-          </ScrollViewer>
-        </ControlTemplate>
-      </Setter>
+    <Setter Property="Template">
+      <ControlTemplate>
+        <ScrollViewer HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
+                      VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
+          <TextPresenter Name="PART_TextPresenter"
+                         Text="{TemplateBinding Text, Mode=TwoWay}"
+                         CaretIndex="{TemplateBinding CaretIndex}"
+                         SelectionStart="{TemplateBinding SelectionStart}"
+                         SelectionEnd="{TemplateBinding SelectionEnd}"
+                         TextAlignment="{TemplateBinding TextAlignment}"
+                         TextWrapping="{TemplateBinding TextWrapping}"
+                         PasswordChar="{TemplateBinding PasswordChar}"
+                         RevealPassword="{TemplateBinding RevealPassword}"
+                         SelectionBrush="{TemplateBinding SelectionBrush}"
+                         SelectionForegroundBrush="{TemplateBinding SelectionForegroundBrush}"
+                         CaretBrush="{TemplateBinding CaretBrush}"
+                         HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+          <ScrollViewer.Styles>
+            <Style Selector="ScrollContentPresenter#PART_ContentPresenter">
+              <Setter Property="Cursor" Value="IBeam" />
+            </Style>
+          </ScrollViewer.Styles>
+        </ScrollViewer>
+      </ControlTemplate>
+    </Setter>
 
   </ControlTheme>
 

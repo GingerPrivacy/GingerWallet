@@ -758,14 +758,14 @@ public partial class Arena : PeriodicRunner
 		return coordinatorScriptPubKey;
 	}
 
-	private void CoinVerifier_CoinBlacklisted(object? _, Coin coin)
+	private void CoinVerifier_CoinBlacklisted(object? _, CoinVerifier.CoinBlacklistedEventArgs args)
 	{
 		// For logging reason Prison needs the roundId.
-		var roundState = RoundStates.FirstOrDefault(rs => rs.CoinjoinState.Inputs.Any(input => input.Outpoint == coin.Outpoint));
+		var roundState = RoundStates.FirstOrDefault(rs => rs.CoinjoinState.Inputs.Any(input => input.Outpoint == args.Coin.Outpoint));
 
 		// Could be a coin from WW1.
 		var roundId = roundState?.Id ?? uint256.Zero;
-		Prison.FailedVerification(coin.Outpoint, roundId);
+		Prison.FailedVerification(args.Coin.Outpoint, roundId, args.RecommendedBanTime, args.Provider);
 	}
 
 	private void AddRound(Round round)

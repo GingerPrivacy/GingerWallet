@@ -9,22 +9,22 @@
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.HomeScreen.Receive.Views.AddressLabelEditView">
   <ContentArea Title="{Binding Title}"
-                 Caption="{x:Static lang:Resources.EditSelectedAddressLabels}"
-                 EnableBack="{Binding EnableBack}"
-                 EnableCancel="{Binding EnableCancel}"
-                 EnableNext="True" NextContent="{x:Static lang:Resources.Save}"
-                 Height="280">
+               Caption="{x:Static lang:Resources.EditSelectedAddressLabels}"
+               EnableBack="{Binding EnableBack}"
+               EnableCancel="{Binding EnableCancel}"
+               EnableNext="True" NextContent="{x:Static lang:Resources.Save}"
+               Height="280">
     <TagsBox x:Name="LabelTagBox"
-               TagSeparator=","
-               Items="{Binding SuggestionLabels.Labels}"
-               Suggestions="{Binding SuggestionLabels.Suggestions}"
-               TopItems="{Binding SuggestionLabels.TopSuggestions}"
-               SuggestionsAreCaseSensitive="True"
-               RestrictInputToSuggestions="False"
-               VerticalAlignment="Top"
-               MaxWidth="320"
-               IsCurrentTextValid="{Binding IsCurrentTextValid, Mode=OneWayToSource}"
-               MaxTextLength="{StaticResource MaxLabelLength}">
+             TagSeparator=","
+             Items="{Binding SuggestionLabels.Labels}"
+             Suggestions="{Binding SuggestionLabels.Suggestions}"
+             TopItems="{Binding SuggestionLabels.TopSuggestions}"
+             SuggestionsAreCaseSensitive="True"
+             RestrictInputToSuggestions="False"
+             VerticalAlignment="Top"
+             MaxWidth="320"
+             IsCurrentTextValid="{Binding IsCurrentTextValid, Mode=OneWayToSource}"
+             MaxTextLength="{StaticResource MaxLabelLength}">
       <Interaction.Behaviors>
         <FocusOnAttachedBehavior />
       </Interaction.Behaviors>

@@ -41,7 +41,8 @@
   <Style Selector="RadioButton.text:checked /template/ ContentPresenter#PART_ContentPresenter">
     <Setter Property="(TextElement.Foreground)" Value="{DynamicResource SystemAccentColor}" />
   </Style>
-  <Style Selector="RadioButton.text:pointerover:not(:pressed) /template/ ContentPresenter#PART_ContentPresenter, RadioButton.text:checked /template/ ContentPresenter#PART_ContentPresenter, RadioButton.text:pressed /template/ ContentPresenter#PART_ContentPresenter">
+  <Style
+    Selector="RadioButton.text:pointerover:not(:pressed) /template/ ContentPresenter#PART_ContentPresenter, RadioButton.text:checked /template/ ContentPresenter#PART_ContentPresenter, RadioButton.text:pressed /template/ ContentPresenter#PART_ContentPresenter">
     <Setter Property="Opacity" Value="1" />
   </Style>
 </Styles>

@@ -39,17 +39,16 @@ public class CoinListViewModel : ViewModelBase, IDisposable
 		var changes = viewModels.Connect();
 
 		var coinItems = changes
-			.TransformMany(
-				item =>
+			.TransformMany(item =>
+			{
+				// When root item is a coin item
+				if (item is CoinViewModel c)
 				{
-					// When root item is a coin item
-					if (item is CoinViewModel c)
-					{
-						return new[] { c };
-					}
+					return new[] { c };
+				}
 
-					return item.Children;
-				})
+				return item.Children;
+			})
 			.AddKey(model => model.Coin.Key);
 
 		coinItems.OnItemAdded(model => model.Coin.SubscribeToCoinChanges(_disposables))
@@ -80,15 +79,14 @@ public class CoinListViewModel : ViewModelBase, IDisposable
 		availableCoins.Pockets
 			.Connect(suppressEmptyChangeSets: false)
 			.ToCollection()
-			.Do(
-				pockets =>
-				{
-					IList<CoinModel> oldSelection = Selection.ToArray();
-					var oldExpandedItemsLabel = _itemsCollection.Where(x => x.IsExpanded).Select(x => x.Labels).ToArray();
-					Rebuild(viewModels, pockets, availableCoins);
-					UpdateSelection(coinItemsCollection, oldSelection);
-					RestoreExpandedRows(oldExpandedItemsLabel);
-				})
+			.Do(pockets =>
+			{
+				IList<CoinModel> oldSelection = Selection.ToArray();
+				var oldExpandedItemsLabel = _itemsCollection.Where(x => x.IsExpanded).Select(x => x.Labels).ToArray();
+				Rebuild(viewModels, pockets, availableCoins);
+				UpdateSelection(coinItemsCollection, oldSelection);
+				RestoreExpandedRows(oldExpandedItemsLabel);
+			})
 			.Subscribe()
 			.DisposeWith(_disposables);
 
@@ -96,14 +94,13 @@ public class CoinListViewModel : ViewModelBase, IDisposable
 		TreeDataGridSource.DisposeWith(_disposables);
 		CoinItems = coinItemsCollection;
 
-		ExpandAllCommand = ReactiveCommand.Create(
-			() =>
+		ExpandAllCommand = ReactiveCommand.Create(() =>
+		{
+			foreach (var item in _itemsCollection)
 			{
-				foreach (var item in _itemsCollection)
-				{
-					item.IsExpanded = true;
-				}
-			});
+				item.IsExpanded = true;
+			}
+		});
 
 		Sortables =
 		[

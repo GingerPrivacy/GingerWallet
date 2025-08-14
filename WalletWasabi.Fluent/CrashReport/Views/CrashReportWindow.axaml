@@ -13,14 +13,14 @@
         x:DataType="vm:CrashReportWindowViewModel">
   <Panel Margin="{Binding #CrashReporterWindow.OffScreenMargin}">
     <ContentArea EnableNext="True"
-                          EnableCancel="True"
-                          NextContent="Exit"
-                          CancelContent="Restart Ginger Wallet"
-                          FocusNext="True"
-                          Title="{Binding Title}"
-                          Caption="{Binding Caption}"
-                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                          ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                 EnableCancel="True"
+                 NextContent="Exit"
+                 CancelContent="Restart Ginger Wallet"
+                 FocusNext="True"
+                 Title="{Binding Title}"
+                 Caption="{Binding Caption}"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ScrollViewer.VerticalScrollBarVisibility="Disabled">
       <ContentArea.Styles>
         <Style Selector="ContentArea /template/ DockPanel#MainDockPanel">
           <Setter Property="Margin" Value="0 36 0 0" />
@@ -28,16 +28,16 @@
       </ContentArea.Styles>
       <DockPanel LastChildFill="True">
         <InfoMessage DockPanel.Dock="Bottom" VerticalAlignment="Center" HorizontalAlignment="Center"
-                              Margin="0 20 0 0">
+                     Margin="0 20 0 0">
           <Panel>
             <WrapPanel>
               <TextBlock Text="You can click this icon" />
               <AnimatedButton Margin="5 0"
-                                       ToolTip.Tip="Copy Log"
-                                       Command="{Binding CopyTraceCommand}"
-                                       NormalIcon="{StaticResource copy_regular}"
-                                       ClickIcon="{StaticResource copy_confirmed}"
-                                       InitialOpacity="1.0" />
+                              ToolTip.Tip="Copy Log"
+                              Command="{Binding CopyTraceCommand}"
+                              NormalIcon="{StaticResource copy_regular}"
+                              ClickIcon="{StaticResource copy_confirmed}"
+                              InitialOpacity="1.0" />
               <TextBlock Text="to copy the above text and post an issue tracker on our" />
               <Button Margin="5 0" Classes="activeHyperLink" Content="GitHub repo here"
                       Command="{Binding OpenGitHubRepoCommand}" ToolTip.Tip="{Binding Link}" />

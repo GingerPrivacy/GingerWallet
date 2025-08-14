@@ -12,7 +12,8 @@
   <Application.DataTemplates>
     <local:ViewLocator />
     <DataTemplate DataType="models:ErrorDescriptor" x:DataType="models:ErrorDescriptor">
-      <TextBlock x:CompileBindings="True" Text="{Binding Message}" Foreground="{DynamicResource SystemControlErrorTextForegroundBrush}" TextWrapping="Wrap" />
+      <TextBlock x:CompileBindings="True" Text="{Binding Message}"
+                 Foreground="{DynamicResource SystemControlErrorTextForegroundBrush}" TextWrapping="Wrap" />
     </DataTemplate>
   </Application.DataTemplates>
 
@@ -20,10 +21,12 @@
 
     <x:Double x:Key="ToggleSwitchThemeMinWidth">0</x:Double>
 
-    <converters:BoolStringConverter x:Key="ShowHideBoolConverter" True="{x:Static lang:Resources.Hide}" False="{x:Static lang:Resources.Show}" />
+    <converters:BoolStringConverter x:Key="ShowHideBoolConverter" True="{x:Static lang:Resources.Hide}"
+                                    False="{x:Static lang:Resources.Show}" />
 
     <NativeMenu x:Key="DefaultNativeMenu">
-      <NativeMenuItem Header="{Binding IsMainWindowShown, Converter={StaticResource ShowHideBoolConverter}}" Command="{Binding ShowHideCommand}" />
+      <NativeMenuItem Header="{Binding IsMainWindowShown, Converter={StaticResource ShowHideBoolConverter}}"
+                      Command="{Binding ShowHideCommand}" />
       <NativeMenuItemSeparator />
       <NativeMenuItem Header="{x:Static lang:Resources.Quit}" Command="{Binding QuitCommand}" />
     </NativeMenu>
@@ -32,7 +35,7 @@
 
   <Application.Styles>
     <FluentTheme />
-    <StyleInclude Source="avares://Avalonia.Controls.TreeDataGrid/Themes/Fluent.axaml"/>
+    <StyleInclude Source="avares://Avalonia.Controls.TreeDataGrid/Themes/Fluent.axaml" />
     <StyleInclude Source="avares://WalletWasabi.Fluent/Styles/Themes/Fluent.axaml" />
     <StyleInclude Source="avares://WalletWasabi.Fluent/Icons/Icons.axaml" />
     <StyleInclude Source="avares://WalletWasabi.Fluent/Styles/Styles.axaml" />

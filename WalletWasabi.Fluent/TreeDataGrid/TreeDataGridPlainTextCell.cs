@@ -47,6 +47,7 @@ internal class TreeDataGridPlainTextCell : TreeDataGridCell
 			{
 				_formattedText.SetForegroundBrush(Foreground);
 			}
+
 			context.DrawText(_formattedText, new Point(0, r.Position.Y));
 		}
 	}

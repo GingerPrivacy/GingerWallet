@@ -14,10 +14,10 @@
     </Style>
   </UserControl.Styles>
   <ContentArea Title="{Binding Title}"
-                 CancelContent="{x:Static lang:Resources.Cancel}"
-                 EnableCancel="{Binding EnableCancel}"
-                 EnableBack="{Binding EnableBack}"
-                 EnableNext="True" NextContent="OK">
+               CancelContent="{x:Static lang:Resources.Cancel}"
+               EnableCancel="{Binding EnableCancel}"
+               EnableBack="{Binding EnableBack}"
+               EnableNext="True" NextContent="OK">
     <StackPanel HorizontalAlignment="Center" Spacing="20" MinWidth="380">
       <Label Content="{x:Static lang:Resources.AdvancedRecoveryOptionsViewModelMinimumGapLimit}" Target="TbGapLimit" />
       <TextBox Name="TbGapLimit" Watermark="e.g., 63"

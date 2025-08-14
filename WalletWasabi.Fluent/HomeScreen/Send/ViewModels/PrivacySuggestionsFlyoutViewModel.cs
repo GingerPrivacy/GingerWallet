@@ -74,6 +74,7 @@ public partial class PrivacySuggestionsFlyoutViewModel : ViewModelBase
 			{
 				Warnings.Add(warning);
 			}
+
 			if (item is PrivacySuggestion suggestion)
 			{
 				Suggestions.Add(suggestion);

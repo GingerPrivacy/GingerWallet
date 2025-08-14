@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using WalletWasabi.Backend.Models;
 using WalletWasabi.Helpers;
 using WalletWasabi.Interfaces;
-using WalletWasabi.Logging;
 using WalletWasabi.Tor.Http.Extensions;
 
 namespace WalletWasabi.WebClients.CoinGecko;

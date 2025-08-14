@@ -1,6 +1,4 @@
 using Newtonsoft.Json;
-using System;
-using WalletWasabi.BuySell;
 using static WalletWasabi.BuySell.BuySellClientModels;
 
 namespace WalletWasabi.JsonConverters

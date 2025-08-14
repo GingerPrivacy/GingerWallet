@@ -6,7 +6,7 @@
   <Design.PreviewWith>
     <Border Width="200">
       <PreviewItem Label="Transaction ID" Icon="{DynamicResource tor_icon}"
-                     CopyableContent="Text to copy" />
+                   CopyableContent="Text to copy" />
     </Border>
   </Design.PreviewWith>
 
@@ -19,17 +19,18 @@
                     Data="{TemplateBinding Icon}"
                     Margin="0 0 20 0"
                     Foreground="{DynamicResource SystemAccentCustomColorLight}"
-                    DockPanel.Dock="Left" IsVisible="{TemplateBinding Icon, Converter={x:Static ObjectConverters.IsNotNull}}" />
+                    DockPanel.Dock="Left"
+                    IsVisible="{TemplateBinding Icon, Converter={x:Static ObjectConverters.IsNotNull}}" />
           <DockPanel>
             <TextBlock Name="PART_Text" Text="{TemplateBinding Label}" DockPanel.Dock="Top" Margin="0 0 0 5"
                        Opacity="0.6"
-                       IsVisible="{Binding !!$self.Text}"/>
+                       IsVisible="{Binding !!$self.Text}" />
             <DockPanel HorizontalAlignment="Left" DockPanel.Dock="Bottom">
               <ClipboardCopyButton x:Name="PART_ClipboardCopyButton"
-                                     ToolTip.Tip="{x:Static lang:Resources.Copy}"
-                                     DockPanel.Dock="Right" Width="30"
-                                     Text="{Binding Path=CopyableContent, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static conv:StringConverters.AsString}}"
-                                     ShowCopyButton="{TemplateBinding IsCopyButtonVisible}" />
+                                   ToolTip.Tip="{x:Static lang:Resources.Copy}"
+                                   DockPanel.Dock="Right" Width="30"
+                                   Text="{Binding Path=CopyableContent, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static conv:StringConverters.AsString}}"
+                                   ShowCopyButton="{TemplateBinding IsCopyButtonVisible}" />
               <Panel>
                 <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}"
                                   ContentTemplate="{TemplateBinding ContentTemplate}"

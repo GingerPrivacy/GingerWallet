@@ -57,7 +57,8 @@
     <Setter Property="HorizontalContentAlignment" Value="Center" />
   </Style>
 
-  <Style Selector="StackPanel.settingsLayout > DockPanel > CurrencyEntryBox.hideValidations /template/ DataValidationErrors#PART_DataValidationErrors">
+  <Style
+    Selector="StackPanel.settingsLayout > DockPanel > CurrencyEntryBox.hideValidations /template/ DataValidationErrors#PART_DataValidationErrors">
     <Setter Property="IsVisible" Value="False" />
   </Style>
 

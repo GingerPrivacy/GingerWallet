@@ -116,7 +116,7 @@ public class TwoFactorEntryBox : TemplatedControl
 
 		if (textBoxes[DigitCount / 2 - 1] is { } middleTb)
 		{
-			middleTb.Margin = new Thickness(0, 0, 10 , 0);
+			middleTb.Margin = new Thickness(0, 0, 10, 0);
 		}
 	}
 

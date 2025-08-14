@@ -35,6 +35,10 @@ public class WabiSabiConfig : ConfigBase
 	public TimeSpan DoSMinTimeForFailedToVerify { get; set; } = TimeSpan.FromDays(31);
 
 	[DefaultValueTimeSpan("1d 0h 0m 0s")]
+	[JsonProperty(PropertyName = "DoSSimplifiedPunishment", DefaultValueHandling = DefaultValueHandling.Populate)]
+	public TimeSpan DoSSimplifiedPunishment { get; set; } = TimeSpan.FromDays(1);
+
+	[DefaultValueTimeSpan("1d 0h 0m 0s")]
 	[JsonProperty(PropertyName = "DoSMinTimeForCheating", DefaultValueHandling = DefaultValueHandling.Populate)]
 	public TimeSpan DoSMinTimeForCheating { get; set; } = TimeSpan.FromDays(1);
 
@@ -249,6 +253,7 @@ public class WabiSabiConfig : ConfigBase
 		new(
 			SeverityInBitcoinsPerHour: DoSSeverity.ToDecimal(MoneyUnit.BTC),
 			MinTimeForFailedToVerify: DoSMinTimeForFailedToVerify,
+			SimplifiedPunishment: DoSSimplifiedPunishment,
 			MinTimeForCheating: DoSMinTimeForCheating,
 			PenaltyFactorForDisruptingConfirmation: (decimal)DoSPenaltyFactorForDisruptingConfirmation,
 			PenaltyFactorForDisruptingSignalReadyToSign: (decimal)DoSPenaltyFactorForDisruptingSignalReadyToSign,
