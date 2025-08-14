@@ -13,7 +13,6 @@ using Avalonia.Interactivity;
 using Avalonia.Metadata;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
-using Microsoft.Net.Http.Headers;
 using ReactiveUI;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
@@ -229,9 +228,9 @@ public class TagsBox : TemplatedControl
 		}
 
 		_autoCompleteBox.InternalTextBox.WhenAnyValue(x => x.IsFocused)
-					.Where(isFocused => isFocused == false)
-					.Subscribe(_ => RequestAdd = true)
-					.DisposeWith(_compositeDisposable);
+			.Where(isFocused => isFocused == false)
+			.Subscribe(_ => RequestAdd = true)
+			.DisposeWith(_compositeDisposable);
 
 		if (_autoCompleteBox.SuggestionListBox is not null)
 		{

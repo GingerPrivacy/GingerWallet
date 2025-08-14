@@ -422,11 +422,12 @@ public partial class Arena : IWabiSabiApiRequestHandler
 
 	private void CheckCoinIsNotBanned(OutPoint input, Round round)
 	{
-		var banningTime = Prison.GetBanTimePeriod(input, Config.GetDoSConfiguration());
-		if (banningTime.Includes(DateTimeOffset.UtcNow))
+		var bannItem = Prison.GetBan(input, Config.GetDoSConfiguration());
+
+		if (bannItem.BanningTime.Includes(DateTimeOffset.UtcNow))
 		{
-			round.LogInfo($"{input} rejected. Banned until {banningTime.EndTime}");
-			throw new WabiSabiProtocolException(WabiSabiProtocolErrorCode.InputBanned, exceptionData: new InputBannedExceptionData(banningTime.EndTime));
+			round.LogInfo($"{input} rejected. {bannItem}");
+			throw new WabiSabiProtocolException(WabiSabiProtocolErrorCode.InputBanned, exceptionData: new InputBannedExceptionData(bannItem.BanningTime.EndTime, bannItem.Reasons));
 		}
 	}
 

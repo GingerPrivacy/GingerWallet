@@ -1,7 +1,6 @@
 using System.Collections.Immutable;
 using NBitcoin;
 using NBitcoin.Policy;
-using WalletWasabi.Helpers;
 using WalletWasabi.WabiSabi.Models;
 using WalletWasabi.WabiSabi.Models.MultipartyTransaction;
 

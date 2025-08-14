@@ -34,11 +34,14 @@
 
     <DockPanel VerticalAlignment="Center">
 
-      <TextBlock Margin="80 40" DockPanel.Dock="Bottom" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap">
+      <TextBlock Margin="80 40" DockPanel.Dock="Bottom" HorizontalAlignment="Center" TextAlignment="Center"
+                 TextWrapping="Wrap">
         <Run Text="{x:Static lang:Resources.SellSuccessText1}" />
-        <Run Text="{x:Static lang:Resources.SellSuccessText2}" FontWeight="Bold" Foreground="{DynamicResource SystemAccentCustomColorLight}" />
+        <Run Text="{x:Static lang:Resources.SellSuccessText2}" FontWeight="Bold"
+             Foreground="{DynamicResource SystemAccentCustomColorLight}" />
         <Run Text="{x:Static lang:Resources.SellSuccessText3}" />
-        <Run Text="{x:Static lang:Resources.SellSuccessText4}" FontWeight="Bold" Foreground="{DynamicResource SystemAccentCustomColorLight}"/>
+        <Run Text="{x:Static lang:Resources.SellSuccessText4}" FontWeight="Bold"
+             Foreground="{DynamicResource SystemAccentCustomColorLight}" />
         <Run Text="{x:Static lang:Resources.SellSuccessText5}" />
       </TextBlock>
 
@@ -47,7 +50,7 @@
                    FontWeight="Bold"
                    Text="{Binding Provider}"
                    Foreground="{DynamicResource SystemAccentCustomColorDark}"
-                   Opacity="0.8"/>
+                   Opacity="0.8" />
       </Viewbox>
 
     </DockPanel>
@@ -55,4 +58,3 @@
 
   </ContentArea>
 </UserControl>
-

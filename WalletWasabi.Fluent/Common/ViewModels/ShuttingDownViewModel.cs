@@ -20,12 +20,11 @@ public partial class ShuttingDownViewModel : RoutableViewModel
 		_applicationViewModel = applicationViewModel;
 		_restart = restart;
 
-		NextCommand = ReactiveCommand.CreateFromTask(
-			async () =>
-			{
-				await UiContext.CoinjoinModel.RestartAbortedCoinjoinsAsync();
-				UiContext.Navigate(CurrentTarget).Clear();
-			});
+		NextCommand = ReactiveCommand.CreateFromTask(async () =>
+		{
+			await UiContext.CoinjoinModel.RestartAbortedCoinjoinsAsync();
+			UiContext.Navigate(CurrentTarget).Clear();
+		});
 	}
 
 	protected override void OnNavigatedTo(bool isInHistory, CompositeDisposable disposables)
@@ -33,15 +32,15 @@ public partial class ShuttingDownViewModel : RoutableViewModel
 		RxApp.MainThreadScheduler.Schedule(async () => await UiContext.CoinjoinModel.SignalToStopCoinjoinsAsync());
 
 		Observable.Interval(TimeSpan.FromSeconds(3))
-				  .ObserveOn(RxApp.MainThreadScheduler)
-				  .Subscribe(_ =>
-				  {
-					  if (UiContext.CoinjoinModel.CanShutdown())
-					  {
-						  UiContext.Navigate(CurrentTarget).Clear();
-						  _applicationViewModel.Shutdown(_restart);
-					  }
-				  })
-				  .DisposeWith(disposables);
+			.ObserveOn(RxApp.MainThreadScheduler)
+			.Subscribe(_ =>
+			{
+				if (UiContext.CoinjoinModel.CanShutdown())
+				{
+					UiContext.Navigate(CurrentTarget).Clear();
+					_applicationViewModel.Shutdown(_restart);
+				}
+			})
+			.DisposeWith(disposables);
 	}
 }

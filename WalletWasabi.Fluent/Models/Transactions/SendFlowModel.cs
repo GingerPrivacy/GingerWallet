@@ -20,13 +20,13 @@ public record SendFlowModel
 	}
 
 	/// <summary>Regular Send Flow. Uses all wallet coins</summary>
-	public SendFlowModel(Wallet wallet, WalletModel walletModel):
+	public SendFlowModel(Wallet wallet, WalletModel walletModel) :
 		this(wallet, wallet.Coins, walletModel.Coins, walletModel)
 	{
 	}
 
 	/// <summary>Manual Control Send Flow. Uses only the specified coins.</summary>
-	public SendFlowModel(Wallet wallet, WalletModel walletModel, IEnumerable<SmartCoin> coins):
+	public SendFlowModel(Wallet wallet, WalletModel walletModel, IEnumerable<SmartCoin> coins) :
 		this(wallet, new CoinsView(coins), new UserSelectionCoinListModel(wallet, walletModel, coins.ToArray()), walletModel)
 	{
 	}
@@ -49,6 +49,6 @@ public record SendFlowModel
 
 	public Pocket[] GetPockets() =>
 		AvailableCoins.GetPockets(Wallet.AnonScoreTarget)
-					  .Select(x => new Pocket(x))
-		              .ToArray();
+			.Select(x => new Pocket(x))
+			.ToArray();
 }

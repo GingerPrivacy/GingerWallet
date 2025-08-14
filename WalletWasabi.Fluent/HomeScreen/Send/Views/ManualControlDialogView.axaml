@@ -17,7 +17,7 @@
                ScrollViewer.HorizontalScrollBarVisibility="Disabled">
     <ContentArea.TopContent>
       <StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Right">
-        <Button Theme="{StaticResource DialogSortButton}"  ToolTip.Tip="{x:Static lang:Resources.Sorting}">
+        <Button Theme="{StaticResource DialogSortButton}" ToolTip.Tip="{x:Static lang:Resources.Sorting}">
           <Button.Flyout>
             <Flyout Placement="BottomEdgeAlignedRight">
               <sorting:SortControl Sortables="{Binding CoinList.Sortables}" />

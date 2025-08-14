@@ -13,7 +13,7 @@
   </Interaction.Behaviors>
   <Panel>
     <shell1:MainScreen x:CompileBindings="False"
-                      IsHitTestVisible="{Binding $parent.DataContext.IsMainContentEnabled^, FallbackValue=True}">
+                       IsHitTestVisible="{Binding $parent.DataContext.IsMainContentEnabled^, FallbackValue=True}">
       <shell1:MainScreen.Transitions>
         <Transitions>
           <EffectTransition Property="Effect"

@@ -170,4 +170,9 @@ public class TestWallet : IKeyChain, IDestinationProvider
 		var path = isInternal ? "84'/0'/0'/1" : "84'/0'/0'/0";
 		return ExtKey.Derive(KeyPath.Parse($"{path}/{NextKeyIndex++}"));
 	}
+
+	public string SignMessage(string message, HdPubKey hdPubKey)
+	{
+		throw new NotImplementedException();
+	}
 }

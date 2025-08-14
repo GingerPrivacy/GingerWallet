@@ -1,7 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using NBitcoin;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using WalletWasabi.Extensions;
+using WalletWasabi.WabiSabi.Models;
 
 namespace WalletWasabi.WabiSabi.Backend.DoSPrevention;
 
@@ -18,12 +20,12 @@ public abstract record Offense();
 
 public record RoundDisruption(IEnumerable<uint256> DisruptedRoundIds, Money Value, RoundDisruptionMethod Method) : Offense
 {
-	public	RoundDisruption(uint256 disruptedRoundId, Money value, RoundDisruptionMethod method)
-		: this(disruptedRoundId.Singleton(), value, method) {}
+	public RoundDisruption(uint256 disruptedRoundId, Money value, RoundDisruptionMethod method)
+		: this(disruptedRoundId.Singleton(), value, method) { }
 }
 public record BackendStabilitySafety(uint256 RoundId) : Offense;
-public record FailedToVerify(uint256 VerifiedInRoundId) : Offense;
-public record Inherited(OutPoint[] Ancestors) : Offense;
+public record FailedToVerify(uint256 VerifiedInRoundId, TimeSpan RecommendedBanTime, string Provider) : Offense;
+public record Inherited(OutPoint[] Ancestors, InputBannedReasonEnum[] InputBannedReasonEnums) : Offense;
 public record Cheating(uint256 RoundId) : Offense;
 
 public record Offender(OutPoint OutPoint, DateTimeOffset StartedTime, Offense Offense)
@@ -54,25 +56,36 @@ public record Offender(OutPoint OutPoint, DateTimeOffset StartedTime, Offense Of
 						yield return disruptedRoundId.ToString();
 					}
 					break;
+
 				case BackendStabilitySafety backendStabilitySafety:
 					yield return nameof(BackendStabilitySafety);
 					yield return backendStabilitySafety.RoundId.ToString();
 					break;
+
 				case FailedToVerify fv:
 					yield return nameof(FailedToVerify);
 					yield return fv.VerifiedInRoundId.ToString();
+					yield return fv.RecommendedBanTime.ToString();
+					yield return fv.Provider;
 					break;
+
 				case Inherited inherited:
 					yield return nameof(Inherited);
 					foreach (var ancestor in inherited.Ancestors)
 					{
 						yield return ancestor.ToString();
 					}
+					foreach (var reason in inherited.InputBannedReasonEnums)
+					{
+						yield return reason.ToString();
+					}
 					break;
+
 				case Cheating cheating:
 					yield return nameof(Cheating);
 					yield return cheating.RoundId.ToString();
 					break;
+
 				default:
 					throw new NotImplementedException("Cannot serialize an unknown offense type.");
 			}
@@ -84,7 +97,6 @@ public record Offender(OutPoint OutPoint, DateTimeOffset StartedTime, Offense Of
 	public static Offender FromStringLine(string str)
 	{
 		var parts = str.Split(Separator);
-
 		var startedTime = DateTimeOffset.FromUnixTimeSeconds(long.Parse(parts[0]));
 		var outpoint = OutPoint.Parse(parts[1]);
 
@@ -106,20 +118,103 @@ public record Offender(OutPoint OutPoint, DateTimeOffset StartedTime, Offense Of
 			nameof(BackendStabilitySafety) =>
 				new BackendStabilitySafety(uint256.Parse(parts[3])),
 			nameof(FailedToVerify) =>
-				new FailedToVerify(uint256.Parse(parts[3])),
+				new FailedToVerify(
+					VerifiedInRoundId: uint256.Parse(parts[3]),
+					RecommendedBanTime: parts.Length > 4 ? TimeSpan.Parse(parts[4], CultureInfo.InvariantCulture) : TimeSpan.Zero,
+					Provider: parts.Length > 5 ? parts[5] : ""),
 			nameof(Inherited) =>
 				ParseInheritedOffense(),
 			nameof(Cheating) =>
 				new Cheating(uint256.Parse(parts[3])),
-		_ => throw new NotImplementedException("Cannot deserialize an unknown offense type.")
+			_ => throw new NotImplementedException("Cannot deserialize an unknown offense type.")
 		};
 
 		return new Offender(outpoint, startedTime, offense);
 
 		Offense ParseInheritedOffense()
 		{
-			var ancestors = parts.Skip(3).Select(OutPoint.Parse).ToArray();
-			return new Inherited(ancestors);
+			List<OutPoint> ancestors = [];
+			List<InputBannedReasonEnum> reasons = [];
+
+			foreach (var ancestorOrReason in parts.Skip(3))
+			{
+				if (OutPoint.TryParse(ancestorOrReason, out var outPoint))
+				{
+					ancestors.Add(outPoint!);
+				}
+				else if (Enum.TryParse<InputBannedReasonEnum>(ancestorOrReason, true, out var reason))
+				{
+					reasons.Add(reason);
+				}
+			}
+
+			return new Inherited(ancestors.ToArray(), reasons.ToArray());
 		}
+	}
+
+	public InputBannedReasonEnum[] GetReasonEnums()
+	{
+		return GetReasonEnums(this);
+	}
+
+	private static InputBannedReasonEnum[] GetReasonEnums(Offender offender)
+	{
+		List<InputBannedReasonEnum> reasonEnums = [];
+
+		switch (offender.Offense)
+		{
+			case RoundDisruption rd:
+				switch (rd.Method)
+				{
+					case RoundDisruptionMethod.DidNotConfirm:
+						reasonEnums.Add(InputBannedReasonEnum.RoundDisruptionMethodDidNotConfirm);
+						break;
+
+					case RoundDisruptionMethod.DidNotSignalReadyToSign:
+						reasonEnums.Add(InputBannedReasonEnum.RoundDisruptionMethodDidNotSignalReadyToSign);
+						break;
+
+					case RoundDisruptionMethod.DidNotSign:
+						reasonEnums.Add(InputBannedReasonEnum.RoundDisruptionMethodDidNotSign);
+						break;
+
+					case RoundDisruptionMethod.DoubleSpent:
+						reasonEnums.Add(InputBannedReasonEnum.RoundDisruptionMethodDoubleSpent);
+						break;
+
+					default:
+						throw new NotImplementedException("Unknown round disruption method.");
+				}
+				break;
+
+			case BackendStabilitySafety:
+				reasonEnums.Add(InputBannedReasonEnum.BackendStabilitySafety);
+				break;
+
+			case FailedToVerify ftv:
+				if (string.Equals(ftv.Provider, "local", StringComparison.InvariantCultureIgnoreCase))
+				{
+					reasonEnums.Add(InputBannedReasonEnum.LocalCoinVerifier);
+				}
+				else
+				{
+					reasonEnums.Add(InputBannedReasonEnum.FailedToVerify);
+				}
+				break;
+
+			case Inherited inherited:
+				reasonEnums.Add(InputBannedReasonEnum.Inherited);
+				reasonEnums.AddRange(inherited.InputBannedReasonEnums);
+				break;
+
+			case Cheating:
+				reasonEnums.Add(InputBannedReasonEnum.Cheating);
+				break;
+
+			default:
+				throw new NotImplementedException("Unknown offense type.");
+		}
+
+		return reasonEnums.Distinct().ToArray();
 	}
 }

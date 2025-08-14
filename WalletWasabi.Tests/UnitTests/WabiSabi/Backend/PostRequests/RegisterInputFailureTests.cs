@@ -154,7 +154,7 @@ public class RegisterInputFailureTests
 		var round = WabiSabiTestFactory.CreateRound(cfg);
 
 		Prison prison = WabiSabiTestFactory.CreatePrison();
-		prison.FailedVerification(coin.Outpoint, round.Id);
+		prison.FailedVerification(coin.Outpoint, round.Id, TimeSpan.Zero, "");
 		using Arena arena = await ArenaTestFactory.From(cfg, rpc, prison).CreateAndStartAsync(round);
 
 		var ownershipProof = WabiSabiTestFactory.CreateOwnershipProof(key, round.Id);

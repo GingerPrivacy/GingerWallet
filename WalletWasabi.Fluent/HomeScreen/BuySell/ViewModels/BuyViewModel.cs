@@ -130,7 +130,7 @@ public partial class BuyViewModel : RoutableViewModel
 
 		if (decimalAmount > MaxAmount)
 		{
-			errors.Add(ErrorSeverity.Error,Resources.AmountCannotExceed.SafeInject(MaxAmount.ToFormattedFiat(SelectedCurrency?.Ticker)));
+			errors.Add(ErrorSeverity.Error, Resources.AmountCannotExceed.SafeInject(MaxAmount.ToFormattedFiat(SelectedCurrency?.Ticker)));
 		}
 		else if (decimalAmount < MinAmount)
 		{
@@ -212,7 +212,6 @@ public partial class BuyViewModel : RoutableViewModel
 
 			MinAmount = min;
 			MaxAmount = max;
-
 		}
 		catch (Exception ex)
 		{

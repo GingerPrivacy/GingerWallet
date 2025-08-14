@@ -11,7 +11,7 @@ public class TorStatusCheckerModel
 	{
 		Issues =
 			Observable.FromEventPattern<Issue[]>(Services.TorStatusChecker, nameof(TorStatusChecker.StatusEvent))
-					  .Select(pattern => pattern.EventArgs.ToList());
+				.Select(pattern => pattern.EventArgs.ToList());
 	}
 
 	public IObservable<IList<Issue>> Issues { get; }

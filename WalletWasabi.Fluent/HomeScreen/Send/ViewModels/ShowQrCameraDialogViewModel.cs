@@ -63,10 +63,10 @@ public partial class ShowQrCameraDialogViewModel : DialogViewModelBase<string?>
 					}
 				},
 				onError: error => Dispatcher.UIThread.Post(async () =>
-					{
-						Close();
-						await ShowErrorAsync(Title, error.Message, "", NavigationTarget.CompactDialogScreen);
-					}))
+				{
+					Close();
+					await ShowErrorAsync(Title, error.Message, "", NavigationTarget.CompactDialogScreen);
+				}))
 			.DisposeWith(disposables);
 	}
 }

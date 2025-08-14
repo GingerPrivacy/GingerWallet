@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Reactive.Disposables;
 using NBitcoin;
 using ReactiveUI;
@@ -5,8 +6,10 @@ using System.Reactive.Linq;
 using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Blockchain.TransactionOutputs;
+using WalletWasabi.Extensions;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Lang;
+using WalletWasabi.WabiSabi.Models;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
 
@@ -18,6 +21,8 @@ public partial class CoinModel : ReactiveObject
 	[AutoNotify] private bool _isCoinJoinInProgress;
 	[AutoNotify] private bool _isBanned;
 	[AutoNotify] private string? _bannedUntilUtcToolTip;
+	[AutoNotify] private string? _banReason;
+	[AutoNotify] private string? _banDetails;
 	[AutoNotify] private string? _confirmedToolTip;
 	[AutoNotify] private int _anonScore;
 	[AutoNotify] private int _confirmations;
@@ -32,6 +37,7 @@ public partial class CoinModel : ReactiveObject
 		Labels = coin.GetLabels(anonScoreTarget);
 		Key = coin.Outpoint.GetHashCode();
 		BannedUntilUtc = coin.BannedUntilUtc;
+		BanReason = GetBanReason(coin.BanReasons);
 		ScriptType = ScriptType.FromEnum(coin.ScriptType);
 		Address = coin.HdPubKey.GetAddress(network);
 		Index = coin.HdPubKey.Index;
@@ -90,16 +96,40 @@ public partial class CoinModel : ReactiveObject
 		this.WhenAnyValue(c => c.Coin.HdPubKey.AnonymitySet).Select(x => (int)x).BindTo(this, x => x.AnonScore).DisposeWith(disposable);
 		this.WhenAnyValue(c => c.Coin.CoinJoinInProgress).BindTo(this, x => x.IsCoinJoinInProgress).DisposeWith(disposable);
 		this.WhenAnyValue(c => c.Coin.IsBanned).BindTo(this, x => x.IsBanned).DisposeWith(disposable);
-		this.WhenAnyValue(c => c.Coin.BannedUntilUtc).WhereNotNull().Subscribe(x => BannedUntilUtcToolTip = Resources.CantParticipateInCoinjoinUntil.SafeInject($"{x:g}")).DisposeWith(disposable);
+		this.WhenAnyValue(c => c.Coin.BannedUntilUtc).WhereNotNull().Subscribe(x => BannedUntilUtcToolTip = Resources.CantParticipateInCoinjoinUntil.SafeInject(x?.ToString("g", Resources.Culture))).DisposeWith(disposable);
+		this.WhenAnyValue(c => c.Coin.BanReasons).Subscribe(x => BanReason = GetBanReason(x)).DisposeWith(disposable);
 
-		this.WhenAnyValue(c => c.Coin.Height).Select(_ => Coin.GetConfirmations()).Subscribe(
-			confirmations =>
-			{
-				Confirmations = confirmations;
-				ConfirmedToolTip = TextHelpers.GetConfirmationText(confirmations);
-			}).DisposeWith(disposable);
+		this.WhenAnyValue(c => c.Coin.Height).Select(_ => Coin.GetConfirmations()).Subscribe(confirmations =>
+		{
+			Confirmations = confirmations;
+			ConfirmedToolTip = TextHelpers.GetConfirmationText(confirmations);
+		}).DisposeWith(disposable);
 
 		_subscribedToCoinChanges = true;
+	}
+
+	private string? GetBanReason(InputBannedReasonEnum[]? reasons)
+	{
+		if (reasons is null)
+		{
+			return null;
+		}
+
+		var hasInherited = false;
+		if (reasons.Contains(InputBannedReasonEnum.Inherited))
+		{
+			hasInherited = true;
+			reasons = reasons.Except([InputBannedReasonEnum.Inherited]).ToArray();
+		}
+
+		var reasonString = string.Join(@", ", reasons.Select(x => x.FriendlyName()));
+
+		if (hasInherited)
+		{
+			reasonString += $@" {InputBannedReasonEnum.Inherited.FriendlyName()}";
+		}
+
+		return reasonString;
 	}
 
 	public bool IsSameAddress(CoinModel anotherCoin) => anotherCoin is CoinModel cm && cm.Coin.HdPubKey == Coin.HdPubKey;

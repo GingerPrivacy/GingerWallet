@@ -3,7 +3,7 @@ using Avalonia.Controls;
 
 namespace WalletWasabi.Fluent.Controls;
 
-public class ThemeImage: Image
+public class ThemeImage : Image
 {
 	protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
 	{
@@ -12,11 +12,11 @@ public class ThemeImage: Image
 
 	protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
 	{
-		ActualThemeVariantChanged -= OnThemeVariantChanged;	
+		ActualThemeVariantChanged -= OnThemeVariantChanged;
 	}
 
 	private void OnThemeVariantChanged(object? sender, EventArgs e)
 	{
 		InvalidateVisual();
-	}	
+	}
 }

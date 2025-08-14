@@ -15,4 +15,3 @@ public class SellSuccessView : UserControl
 		AvaloniaXamlLoader.Load(this);
 	}
 }
-

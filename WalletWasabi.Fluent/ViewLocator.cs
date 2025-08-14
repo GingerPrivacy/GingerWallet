@@ -13,12 +13,13 @@ public partial class ViewLocator : IDataTemplate
 		{
 			throw new ArgumentNullException($"Param: {data}");
 		}
-		
+
 		var type = data.GetType();
 		if (s_views.TryGetValue(type, out var func))
 		{
 			return func.Invoke();
 		}
+
 		throw new Exception($"Unable to create view for type: {type}");
 	}
 

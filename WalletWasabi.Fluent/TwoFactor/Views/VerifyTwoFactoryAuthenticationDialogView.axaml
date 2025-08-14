@@ -16,7 +16,7 @@
                NextContent="{x:Static lang:Resources.Verify}">
     <DockPanel>
       <controls:TwoFactorEntryBox HorizontalAlignment="Center" DockPanel.Dock="Bottom"
-                         Text="{Binding TwoFactorToken, Mode=OneWayToSource}" />
+                                  Text="{Binding TwoFactorToken, Mode=OneWayToSource}" />
       <Label HorizontalAlignment="Center" DockPanel.Dock="Bottom">Verification code:</Label>
       <Viewbox MaxHeight="150" Margin="40">
         <PathIcon Data="{StaticResource shield_lock}" Opacity="0.6" />

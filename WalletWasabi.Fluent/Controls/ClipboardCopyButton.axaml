@@ -8,11 +8,13 @@
   <ControlTheme x:Key="{x:Type ClipboardCopyButton}" TargetType="ClipboardCopyButton">
 
     <Setter Property="RenderTransform" Value="scale(0.8,0.8)" />
-    <Setter Property="Opacity" Value="{Binding $self.ShowCopyButton, Converter={x:Static converters:BoolOpacityConverters.BoolToOpacity}}"/>
+    <Setter Property="Opacity"
+            Value="{Binding $self.ShowCopyButton, Converter={x:Static converters:BoolOpacityConverters.BoolToOpacity}}" />
     <Setter Property="Transitions">
       <Transitions>
-        <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.135" Easing="{StaticResource FluentEasing}" />
-        <DoubleTransition Property="Opacity" Duration="0:0:0.135" Easing="{StaticResource FluentEasing}"/>
+        <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.135"
+                                       Easing="{StaticResource FluentEasing}" />
+        <DoubleTransition Property="Opacity" Duration="0:0:0.135" Easing="{StaticResource FluentEasing}" />
       </Transitions>
     </Setter>
 

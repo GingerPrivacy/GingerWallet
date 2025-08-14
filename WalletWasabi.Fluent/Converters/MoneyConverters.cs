@@ -32,5 +32,5 @@ public static class MoneyConverters
 		new FuncValueConverter<Money?, string?>(n => n?.ToFeeDisplayUnitRawString());
 
 	public static readonly IValueConverter PercentageDifferenceConverter =
-			new FuncValueConverter<double, string>(TextHelpers.FormatPercentageDiff );
+		new FuncValueConverter<double, string>(TextHelpers.FormatPercentageDiff);
 }

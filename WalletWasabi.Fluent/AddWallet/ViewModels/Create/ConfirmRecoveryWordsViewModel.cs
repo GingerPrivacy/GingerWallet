@@ -55,9 +55,9 @@ public partial class ConfirmRecoveryWordsViewModel : RoutableViewModel
 
 		var nextCommandCanExecute =
 			confirmationWordsSourceList
-			.Connect()
-			.WhenValueChanged(x => x.IsConfirmed)
-			.Select(_ => confirmationWordsSourceList.Items.All(x => x.IsConfirmed));
+				.Connect()
+				.WhenValueChanged(x => x.IsConfirmed)
+				.Select(_ => confirmationWordsSourceList.Items.All(x => x.IsConfirmed));
 
 		NextCommand = ReactiveCommand.CreateFromTask(OnNextAsync, nextCommandCanExecute);
 

@@ -63,23 +63,23 @@ public partial class OrdersViewModel : RoutableViewModel
 		[
 			new SortableItem(Resources.Status)
 			{
-				SortByAscendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[0], ListSortDirection.Ascending)),
-				SortByDescendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[0], ListSortDirection.Descending))
+				SortByAscendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource)Source).SortBy(Source.Columns[0], ListSortDirection.Ascending)),
+				SortByDescendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource)Source).SortBy(Source.Columns[0], ListSortDirection.Descending))
 			},
 			new SortableItem(Resources.Date)
 			{
-				SortByAscendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[1], ListSortDirection.Ascending)),
-				SortByDescendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[1], ListSortDirection.Descending))
+				SortByAscendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource)Source).SortBy(Source.Columns[1], ListSortDirection.Ascending)),
+				SortByDescendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource)Source).SortBy(Source.Columns[1], ListSortDirection.Descending))
 			},
 			new SortableItem(Resources.Amount)
 			{
-				SortByAscendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[2], ListSortDirection.Ascending)),
-				SortByDescendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[2], ListSortDirection.Descending))
+				SortByAscendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource)Source).SortBy(Source.Columns[2], ListSortDirection.Ascending)),
+				SortByDescendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource)Source).SortBy(Source.Columns[2], ListSortDirection.Descending))
 			},
 			new SortableItem(Resources.Provider)
 			{
-				SortByAscendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[3], ListSortDirection.Ascending)),
-				SortByDescendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[3], ListSortDirection.Descending))
+				SortByAscendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource)Source).SortBy(Source.Columns[3], ListSortDirection.Ascending)),
+				SortByDescendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource)Source).SortBy(Source.Columns[3], ListSortDirection.Descending))
 			},
 		];
 	}

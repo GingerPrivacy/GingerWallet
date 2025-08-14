@@ -13,7 +13,7 @@
                            Classes="monoSpaced bold"
                            UseOpacity="True"
                            MaxWidth="390">
-      <TextBlock Text="{Binding AddressText}" ToolTip.Tip="{Binding AddressText}" TextTrimming="CharacterEllipsis"/>
+      <TextBlock Text="{Binding AddressText}" ToolTip.Tip="{Binding AddressText}" TextTrimming="CharacterEllipsis" />
     </PrivacyContentControl>
   </DockPanel>
 </UserControl>

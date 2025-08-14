@@ -22,7 +22,8 @@
           </Border.Effect>
           <DockPanel>
             <TextBlock Text="{TemplateBinding Title}" Opacity="0.6" FontWeight="Bold" DockPanel.Dock="Top" Classes="h8" />
-            <ContentPresenter Content="{TemplateBinding BottomContent}" DockPanel.Dock="Bottom" IsVisible="{TemplateBinding IsBottomContentVisible}" />
+            <ContentPresenter Content="{TemplateBinding BottomContent}" DockPanel.Dock="Bottom"
+                              IsVisible="{TemplateBinding IsBottomContentVisible}" />
             <ContentPresenter Name="PART_Content" Content="{TemplateBinding Content}" />
           </DockPanel>
         </Border>

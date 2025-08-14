@@ -1,5 +1,6 @@
 using Moq;
 using NBitcoin;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WalletWasabi.Tests.Helpers;
@@ -7,6 +8,7 @@ using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.WabiSabi;
 using WalletWasabi.WabiSabi.Backend.DoSPrevention;
 using WalletWasabi.WabiSabi.Backend.Rounds.CoinJoinStorage;
+using WalletWasabi.WabiSabi.Models;
 using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests.WabiSabi.Backend;
@@ -44,11 +46,13 @@ public class UtxoPrisonWardenTests
 		var i3 = BitcoinFactory.CreateOutPoint();
 		var i4 = BitcoinFactory.CreateOutPoint();
 		var i5 = BitcoinFactory.CreateOutPoint();
-		w.Prison.FailedVerification(i1, uint256.One);
+		var i6 = BitcoinFactory.CreateOutPoint();
+		w.Prison.FailedVerification(i1, uint256.One, TimeSpan.Zero, "local"); // For local we will add a special reason.
 		w.Prison.FailedToConfirm(i2, Money.Coins(0.01m), uint256.One);
 		w.Prison.FailedToSign(i3, Money.Coins(0.1m), uint256.One);
 		w.Prison.DoubleSpent(i4, Money.Coins(0.1m), uint256.One);
 		w.Prison.CheatingDetected(i5, uint256.One);
+		w.Prison.InheritPunishment(i6, [i3], [InputBannedReasonEnum.RoundDisruptionMethodDidNotSignalReadyToSign]);
 
 		// Wait until serializes.
 		await w.StopAsync(CancellationToken.None);
@@ -66,6 +70,11 @@ public class UtxoPrisonWardenTests
 		Assert.True(w2.Prison.IsBanned(i3, dosConfig, DateTimeOffset.UtcNow));
 		Assert.True(w2.Prison.IsBanned(i4, dosConfig, DateTimeOffset.UtcNow));
 		Assert.True(w2.Prison.IsBanned(i5, dosConfig, DateTimeOffset.UtcNow));
+		Assert.True(w2.Prison.IsBanned(i6, dosConfig, DateTimeOffset.UtcNow));
+
+		Assert.Equal(InputBannedReasonEnum.LocalCoinVerifier, w2.Prison.GetBan(i1, dosConfig).Reasons.First());
+
+		Assert.Equal([InputBannedReasonEnum.Inherited, InputBannedReasonEnum.RoundDisruptionMethodDidNotSignalReadyToSign], w2.Prison.GetBan(i6, dosConfig).Reasons.OrderBy(x => x));
 
 		await w2.StopAsync(CancellationToken.None);
 	}

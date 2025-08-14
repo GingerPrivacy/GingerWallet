@@ -11,12 +11,14 @@ using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.Screenshot;
+
 public static class Capture
 {
 	public static void AttachCapture(this TopLevel root)
 	{
 		AttachCapture(root, new(Key.F6));
 	}
+
 	public static void AttachCapture(this TopLevel root, KeyGesture gesture)
 	{
 		async void Handler(object? sender, KeyEventArgs args)
@@ -26,8 +28,10 @@ public static class Capture
 				await SaveAsync(root);
 			}
 		}
+
 		root.AddHandler(InputElement.KeyDownEvent, Handler, RoutingStrategies.Tunnel);
 	}
+
 	private static async Task SaveAsync(TopLevel root)
 	{
 		var file = await FileDialogHelper.SaveFileAsync(
@@ -43,7 +47,7 @@ public static class Capture
 
 	private static void RenderAsPng(Control target, Size size, FileStream stream)
 	{
-		var pixelSize = new PixelSize((int) size.Width, (int) size.Height);
+		var pixelSize = new PixelSize((int)size.Width, (int)size.Height);
 		var dpiVector = new Vector(96d, 96d);
 		using var bitmap = new RenderTargetBitmap(pixelSize, dpiVector);
 		target.Measure(size);
@@ -55,7 +59,7 @@ public static class Capture
 	private static async Task RenderAsSvgAsync(Stream stream, Size size, Visual visual)
 	{
 		using var managedWStream = new SKManagedWStream(stream);
-		var bounds = SKRect.Create(new SKSize((float) size.Width, (float) size.Height));
+		var bounds = SKRect.Create(new SKSize((float)size.Width, (float)size.Height));
 		using var canvas = SKSvgCanvas.Create(bounds, managedWStream);
 		await DrawingContextHelper.RenderAsync(canvas, visual);
 	}
@@ -66,6 +70,7 @@ public static class Capture
 		{
 			return;
 		}
+
 		var extension = Path.GetExtension(path);
 		switch (extension.ToLower(Resources.Culture))
 		{

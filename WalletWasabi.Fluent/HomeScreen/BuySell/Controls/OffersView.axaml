@@ -87,7 +87,8 @@
 
                     <!-- Amount and labels -->
                     <DockPanel DockPanel.Dock="Left" Margin="10 0 10 0" VerticalAlignment="Center">
-                      <StackPanel Orientation="Horizontal" Spacing="10" DockPanel.Dock="Bottom" HorizontalAlignment="Center">
+                      <StackPanel Orientation="Horizontal" Spacing="10" DockPanel.Dock="Bottom"
+                                  HorizontalAlignment="Center">
                         <StackPanel.Styles>
                           <Style Selector="Border">
                             <Setter Property="Padding" Value="8 2" />
@@ -119,18 +120,20 @@
                           </Style>
                         </StackPanel.Styles>
                         <Border>
-                          <StackPanel >
-                            <TextBlock Name="PaymentTb" Classes="title" Text="{x:Static lang:Resources.Payment}" ToolTip.Tip="{Binding #PaymentTb.Text}" />
+                          <StackPanel>
+                            <TextBlock Name="PaymentTb" Classes="title" Text="{x:Static lang:Resources.Payment}"
+                                       ToolTip.Tip="{Binding #PaymentTb.Text}" />
                             <TextBlock Classes="value" Text="{Binding Offer.MethodName}" />
                           </StackPanel>
                         </Border>
 
                         <Border>
-                          <StackPanel >
+                          <StackPanel>
                             <TextBlock Name="FeeTb" Classes="title" Text="{x:Static lang:Resources.Fee}" />
                             <TextBlock Classes="value" Text="{Binding Fee}" ToolTip.Tip="{Binding #FeeTb.Text}" />
                             <Viewbox Width="15" Height="15" Margin="0 -1 0 0" ClipToBounds="False">
-                              <PathIcon Opacity="0.6" Height="20" Width="20" Data="{StaticResource question_circle}" ToolTip.Tip="{Binding FeeToolTip}"/>
+                              <PathIcon Opacity="0.6" Height="20" Width="20" Data="{StaticResource question_circle}"
+                                        ToolTip.Tip="{Binding FeeToolTip}" />
                             </Viewbox>
                           </StackPanel>
                         </Border>
@@ -138,8 +141,9 @@
                       </StackPanel>
 
                       <!-- Amounts -->
-                      <CopyableItem ContentToCopy="{Binding Offer.AmountTo}" VerticalAlignment="Bottom" HorizontalAlignment="Center" DockPanel.Dock="Top">
-                        <TextBlock Text="{Binding Amount}" FontWeight="Bold" FontSize="20"  />
+                      <CopyableItem ContentToCopy="{Binding Offer.AmountTo}" VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Center" DockPanel.Dock="Top">
+                        <TextBlock Text="{Binding Amount}" FontWeight="Bold" FontSize="20" />
                       </CopyableItem>
 
                     </DockPanel>

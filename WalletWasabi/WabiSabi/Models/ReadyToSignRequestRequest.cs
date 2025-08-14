@@ -1,4 +1,3 @@
-using System.Linq;
 using NBitcoin;
 using Newtonsoft.Json;
 

@@ -1,12 +1,12 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:conv="using:WalletWasabi.Fluent.Converters"
-        xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:conv="using:WalletWasabi.Fluent.Converters"
+                    xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi">
 
   <Design.PreviewWith>
     <Border Width="200">
       <PreviewMessageItem Label="Transaction ID" Icon="{DynamicResource tor_icon}"
-                     CopyableContent="Text to copy" />
+                          CopyableContent="Text to copy" />
     </Border>
   </Design.PreviewWith>
 
@@ -16,13 +16,13 @@
         <DockPanel Background="Transparent"
                    Margin="{TemplateBinding Margin}">
           <ClipboardCopyButton x:Name="PART_ClipboardCopyButton"
-                                 ToolTip.Tip="{x:Static lang:Resources.Copy}"
-                                 DockPanel.Dock="{TemplateBinding CopyButtonPlacement}"
-                                 Width="30"
-                                 Text="{Binding Path=CopyableContent, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static conv:StringConverters.AsString}}"
-                                 ShowCopyButton="{TemplateBinding IsCopyButtonVisible}"
-                                 VerticalAlignment="Center"
-                                 HorizontalAlignment="Center"/>
+                               ToolTip.Tip="{x:Static lang:Resources.Copy}"
+                               DockPanel.Dock="{TemplateBinding CopyButtonPlacement}"
+                               Width="30"
+                               Text="{Binding Path=CopyableContent, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static conv:StringConverters.AsString}}"
+                               ShowCopyButton="{TemplateBinding IsCopyButtonVisible}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center" />
           <Button Classes="plain"
                   ToolTip.Tip="{x:Static lang:Resources.Edit}"
                   Command="{TemplateBinding EditCommand}"
@@ -83,7 +83,8 @@
     </Style>
 
     <!-- Transitions -->
-    <Style Selector="^/template/ ContentPresenter#PART_ContentPresenter,
+    <Style
+      Selector="^/template/ ContentPresenter#PART_ContentPresenter,
                    ^/template/ TextBlock#PART_ContentReplacementTextBlock">
       <Setter Property="Transitions">
         <Transitions>
@@ -91,11 +92,13 @@
         </Transitions>
       </Setter>
     </Style>
-    <Style Selector="^/template/ TextBlock#PART_ContentReplacementTextBlock[IsVisible=True],
+    <Style
+      Selector="^/template/ TextBlock#PART_ContentReplacementTextBlock[IsVisible=True],
                    ^/template/ ContentPresenter#PART_ContentPresenter[IsVisible=True]">
       <Setter Property="Opacity" Value="1" />
     </Style>
-    <Style Selector="^/template/ TextBlock#PART_ContentReplacementTextBlock[IsVisible=False],
+    <Style
+      Selector="^/template/ TextBlock#PART_ContentReplacementTextBlock[IsVisible=False],
                    ^/template/ ContentPresenter#PART_ContentPresenter[IsVisible=False]">
       <Setter Property="Opacity" Value="0" />
     </Style>

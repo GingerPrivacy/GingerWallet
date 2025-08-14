@@ -8,7 +8,6 @@ using WabiSabi.Crypto.ZeroKnowledge;
 using WalletWasabi.Crypto;
 using WalletWasabi.Helpers;
 using WalletWasabi.Logging;
-using WalletWasabi.Userfacing.Bip21;
 using WalletWasabi.WabiSabi.Backend.Models;
 using WalletWasabi.WabiSabi.Client.CredentialDependencies;
 

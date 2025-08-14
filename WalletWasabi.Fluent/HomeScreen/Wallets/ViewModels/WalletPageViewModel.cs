@@ -1,15 +1,11 @@
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using ReactiveUI;
 using WalletWasabi.Fluent.Common.ViewModels;
-using WalletWasabi.Fluent.Extensions;
-using WalletWasabi.Fluent.HomeScreen.Loading.ViewModels;
 using WalletWasabi.Fluent.Login.ViewModels;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.Models;
 using WalletWasabi.Fluent.Navigation.ViewModels;
-using WalletWasabi.Services;
 using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.HomeScreen.Wallets.ViewModels;
@@ -86,8 +82,8 @@ public partial class WalletPageViewModel : ViewModelBase, IDisposable
 	{
 		WalletViewModel =
 			WalletModel.IsHardwareWallet
-			? new HardwareWalletViewModel(WalletModel, Wallet)
-			: new WalletViewModel(WalletModel, Wallet);
+				? new HardwareWalletViewModel(WalletModel, Wallet)
+				: new WalletViewModel(WalletModel, Wallet);
 
 		this.WhenAnyValue(x => x.WalletModel.Loader.IsLoading)
 			.BindTo(this, x => x.IsLoading)

@@ -58,7 +58,8 @@
     <Setter Property="ContentTemplate">
       <Setter.Value>
         <DataTemplate>
-          <PathIcon Height="11" Opacity="0.6" Foreground="{DynamicResource AcrylicTrimForeground}" Data="{StaticResource sorting}" />
+          <PathIcon Height="11" Opacity="0.6" Foreground="{DynamicResource AcrylicTrimForeground}"
+                    Data="{StaticResource sorting}" />
         </DataTemplate>
       </Setter.Value>
     </Setter>
@@ -95,7 +96,8 @@
       <Setter Property="ContentTemplate">
         <Setter.Value>
           <DataTemplate>
-            <PathIcon Height="13" Foreground="{DynamicResource AcrylicTrimForeground}" Data="{StaticResource select_all}" />
+            <PathIcon Height="13" Foreground="{DynamicResource AcrylicTrimForeground}"
+                      Data="{StaticResource select_all}" />
           </DataTemplate>
         </Setter.Value>
       </Setter>
@@ -105,7 +107,8 @@
       <Setter Property="ContentTemplate">
         <Setter.Value>
           <DataTemplate>
-            <PathIcon Height="13" Foreground="{DynamicResource AcrylicTrimForeground}" Data="{StaticResource select_none}" />
+            <PathIcon Height="13" Foreground="{DynamicResource AcrylicTrimForeground}"
+                      Data="{StaticResource select_none}" />
           </DataTemplate>
         </Setter.Value>
       </Setter>

@@ -44,5 +44,5 @@ public class DummyRowsControl : TemplatedControl
 		set => SetValue(RowTemplateProperty, value);
 	}
 
-	private static IEnumerable<int> GenerateItems(double rowHeight, Rect bounds) => Enumerable.Range(0, (int) Math.Ceiling(bounds.Height / rowHeight));
+	private static IEnumerable<int> GenerateItems(double rowHeight, Rect bounds) => Enumerable.Range(0, (int)Math.Ceiling(bounds.Height / rowHeight));
 }

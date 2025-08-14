@@ -61,10 +61,14 @@
     <SolidColorBrush x:Key="ToggleSwitchKnobFillOnPressed" Color="{DynamicResource AcrylicTrimForeground}" />
 
     <!--Disabled overrides-->
-    <SolidColorBrush Opacity="0.6" x:Key="ToggleSwitchHeaderForegroundDisabled" Color="{DynamicResource AcrylicTrimForeground}" />
-    <SolidColorBrush Opacity="0.6" x:Key="ToggleSwitchStrokeOffDisabled" Color="{DynamicResource AcrylicTrimForeground}" />
-    <SolidColorBrush Opacity="0.6" x:Key="ToggleSwitchKnobFillOffDisabled" Color="{DynamicResource AcrylicTrimForeground}" />
-    <SolidColorBrush Opacity="0.6" x:Key="ToggleSwitchKnobFillOnDisabled" Color="{DynamicResource AcrylicTrimForeground}" />
+    <SolidColorBrush Opacity="0.6" x:Key="ToggleSwitchHeaderForegroundDisabled"
+                     Color="{DynamicResource AcrylicTrimForeground}" />
+    <SolidColorBrush Opacity="0.6" x:Key="ToggleSwitchStrokeOffDisabled"
+                     Color="{DynamicResource AcrylicTrimForeground}" />
+    <SolidColorBrush Opacity="0.6" x:Key="ToggleSwitchKnobFillOffDisabled"
+                     Color="{DynamicResource AcrylicTrimForeground}" />
+    <SolidColorBrush Opacity="0.6" x:Key="ToggleSwitchKnobFillOnDisabled"
+                     Color="{DynamicResource AcrylicTrimForeground}" />
     <SolidColorBrush Opacity="0.6" x:Key="ToggleSwitchFillOnDisabled" Color="{DynamicResource AcrylicTrimForeground}" />
     <SolidColorBrush Opacity="0.6" x:Key="ToggleSwitchStrokeOnDisabled" Color="{DynamicResource AcrylicTrimForeground}" />
     <!--Disabled overrides-->
@@ -76,7 +80,8 @@
     <settings:SettingSelector>
       <settings:SettingSelector.DataTemplates>
         <DataTemplate DataType="x:Boolean">
-          <ToggleSwitch Focusable="False" x:CompileBindings="False" HorizontalAlignment="Right" IsChecked="{Binding Value, Mode=TwoWay}" />
+          <ToggleSwitch Focusable="False" x:CompileBindings="False" HorizontalAlignment="Right"
+                        IsChecked="{Binding Value, Mode=TwoWay}" />
         </DataTemplate>
       </settings:SettingSelector.DataTemplates>
     </settings:SettingSelector>
@@ -87,7 +92,8 @@
         <Panel DockPanel.Dock="Left" Width="16" Height="16" Opacity="0.8" VerticalAlignment="Center">
           <PathIcon Data="{Binding Icon, Converter={x:Static conv:NavBarIconConverter.Instance}}" />
         </Panel>
-        <TextBlock Margin="10 0 10 0" Text="{Binding Name}" VerticalAlignment="Center" IsVisible="{Binding Name, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+        <TextBlock Margin="10 0 10 0" Text="{Binding Name}" VerticalAlignment="Center"
+                   IsVisible="{Binding Name, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
         <ContentControl HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Stretch"
                         Content="{Binding Content}" />
@@ -97,15 +103,18 @@
     <DataTemplate DataType="searchItems:ActionableItem">
 
       <Button ClickMode="Press" Focusable="False" Classes="searchItem" Background="Transparent"
-              Foreground="{DynamicResource AcrylicTrimForeground}" HorizontalAlignment="Stretch" Padding="0" Cursor="Hand">
+              Foreground="{DynamicResource AcrylicTrimForeground}" HorizontalAlignment="Stretch" Padding="0"
+              Cursor="Hand">
 
         <DockPanel Background="Transparent" Margin="10">
-          <PathIcon DockPanel.Dock="Left" Width="16" Height="16" Opacity="0.8" VerticalAlignment="Center" Foreground="{DynamicResource AcrylicTrimForeground}"
+          <PathIcon DockPanel.Dock="Left" Width="16" Height="16" Opacity="0.8" VerticalAlignment="Center"
+                    Foreground="{DynamicResource AcrylicTrimForeground}"
                     Data="{Binding Icon, Converter={x:Static conv:NavBarIconConverter.Instance}}" />
           <TextBlock Margin="10 0 10 0" Text="{Binding Name}"
                      ToolTip.Tip="{Binding Name}"
-                     VerticalAlignment="Center"  TextTrimming="CharacterEllipsis" MaxWidth="150" />
-          <TextBlock Opacity="0.5" VerticalAlignment="Center" ToolTip.Tip="{Binding Description}" Text="{Binding Description}"
+                     VerticalAlignment="Center" TextTrimming="CharacterEllipsis" MaxWidth="150" />
+          <TextBlock Opacity="0.5" VerticalAlignment="Center" ToolTip.Tip="{Binding Description}"
+                     Text="{Binding Description}"
                      TextTrimming="CharacterEllipsis" />
         </DockPanel>
 
@@ -113,7 +122,8 @@
           <ButtonClickEventTriggerBehavior>
             <FocusControlAction TargetControl="{x:Static helpers:ApplicationHelper.MainWindow}" />
             <InvokeCommandAction Command="{Binding Command}" />
-            <InvokeCommandAction Command="{Binding $parent[views:SearchBar].((viewModels:SearchBarViewModel)DataContext).ResetCommand}" />
+            <InvokeCommandAction
+              Command="{Binding $parent[views:SearchBar].((viewModels:SearchBarViewModel)DataContext).ResetCommand}" />
           </ButtonClickEventTriggerBehavior>
         </Interaction.Behaviors>
       </Button>
@@ -122,7 +132,7 @@
 
   <Panel VerticalAlignment="Center">
     <TextBlock IsVisible="{Binding !#Items.IsVisible, FallbackValue=False}" Margin="10"
-               Text="{x:Static lang:Resources.NoResults}"/>
+               Text="{x:Static lang:Resources.NoResults}" />
     <ItemsControl x:Name="Items" IsVisible="{Binding !!Groups.Count}" ItemsSource="{Binding Groups}">
       <ItemsControl.ItemTemplate>
         <DataTemplate DataType="{x:Type viewModels:SearchItemGroup}">

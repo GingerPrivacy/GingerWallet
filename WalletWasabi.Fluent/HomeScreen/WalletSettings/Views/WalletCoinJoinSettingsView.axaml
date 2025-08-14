@@ -31,7 +31,8 @@
           </DataTemplate>
         </ComboBox.ItemTemplate>
       </ComboBox>
-      <PathIcon DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0" Data="{StaticResource warning_regular}"
+      <PathIcon DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0"
+                Data="{StaticResource warning_regular}"
                 Foreground="{DynamicResource WarningMessageForeground}" Height="17">
         <ToolTip.Tip>
           <TextBlock>
@@ -70,7 +71,8 @@
       <ComboBox ItemsSource="{Binding TimeFrames}" SelectedItem="{Binding SelectedTimeFrame}" />
     </DockPanel>
 
-    <DockPanel IsVisible="{Binding IgnoreCostOptimizationVisible}" ToolTip.Tip="{x:Static lang:Resources.SafeFeeToolTip}">
+    <DockPanel IsVisible="{Binding IgnoreCostOptimizationVisible}"
+               ToolTip.Tip="{x:Static lang:Resources.SafeFeeToolTip}">
       <TextBlock Text="{x:Static lang:Resources.SafeFeeText}" />
       <CurrencyEntryBox Text="{Binding SafeMiningFeeRate}" CurrencyCode="sat/vByte"
                         MaxDecimals="2" Classes="standalone hideValidations" Watermark="1 sat/vByte" />
@@ -80,8 +82,10 @@
 
     <DockPanel>
       <TextBlock Text="{x:Static lang:Resources.ExperimentalCoinJoinCoinSelector}" />
-      <ToggleSwitch IsChecked="{Binding UseExperimentalCoinSelector}" DockPanel.Dock="Right"/>
-      <Button Classes="plain" IsVisible="{Binding UseExperimentalCoinSelector}" Command="{Binding CoinjoinConfigurationCommand}" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0 0 10 0" ToolTip.Tip="{x:Static lang:Resources.Configuration}">
+      <ToggleSwitch IsChecked="{Binding UseExperimentalCoinSelector}" DockPanel.Dock="Right" />
+      <Button Classes="plain" IsVisible="{Binding UseExperimentalCoinSelector}"
+              Command="{Binding CoinjoinConfigurationCommand}" DockPanel.Dock="Right" HorizontalAlignment="Right"
+              Margin="0 0 10 0" ToolTip.Tip="{x:Static lang:Resources.Configuration}">
         <PathIcon Data="{StaticResource nav_settings_24_regular}" Opacity="0.6" />
       </Button>
     </DockPanel>

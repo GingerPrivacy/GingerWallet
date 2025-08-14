@@ -8,7 +8,8 @@
              x:DataType="viewModels:AddressViewModel"
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.HomeScreen.Receive.Views.Columns.ActionsColumnView">
-  <Border CornerRadius="30" HorizontalAlignment="Right" Margin="0 0 2 0" Background="{DynamicResource Layer2BackgroundBrush}">
+  <Border CornerRadius="30" HorizontalAlignment="Right" Margin="0 0 2 0"
+          Background="{DynamicResource Layer2BackgroundBrush}">
     <Border.Styles>
       <Style Selector="AnimatedButton /template/ PathIcon">
         <Setter Property="Height" Value="15" />

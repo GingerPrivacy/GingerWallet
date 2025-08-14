@@ -25,36 +25,35 @@ public class QrCodeReader
 
 	public IObservable<(string decoded, Bitmap bitmap)> Read()
 	{
-		return Observable.Create(
-			async (IObserver<(string, Bitmap)> result, CancellationToken ct) =>
-			{
-				var devices = new CaptureDevices();
-				var device = devices
-					.EnumerateDescriptors()
-					.Where(static d => d is not VideoForWindowsDeviceDescriptor)
-					.SelectMany(static d => d.Characteristics, static (d, c) => new { d, c })
-					.FirstOrDefault() ?? throw new InvalidOperationException("Could not find a device.");
+		return Observable.Create(async (IObserver<(string, Bitmap)> result, CancellationToken ct) =>
+		{
+			var devices = new CaptureDevices();
+			var device = devices
+				.EnumerateDescriptors()
+				.Where(static d => d is not VideoForWindowsDeviceDescriptor)
+				.SelectMany(static d => d.Characteristics, static (d, c) => new { d, c })
+				.FirstOrDefault() ?? throw new InvalidOperationException("Could not find a device.");
 
-				await using var capture = await device.d
-					.OpenAsync(
-						device.c,
-						ct: ct,
-						pixelBufferArrived: scope =>
-						{
-							var decoded = Decode(scope);
-							var bitmap = new Bitmap(scope.Buffer.ReferImage().AsStream());
+			await using var capture = await device.d
+				.OpenAsync(
+					device.c,
+					ct: ct,
+					pixelBufferArrived: scope =>
+					{
+						var decoded = Decode(scope);
+						var bitmap = new Bitmap(scope.Buffer.ReferImage().AsStream());
 
-							result.OnNext((decoded, bitmap));
-						})
-					.ConfigureAwait(false);
+						result.OnNext((decoded, bitmap));
+					})
+				.ConfigureAwait(false);
 
-				var tcs = new TaskCompletionSource<object?>();
+			var tcs = new TaskCompletionSource<object?>();
 
-				ct.Register(() => tcs.TrySetResult(default));
+			ct.Register(() => tcs.TrySetResult(default));
 
-				await capture.StartAsync(ct).ConfigureAwait(false);
-				await tcs.Task.ConfigureAwait(false);
-			});
+			await capture.StartAsync(ct).ConfigureAwait(false);
+			await tcs.Task.ConfigureAwait(false);
+		});
 	}
 
 	private string Decode(PixelBufferScope scope)

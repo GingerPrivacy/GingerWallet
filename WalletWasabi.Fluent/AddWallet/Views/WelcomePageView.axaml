@@ -86,10 +86,10 @@
         <DockPanel Grid.Row="1" VerticalAlignment="Center">
           <TextBlock Text="{x:Static lang:Resources.WelcomeToGingerWallet}" FontSize="30" HorizontalAlignment="Center"
                      FontWeight="Bold"
-                     DockPanel.Dock="Top"/>
+                     DockPanel.Dock="Top" />
           <TextBlock Margin="0 20 0 10" TextAlignment="Center" HorizontalAlignment="Center"
                      Text="{x:Static lang:Resources.SelectPreferredLanguage}"
-                     DockPanel.Dock="Top"/>
+                     DockPanel.Dock="Top" />
           <ListBox MaxWidth="300" DockPanel.Dock="Bottom" HorizontalAlignment="Stretch"
                    ItemsSource="{Binding DisplayLanguagesList}"
                    SelectedItem="{Binding SelectedDisplayLanguage}">

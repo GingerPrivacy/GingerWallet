@@ -24,16 +24,17 @@
         </ComboBox.ItemTemplate>
         <ComboBox.Styles>
           <Style Selector="ComboBox /template/ Border#Background">
-            <Setter Property="CornerRadius" Value="30"/>
+            <Setter Property="CornerRadius" Value="30" />
           </Style>
           <Style Selector="ComboBox /template/ Border#HighlightBackground">
-            <Setter Property="CornerRadius" Value="30"/>
+            <Setter Property="CornerRadius" Value="30" />
           </Style>
         </ComboBox.Styles>
       </ComboBox>
     </DockPanel>
 
-    <DockPanel IsVisible="{Binding Settings.UseTor, ConverterParameter={x:Static basemodels:TorMode.Enabled}, Converter={x:Static conv:EnumToBoolConverter.Instance}}">
+    <DockPanel
+      IsVisible="{Binding Settings.UseTor, ConverterParameter={x:Static basemodels:TorMode.Enabled}, Converter={x:Static conv:EnumToBoolConverter.Instance}}">
       <TextBlock Text="{x:Static lang:Resources.TerminateTorWhenShutdown}" />
       <ToggleSwitch IsChecked="{Binding Settings.TerminateTorOnExit}" />
     </DockPanel>

@@ -32,7 +32,21 @@ public class CoinVerifier : IAsyncDisposable
 		VerifierAuditArchiver = auditArchiver ?? new("test/directory/path");
 	}
 
-	public event EventHandler<Coin>? CoinBlacklisted;
+	public class CoinBlacklistedEventArgs : EventArgs
+	{
+		public Coin Coin { get; }
+		public TimeSpan RecommendedBanTime { get; }
+		public string Provider { get; }
+
+		public CoinBlacklistedEventArgs(Coin coin, TimeSpan recommendedBanTime, string provider)
+		{
+			Coin = coin;
+			RecommendedBanTime = recommendedBanTime;
+			Provider = provider;
+		}
+	}
+
+	public event EventHandler<CoinBlacklistedEventArgs>? CoinBlacklisted;
 
 	// This should be much bigger than the possible input-reg period.
 	private TimeSpan AbsoluteScheduleSanityTimeout { get; } = TimeSpan.FromDays(2);
@@ -231,7 +245,7 @@ public class CoinVerifier : IAsyncDisposable
 					// We got a definitive answer.
 					if (apiResponseItem.ShouldBan)
 					{
-						CoinBlacklisted?.SafeInvoke(this, coin);
+						CoinBlacklisted?.SafeInvoke(this, new CoinBlacklistedEventArgs(coin, apiResponseItem.RecommendedBanTime, apiResponseItem.Provider));
 					}
 					else if (!apiResponseItem.ShouldRemove)
 					{

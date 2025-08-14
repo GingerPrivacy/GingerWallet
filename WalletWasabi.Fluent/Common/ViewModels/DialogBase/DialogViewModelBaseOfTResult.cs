@@ -26,10 +26,7 @@ public abstract class DialogViewModelBase<TResult> : DialogViewModelBase
 
 		BackCommand = ReactiveCommand.Create(() => Close(DialogResultKind.Back));
 
-		CancelCommand = ReactiveCommand.Create(() =>
-		{
-			UiContext.Navigate(CurrentTarget).Clear();
-		});
+		CancelCommand = ReactiveCommand.Create(() => { UiContext.Navigate(CurrentTarget).Clear(); });
 	}
 
 	protected override void OnNavigatedFrom(bool isInHistory)

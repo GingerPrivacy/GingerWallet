@@ -69,25 +69,25 @@ public class TransactionBroadcasterModel
 		var inputCount = inputAddressAmount.Length;
 		var totalInputValue =
 			inputAddressAmount.Any(x => x.Value == nullMoney)
-			? null
-			: inputAddressAmount.Select(x => x.Value).Sum();
+				? null
+				: inputAddressAmount.Select(x => x.Value).Sum();
 
 		var inputAmountString =
 			totalInputValue is null
-			? Resources.Unknown
-			: $"{totalInputValue.ToFormattedString()} BTC";
+				? Resources.Unknown
+				: $"{totalInputValue.ToFormattedString()} BTC";
 
 		var outputCount = outputAddressAmount.Length;
 
 		var totalOutputValue =
 			outputAddressAmount.Any(x => x.Value == nullMoney)
-			? null
-			: outputAddressAmount.Select(x => x.Value).Sum();
+				? null
+				: outputAddressAmount.Select(x => x.Value).Sum();
 
 		var outputAmountString =
 			totalOutputValue is null
-			? Resources.Unknown
-			: $"{totalOutputValue.ToFormattedString()} BTC";
+				? Resources.Unknown
+				: $"{totalOutputValue.ToFormattedString()} BTC";
 
 		var networkFee = totalInputValue is null || totalOutputValue is null
 			? null

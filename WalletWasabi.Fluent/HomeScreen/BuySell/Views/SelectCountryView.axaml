@@ -21,7 +21,7 @@
     <StackPanel Spacing="15" VerticalAlignment="Center">
       <StackPanel.Styles>
         <Style Selector="DockPanel > TextBlock">
-          <Setter Property="MinWidth" Value="80"/>
+          <Setter Property="MinWidth" Value="80" />
         </Style>
       </StackPanel.Styles>
 

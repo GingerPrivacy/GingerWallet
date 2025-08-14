@@ -9,15 +9,15 @@
              xmlns:create="clr-namespace:WalletWasabi.Fluent.AddWallet.ViewModels.Create"
              x:Class="WalletWasabi.Fluent.AddWallet.Views.Create.ConfirmRecoveryWordsView">
   <ContentArea Title="{Binding Title}"
-                 Caption="{Binding CurrentWord.Index, StringFormat='{x:Static lang:Resources.ConfirmRecoveryWordsViewModelClickRecovery}', FallbackValue=' '}"
-                 EnableCancel="{Binding EnableCancel}"
-                 EnableBack="{Binding EnableBack}"
-                 EnableNext="True"
-                 NextContent="{x:Static lang:Resources.Continue}"
-                 EnableSkip="{Binding IsSkipEnabled}"
-                 IsBusy="{Binding IsBusy}"
-                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                 ScrollViewer.VerticalScrollBarVisibility="Disabled">
+               Caption="{Binding CurrentWord.Index, StringFormat='{x:Static lang:Resources.ConfirmRecoveryWordsViewModelClickRecovery}', FallbackValue=' '}"
+               EnableCancel="{Binding EnableCancel}"
+               EnableBack="{Binding EnableBack}"
+               EnableNext="True"
+               NextContent="{x:Static lang:Resources.Continue}"
+               EnableSkip="{Binding IsSkipEnabled}"
+               IsBusy="{Binding IsBusy}"
+               ScrollViewer.HorizontalScrollBarVisibility="Auto"
+               ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <Grid x:Name="Layout">
       <Grid.RowDefinitions>
         <RowDefinition MinHeight="70" Height="*" />
@@ -80,7 +80,8 @@
           <ItemsControl.ItemTemplate>
             <DataTemplate>
               <StackPanel Orientation="Horizontal" Margin="50 0 50 0" Width="80">
-                <TextBlock Text="{Binding Index, Mode=OneWay, StringFormat={}{0}.}" Opacity="0.5" FontSize="{DynamicResource FontSizeH6}" Height="42" />
+                <TextBlock Text="{Binding Index, Mode=OneWay, StringFormat={}{0}.}" Opacity="0.5"
+                           FontSize="{DynamicResource FontSizeH6}" Height="42" />
                 <TextBlock Text="{Binding SelectedWord}" FontWeight="SemiBold" Margin="5 0 0 0"
                            Classes.error="{Binding !IsConfirmed}" FontSize="{DynamicResource FontSizeH6}" Height="42" />
               </StackPanel>

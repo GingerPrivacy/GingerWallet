@@ -22,10 +22,10 @@
                      FontSize="{TemplateBinding FontSize}"
                      Opacity="0" />
           <FadeOutTextBlock Name="PART_NoTrimTextBlock"
-                              TextAlignment="{TemplateBinding HorizontalAlignment}"
-                              FontSize="{TemplateBinding FontSize}"
-                              Text="{TemplateBinding Text}"
-                              TextTrimming="None" />
+                            TextAlignment="{TemplateBinding HorizontalAlignment}"
+                            FontSize="{TemplateBinding FontSize}"
+                            Text="{TemplateBinding Text}"
+                            TextTrimming="None" />
         </Panel>
       </ControlTemplate>
     </Setter>
@@ -33,4 +33,3 @@
   </ControlTheme>
 
 </ResourceDictionary>
-

@@ -5,6 +5,7 @@ using System.Threading.Channels;
 using WalletWasabi.Logging;
 using WalletWasabi.WabiSabi.Backend.Rounds;
 using WalletWasabi.WabiSabi.Backend.Rounds.CoinJoinStorage;
+using WalletWasabi.WabiSabi.Models;
 
 namespace WalletWasabi.WabiSabi.Backend.DoSPrevention;
 
@@ -20,7 +21,7 @@ public class Prison
 	private ICoinJoinIdStore CoinJoinIdStore { get; }
 	private ChannelWriter<Offender> NotificationChannelWriter { get; }
 	private Dictionary<uint256, List<Offender>> OffendersByTxId { get; }
-	private Dictionary<OutPoint, TimeFrame> BanningTimeCache { get; } = new();
+	private Dictionary<OutPoint, BanItem> BanningTimeCache { get; } = new();
 
 	/// <remarks>Lock object to guard <see cref="OffendersByTxId"/>and <see cref="BanningTimeCache"/></remarks>
 	private object Lock { get; } = new();
@@ -34,8 +35,8 @@ public class Prison
 	public void FailedToSign(OutPoint outPoint, Money value, uint256 roundId) =>
 		Punish(new Offender(outPoint, DateTimeOffset.UtcNow, new RoundDisruption(roundId, value, RoundDisruptionMethod.DidNotSign)));
 
-	public void FailedVerification(OutPoint outPoint, uint256 roundId) =>
-		Punish(new Offender(outPoint, DateTimeOffset.UtcNow, new FailedToVerify(roundId)));
+	public void FailedVerification(OutPoint outPoint, uint256 roundId, TimeSpan recommendedBanTime, string provider) =>
+		Punish(new Offender(outPoint, DateTimeOffset.UtcNow, new FailedToVerify(roundId, recommendedBanTime, provider)));
 
 	public void CheatingDetected(OutPoint outPoint, uint256 roundId) =>
 		Punish(new Offender(outPoint, DateTimeOffset.UtcNow, new Cheating(roundId)));
@@ -46,16 +47,16 @@ public class Prison
 	public void DoubleSpent(OutPoint outPoint, Money value, IEnumerable<uint256> roundIds) =>
 		Punish(new Offender(outPoint, DateTimeOffset.UtcNow, new RoundDisruption(roundIds, value, RoundDisruptionMethod.DoubleSpent)));
 
-	public void InheritPunishment(OutPoint outpoint, OutPoint[] ancestors) =>
-		Punish(new Offender(outpoint, DateTimeOffset.UtcNow, new Inherited(ancestors)));
+	public void InheritPunishment(OutPoint outpoint, OutPoint[] outPoints, InputBannedReasonEnum[] inputBannedReasonEnum) =>
+		Punish(new Offender(outpoint, DateTimeOffset.UtcNow, new Inherited(outPoints, inputBannedReasonEnum)));
 
 	public void FailedToSignalReadyToSign(OutPoint outPoint, Money value, uint256 roundId) =>
 		Punish(new Offender(outPoint, DateTimeOffset.UtcNow, new RoundDisruption(roundId, value, RoundDisruptionMethod.DidNotSignalReadyToSign)));
 
 	public bool IsBanned(OutPoint outpoint, DoSConfiguration configuration, DateTimeOffset when) =>
-		GetBanTimePeriod(outpoint, configuration).Includes(when);
+		GetBan(outpoint, configuration).BanningTime.Includes(when);
 
-	public TimeFrame GetBanTimePeriod(OutPoint outpoint, DoSConfiguration configuration)
+	public BanItem GetBan(OutPoint outpoint, DoSConfiguration configuration)
 	{
 		TimeFrame EffectiveMinTimeFrame(TimeFrame banningPeriod) =>
 			banningPeriod.Duration < configuration.MinTimeInPrison
@@ -64,6 +65,11 @@ public class Prison
 
 		TimeSpan CalculatePunishment(Offender offender, RoundDisruption disruption)
 		{
+			if (configuration.SimplifiedPunishment > TimeSpan.Zero)
+			{
+				return configuration.SimplifiedPunishment;
+			}
+
 			var basePunishmentInHours = configuration.SeverityInBitcoinsPerHour / disruption.Value.ToDecimal(MoneyUnit.BTC);
 
 			IReadOnlyList<RoundDisruption> offenderHistory;
@@ -102,7 +108,7 @@ public class Prison
 		TimeFrame CalculatePunishmentInheritance(OutPoint[] ancestors)
 		{
 			var banningTimeFrame = ancestors
-				.Select(a => (Ancestor: a, BanningTime: GetBanTimePeriod(a, configuration)))
+				.Select(a => (Ancestor: a, BanningTime: GetBan(a, configuration).BanningTime))
 				.MaxBy(x => x.BanningTime.EndTime)
 				.BanningTime;
 			return new TimeFrame(banningTimeFrame.StartTime, banningTimeFrame.Duration / 2);
@@ -125,18 +131,20 @@ public class Prison
 		{
 			null => TimeFrame.Zero,
 			{ Offense: BackendStabilitySafety } => new TimeFrame(offender.StartedTime, configuration.MinTimeInPrison + TimeSpan.FromHours(new Random().Next(0, 4))),
-			{ Offense: FailedToVerify } => new TimeFrame(offender.StartedTime, configuration.MinTimeForFailedToVerify),
+			{ Offense: FailedToVerify offense } => new TimeFrame(offender.StartedTime, offense.RecommendedBanTime > TimeSpan.Zero ? offense.RecommendedBanTime : configuration.MinTimeForFailedToVerify),
 			{ Offense: Cheating } => new TimeFrame(offender.StartedTime, configuration.MinTimeForCheating),
 			{ Offense: RoundDisruption offense } => new TimeFrame(offender.StartedTime, CalculatePunishment(offender, offense)),
 			{ Offense: Inherited { Ancestors: { } ancestors } } => CalculatePunishmentInheritance(ancestors),
 			_ => throw new NotSupportedException("Unknown offense type.")
 		});
 
+		var result = new BanItem(banningTime, offender?.GetReasonEnums() ?? []);
+
 		lock (Lock)
 		{
-			BanningTimeCache[outpoint] = banningTime;
+			BanningTimeCache[outpoint] = result;
 		}
-		return banningTime;
+		return result;
 	}
 
 	private void Punish(Offender offender)
@@ -163,5 +171,13 @@ public class Prison
 	public int GetCount()
 	{
 		return OffendersByTxId.Count;
+	}
+}
+
+public record BanItem(TimeFrame BanningTime, InputBannedReasonEnum[] Reasons)
+{
+	public override string ToString()
+	{
+		return $"BannItem {{ BanningTime duration = {BanningTime.Duration}, Reasons = '{string.Join(",", Reasons.Select(r => r.ToString()))}' }}";
 	}
 }

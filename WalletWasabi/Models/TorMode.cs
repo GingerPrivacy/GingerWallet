@@ -1,5 +1,3 @@
-using WalletWasabi.Lang;
-
 namespace WalletWasabi.Models;
 
 /// <summary>

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using NBitcoin;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Crypto;
@@ -10,4 +9,6 @@ public interface IKeyChain
 	OwnershipProof GetOwnershipProof(IDestination destination, CoinJoinInputCommitmentData committedData);
 
 	Transaction Sign(Transaction transaction, Coin coin, PrecomputedTransactionData precomputeTransactionData);
+
+	public string SignMessage(string message, HdPubKey hdPubKey);
 }

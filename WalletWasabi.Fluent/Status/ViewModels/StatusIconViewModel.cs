@@ -20,12 +20,11 @@ public partial class StatusIconViewModel : ViewModelBase
 		HealthMonitor = UiContext.HealthMonitor;
 
 		ManualUpdateCommand = ReactiveCommand.CreateFromTask(() => UiContext.FileSystem.OpenBrowserAsync(UiConstants.DownloadLink));
-		UpdateCommand = ReactiveCommand.Create(
-			() =>
-			{
-				UiContext.ApplicationSettings.DoUpdateOnClose = true;
-				AppLifetimeHelper.Shutdown();
-			});
+		UpdateCommand = ReactiveCommand.Create(() =>
+		{
+			UiContext.ApplicationSettings.DoUpdateOnClose = true;
+			AppLifetimeHelper.Shutdown();
+		});
 
 		AskMeLaterCommand = ReactiveCommand.Create(() => HealthMonitor.CheckForUpdates = false);
 

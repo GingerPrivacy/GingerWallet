@@ -50,7 +50,7 @@
     </DockPanel>
 
     <DockPanel IsVisible="{Binding !Settings.StartLocalBitcoinCoreOnStartup}"
-                ToolTip.Tip="{x:Static lang:Resources.WasabiDownloadBlocksFromFullNode}">
+               ToolTip.Tip="{x:Static lang:Resources.WasabiDownloadBlocksFromFullNode}">
       <TextBlock Text="{x:Static lang:Resources.BitcoinP2PEndpoint}" />
       <TextBox Text="{Binding BitcoinP2PEndPoint}">
         <Interaction.Behaviors>

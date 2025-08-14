@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using System.Threading;
+using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Hwi;
 using WalletWasabi.Wallets;
 using WalletWasabi.Extensions;
@@ -46,6 +47,30 @@ public class HardwareWalletModel : WalletModel
 		{
 			Logger.LogError(ex);
 			return false;
+		}
+	}
+
+	public async Task<string> SignMessageAsync(string message, HdPubKey hdPubKey)
+	{
+		try
+		{
+			var client = new HwiClient(Wallet.Network);
+
+			TimeSpan baseTimeout = TimeSpan.FromMinutes(3);
+			using var cts = new CancellationTokenSource(baseTimeout);
+
+			var signature = await client.SignMessageAsync(
+				Wallet.KeyManager.MasterFingerprint!.Value,
+				hdPubKey.FullKeyPath,
+				message,
+				cts.Token);
+
+			return signature;
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex);
+			throw;
 		}
 	}
 }

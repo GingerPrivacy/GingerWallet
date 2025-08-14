@@ -13,7 +13,8 @@
     <shell1:TitleBar Height="42" DockPanel.Dock="Top" />
     <DockPanel>
       <views:NavBar DockPanel.Dock="Left" DataContext="{Binding NavBar}" />
-      <Border x:Name="ContentPart" CornerRadius="10 0 0 0" ClipToBounds="True" Background="{DynamicResource RegionColor}">
+      <Border x:Name="ContentPart" CornerRadius="10 0 0 0" ClipToBounds="True"
+              Background="{DynamicResource RegionColor}">
         <Border.Effect>
           <DynamicResource ResourceKey="MainAreaDropShadowEffect" />
         </Border.Effect>
@@ -25,7 +26,8 @@
               <SpectrumControl.IsDockEffectVisible>
                 <MultiBinding Converter="{x:Static BoolConverters.And}">
                   <Binding Path="CurrentWallet^.IsMusicBoxVisible^" FallbackValue="False" />
-                  <Binding Path="CurrentWallet^.CoinjoinPlayerViewModel.AreAllCoinsPrivate" FallbackValue="False" Converter="{x:Static BoolConverters.Not}" />
+                  <Binding Path="CurrentWallet^.CoinjoinPlayerViewModel.AreAllCoinsPrivate" FallbackValue="False"
+                           Converter="{x:Static BoolConverters.Not}" />
                 </MultiBinding>
               </SpectrumControl.IsDockEffectVisible>
               <SpectrumControl.Styles>
@@ -54,7 +56,7 @@
               </Style>
             </DockPanel.Styles>
             <view:CoinjoinPlayerControlView DockPanel.Dock="Bottom" DataContext="{Binding CurrentWallet^}"
-                                       HorizontalAlignment="Center" Height="66" />
+                                            HorizontalAlignment="Center" Height="66" />
 
             <!-- Main content -->
             <ContentControl ClipToBounds="False" Content="{Binding MainScreen.CurrentPage}">

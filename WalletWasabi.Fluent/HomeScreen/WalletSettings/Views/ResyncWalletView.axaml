@@ -18,8 +18,8 @@
         </Viewbox>
       </QuestionControl.IconContent>
       <StackPanel Spacing="10">
-        <TextBlock TextWrapping="Wrap" TextAlignment="Center" Text="{x:Static lang:Resources.ApplicationRestartRescan}"/>
-        <TextBlock TextWrapping="Wrap" TextAlignment="Center" Text="{x:Static lang:Resources.ProceedConfirmation}"/>
+        <TextBlock TextWrapping="Wrap" TextAlignment="Center" Text="{x:Static lang:Resources.ApplicationRestartRescan}" />
+        <TextBlock TextWrapping="Wrap" TextAlignment="Center" Text="{x:Static lang:Resources.ProceedConfirmation}" />
       </StackPanel>
     </QuestionControl>
   </ContentArea>

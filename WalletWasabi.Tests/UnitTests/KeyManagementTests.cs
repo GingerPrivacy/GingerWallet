@@ -8,7 +8,6 @@ using WalletWasabi.Crypto.Randomness;
 using WalletWasabi.Logging;
 using WalletWasabi.Models;
 using WalletWasabi.Tests.TestCommon;
-using WalletWasabi.Wallets;
 using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests;

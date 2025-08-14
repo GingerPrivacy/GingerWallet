@@ -1,6 +1,5 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using WalletWasabi.Lang;
 using WalletWasabi.Models;
 
 namespace WalletWasabi.JsonConverters;

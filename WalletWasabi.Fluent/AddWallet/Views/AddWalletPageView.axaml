@@ -16,16 +16,16 @@
                EnableNext="False">
     <Grid VerticalAlignment="Stretch" MaxHeight="320">
       <Grid.RowDefinitions>
-        <RowDefinition Height="*" MaxHeight="80" MinHeight="60"/>
-        <RowDefinition Height="*" MaxHeight="80" MinHeight="60"/>
-        <RowDefinition Height="*" MaxHeight="80" MinHeight="60"/>
-        <RowDefinition Height="*" MaxHeight="80" MinHeight="60"/>
+        <RowDefinition Height="*" MaxHeight="80" MinHeight="60" />
+        <RowDefinition Height="*" MaxHeight="80" MinHeight="60" />
+        <RowDefinition Height="*" MaxHeight="80" MinHeight="60" />
+        <RowDefinition Height="*" MaxHeight="80" MinHeight="60" />
       </Grid.RowDefinitions>
       <Grid.Styles>
         <Style Selector="TileButton">
           <Setter Property="Cursor" Value="Hand" />
           <Setter Property="Margin" Value="0 5 0 5" />
-          <Setter Property="Width" Value="400"/>
+          <Setter Property="Width" Value="400" />
           <Setter Property="Height">
             <Setter.Value>
               <system:Double>NaN</system:Double>
@@ -49,14 +49,14 @@
                               Height="{TemplateBinding IconSize}"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
-                              Margin="0"/>
+                              Margin="0" />
                   </Panel>
                   <TextBlock x:Name="PART_Text"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Left"
                              Text="{TemplateBinding Text}"
                              Foreground="{TemplateBinding Foreground}"
-                             Margin="0"/>
+                             Margin="0" />
                 </DockPanel>
 
               </Border>

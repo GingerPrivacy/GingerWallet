@@ -34,10 +34,10 @@ public partial class WalletLoadWorkflow
 
 		LoadCompleted =
 			Observable.FromEventPattern<WalletState>(_wallet, nameof(Wallet.StateChanged))
-					.ObserveOn(RxApp.MainThreadScheduler)
-					.Select(x => x.EventArgs)
-					.Where(x => x == WalletState.Started)
-					.ToSignal();
+				.ObserveOn(RxApp.MainThreadScheduler)
+				.Select(x => x.EventArgs)
+				.Where(x => x == WalletState.Started)
+				.ToSignal();
 	}
 
 	public IObservable<(double PercentComplete, TimeSpan TimeRemaining)> Progress => _progress;
@@ -64,15 +64,14 @@ public partial class WalletLoadWorkflow
 			.DisposeWith(_disposables);
 
 		Observable.Interval(TimeSpan.FromSeconds(1))
-				.ObserveOn(RxApp.MainThreadScheduler)
-				.Subscribe(
-					_ =>
-					{
-						UpdateCurrentTipHeight();
-						var processedCount = GetCurrentProcessedCount();
-						UpdateProgress(processedCount);
-					})
-				.DisposeWith(_disposables);
+			.ObserveOn(RxApp.MainThreadScheduler)
+			.Subscribe(_ =>
+			{
+				UpdateCurrentTipHeight();
+				var processedCount = GetCurrentProcessedCount();
+				UpdateProgress(processedCount);
+			})
+			.DisposeWith(_disposables);
 	}
 
 	public void Stop()

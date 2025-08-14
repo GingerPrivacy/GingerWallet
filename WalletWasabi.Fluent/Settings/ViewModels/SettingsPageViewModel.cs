@@ -51,13 +51,13 @@ public partial class SettingsPageViewModel : RoutableViewModel
 
 		// Show restart message when needed
 		UiContext.ApplicationSettings.IsRestartNeeded
-									 .BindTo(this, x => x.IsModified);
+			.BindTo(this, x => x.IsModified);
 
 		// Show restart notification when needed only if this page is not active.
 		UiContext.ApplicationSettings.IsRestartNeeded
-				 .Where(x => x && !IsActive && !_isDisplayed && !UiContext.ApplicationSettings.Oobe)
-				 .Do(_ => NotificationHelpers.Show(new RestartViewModel(Resources.ApplyNewSettingRestart)))
-				 .Subscribe();
+			.Where(x => x && !IsActive && !_isDisplayed && !UiContext.ApplicationSettings.Oobe)
+			.Do(_ => NotificationHelpers.Show(new RestartViewModel(Resources.ApplyNewSettingRestart)))
+			.Subscribe();
 	}
 
 	public bool IsReadOnly => UiContext.ApplicationSettings.IsOverridden;

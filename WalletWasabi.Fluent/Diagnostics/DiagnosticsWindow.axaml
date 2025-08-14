@@ -30,9 +30,9 @@
           <Panel Width="{Binding $parent[Control].Bounds.Width}"
                  Height="{Binding $parent[Control].Bounds.Height}">
             <StackPanel Orientation="Horizontal" Margin="0,-14,0,0">
-              <TextBlock Text="{Binding $parent[Control].Bounds.Width}" Foreground="Red" FontSize="12"/>
-              <TextBlock Text=" x " Foreground="Red" FontSize="12"/>
-              <TextBlock Text="{Binding $parent[Control].Bounds.Height}" Foreground="Red" FontSize="12"/>
+              <TextBlock Text="{Binding $parent[Control].Bounds.Width}" Foreground="Red" FontSize="12" />
+              <TextBlock Text=" x " Foreground="Red" FontSize="12" />
+              <TextBlock Text="{Binding $parent[Control].Bounds.Height}" Foreground="Red" FontSize="12" />
               <!--
               <TextBlock Text=" (" Foreground="Red" FontSize="12"/>
               <TextBlock Text="{Binding $parent[Control].DataContext}" Foreground="Red" FontSize="12"/>

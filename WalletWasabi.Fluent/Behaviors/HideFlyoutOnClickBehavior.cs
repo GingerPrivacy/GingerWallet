@@ -19,14 +19,14 @@ public class HideFlyoutOnClickBehavior : Behavior<RadioButton>
 		{
 			return;
 		}
-        
+
 		var fp = AssociatedObject.FindAncestorOfType<FlyoutPresenter>();
 
 		if (fp?.Parent is not Popup popup)
 		{
 			return;
 		}
-        
+
 		_subscription = Observable
 			.FromEventPattern<RoutedEventArgs>(handler => AssociatedObject.Click += handler, handler => AssociatedObject.Click -= handler)
 			.Do(_ =>
@@ -36,6 +36,7 @@ public class HideFlyoutOnClickBehavior : Behavior<RadioButton>
 				{
 					AssociatedObject.Command.Execute(AssociatedObject.CommandParameter);
 				}
+
 				popup.Close();
 			})
 			.Subscribe();

@@ -16,7 +16,7 @@ public class UserSelectionCoinListModel(Wallet wallet, WalletModel walletModel, 
 	{
 		return
 			new CoinsView(selectedCoins).GetPockets(WalletModel.Settings.AnonScoreTarget)
-										.Select(x => new Pocket(x))
-										.ToArray();
+				.Select(x => new Pocket(x))
+				.ToArray();
 	}
 }

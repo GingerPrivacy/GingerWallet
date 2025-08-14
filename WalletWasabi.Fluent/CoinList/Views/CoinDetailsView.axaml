@@ -10,50 +10,88 @@
              x:Class="WalletWasabi.Fluent.CoinList.Views.CoinDetailsView">
   <ContentArea Title="{Binding Title}"
                EnableBack="{Binding EnableBack}"
-               NextContent="{x:Static lang:Resources.Done}" EnableNext="True"
+               NextContent="{x:Static lang:Resources.Done}" EnableNext="False"
                EnableCancel="{Binding EnableCancel}">
 
-    <StackPanel Spacing="15">
+    <DockPanel>
+      <StackPanel Spacing="15" DockPanel.Dock="Top">
+        <StackPanel.Styles>
+          <Style Selector="PreviewItem.warning /template/ PathIcon#PART_Icon">
+            <Setter Property="Foreground" Value="{DynamicResource WarningMessageForeground}" />
+          </Style>
+        </StackPanel.Styles>
 
-      <!-- Amount -->
-      <PreviewItem Icon="{StaticResource btc_logo}"
+        <!-- Amount -->
+        <PreviewItem Icon="{StaticResource btc_logo}"
                      Label="{x:Static lang:Resources.Amount}"
                      CopyableContent="{Binding Amount.Btc}">
-        <PrivacyContentControl>
-          <AmountControl Amount="{Binding Amount}" />
-        </PrivacyContentControl>
-      </PreviewItem>
+          <PrivacyContentControl>
+            <AmountControl Amount="{Binding Amount}" />
+          </PrivacyContentControl>
+        </PreviewItem>
 
-      <Separator />
+        <Separator />
 
-      <!-- Transaction ID -->
-      <PreviewItem Icon="{StaticResource transaction_id}"
-                   Label="{x:Static lang:Resources.TransactionID}"
-                   CopyableContent="{Binding TransactionId}">
-        <PrivacyContentControl>
-          <TextBlock Text="{Binding TransactionId}" Classes="monoSpaced" />
-        </PrivacyContentControl>
-      </PreviewItem>
-      <Separator />
+        <!-- Transaction ID -->
+        <PreviewItem Icon="{StaticResource transaction_id}"
+                     Label="{x:Static lang:Resources.TransactionID}"
+                     CopyableContent="{Binding TransactionId}">
+          <PrivacyContentControl>
+            <TextBlock Text="{Binding TransactionId}" Classes="monoSpaced" />
+          </PrivacyContentControl>
+        </PreviewItem>
+        <Separator />
 
-      <!-- Destination Address -->
-      <PreviewItem Icon="{StaticResource transceive_regular}"
-                   CopyableContent="{Binding Address}"
-                   Label="{x:Static lang:Resources.Address}">
-        <PrivacyContentControl>
-          <TextBlock Text="{Binding Address}" />
-        </PrivacyContentControl>
-      </PreviewItem>
+        <!-- Destination Address -->
+        <PreviewItem Icon="{StaticResource transceive_regular}"
+                     CopyableContent="{Binding Address}"
+                     Label="{x:Static lang:Resources.Address}">
+          <PrivacyContentControl>
+            <TextBlock Text="{Binding Address}" />
+          </PrivacyContentControl>
+        </PreviewItem>
 
-      <Separator />
+        <Separator />
 
-      <!-- Index -->
-      <PreviewItem Icon="{StaticResource index}"
-                   Label="{x:Static lang:Resources.Index}"
-                   CopyableContent="{Binding Index}">
-        <TextBlock Text="{Binding Index}" />
-      </PreviewItem>
+        <!-- Index -->
+        <PreviewItem Icon="{StaticResource index}"
+                     Label="{x:Static lang:Resources.Index}"
+                     CopyableContent="{Binding Index}">
+          <TextBlock Text="{Binding Index}" />
+        </PreviewItem>
 
-    </StackPanel>
+      </StackPanel>
+      <Border IsVisible="{Binding BannedTimeText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+              HorizontalAlignment="Center" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Margin="0 0 0 10"
+              BorderThickness="2"
+              CornerRadius="20"
+              Padding="30 10"
+              MaxWidth="450"
+              BorderBrush="{DynamicResource WarningMessageForeground}"
+              Background="{DynamicResource Layer1BackgroundBrush}">
+        <StackPanel Spacing="10">
+          <PathIcon Data="{StaticResource warning_filled}"
+                    Foreground="{DynamicResource WarningMessageForeground}"
+                    HorizontalAlignment="Center"
+                    Width="35"
+                    Height="35" />
+
+          <CopyableItem ContentToCopy="{Binding BannedTimeText}"
+                        HorizontalAlignment="Center">
+            <TextBlock TextAlignment="Center" TextWrapping="Wrap"
+                       Text="{Binding BannedTimeText}" />
+          </CopyableItem>
+
+          <CopyableItem ContentToCopy="{Binding BannedReasonText}"
+                        IsVisible="{Binding BannedReasonText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                        HorizontalAlignment="Center">
+            <TextBlock TextAlignment="Center" TextWrapping="Wrap"
+                       Text="{Binding BannedReasonText}" />
+          </CopyableItem>
+
+        </StackPanel>
+      </Border>
+    </DockPanel>
+
   </ContentArea>
 </UserControl>

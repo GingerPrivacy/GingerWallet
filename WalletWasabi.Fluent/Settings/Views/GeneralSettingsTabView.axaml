@@ -42,8 +42,9 @@
       <ToggleSwitch IsChecked="{Binding Settings.EnableGpu}" />
     </DockPanel>
 
-    <DockPanel IsVisible="{Binding Settings.SelectedBrowser, Converter={x:Static conv:EnumToBoolConverter.Instance}, ConverterParameter={x:Static models:BrowserTypeDropdownListEnum.Custom}}"
-        ToolTip.Tip="{x:Static lang:Resources.SetPreferredBrowserPath}">
+    <DockPanel
+      IsVisible="{Binding Settings.SelectedBrowser, Converter={x:Static conv:EnumToBoolConverter.Instance}, ConverterParameter={x:Static models:BrowserTypeDropdownListEnum.Custom}}"
+      ToolTip.Tip="{x:Static lang:Resources.SetPreferredBrowserPath}">
       <TextBlock Text="{x:Static lang:Resources.CustomBrowserPath}" />
       <TextBox Text="{Binding Settings.BrowserPath}">
         <Interaction.Behaviors>

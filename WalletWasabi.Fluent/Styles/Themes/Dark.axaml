@@ -89,7 +89,8 @@
   <Color x:Key="OfferBorderColor">#27757575</Color>
 
   <SolidColorBrush x:Key="PrivacyControlWhiteListHeaderForeground" Color="#FFFFFF" />
-  <SolidColorBrush x:Key="PrivacyControlWhiteListBackground" Color="{StaticResource SystemAccentCustomColorDark}" Opacity="0.1" />
+  <SolidColorBrush x:Key="PrivacyControlWhiteListBackground" Color="{StaticResource SystemAccentCustomColorDark}"
+                   Opacity="0.1" />
   <SolidColorBrush x:Key="PrivacyControlBlackListBackground" Color="Transparent" />
   <SolidColorBrush x:Key="PrivacyControlItemBackground" Color="#2FFFFFFF" />
 
@@ -145,7 +146,8 @@
   <SolidColorBrush x:Key="BuyAnythingChatBackground" Color="{StaticResource Layer2BackgroundBrush}" />
   <SolidColorBrush x:Key="AssistantMessageBackground" Color="{StaticResource Layer1BackgroundBrush}" />
   <SolidColorBrush x:Key="ConversationSelectedBackground" Color="{StaticResource Layer2BackgroundBrush}" />
-  <SolidColorBrush x:Key="ConversationPointerOverBackground" Color="{StaticResource Layer2BackgroundBrush}" Opacity="0.5" />
+  <SolidColorBrush x:Key="ConversationPointerOverBackground" Color="{StaticResource Layer2BackgroundBrush}"
+                   Opacity="0.5" />
   <SolidColorBrush x:Key="ConversationPressedBackground" Color="{StaticResource Layer2BackgroundBrush}" Opacity="0.8" />
   <StaticResource x:Key="UserMessageBackground" ResourceKey="SystemAccentCustomColorLight" />
 

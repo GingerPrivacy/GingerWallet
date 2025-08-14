@@ -9,17 +9,18 @@
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.HomeScreen.Receive.Views.ConfirmHideAddressView">
   <ContentArea Title="{Binding Title}"
-                 ScrollViewer.VerticalScrollBarVisibility="Disabled">
+               ScrollViewer.VerticalScrollBarVisibility="Disabled">
     <QuestionControl YesCommand="{Binding NextCommand}"
-                       NoCommand="{Binding CancelCommand}"
-                       HighlightButton="YesButton">
+                     NoCommand="{Binding CancelCommand}"
+                     HighlightButton="YesButton">
       <QuestionControl.IconContent>
         <Viewbox MaxHeight="150" Margin="40">
           <PathIcon Data="{StaticResource delete_regular}" Opacity="0.6" />
         </Viewbox>
       </QuestionControl.IconContent>
       <StackPanel Spacing="10">
-        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="{x:Static lang:Resources.WishToHideAddressWithLabels}" />
+        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap"
+                   Text="{x:Static lang:Resources.WishToHideAddressWithLabels}" />
         <LabelsItemsPresenter HorizontalAlignment="Center" ItemsSource="{Binding Labels}" />
         <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="{x:Static lang:Resources.ThisCannotBeUndone}" />
       </StackPanel>

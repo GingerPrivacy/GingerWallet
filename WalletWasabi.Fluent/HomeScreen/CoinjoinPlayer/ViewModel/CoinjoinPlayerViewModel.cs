@@ -77,16 +77,16 @@ public partial class CoinjoinPlayerViewModel : ViewModelBase
 		_wallet = wallet;
 
 		wallet.Coinjoin.StatusUpdated
-					   .Do(ProcessStatusChange)
-					   .Subscribe();
+			.Do(ProcessStatusChange)
+			.Subscribe();
 
 		wallet.Privacy.IsWalletPrivate
-					  .BindTo(this, x => x.AreAllCoinsPrivate);
+			.BindTo(this, x => x.AreAllCoinsPrivate);
 
 		var initialState =
 			wallet.Settings.AutoCoinjoin
-			? State.WaitingForAutoStart
-			: State.StoppedOrPaused;
+				? State.WaitingForAutoStart
+				: State.StoppedOrPaused;
 
 		if (wallet.IsHardwareWallet || wallet.IsWatchOnlyWallet)
 		{
@@ -103,8 +103,8 @@ public partial class CoinjoinPlayerViewModel : ViewModelBase
 		ConfigureStateMachine();
 
 		wallet.Balances
-			  .Do(_ => _stateMachine.Fire(Trigger.BalanceChanged))
-			  .Subscribe();
+			.Do(_ => _stateMachine.Fire(Trigger.BalanceChanged))
+			.Subscribe();
 
 		this.WhenAnyValue(x => x.AreAllCoinsPrivate)
 			.Do(_ => _stateMachine.Fire(Trigger.AreAllCoinsPrivateChanged))
@@ -133,12 +133,12 @@ public partial class CoinjoinPlayerViewModel : ViewModelBase
 			.Subscribe();
 
 		wallet.Settings.WhenAnyValue(x => x.PlebStopThreshold)
-					   .SubscribeAsync(async _ =>
-					   {
-						   // Hack: we take the value from KeyManager but it is saved later.
-						   await Task.Delay(1500);
-						   _stateMachine.Fire(Trigger.PlebStopChanged);
-					   });
+			.SubscribeAsync(async _ =>
+			{
+				// Hack: we take the value from KeyManager but it is saved later.
+				await Task.Delay(1500);
+				_stateMachine.Fire(Trigger.PlebStopChanged);
+			});
 
 		_autoCoinJoinStartTimer = new DispatcherTimer { Interval = TimeSpan.FromMinutes(Random.Shared.Next(5, 16)) };
 		_autoCoinJoinStartTimer.Tick += async (_, _) =>
@@ -405,6 +405,7 @@ public partial class CoinjoinPlayerViewModel : ViewModelBase
 					};
 					StopCountDown();
 				}
+
 				break;
 
 			case EnteringOutputRegistrationPhase outputRegPhase:
@@ -435,8 +436,8 @@ public partial class CoinjoinPlayerViewModel : ViewModelBase
 
 				var startTime = confirmationPhase.TimeoutAt - confirmationPhase.RoundState.CoinjoinState.Parameters.ConnectionConfirmationTimeout;
 				var totalEndTime = confirmationPhase.TimeoutAt +
-								   confirmationPhase.RoundState.CoinjoinState.Parameters.OutputRegistrationTimeout +
-								   confirmationPhase.RoundState.CoinjoinState.Parameters.TransactionSigningTimeout;
+				                   confirmationPhase.RoundState.CoinjoinState.Parameters.OutputRegistrationTimeout +
+				                   confirmationPhase.RoundState.CoinjoinState.Parameters.TransactionSigningTimeout;
 
 				StartCountDown(
 					message: CoinJoinInProgress,

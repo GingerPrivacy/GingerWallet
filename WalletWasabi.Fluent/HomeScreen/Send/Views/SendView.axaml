@@ -169,7 +169,7 @@
       </DockPanel>
 
       <!-- Recipient -->
-      <Label Grid.Row="4" Grid.Column="0" Content="{x:Static lang:Resources.RecipientWithColon}" Target="LabelTagBox"/>
+      <Label Grid.Row="4" Grid.Column="0" Content="{x:Static lang:Resources.RecipientWithColon}" Target="LabelTagBox" />
       <TagsBox Grid.Row="4" Grid.Column="2" x:Name="LabelTagBox"
                VerticalAlignment="Top"
                Watermark="{x:Static lang:Resources.LabelsWatermarkText}"

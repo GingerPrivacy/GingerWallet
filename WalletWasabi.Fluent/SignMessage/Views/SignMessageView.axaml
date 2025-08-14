@@ -1,0 +1,126 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels1="clr-namespace:WalletWasabi.Fluent.SignMessage.ViewModels"
+             xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
+             mc:Ignorable="d" d:DesignWidth="650"
+             x:Class="WalletWasabi.Fluent.SignMessage.Views.SignMessageView"
+             x:CompileBindings="True"
+             x:DataType="viewModels1:SignMessageViewModel">
+  <ContentArea Title="{x:Static lang:Resources.SignMessage}"
+               Caption="{x:Static lang:Resources.SignMessageToVerifyYouOwnAddressForExchange}"
+               EnableNext="True" NextContent="{x:Static lang:Resources.Continue}"
+               EnableCancel="{Binding EnableCancel}"
+               IsBusy="{Binding IsBusy}"
+               ScrollViewer.VerticalScrollBarVisibility="Disabled">
+    <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+      <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto"
+            ColumnSpacing="10" RowSpacing="20"
+            VerticalAlignment="Top" HorizontalAlignment="Stretch"
+            DockPanel.Dock="Top">
+        <Grid.Styles>
+          <Style Selector="AnimatedButton.flash">
+            <Setter Property="InitialOpacity" Value="0.8" />
+          </Style>
+          <Style Selector="AnimatedButton.flash /template/ PathIcon#PART_IconNormal">
+            <Setter Property="Foreground" Value="{DynamicResource SystemAccentColor}" />
+            <Style.Animations>
+              <Animation Duration="0.25" IterationCount="6"
+                         PlaybackDirection="AlternateReverse"
+                         Easing="{StaticResource FluentEasing}">
+                <KeyFrame KeyTime="0:0:0.0">
+                  <Setter Property="Opacity" Value="0.1" />
+                </KeyFrame>
+                <KeyFrame KeyTime="0:0:0.25">
+                  <Setter Property="Opacity" Value="1" />
+                </KeyFrame>
+              </Animation>
+            </Style.Animations>
+          </Style>
+        </Grid.Styles>
+
+        <!-- To -->
+        <Label Grid.Row="0" Grid.Column="0" Content="{x:Static lang:Resources.AddressWithColon}" Target="toTb" />
+        <TextBox Grid.Row="0" Grid.Column="1" x:Name="toTb" VerticalAlignment="Top" MaxLength="250"
+                 Text="{Binding Address}"
+                 Classes="monoSpaced"
+                 Watermark="{x:Static lang:Resources.PasteTheAddressProvidedByTheExchange}"
+                 ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                 AcceptsReturn="False">
+          <Interaction.Behaviors>
+            <FocusOnAttachedBehavior />
+            <ExecuteCommandOnActivatedBehavior Command="{Binding AutoPasteCommand}" />
+            <FocusNextWhenValidBehavior />
+          </Interaction.Behaviors>
+          <TextBox.InnerRightContent>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10" Margin="10 0">
+              <AnimatedButton KeyboardNavigation.IsTabStop="False"
+                              Focusable="False"
+                              Command="{Binding PasteCommand}"
+                              NormalIcon="{StaticResource paste_regular}"
+                              ClickIcon="{StaticResource copy_confirmed}">
+                <Interaction.Behaviors>
+                  <PasteButtonFlashBehavior FlashAnimation="flash" CurrentAddress="{Binding Address}" />
+                </Interaction.Behaviors>
+              </AnimatedButton>
+            </StackPanel>
+          </TextBox.InnerRightContent>
+        </TextBox>
+
+        <!-- Message To Sing -->
+        <Label Grid.Row="1" Grid.Column="0" Content="{x:Static lang:Resources.MessageWithColon}" Target="toTb" />
+        <TextBox Grid.Row="1" Grid.Column="1" x:Name="messageTb"
+                 Text="{Binding MessageToSign}"
+                 MaxHeight="100"
+                 AcceptsReturn="True"
+                 TextWrapping="Wrap"
+                 Classes="monoSpaced"
+                 Watermark="{x:Static lang:Resources.EnterTheMessageYouWishToSign}"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                 VerticalAlignment="Top">
+          <TextBox.InnerRightContent>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10" Margin="10 0">
+              <AnimatedButton KeyboardNavigation.IsTabStop="False"
+                              Focusable="False"
+                              Command="{Binding PasteMessageCommand}"
+                              NormalIcon="{StaticResource paste_regular}"
+                              ClickIcon="{StaticResource copy_confirmed}">
+              </AnimatedButton>
+            </StackPanel>
+          </TextBox.InnerRightContent>
+        </TextBox>
+      </Grid>
+
+      <!-- Message To Sing -->
+      <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="450" DockPanel.Dock="Bottom"
+                  Classes="transitionO hide"
+                  Classes.show="{Binding SignedMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+        <Border VerticalAlignment="Top"
+                BorderThickness="2"
+                BorderBrush="{DynamicResource TextControlBorderBrushFocused}"
+                CornerRadius="15"
+                Background="{DynamicResource Layer1BackgroundBrush}"
+                Padding="30 10 30 15">
+          <StackPanel Spacing="10">
+            <TextBlock Text="{x:Static lang:Resources.Signature}" HorizontalAlignment="Center" FontWeight="Bold"
+                       Opacity="0.4" />
+            <CopyableItem ContentToCopy="{Binding SignedMessage}">
+              <SelectableTextBlock Text="{Binding SignedMessage}"
+                                   TextWrapping="Wrap"
+                                   Classes="monoSpaced"
+                                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                   ScrollViewer.VerticalScrollBarVisibility="Auto" />
+            </CopyableItem>
+          </StackPanel>
+
+        </Border>
+      </StackPanel>
+
+    </DockPanel>
+
+  </ContentArea>
+
+</UserControl>

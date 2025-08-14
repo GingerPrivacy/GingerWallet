@@ -117,9 +117,9 @@ public class PreviewMessageItem : ContentControl
 		{
 			var isCopyButtonVisible =
 				button.CopyCommand
-				      .IsExecuting
-				      .CombineLatest(this.WhenAnyValue(x => x.IsPointerOver, x => x.CopyableContent, (a, b) => a && !string.IsNullOrWhiteSpace(b?.ToString())))
-				      .Select(x => x.First || x.Second);
+					.IsExecuting
+					.CombineLatest(this.WhenAnyValue(x => x.IsPointerOver, x => x.CopyableContent, (a, b) => a && !string.IsNullOrWhiteSpace(b?.ToString())))
+					.Select(x => x.First || x.Second);
 
 			Bind(IsCopyButtonVisibleProperty, isCopyButtonVisible);
 		}

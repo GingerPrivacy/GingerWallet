@@ -231,8 +231,8 @@ public class CubicSpline
 
 		// normalize special cases
 		if ((n == 2)
-			&& (leftBoundaryCondition == SplineBoundaryCondition.ParabolicallyTerminated)
-			&& (rightBoundaryCondition == SplineBoundaryCondition.ParabolicallyTerminated))
+		    && (leftBoundaryCondition == SplineBoundaryCondition.ParabolicallyTerminated)
+		    && (rightBoundaryCondition == SplineBoundaryCondition.ParabolicallyTerminated))
 		{
 			leftBoundaryCondition = SplineBoundaryCondition.SecondDerivative;
 			leftBoundary = 0d;

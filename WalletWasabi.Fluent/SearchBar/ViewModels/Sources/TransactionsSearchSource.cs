@@ -109,9 +109,8 @@ public class TransactionsSearchSource : ReactiveObject, ISearchSource, IDisposab
 			.Where(x => x.IsLoggedIn && x.Wallet.State == WalletState.Started)
 			.Select(x => x.WalletViewModel)
 			.WhereNotNull()
-			.Select(
-				x => (Wallet: x,
-					x.History.Transactions.Concat(x.History.Transactions.OfType<CoinJoinsHistoryItemViewModel>().SelectMany(y => y.Children))));
+			.Select(x => (Wallet: x,
+				x.History.Transactions.Concat(x.History.Transactions.OfType<CoinJoinsHistoryItemViewModel>().SelectMany(y => y.Children))));
 	}
 
 	private static IEnumerable<ISearchItem> Search(string query)
@@ -124,9 +123,7 @@ public class TransactionsSearchSource : ReactiveObject, ISearchSource, IDisposab
 	private static IEnumerable<(WalletViewModel, HistoryItemViewModelBase)> Filter(string queryStr)
 	{
 		return Flatten(GetTransactionsByWallet())
-		.Where(tuple => NBitcoinHelpers.TryParseBitcoinAddress(tuple.Item1.WalletModel.Network, queryStr, out var address) ?
-			ContainsDestinationAddress(tuple.Item1, tuple.Item2, address) :
-			ContainsId(tuple.Item2, queryStr));
+			.Where(tuple => NBitcoinHelpers.TryParseBitcoinAddress(tuple.Item1.WalletModel.Network, queryStr, out var address) ? ContainsDestinationAddress(tuple.Item1, tuple.Item2, address) : ContainsId(tuple.Item2, queryStr));
 	}
 
 	private static bool ContainsDestinationAddress(WalletViewModel walletViewModel, HistoryItemViewModelBase historyItem, BitcoinAddress address)

@@ -86,6 +86,7 @@ public partial class NavigationStack<T> : ViewModelBase, INavigationStack<T> whe
 					OnPopped(item);
 				}
 			}
+
 			CurrentPage = root;
 		}
 		else
@@ -149,6 +150,7 @@ public partial class NavigationStack<T> : ViewModelBase, INavigationStack<T> whe
 				{
 					_backStack.Push(oldPage);
 				}
+
 				break;
 
 			case NavigationMode.Clear:

@@ -12,22 +12,22 @@ public static class MacOsStartupHelper
 
 	private static readonly string PlistContent =
 		$"""
-		<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-		<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
-		<plist version=\"1.0\">
-		<dict>
-		    <key>Label</key>
-		    <string>com.gingerwallet.startup</string>
-			<key>ProgramArguments</key>
-			<array>
-				<string>{EnvironmentHelpers.GetExecutablePath()}</string>
-				<string>{StartupHelper.SilentArgument}</string>
-			</array>
-			<key>RunAtLoad</key>
-			<true/>
-		</dict>
-		</plist>
-		""";
+		 <?xml version=\"1.0\" encoding=\"UTF-8\"?>
+		 <!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+		 <plist version=\"1.0\">
+		 <dict>
+		     <key>Label</key>
+		     <string>com.gingerwallet.startup</string>
+		 	<key>ProgramArguments</key>
+		 	<array>
+		 		<string>{EnvironmentHelpers.GetExecutablePath()}</string>
+		 		<string>{StartupHelper.SilentArgument}</string>
+		 	</array>
+		 	<key>RunAtLoad</key>
+		 	<true/>
+		 </dict>
+		 </plist>
+		 """;
 
 	public static async Task AddOrRemoveStartupItemAsync(bool runOnSystemStartup)
 	{

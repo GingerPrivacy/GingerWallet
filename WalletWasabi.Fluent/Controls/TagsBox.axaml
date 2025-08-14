@@ -1,8 +1,7 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
-        xmlns:system="clr-namespace:System;assembly=System.Runtime"
-        >
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
   <Design.PreviewWith>
     <StackPanel Spacing="4" Width="300">
@@ -16,7 +15,7 @@
         </TagsBox.Items>
       </TagsBox>
 
-      <TextBox Text="{Binding $self.Bounds.Height}"/>
+      <TextBox Text="{Binding $self.Bounds.Height}" />
       <TagsBox Watermark="{Binding $self.Bounds.Height}" />
 
       <TagsBox Watermark="Test watermark" />
@@ -40,71 +39,71 @@
     <Setter Property="IsTabStop" Value="False" />
     <Setter Property="Template">
       <ControlTemplate>
-          <DockPanel x:Name="PART_DockPanel">
-            <DataValidationErrors DockPanel.Dock="Bottom" />
-            <ItemsControl ItemsSource="{TemplateBinding TopItems}"
-                          IsVisible="{TemplateBinding TopItems, Converter={x:Static ObjectConverters.IsNotNull}}"
-                          ClipToBounds="False"
-                          Margin="15,2,0,0"
-                          DockPanel.Dock="Bottom">
-              <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                  <WrapPanel Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-              </ItemsControl.ItemsPanel>
-              <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                  <PrivacyContentControl Margin="0,0,6,0">
-                    <Button Classes="activeHyperLink"
-                            Focusable="False"
-                            Content="{Binding}"
-                            Command="{Binding $parent[TagsBox].AddTag}"
-                            CommandParameter="{Binding }"
-                            x:CompileBindings="False" />
-                  </PrivacyContentControl>
-                </DataTemplate>
-              </ItemsControl.ItemTemplate>
-            </ItemsControl>
-            <Border x:Name="PART_Border" Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    Padding="{TemplateBinding Padding}"
-                    CornerRadius="{TemplateBinding CornerRadius}">
-              <Panel>
-                <TextBlock Name="PART_Watermark"
-                           Opacity="0.5"
-                           VerticalAlignment="Center"
-                           Margin="0"
-                           Text="{TemplateBinding Watermark}" />
-                <ItemsControl Name="PART_ItemsPresenter"
-                              ItemsSource="{TemplateBinding Items}"
-                              ClipToBounds="False"
-                              Focusable="False">
-                  <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                      <ConcatenatingWrapPanel Focusable="False" VerticalAlignment="Center"
-                                              Margin="0 3 0 0">
-                        <ConcatenatingWrapPanel.ConcatenatedChildren>
-                          <TagsBoxAutoCompleteBox x:Name="PART_AutoCompleteBox"
-                                                    ItemsSource="{Binding $parent[TagsBox].Suggestions}"
-                                                    FilterMode="StartsWith" Theme="{StaticResource TagsBoxAutoCompleteBox}"
-                                                    Margin="0 -4 0 -3"
-                                                    Padding="0 10 0 8"/>
-                        </ConcatenatingWrapPanel.ConcatenatedChildren>
-                      </ConcatenatingWrapPanel>
-                    </ItemsPanelTemplate>
-                  </ItemsControl.ItemsPanel>
-                  <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                      <TagControl Content="{Binding .}"
-                                    EnableCounter="{Binding $parent[TagsBox].EnableCounter}"
-                                    EnableDelete="{Binding $parent[TagsBox].EnableDelete}" />
-                    </DataTemplate>
-                  </ItemsControl.ItemTemplate>
-                </ItemsControl>
-              </Panel>
-            </Border>
-          </DockPanel>
+        <DockPanel x:Name="PART_DockPanel">
+          <DataValidationErrors DockPanel.Dock="Bottom" />
+          <ItemsControl ItemsSource="{TemplateBinding TopItems}"
+                        IsVisible="{TemplateBinding TopItems, Converter={x:Static ObjectConverters.IsNotNull}}"
+                        ClipToBounds="False"
+                        Margin="15,2,0,0"
+                        DockPanel.Dock="Bottom">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <WrapPanel Orientation="Horizontal" />
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <PrivacyContentControl Margin="0,0,6,0">
+                  <Button Classes="activeHyperLink"
+                          Focusable="False"
+                          Content="{Binding}"
+                          Command="{Binding $parent[TagsBox].AddTag}"
+                          CommandParameter="{Binding }"
+                          x:CompileBindings="False" />
+                </PrivacyContentControl>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+          <Border x:Name="PART_Border" Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  Padding="{TemplateBinding Padding}"
+                  CornerRadius="{TemplateBinding CornerRadius}">
+            <Panel>
+              <TextBlock Name="PART_Watermark"
+                         Opacity="0.5"
+                         VerticalAlignment="Center"
+                         Margin="0"
+                         Text="{TemplateBinding Watermark}" />
+              <ItemsControl Name="PART_ItemsPresenter"
+                            ItemsSource="{TemplateBinding Items}"
+                            ClipToBounds="False"
+                            Focusable="False">
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <ConcatenatingWrapPanel Focusable="False" VerticalAlignment="Center"
+                                            Margin="0 3 0 0">
+                      <ConcatenatingWrapPanel.ConcatenatedChildren>
+                        <TagsBoxAutoCompleteBox x:Name="PART_AutoCompleteBox"
+                                                ItemsSource="{Binding $parent[TagsBox].Suggestions}"
+                                                FilterMode="StartsWith" Theme="{StaticResource TagsBoxAutoCompleteBox}"
+                                                Margin="0 -4 0 -3"
+                                                Padding="0 10 0 8" />
+                      </ConcatenatingWrapPanel.ConcatenatedChildren>
+                    </ConcatenatingWrapPanel>
+                  </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <TagControl Content="{Binding .}"
+                                EnableCounter="{Binding $parent[TagsBox].EnableCounter}"
+                                EnableDelete="{Binding $parent[TagsBox].EnableDelete}" />
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </Panel>
+          </Border>
+        </DockPanel>
       </ControlTemplate>
     </Setter>
 
@@ -116,7 +115,8 @@
       <Setter Property="RenderTransformOrigin" Value="0.5,0" />
       <Setter Property="Transitions">
         <Transitions>
-          <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1" Delay="0:0:0.1" Easing="{StaticResource FluentEasing}" />
+          <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1" Delay="0:0:0.1"
+                                         Easing="{StaticResource FluentEasing}" />
           <ThicknessTransition Property="Margin" Duration="0:0:0.1" Easing="{StaticResource FluentEasing}" />
         </Transitions>
       </Setter>
@@ -127,18 +127,18 @@
     </Style>
 
     <Style Selector="^:pointerover /template/ Border#PART_Border">
-      <Setter Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushPointerOver}"/>
+      <Setter Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushPointerOver}" />
     </Style>
 
     <Style Selector="^:pointerover /template/ TextBlock#PART_Watermark">
-      <Setter Property="Opacity" Value="0.3"/>
+      <Setter Property="Opacity" Value="0.3" />
     </Style>
     <Style Selector="^:focus-within /template/ TextBlock#PART_Watermark">
-      <Setter Property="Opacity" Value="0.2"/>
+      <Setter Property="Opacity" Value="0.2" />
     </Style>
 
     <Style Selector="^:focus-within /template/ Border#PART_Border">
-      <Setter Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushFocused}"/>
+      <Setter Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushFocused}" />
     </Style>
   </ControlTheme>
 

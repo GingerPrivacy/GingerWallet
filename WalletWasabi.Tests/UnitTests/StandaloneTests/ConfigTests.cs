@@ -81,6 +81,7 @@ public class ConfigTests
 			  "ConfirmationTarget": 108,
 			  "DoSSeverity": "0.10",
 			  "DoSMinTimeForFailedToVerify": "31d 0h 0m 0s",
+			  "DoSSimplifiedPunishment": "1d 0h 0m 0s",
 			  "DoSMinTimeForCheating": "1d 0h 0m 0s",
 			  "DoSPenaltyFactorForDisruptingConfirmation": 0.2,
 			  "DoSPenaltyFactorForDisruptingSignalReadyToSign": 1.0,

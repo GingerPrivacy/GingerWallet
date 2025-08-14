@@ -125,6 +125,7 @@ public class ApplicationStateManager : IMainWindowService
 			{
 				return;
 			}
+
 			_isPowerSavingModeActive = false;
 
 			/*
@@ -144,6 +145,7 @@ public class ApplicationStateManager : IMainWindowService
 			{
 				return;
 			}
+
 			_isPowerSavingModeActive = true;
 
 			/*
@@ -205,6 +207,7 @@ public class ApplicationStateManager : IMainWindowService
 				{
 					service.Show();
 				}
+
 				break;
 		}
 	}
@@ -221,6 +224,7 @@ public class ApplicationStateManager : IMainWindowService
 						service.Hide();
 					}
 				}
+
 				break;
 		}
 	}

@@ -51,7 +51,8 @@
           <DockPanel DockPanel.Dock="Top"
                      VerticalAlignment="Bottom"
                      IsVisible="{Binding IsPasswordNeeded}">
-            <CopyablePasswordTextBox DockPanel.Dock="Top" Text="{Binding Password}" Watermark="{x:Static lang:Resources.OpenPasswordBoxWatermark}" PasswordChar="•"
+            <CopyablePasswordTextBox DockPanel.Dock="Top" Text="{Binding Password}"
+                                     Watermark="{x:Static lang:Resources.OpenPasswordBoxWatermark}" PasswordChar="•"
                                      Classes="revealPasswordButton copyablePasswordTextBox"
                                      x:Name="Password">
               <Interaction.Behaviors>
@@ -67,10 +68,10 @@
                     <Panel>
                       <PathIcon Data="{StaticResource PasswordBoxRevealButtonData}"
                                 Height="8" Width="12"
-                                IsVisible="{Binding !$parent[ToggleButton].IsChecked}"/>
+                                IsVisible="{Binding !$parent[ToggleButton].IsChecked}" />
                       <PathIcon Data="{StaticResource PasswordBoxHideButtonData}"
                                 Height="12" Width="12"
-                                IsVisible="{Binding $parent[ToggleButton].IsChecked}"/>
+                                IsVisible="{Binding $parent[ToggleButton].IsChecked}" />
                     </Panel>
                   </ToggleButton>
 
@@ -100,7 +101,8 @@
           </DockPanel>
 
           <!-- Hardware & Watch only wallet -->
-          <Button Content="{x:Static lang:Resources.Open}" IsVisible="{Binding !IsPasswordNeeded}" HorizontalAlignment="Center" Classes="action" Command="{Binding NextCommand}">
+          <Button Content="{x:Static lang:Resources.Open}" IsVisible="{Binding !IsPasswordNeeded}"
+                  HorizontalAlignment="Center" Classes="action" Command="{Binding NextCommand}">
             <Button.IsDefault>
               <MultiBinding Converter="{x:Static BoolConverters.And}">
                 <Binding Path="ErrorMessage" Converter="{x:Static StringConverters.IsNullOrEmpty}" />
@@ -117,7 +119,8 @@
                     VerticalAlignment="Bottom"
                     Classes="fadeAnimation">
           <TextBlock Text="{Binding ErrorMessage}" HorizontalAlignment="Center" />
-          <Button Content="{x:Static lang:Resources.Ok}" Focusable="False" Classes="action" HorizontalAlignment="Center" Command="{Binding OkCommand}">
+          <Button Content="{x:Static lang:Resources.Ok}" Focusable="False" Classes="action"
+                  HorizontalAlignment="Center" Command="{Binding OkCommand}">
             <Button.IsDefault>
               <MultiBinding Converter="{x:Static BoolConverters.And}">
                 <Binding Path="ErrorMessage" Converter="{x:Static StringConverters.IsNotNullOrEmpty}" />

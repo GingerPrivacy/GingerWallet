@@ -6,7 +6,8 @@
 
     <Setter Property="Template">
       <ControlTemplate>
-        <TextBlock DataContext="{Binding Path=Amount, RelativeSource={RelativeSource TemplatedParent}}" Classes="monoSpaced" TextWrapping="Wrap"
+        <TextBlock DataContext="{Binding Path=Amount, RelativeSource={RelativeSource TemplatedParent}}"
+                   Classes="monoSpaced" TextWrapping="Wrap"
                    IsVisible="{Binding Path=Amount, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNotNull}}">
           <TextBlock.Text>
             <MultiBinding StringFormat="{}{0} {1}">
@@ -21,7 +22,8 @@
     <Style Selector="^.Fee">
       <Setter Property="Template">
         <ControlTemplate>
-          <TextBlock DataContext="{Binding Path=Amount, RelativeSource={RelativeSource TemplatedParent}}" Classes="monoSpaced" TextWrapping="Wrap"
+          <TextBlock DataContext="{Binding Path=Amount, RelativeSource={RelativeSource TemplatedParent}}"
+                     Classes="monoSpaced" TextWrapping="Wrap"
                      IsVisible="{Binding Path=Amount, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNotNull}}">
             <TextBlock.Text>
               <MultiBinding StringFormat="{}{0} {1}">
@@ -43,11 +45,11 @@
                   IsVisible="{Binding Path=Amount, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNotNull}}">
             <StackPanel Orientation="Horizontal" Spacing="10">
               <TextBlock Classes="monoSpaced" TextWrapping="Wrap"
-                         Text="{Binding Btc, Converter={x:Static converters:MoneyConverters.ToBtc}}"/>
+                         Text="{Binding Btc, Converter={x:Static converters:MoneyConverters.ToBtc}}" />
               <TextBlock Classes="monoSpaced" TextWrapping="Wrap"
                          Text="{Binding Fiat^, Converter={x:Static converters:MoneyConverters.ToFiatFormatted}}"
                          IsVisible="{Binding HasFiatBalance^}"
-                         Opacity="0.6"/>
+                         Opacity="0.6" />
             </StackPanel>
           </Border>
         </ControlTemplate>

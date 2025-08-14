@@ -113,7 +113,8 @@
     <Carousel ItemsSource="{Binding TransactionSummaries}"
               SelectedItem="{Binding DisplayedTransactionSummary}">
       <Carousel.PageTransition>
-        <CrossFade Duration="0:0:0.3" FadeInEasing="{StaticResource FluentEasing}" FadeOutEasing="{StaticResource FluentEasing}"/>
+        <CrossFade Duration="0:0:0.3" FadeInEasing="{StaticResource FluentEasing}"
+                   FadeOutEasing="{StaticResource FluentEasing}" />
       </Carousel.PageTransition>
       <Carousel.ItemTemplate>
         <DataTemplate>

@@ -25,7 +25,8 @@
                    DockPanel.Dock="Bottom">
         <StackPanel Orientation="Horizontal">
           <TextBlock Text="{x:Static lang:Resources.ChangesAppliedAfterRestart}" />
-          <Button Content="{x:Static lang:Resources.RestartApplication}" Classes="activeHyperLink plain" Margin="5 0 0 0"
+          <Button Content="{x:Static lang:Resources.RestartApplication}" Classes="activeHyperLink plain"
+                  Margin="5 0 0 0"
                   Command="{Binding RestartCommand}" />
         </StackPanel>
       </InfoMessage>
@@ -48,7 +49,8 @@
 
         <TabItem Header="{x:Static lang:Resources.AppearanceSettingsTabViewModelTitle}">
           <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-            <views:AppearanceSettingsTabView DataContext="{Binding AppearanceSettingsTab}" IsEnabled="{Binding !IsReadOnly}" />
+            <views:AppearanceSettingsTabView DataContext="{Binding AppearanceSettingsTab}"
+                                             IsEnabled="{Binding !IsReadOnly}" />
           </ScrollViewer>
         </TabItem>
 
@@ -60,7 +62,8 @@
 
         <TabItem Header="{x:Static lang:Resources.Security}">
           <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-            <views:SecuritySettingsTabView DataContext="{Binding SecuritySettingsTab}" IsEnabled="{Binding !IsReadOnly}" />
+            <views:SecuritySettingsTabView DataContext="{Binding SecuritySettingsTab}"
+                                           IsEnabled="{Binding !IsReadOnly}" />
           </ScrollViewer>
         </TabItem>
       </TabControl>

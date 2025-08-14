@@ -53,6 +53,7 @@ public class HistoryItemTypeClassBehavior : AttachedToVisualTreeBehavior<Avaloni
 				row.Classes.Add(PositiveAmountClass);
 			}
 		}
+
 		switch (row.DataContext)
 		{
 			case TransactionHistoryItemViewModel:

@@ -50,9 +50,9 @@ public partial class ReceiveAddressesViewModel : RoutableViewModel
 
 		Sortables =
 		[
-			new SortableItem(Resources.Type) { SortByAscendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[0], ListSortDirection.Ascending)), SortByDescendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[0], ListSortDirection.Descending)) },
-			new SortableItem(Resources.Address) { SortByAscendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[1], ListSortDirection.Ascending)), SortByDescendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[1], ListSortDirection.Descending)) },
-			new SortableItem(Resources.Label) { SortByAscendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[2], ListSortDirection.Ascending)), SortByDescendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource) Source).SortBy(Source.Columns[2], ListSortDirection.Descending)) }
+			new SortableItem(Resources.Type) { SortByAscendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource)Source).SortBy(Source.Columns[0], ListSortDirection.Ascending)), SortByDescendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource)Source).SortBy(Source.Columns[0], ListSortDirection.Descending)) },
+			new SortableItem(Resources.Address) { SortByAscendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource)Source).SortBy(Source.Columns[1], ListSortDirection.Ascending)), SortByDescendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource)Source).SortBy(Source.Columns[1], ListSortDirection.Descending)) },
+			new SortableItem(Resources.Label) { SortByAscendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource)Source).SortBy(Source.Columns[2], ListSortDirection.Ascending)), SortByDescendingCommand = ReactiveCommand.Create(() => ((ITreeDataGridSource)Source).SortBy(Source.Columns[2], ListSortDirection.Descending)) }
 		];
 
 		base.OnNavigatedTo(isInHistory, disposables);

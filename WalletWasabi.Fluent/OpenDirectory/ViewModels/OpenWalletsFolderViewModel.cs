@@ -14,8 +14,7 @@ public partial class OpenWalletsFolderViewModel : TriggerCommandViewModel
 {
 	public OpenWalletsFolderViewModel()
 	{
-		TargetCommand = ReactiveCommand.Create(
-			() => UiContext.FileSystem.OpenFolderInFileExplorer(UiContext.Config.WalletsDir));
+		TargetCommand = ReactiveCommand.Create(() => UiContext.FileSystem.OpenFolderInFileExplorer(UiContext.Config.WalletsDir));
 	}
 
 	public override ICommand TargetCommand { get; }

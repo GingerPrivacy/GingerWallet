@@ -28,7 +28,7 @@
       <PreviewItem Icon="{StaticResource btc_logo}"
                    Label="{x:Static lang:Resources.Amount}"
                    CopyableContent="{Binding Amount}">
-        <PrivacyContentControl Content="{Binding Amount}"/>
+        <PrivacyContentControl Content="{Binding Amount}" />
       </PreviewItem>
 
       <Separator />
@@ -36,7 +36,7 @@
       <!-- Status -->
       <PreviewItem Icon="{StaticResource copy_confirmed}"
                    Label="{x:Static lang:Resources.Status}">
-        <PrivacyContentControl Content="{Binding Status}"/>
+        <PrivacyContentControl Content="{Binding Status}" />
       </PreviewItem>
 
       <Separator />
@@ -56,7 +56,7 @@
       <PreviewItem Icon="{StaticResource entities_regular}"
                    Label="Provider"
                    CopyableContent="{Binding Provider}">
-        <PrivacyContentControl Content="{Binding Provider}"/>
+        <PrivacyContentControl Content="{Binding Provider}" />
       </PreviewItem>
 
     </StackPanel>

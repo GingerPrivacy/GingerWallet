@@ -15,7 +15,6 @@ public partial class BuyOffersViewModel : OffersViewModel
 {
 	public BuyOffersViewModel(WalletModel wallet, IEnumerable<OfferModel> offers) : base(wallet, offers)
 	{
-
 	}
 
 	protected override OfferViewModel CreateOfferViewModel(OfferModel model)

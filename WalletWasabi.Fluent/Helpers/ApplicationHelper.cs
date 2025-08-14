@@ -62,7 +62,7 @@ public class ApplicationHelper
 		}
 	}
 
-	public static async Task ClearAsync()
+	public static async Task ClearClipboardAsync()
 	{
 		if (GetClipboard() is { } clipboard)
 		{

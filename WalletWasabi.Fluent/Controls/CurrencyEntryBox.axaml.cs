@@ -376,8 +376,8 @@ public class CurrencyEntryBox : TextBox
 		var selectionEnd = SelectionEnd;
 
 		if (!string.IsNullOrEmpty(input) && (MaxLength == 0 ||
-											 input.Length + preComposedText.Length -
-											 Math.Abs(selectionStart - selectionEnd) <= MaxLength))
+		                                     input.Length + preComposedText.Length -
+		                                     Math.Abs(selectionStart - selectionEnd) <= MaxLength))
 		{
 			if (selectionStart != selectionEnd)
 			{

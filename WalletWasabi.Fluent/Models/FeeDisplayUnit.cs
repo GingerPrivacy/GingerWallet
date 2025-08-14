@@ -6,6 +6,5 @@ public enum FeeDisplayUnit
 {
 	BTC,
 
-	[FriendlyName("sats")]
-	Satoshis,
+	[FriendlyName("sats")] Satoshis,
 }

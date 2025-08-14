@@ -61,4 +61,9 @@ public class KeyChain : IKeyChain
 
 		return transaction;
 	}
+
+	public string SignMessage(string message, HdPubKey hdPubKey)
+	{
+		return KeyManager.SignMessage(Kitchen.SaltSoup(), message, hdPubKey, true, KeyManagerExtension.LegacyHeaderStyle.Standard, false);
+	}
 }

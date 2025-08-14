@@ -43,6 +43,7 @@ public class TransactionTreeBuilder
 				coinJoinGroup.Add(CreateCoinjoinTransaction(i, item));
 			}
 		}
+
 		AddCoinjoinOrGroup(result, ref coinJoinGroup);
 
 		// This second iteration is necessary to transform the flat list of speed-ups into actual groups.
@@ -103,6 +104,7 @@ public class TransactionTreeBuilder
 				UpdateCoinjoinGroup(group);
 				list.Add(group);
 			}
+
 			group = default;
 		}
 	}
@@ -188,8 +190,8 @@ public class TransactionTreeBuilder
 			Type = GetItemType(transactionSummary),
 			Status =
 				isConfirmed
-				? TransactionStatus.Confirmed
-				: TransactionStatus.Pending,
+					? TransactionStatus.Confirmed
+					: TransactionStatus.Pending,
 			HasBeenSpedUp = true,
 		};
 
@@ -223,8 +225,8 @@ public class TransactionTreeBuilder
 		var isConfirmed = coinjoinGroup.Children.All(x => x.IsConfirmed);
 		coinjoinGroup.Status =
 			isConfirmed
-			? TransactionStatus.Confirmed
-			: TransactionStatus.Pending;
+				? TransactionStatus.Confirmed
+				: TransactionStatus.Pending;
 
 		coinjoinGroup.ConfirmedTooltip = coinjoinGroup.Children.MinBy(x => x.Confirmations)?.ConfirmedTooltip ?? "";
 		coinjoinGroup.Date = coinjoinGroup.Children.Select(tx => tx.Date).Max().ToLocalTime();

@@ -18,8 +18,9 @@
         </Viewbox>
       </QuestionControl.IconContent>
       <StackPanel Spacing="10">
-        <TextBlock TextWrapping="Wrap" TextAlignment="Center" Text="{x:Static lang:Resources.CoinJoinProfilesCaption}"/>
-        <TextBlock TextWrapping="Wrap" TextAlignment="Center" Text="{x:Static lang:Resources.WouldYouLikeToPersonalizeIt}"/>
+        <TextBlock TextWrapping="Wrap" TextAlignment="Center" Text="{x:Static lang:Resources.CoinJoinProfilesCaption}" />
+        <TextBlock TextWrapping="Wrap" TextAlignment="Center"
+                   Text="{x:Static lang:Resources.WouldYouLikeToPersonalizeIt}" />
       </StackPanel>
     </QuestionControl>
   </ContentArea>

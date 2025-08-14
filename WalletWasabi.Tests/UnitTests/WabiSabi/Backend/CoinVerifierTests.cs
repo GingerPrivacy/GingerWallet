@@ -43,7 +43,7 @@ public class CoinVerifierTests
 		public override ApiResponse ParseResponse(HttpStatusCode statusCode, string responseString, Coin coin, int coinBlockHeight, int currentBlockHeight)
 		{
 			bool ban = responseString == BanResponse;
-			return new ApiResponse(ApiResponseInfo.OK, "mock", ban, ban, "");
+			return new ApiResponse(ApiResponseInfo.OK, "mock", ban, ban, "", TimeSpan.Zero);
 		}
 	}
 

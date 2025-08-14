@@ -8,4 +8,4 @@ public record SpeedupTransaction(
 	BuildTransactionResult BoostingTransaction,
 	bool AreWePayingTheFee,
 	Amount Fee
-	);
+);

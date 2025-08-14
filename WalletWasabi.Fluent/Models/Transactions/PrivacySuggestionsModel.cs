@@ -81,10 +81,12 @@ public class PrivacySuggestionsModel
 			{
 				yield return item;
 			}
+
 			await foreach (var item in VerifyChangeAsync(parameters, _linkedCancellationTokenSource).ConfigureAwait(false))
 			{
 				yield return item;
 			}
+
 			lock (_lock)
 			{
 				_singleRunCancellationTokenSource = null;
@@ -140,7 +142,7 @@ public class PrivacySuggestionsModel
 			parameters.TransactionInfo.Recipient.Equals(new LabelsArray(transactionLabels), StringComparer.OrdinalIgnoreCase);
 
 		var foundNonPrivate = !onlyKnownByRecipient &&
-							  parameters.Transaction.SpentCoins.Any(x => x.GetPrivacyLevel(_wallet.AnonScoreTarget) == PrivacyLevel.NonPrivate);
+		                      parameters.Transaction.SpentCoins.Any(x => x.GetPrivacyLevel(_wallet.AnonScoreTarget) == PrivacyLevel.NonPrivate);
 
 		var foundSemiPrivate =
 			parameters.Transaction.SpentCoins.Any(x => x.GetPrivacyLevel(_wallet.AnonScoreTarget) == PrivacyLevel.SemiPrivate);
@@ -174,8 +176,8 @@ public class PrivacySuggestionsModel
 		var onlyKnownByTheRecipientCoins = availableCoins.Where(x => parameters.TransactionInfo.Recipient.Equals(x.GetLabels(_wallet.AnonScoreTarget), StringComparer.OrdinalIgnoreCase)).ToArray();
 		var allSemiPrivateCoin =
 			availableCoins.Where(x => x.GetPrivacyLevel(_wallet.AnonScoreTarget) == PrivacyLevel.SemiPrivate)
-						  .Union(onlyKnownByTheRecipientCoins)
-						  .ToArray();
+				.Union(onlyKnownByTheRecipientCoins)
+				.ToArray();
 
 		allSemiPrivateCoin = wasCoinjoiningCoinUsed ? allSemiPrivateCoin : allSemiPrivateCoin.Except(coinsToExclude).ToArray();
 
@@ -184,7 +186,7 @@ public class PrivacySuggestionsModel
 		FullPrivacySuggestion? fullPrivacySuggestion = null;
 
 		if ((foundNonPrivate || foundSemiPrivate) && allPrivateCoin.Length != 0 &&
-			TryCreateTransaction(parameters.TransactionInfo, allPrivateCoin, out var newTransaction, out var isChangeless))
+		    TryCreateTransaction(parameters.TransactionInfo, allPrivateCoin, out var newTransaction, out var isChangeless))
 		{
 			var amountDifference = totalAmount - newTransaction.CalculateDestinationAmount(parameters.TransactionInfo.Destination).ToDecimal(MoneyUnit.BTC);
 			var amountDifferencePercentage = amountDifference / totalAmount;
@@ -210,7 +212,7 @@ public class PrivacySuggestionsModel
 
 		var coins = allPrivateCoin.Union(allSemiPrivateCoin).ToArray();
 		if (foundNonPrivate && allSemiPrivateCoin.Length != 0 &&
-			TryCreateTransaction(parameters.TransactionInfo, coins, out newTransaction, out isChangeless))
+		    TryCreateTransaction(parameters.TransactionInfo, coins, out newTransaction, out isChangeless))
 		{
 			var amountDifference = totalAmount - newTransaction.CalculateDestinationAmount(parameters.TransactionInfo.Destination).ToDecimal(MoneyUnit.BTC);
 			var amountDifferencePercentage = amountDifference / totalAmount;
@@ -326,6 +328,7 @@ public class PrivacySuggestionsModel
 					result.Remove(existingSuggestion);
 					result.Add(suggestion);
 				}
+
 				return result;
 			}
 
