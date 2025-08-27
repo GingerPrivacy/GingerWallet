@@ -4,12 +4,24 @@
 		<DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
 		<IsPackable>false</IsPackable>
 		<NoWarn>1701;1702;1705;1591;CA1031;CA1822</NoWarn>
+
 		<ApplicationIcon />
 		<OutputType>Library</OutputType>
 		<StartupObject />
+
+		<!-- Determinism-friendly -->
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-		<!-- TODO: PathMap breaks Verifier.Verify -->
-		<!--<PathMap>$(MSBuildProjectDirectory)\=WalletWasabi.Tests</PathMap>-->
+		<TargetLatestRuntimePatch>false</TargetLatestRuntimePatch>
+
+		<!-- Keep PathMap disabled here (Verifier.Verify compatibility) -->
+		<!-- <PathMap>$(MSBuildProjectDirectory)\=WalletWasabi.Tests</PathMap> -->
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DocumentationFile></DocumentationFile>
+		<DebugType>none</DebugType>
+		<DebugSymbols>false</DebugSymbols>
+		<ErrorReport>none</ErrorReport>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -43,19 +55,19 @@
 
 	<ItemGroup>
 		<None Update="UnitTests\QrDecode\QrResources\AddressTest1.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="UnitTests\QrDecode\QrResources\AddressTest2.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="UnitTests\QrDecode\QrResources\qr-embed-logos.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="UnitTests\QrDecode\QrResources\QrByPhone.jpg">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="UnitTests\QrDecode\QrResources\QRwithZebraBackground.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="xunit.runner.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>

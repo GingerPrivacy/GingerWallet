@@ -835,7 +835,7 @@
       "walletwasabi": {
         "type": "Project",
         "dependencies": {
-          "GingerCommon": "[1.0.0, )",
+          "GingerCommon": "[0.0.0, )",
           "Microsoft.AspNetCore.WebUtilities": "[8.0.0, )",
           "Microsoft.Data.Sqlite": "[8.0.0, )",
           "Microsoft.Extensions.Caching.Abstractions": "[8.0.0, )",
@@ -849,12 +849,12 @@
           "WabiSabi": "[1.0.1.2, )"
         }
       },
-      "Wasabi Wallet Daemon": {
+      "walletwasabi.daemon": {
         "type": "Project",
         "dependencies": {
           "Microsoft.Extensions.Caching.Memory": "[8.0.1, )",
           "System.Text.Json": "[8.0.5, )",
-          "WalletWasabi": "[1.0.0, )"
+          "WalletWasabi": "[0.0.0, )"
         }
       },
       "Microsoft.AspNetCore.WebUtilities": {

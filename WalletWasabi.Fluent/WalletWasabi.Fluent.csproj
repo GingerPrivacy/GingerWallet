@@ -3,17 +3,36 @@
 		<DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
 		<Nullable>enable</Nullable>
 		<NoWarn>1701;1702;1705;1591;1573;CA1031</NoWarn>
+
+		<!-- Keep generator outputs (fine for build), but they won't ship -->
 		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
 		<CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\$(Configuration)\$(TargetFramework)\GeneratedFiles</CompilerGeneratedFilesOutputPath>
+
+		<!-- NuGet reproducibility -->
 		<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
 		<DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
-		<PathMap>$(MSBuildProjectDirectory)\=WalletWasabi.Fluent</PathMap>
+
+		<!-- Determinism: do NOT float runtime patches when publishing self-contained -->
+		<TargetLatestRuntimePatch>false</TargetLatestRuntimePatch>
+
+		<!-- Use repo-wide PathMap from Directory.Build.props for consistent paths -->
+		<!-- <PathMap>$(MSBuildProjectDirectory)\=WalletWasabi.Fluent</PathMap> -->
+
 		<AvaloniaNameGeneratorIsEnabled>false</AvaloniaNameGeneratorIsEnabled>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DocumentationFile></DocumentationFile>
+		<DebugType>none</DebugType>
+		<DebugSymbols>false</DebugSymbols>
+		<ErrorReport>none</ErrorReport>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<AvaloniaResource Include="Assets\**"/>
 	</ItemGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Avalonia"/>
 		<PackageReference Include="Avalonia.Controls.TreeDataGrid"/>
@@ -30,10 +49,14 @@
 		<PackageReference Include="System.Private.Uri"/>
 		<PackageReference Include="System.Text.Json"/>
 	</ItemGroup>
+
 	<ItemGroup>
 		<ProjectReference Include="..\WalletWasabi.Daemon\WalletWasabi.Daemon.csproj"/>
 
-		<!-- See explanation of the additional properties here: https://github.com/dotnet/roslyn/issues/60744#issuecomment-1438273464 -->
-		<ProjectReference Include="..\WalletWasabi.Fluent.Generators\WalletWasabi.Fluent.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" AdditionalProperties="IsRidAgnostic=true"/>
+		<!-- Generator as analyzer (RID-agnostic stays) -->
+		<ProjectReference Include="..\WalletWasabi.Fluent.Generators\WalletWasabi.Fluent.Generators.csproj"
+						  OutputItemType="Analyzer"
+						  ReferenceOutputAssembly="false"
+						  AdditionalProperties="IsRidAgnostic=true"/>
 	</ItemGroup>
 </Project>

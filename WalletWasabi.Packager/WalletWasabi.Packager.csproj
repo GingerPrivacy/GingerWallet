@@ -5,10 +5,22 @@
 		<DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
 		<NoWarn>1701;1702;1705;1591;1573;CA1031;CA1822</NoWarn>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+		<!-- NuGet reproducibility -->
 		<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
 		<DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
-		<RuntimeIdentifiers>win-x64;linux-x64;osx-x64;osx-arm64;</RuntimeIdentifiers>
-		<PathMap>$(MSBuildProjectDirectory)\=WalletWasabi.Packager</PathMap>
+
+		<!-- Determinism / stop runtime patch drift (even though we don't ship this tool) -->
+		<TargetLatestRuntimePatch>false</TargetLatestRuntimePatch>
+
+		<!-- Packager is run with `dotnet run`; no need for platform apphost -->
+		<UseAppHost>false</UseAppHost>
+
+		<!-- Keep RIDs tidy (trailing ; removed) -->
+		<RuntimeIdentifiers>win-x64;linux-x64;osx-x64;osx-arm64</RuntimeIdentifiers>
+
+		<!-- Use the repo-wide PathMap from Directory.Build.props -->
+		<!-- <PathMap>$(MSBuildProjectDirectory)\=WalletWasabi.Packager</PathMap> -->
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -23,7 +35,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="System.Text.Json" />
+		<PackageReference Include="System.Text.Json" />
 	</ItemGroup>
 
 	<ItemGroup>
