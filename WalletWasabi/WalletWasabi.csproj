@@ -2,12 +2,19 @@
 
 	<PropertyGroup>
 		<DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
-		<TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
+
+		<!-- Repro: do NOT float runtime patches when publishing self-contained -->
+		<TargetLatestRuntimePatch>false</TargetLatestRuntimePatch>
+
 		<NoWarn>1701;1702;1705;1591;1573;CA1031;CA1822</NoWarn>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+		<!-- NuGet reproducibility (also set repo-wide; harmless to keep here) -->
 		<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
 		<DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
-		<PathMap>$(MSBuildProjectDirectory)\=WalletWasabi</PathMap>
+
+		<!-- Use the repo-wide PathMap from Directory.Build.props for consistent paths -->
+		<!-- <PathMap>$(MSBuildProjectDirectory)\=WalletWasabi</PathMap> -->
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -21,6 +28,7 @@
 		<ErrorReport>none</ErrorReport>
 	</PropertyGroup>
 
+	<!-- Keep CommitHash metadata (picked up from env/CI and used in InformationalVersion) -->
 	<Target Name="WriteMetadata" BeforeTargets="PrepareForBuild">
 		<ItemGroup>
 			<AssemblyMetadata Include="CommitHash" Value="$(CommitHash)" />
@@ -43,7 +51,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\GingerCommon\GingerCommon.csproj" />
+		<ProjectReference Include="..\GingerCommon\GingerCommon.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -85,20 +93,19 @@
 		</None>
 	</ItemGroup>
 
-
 	<ItemGroup>
-	  <Compile Update="Lang\Resources.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>Resources.resx</DependentUpon>
-	  </Compile>
+		<Compile Update="Lang\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Update="Lang\Resources.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
-	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
+		<EmbeddedResource Update="Lang\Resources.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 	</ItemGroup>
 
 </Project>

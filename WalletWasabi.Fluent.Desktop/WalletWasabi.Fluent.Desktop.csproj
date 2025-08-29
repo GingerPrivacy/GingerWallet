@@ -1,20 +1,33 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+	<!-- Keep your Debug/Release OutputType behavior -->
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<OutputType>Exe</OutputType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 		<OutputType>WinExe</OutputType>
+		<!-- Deterministic-friendly Release settings -->
+		<DocumentationFile></DocumentationFile>
+		<DebugType>none</DebugType>
+		<DebugSymbols>false</DebugSymbols>
+		<ErrorReport>none</ErrorReport>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
 		<NoWarn>1701;1702;1705;1591;1573;CA1031;CA1822</NoWarn>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+		<!-- NuGet reproducibility (also set repo-wide; harmless to keep here) -->
 		<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
 		<DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
-		<PathMap>$(MSBuildProjectDirectory)\=WalletWasabi.Fluent.Desktop</PathMap>
+
+		<!-- Determinism: do NOT float runtime patch when publishing self-contained -->
+		<TargetLatestRuntimePatch>false</TargetLatestRuntimePatch>
+
+		<!-- Use repo-wide PathMap for consistent PDB/SourceLink paths -->
+		<!-- <PathMap>$(MSBuildProjectDirectory)\=WalletWasabi.Fluent.Desktop</PathMap> -->
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -36,17 +49,18 @@
 		<ApplicationIcon>Assets\WasabiLogo.ico</ApplicationIcon>
 		<PackageIcon>Assets\WasabiLogo.ico</PackageIcon>
 		<Product>Ginger Wallet Fluent</Product>
-		<!-- owners is not supported in MSBuild -->
 	</PropertyGroup>
 
 	<ItemGroup>
 		<AvaloniaResource Include="Assets\**" />
 	</ItemGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Avalonia.Desktop" />
 		<PackageReference Include="Avalonia.ReactiveUI" />
 		<PackageReference Include="System.Text.Json" />
 	</ItemGroup>
+
 	<ItemGroup>
 		<ProjectReference Include="..\WalletWasabi.Fluent\WalletWasabi.Fluent.csproj" />
 		<ProjectReference Include="..\WalletWasabi\WalletWasabi.csproj" />

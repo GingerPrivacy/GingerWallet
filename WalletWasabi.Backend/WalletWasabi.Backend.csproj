@@ -3,14 +3,25 @@
 	<PropertyGroup>
 		<DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
 		<NoWarn>1701;1702;1705;1591;1573;CA1031;CA1822</NoWarn>
-		<Product>WalletWasabiApi</Product>
+
+		<!-- Avoid runtime patch drift if this ever publishes self-contained -->
+		<TargetLatestRuntimePatch>false</TargetLatestRuntimePatch>
+
+		<!-- Use repo-wide PathMap for consistent paths (remove project-specific override) -->
+		<!-- <PathMap>$(MSBuildProjectDirectory)\=WalletWasabi.Backend</PathMap> -->
+
+		<Product>WalletGingerApi</Product>
 		<Copyright>MIT</Copyright>
-		<PackageTags>walletwasabi, wasabiwallet, wasabi, wallet, bitcoin, nbitcoin, tor, zerolink, wabisabi, coinjoin, fungibility, privacy, anonymity</PackageTags>
+		<PackageTags>walletginger, gingerwallet, wasabi, wallet, bitcoin, nbitcoin, tor, zerolink, wabisabi, coinjoin, fungibility, privacy, anonymity</PackageTags>
 		<RepositoryType>Git</RepositoryType>
-		<RepositoryUrl>https://github.com/zkSNACKs/WalletWasabi/</RepositoryUrl>
-		<PathMap>$(MSBuildProjectDirectory)\=WalletWasabi.Backend</PathMap>
+		<RepositoryUrl>https://github.com/GingerPrivacy/GingerWallet</RepositoryUrl>
+
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<StaticWebAssetsEnabled>false</StaticWebAssetsEnabled>
+
+		<!-- NuGet reproducibility (also set repo-wide; harmless to keep) -->
+		<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+		<DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -26,7 +37,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<!-- Needed for Swagger! -->
+		<!-- Keep XML for Swagger; PDBs off for reproducibility -->
 		<DocumentationFile>bin\Release\net8.0\WalletWasabi.Backend.xml</DocumentationFile>
 		<DebugType>none</DebugType>
 		<DebugSymbols>false</DebugSymbols>
