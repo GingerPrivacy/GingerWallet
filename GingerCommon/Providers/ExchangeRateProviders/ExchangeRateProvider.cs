@@ -21,7 +21,7 @@ public abstract class ExchangeRateProvider
 	private static readonly SortedSet<string> ExcludeCurrencies = ["HRK", "SLL", "ANG"];
 
 	// Same, but missing ones
-	private static readonly SortedSet<string> MissingCurrencies = ["MVR", "SLE", "VED", "VES"];
+	private static readonly SortedSet<string> MissingCurrencies = ["MVR", "SLE", "VED", "VES", "XCG"];
 
 	public static readonly ImmutableSortedSet<string> ValidCurrencies =
 		CultureInfo.GetCultures(CultureTypes.SpecificCultures).Select(culture => new RegionInfo(culture.Name).ISOCurrencySymbol).Where(x => x?.Length == 3 && !ExcludeCurrencies.Contains(x)).Concat(MissingCurrencies).ToImmutableSortedSet();
