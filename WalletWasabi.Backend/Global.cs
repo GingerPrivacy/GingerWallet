@@ -65,11 +65,7 @@ public class Global : IDisposable
 
 	public void CreateDiscordLogger()
 	{
-		string discordWebhook = Config.DiscordLoggerWebhook;
-		if (!string.IsNullOrEmpty(discordWebhook))
-		{
-			Logger.CreateDiscordLogger(LogLevel.Information, HttpClientFactory, discordWebhook);
-		}
+		Logger.CreateDiscordLogger(LogLevel.Information, HttpClientFactory, Config.DiscordLoggers);
 	}
 
 	public string DataDir { get; }
@@ -160,7 +156,7 @@ public class Global : IDisposable
 
 	private void BlockNotifier_ExceptionThrown(object? sender, Exception e)
 	{
-		Logger.LogDiscord(LogLevel.Error, $"BlockNotifier had an exception: '{e.Message}'.", normalLogLevel: LogLevel.Error);
+		Logger.LogDiscord("main", LogLevel.Error, $"BlockNotifier had an exception: '{e.Message}'.", normalLogLevel: LogLevel.Error);
 	}
 
 	[MemberNotNull(nameof(WabiSabiCoordinator))]

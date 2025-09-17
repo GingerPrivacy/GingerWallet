@@ -8,75 +8,80 @@
     <!-- Set Defaults -->
     <Setter Property="Template">
       <ControlTemplate>
-        <Image x:Name="Image" DataContext="{TemplateBinding WalletType}">
-          <Interaction.Behaviors>
+        <Panel>
+          <Image x:Name="Image" DataContext="{TemplateBinding WalletType}">
+            <Interaction.Behaviors>
 
-            <DataTriggerBehavior Binding="{Binding #Image.DataContext}" Value="Normal">
-              <ChangeAvaloniaPropertyAction TargetObject="Image" TargetProperty="{x:Static Image.SourceProperty}">
-                <ChangeAvaloniaPropertyAction.Value>
-                  <StaticResource ResourceKey="NormalWalletIcon" />
-                </ChangeAvaloniaPropertyAction.Value>
-              </ChangeAvaloniaPropertyAction>
-            </DataTriggerBehavior>
+              <DataTriggerBehavior Binding="{Binding #Image.DataContext}" Value="Normal">
+                <ChangeAvaloniaPropertyAction TargetObject="Image" TargetProperty="{x:Static Image.SourceProperty}">
+                  <ChangeAvaloniaPropertyAction.Value>
+                    <StaticResource ResourceKey="NormalWalletIcon" />
+                  </ChangeAvaloniaPropertyAction.Value>
+                </ChangeAvaloniaPropertyAction>
+              </DataTriggerBehavior>
 
-            <DataTriggerBehavior Binding="{Binding #Image.DataContext}" Value="BitBox">
-              <ChangeAvaloniaPropertyAction TargetObject="Image" TargetProperty="{x:Static Image.SourceProperty}">
-                <ChangeAvaloniaPropertyAction.Value>
-                  <StaticResource ResourceKey="BitBoxWalletIcon" />
-                </ChangeAvaloniaPropertyAction.Value>
-              </ChangeAvaloniaPropertyAction>
-            </DataTriggerBehavior>
+              <DataTriggerBehavior Binding="{Binding #Image.DataContext}" Value="BitBox">
+                <ChangeAvaloniaPropertyAction TargetObject="Image" TargetProperty="{x:Static Image.SourceProperty}">
+                  <ChangeAvaloniaPropertyAction.Value>
+                    <StaticResource ResourceKey="BitBoxWalletIcon" />
+                  </ChangeAvaloniaPropertyAction.Value>
+                </ChangeAvaloniaPropertyAction>
+              </DataTriggerBehavior>
 
-            <DataTriggerBehavior Binding="{Binding #Image.DataContext}" Value="Trezor">
-              <ChangeAvaloniaPropertyAction TargetObject="Image" TargetProperty="{x:Static Image.SourceProperty}">
-                <ChangeAvaloniaPropertyAction.Value>
-                  <StaticResource ResourceKey="TrezorWalletIcon" />
-                </ChangeAvaloniaPropertyAction.Value>
-              </ChangeAvaloniaPropertyAction>
-            </DataTriggerBehavior>
+              <DataTriggerBehavior Binding="{Binding #Image.DataContext}" Value="Trezor">
+                <ChangeAvaloniaPropertyAction TargetObject="Image" TargetProperty="{x:Static Image.SourceProperty}">
+                  <ChangeAvaloniaPropertyAction.Value>
+                    <StaticResource ResourceKey="TrezorWalletIcon" />
+                  </ChangeAvaloniaPropertyAction.Value>
+                </ChangeAvaloniaPropertyAction>
+              </DataTriggerBehavior>
 
-            <DataTriggerBehavior Binding="{Binding #Image.DataContext}" Value="Coldcard">
-              <ChangeAvaloniaPropertyAction TargetObject="Image" TargetProperty="{x:Static Image.SourceProperty}">
-                <ChangeAvaloniaPropertyAction.Value>
-                  <StaticResource ResourceKey="ColdcardWalletIcon" />
-                </ChangeAvaloniaPropertyAction.Value>
-              </ChangeAvaloniaPropertyAction>
-            </DataTriggerBehavior>
+              <DataTriggerBehavior Binding="{Binding #Image.DataContext}" Value="Coldcard">
+                <ChangeAvaloniaPropertyAction TargetObject="Image" TargetProperty="{x:Static Image.SourceProperty}">
+                  <ChangeAvaloniaPropertyAction.Value>
+                    <StaticResource ResourceKey="ColdcardWalletIcon" />
+                  </ChangeAvaloniaPropertyAction.Value>
+                </ChangeAvaloniaPropertyAction>
+              </DataTriggerBehavior>
 
-            <DataTriggerBehavior Binding="{Binding #Image.DataContext}" Value="Generic">
-              <ChangeAvaloniaPropertyAction TargetObject="Image" TargetProperty="{x:Static Image.SourceProperty}">
-                <ChangeAvaloniaPropertyAction.Value>
-                  <StaticResource ResourceKey="GenericWalletIcon" />
-                </ChangeAvaloniaPropertyAction.Value>
-              </ChangeAvaloniaPropertyAction>
-            </DataTriggerBehavior>
+              <DataTriggerBehavior Binding="{Binding #Image.DataContext}" Value="Generic">
+                <ChangeAvaloniaPropertyAction TargetObject="Image" TargetProperty="{x:Static Image.SourceProperty}">
+                  <ChangeAvaloniaPropertyAction.Value>
+                    <StaticResource ResourceKey="GenericWalletIcon" />
+                  </ChangeAvaloniaPropertyAction.Value>
+                </ChangeAvaloniaPropertyAction>
+              </DataTriggerBehavior>
 
-            <DataTriggerBehavior Binding="{Binding #Image.DataContext}" Value="Ledger">
-              <ChangeAvaloniaPropertyAction TargetObject="Image" TargetProperty="{x:Static Image.SourceProperty}">
-                <ChangeAvaloniaPropertyAction.Value>
-                  <StaticResource ResourceKey="LedgerWalletIcon" />
-                </ChangeAvaloniaPropertyAction.Value>
-              </ChangeAvaloniaPropertyAction>
-            </DataTriggerBehavior>
+              <DataTriggerBehavior Binding="{Binding #Image.DataContext}" Value="Ledger">
+                <ChangeAvaloniaPropertyAction TargetObject="Image" TargetProperty="{x:Static Image.SourceProperty}">
+                  <ChangeAvaloniaPropertyAction.Value>
+                    <StaticResource ResourceKey="LedgerWalletIcon" />
+                  </ChangeAvaloniaPropertyAction.Value>
+                </ChangeAvaloniaPropertyAction>
+              </DataTriggerBehavior>
 
-            <DataTriggerBehavior Binding="{Binding #Image.DataContext}" Value="Jade">
-              <ChangeAvaloniaPropertyAction TargetObject="Image" TargetProperty="{x:Static Image.SourceProperty}">
-                <ChangeAvaloniaPropertyAction.Value>
-                  <StaticResource ResourceKey="JadeWalletIcon" />
-                </ChangeAvaloniaPropertyAction.Value>
-              </ChangeAvaloniaPropertyAction>
-            </DataTriggerBehavior>
+              <DataTriggerBehavior Binding="{Binding #Image.DataContext}" Value="Jade">
+                <ChangeAvaloniaPropertyAction TargetObject="Image" TargetProperty="{x:Static Image.SourceProperty}">
+                  <ChangeAvaloniaPropertyAction.Value>
+                    <StaticResource ResourceKey="JadeWalletIcon" />
+                  </ChangeAvaloniaPropertyAction.Value>
+                </ChangeAvaloniaPropertyAction>
+              </DataTriggerBehavior>
 
-            <DataTriggerBehavior Binding="{Binding #Image.DataContext}" Value="Hardware">
-              <ChangeAvaloniaPropertyAction TargetObject="Image" TargetProperty="{x:Static Image.SourceProperty}">
-                <ChangeAvaloniaPropertyAction.Value>
-                  <StaticResource ResourceKey="GenericWalletIcon" />
-                </ChangeAvaloniaPropertyAction.Value>
-              </ChangeAvaloniaPropertyAction>
-            </DataTriggerBehavior>
+              <DataTriggerBehavior Binding="{Binding #Image.DataContext}" Value="Hardware">
+                <ChangeAvaloniaPropertyAction TargetObject="Image" TargetProperty="{x:Static Image.SourceProperty}">
+                  <ChangeAvaloniaPropertyAction.Value>
+                    <StaticResource ResourceKey="GenericWalletIcon" />
+                  </ChangeAvaloniaPropertyAction.Value>
+                </ChangeAvaloniaPropertyAction>
+              </DataTriggerBehavior>
 
-          </Interaction.Behaviors>
-        </Image>
+            </Interaction.Behaviors>
+          </Image>
+          <ThemeImage Height="500" Width="500" Margin="0 500 0 0" Opacity="0.6" VerticalAlignment="Center" HorizontalAlignment="Center"
+                      Source="{DynamicResource UnionDrawingImage}"
+                      IsVisible="{TemplateBinding IsNormal}"/>
+        </Panel>
       </ControlTemplate>
     </Setter>
   </ControlTheme>

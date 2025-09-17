@@ -222,7 +222,7 @@ public class StepOutputRegistrationTests
 		var task1 = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round), arenaClient, coin1, keyChain, roundStateUpdater, token, token, token, silentLeaveToken);
 		var task2 = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round), arenaClient, coin2, keyChain, roundStateUpdater, token, token, token, silentLeaveToken);
 
-		while (Phase.ConnectionConfirmation != round.Phase)
+		while (round.Phase < Phase.ConnectionConfirmation)
 		{
 			await arena.TriggerAndWaitRoundAsync(token);
 		}
@@ -283,7 +283,7 @@ public class StepOutputRegistrationTests
 		var task1a = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round1), arenaClient1, coin1a, keyChain1, roundStateUpdater, token, token, token, silentLeaveToken);
 		var task1b = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round1), arenaClient1, coin1b, keyChain1, roundStateUpdater, token, token, token, silentLeaveToken);
 
-		while (Phase.ConnectionConfirmation != round1.Phase)
+		while (round1.Phase < Phase.ConnectionConfirmation)
 		{
 			await arena.TriggerAndWaitRoundAsync(token);
 		}
@@ -299,7 +299,7 @@ public class StepOutputRegistrationTests
 		var task2a = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round2), arenaClient2, coin2a, keyChain2, roundStateUpdater, token, token, token, silentLeaveToken);
 		var task2b = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round2), arenaClient2, coin2b, keyChain2, roundStateUpdater, token, token, token, silentLeaveToken);
 
-		while (Phase.ConnectionConfirmation != round2.Phase)
+		while (round2.Phase < Phase.ConnectionConfirmation)
 		{
 			await arena.TriggerAndWaitRoundAsync(token);
 		}
@@ -307,7 +307,7 @@ public class StepOutputRegistrationTests
 		var aliceClient2a = await task2a;
 		var aliceClient2b = await task2b;
 
-		while (Phase.OutputRegistration != round1.Phase || Phase.OutputRegistration != round2.Phase)
+		while (round1.Phase < Phase.OutputRegistration || round2.Phase < Phase.OutputRegistration)
 		{
 			await arena.TriggerAndWaitRoundAsync(token);
 		}
@@ -377,7 +377,7 @@ public class StepOutputRegistrationTests
 		await aliceClient1a.ReadyToSignAsync(token);
 		await aliceClient1b.ReadyToSignAsync(token);
 
-		while (Phase.TransactionSigning != round1.Phase)
+		while (round1.Phase < Phase.TransactionSigning)
 		{
 			await arena.TriggerAndWaitRoundAsync(token);
 		}

@@ -260,8 +260,8 @@ public partial class FeeChartViewModel : ViewModelBase
 			var minY = 1; // If values are not the same, it will be always rendered starting from 1.
 
 			SatoshiPerByteLabels = areAllValuesEqual
-				? new[] { "", "", maxY.ToString("F0", Resources.Culture.NumberFormat) }
-				: new[] { minY.ToString("F0", Resources.Culture.NumberFormat), ((maxY + minY) / 2).ToString("F0", Resources.Culture.NumberFormat), maxY.ToString("F0", Resources.Culture.NumberFormat) };
+				? new[] { "", "", maxY.ToString("F2", Resources.Culture.NumberFormat) }
+				: new[] { minY.ToString("F2", Resources.Culture.NumberFormat), ((maxY + minY) / 2).ToString("F2", Resources.Culture.NumberFormat), maxY.ToString("F2", Resources.Culture.NumberFormat) };
 		}
 		else
 		{

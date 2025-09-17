@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using Avalonia.Controls;
 using Avalonia.Controls.Models.TreeDataGrid;
 using Avalonia.Controls.Templates;
@@ -180,6 +181,7 @@ public partial class HistoryViewModel : ActivatableViewModel
 		}
 
 		Wallet.Transactions.Cache.Connect()
+			.SkipWhile(_ => !Wallet.IsLoaded)
 			.Transform(x => CreateViewModel(x))
 			.Sort(
 				SortExpressionComparer<HistoryItemViewModelBase>

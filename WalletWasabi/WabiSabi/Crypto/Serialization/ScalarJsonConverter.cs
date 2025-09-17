@@ -11,7 +11,7 @@ public class ScalarJsonConverter : JsonConverter<Scalar>
 	{
 		if (reader.Value is string serialized)
 		{
-			return new Scalar(ByteHelpers.FromHex(serialized));
+			return new Scalar(Convert.FromHexString(serialized));
 		}
 		throw new ArgumentException($"No valid serialized {nameof(Scalar)} passed.");
 	}
@@ -19,6 +19,6 @@ public class ScalarJsonConverter : JsonConverter<Scalar>
 	/// <inheritdoc />
 	public override void WriteJson(JsonWriter writer, Scalar scalar, JsonSerializer serializer)
 	{
-		writer.WriteValue(ByteHelpers.ToHex(scalar.ToBytes()));
+		writer.WriteValue(Convert.ToHexString(scalar.ToBytes()));
 	}
 }

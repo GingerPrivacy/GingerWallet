@@ -14,7 +14,7 @@ public class MethodsField : ByteArraySerializableBase
 		{
 			if (b != MethodField.NoAuthenticationRequired && b != MethodField.UsernamePassword)
 			{
-				throw new FormatException($"Unrecognized authentication method: {ByteHelpers.ToHex(b)}.");
+				throw new FormatException($"Unrecognized authentication method: {b:X2}.");
 			}
 		}
 

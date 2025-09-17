@@ -526,7 +526,7 @@ public class WasabiJsonRpcService : IJsonRpcService
 			return nonNullFeeRates.Estimations;
 		}
 
-		return new Dictionary<int, int>();
+		return new Dictionary<int, FeeRate>();
 	}
 
 	[JsonRpcMethod("listwallets", initializable: false)]

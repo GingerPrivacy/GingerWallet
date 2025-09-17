@@ -86,8 +86,9 @@ public class DenominationFactory
 		}
 
 		var maxInput = inputEffectiveValues.Max();
+		// Now we allow denom above the biggest input to fight against the coin fragmentation
 		// There is no garantee that denoms[^1] <= inputEffectiveValues.Min(), that's completely valid!
-		if (denoms[0] > maxInput || denoms[^1] < MinAllowedOutputAmount)
+		if (denoms[0] > 3 * maxInput || denoms[^1] < MinAllowedOutputAmount)
 		{
 			return false;
 		}

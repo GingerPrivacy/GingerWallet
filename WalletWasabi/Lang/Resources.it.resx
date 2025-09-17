@@ -2089,6 +2089,27 @@
   <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
     <value>Avvia il coinjoin per ottenere privacy</value>
   </data>
+  <data name="Resync" xml:space="preserve">
+    <value>Risincronizza</value>
+  </data>
+  <data name="DeleteWallet" xml:space="preserve">
+    <value>Elimina Portafoglio</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Elimina</value>
+  </data>
+  <data name="DeletingAWalletIsPermanentAndCannotBeUndone" xml:space="preserve">
+    <value>Eliminare un portafoglio è permanente e non può essere annullato. Il portafoglio può essere ripristinato solo utilizzando le tue parole di recupero, quindi assicurati di averle. Per confermare l’eliminazione, inserisci</value>    
+  </data>
+  <data name="InTheFieldBelow" xml:space="preserve">
+    <value>nel campo sottostante.</value>
+  </data>
+  <data name="NoKYC" xml:space="preserve">
+    <value>Non è richiesto il caricamento di documenti per acquisti inferiori a 1000 USD con questo fornitore.</value>
+  </data>
+  <data name="SensitiveData" xml:space="preserve">
+    <value>Dati sensibili</value>
+  </data>
   <data name="CouldntDeleteWalletCheckLogs" xml:space="preserve">
     <value>Impossibile eliminare il portafoglio, controlla i log per maggiori dettagli.</value>
   </data>
@@ -2163,5 +2184,11 @@
   </data>
   <data name="RoundDisruptionMethodDidNotSignalReadyToSignEnum" xml:space="preserve">
     <value>Interruzione del turno</value>
+  </data>
+  <data name="CanSelectPrivateCoinsInCoinJoinCoinSelector" xml:space="preserve">
+    <value>È possibile selezionare monete già private</value>
+  </data>
+  <data name="CanSelectPrivateCoinsInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>La selezione può contenere monete già private.</value>
   </data>
 </root>

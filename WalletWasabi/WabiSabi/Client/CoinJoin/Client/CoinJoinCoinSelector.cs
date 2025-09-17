@@ -69,6 +69,7 @@ public class CoinJoinCoinSelector
 	private CoinJoinCoinSelectionParameters CreateParameters(UtxoSelectionParameters parameters, double maxWeightedAnonymityLoss, double maxValueLossRate)
 	{
 		CoinJoinCoinSelectionParameters res = new(
+			AnonScoreTarget: AnonScoreTarget,
 			MiningFeeRate: parameters.MiningFeeRate,
 			MinInputAmount: parameters.AllowedInputAmounts.Min.Satoshi,
 			CoinJoinLoss: (long)(.4 * parameters.MinAllowedOutputAmount.Satoshi + parameters.MiningFeeRate.GetFee(8 * Constants.P2wpkhOutputVirtualSize).Satoshi),
@@ -84,7 +85,7 @@ public class CoinJoinCoinSelector
 
 	private CoinJoinCoinSelectionParameters _coinSelectionParameters = CoinJoinCoinSelectionParameters.Empty;
 
-	private const int SufficeCandidateCountForCoinSelection = 150;
+	private const int SufficeCandidateCountForCoinSelection = 200;
 
 	public List<SmartCoin> SelectCoinsForRoundNew(UtxoSelectionParameters parameters, Money liquidityClue)
 	{
@@ -138,35 +139,29 @@ public class CoinJoinCoinSelector
 
 		_wallet.LogInfo($"Target InputCount is {inputCount} (Amount {walletAmount}, CoinRate {coinCountRate:F2} = {walletCoinCount} / {expectedCoinCount:F2})");
 
-		int sensitivityDecrement = 2;
-		int absLowestSensitivity = (int)-Math.Min(Math.Ceiling(walletMaxBallance), inputCount) - sensitivityDecrement;
+		// Always try to get candidates without private coins first
+		CollectCandidates(candidatesDict, selectableCoins, inputCount, walletMaxBallance, parameters);
 
-		int maxDistance = forceUsingLowPrivacyCoins ? 30 : 20;
-		double valueRateLossMul = 0.025 / maxDistance;
-		double anonymityLossMul = (forceUsingLowPrivacyCoins ? 0.5 : 1.0) * Math.Max(AnonScoreTarget - 1.5, 4.0) / maxDistance;
-		int totalCandidates = 0;
-		for (int lowestSensitivity = 1; lowestSensitivity >= absLowestSensitivity && totalCandidates < SufficeCandidateCountForCoinSelection; lowestSensitivity -= sensitivityDecrement)
+		if (_settings.CanSelectPrivateCoins)
 		{
-			int distanceIncrement = 1;
-			for (int idx = 0; idx < maxDistance && totalCandidates < SufficeCandidateCountForCoinSelection; idx += distanceIncrement)
+			int candidateCountNonPrivate = candidatesDict.Sum(x => x.Value.Count);
+			if (candidateCountNonPrivate >= SufficeCandidateCountForCoinSelection)
 			{
-				for (int jdx = 0; jdx < idx; jdx++)
+				_wallet.LogInfo($"Using private coins is allowed, but already have enough candidates {candidateCountNonPrivate}, not using private coins.");
+			}
+			else
+			{
+				List<SmartCoin> selectablePrivateCoins = _privateCoins.Where(x => !_coinSelectionParameters.IsCoinAboveAllowedLoss(x)).ToList();
+				_wallet.LogInfo($"Using private coins is allowed, {selectablePrivateCoins.Count} coins found.");
+				if (selectablePrivateCoins.Count > 0)
 				{
-					double maxValueRateLoss = 0.001 + jdx * valueRateLossMul;
-					double maxWeightedAnonymityLoss = 1.5 + (idx - jdx) * anonymityLossMul;
-					_coinSelectionParameters = CreateParameters(parameters, maxWeightedAnonymityLoss, maxValueRateLoss);
-					CollectCandidates(candidatesDict, selectableCoins, inputCount, lowestSensitivity);
+					selectablePrivateCoins = selectablePrivateCoins.OrderBy(x => Math.Round(x.AnonymitySet, 3) * 1000 + x.Amount.Satoshi * amountScale).ToList();
+					// Simply adding to the end and retry
+					selectableCoins.AddRange(selectablePrivateCoins);
+					CollectCandidates(candidatesDict, selectableCoins, inputCount, walletMaxBallance, parameters);
+					int candidateCountPrivate = candidatesDict.Sum(x => x.Value.Count);
+					_wallet.LogInfo($"Changed the possible candidates from {candidateCountNonPrivate} to {candidateCountPrivate}.");
 				}
-				int recountedCandidates = candidatesDict.Sum(x => x.Value.Count);
-				if (recountedCandidates > 0 && recountedCandidates - totalCandidates < 2 && idx + 1 < maxDistance)
-				{
-					distanceIncrement = Math.Min(distanceIncrement + 1, maxDistance - idx - 1);
-				}
-				else
-				{
-					distanceIncrement = 1;
-				}
-				totalCandidates = recountedCandidates;
 			}
 		}
 
@@ -185,6 +180,7 @@ public class CoinJoinCoinSelector
 					candidates.RemoveAt(idx + 1);
 				}
 			}
+			int unqiueCandidatesCount = candidates.Count;
 			// Now we need to choose
 			var bestScore = candidates[0].Score;
 			var bestLossScore = _comparer.GetLossScore(candidates[0]);
@@ -197,6 +193,8 @@ public class CoinJoinCoinSelector
 					break;
 				}
 			}
+			_wallet.LogInfo($"Created {unqiueCandidatesCount} candidates, kept the first {candidates.Count} with scores {bestScore} - {scoreLimit} to choose from.");
+
 			var finalCandidate = candidates.RandomElement(_random) ?? candidates[0];
 			return finalCandidate.Coins.ToShuffled(_random).ToList();
 		}
@@ -204,12 +202,54 @@ public class CoinJoinCoinSelector
 		return [];
 	}
 
-	private void CollectCandidates(Dictionary<SmartCoin, List<CoinSelectionCandidate>> candidates, List<SmartCoin> selectableCoins, int inputCount, double lowestSensitivity)
+	private void CollectCandidates(Dictionary<SmartCoin, List<CoinSelectionCandidate>> candidates, List<SmartCoin> selectableCoins, int inputCount, double walletMaxBallance, UtxoSelectionParameters parameters)
+	{
+		int sensitivityDecrement = 2;
+		int absLowestSensitivity = (int)-Math.Min(Math.Ceiling(walletMaxBallance), inputCount) - sensitivityDecrement;
+
+		bool forceUsingLowPrivacyCoins = _settings.ForceUsingLowPrivacyCoins;
+		int maxDistance = forceUsingLowPrivacyCoins ? 30 : 20;
+		double valueRateLossMul = 0.025 / maxDistance;
+		double anonymityLossMul = (forceUsingLowPrivacyCoins ? 0.5 : 1.0) * Math.Max(AnonScoreTarget - 1.5, 4.0) / maxDistance;
+		int totalCandidates = candidates.Sum(x => x.Value.Count);
+		for (int lowestSensitivity = 1; lowestSensitivity >= absLowestSensitivity && totalCandidates < SufficeCandidateCountForCoinSelection; lowestSensitivity -= sensitivityDecrement)
+		{
+			int distanceIncrement = 1;
+			for (int idx = 0; idx < maxDistance && totalCandidates < SufficeCandidateCountForCoinSelection; idx += distanceIncrement)
+			{
+				for (int jdx = 0; jdx < idx; jdx++)
+				{
+					double maxValueRateLoss = 0.001 + jdx * valueRateLossMul;
+					double maxWeightedAnonymityLoss = 1.5 + (idx - jdx) * anonymityLossMul;
+					_coinSelectionParameters = CreateParameters(parameters, maxWeightedAnonymityLoss, maxValueRateLoss);
+					CollectCandidatesWithSensitivity(candidates, selectableCoins, inputCount, lowestSensitivity);
+				}
+				int recountedCandidates = candidates.Sum(x => x.Value.Count);
+				if (recountedCandidates > 0 && recountedCandidates - totalCandidates < 2 && idx + 1 < maxDistance)
+				{
+					distanceIncrement = Math.Min(distanceIncrement + 1, maxDistance - idx - 1);
+				}
+				else
+				{
+					distanceIncrement = 1;
+				}
+				totalCandidates = recountedCandidates;
+			}
+		}
+	}
+
+	private void CollectCandidatesWithSensitivity(Dictionary<SmartCoin, List<CoinSelectionCandidate>> candidates, List<SmartCoin> selectableCoins, int inputCount, double lowestSensitivity)
 	{
 		bool forceUsingLowPrivacyCoins = _settings.ForceUsingLowPrivacyCoins;
 		double coinCheck = SufficeCandidateCountForCoinSelection / (double)candidates.Count;
 		int triesPerStartingCoin = Math.Max(2, Math.Min((int)Math.Round(coinCheck), 6));
 		int maxCandidatesPerStartingCoin = Math.Max(3, Math.Min((int)Math.Round(coinCheck * 2), 20));
+		// If we have very few starting coins then we try to increase the allowed candidates per coin further
+		if (candidates.Count < 4)
+		{
+			maxCandidatesPerStartingCoin = Math.Max(maxCandidatesPerStartingCoin, (int)Math.Round(coinCheck));
+		}
+
 		// These are the starting candidates
 		foreach (var (coin, list) in candidates)
 		{
@@ -255,7 +295,7 @@ public class CoinJoinCoinSelector
 				SmartCoin coin = list[idx];
 				sumAmount += coin.Amount.Satoshi;
 				sumVSize += coin.ScriptPubKey.EstimateInputVsize();
-				sumAmountMulAnonScore += (coin.AnonymitySet - minimumAnonScore) * coin.Amount.Satoshi;
+				sumAmountMulAnonScore += CoinSelectionCandidate.GetCoinAnonymityWeight(coin, AnonScoreTarget, minimumAnonScore);
 				if (sumAmountMulAnonScore <= maxWeightedAnonymityLoss * sumAmount)
 				{
 					result.Add(coin);

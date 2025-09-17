@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.Logging.Debug;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
@@ -52,23 +53,33 @@ public static class Logger
 		LoggerInstance = logger;
 	}
 
-	public static void CreateDiscordLogger(LogLevel? logLevel, IHttpClientFactory httpClientFactory, string webhook)
+	public static void CreateDiscordLogger(LogLevel? logLevel, IHttpClientFactory httpClientFactory, string[]? webhooks)
 	{
-		if (logLevel == LogLevel.None || string.IsNullOrEmpty(webhook))
+		if (logLevel == LogLevel.None || webhooks is null || webhooks.Length == 0)
 		{
 			return;
 		}
 
 		logLevel ??= LogLevel.Error;
 
-		using ILoggerFactory factory = LoggerFactory.Create(builder =>
+		foreach (var webhookTarget in webhooks)
 		{
-			builder.ClearProviders();
-			builder.AddFilter<DiscordLoggerProvider>(null, (LogLevel)logLevel);
-			builder.AddProvider(new DiscordLoggerProvider(httpClientFactory, webhook));
-		});
-		ILogger logger = factory.CreateLogger("Discord");
-		DiscordLogger = logger;
+			var split = webhookTarget.Split("|");
+			var name = split.Length > 1 ? split[0] : "main";
+			var webhook = split.Length > 1 ? split[1] : webhookTarget;
+
+			if (!DiscordLoggers.ContainsKey(name))
+			{
+				using ILoggerFactory factory = LoggerFactory.Create(builder =>
+				{
+					builder.ClearProviders();
+					builder.AddFilter<DiscordLoggerProvider>(null, (LogLevel)logLevel);
+					builder.AddProvider(new DiscordLoggerProvider(httpClientFactory, webhook));
+				});
+				ILogger logger = factory.CreateLogger(name);
+				DiscordLoggers.Add(name, logger);
+			}
+		}
 	}
 
 	public static void FinishFileLogging()
@@ -83,7 +94,7 @@ public static class Logger
 	private static ILogger? LoggerInstance = null;
 	private static string[]? LogLevelStrings = null;
 
-	private static ILogger? DiscordLogger = null;
+	private static Dictionary<string, ILogger> DiscordLoggers = [];
 
 	private static void InitLevelStrings()
 	{
@@ -117,9 +128,12 @@ public static class Logger
 		}
 	}
 
-	public static void LogDiscord(LogLevel level, string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1, LogLevel normalLogLevel = LogLevel.None)
+	public static void LogDiscord(string channel, LogLevel level, string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1, LogLevel normalLogLevel = LogLevel.None, bool rawMessage = false)
 	{
-		Log(DiscordLogger, level, message, callerFilePath, callerMemberName, callerLineNumber);
+		if (DiscordLoggers.TryGetValue(channel, out var discordLogger))
+		{
+			Log(discordLogger, level, message, callerFilePath, callerMemberName, callerLineNumber, rawMessage);
+		}
 		if (normalLogLevel != LogLevel.None)
 		{
 			Log(LoggerInstance, normalLogLevel, message, callerFilePath, callerMemberName, callerLineNumber);
@@ -132,7 +146,7 @@ public static class Logger
 		Log(LoggerInstance, level, message, callerFilePath, callerMemberName, callerLineNumber);
 	}
 
-	private static void Log(ILogger? loggerInstance, LogLevel level, string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1)
+	private static void Log(ILogger? loggerInstance, LogLevel level, string message, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1, bool rawMessage = false)
 	{
 		try
 		{
@@ -142,19 +156,22 @@ public static class Logger
 			}
 
 			message = message.SafeTrim();
-			var category = string.IsNullOrWhiteSpace(callerFilePath) ? "" : $"{callerFilePath.ExtractFileName()}.{callerMemberName} ({callerLineNumber})";
+			var finalMessage = message;
 
-			var messageBuilder = new StringBuilder();
-			messageBuilder.Append(CultureInfo.InvariantCulture, $"{DateTime.UtcNow.ToLocalTime():yyyy-MM-dd HH:mm:ss.fff} [{Environment.CurrentManagedThreadId,2}] {GetLevelString(level)} ");
-
-			messageBuilder.Append(category);
-			if (message.Length > 0 && category.Length > 0)
+			if (!rawMessage)
 			{
-				messageBuilder.Append('\t');
-			}
-			messageBuilder.Append(message);
+				var messageBuilder = new StringBuilder();
+				messageBuilder.Append(CultureInfo.InvariantCulture, $"{DateTime.UtcNow.ToLocalTime():yyyy-MM-dd HH:mm:ss.fff} [{Environment.CurrentManagedThreadId,2}] {GetLevelString(level)} ");
 
-			var finalMessage = messageBuilder.ToString();
+				var category = string.IsNullOrWhiteSpace(callerFilePath) ? "" : $"{callerFilePath.ExtractFileName()}.{callerMemberName} ({callerLineNumber})";
+				messageBuilder.Append(category);
+				if (message.Length > 0 && category.Length > 0)
+				{
+					messageBuilder.Append('\t');
+				}
+				messageBuilder.Append(message);
+				finalMessage = messageBuilder.ToString();
+			}
 			loggerInstance.Log(level, finalMessage);
 		}
 		catch (Exception ex)

@@ -102,7 +102,17 @@ public class MockRpcClient : IRPCClient
 		return OnGetRawTransactionAsync?.Invoke(txid, throwIfNotFound) ?? NotImplementedTask<Transaction>(nameof(GetRawTransactionAsync));
 	}
 
+	public Task<RawTransactionInfo?> GetRawTransactionInfoAsync(uint256 txid, bool throwIfNotFound = true, CancellationToken cancellationToken = default)
+	{
+		throw new NotImplementedException();
+	}
+
 	public Task<IEnumerable<Transaction>> GetRawTransactionsAsync(IEnumerable<uint256> txids, CancellationToken cancellationToken = default)
+	{
+		throw new NotImplementedException();
+	}
+
+	public Task<IEnumerable<RawTransactionInfo>> GetRawTransactionInfosAsync(IEnumerable<uint256> txids, CancellationToken cancellationToken = default)
 	{
 		throw new NotImplementedException();
 	}
@@ -166,11 +176,6 @@ public class MockRpcClient : IRPCClient
 	}
 
 	public Task StopAsync(CancellationToken cancellationToken = default)
-	{
-		throw new NotImplementedException();
-	}
-
-	public Task<MempoolAcceptResult> TestMempoolAcceptAsync(Transaction transaction, CancellationToken cancellationToken = default)
 	{
 		throw new NotImplementedException();
 	}

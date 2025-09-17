@@ -311,6 +311,7 @@ public class WalletJsonTest
 		  "CoinJoinCoinSelectionSettings": {
 		    "UseExperimentalCoinSelector": false,
 		    "ForceUsingLowPrivacyCoins": false,
+		    "CanSelectPrivateCoins": false,
 		    "WeightedAnonymityLossNormal": 3,
 		    "ValueLossRateNormal": 0.005,
 		    "TargetCoinCountPerBucket": 10,

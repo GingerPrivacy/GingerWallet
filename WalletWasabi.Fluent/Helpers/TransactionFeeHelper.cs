@@ -15,18 +15,18 @@ namespace WalletWasabi.Fluent.Helpers;
 public static class TransactionFeeHelper
 {
 	private static readonly AllFeeEstimate TestNetFeeEstimates = new(
-		new Dictionary<int, int>
+		new Dictionary<int, FeeRate>
 		{
-			[1] = 17,
-			[2] = 12,
-			[3] = 9,
-			[6] = 9,
-			[18] = 2,
-			[36] = 2,
-			[72] = 2,
-			[144] = 2,
-			[432] = 1,
-			[1008] = 1
+			[1] = new FeeRate(17m),
+			[2] = new FeeRate(12m),
+			[3] = new FeeRate(9m),
+			[6] = new FeeRate(9m),
+			[18] = new FeeRate(2m),
+			[36] = new FeeRate(2m),
+			[72] = new FeeRate(2m),
+			[144] = new FeeRate(2m),
+			[432] = new FeeRate(1m),
+			[1008] = new FeeRate(1m)
 		});
 
 	public static bool TryEstimateConfirmationTime(IWalletFeeRateProvider feeProvider, Network network, SmartTransaction tx, UnconfirmedTransactionChainProvider unconfirmedTxChainProvider, [NotNullWhen(true)] out TimeSpan? estimate)

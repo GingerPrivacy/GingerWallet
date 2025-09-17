@@ -33,11 +33,11 @@
 		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
 		<PackageReference Include="Microsoft.Extensions.Http" />
+		<PackageReference Include="NBitcoin" />
 		<PackageReference Include="NNostr.Client" />
 		<PackageReference Include="System.IO.Pipelines" />
 		<PackageReference Include="Microsoft.Data.Sqlite" />
 		<PackageReference Include="Microsoft.Win32.SystemEvents" />
-		<PackageReference Include="NBitcoin" />
 		<PackageReference Include="System.Text.Json" />
 		<PackageReference Include="WabiSabi" />
 	</ItemGroup>

@@ -11,9 +11,9 @@ public abstract class ByteArraySerializableBase : IByteArraySerializable, IEquat
 	{
 		if (xhhSyntax)
 		{
-			return $"X'{ByteHelpers.ToHex(ToBytes())}'";
+			return $"X'{Convert.ToHexString(ToBytes())}'";
 		}
-		return ByteHelpers.ToHex(ToBytes());
+		return Convert.ToHexString(ToBytes());
 	}
 
 	public override string ToString()

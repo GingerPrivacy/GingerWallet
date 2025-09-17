@@ -40,7 +40,7 @@ public static class HttpMessageHelper
 			// End of stream has been reached.
 			if (read == -1)
 			{
-				Logger.LogTrace($"End of stream has been reached during reading HTTP start-line. Read bytes: '{ByteHelpers.ToHex(bab.ToArray())}'.");
+				Logger.LogTrace($"End of stream has been reached during reading HTTP start-line. Read bytes: '{Convert.ToHexString(bab.ToArray())}'.");
 				throw new TorConnectionReadException("HTTP start-line is incomplete. Tor circuit probably died.");
 			}
 

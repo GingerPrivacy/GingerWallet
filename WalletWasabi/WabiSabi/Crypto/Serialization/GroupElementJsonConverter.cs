@@ -1,6 +1,5 @@
 using Newtonsoft.Json;
 using WabiSabi.Crypto.Groups;
-using WalletWasabi.Helpers;
 
 namespace WalletWasabi.WabiSabi.Crypto.Serialization;
 
@@ -11,7 +10,7 @@ public class GroupElementJsonConverter : JsonConverter<GroupElement>
 	{
 		if (reader.Value is string serialized)
 		{
-			return GroupElement.FromBytes(ByteHelpers.FromHex(serialized));
+			return GroupElement.FromBytes(Convert.FromHexString(serialized));
 		}
 		throw new ArgumentException($"No valid serialized {nameof(GroupElement)} passed.");
 	}
@@ -21,7 +20,7 @@ public class GroupElementJsonConverter : JsonConverter<GroupElement>
 	{
 		if (value is { } ge)
 		{
-			writer.WriteValue(ByteHelpers.ToHex(ge.ToBytes()));
+			writer.WriteValue(Convert.ToHexString(ge.ToBytes()));
 			return;
 		}
 		throw new ArgumentException($"No valid {nameof(GroupElement)}.", nameof(value));

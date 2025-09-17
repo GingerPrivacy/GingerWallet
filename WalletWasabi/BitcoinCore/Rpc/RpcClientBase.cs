@@ -123,11 +123,6 @@ public class RpcClientBase : IRPCClient
 		return await Rpc.GetTxOutAsync(txid, index, includeMempool, cancellationToken).ConfigureAwait(false);
 	}
 
-	public virtual async Task<MempoolAcceptResult> TestMempoolAcceptAsync(Transaction transaction, CancellationToken cancellationToken = default)
-	{
-		return await Rpc.TestMempoolAcceptAsync(transaction, cancellationToken).ConfigureAwait(false);
-	}
-
 	public virtual async Task StopAsync(CancellationToken cancellationToken = default)
 	{
 		await Rpc.StopAsync(cancellationToken).ConfigureAwait(false);
@@ -202,6 +197,24 @@ public class RpcClientBase : IRPCClient
 		return await Rpc.GetRawTransactionAsync(txid, throwIfNotFound, cancellationToken).ConfigureAwait(false);
 	}
 
+	public virtual async Task<RawTransactionInfo?> GetRawTransactionInfoAsync(uint256 txid, bool throwIfNotFound = true, CancellationToken cancellationToken = default)
+	{
+		try
+		{
+			return await Rpc.GetRawTransactionInfoAsync(txid, cancellationToken).ConfigureAwait(false);
+		}
+		catch
+		{
+			{
+				if (throwIfNotFound)
+				{
+					throw;
+				}
+				return null;
+			}
+		}
+	}
+
 	public virtual async Task<IEnumerable<Transaction>> GetRawTransactionsAsync(IEnumerable<uint256> txids, CancellationToken cancel)
 	{
 		// 8 is half of the default rpcworkqueue
@@ -228,6 +241,34 @@ public class RpcClientBase : IRPCClient
 		}
 
 		return acquiredTransactions;
+	}
+
+	public virtual async Task<IEnumerable<RawTransactionInfo>> GetRawTransactionInfosAsync(IEnumerable<uint256> txids, CancellationToken cancel)
+	{
+		// 8 is half of the default rpcworkqueue
+		List<RawTransactionInfo> acquiredTransactionInfos = new();
+		foreach (var txidsChunk in txids.ChunkBy(8))
+		{
+			IRPCClient batchingRpc = PrepareBatch();
+			List<Task<RawTransactionInfo?>> tasks = new();
+			foreach (var txid in txidsChunk)
+			{
+				tasks.Add(batchingRpc.GetRawTransactionInfoAsync(txid, throwIfNotFound: false, cancel));
+			}
+
+			await batchingRpc.SendBatchAsync(cancel).ConfigureAwait(false);
+
+			foreach (var tx in await Task.WhenAll(tasks).ConfigureAwait(false))
+			{
+				if (tx is not null)
+				{
+					acquiredTransactionInfos.Add(tx);
+				}
+				cancel.ThrowIfCancellationRequested();
+			}
+		}
+
+		return acquiredTransactionInfos;
 	}
 
 	public virtual async Task<int> GetBlockCountAsync(CancellationToken cancellationToken = default)

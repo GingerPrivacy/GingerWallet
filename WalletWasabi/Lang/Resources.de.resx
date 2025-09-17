@@ -2119,21 +2119,6 @@
     <data name="SetAsDefault" xml:space="preserve">
         <value>Als Standard festlegen</value>
     </data>
-    <data name="LoadingViewDownloadText" xml:space="preserve">
-        <value>Bitcoin-Netzwerkdaten werden heruntergeladen und verarbeitet</value>
-    </data>
-    <data name="LoadingViewProcessLonger" xml:space="preserve">
-        <value>Dieser Prozess kann beim ersten Start, bei großen Wallets oder nach längeren Synchronisationspausen länger dauern.</value>
-    </data>
-    <data name="LoadingViewThirdparty" xml:space="preserve">
-        <value>Ginger tut dies, ohne dass Dritte von Deinem Kontostand oder Deiner finanziellen Aktivität erfahren.</value>
-    </data>
-    <data name="TwoFactorDisabledWarnMessage" xml:space="preserve">
-        <value>Zwei-Faktor-Authentifizierung ist deaktiviert. Aktiviere sie in den Einstellungen für besseren Schutz.</value>
-    </data>
-    <data name="TwoFactorDisabledWarnMessageOpenSettings" xml:space="preserve">
-        <value>Einstellungen öffnen</value>
-    </data>
     <data name="SignMessage" xml:space="preserve">
         <value>Nachricht signieren</value>
     </data>
@@ -2200,4 +2185,10 @@
     <data name="RoundDisruptionMethodDidNotSignalReadyToSignEnum" xml:space="preserve">
         <value>Rundenunterbrechung</value>
     </data>
+  <data name="CanSelectPrivateCoinsInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Bereits private Coins können ausgewählt werden</value>
+  </data>
+  <data name="CanSelectPrivateCoinsInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>Die Auswahl darf bereits private Coins enthalten.</value>
+  </data>
 </root>

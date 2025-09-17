@@ -144,8 +144,6 @@ public class TransactionFactory
 			builder.SetChange(changeHdPubKey.GetAssumedScriptPubKey());
 		}
 
-		builder.OptInRBF = true;
-
 		builder.SendEstimatedFees(parameters.FeeRate);
 
 		var psbt = builder.BuildPSBT(false);
@@ -164,7 +162,10 @@ public class TransactionFactory
 			throw new InvalidOperationException("Impossible to get the fees of the PSBT, this should never happen.");
 		}
 
-		var vSize = builder.EstimateSize(psbt.GetOriginalTransaction(), true);
+		if (!psbt.TryGetVirtualSize(out var vSize))
+		{
+			throw new InvalidOperationException("It was not possible to get the virtual size of the transaction");
+		}
 
 		// Do some checks
 		Money totalSendAmountNoFee = realToSend.Sum(x => x.amount);

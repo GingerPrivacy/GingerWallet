@@ -2091,7 +2091,7 @@
   <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
     <value>Start coinjoining to gain privacy</value>
   </data>
-    <data name="Resync" xml:space="preserve">
+  <data name="Resync" xml:space="preserve">
     <value>Resync</value>
   </data>
     <data name="DeleteWallet" xml:space="preserve">
@@ -2186,5 +2186,11 @@
   </data>
   <data name="RoundDisruptionMethodDidNotSignalReadyToSignEnum" xml:space="preserve">
     <value>Round Interruption</value>
+  </data>
+  <data name="CanSelectPrivateCoinsInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Can select already private coins</value>
+  </data>
+  <data name="CanSelectPrivateCoinsInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>The selection is allowed to contain already private coins.</value>
   </data>
 </root>

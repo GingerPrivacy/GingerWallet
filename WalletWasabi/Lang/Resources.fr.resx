@@ -2113,12 +2113,6 @@
   <data name="CouldntDeleteWalletCheckLogs" xml:space="preserve">
     <value>Impossible de supprimer le portefeuille, consultez les journaux pour plus de détails.</value>
   </data>
-  <data name="TwoFactorDisabledWarnMessage" xml:space="preserve">
-    <value>L'authentification à deux facteurs est désactivée. Activez-la dans les paramètres pour une meilleure protection.</value>
-  </data>
-  <data name="TwoFactorDisabledWarnMessageOpenSettings" xml:space="preserve">
-    <value>Ouvrir les paramètres</value>
-  </data>
     <data name="SyncingYourWallet" xml:space="preserve">
     <value>Synchronisation de votre portefeuille...</value>
   </data>
@@ -2190,5 +2184,11 @@
   </data>
   <data name="RoundDisruptionMethodDidNotSignalReadyToSignEnum" xml:space="preserve">
     <value>Interruption de la manche</value>
+  </data>
+  <data name="CanSelectPrivateCoinsInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Il est possible de sélectionner des pièces déjà privées</value>
+  </data>
+  <data name="CanSelectPrivateCoinsInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>La sélection est autorisée à contenir des pièces déjà privées.</value>
   </data>
 </root>

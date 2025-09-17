@@ -111,7 +111,8 @@ public static class ObservableExtensions
 	public static IObservableCache<TObject, TKey> Fetch<TObject, TKey>(this IObservable<Unit> signal, Func<IEnumerable<TObject>> source, Func<TObject, TKey> keySelector, IEqualityComparer<TObject>? equalityComparer = null)
 		where TKey : notnull where TObject : notnull
 	{
-		return signal.Select(_ => source())
+		return signal
+			.Select(_ => source())
 			.EditDiff(keySelector, equalityComparer)
 			.DisposeMany()
 			.AsObservableCache();

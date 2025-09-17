@@ -1,3 +1,4 @@
+using NBitcoin;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,12 +17,12 @@ public class RegTestFeeRateProvider : IFeeRateProvider
 
 	private static AllFeeEstimate GetFakeRegTestFeeRatesAsync()
 	{
-		var feeEstimations = new Dictionary<int, int>
+		var feeEstimations = new Dictionary<int, FeeRate>
 		{
-			{ 2, 100 },   // For confirmation target 1, fee rate is 100 sats/vByte
-			{ 3, 70 },
-			{ 6, 40 },
-			{ 72, 10 }
+			{ 2, new FeeRate(100m) },   // For confirmation target 1, fee rate is 100 sats/vByte
+			{ 3, new FeeRate(70m) },
+			{ 6, new FeeRate(40m) },
+			{ 72, new FeeRate(10m) }
 		};
 
 		// Initialize the AllFeeEstimate instance with the dictionary.

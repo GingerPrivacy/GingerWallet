@@ -12,7 +12,7 @@ namespace WalletWasabi.WabiSabi.Client.RoundStateAwaiters;
 
 public class RoundStateHolder
 {
-	public RoundStateHolder(RoundState roundState, string[] allowedCoordinatorIdentifiers, bool verify)
+	public RoundStateHolder(RoundState roundState, string[] allowedCoordinatorIdentifiers, bool verify, DateTimeOffset minInputRegistrationStart)
 	{
 		RoundState = roundState;
 		Confidence = 0;
@@ -21,6 +21,11 @@ public class RoundStateHolder
 		_inputCount = -1;
 		_exception = null;
 		_allowedCoordinatorIdentifiers = allowedCoordinatorIdentifiers;
+
+		if (verify && roundState.InputRegistrationStart <= minInputRegistrationStart)
+		{
+			Exception = new CoinJoinClientException(CoinjoinError.TamperedRoundState, $"Registration time is earlier than should be {roundState.Id}.");
+		}
 		VerifyAndSet(roundState, false, verify);
 	}
 

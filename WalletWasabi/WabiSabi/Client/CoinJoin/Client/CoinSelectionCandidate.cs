@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Extensions;
+using WalletWasabi.Helpers;
 
 namespace WalletWasabi.WabiSabi.Client.CoinJoin.Client;
 
@@ -37,7 +38,7 @@ public class CoinSelectionCandidate : CoinSelectionStatistics
 
 	public CoinSelectionCandidate(List<SmartCoin> coins, CoinJoinCoinSelectionParameters coinSelectionParameters)
 	{
-		Coins = new(coins);
+		Coins = [.. coins];
 		RemovedCoins = [];
 		_coinSelectionParameters = coinSelectionParameters;
 		Refresh();
@@ -45,8 +46,8 @@ public class CoinSelectionCandidate : CoinSelectionStatistics
 
 	public CoinSelectionCandidate(CoinSelectionCandidate src)
 	{
-		Coins = new(src.Coins);
-		RemovedCoins = new(src.RemovedCoins);
+		Coins = [.. src.Coins];
+		RemovedCoins = [.. src.RemovedCoins];
 		_coinSelectionParameters = src._coinSelectionParameters;
 		_amount = src._amount;
 		_vsize = src._vsize;
@@ -91,6 +92,14 @@ public class CoinSelectionCandidate : CoinSelectionStatistics
 		return true;
 	}
 
+	public static double GetCoinAnonymityWeight(SmartCoin coin, int anonScoreTarget, double minAnonymityScore)
+	{
+		// Extra penalty for private coins, we allow to use private coins, but use when really needed
+		double modifier = (coin.IsPrivate(anonScoreTarget) ? PrivateCoinAnonymityPenalty : 0) - minAnonymityScore;
+		double res = (coin.AnonymitySet + modifier) * coin.Amount.Satoshi;
+		return res;
+	}
+
 	// Calculate some of the decision factors
 	[MemberNotNull(nameof(_amount))]
 	public void Refresh()
@@ -117,7 +126,7 @@ public class CoinSelectionCandidate : CoinSelectionStatistics
 				MinimumAnonymityCount++;
 			}
 
-			_weightedAnonymitySet += coin.AnonymitySet * coin.Amount.Satoshi;
+			_weightedAnonymitySet += GetCoinAnonymityWeight(coin, _coinSelectionParameters.AnonScoreTarget, 0);
 			_vsize += coin.ScriptPubKey.EstimateInputVsize();
 			_transactions.AddValue(coin.TransactionId, 1);
 
@@ -287,7 +296,7 @@ public class CoinSelectionCandidate : CoinSelectionStatistics
 				}
 
 				_amount -= coin.Amount;
-				_weightedAnonymitySet -= coin.AnonymitySet * coin.Amount.Satoshi;
+				_weightedAnonymitySet -= GetCoinAnonymityWeight(coin, _coinSelectionParameters.AnonScoreTarget, 0);
 				_vsize -= coin.ScriptPubKey.EstimateInputVsize();
 				_transactions.AddValue(coin.TransactionId, -1);
 
@@ -348,6 +357,8 @@ public class CoinSelectionCandidate : CoinSelectionStatistics
 	}
 
 	public bool GoodCandidate => AnonymityLoss <= _coinSelectionParameters.MaxWeightedAnonymityLoss && ValueLossRate <= _coinSelectionParameters.MaxValueLossRate;
+
+	private const double PrivateCoinAnonymityPenalty = 2;
 
 	private Money _amount;
 	public override Money Amount => _amount;

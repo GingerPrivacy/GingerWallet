@@ -14,16 +14,19 @@ namespace WalletWasabi.WabiSabi.Backend.Statistics;
 
 public class CoinJoinFeeRateStatStore : PeriodicRunner
 {
-	public CoinJoinFeeRateStatStore(WabiSabiConfig config, IRPCClient rpc, IEnumerable<CoinJoinFeeRateStat> feeRateStats)
+	private readonly FeeRate _minimumMiningFeeRate;
+
+	public CoinJoinFeeRateStatStore(WabiSabiConfig config, IRPCClient rpc, IEnumerable<CoinJoinFeeRateStat> feeRateStats, FeeRate minimumMiningFeeRate)
 		: base(TimeSpan.FromMinutes(10))
 	{
 		Config = config;
 		Rpc = rpc;
+		_minimumMiningFeeRate = minimumMiningFeeRate;
 		CoinJoinFeeRateStats = new(feeRateStats.OrderBy(x => x.DateTimeOffset));
 	}
 
 	public CoinJoinFeeRateStatStore(WabiSabiConfig config, IRPCClient rpc)
-		: this(config, rpc, Enumerable.Empty<CoinJoinFeeRateStat>())
+		: this(config, rpc, Enumerable.Empty<CoinJoinFeeRateStat>(), FeeRate.Zero)
 	{
 	}
 
@@ -76,6 +79,11 @@ public class CoinJoinFeeRateStatStore : PeriodicRunner
 			? new FeeRate((feeRates[feeRates.Length / 2].FeeRate.SatoshiPerByte + feeRates[(feeRates.Length / 2) - 1].FeeRate.SatoshiPerByte) / 2)
 			: feeRates[feeRates.Length / 2].FeeRate;
 
+		if (med < _minimumMiningFeeRate)
+		{
+			med = _minimumMiningFeeRate;
+		}
+
 		return med;
 	}
 
@@ -87,7 +95,7 @@ public class CoinJoinFeeRateStatStore : PeriodicRunner
 		return DefaultMedians;
 	}
 
-	public static CoinJoinFeeRateStatStore LoadFromFile(string filePath, WabiSabiConfig config, IRPCClient rpc)
+	public static CoinJoinFeeRateStatStore LoadFromFile(string filePath, WabiSabiConfig config, IRPCClient rpc, FeeRate minimumMiningFeeRate)
 	{
 		var from = DateTimeOffset.UtcNow - MaximumTimeToStore;
 
@@ -97,7 +105,7 @@ public class CoinJoinFeeRateStatStore : PeriodicRunner
 				.Select(x => CoinJoinFeeRateStat.FromLine(x))
 				.Where(x => x.DateTimeOffset >= from);
 
-		var store = new CoinJoinFeeRateStatStore(config, rpc, stats);
+		var store = new CoinJoinFeeRateStatStore(config, rpc, stats, minimumMiningFeeRate);
 
 		return store;
 	}

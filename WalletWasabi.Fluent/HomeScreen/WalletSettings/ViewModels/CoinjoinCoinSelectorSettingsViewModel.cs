@@ -15,6 +15,7 @@ public partial class CoinjoinCoinSelectorSettingsViewModel : DialogViewModelBase
 	private readonly WalletModel _wallet;
 
 	[AutoNotify] private bool _forceUsingLowPrivacyCoins;
+	[AutoNotify] private bool _canSelectPrivateCoins;
 	[AutoNotify] private string _weightedAnonymityLossNormal;
 	[AutoNotify] private string _valueLossRateNormal;
 	[AutoNotify] private string _targetCoinCountPerBucket;
@@ -34,6 +35,7 @@ public partial class CoinjoinCoinSelectorSettingsViewModel : DialogViewModelBase
 		this.ValidateProperty(x => x.TargetCoinCountPerBucket, x => ValidateDouble(x, TargetCoinCountPerBucket, 1.0, 30.0));
 
 		_forceUsingLowPrivacyCoins = _wallet.Settings.ForceUsingLowPrivacyCoins;
+		_canSelectPrivateCoins = _wallet.Settings.CanSelectPrivateCoins;
 		_weightedAnonymityLossNormal = _wallet.Settings.WeightedAnonymityLossNormal.ToString(Resources.Culture.NumberFormat);
 		_valueLossRateNormal = _wallet.Settings.ValueLossRateNormal.ToString(Resources.Culture.NumberFormat);
 		_targetCoinCountPerBucket = _wallet.Settings.TargetCoinCountPerBucket.ToString(Resources.Culture.NumberFormat);
@@ -45,6 +47,15 @@ public partial class CoinjoinCoinSelectorSettingsViewModel : DialogViewModelBase
 			.Subscribe(x =>
 			{
 				_wallet.Settings.ForceUsingLowPrivacyCoins = x;
+				_wallet.Settings.Save();
+			});
+
+		this.WhenAnyValue(x => x.CanSelectPrivateCoins)
+			.Skip(1)
+			.ObserveOn(RxApp.TaskpoolScheduler)
+			.Subscribe(x =>
+			{
+				_wallet.Settings.CanSelectPrivateCoins = x;
 				_wallet.Settings.Save();
 			});
 

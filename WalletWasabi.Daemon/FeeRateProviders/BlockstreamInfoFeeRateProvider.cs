@@ -65,7 +65,7 @@ public class BlockstreamInfoFeeRateProvider : IFeeRateProvider
 	{
 		using var document = JsonDocument.Parse(json);
 		var root = document.RootElement;
-		var feeEstimates = new Dictionary<int, int>();
+		var feeEstimates = new Dictionary<int, FeeRate>();
 
 		// Blockstream.info returns a JSON object where each property name is the target confirmation block
 		// (e.g., "2", "3", "6", "12", etc.) and its value is the estimated fee rate.
@@ -73,7 +73,7 @@ public class BlockstreamInfoFeeRateProvider : IFeeRateProvider
 		{
 			if (int.TryParse(property.Name, out int target))
 			{
-				feeEstimates[target] = (int)Math.Ceiling(property.Value.GetDouble());
+				feeEstimates[target] = new FeeRate(property.Value.GetDecimal());
 			}
 		}
 
