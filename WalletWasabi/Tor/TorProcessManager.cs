@@ -4,7 +4,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using WalletWasabi.Helpers;
 using WalletWasabi.Logging;
 using WalletWasabi.Microservices;
 using WalletWasabi.Models;
@@ -455,7 +454,7 @@ public class TorProcessManager : IAsyncDisposable
 		}
 
 		// Get cookie.
-		string cookieString = ByteHelpers.ToHex(File.ReadAllBytes(Settings.CookieAuthFilePath));
+		string cookieString = Convert.ToHexString(File.ReadAllBytes(Settings.CookieAuthFilePath));
 
 		// Authenticate.
 		TorControlClientFactory factory = new();

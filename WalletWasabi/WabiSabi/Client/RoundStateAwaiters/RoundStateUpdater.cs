@@ -9,6 +9,8 @@ using WabiSabi.Crypto.Randomness;
 using WalletWasabi.Bases;
 using WalletWasabi.WabiSabi.Backend.PostRequests;
 using WalletWasabi.WabiSabi.Backend.Rounds;
+using WalletWasabi.WabiSabi.Client.CoinJoin.Client;
+using WalletWasabi.WabiSabi.Client.StatusChangedEvents;
 using WalletWasabi.WabiSabi.Models;
 
 namespace WalletWasabi.WabiSabi.Client.RoundStateAwaiters;
@@ -85,9 +87,26 @@ public class RoundStateUpdater : PeriodicRunner
 
 		CoinJoinFeeRateMedians = response.CoinJoinFeeRateMedians.ToDictionary(a => a.TimeFrame, a => a.MedianFeeRate);
 
+		var timeLimitFromLastSuccessfulRequestTime = LastSuccessfulRequestTime > DateTimeOffset.UnixEpoch ? LastSuccessfulRequestTime - TimeSpan.FromMinutes(1) : LastSuccessfulRequestTime;
+		DateTimeOffset minInputRegistrationStart = RoundStates.Values.Select(x => x.RoundState.InputRegistrationStart).Append(timeLimitFromLastSuccessfulRequestTime).Max();
 		// Don't use ToImmutable dictionary, because that ruins the original order and makes the server unable to suggest a round preference.
 		// ToDo: ToDictionary doesn't guarantee the order by design so .NET team might change this out of our feet, so there's room for improvement here.
-		RoundStates = response.RoundStates.Select(rs => CheckAndMergeRoundState(rs, requestFromCheckpointList)).ToDictionary(x => x.RoundState.Id, x => x);
+		var newRoundStates = response.RoundStates.Select(rs => CheckAndMergeRoundState(rs, requestFromCheckpointList, minInputRegistrationStart)).ToDictionary(x => x.RoundState.Id, x => x);
+
+		if (_verifyRoundState)
+		{
+			var actives = newRoundStates.Values.Where(x => x.RoundState.Phase != Phase.Ended && !x.RoundState.IsBlame).ToList();
+			if (actives.Count > 4)
+			{
+				// Suspiciously lot active rounds
+				foreach (var roundHolder in actives)
+				{
+					roundHolder.Exception = new CoinJoinClientException(CoinjoinError.TamperedRoundState, $"Too many active rounds found {roundHolder.RoundState.Id}.");
+				}
+			}
+		}
+
+		RoundStates = newRoundStates;
 
 		lock (AwaitersLock)
 		{
@@ -103,11 +122,11 @@ public class RoundStateUpdater : PeriodicRunner
 		_waitSlowRequestMode = TimeSpan.FromMilliseconds(_random.GetInt(2 * 60000, 5 * 60000));
 	}
 
-	private RoundStateHolder CheckAndMergeRoundState(RoundState rs, Dictionary<uint256, RoundStateHolder> requestFromCheckpointList)
+	private RoundStateHolder CheckAndMergeRoundState(RoundState rs, Dictionary<uint256, RoundStateHolder> requestFromCheckpointList, DateTimeOffset minInputRegistrationStart)
 	{
 		if (!RoundStates.TryGetValue(rs.Id, out RoundStateHolder? rsh))
 		{
-			return new(rs, _allowedCoordinatorIdentifiers, _verifyRoundState);
+			return new(rs, _allowedCoordinatorIdentifiers, _verifyRoundState, minInputRegistrationStart);
 		}
 
 		rsh.VerifyAndSet(rs, requestFromCheckpointList.ContainsKey(rs.Id), _verifyRoundState);

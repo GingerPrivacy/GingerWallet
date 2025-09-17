@@ -40,8 +40,6 @@ public interface IRPCClient
 
 	Task<MemPoolInfo> GetMempoolInfoAsync(CancellationToken cancel = default);
 
-	Task<MempoolAcceptResult> TestMempoolAcceptAsync(Transaction transaction, CancellationToken cancellationToken = default);
-
 	Task<EstimateSmartFeeResponse> EstimateSmartFeeAsync(int confirmationTarget, EstimateSmartFeeMode estimateMode = EstimateSmartFeeMode.Conservative, CancellationToken cancellationToken = default);
 
 	Task<GetTxOutResponse?> GetTxOutAsync(uint256 txid, int index, bool includeMempool = true, CancellationToken cancellationToken = default);
@@ -60,7 +58,11 @@ public interface IRPCClient
 
 	Task<Transaction> GetRawTransactionAsync(uint256 txid, bool throwIfNotFound = true, CancellationToken cancellationToken = default);
 
+	Task<RawTransactionInfo?> GetRawTransactionInfoAsync(uint256 txid, bool throwIfNotFound = true, CancellationToken cancellationToken = default);
+
 	Task<IEnumerable<Transaction>> GetRawTransactionsAsync(IEnumerable<uint256> txids, CancellationToken cancel);
+
+	Task<IEnumerable<RawTransactionInfo>> GetRawTransactionInfosAsync(IEnumerable<uint256> txids, CancellationToken cancel);
 
 	Task<int> GetBlockCountAsync(CancellationToken cancellationToken = default);
 

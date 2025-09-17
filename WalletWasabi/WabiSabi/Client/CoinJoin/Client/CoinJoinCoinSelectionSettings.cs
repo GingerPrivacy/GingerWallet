@@ -13,6 +13,9 @@ public class CoinJoinCoinSelectionSettings
 	// The coin selector will check and propose only candidates that has at least one low privacy coin
 	public bool ForceUsingLowPrivacyCoins { get; set; } = false;
 
+	// Allowed to use already private coins
+	public bool CanSelectPrivateCoins { get; set; } = false;
+
 	// Lowering this value will result to favor coin selections with less weighted anonymity loss (weighted privacy difference between coins)
 	public double WeightedAnonymityLossNormal { get; set; } = 3.0;
 

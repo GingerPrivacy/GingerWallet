@@ -52,7 +52,7 @@ public class DiscordLogger : ILogger
 		{
 			try
 			{
-				var content = new { content = message };
+				var content = new { content = message, flags = 4 };
 				var json = JsonSerializer.Serialize(content);
 				using var data = new StringContent(json, Encoding.UTF8, "application/json");
 				HttpResponseMessage response = await _httpClient.PostAsync(_webhook, data);

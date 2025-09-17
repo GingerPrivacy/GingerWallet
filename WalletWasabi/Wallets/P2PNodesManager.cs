@@ -1,11 +1,15 @@
 using NBitcoin;
 using NBitcoin.Protocol;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using WabiSabi.Crypto.Randomness;
 using WalletWasabi.Extensions;
 using WalletWasabi.Helpers;
 using WalletWasabi.Logging;
+using WalletWasabi.Tor.Socks5.Pool.Circuits;
 
 namespace WalletWasabi.Wallets;
 
@@ -24,20 +28,21 @@ public class P2PNodesManager
 	private int NodeTimeouts { get; set; }
 	public uint ConnectedNodesCount => (uint)Nodes.ConnectedNodes.Count;
 
-	public async Task<Node?> GetNodeAsync(CancellationToken cancellationToken)
+	private readonly HashSet<Node> _nodesInUse = new();
+
+	public async Task<Node> GetNodeAsync(CancellationToken cancellationToken)
 	{
 		do
 		{
 			if (Nodes.ConnectedNodes.Count > 0)
 			{
-				var node = Nodes.ConnectedNodes.RandomElement(SecureRandom.Instance);
+				var node = Nodes.ConnectedNodes.Where(n => !_nodesInUse.Contains(n)).RandomElement(SecureRandom.Instance);
 
 				if (node is not null && node.IsConnected)
 				{
+					_nodesInUse.Add(node);
 					return node;
 				}
-
-				Logger.LogTrace($"Selected node is null or disconnected.");
 			}
 
 			await Task.Delay(TimeSpan.FromMilliseconds(50), cancellationToken).ConfigureAwait(false);
@@ -59,6 +64,16 @@ public class P2PNodesManager
 	{
 		Logger.LogInfo(reason);
 		node.DisconnectAsync(reason);
+	}
+
+	public bool TryReleaseNode(Node? node)
+	{
+		if (node is null)
+		{
+			return false;
+		}
+
+		return _nodesInUse.Remove(node);
 	}
 
 	public double GetCurrentTimeout()

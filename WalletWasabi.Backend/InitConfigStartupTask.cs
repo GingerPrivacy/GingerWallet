@@ -21,7 +21,7 @@ public class InitConfigStartupTask : IStartupTask
 		Global.CreateDiscordLogger();
 
 		Logger.LogSoftwareStarted("Ginger Backend");
-		Logger.LogDiscord(LogLevel.Information, "Ginger Backend started");
+		Logger.LogDiscord("main", LogLevel.Information, "Ginger Backend started");
 
 		AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 		TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;

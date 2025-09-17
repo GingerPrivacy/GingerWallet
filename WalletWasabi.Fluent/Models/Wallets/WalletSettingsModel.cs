@@ -31,6 +31,7 @@ public partial class WalletSettingsModel : ReactiveObject
 
 	[AutoNotify] private bool _useExperimentalCoinSelector;
 	[AutoNotify] private bool _forceUsingLowPrivacyCoins;
+	[AutoNotify] private bool _canSelectPrivateCoins;
 	[AutoNotify] private double _weightedAnonymityLossNormal;
 	[AutoNotify] private double _valueLossRateNormal;
 	[AutoNotify] private double _targetCoinCountPerBucket;
@@ -58,6 +59,7 @@ public partial class WalletSettingsModel : ReactiveObject
 		var coinJoinSelectionSettings = _keyManager.Attributes.CoinJoinCoinSelectionSettings;
 		_useExperimentalCoinSelector = coinJoinSelectionSettings.UseExperimentalCoinSelector;
 		_forceUsingLowPrivacyCoins = coinJoinSelectionSettings.ForceUsingLowPrivacyCoins;
+		_canSelectPrivateCoins = coinJoinSelectionSettings.CanSelectPrivateCoins;
 		_weightedAnonymityLossNormal = coinJoinSelectionSettings.WeightedAnonymityLossNormal;
 		_valueLossRateNormal = coinJoinSelectionSettings.ValueLossRateNormal;
 		_targetCoinCountPerBucket = coinJoinSelectionSettings.TargetCoinCountPerBucket;
@@ -90,11 +92,12 @@ public partial class WalletSettingsModel : ReactiveObject
 				x => x.SafeMiningFeeRate,
 				x => x.UseExperimentalCoinSelector,
 				x => x.ForceUsingLowPrivacyCoins,
+				x => x.CanSelectPrivateCoins,
 				x => x.WeightedAnonymityLossNormal,
 				x => x.ValueLossRateNormal,
 				x => x.TargetCoinCountPerBucket,
 				x => x.UseOldCoinSelectorAsFallback,
-				(_, _, _, _, _, _, _, _) => Unit.Default)
+				(_, _, _, _, _, _, _, _, _) => Unit.Default)
 			.Skip(1)
 			.Do(_ => SetValues())
 			.Subscribe();
@@ -140,6 +143,7 @@ public partial class WalletSettingsModel : ReactiveObject
 		_keyManager.SetFeeRateMedianTimeFrame(FeeRateMedianTimeFrameHours);
 		_keyManager.Attributes.CoinJoinCoinSelectionSettings.UseExperimentalCoinSelector = UseExperimentalCoinSelector;
 		_keyManager.Attributes.CoinJoinCoinSelectionSettings.ForceUsingLowPrivacyCoins = ForceUsingLowPrivacyCoins;
+		_keyManager.Attributes.CoinJoinCoinSelectionSettings.CanSelectPrivateCoins = CanSelectPrivateCoins;
 		_keyManager.Attributes.CoinJoinCoinSelectionSettings.WeightedAnonymityLossNormal = WeightedAnonymityLossNormal;
 		_keyManager.Attributes.CoinJoinCoinSelectionSettings.ValueLossRateNormal = ValueLossRateNormal;
 		_keyManager.Attributes.CoinJoinCoinSelectionSettings.TargetCoinCountPerBucket = TargetCoinCountPerBucket;

@@ -2119,21 +2119,6 @@
   <data name="Hide" xml:space="preserve">
     <value>隐藏</value>
   </data>
-  <data name="LoadingViewDownloadText" xml:space="preserve">
-    <value>比特币网络数据下载与处理</value>
-  </data>
-  <data name="LoadingViewProcessLonger" xml:space="preserve">
-    <value>首次启动、大型钱包或距上次同步间隔较久时，此过程可能需要更长时间。</value>
-  </data>
-  <data name="LoadingViewThirdparty" xml:space="preserve">
-    <value>Ginger 通过这种方式确保第三方无法获知你的账户余额和财务活动。</value>
-  </data>
-  <data name="TwoFactorDisabledWarnMessage" xml:space="preserve">
-    <value>双重验证已关闭。请至设置开启增强防护。</value>
-  </data>
-  <data name="TwoFactorDisabledWarnMessageOpenSettings" xml:space="preserve">
-    <value>打开设置</value>
-  </data>
     <data name="SignMessage" xml:space="preserve">
     <value>签署消息</value>
   </data>
@@ -2199,5 +2184,11 @@
   </data>
   <data name="RoundDisruptionMethodDidNotSignalReadyToSignEnum" xml:space="preserve">
     <value>回合中断</value>
+  </data>
+  <data name="CanSelectPrivateCoinsInCoinJoinCoinSelector" xml:space="preserve">
+    <value>可以选择已经私有的币</value>
+  </data>
+  <data name="CanSelectPrivateCoinsInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>选择中允许包含已经私有的币。</value>
   </data>
 </root>

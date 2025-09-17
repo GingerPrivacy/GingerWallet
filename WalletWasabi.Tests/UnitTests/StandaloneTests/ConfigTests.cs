@@ -127,8 +127,6 @@ public class ConfigTests
 			  "CoinVerifierRequiredConfirmationAmount": "1.00",
 			  "ReleaseFromWhitelistAfter": "31d 0h 0m 0s",
 			  "RoundParallelization": 1,
-			  "WW200CompatibleLoadBalancing": false,
-			  "WW200CompatibleLoadBalancingInputSplit": 0.75,
 			  "CoordinatorIdentifier": "CoinJoinCoordinatorIdentifier",
 			  "AllowP2wpkhInputs": true,
 			  "AllowP2trInputs": true,

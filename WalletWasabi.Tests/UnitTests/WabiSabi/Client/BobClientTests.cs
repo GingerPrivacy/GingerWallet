@@ -77,7 +77,7 @@ public class BobClientTests
 		{
 			await arena.TriggerAndWaitRoundAsync(token);
 		}
-		while (round.Phase != Phase.ConnectionConfirmation);
+		while (round.Phase < Phase.ConnectionConfirmation);
 
 		var aliceClient = await task;
 

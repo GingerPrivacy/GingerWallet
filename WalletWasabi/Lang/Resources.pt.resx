@@ -2185,4 +2185,10 @@
     <data name="RoundDisruptionMethodDidNotSignalReadyToSignEnum" xml:space="preserve">
         <value>Interrupção da rodada</value>
     </data>
+  <data name="CanSelectPrivateCoinsInCoinJoinCoinSelector" xml:space="preserve">
+    <value>É possível selecionar moedas já privadas</value>
+  </data>
+  <data name="CanSelectPrivateCoinsInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>A seleção pode conter moedas já privadas.</value>
+  </data>
 </root>

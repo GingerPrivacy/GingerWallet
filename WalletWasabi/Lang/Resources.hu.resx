@@ -1597,7 +1597,7 @@
     <value>Régi érmekiválasztó használata másodlagos opcióként</value>
   </data>
   <data name="UseOldCoinSelectorAsFallbackInCoinJoinCoinSelectorToolTip" xml:space="preserve">
-    <value>Az új és a régi pénzválasztó is használatban lesz, és a jobb eredmény kerül kiválasztásra.</value>
+    <value>Az új és a régi érmeválasztó is használatban lesz, és a jobb eredmény kerül kiválasztásra.</value>
   </data>
   <data name="Configuration" xml:space="preserve">
     <value>Konfiguráció</value>
@@ -2184,5 +2184,11 @@
   </data>
   <data name="RoundDisruptionMethodDidNotSignalReadyToSignEnum" xml:space="preserve">
     <value>Kör megszakítása</value>
+  </data>
+  <data name="CanSelectPrivateCoinsInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Már anonim érmék is választhatók</value>
+  </data>
+  <data name="CanSelectPrivateCoinsInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>A kiválasztott érmék tartalmazhatnak már anonim érméket is.</value>
   </data>
 </root>

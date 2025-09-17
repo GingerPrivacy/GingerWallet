@@ -67,6 +67,7 @@ public class BatchController : ControllerBase
 
 		try
 		{
+			// We still provide it, but the client never should read it
 			response.AllFeeEstimate = await BlockchainController.GetAllFeeEstimateAsync(EstimateSmartFeeMode.Conservative, cancellationToken);
 		}
 		catch (Exception ex)

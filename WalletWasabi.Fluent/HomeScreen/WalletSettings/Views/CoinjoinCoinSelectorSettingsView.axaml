@@ -20,6 +20,11 @@
         <ToggleSwitch IsChecked="{Binding ForceUsingLowPrivacyCoins}" />
       </DockPanel>
 
+      <DockPanel ToolTip.Tip="{x:Static lang:Resources.CanSelectPrivateCoinsInCoinJoinCoinSelectorToolTip}">
+        <TextBlock Text="{x:Static lang:Resources.CanSelectPrivateCoinsInCoinJoinCoinSelector}" />
+        <ToggleSwitch IsChecked="{Binding CanSelectPrivateCoins}" />
+      </DockPanel>
+
       <DockPanel ToolTip.Tip="{x:Static lang:Resources.WeightedAnonymityLossNormalInCoinJoinCoinSelectorToolTip}">
         <TextBlock Text="{x:Static lang:Resources.WeightedAnonymityLossNormalInCoinJoinCoinSelector}" />
         <TextBox Text="{Binding WeightedAnonymityLossNormal}" />

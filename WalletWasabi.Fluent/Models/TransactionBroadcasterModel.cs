@@ -5,7 +5,6 @@ using WalletWasabi.Blockchain.Transactions;
 using WalletWasabi.Extensions;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
-using WalletWasabi.Lang;
 using WalletWasabi.Models;
 
 namespace WalletWasabi.Fluent.Models;
@@ -43,59 +42,20 @@ public class TransactionBroadcasterModel
 
 	public TransactionBroadcastInfo GetBroadcastInfo(SmartTransaction transaction)
 	{
-		var nullMoney = new Money(-1L);
-		var nullOutput = new TxOut(nullMoney, Script.Empty);
+		var tx = transaction.Transaction;
 
-		var psbt = PSBT.FromTransaction(transaction.Transaction, _network);
+		Money spendingSum = tx.Inputs
+			.Select(x => Services.BitcoinStore.TransactionStore.TryGetTransaction(x.PrevOut.Hash, out var prevTxn) ? prevTxn.Transaction.Outputs[x.PrevOut.N].Value : Money.Zero)
+			.Sum();
 
-		TxOut GetOutput(OutPoint outpoint) =>
-			Services.BitcoinStore.TransactionStore.TryGetTransaction(outpoint.Hash, out var prevTxn)
-				? prevTxn.Transaction.Outputs[outpoint.N]
-				: nullOutput;
+		Money outputSum = tx.Outputs.Select(x => x.Value).Sum();
+		var networkFee = spendingSum - outputSum;
 
-		var inputAddressAmount = psbt.Inputs
-			.Select(x => x.PrevOut)
-			.Select(GetOutput)
-			.ToArray();
-
-		var outputAddressAmount = psbt.Outputs
-			.Select(x => x.GetCoin().TxOut)
-			.ToArray();
-
-		var psbtTxn = psbt.GetOriginalTransaction();
-
-		var transactionId = psbtTxn.GetHash().ToString();
-
-		var inputCount = inputAddressAmount.Length;
-		var totalInputValue =
-			inputAddressAmount.Any(x => x.Value == nullMoney)
-				? null
-				: inputAddressAmount.Select(x => x.Value).Sum();
-
-		var inputAmountString =
-			totalInputValue is null
-				? Resources.Unknown
-				: $"{totalInputValue.ToFormattedString()} BTC";
-
-		var outputCount = outputAddressAmount.Length;
-
-		var totalOutputValue =
-			outputAddressAmount.Any(x => x.Value == nullMoney)
-				? null
-				: outputAddressAmount.Select(x => x.Value).Sum();
-
-		var outputAmountString =
-			totalOutputValue is null
-				? Resources.Unknown
-				: $"{totalOutputValue.ToFormattedString()} BTC";
-
-		var networkFee = totalInputValue is null || totalOutputValue is null
-			? null
-			: totalInputValue - totalOutputValue;
-
+		var inputAmountString = $"{spendingSum.ToFormattedString()} BTC";
+		var outputAmountString = $"{outputSum.ToFormattedString()} BTC";
 		var feeString = networkFee.ToFeeDisplayUnitFormattedString();
 
-		return new TransactionBroadcastInfo(transactionId, inputCount, outputCount, inputAmountString, outputAmountString, feeString);
+		return new TransactionBroadcastInfo(tx.GetHash().ToString(), tx.Inputs.Count, tx.Outputs.Count, inputAmountString, outputAmountString, feeString);
 	}
 
 	public Task SendAsync(SmartTransaction transaction)

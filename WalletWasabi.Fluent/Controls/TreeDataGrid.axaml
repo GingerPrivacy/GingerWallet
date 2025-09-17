@@ -45,7 +45,6 @@
     </Setter>
 
     <Style Selector="^/template/ Border#BackgroundRectangle">
-      <Setter Property="Background" Value="{DynamicResource SystemControlTransparentBrush}" />
       <Setter Property="CornerRadius" Value="30" />
     </Style>
 

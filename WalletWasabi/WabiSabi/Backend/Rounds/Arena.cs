@@ -6,6 +6,7 @@ using Nito.AsyncEx;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -168,7 +169,7 @@ public partial class Arena : PeriodicRunner
 					{
 						// This should never happen.
 						CoinVerifier.VerifierAuditArchiver.LogException(round.Id, "AliceException", exc);
-						Logger.LogDiscord(LogLevel.Error, $"AliceException at round {round.Id}: {exc.Message}", normalLogLevel: LogLevel.Error);
+						Logger.LogDiscord("main", LogLevel.Error, $"AliceException at round {round.Id}: {exc.Message}", normalLogLevel: LogLevel.Error);
 						throw;
 					}
 				}
@@ -405,7 +406,14 @@ public partial class Arena : PeriodicRunner
 					await Rpc.SendRawTransactionAsync(coinjoin, cancellationToken).ConfigureAwait(false);
 					EndRound(round, EndRoundState.TransactionBroadcasted);
 					round.LogInfo($"Successfully broadcast the coinjoin: {coinjoin.GetHash()}.");
-					round.LogInfo($"Coinjoin summary {coinjoin.GetHash()}, {coinjoin.Inputs.Count}, {coinjoin.Outputs.Count}, {coinjoin.GetAnonScore():F2}, {state.Inputs.Select(x => x.Amount).Sum().Satoshi}, {coinjoin.Outputs.Select(x => x.Value).Sum().Satoshi}, {round.ExpectedCoordinationFee.Satoshi}, {round.CoordinationFee.Satoshi}, {feeRate.SatoshiPerByte}");
+
+					round.LogInfo($"Coinjoin summary {coinjoin.GetHash()}, {coinjoin.Inputs.Count}, {coinjoin.Outputs.Count}, {coinjoin.GetAnonSet():F2}, {state.Inputs.Select(x => x.Amount).Sum().Satoshi}, {coinjoin.Outputs.Select(x => x.Value).Sum().Satoshi}, {round.ExpectedCoordinationFee.Satoshi}, {round.CoordinationFee.Satoshi}, {feeRate.SatoshiPerByte}");
+					Logger.LogDiscord(
+						"coinjoin",
+						LogLevel.Information,
+						$"New [coinjoin](https://mempool.space/tx/{coinjoin.GetHash()})!  🥳    I/O: **{coinjoin.Inputs.Count}/{coinjoin.Outputs.Count}**    Income: **{round.CoordinationFee.ToUnit(MoneyUnit.BTC).ToString("0.0000 0000", CultureInfo.InvariantCulture)} BTC**",
+						rawMessage: true
+					);
 
 					var coordinatorScriptPubKey = Config.GetNextCleanCoordinatorScript();
 					if (round.CoordinatorScript == coordinatorScriptPubKey)
@@ -566,60 +574,6 @@ public partial class Arena : PeriodicRunner
 	{
 		FeeRate? feeRate = null;
 
-		// Have rounds to split the volume around minimum input counts if load balance is required.
-		// Only do things if the load balancer compatibility is configured.
-		if (Config.WW200CompatibleLoadBalancing)
-		{
-			foreach (var round in Rounds.Where(x =>
-				x.Phase == Phase.InputRegistration
-				&& x is not BlameRound
-				&& !x.IsInputRegistrationEnded(x.Parameters.MaxInputCountByRound)
-				&& x.InputCount >= Config.RoundDestroyerThreshold).ToArray())
-			{
-				feeRate = await MiningFeeRateEstimator.GetRoundFeeRateAsync(cancellationToken).ConfigureAwait(false);
-
-				var allInputs = round.Alices.Select(y => y.Coin.Amount).OrderBy(x => x).ToArray();
-
-				// 0.75 to bias towards larger numbers as larger input owners often have many smaller inputs too.
-				var smallSuggestion = allInputs.Skip((int)(allInputs.Length * Config.WW200CompatibleLoadBalancingInputSplit)).First();
-				var largeSuggestion = MaxSuggestedAmountProvider.AbsoluteMaximumInput;
-
-				var roundWithoutThis = Rounds.Except(new[] { round });
-				RoundParameters parameters = RoundParameterFactory.CreateRoundParameter(feeRate, largeSuggestion);
-				Round? foundLargeRound = roundWithoutThis
-					.FirstOrDefault(x =>
-									x.Phase == Phase.InputRegistration
-									&& x is not BlameRound
-									&& !x.IsInputRegistrationEnded(round.Parameters.MaxInputCountByRound)
-									&& x.Parameters.MaxSuggestedAmount >= allInputs.Max()
-									&& x.InputRegistrationTimeFrame.Remaining > TimeSpan.FromSeconds(60));
-				var largeRound = foundLargeRound ?? TryMineRound(parameters, roundWithoutThis.ToArray());
-
-				if (largeRound is not null)
-				{
-					parameters = RoundParameterFactory.CreateRoundParameter(feeRate, smallSuggestion);
-					var smallRound = TryMineRound(parameters, roundWithoutThis.Concat(new[] { largeRound }).ToArray());
-
-					// If creation is successful, only then destroy the round.
-					if (smallRound is not null)
-					{
-						AddRound(largeRound);
-						AddRound(smallRound);
-
-						if (foundLargeRound is null)
-						{
-							largeRound.LogInfo($"Mined round with parameters: {nameof(largeRound.Parameters.MaxSuggestedAmount)}:'{largeRound.Parameters.MaxSuggestedAmount}' BTC.");
-						}
-						smallRound.LogInfo($"Mined round with parameters: {nameof(smallRound.Parameters.MaxSuggestedAmount)}:'{smallRound.Parameters.MaxSuggestedAmount}' BTC.");
-
-						// If it can't create the large round, then don't abort.
-						EndRound(round, EndRoundState.AbortedLoadBalancing);
-						Logger.LogInfo($"Destroyed round with {allInputs.Length} inputs. Threshold: {Config.RoundDestroyerThreshold}");
-					}
-				}
-			}
-		}
-
 		bool IsRoundRegistrable(TimeSpan inputRegRemainingTime, TimeSpan createNewRoundBeforeInputRegEnd)
 		{
 			var remainingTime = inputRegRemainingTime < TimeSpan.Zero ? TimeSpan.Zero : inputRegRemainingTime;
@@ -648,43 +602,6 @@ public partial class Arena : PeriodicRunner
 
 		var round = new Round(parameters, SecureRandom.Instance);
 		return round;
-	}
-
-	private Round? TryMineRound(RoundParameters parameters, Round[] rounds)
-	{
-		// Huge HACK to keep it compatible with WW2.0.0 client version, which's
-		// round preference is based on the ordering of ToImmutableDictionary.
-		// Add round until ToImmutableDictionary orders it to be the first round
-		// so old clients will prefer that one.
-		IOrderedEnumerable<Round>? orderedRounds;
-		Round r;
-		var before = DateTimeOffset.UtcNow;
-		var times = 0;
-		var maxCycleTimes = 300;
-		do
-		{
-			var roundsCopy = rounds.ToList();
-			r = new Round(parameters, SecureRandom.Instance);
-			roundsCopy.Add(r);
-			orderedRounds = roundsCopy
-				.Where(x => x.Phase == Phase.InputRegistration && x is not BlameRound && !x.IsInputRegistrationEnded(x.Parameters.MaxInputCountByRound))
-				.OrderBy(x => x.Parameters.MaxSuggestedAmount)
-				.ThenBy(x => x.InputCount);
-			times++;
-		}
-		while (times <= maxCycleTimes && orderedRounds.ToImmutableDictionary(x => x.Id, x => x).First().Key != r.Id);
-
-		Logger.LogDebug($"First ordered round creator did {times} cycles.");
-
-		if (times > maxCycleTimes)
-		{
-			r.LogInfo("First ordered round creation too expensive. Skipping...");
-			return null;
-		}
-		else
-		{
-			return r;
-		}
 	}
 
 	private void TimeoutRounds()

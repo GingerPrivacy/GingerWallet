@@ -17,6 +17,7 @@ namespace WalletWasabi.WabiSabi.Client.CoinJoin.Client;
 /// <param name="WalletStatistics">Useful statistics from the wallet</param>
 /// <param name="Random">The random geneator to be used</param>
 public record CoinJoinCoinSelectionParameters(
+	int AnonScoreTarget,
 	FeeRate MiningFeeRate,
 	long MinInputAmount,
 	long CoinJoinLoss,
@@ -28,7 +29,7 @@ public record CoinJoinCoinSelectionParameters(
 	WasabiRandom Random)
 {
 	// This paramter leads to drop every coin
-	public static readonly CoinJoinCoinSelectionParameters Empty = new(FeeRate.Zero, 10000, 0, 0, 0, 0, new([], 0), new(10, 3.0, 0.01), SecureRandom.Instance);
+	public static readonly CoinJoinCoinSelectionParameters Empty = new(2, FeeRate.Zero, 10000, 0, 0, 0, 0, new([], 0), new(10, 3.0, 0.01), SecureRandom.Instance);
 
 	public bool IsCoinAboveAllowedLoss(ISmartCoin coin) => MiningFeeRate.GetFee(coin.ScriptType.EstimateInputVsize()).Satoshi / (double)coin.Amount.Satoshi > MaxCoinLossRate;
 

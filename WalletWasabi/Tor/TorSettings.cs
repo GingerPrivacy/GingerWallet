@@ -173,7 +173,11 @@ public class TorSettings
 			$"--CookieAuthFile \"{CookieAuthFilePath}\"",
 			$"--DataDirectory \"{TorDataDir}\"",
 			$"--GeoIPFile \"{GeoIpPath}\"",
-			$"--GeoIPv6File \"{GeoIp6Path}\""
+			$"--GeoIPv6File \"{GeoIp6Path}\"",
+			$"--NumEntryGuards 3",
+			$"--NumPrimaryGuards 3",
+			$"--ConfluxEnabled 1",
+			$"--ConfluxClientUX throughput"
 		];
 
 		if (useBridges)

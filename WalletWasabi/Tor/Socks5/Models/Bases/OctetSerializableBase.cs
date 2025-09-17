@@ -1,4 +1,3 @@
-using WalletWasabi.Helpers;
 using WalletWasabi.Tor.Socks5.Models.Interfaces;
 
 namespace WalletWasabi.Tor.Socks5.Models.Bases;
@@ -15,9 +14,9 @@ public abstract class OctetSerializableBase : IByteSerializable, IEquatable<Octe
 	{
 		if (xhhSyntax)
 		{
-			return $"X'{ByteHelpers.ToHex(ToByte())}'";
+			return $"X'{ByteValue:X2}'";
 		}
-		return ByteHelpers.ToHex(ToByte());
+		return $"{ByteValue:X2}";
 	}
 
 	public override string ToString()

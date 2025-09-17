@@ -12,7 +12,7 @@ public class OwnershipProofJsonConverter : JsonConverter<OwnershipProof>
 	{
 		if (reader.Value is string serialized)
 		{
-			return OwnershipProof.FromBytes(ByteHelpers.FromHex(serialized));
+			return OwnershipProof.FromBytes(Convert.FromHexString(serialized));
 		}
 		throw new ArgumentException($"No valid serialized {nameof(OwnershipProof)} passed.");
 	}
@@ -21,6 +21,6 @@ public class OwnershipProofJsonConverter : JsonConverter<OwnershipProof>
 	public override void WriteJson(JsonWriter writer, OwnershipProof? value, JsonSerializer serializer)
 	{
 		var bytes = value.ToBytes();
-		writer.WriteValue(ByteHelpers.ToHex(bytes));
+		writer.WriteValue(Convert.ToHexString(bytes));
 	}
 }

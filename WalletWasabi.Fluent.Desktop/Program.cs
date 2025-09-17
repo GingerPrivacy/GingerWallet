@@ -182,7 +182,7 @@ public static class WasabiAppExtensions
 					RxApp.MainThreadScheduler.Schedule(() => throw new ApplicationException("Exception has been thrown in unobserved ThrownExceptions", ex));
 				});
 
-				Logger.LogInfo("Wasabi GUI started.");
+				Logger.LogInfo("Ginger GUI started.");
 				bool runGuiInBackground = app.AppConfig.Arguments.Any(arg => arg.Contains(StartupHelper.SilentArgument));
 				UiConfig uiConfig = app.Global!.UiConfig;
 				uiConfig

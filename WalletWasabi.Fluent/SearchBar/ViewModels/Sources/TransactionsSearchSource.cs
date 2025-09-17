@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
@@ -34,8 +35,14 @@ public class TransactionsSearchSource : ReactiveObject, ISearchSource, IDisposab
 #pragma warning restore CA2000 // Dispose objects before losing scope
 
 		var results = queries
-			.Select(query => query.Length >= MinQueryLength ? Search(query) : Enumerable.Empty<ISearchItem>())
-			.ObserveOn(RxApp.MainThreadScheduler);
+			.Throttle(TimeSpan.FromMilliseconds(180))                  // rate-limit while typing
+			.DistinctUntilChanged(StringComparer.Ordinal)
+			.Select(q =>
+				string.IsNullOrWhiteSpace(q) || q.Length < MinQueryLength
+					? Observable.Return(Enumerable.Empty<ISearchItem>())
+					: Observable.Start(() => Search(q).ToList(), RxApp.TaskpoolScheduler)) // heavy work off UI thread
+			.Switch()                                                  // cancel stale searches
+			.ObserveOn(RxApp.MainThreadScheduler);                     // update cache on UI thread
 
 		sourceCache
 			.RefillFrom(results)
@@ -53,7 +60,8 @@ public class TransactionsSearchSource : ReactiveObject, ISearchSource, IDisposab
 
 	private static bool ContainsId(HistoryItemViewModelBase historyItemViewModelBase, string queryStr)
 	{
-		return historyItemViewModelBase.Transaction.Id.ToString().Contains(queryStr, StringComparison.CurrentCultureIgnoreCase);
+		return historyItemViewModelBase.Transaction.Id.ToString()
+			.Contains(queryStr, StringComparison.OrdinalIgnoreCase);
 	}
 
 	private static Task NavigateTo(WalletViewModel wallet, HistoryItemViewModelBase item)
@@ -77,7 +85,7 @@ public class TransactionsSearchSource : ReactiveObject, ISearchSource, IDisposab
 		return historyItemViewModelBase switch
 		{
 			CoinJoinHistoryItemViewModel => "shield_regular",
-			CoinJoinsHistoryItemViewModel => "shield_regular",
+			CoinJoinsHistoryItemViewModel => "double_shield_regular",
 			TransactionHistoryItemViewModel => "normal_transaction",
 			_ => ""
 		};
@@ -86,19 +94,6 @@ public class TransactionsSearchSource : ReactiveObject, ISearchSource, IDisposab
 	private static IEnumerable<(WalletViewModel, HistoryItemViewModelBase)> Flatten(IEnumerable<(WalletViewModel Wallet, IEnumerable<HistoryItemViewModelBase> Transactions)> walletTransactions)
 	{
 		return walletTransactions.SelectMany(t => t.Transactions.Select(item => (t.Wallet, HistoryItem: item)));
-	}
-
-	private static ISearchItem ToSearchItem(WalletViewModel wallet, HistoryItemViewModelBase item)
-	{
-		return new ActionableItem(
-			item.Transaction.Id.ToString(),
-			Resources.FoundIn.SafeInject(wallet.WalletModel.Name),
-			() => NavigateTo(wallet, item),
-			Resources.WalletTransactions,
-			new List<string>())
-		{
-			Icon = GetIcon(item)
-		};
 	}
 
 	private static IEnumerable<(WalletViewModel Wallet, IEnumerable<HistoryItemViewModelBase> Transactions)> GetTransactionsByWallet()
@@ -113,22 +108,77 @@ public class TransactionsSearchSource : ReactiveObject, ISearchSource, IDisposab
 				x.History.Transactions.Concat(x.History.Transactions.OfType<CoinJoinsHistoryItemViewModel>().SelectMany(y => y.Children))));
 	}
 
+	private static List<(WalletViewModel Wallet, HistoryItemViewModelBase Item)> SnapshotTransactions()
+	{
+		// materialize once per query to avoid repeated enumeration / UI access
+		return Flatten(GetTransactionsByWallet()).ToList();
+	}
+
 	private static IEnumerable<ISearchItem> Search(string query)
 	{
-		return Filter(query)
-			.Take(MaxResultCount)
-			.Select(tuple => ToSearchItem(tuple.Item1, tuple.Item2));
+		var snapshot = SnapshotTransactions();
+
+		if (!snapshot.Any())
+		{
+			return Enumerable.Empty<ISearchItem>();
+		}
+
+		// cache destination addresses per tx within a single search
+		var destCache = new Dictionary<uint256, IReadOnlyCollection<BitcoinAddress>>();
+
+		var results = new List<ISearchItem>(Math.Min(MaxResultCount, 16));
+
+		// parse address at most once per wallet/network
+		foreach (var group in snapshot.GroupBy(t => t.Wallet))
+		{
+			BitcoinAddress? parsedAddr = null;
+			if (NBitcoinHelpers.TryParseBitcoinAddress(group.Key.WalletModel.Network, query, out var addr))
+			{
+				parsedAddr = addr;
+			}
+
+			foreach (var (wallet, item) in group)
+			{
+				bool isMatch;
+				if (parsedAddr is null)
+				{
+					isMatch = ContainsId(item, query);
+				}
+				else
+				{
+					var txid = item.Transaction.Id;
+					if (!destCache.TryGetValue(txid, out var dests))
+					{
+						dests = wallet.WalletModel.Transactions.GetDestinationAddresses(txid).ToList();
+						destCache[txid] = dests;
+					}
+					isMatch = dests.Contains(parsedAddr);
+				}
+
+				if (isMatch)
+				{
+					results.Add(ToSearchItem(wallet, item));
+					if (results.Count >= MaxResultCount)
+					{
+						return results;
+					}
+				}
+			}
+		}
+
+		return results;
 	}
 
-	private static IEnumerable<(WalletViewModel, HistoryItemViewModelBase)> Filter(string queryStr)
+	private static ISearchItem ToSearchItem(WalletViewModel wallet, HistoryItemViewModelBase item)
 	{
-		return Flatten(GetTransactionsByWallet())
-			.Where(tuple => NBitcoinHelpers.TryParseBitcoinAddress(tuple.Item1.WalletModel.Network, queryStr, out var address) ? ContainsDestinationAddress(tuple.Item1, tuple.Item2, address) : ContainsId(tuple.Item2, queryStr));
-	}
-
-	private static bool ContainsDestinationAddress(WalletViewModel walletViewModel, HistoryItemViewModelBase historyItem, BitcoinAddress address)
-	{
-		var txid = historyItem.Transaction.Id;
-		return walletViewModel.WalletModel.Transactions.GetDestinationAddresses(txid).Contains(address);
+		return new ActionableItem(
+			item.Transaction.Id.ToString(),
+			Resources.FoundIn.SafeInject(wallet.WalletModel.Name),
+			() => NavigateTo(wallet, item),
+			Resources.WalletTransactions,
+			new List<string>())
+		{
+			Icon = GetIcon(item)
+		};
 	}
 }

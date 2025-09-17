@@ -18,6 +18,8 @@ public class MiningFeeRateEstimator
 	protected WabiSabiConfig Config { get; }
 	protected IRPCClient Rpc { get; }
 
+	public virtual FeeRate GetRoundMinimumFeeRate => FeeRate.Zero;
+
 	public virtual async Task<FeeRate> GetRoundFeeRateAsync(CancellationToken cancellationToken)
 	{
 		var feeRate = (await Rpc.EstimateConservativeSmartFeeAsync((int)Config.ConfirmationTarget, cancellationToken).ConfigureAwait(false)).FeeRate;

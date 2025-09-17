@@ -57,13 +57,13 @@ public static class NBitcoinExtensions
 
 	public static string ToHex(this IBitcoinSerializable me)
 	{
-		return ByteHelpers.ToHex(me.ToBytes());
+		return Convert.ToHexString(me.ToBytes());
 	}
 
 	public static void FromHex(this IBitcoinSerializable me, string hex)
 	{
 		Guard.NotNullOrEmptyOrWhitespace(nameof(hex), hex);
-		me.FromBytes(ByteHelpers.FromHex(hex));
+		me.FromBytes(Convert.FromHexString(hex));
 	}
 
 	/// <summary>
@@ -525,7 +525,7 @@ public static class NBitcoinExtensions
 		}
 	}
 
-	public static double GetAnonScore(this Transaction transaction)
+	public static double GetAnonSet(this Transaction transaction)
 	{
 		int totalCount = transaction.Outputs.Count;
 		int diffCount = transaction.Outputs.Select(x => x.Value.Satoshi).ToHashSet().Count;

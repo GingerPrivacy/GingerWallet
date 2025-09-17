@@ -30,7 +30,7 @@ public class TorControlFactoryTests
 
 		Mock<IRandom> mockRandom = new(MockBehavior.Strict);
 		mockRandom.Setup(c => c.GetBytes(It.IsAny<byte[]>()))
-			.Callback((byte[] dest) => Array.Copy(sourceArray: ByteHelpers.FromHex(clientNonce), dest, 32));
+			.Callback((byte[] dest) => Array.Copy(sourceArray: Convert.FromHexString(clientNonce), dest, 32));
 
 		TorControlClientFactory clientFactory = new(mockRandom.Object);
 

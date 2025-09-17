@@ -1,6 +1,5 @@
 using NBitcoin;
 using Newtonsoft.Json;
-using WalletWasabi.Helpers;
 
 namespace WalletWasabi.WabiSabi.Models.Serialization;
 
@@ -11,7 +10,7 @@ public class WitScriptJsonConverter : JsonConverter<WitScript>
 	{
 		if (reader.Value is string serialized)
 		{
-			return new WitScript(ByteHelpers.FromHex(serialized));
+			return new WitScript(Convert.FromHexString(serialized));
 		}
 		throw new ArgumentException($"No valid serialized {nameof(WitScript)} passed.");
 	}
@@ -20,6 +19,6 @@ public class WitScriptJsonConverter : JsonConverter<WitScript>
 	public override void WriteJson(JsonWriter writer, WitScript? value, JsonSerializer serializer)
 	{
 		var bytes = value?.ToBytes() ?? throw new ArgumentNullException(nameof(value));
-		writer.WriteValue(ByteHelpers.ToHex(bytes));
+		writer.WriteValue(Convert.ToHexString(bytes));
 	}
 }

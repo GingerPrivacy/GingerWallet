@@ -62,7 +62,7 @@ public class MempoolSpaceFeeRateProvider : IFeeRateProvider
 	{
 		using var document = JsonDocument.Parse(json);
 		var root = document.RootElement;
-		var feeEstimates = new Dictionary<int, int>();
+		var feeEstimates = new Dictionary<int, FeeRate>();
 
 		// According to mempool.space docs, the JSON response is similar to:
 		// {
@@ -80,11 +80,11 @@ public class MempoolSpaceFeeRateProvider : IFeeRateProvider
 			// Check if the property exists and is a number
 			if (root.TryGetProperty(mapping.JsonKey, out var jsonElement) &&
 				jsonElement.ValueKind == JsonValueKind.Number && // Ensure it's a number type
-				jsonElement.TryGetDouble(out double feeValue))   // Try to parse it as double
+				jsonElement.TryGetDecimal(out decimal feeValue))   // Try to parse it as decimal
 			{
 				// Calculate fee rate in sat/vB (rounding up) and add to the dictionary
 				// using the target block confirmation time as the key.
-				feeEstimates[mapping.TargetBlocks] = (int)Math.Ceiling(feeValue);
+				feeEstimates[mapping.TargetBlocks] = new FeeRate(feeValue);
 			}
 			// If the property doesn't exist or isn't a valid number, it's skipped.
 		}

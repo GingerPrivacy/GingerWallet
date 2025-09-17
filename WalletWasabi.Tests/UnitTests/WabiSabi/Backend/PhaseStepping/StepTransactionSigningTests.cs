@@ -80,7 +80,7 @@ public class StepTransactionSigningTests
 		await aliceClient1.SignTransactionAsync(signedCoinJoin, keyChain, token);
 		await aliceClient2.SignTransactionAsync(signedCoinJoin, keyChain, token);
 		await arena.TriggerAndWaitRoundAsync(token);
-		Assert.DoesNotContain(round, arena.Rounds.Where(x => x.Phase != Phase.Ended));
+		Assert.DoesNotContain(round, arena.Rounds.Where(x => x.Phase < Phase.Ended));
 		Assert.Equal(Phase.Ended, round.Phase);
 		Assert.Equal(EndRoundState.TransactionBroadcastFailed, round.EndRoundState);
 
@@ -118,7 +118,7 @@ public class StepTransactionSigningTests
 		await aliceClient1.SignTransactionAsync(signedCoinJoin, keyChain, token);
 		await aliceClient2.SignTransactionAsync(signedCoinJoin, keyChain, token);
 		await arena.TriggerAndWaitRoundAsync(token);
-		Assert.DoesNotContain(round, arena.Rounds.Where(x => x.Phase != Phase.Ended));
+		Assert.DoesNotContain(round, arena.Rounds.Where(x => x.Phase < Phase.Ended));
 		Assert.Equal(Phase.Ended, round.Phase);
 		Assert.Equal(EndRoundState.TransactionBroadcastFailed, round.EndRoundState);
 
@@ -159,7 +159,7 @@ public class StepTransactionSigningTests
 		var signedCoinJoin = round.Assert<SigningState>().CreateUnsignedTransactionWithPrecomputedData();
 		await aliceClient2.SignTransactionAsync(signedCoinJoin, keyChain, token);
 		await arena.TriggerAndWaitRoundAsync(token);
-		Assert.DoesNotContain(round, arena.Rounds.Where(x => x.Phase != Phase.Ended));
+		Assert.DoesNotContain(round, arena.Rounds.Where(x => x.Phase < Phase.Ended));
 		Assert.Equal(Phase.Ended, round.Phase);
 		Assert.Equal(EndRoundState.AbortedNotEnoughAlicesSigned, round.EndRoundState);
 		Assert.Empty(arena.Rounds.Where(x => x is BlameRound));
@@ -203,7 +203,7 @@ public class StepTransactionSigningTests
 		await aliceClient1.SignTransactionAsync(signedCoinJoin, keyChain, token);
 		await aliceClient2.SignTransactionAsync(signedCoinJoin, keyChain, token);
 		await arena.TriggerAndWaitRoundAsync(token);
-		Assert.DoesNotContain(round, arena.Rounds.Where(x => x.Phase != Phase.Ended));
+		Assert.DoesNotContain(round, arena.Rounds.Where(x => x.Phase < Phase.Ended));
 		Assert.Single(arena.Rounds.Where(x => x is BlameRound));
 		var badOutpoint = alice3.Coin.Outpoint;
 		Assert.True(prison.IsBanned(badOutpoint, cfg.GetDoSConfiguration(), DateTimeOffset.UtcNow));
@@ -289,7 +289,7 @@ public class StepTransactionSigningTests
 		var task1 = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round), arenaClient, coin1, keyChain, roundStateUpdater, token, token, token, silentLeaveToken);
 		var task2 = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round), arenaClient, coin2, keyChain, roundStateUpdater, token, token, token, silentLeaveToken);
 
-		while (Phase.OutputRegistration != round.Phase)
+		while (round.Phase < Phase.OutputRegistration)
 		{
 			await arena.TriggerAndWaitRoundAsync(token);
 		}

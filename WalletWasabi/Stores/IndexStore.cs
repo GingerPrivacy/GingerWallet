@@ -2,7 +2,6 @@ using Microsoft.Data.Sqlite;
 using NBitcoin;
 using Nito.AsyncEx;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -28,15 +27,11 @@ public class IndexStore : IIndexStore, IAsyncDisposable
 		workFolderPath = Guard.NotNullOrEmptyOrWhitespace(nameof(workFolderPath), workFolderPath, trim: true);
 		IoHelpers.EnsureDirectoryExists(workFolderPath);
 
-		// Migration data.
-		OldIndexFilePath = Path.Combine(workFolderPath, "MatureIndex.dat");
-		OldImmatureIndexFilePath = Path.Combine(workFolderPath, "ImmatureIndex.dat");
-		NewIndexFilePath = Path.Combine(workFolderPath, "IndexStore.sqlite");
-		RunMigration = File.Exists(OldIndexFilePath);
+		IndexFilePath = Path.Combine(workFolderPath, "IndexStore.sqlite");
 
 		if (network == Network.RegTest)
 		{
-			File.Delete(NewIndexFilePath);
+			File.Delete(IndexFilePath);
 		}
 
 		IndexStorage = CreateBlockFilterSqliteStorage();
@@ -46,13 +41,13 @@ public class IndexStore : IIndexStore, IAsyncDisposable
 	{
 		try
 		{
-			return BlockFilterSqliteStorage.FromFile(dataSource: NewIndexFilePath, startingFilter: StartingFilters.GetStartingFilter(Network));
+			return BlockFilterSqliteStorage.FromFile(dataSource: IndexFilePath, startingFilter: StartingFilters.GetStartingFilter(Network));
 		}
 		catch (SqliteException ex) when (ex.SqliteExtendedErrorCode == 11) // 11 ~ SQLITE_CORRUPT error code
 		{
-			Logger.LogError($"Failed to open SQLite storage file because it's corrupted. Deleting the storage file '{NewIndexFilePath}'.");
+			Logger.LogError($"Failed to open SQLite storage file because it's corrupted. Deleting the storage file '{IndexFilePath}'.");
 
-			File.Delete(NewIndexFilePath);
+			File.Delete(IndexFilePath);
 			throw;
 		}
 	}
@@ -61,17 +56,7 @@ public class IndexStore : IIndexStore, IAsyncDisposable
 
 	public event EventHandler<IEnumerable<FilterModel>>? NewFilters;
 
-	/// <summary>Mature index path for migration purposes.</summary>
-	private string OldIndexFilePath { get; }
-
-	/// <summary>Immature index path for migration purposes.</summary>
-	private string OldImmatureIndexFilePath { get; }
-
-	/// <summary>SQLite file path for migration purposes.</summary>
-	private string NewIndexFilePath { get; }
-
-	/// <summary>Run migration if SQLite file does not exist.</summary>
-	private bool RunMigration { get; }
+	private string IndexFilePath { get; }
 
 	/// <summary>NBitcoin network.</summary>
 	private Network Network { get; }
@@ -97,16 +82,6 @@ public class IndexStore : IIndexStore, IAsyncDisposable
 			{
 				cancellationToken.ThrowIfCancellationRequested();
 
-				// Migration code.
-				if (RunMigration)
-				{
-					MigrateToSqliteNoLock(cancellationToken);
-				}
-
-				// If the automatic migration to SQLite is stopped, we would not delete the old index data.
-				// So check it every time.
-				RemoveOldIndexFilesIfExist();
-
 				await InitializeFiltersNoLockAsync(cancellationToken).ConfigureAwait(false);
 
 				// Initialization succeeded.
@@ -117,93 +92,6 @@ public class IndexStore : IIndexStore, IAsyncDisposable
 		{
 			InitializedTcs.SetResult(false);
 			throw;
-		}
-	}
-
-	private void RemoveOldIndexFilesIfExist()
-	{
-		if (File.Exists(OldIndexFilePath))
-		{
-			try
-			{
-				File.Delete($"{OldImmatureIndexFilePath}.dig"); // No exception is thrown if file does not exist.
-				File.Delete(OldImmatureIndexFilePath);
-				File.Delete($"{OldIndexFilePath}.dig");
-				File.Delete(OldIndexFilePath);
-
-				Logger.LogInfo("Removed old index file data.");
-			}
-			catch (Exception ex)
-			{
-				Logger.LogDebug(ex);
-			}
-		}
-	}
-
-	private void MigrateToSqliteNoLock(CancellationToken cancel)
-	{
-		int i = 0;
-
-		try
-		{
-			Logger.LogWarning("Migration of block filters to SQLite format is about to begin. Please wait a moment.");
-
-			Stopwatch stopwatch = Stopwatch.StartNew();
-
-			IndexStorage.Clear();
-
-			List<string> filters = new(capacity: 10_000);
-			using (FileStream fs = File.Open(OldIndexFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
-			using (BufferedStream bs = new(fs))
-			using (StreamReader sr = new(bs))
-			{
-				while (true)
-				{
-					cancel.ThrowIfCancellationRequested();
-
-					i++;
-					string? line = sr.ReadLine();
-
-					if (line is null)
-					{
-						break;
-					}
-
-					// Starting filter is already added at this point.
-					if (i == 1)
-					{
-						continue;
-					}
-
-					filters.Add(line);
-
-					if (i % 10_000 == 0)
-					{
-						IndexStorage.BulkAppend(filters);
-						filters.Clear();
-					}
-				}
-			}
-
-			IndexStorage.BulkAppend(filters);
-
-			Logger.LogInfo($"Migration of {i} filters to SQLite was finished in {stopwatch.Elapsed} seconds.");
-		}
-		catch (OperationCanceledException)
-		{
-			throw;
-		}
-		catch (Exception ex)
-		{
-			Logger.LogError(ex);
-
-			IndexStorage.Dispose();
-
-			// Do not run migration code again if it fails.
-			File.Delete(NewIndexFilePath);
-			File.Delete(OldIndexFilePath);
-
-			IndexStorage = CreateBlockFilterSqliteStorage();
 		}
 	}
 

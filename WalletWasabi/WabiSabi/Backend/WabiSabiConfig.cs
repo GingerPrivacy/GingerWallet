@@ -184,14 +184,6 @@ public class WabiSabiConfig : ConfigBase
 	[JsonProperty(PropertyName = "RoundParallelization", DefaultValueHandling = DefaultValueHandling.Populate)]
 	public int RoundParallelization { get; set; } = 1;
 
-	[DefaultValue(false)]
-	[JsonProperty(PropertyName = "WW200CompatibleLoadBalancing", DefaultValueHandling = DefaultValueHandling.Populate)]
-	public bool WW200CompatibleLoadBalancing { get; set; } = false;
-
-	[DefaultValue(0.75)]
-	[JsonProperty(PropertyName = "WW200CompatibleLoadBalancingInputSplit", DefaultValueHandling = DefaultValueHandling.Populate)]
-	public double WW200CompatibleLoadBalancingInputSplit { get; set; } = 0.75;
-
 	[DefaultValue("CoinJoinCoordinatorIdentifier")]
 	[JsonProperty(PropertyName = "CoordinatorIdentifier", DefaultValueHandling = DefaultValueHandling.Populate)]
 	public string CoordinatorIdentifier { get; set; } = "CoinJoinCoordinatorIdentifier";

@@ -72,7 +72,7 @@ public class IndexBuilderService
 		BlockNotifier.OnBlock += BlockNotifier_OnBlock;
 	}
 
-	public static byte[][] DummyScript { get; } = new byte[][] { ByteHelpers.FromHex("0009BBE4C2D17185643765C265819BF5261755247D") };
+	public static byte[][] DummyScript { get; } = [Convert.FromHexString("0009BBE4C2D17185643765C265819BF5261755247D")];
 
 	private IRPCClient RpcClient { get; }
 	private BlockNotifier BlockNotifier { get; }
@@ -81,6 +81,7 @@ public class IndexBuilderService
 
 	/// <remarks>Guards <see cref="Index"/>.</remarks>
 	private object IndexLock { get; } = new();
+
 	private uint StartingHeight { get; }
 	public bool IsRunning => Interlocked.Read(ref _serviceStatus) == Running;
 	private bool IsStopping => Interlocked.Read(ref _serviceStatus) >= Stopping;

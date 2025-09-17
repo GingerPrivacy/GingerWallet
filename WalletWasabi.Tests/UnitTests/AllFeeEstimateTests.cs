@@ -20,11 +20,11 @@ public class AllFeeEstimateTests
 	[Fact]
 	public void Serialization()
 	{
-		var estimations = new Dictionary<int, int>
+		var estimations = new Dictionary<int, FeeRate>
 		{
-			{ 2, 102 },
-			{ 3, 20 },
-			{ 19, 1 }
+			{ 2, new FeeRate(102m) },
+			{ 3, new FeeRate(20m) },
+			{ 19, new FeeRate(1m) }
 		};
 		var allFee = new AllFeeEstimate(estimations);
 		var serialized = JsonConvert.SerializeObject(allFee);
@@ -39,12 +39,12 @@ public class AllFeeEstimateTests
 	[Fact]
 	public void OrdersByTarget()
 	{
-		var estimations = new Dictionary<int, int>
+		var estimations = new Dictionary<int, FeeRate>
 		{
-			{ 3, 20 },
-			{ 2, 102 },
-			{ 19, 1 },
-			{ 20, 1 }
+			{ 3, new FeeRate(20m) },
+			{ 2, new FeeRate(102m) },
+			{ 19, new FeeRate(1m) },
+			{ 20, new FeeRate(1m) }
 		};
 
 		var allFee = new AllFeeEstimate(estimations);
@@ -56,10 +56,10 @@ public class AllFeeEstimateTests
 	[Fact]
 	public void HandlesDuplicate()
 	{
-		var estimations = new Dictionary<int, int>
+		var estimations = new Dictionary<int, FeeRate>
 		{
-			{ 2, 20 },
-			{ 3, 20 }
+			{ 2, new FeeRate(20m) },
+			{ 3, new FeeRate(20m) }
 		};
 
 		var allFee = new AllFeeEstimate(estimations);
@@ -71,9 +71,9 @@ public class AllFeeEstimateTests
 	public void HandlesOne()
 	{
 		// If there's no 2, this'll be 2.
-		var estimations = new Dictionary<int, int>
+		var estimations = new Dictionary<int, FeeRate>
 		{
-			{ 1, 20 }
+			{ 1, new FeeRate(20m) }
 		};
 
 		var allFees = new AllFeeEstimate(estimations);
@@ -81,10 +81,10 @@ public class AllFeeEstimateTests
 		Assert.Equal(estimations[1], allFees.Estimations[2]);
 
 		// If there's 2, 1 is dismissed.
-		estimations = new Dictionary<int, int>
+		estimations = new Dictionary<int, FeeRate>
 		{
-			{ 1, 20 },
-			{ 2, 21 }
+			{ 1, new FeeRate(20m) },
+			{ 2, new FeeRate(21m) }
 		};
 
 		allFees = new AllFeeEstimate(estimations);
@@ -95,9 +95,9 @@ public class AllFeeEstimateTests
 	[Fact]
 	public void EndOfTheRange()
 	{
-		var estimations = new Dictionary<int, int>
+		var estimations = new Dictionary<int, FeeRate>
 		{
-			{ 1007, 20 }
+			{ 1007, new FeeRate(20m) }
 		};
 
 		var allFees = new AllFeeEstimate(estimations);
@@ -108,23 +108,23 @@ public class AllFeeEstimateTests
 	[Fact]
 	public void HandlesInconsistentData()
 	{
-		var estimations = new Dictionary<int, int>
+		var estimations = new Dictionary<int, FeeRate>
 		{
-			{ 2, 20 },
-			{ 3, 21 }
+			{ 2, new FeeRate(20m) },
+			{ 3, new FeeRate(21m) }
 		};
 
 		var allFee = new AllFeeEstimate(estimations);
 		Assert.Single(allFee.Estimations);
 		Assert.Equal(estimations[2], allFee.Estimations[2]);
 
-		estimations = new Dictionary<int, int>
+		estimations = new Dictionary<int, FeeRate>
 		{
-			{ 18, 1000 },
-			{ 3, 21 },
-			{ 2, 20 },
-			{ 100, 100 },
-			{ 6, 4 },
+			{ 18, new FeeRate(1000m) },
+			{ 3, new FeeRate(21m) },
+			{ 2, new FeeRate(20m) },
+			{ 100, new FeeRate(100m) },
+			{ 6, new FeeRate(4m) },
 		};
 
 		allFee = new AllFeeEstimate(estimations);
@@ -225,9 +225,9 @@ public class AllFeeEstimateTests
 
 		var allFee = await mockRpc.EstimateAllFeeAsync();
 		Assert.Equal(3, allFee.Estimations.Count);
-		Assert.Equal(99, allFee.Estimations[2]);
-		Assert.Equal(75, allFee.Estimations[6]);
-		Assert.Equal(31, allFee.Estimations[1008]);
+		Assert.Equal(99, allFee.Estimations[2].SatoshiPerByte);
+		Assert.Equal(75, allFee.Estimations[6].SatoshiPerByte);
+		Assert.Equal(31, allFee.Estimations[1008].SatoshiPerByte);
 	}
 
 	[Fact]
@@ -266,9 +266,9 @@ public class AllFeeEstimateTests
 			};
 
 		var allFee = await mockRpc.EstimateAllFeeAsync();
-		Assert.Equal(140, allFee.Estimations[2]);
-		Assert.Equal(124, allFee.Estimations[144]);
-		Assert.True(allFee.Estimations[1008] > 1);
+		Assert.Equal(140, allFee.Estimations[2].SatoshiPerByte);
+		Assert.Equal(124, allFee.Estimations[144].SatoshiPerByte);
+		Assert.True(allFee.Estimations[1008].SatoshiPerByte > 1);
 	}
 
 	[Fact]
@@ -302,7 +302,7 @@ public class AllFeeEstimateTests
 			Assert.Subset(Constants.ConfirmationTargets.ToHashSet(), estimations.Keys.ToHashSet());
 			Assert.Equal(estimations.Keys, estimations.Keys.OrderBy(x => x));
 			Assert.Equal(estimations.Values, estimations.Values.OrderByDescending(x => x));
-			Assert.All(estimations, (e) => Assert.True(e.Value >= mempoolInfo.MemPoolMinFee * 100_000));
+			Assert.All(estimations, (e) => Assert.True(e.Value.SatoshiPerByte >= (decimal)mempoolInfo.MemPoolMinFee * 100_000));
 		}
 	}
 
@@ -317,7 +317,7 @@ public class AllFeeEstimateTests
 		var estimations = feeRates.Estimations;
 		var minFee = estimations.Min(x => x.Value);
 
-		Assert.Equal(15, minFee); // this is the calculated MempoolMinFee needed to be in the top 200MB
+		Assert.Equal(15, minFee.SatoshiPerByte); // this is the calculated MempoolMinFee needed to be in the top 200MB
 	}
 
 	[Theory]
@@ -334,7 +334,7 @@ public class AllFeeEstimateTests
 		var estimations = feeRates.Estimations;
 		var minFee = estimations.Min(x => x.Value);
 
-		Assert.Equal(expectedMinFee, minFee);
+		Assert.Equal(expectedMinFee, minFee.SatoshiPerByte);
 	}
 
 	[Theory]
@@ -361,18 +361,18 @@ public class AllFeeEstimateTests
 		var estimations = feeRates.Estimations;
 		var maxFee = estimations.Max(x => x.Value);
 
-		Assert.Equal(expectedMaxFee, maxFee);
+		Assert.Equal(expectedMaxFee, maxFee.SatoshiPerByte);
 	}
 
 	[Fact]
 	public void WildEstimations()
 	{
-		var estimations = new Dictionary<int, int>
+		var estimations = new Dictionary<int, FeeRate>
 		{
-			{ 2, 102 }, // 20m
-			{ 3, 20 }, // 30m
-			{ 6, 10 }, // 1h
-			{ 18, 1 } // 3h
+			{ 2, new FeeRate(102m) }, // 20m
+			{ 3, new FeeRate(20m) }, // 30m
+			{ 6, new FeeRate(10m) }, // 1h
+			{ 18, new FeeRate(1m) } // 3h
 		};
 
 		var allFee = new AllFeeEstimate(estimations);

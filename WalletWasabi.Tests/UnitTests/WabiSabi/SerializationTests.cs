@@ -151,7 +151,7 @@ public class SerializationTests
 		Assert.Equal(Scalar.Zero, deserializedZero);
 
 		// Serialization round test.
-		var scalar = new Scalar(ByteHelpers.FromHex("D9C17A80D299A51E1ED9CF94FCE5FD883ADACE4ECC167E1D1FB8E5C4A0ADC4D2"));
+		var scalar = new Scalar(Convert.FromHexString("D9C17A80D299A51E1ED9CF94FCE5FD883ADACE4ECC167E1D1FB8E5C4A0ADC4D2"));
 
 		var serializedScalar = JsonConvert.SerializeObject(scalar, converters);
 		Assert.Equal("\"D9C17A80D299A51E1ED9CF94FCE5FD883ADACE4ECC167E1D1FB8E5C4A0ADC4D2\"", serializedScalar);

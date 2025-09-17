@@ -52,6 +52,7 @@ public class CoinJoinTrackerFactory
 			CoinJoinConfiguration,
 			LiquidityClueProvider,
 			feeRateMedianTimeFrame: wallet.FeeRateMedianTimeFrame,
+			safeMiningFeeRate: wallet.SafeMiningFeeRate,
 			skipFactors: wallet.CoinjoinSkipFactors,
 			doNotRegisterInLastMinuteTimeLimit: TimeSpan.FromMinutes(1));
 
