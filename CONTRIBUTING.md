@@ -14,16 +14,6 @@ We encourage you to report any bugs, issues, or inconsistencies you encounter wh
 2. **Open a New Issue**: If your issue is not listed, feel free to open a new one. Provide as much detail as possible, including steps to reproduce the issue, your environment, and any relevant logs or screenshots.
 
 ### Feature Requests
-
-We welcome suggestions for new features or improvements to GingerWallet. To request a feature:
-
-1. **Search Existing Requests**: Before making a new request, please check if someone else has already suggested it.
-2. **Open a New Request**: If your feature is not listed, open a new request. Clearly describe the feature, its benefits, and any additional context that might help us understand its importance.
-
-### General Discussions
-
-We love hearing from our community! For general discussions, questions, or feedback that don’t fit into issues or feature requests:
-
 1. **Join the Conversation**: Use our discussion forums or community channels to share your thoughts and interact with other GingerWallet users and developers.
 2. **Stay Respectful and Constructive**: We aim to foster a friendly and constructive environment. Please be respectful and considerate in your communications.
 
