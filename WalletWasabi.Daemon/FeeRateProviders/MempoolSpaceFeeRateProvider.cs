@@ -17,6 +17,7 @@ namespace WalletWasabi.Daemon.FeeRateProviders;
 public class MempoolSpaceFeeRateProvider : IFeeRateProvider
 {
 	private const string ApiUrl = "https://mempool.space/api/v1/";
+	private const string OnionApiUrl = "http://mempoolhqx4isw62xs7abwphsq7ldayuidyx2v2oethdhhj6mlo2r6ad.onion/api/v1/";
 	private const string TestNetApiUrl = "https://mempool.space/testnet/api/v1/";
 
 	// Define the mappings between JSON property names and target blocks
@@ -32,17 +33,22 @@ public class MempoolSpaceFeeRateProvider : IFeeRateProvider
 
 	public MempoolSpaceFeeRateProvider(WasabiHttpClientFactory httpClientFactory, Network network)
 	{
-		string apiUrl = network switch
+		if (network == Network.Main)
 		{
-			_ when network == Network.Main => ApiUrl,
-			_ when network == Network.TestNet => TestNetApiUrl,
-			_ => throw new NotSupportedException($"Unsupported network: {network}")
-		};
-
-		// Mempool testnet from Tor works unreliable - 503 (Service Unavailable).
-		HttpClient = httpClientFactory.NewHttpClient(
-			() => new Uri(apiUrl),
-			Tor.Socks5.Pool.Circuits.Mode.NewCircuitPerRequest);
+			// Mempool works only from onion if you use Tor, exit nodes are timed out.
+			HttpClient = httpClientFactory.IsTorEnabled
+				? httpClientFactory.NewHttpClient(() => new Uri(OnionApiUrl), Tor.Socks5.Pool.Circuits.Mode.NewCircuitPerRequest)
+				: httpClientFactory.NewClearnetHttpClient(() => new Uri(ApiUrl));
+		}
+		else if (network == Network.TestNet)
+		{
+			// Mempool testnet from Tor works unreliable - 503 (Service Unavailable).
+			HttpClient = httpClientFactory.NewClearnetHttpClient(() => new Uri(TestNetApiUrl));
+		}
+		else
+		{
+			throw new NotSupportedException($"Unsupported network: {network}");
+		}
 	}
 
 	public async Task<AllFeeEstimate> GetFeeRatesAsync(CancellationToken cancellationToken)

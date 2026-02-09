@@ -94,8 +94,13 @@ public class WasabiHttpClientFactory : IWasabiHttpClientFactory, IAsyncDisposabl
 		}
 		else
 		{
-			return new ClearnetHttpClient(HttpClient, baseUriFn);
+			return NewClearnetHttpClient(baseUriFn);
 		}
+	}
+
+	public IHttpClient NewClearnetHttpClient(Func<Uri>? baseUriFn)
+	{
+		return new ClearnetHttpClient(HttpClient, baseUriFn);
 	}
 
 	/// <summary>Creates new <see cref="TorHttpClient"/>.</summary>

@@ -136,7 +136,7 @@ public class TorTests : IAsyncLifetime
 			Assert.NotNull(headersNode);
 
 			Assert.Equal("58", GetJsonNode(headersNode, "content-length").GetValue<string>());
-			Assert.Equal("gzip, br", GetJsonNode(headersNode, "accept-encoding").GetValue<string>());
+			Assert.Equal("gzip", GetJsonNode(headersNode, "accept-encoding").GetValue<string>());
 			Assert.Equal("text/plain; charset=utf-8", GetJsonNode(headersNode, "content-type").GetValue<string>());
 		}
 
@@ -238,7 +238,7 @@ public class TorTests : IAsyncLifetime
 
 			Assert.Equal("https", GetJsonNode(headersNode, "x-forwarded-proto").GetValue<string>());
 			Assert.Equal("443", GetJsonNode(headersNode, "x-forwarded-port").GetValue<string>());
-			Assert.Equal("gzip, br", GetJsonNode(headersNode, "accept-encoding").GetValue<string>());
+			Assert.Equal("gzip", GetJsonNode(headersNode, "accept-encoding").GetValue<string>());
 		}
 
 		Assert.Equal("https://postman-echo.com/get?foo1=bar1&foo2=bar2", GetJsonNode(responseNode, "url").GetValue<string>());

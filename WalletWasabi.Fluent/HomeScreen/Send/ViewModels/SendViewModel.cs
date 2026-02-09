@@ -202,7 +202,7 @@ public partial class SendViewModel : RoutableViewModel
 	private IPayjoinClient? GetPayjoinClient(string? endPoint)
 	{
 		if (!string.IsNullOrWhiteSpace(endPoint) &&
-		    Uri.IsWellFormedUriString(endPoint, UriKind.Absolute))
+			Uri.IsWellFormedUriString(endPoint, UriKind.Absolute))
 		{
 			var payjoinEndPointUri = new Uri(endPoint);
 			if (Services.Config.UseTor != TorMode.Disabled)
@@ -361,10 +361,7 @@ public partial class SendViewModel : RoutableViewModel
 
 		RxApp.MainThreadScheduler.Schedule(async () => await OnAutoPasteAsync());
 
-		Observable
-			.Timer(TimeSpan.Zero, TimeSpan.FromSeconds(10), RxApp.TaskpoolScheduler)
-			.Subscribe(_ => _wallet.FeeProvider.TriggerRefresh())
-			.DisposeWith(disposables);
+		_wallet.FeeProvider.IsFastRefresh = true;
 
 		base.OnNavigatedTo(inHistory, disposables);
 	}
@@ -376,6 +373,7 @@ public partial class SendViewModel : RoutableViewModel
 		if (!isInHistory && _coinJoinManager is { } coinJoinManager)
 		{
 			coinJoinManager.WalletLeftSendWorkflow(_wallet);
+			_wallet.FeeProvider.IsFastRefresh = false;
 		}
 	}
 }

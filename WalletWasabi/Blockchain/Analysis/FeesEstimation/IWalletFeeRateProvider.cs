@@ -7,7 +7,5 @@ public interface IWalletFeeRateProvider
 {
 	public AllFeeEstimate GetAllFeeEstimate();
 
-	public Task<AllFeeEstimate> GetAllFeeEstimateAsync(CancellationToken cancellationToken);
-
-	public void TriggerRefresh();
+	public bool IsFastRefresh { get; set; }
 }

@@ -62,7 +62,7 @@ public class ReceiveSpeedupTests : IClassFixture<RegTestFixture>
 		// 3. Create wasabi synchronizer service.
 		await using WasabiHttpClientFactory httpClientFactory = new(torEndPoint: null, backendUriGetter: () => new Uri(RegTestFixture.BackendEndPoint));
 		using WasabiSynchronizer synchronizer = new(period: TimeSpan.FromSeconds(3), 10000, bitcoinStore, httpClientFactory);
-		FeeRateProvider feeProvider = new(httpClientFactory, network);
+		using FeeRateProvider feeProvider = new(httpClientFactory, network);
 		using UnconfirmedTransactionChainProvider unconfirmedChainProvider = new(httpClientFactory);
 
 		// 4. Create key manager service.
@@ -149,7 +149,7 @@ public class ReceiveSpeedupTests : IClassFixture<RegTestFixture>
 			Assert.Equal(outputToSpend, cpfpInput);
 
 			// CPFP fee rate should be higher than the best fee rate.
-			var feeRates = await wallet.FeeProvider.GetAllFeeEstimateAsync(CancellationToken.None);
+			var feeRates = wallet.FeeProvider.GetAllFeeEstimate();
 			var feeRate = feeRates.GetFeeRate(2);
 			Assert.NotNull(feeRate);
 			var cpfpFeeRate = cpfp.Transaction.Transaction.GetFeeRate(cpfp.Transaction.WalletInputs.Select(x => x.Coin).ToArray());

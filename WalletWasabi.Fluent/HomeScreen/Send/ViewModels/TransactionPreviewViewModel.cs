@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Concurrency;
@@ -33,9 +34,12 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 	private readonly Wallet _wallet;
 	private readonly WalletModel _walletModel;
 	private readonly SendFlowModel _sendFlow;
+	private readonly object _ctsLock = new();
+
 	private TransactionInfo _info;
 	private TransactionInfo _currentTransactionInfo;
-	private CancellationTokenSource _cancellationTokenSource;
+	private CancellationTokenSource? _cancellationTokenSource;
+
 	[AutoNotify] private BuildTransactionResult? _transaction;
 	[AutoNotify] private string _nextButtonText;
 	[AutoNotify] private TransactionSummaryViewModel? _displayedTransactionSummary;
@@ -52,7 +56,6 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 
 		_info = _sendFlow.TransactionInfo ?? throw new InvalidOperationException($"Missing required TransactionInfo.");
 		_currentTransactionInfo = _info.Clone();
-		_cancellationTokenSource = new CancellationTokenSource();
 
 		PrivacySuggestions = new PrivacySuggestionsFlyoutViewModel(walletModel, _sendFlow);
 		CurrentTransactionSummary = new TransactionSummaryViewModel(this, walletModel, _info);
@@ -73,13 +76,11 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 		{
 			SkipCommand = ReactiveCommand.CreateFromTask(OnConfirmAsync);
 			NextCommand = ReactiveCommand.CreateFromTask(OnExportPsbtAsync);
-
 			_nextButtonText = Resources.SavePSBTFile;
 		}
 		else
 		{
 			NextCommand = ReactiveCommand.CreateFromTask(OnConfirmAsync);
-
 			_nextButtonText = Resources.Confirm;
 		}
 
@@ -99,20 +100,71 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 	}
 
 	public TransactionSummaryViewModel CurrentTransactionSummary { get; }
-
 	public TransactionSummaryViewModel PreviewTransactionSummary { get; }
-
 	public List<TransactionSummaryViewModel> TransactionSummaries { get; }
-
 	public PrivacySuggestionsFlyoutViewModel PrivacySuggestions { get; }
-
 	public bool PreferPsbtWorkflow => _walletModel.Settings.PreferPsbtWorkflow;
-
 	public ICommand AdjustFeeCommand { get; }
-
 	public ICommand ChangeCoinsCommand { get; }
-
 	public ICommand UndoCommand { get; }
+
+	/// <summary>
+	/// Gets the current cancellation token in a thread-safe manner.
+	/// </summary>
+	private CancellationToken GetCancellationToken()
+	{
+		lock (_ctsLock)
+		{
+			return _cancellationTokenSource?.Token ?? CancellationToken.None;
+		}
+	}
+
+	/// <summary>
+	/// Cancels and recreates the CancellationTokenSource in a thread-safe manner.
+	/// Properly disposes the old CTS.
+	/// </summary>
+	private void ResetCancellationToken()
+	{
+		lock (_ctsLock)
+		{
+			try
+			{
+				_cancellationTokenSource?.Cancel();
+				_cancellationTokenSource?.Dispose();
+			}
+			catch (ObjectDisposedException)
+			{
+				// Already disposed, ignore
+			}
+			finally
+			{
+				_cancellationTokenSource = new CancellationTokenSource();
+			}
+		}
+	}
+
+	/// <summary>
+	/// Cancels and disposes the CancellationTokenSource.
+	/// </summary>
+	private void CancelAndDisposeCancellationToken()
+	{
+		lock (_ctsLock)
+		{
+			try
+			{
+				_cancellationTokenSource?.Cancel();
+				_cancellationTokenSource?.Dispose();
+			}
+			catch (ObjectDisposedException)
+			{
+				// Already disposed, ignore
+			}
+			finally
+			{
+				_cancellationTokenSource = null;
+			}
+		}
+	}
 
 	private async Task OnExportPsbtAsync()
 	{
@@ -150,7 +202,6 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 		}
 
 		summary.UpdateTransaction(transaction, _info);
-
 		DisplayedTransactionSummary = summary;
 	}
 
@@ -169,7 +220,7 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 
 	private async Task BuildAndUpdateAsync()
 	{
-		var newTransaction = await BuildTransactionAsync();
+		var newTransaction = await BuildTransactionAsync(GetCancellationToken());
 
 		if (newTransaction is { })
 		{
@@ -195,7 +246,7 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 		}
 	}
 
-	private async Task<bool> InitialiseTransactionAsync()
+	private async Task<bool> InitialiseTransactionAsync(CancellationToken cancellationToken)
 	{
 		if (_info.FeeRate == FeeRate.Zero)
 		{
@@ -218,9 +269,9 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 		return _info.FeeRate != FeeRate.Zero && _info.Coins.Any();
 	}
 
-	private async Task<BuildTransactionResult?> BuildTransactionAsync()
+	private async Task<BuildTransactionResult?> BuildTransactionAsync(CancellationToken cancellationToken)
 	{
-		if (!await InitialiseTransactionAsync())
+		if (!await InitialiseTransactionAsync(cancellationToken))
 		{
 			return null;
 		}
@@ -229,13 +280,17 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 		{
 			IsBusy = true;
 
-			return await Task.Run(() => TransactionHelpers.BuildTransaction(_wallet, _info, tryToSign: false));
+			return await Task.Run(() => TransactionHelpers.BuildTransaction(_wallet, _info, tryToSign: false), cancellationToken);
+		}
+		catch (OperationCanceledException)
+		{
+			return null;
 		}
 		catch (Exception ex) when (ex is NotEnoughFundsException or TransactionFeeOverpaymentException || (ex is InvalidTxException itx && itx.Errors.OfType<FeeTooHighPolicyError>().Any()))
 		{
 			if (await TransactionFeeHelper.TrySetMaxFeeRateAsync(_wallet, _info))
 			{
-				return await BuildTransactionAsync();
+				return await BuildTransactionAsync(cancellationToken);
 			}
 
 			await ShowErrorAsync(
@@ -255,12 +310,12 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 				if (newCoins is not null)
 				{
 					_info.Coins = newCoins;
-					return await BuildTransactionAsync();
+					return await BuildTransactionAsync(cancellationToken);
 				}
 			}
 			else if (await TransactionFeeHelper.TrySetMaxFeeRateAsync(_wallet, _info))
 			{
-				return await BuildTransactionAsync();
+				return await BuildTransactionAsync(cancellationToken);
 			}
 
 			await ShowErrorAsync(
@@ -289,7 +344,7 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 
 	private async Task InitialiseViewModelAsync()
 	{
-		if (await BuildTransactionAsync() is { } initialTransaction)
+		if (await BuildTransactionAsync(GetCancellationToken()) is { } initialTransaction)
 		{
 			UpdateTransaction(CurrentTransactionSummary, initialTransaction);
 		}
@@ -306,15 +361,28 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 		PrivacySuggestions.WhenAnyValue(x => x.PreviewSuggestion)
 			.DoAsync(async x =>
 			{
-				if (x?.Transaction is { } transaction)
+				try
 				{
-					UpdateTransaction(PreviewTransactionSummary, transaction);
-					await PrivacySuggestions.UpdatePreviewWarningsAsync(_info, transaction, _cancellationTokenSource.Token);
+					var ct = GetCancellationToken();
+
+					if (x?.Transaction is { } transaction)
+					{
+						UpdateTransaction(PreviewTransactionSummary, transaction);
+						await PrivacySuggestions.UpdatePreviewWarningsAsync(_info, transaction, ct);
+					}
+					else
+					{
+						DisplayedTransactionSummary = CurrentTransactionSummary;
+						PrivacySuggestions.ClearPreviewWarnings();
+					}
 				}
-				else
+				catch (OperationCanceledException)
 				{
-					DisplayedTransactionSummary = CurrentTransactionSummary;
-					PrivacySuggestions.ClearPreviewWarnings();
+					// Cancelled, ignore
+				}
+				catch (Exception ex)
+				{
+					Logger.LogError($"Error in PreviewSuggestion handler: {ex}");
 				}
 			})
 			.Subscribe()
@@ -323,11 +391,18 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 		PrivacySuggestions.WhenAnyValue(x => x.SelectedSuggestion)
 			.SubscribeAsync(async suggestion =>
 			{
-				PrivacySuggestions.SelectedSuggestion = null;
-
-				if (suggestion is { })
+				try
 				{
-					await ApplyPrivacySuggestionAsync(suggestion);
+					PrivacySuggestions.SelectedSuggestion = null;
+
+					if (suggestion is { })
+					{
+						await ApplyPrivacySuggestionAsync(suggestion);
+					}
+				}
+				catch (Exception ex)
+				{
+					Logger.LogError($"Error applying privacy suggestion: {ex}");
 				}
 			})
 			.DisposeWith(disposables);
@@ -336,21 +411,37 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 			.WhereNotNull()
 			.Throttle(TimeSpan.FromMilliseconds(100))
 			.ObserveOn(RxApp.MainThreadScheduler)
-			.Do(_ =>
+			.Do(transaction =>
 			{
-				_cancellationTokenSource.Cancel();
-				_cancellationTokenSource = new();
+				// Reset cancellation token for new transaction processing
+				ResetCancellationToken();
 			})
 			.DoAsync(async transaction =>
 			{
-				await CheckChangePocketAvailableAsync(transaction);
-				await PrivacySuggestions.BuildPrivacySuggestionsAsync(_info, transaction, _cancellationTokenSource.Token);
+				try
+				{
+					var ct = GetCancellationToken();
+
+					await CheckChangePocketAvailableAsync(transaction);
+					await PrivacySuggestions.BuildPrivacySuggestionsAsync(_info, transaction, ct);
+				}
+				catch (OperationCanceledException)
+				{
+					// Cancelled, ignore
+				}
+				catch (Exception ex)
+				{
+					Logger.LogError($"Error processing transaction: {ex}");
+				}
 			})
 			.Subscribe()
 			.DisposeWith(disposables);
 
 		if (!isInHistory)
 		{
+			// Initialize CancellationTokenSource
+			ResetCancellationToken();
+
 			RxApp.MainThreadScheduler.Schedule(async () => await InitialiseViewModelAsync());
 		}
 	}
@@ -359,8 +450,7 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 	{
 		if (!isInHistory)
 		{
-			_cancellationTokenSource.Cancel();
-			_cancellationTokenSource.Dispose();
+			CancelAndDisposeCancellationToken();
 		}
 
 		base.OnNavigatedFrom(isInHistory);
@@ -370,22 +460,29 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 
 	private async Task OnConfirmAsync()
 	{
+		var ct = GetCancellationToken();
+
 		try
 		{
-			var transaction = await Task.Run(() => TransactionHelpers.BuildTransaction(_wallet, _info));
+			var transaction = await Task.Run(() => TransactionHelpers.BuildTransaction(_wallet, _info), ct);
 			var transactionAuthorizationInfo = new TransactionAuthorizationInfo(transaction);
 			var authResult = await AuthorizeAsync(transactionAuthorizationInfo);
+
 			if (authResult)
 			{
 				IsBusy = true;
 
-				var finalTransaction =
-					await GetFinalTransactionAsync(transactionAuthorizationInfo.Transaction, _info);
+				var finalTransaction = await GetFinalTransactionAsync(transactionAuthorizationInfo.Transaction, _info, ct);
 				await SendTransactionAsync(finalTransaction);
 				_wallet.UpdateUsedHdPubKeysLabels(transaction.HdPubKeysWithNewLabels);
-				_cancellationTokenSource.Cancel();
+
+				CancelAndDisposeCancellationToken();
 				UiContext.Navigate(CurrentTarget).To().SendSuccess(finalTransaction);
 			}
+		}
+		catch (OperationCanceledException)
+		{
+			Logger.LogInfo("Transaction confirmation was cancelled.");
 		}
 		catch (Exception ex)
 		{
@@ -403,7 +500,7 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 
 	private async Task<bool> AuthorizeAsync(TransactionAuthorizationInfo transactionAuthorizationInfo)
 	{
-		if (!_walletModel.IsHardwareWallet && !_walletModel.Auth.HasPassword) // Do not show authentication dialog when password is empty
+		if (!_walletModel.IsHardwareWallet && !_walletModel.Auth.HasPassword)
 		{
 			return true;
 		}
@@ -420,15 +517,19 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 		await Services.TransactionBroadcaster.SendTransactionAsync(transaction);
 	}
 
-	private async Task<SmartTransaction> GetFinalTransactionAsync(SmartTransaction transaction, TransactionInfo transactionInfo)
+	private async Task<SmartTransaction> GetFinalTransactionAsync(SmartTransaction transaction, TransactionInfo transactionInfo, CancellationToken cancellationToken)
 	{
 		if (transactionInfo.PayJoinClient is { })
 		{
 			try
 			{
 				var payJoinTransaction = await Task.Run(() =>
-					TransactionHelpers.BuildTransaction(_wallet, transactionInfo, isPayJoin: true));
+					TransactionHelpers.BuildTransaction(_wallet, transactionInfo, isPayJoin: true), cancellationToken);
 				return payJoinTransaction.Transaction;
+			}
+			catch (OperationCanceledException)
+			{
+				throw;
 			}
 			catch (Exception ex)
 			{
@@ -471,48 +572,45 @@ public partial class TransactionPreviewViewModel : RoutableViewModel
 		switch (suggestion)
 		{
 			case LabelManagementSuggestion:
-			{
-				var newCoins = await UiContext.Navigate().To().PrivacyControl(_wallet, _sendFlow, _info, Transaction?.SpentCoins, false).GetResultAsync();
-				if (newCoins is not null)
 				{
-					_info.Coins = newCoins;
-					await BuildAndUpdateAsync();
+					var newCoins = await UiContext.Navigate().To().PrivacyControl(_wallet, _sendFlow, _info, Transaction?.SpentCoins, false).GetResultAsync();
+					if (newCoins is not null)
+					{
+						_info.Coins = newCoins;
+						await BuildAndUpdateAsync();
+					}
+					break;
 				}
-
-				break;
-			}
 
 			case ChangeAvoidanceSuggestion { Transaction: { } txn }:
 				_info.ChangelessCoins = txn.SpentCoins;
 				break;
 
 			case FullPrivacySuggestion fullPrivacySuggestion:
-			{
-				if (fullPrivacySuggestion.IsChangeless)
 				{
-					_info.ChangelessCoins = fullPrivacySuggestion.Coins;
+					if (fullPrivacySuggestion.IsChangeless)
+					{
+						_info.ChangelessCoins = fullPrivacySuggestion.Coins;
+					}
+					else
+					{
+						_info.Coins = fullPrivacySuggestion.Coins;
+					}
+					break;
 				}
-				else
-				{
-					_info.Coins = fullPrivacySuggestion.Coins;
-				}
-
-				break;
-			}
 
 			case BetterPrivacySuggestion betterPrivacySuggestion:
-			{
-				if (betterPrivacySuggestion.IsChangeless)
 				{
-					_info.ChangelessCoins = betterPrivacySuggestion.Coins;
+					if (betterPrivacySuggestion.IsChangeless)
+					{
+						_info.ChangelessCoins = betterPrivacySuggestion.Coins;
+					}
+					else
+					{
+						_info.Coins = betterPrivacySuggestion.Coins;
+					}
+					break;
 				}
-				else
-				{
-					_info.Coins = betterPrivacySuggestion.Coins;
-				}
-
-				break;
-			}
 		}
 
 		if (suggestion.Transaction is { } transaction)

@@ -97,6 +97,11 @@ public partial class SendFeeViewModel : DialogViewModelBase<FeeRate?>
 
 		base.OnNavigatedTo(isInHistory, disposables);
 
+		if (isInHistory)
+		{
+			return;
+		}
+
 		RxApp.MainThreadScheduler.Schedule(async () =>
 		{
 			try
@@ -126,12 +131,13 @@ public partial class SendFeeViewModel : DialogViewModelBase<FeeRate?>
 
 		try
 		{
-			feeEstimates = await TransactionFeeHelper.GetFeeEstimatesAsync(_wallet.FeeProvider, _wallet.Network, cancelTokenSource.Token);
+			feeEstimates = TransactionFeeHelper.GetFeeEstimates(_wallet.FeeProvider, _wallet.Network);
 		}
 		catch (Exception ex)
 		{
 			Logger.LogInfo(ex);
 			await FeeEstimationsAreNotAvailableAsync();
+			OnNext();
 			return;
 		}
 

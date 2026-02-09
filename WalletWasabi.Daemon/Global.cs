@@ -119,7 +119,8 @@ public class Global
 			},
 			friendlyName: "Bitcoin P2P Network");
 
-		FeeRateProvider = new FeeRateProvider(HttpClientFactory, Config.FeeRateEstimationProvider, Network);
+		HostedServices.Register<FeeRateProvider>(() => new FeeRateProvider(HttpClientFactory, Config.FeeRateEstimationProvider, Network), friendlyName: "FeeRateProvider");
+		var feeRateProvider = HostedServices.Get<FeeRateProvider>();
 
 		// Block providers.
 		SpecificNodeBlockProvider = new SpecificNodeBlockProvider(Network, Config.ServiceConfiguration, HttpClientFactory.TorEndpoint);
@@ -135,7 +136,7 @@ public class Global
 			new P2PBlockProvider(P2PNodesManager));
 
 		HostedServices.Register<UnconfirmedTransactionChainProvider>(() => new UnconfirmedTransactionChainProvider(HttpClientFactory), friendlyName: "Unconfirmed Transaction Chain Provider");
-		WalletFactory walletFactory = new(DataDir, config.Network, BitcoinStore, wasabiSynchronizer, config.ServiceConfiguration, FeeRateProvider, BlockDownloadService, HostedServices.Get<UnconfirmedTransactionChainProvider>());
+		WalletFactory walletFactory = new(DataDir, config.Network, BitcoinStore, wasabiSynchronizer, config.ServiceConfiguration, feeRateProvider, BlockDownloadService, HostedServices.Get<UnconfirmedTransactionChainProvider>());
 
 		WalletDirectories walletDirectories = new(Config.Network, DataDir);
 		TwoFactorAuthenticationService = new TwoFactorAuthenticationService(walletDirectories, HttpClientFactory.SharedWasabiClient);
@@ -197,7 +198,6 @@ public class Global
 	public TwoFactorAuthenticationService TwoFactorAuthenticationService { get; }
 
 	private BuySellClient BuysellClient { get; }
-	public FeeRateProvider FeeRateProvider { get; }
 
 	private WasabiHttpClientFactory BuildHttpClientFactory(Func<Uri> backendUriGetter) =>
 		new(
@@ -249,7 +249,7 @@ public class Global
 				await StartLocalBitcoinNodeAsync(cancel).ConfigureAwait(false);
 
 				var rpcFeeProvider = BitcoinCoreNode is null ? null : new RpcFeeRateProvider(BitcoinCoreNode.RpcClient);
-				FeeRateProvider.Initialize(rpcFeeProvider);
+				HostedServices.Get<FeeRateProvider>().Initialize(rpcFeeProvider);
 
 				await BlockDownloadService.StartAsync(cancel).ConfigureAwait(false);
 

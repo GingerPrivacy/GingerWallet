@@ -92,14 +92,14 @@ public static class TransactionFeeHelper
 		return false;
 	}
 
-	public static async Task<AllFeeEstimate> GetFeeEstimatesAsync(IWalletFeeRateProvider feeProvider, Network network, CancellationToken token)
+	public static AllFeeEstimate GetFeeEstimates(IWalletFeeRateProvider feeProvider, Network network)
 	{
 		if (network == Network.TestNet || network == Network.RegTest)
 		{
 			return TestNetFeeEstimates;
 		}
 
-		return await feeProvider.GetAllFeeEstimateAsync(token);
+		return feeProvider.GetAllFeeEstimate();
 	}
 
 	public static TimeSpan CalculateConfirmationTime(double targetBlock)
