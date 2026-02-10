@@ -16,10 +16,10 @@ public class MempoolSpaceExchangeRateProvider : ExchangeRateProvider
 
 	public override async Task<Dictionary<string, decimal>> QueryRateAsync(string currency, EndPoint? torEndpoint, CancellationToken cancellationToken)
 	{
-		var contentString = await HttpUtils.HttpGetAsync(ApiUrl, $"api/v1/prices", torEndpoint, null, cancellationToken);
 		var apiUrl = torEndpoint is null
 			? ApiUrl
 			: OnionApiUrl;
+		var contentString = await HttpUtils.HttpGetAsync(apiUrl, $"api/v1/prices", torEndpoint, null, cancellationToken);
 
 		var rates = JsonSerializer.Deserialize<Dictionary<string, decimal>>(contentString, JsonUtils.OptionCaseInsensitive);
 		return rates ?? new();
