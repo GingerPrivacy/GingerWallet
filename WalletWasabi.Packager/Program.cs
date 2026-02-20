@@ -321,6 +321,8 @@ public static class Program
 				}
 			}
 
+			DeleteGitMetadataFiles(currentBinDistDirectory);
+
 			// Rename WalletWasabi.Fluent.Desktop(.exe) -> wassabee(.exe).
 			string executableExtension = target.StartsWith("win") ? ".exe" : "";
 			string oldExecutablePath = Path.Combine(currentBinDistDirectory, $"WalletWasabi.Fluent.Desktop{executableExtension}");
@@ -669,5 +671,33 @@ public static class Program
 		}
 
 		return target;
+	}
+
+	private static void DeleteGitMetadataFiles(string rootDir)
+	{
+		static void TryDelete(string path)
+		{
+			try
+			{
+				// Ensure writeable (defensive for Windows attributes).
+				File.SetAttributes(path, FileAttributes.Normal);
+				File.Delete(path);
+			}
+			catch
+			{
+				// Intentionally ignore: best-effort cleanup.
+			}
+		}
+
+		foreach (var file in Directory.EnumerateFiles(rootDir, ".gitattributes", SearchOption.AllDirectories))
+		{
+			TryDelete(file);
+		}
+
+		// Optional: also remove .gitignore (same class of non-functional metadata)
+		foreach (var file in Directory.EnumerateFiles(rootDir, ".gitignore", SearchOption.AllDirectories))
+		{
+			TryDelete(file);
+		}
 	}
 }
