@@ -1,10 +1,11 @@
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using NBitcoin;
 using NBitcoin.RPC;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 
 namespace WalletWasabi.Tests.Helpers;
 
@@ -89,7 +90,7 @@ public class MempoolInfoGenerator
 
 							return new FeeRateGroup
 							{
-								Group = int.Parse(p.Name),
+								Group = int.Parse(p.Name, CultureInfo.InvariantCulture),
 								Sizes = p.Value.Value<ulong>("sizes"),
 								Count = p.Value.Value<uint>("count"),
 								Fees = Money.Satoshis(p.Value.Value<ulong>("fees")),

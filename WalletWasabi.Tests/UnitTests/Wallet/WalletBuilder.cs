@@ -66,7 +66,9 @@ public class WalletBuilder : IAsyncDisposable
 
 		var serviceConfiguration = new ServiceConfiguration(new UriEndPoint(new Uri("http://www.nomatter.dontcare")), Money.Coins(WalletWasabi.Helpers.Constants.DefaultDustThreshold));
 
+#pragma warning disable CA2000 // Dispose objects before losing scope
 		var feeProvider = new FeeRateProvider(HttpClientFactory, keyManager.GetNetwork());
+#pragma warning restore CA2000 // Dispose objects before losing scope
 
 		WalletFactory walletFactory = new(DataDir, Network.RegTest, BitcoinStore, Synchronizer, serviceConfiguration, feeProvider, BlockDownloadService, UnconfirmedTransactionChainProvider);
 		return walletFactory.CreateAndInitialize(keyManager);

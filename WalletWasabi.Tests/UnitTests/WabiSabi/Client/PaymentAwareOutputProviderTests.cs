@@ -1,5 +1,6 @@
 using NBitcoin;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using WalletWasabi.Extensions;
 using WalletWasabi.Tests.Helpers;
@@ -58,10 +59,10 @@ public class PaymentAwareOutputProviderTests
 		var roundParameters = WabiSabiTestFactory.CreateRoundParameters(WabiSabiTestFactory.CreateDefaultWabiSabiConfig());
 		var paymentBatch = new PaymentBatch();
 
-		var payments = amountsToPay.Select(a => (Destination: GetNewSegwitAddress(), Amount: Money.Coins(decimal.Parse(a))));
+		var payments = amountsToPay.Select(a => (Destination: GetNewSegwitAddress(), Amount: Money.Coins(decimal.Parse(a, CultureInfo.InvariantCulture))));
 		payments.ToList().ForEach(p => paymentBatch.AddPayment(p.Destination, p.Amount));
 
-		var availableMoney = Money.Coins(decimal.Parse(availableAmountStr));
+		var availableMoney = Money.Coins(decimal.Parse(availableAmountStr, CultureInfo.InvariantCulture));
 		var paymentSet = paymentBatch.GetBestPaymentSet(availableMoney, availableVsize, roundParameters);
 
 		Assert.True(paymentSet.TotalAmount < availableMoney);

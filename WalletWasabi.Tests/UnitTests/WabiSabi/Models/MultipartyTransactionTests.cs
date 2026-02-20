@@ -1,5 +1,6 @@
 using NBitcoin;
 using System.Collections.Immutable;
+using System.Globalization;
 using System.Linq;
 using WalletWasabi.Crypto;
 using WalletWasabi.Extensions;
@@ -424,7 +425,7 @@ public class MultipartyTransactionTests
 	{
 		var rnd = TestRandom.Get();
 
-		FeeRate feeRate = new(satoshiPerByte: decimal.Parse(feeRateString));
+		FeeRate feeRate = new(satoshiPerByte: decimal.Parse(feeRateString, CultureInfo.InvariantCulture));
 		CoordinationFeeRate coordinatorFeeRate = new(0m, Money.Zero);
 
 		var cfg1 = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();

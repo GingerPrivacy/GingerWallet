@@ -3,6 +3,7 @@ using NBitcoin;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Blockchain.TransactionBuilding;
 using WalletWasabi.Blockchain.TransactionBuilding.BnB;
@@ -114,7 +115,7 @@ public class ChangelessTransactionCoinSelectorTests
 	/// BnB algorithm chooses coins in the way that either all coins with the same scriptPubKey are selected or no coin with that scriptPubKey is selected.
 	/// </summary>
 	[Fact]
-	public async void BnBRespectScriptPubKeyPrivacyRuleAsync()
+	public async Task BnBRespectScriptPubKeyPrivacyRuleAsync()
 	{
 		var rnd = TestRandom.Get();
 		using CancellationTokenSource testDeadlineCts = new(TimeSpan.FromMinutes(5));

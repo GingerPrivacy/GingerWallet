@@ -117,6 +117,14 @@ public class ExchangeRateProviderTests : IAsyncLifetime
 	}
 
 	[Fact]
+	public async Task BlockchainInfoExchangeRateProviderTestAsync()
+	{
+		var provider = new BlockchainInfoExchangeRateProvider();
+		await TestProviderAsync(provider);
+		Assert.Equal(ExchangeRateService.DefaultCurrencies, provider.Currencies);
+	}
+
+	[Fact]
 	public async Task MempoolSpaceExchangeRateProviderTestAsync()
 	{
 		await TestProviderAsync(new MempoolSpaceExchangeRateProvider());

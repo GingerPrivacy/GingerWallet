@@ -63,7 +63,7 @@ public class SpecificNodeBlockProviderTests
 			.Throws(new OperationCanceledException("Got disconnected"));
 
 		// Mock the provider.
-		Mock<SpecificNodeBlockProvider> mockProvider = new(MockBehavior.Strict, network, serviceConfiguration, /* torEndPoint */ null) { CallBase = true };
+		Mock<SpecificNodeBlockProvider> mockProvider = new(MockBehavior.Strict, network, serviceConfiguration, /* torEndPoint */ null!) { CallBase = true };
 
 		mockProvider.Setup(c => c.ConnectAsync(It.IsAny<CancellationToken>()))
 			.ReturnsAsync(mockNode.Object);

@@ -16,7 +16,9 @@ public static class ServiceFactory
 		KeyManager keyManager = watchOnly ? CreateWatchOnlyKeyManager() : CreateKeyManager(password);
 		SmartCoin[] sCoins = CreateCoins(rnd, keyManager, coins);
 		var coinsView = new CoinsView(sCoins);
+#pragma warning disable CA2000 // Dispose objects before losing scope
 		var mockTransactionStore = new AllTransactionStore(".", Network.Main);
+#pragma warning restore CA2000 // Dispose objects before losing scope
 		return new TransactionFactory(Network.Main, keyManager, coinsView, mockTransactionStore, password);
 	}
 

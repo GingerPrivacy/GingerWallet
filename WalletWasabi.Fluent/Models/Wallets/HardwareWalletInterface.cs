@@ -24,11 +24,16 @@ public class HardwareWalletInterface
 		using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(3));
 		using var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(cts.Token, cancelToken);
 
-		var detectedHardwareWallets = (await client.EnumerateAsync(timeoutCts.Token).ConfigureAwait(false)).ToArray();
+		var all = (await client.EnumerateAsync(timeoutCts.Token).ConfigureAwait(false)).ToArray();
 
 		cancelToken.ThrowIfCancellationRequested();
 
-		return detectedHardwareWallets;
+		// Return only devices that are actually usable.
+		var usable = all
+			.Where(d => d.Code is null && d.Fingerprint is not null)
+			.ToArray();
+
+		return usable;
 	}
 
 	public async Task InitHardwareWalletAsync(HwiEnumerateEntry device, CancellationToken cancelToken)

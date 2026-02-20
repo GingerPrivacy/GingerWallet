@@ -1,7 +1,8 @@
+using NBitcoin;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using NBitcoin;
 using WalletWasabi.Blockchain.Blocks;
 using WalletWasabi.Helpers;
 using Xunit;
@@ -88,7 +89,7 @@ public class BlockNotifierTests
 
 			if (h1 != h2)
 			{
-				message = string.Format("height={0}, [h1] {1} != [h2] {2}", height, h1, h2);
+				message = string.Format(CultureInfo.InvariantCulture, "height={0}, [h1] {1} != [h2] {2}", height, h1, h2);
 				cts.Cancel();
 				return;
 			}

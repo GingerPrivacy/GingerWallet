@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using WalletWasabi.Extensions;
@@ -65,14 +66,14 @@ public class ParserTests
 			"999999999999999999999",
 			"foo",
 			"-999999999999999999999",
-			int.MaxValue.ToString(),
-			uint.MaxValue.ToString(),
-			long.MaxValue.ToString(),
+			int.MaxValue.ToString(CultureInfo.InvariantCulture),
+			uint.MaxValue.ToString(CultureInfo.InvariantCulture),
+			long.MaxValue.ToString(CultureInfo.InvariantCulture),
 			"0.1",
-			int.MinValue.ToString(),
-			long.MinValue.ToString(),
-			(ushort.MinValue - 1).ToString(),
-			(ushort.MaxValue + 1).ToString()
+			int.MinValue.ToString(CultureInfo.InvariantCulture),
+			long.MinValue.ToString(CultureInfo.InvariantCulture),
+			(ushort.MinValue - 1).ToString(CultureInfo.InvariantCulture),
+			(ushort.MaxValue + 1).ToString(CultureInfo.InvariantCulture)
 		};
 
 		var validPorts = new[]

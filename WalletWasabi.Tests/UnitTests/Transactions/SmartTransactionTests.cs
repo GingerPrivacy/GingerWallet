@@ -1,5 +1,6 @@
 using NBitcoin;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Blockchain.Transactions;
@@ -133,9 +134,9 @@ public class SmartTransactionTests
 					Assert.Equal(txHex, stx.Transaction.ToHex());
 					Assert.Equal(height, stx.Height.ToString());
 					Assert.Equal(blockHash, Guard.Correct(stx.BlockHash?.ToString()));
-					Assert.Equal(blockIndex, stx.BlockIndex.ToString());
+					Assert.Equal(blockIndex, stx.BlockIndex.ToString(CultureInfo.InvariantCulture));
 					Assert.Equal(label, stx.Labels);
-					Assert.Equal(unixSeconds, stx.FirstSeen.ToUnixTimeSeconds().ToString());
+					Assert.Equal(unixSeconds, stx.FirstSeen.ToUnixTimeSeconds().ToString(CultureInfo.InvariantCulture));
 					Assert.Equal(isReplacement, stx.IsReplacement.ToString());
 					Assert.Equal(isSpeedup, stx.IsSpeedup.ToString());
 					Assert.Equal(isCancellation, stx.IsCancellation.ToString());

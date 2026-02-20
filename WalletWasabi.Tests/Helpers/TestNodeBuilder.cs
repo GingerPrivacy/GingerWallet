@@ -37,6 +37,7 @@ public static class TestNodeBuilder
 
 	private static CoreNodeParams CreateDefaultCoreNodeParams(MempoolService mempoolService, string dataDir)
 	{
+#pragma warning disable CA2000 // Dispose objects before losing scope
 		var nodeParameters = new CoreNodeParams(
 				Network.RegTest,
 				mempoolService ?? new MempoolService(),
@@ -52,6 +53,7 @@ public static class TestNodeBuilder
 				userAgent: $"/WasabiClient:{Constants.ClientVersion}/",
 				fallbackFee: Money.Coins(0.0002m), // https://github.com/bitcoin/bitcoin/pull/16524
 				new MemoryCache(new MemoryCacheOptions()));
+#pragma warning restore CA2000 // Dispose objects before losing scope
 		nodeParameters.ListenOnion = 0;
 		nodeParameters.Discover = 0;
 		nodeParameters.DnsSeed = 0;

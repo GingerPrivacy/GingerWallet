@@ -1,19 +1,24 @@
+using GingerCommon.Crypto.Random;
 using Moq;
 using NBitcoin;
 using NBitcoin.Crypto;
 using NBitcoin.RPC;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using WabiSabi.CredentialRequesting;
 using WabiSabi.Crypto;
+using WabiSabi.Crypto.Randomness;
 using WabiSabi.Crypto.ZeroKnowledge;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Crypto;
 using WalletWasabi.Helpers;
+using WalletWasabi.Models;
+using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.Tests.UnitTests;
 using WalletWasabi.WabiSabi;
 using WalletWasabi.WabiSabi.Backend;
@@ -22,15 +27,11 @@ using WalletWasabi.WabiSabi.Backend.Models;
 using WalletWasabi.WabiSabi.Backend.Rounds;
 using WalletWasabi.WabiSabi.Backend.Rounds.CoinJoinStorage;
 using WalletWasabi.WabiSabi.Client;
+using WalletWasabi.WabiSabi.Client.CoinJoin.Client;
 using WalletWasabi.WabiSabi.Client.RoundStateAwaiters;
 using WalletWasabi.WabiSabi.Models;
 using WalletWasabi.Wallets;
 using WalletWasabi.WebClients.Wasabi;
-using WalletWasabi.WabiSabi.Client.CoinJoin.Client;
-using WabiSabi.Crypto.Randomness;
-using System.Runtime.CompilerServices;
-using WalletWasabi.Tests.TestCommon;
-using GingerCommon.Crypto.Random;
 
 namespace WalletWasabi.Tests.Helpers;
 
@@ -45,7 +46,9 @@ public static class WabiSabiTestFactory
 
 	public static Coin CreateCoin(Key? key = null, Money? amount = null, ScriptPubKeyType scriptPubKeyType = ScriptPubKeyType.Segwit)
 	{
+#pragma warning disable CA2000 // Dispose objects before losing scope
 		key ??= new();
+#pragma warning restore CA2000 // Dispose objects before losing scope
 		amount ??= Money.Coins(1);
 		return new(
 			new OutPoint(Hashes.DoubleSHA256(key.PubKey.ToBytes().Concat(BitConverter.GetBytes(amount)).ToArray()), 0),
@@ -54,7 +57,9 @@ public static class WabiSabiTestFactory
 
 	public static Tuple<Coin, OwnershipProof> CreateCoinWithOwnershipProof(GingerRandom rnd, Key? key = null, Money? amount = null, uint256? roundId = null, ScriptPubKeyType scriptPubKeyType = ScriptPubKeyType.Segwit)
 	{
+#pragma warning disable CA2000 // Dispose objects before losing scope
 		key ??= new();
+#pragma warning restore CA2000 // Dispose objects before losing scope
 		var coin = CreateCoin(key, amount, scriptPubKeyType);
 		roundId ??= uint256.One;
 		var ownershipProof = CreateOwnershipProof(rnd, key, roundId);
@@ -354,7 +359,7 @@ public static class WabiSabiTestFactory
 			0,
 			TimeSpan.Zero,
 			TimeSpan.Zero,
-			null);
+			null!);
 
 		// Overwrite Maximum Request Delay parameter but still use the original method.
 		mock.Setup(m => m.GetScheduledDates(It.IsAny<int>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>(), It.IsNotIn(TimeSpan.FromSeconds(1))))

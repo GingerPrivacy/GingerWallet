@@ -1,6 +1,7 @@
 using NBitcoin;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -41,7 +42,7 @@ public class WasabiClientTests
 
 		var mockTorHttpClient = new MockIHttpClient();
 		mockTorHttpClient.OnSendAsync = req =>
-			FakeServerCodeAsync(req.Method, req.RequestUri.PathAndQuery, req.Content, CancellationToken.None);
+			FakeServerCodeAsync(req.Method, req.RequestUri!.PathAndQuery, req.Content, CancellationToken.None);
 
 		var client = new WasabiClient(mockTorHttpClient);
 		Assert.Empty(WasabiClient.TransactionCache);
@@ -104,10 +105,10 @@ public class WasabiClientTests
 	[Fact]
 	public void ConstantsTests()
 	{
-		var min = int.Parse(WalletWasabi.Helpers.Constants.ClientSupportBackendVersionMin);
-		var max = int.Parse(WalletWasabi.Helpers.Constants.ClientSupportBackendVersionMax);
+		var min = int.Parse(WalletWasabi.Helpers.Constants.ClientSupportBackendVersionMin, CultureInfo.InvariantCulture);
+		var max = int.Parse(WalletWasabi.Helpers.Constants.ClientSupportBackendVersionMax, CultureInfo.InvariantCulture);
 		Assert.True(min <= max);
 
-		int.Parse(WalletWasabi.Helpers.Constants.BackendMajorVersion);
+		int.Parse(WalletWasabi.Helpers.Constants.BackendMajorVersion, CultureInfo.InvariantCulture);
 	}
 }

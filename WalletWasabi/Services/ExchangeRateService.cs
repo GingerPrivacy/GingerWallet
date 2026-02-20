@@ -32,7 +32,7 @@ public class ExchangeRateService : PeriodicRunner
 	public event EventHandler<ImmutableSortedSet<string>>? SupportedCurrenciesChanged;
 
 	public static readonly ImmutableSortedSet<string> DefaultCurrencies = [
-		"ARS","AUD","BRL","CAD","CHF","CLP","CNY","CZK","DKK","EUR","GBP","HKD","HUF","INR","ISK","JPY","KRW","NGN","NZD","PLN","RON","RUB","SEK","SGD","THB","TRY","TWD","USD"
+		"ARS","AUD","BRL","CAD","CHF","CLP","CNY","CZK","DKK","EUR","GBP","GHS","HKD","HUF","INR","ISK","JPY","KRW","NGN","NZD","PLN","RON","RUB","SEK","SGD","THB","TRY","TWD","USD"
 	];
 
 	public bool Active { get; set; } = true;

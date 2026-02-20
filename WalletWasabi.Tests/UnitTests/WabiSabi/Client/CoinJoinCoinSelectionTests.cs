@@ -1,6 +1,7 @@
 using Moq;
 using NBitcoin;
 using System.Linq;
+using System.Threading.Tasks;
 using WabiSabi.Crypto.Randomness;
 using WalletWasabi.Blockchain.Analysis;
 using WalletWasabi.Blockchain.Keys;
@@ -32,7 +33,7 @@ public class CoinJoinCoinSelectionTests
 	/// This test is to make sure no coins are selected when there are no coins.
 	/// </summary>
 	[Fact]
-	public async void SelectNothingFromEmptySetOfCoinsAsync()
+	public async Task SelectNothingFromEmptySetOfCoinsAsync()
 	{
 		CoinJoinCoinSelectorRandomnessGenerator generator = CreateSelectorGenerator(inputTarget: 5);
 
@@ -49,7 +50,7 @@ public class CoinJoinCoinSelectionTests
 	/// This test is to make sure no coins are selected when all coins are private.
 	/// </summary>
 	[Fact]
-	public async void SelectNothingFromFullyPrivateSetOfCoinsAsync()
+	public async Task SelectNothingFromFullyPrivateSetOfCoinsAsync()
 	{
 		var rnd = TestRandom.Get();
 		const int AnonymitySet = 10;
@@ -87,7 +88,7 @@ public class CoinJoinCoinSelectionTests
 	/// Although the coin amount is larger than the smallest reasonable effective denomination, if the algorithm is right, then the effective input amount is considered.
 	/// </summary>
 	[Fact]
-	public async void SelectSomethingFromPrivateButExternalSetOfCoins1Async()
+	public async Task SelectSomethingFromPrivateButExternalSetOfCoins1Async()
 	{
 		var rnd = TestRandom.Get();
 		// Although all coins have reached the desired anonymity set, they are not sufficiently distanced from external keys, because they are external keys.
@@ -109,7 +110,7 @@ public class CoinJoinCoinSelectionTests
 	}
 
 	[Fact]
-	public async void SelectSomethingFromPrivateButNotDistancedSetOfCoins2Async()
+	public async Task SelectSomethingFromPrivateButNotDistancedSetOfCoins2Async()
 	{
 		var rnd = TestRandom.Get();
 		// Although all coins have reached the desired anonymity set, they are not sufficiently distanced from external keys.
@@ -131,7 +132,7 @@ public class CoinJoinCoinSelectionTests
 	}
 
 	[Fact]
-	public async void SelectSomethingFromPrivateButExternalSetOfCoins3Async()
+	public async Task SelectSomethingFromPrivateButExternalSetOfCoins3Async()
 	{
 		var rnd = TestRandom.Get();
 		// Although all coins have reached the desired anonymity set, they are not sufficiently distanced from external keys.
@@ -163,7 +164,7 @@ public class CoinJoinCoinSelectionTests
 	}
 
 	[Fact]
-	public async void SelectNothingFromTooSmallCoinAsync()
+	public async Task SelectNothingFromTooSmallCoinAsync()
 	{
 		var km = KeyManager.CreateNew(out _, "", Network.Main);
 		var coinsToSelectFrom = new[] { BitcoinFactory.CreateSmartCoin(TestRandom.Get(), BitcoinFactory.CreateHdPubKey(km), Money.Coins(0.00017423m), anonymitySet: 1) };
@@ -184,7 +185,7 @@ public class CoinJoinCoinSelectionTests
 	/// This test is to make sure no coins are selected when there too small coins.
 	/// </summary>
 	[Fact]
-	public async void SelectNothingFromTooSmallSetOfCoinsAsync()
+	public async Task SelectNothingFromTooSmallSetOfCoinsAsync()
 	{
 		var rnd = TestRandom.Get();
 		var km = KeyManager.CreateNew(out _, "", Network.Main);
@@ -210,7 +211,7 @@ public class CoinJoinCoinSelectionTests
 	/// This test is to make sure the coins are selected when the selection's effective sum is exactly the smallest reasonable effective denom.
 	/// </summary>
 	[Fact]
-	public async void SelectSomethingFromJustEnoughSetOfCoinsAsync()
+	public async Task SelectSomethingFromJustEnoughSetOfCoinsAsync()
 	{
 		var rnd = TestRandom.Get();
 		var km = KeyManager.CreateNew(out _, "", Network.Main);
@@ -236,7 +237,7 @@ public class CoinJoinCoinSelectionTests
 	/// This test is to make sure that we select the non-private coin in the set.
 	/// </summary>
 	[Fact]
-	public async void SelectNonPrivateCoinFromOneNonPrivateCoinInBigSetOfCoinsConsolidationModeAsync()
+	public async Task SelectNonPrivateCoinFromOneNonPrivateCoinInBigSetOfCoinsConsolidationModeAsync()
 	{
 		var rnd = TestRandom.Get();
 		const int AnonymitySet = 10;
@@ -264,7 +265,7 @@ public class CoinJoinCoinSelectionTests
 	/// This test is to make sure that we select the only non-private coin when it is the only coin in the wallet.
 	/// </summary>
 	[Fact]
-	public async void SelectNonPrivateCoinFromOneCoinSetOfCoinsAsync()
+	public async Task SelectNonPrivateCoinFromOneCoinSetOfCoinsAsync()
 	{
 		var rnd = TestRandom.Get();
 		const int AnonymitySet = 10;
@@ -290,7 +291,7 @@ public class CoinJoinCoinSelectionTests
 	/// </summary>
 	/// <remarks>Note randomization can make this test fail even though that's unlikely.</remarks>
 	[Fact]
-	public async void SelectMoreNonPrivateCoinFromTwoCoinsSetOfCoinsAsync()
+	public async Task SelectMoreNonPrivateCoinFromTwoCoinsSetOfCoinsAsync()
 	{
 		var rnd = TestRandom.Get();
 		const int AnonymitySet = 10;
@@ -316,7 +317,7 @@ public class CoinJoinCoinSelectionTests
 	/// This test is to make sure that we select more than one non-private coin.
 	/// </summary>
 	[Fact]
-	public async void SelectTwoNonPrivateCoinsFromTwoCoinsSetOfCoinsConsolidationModeAsync()
+	public async Task SelectTwoNonPrivateCoinsFromTwoCoinsSetOfCoinsConsolidationModeAsync()
 	{
 		var rnd = TestRandom.Get();
 		const int AnonymitySet = 10;
@@ -342,7 +343,7 @@ public class CoinJoinCoinSelectionTests
 	/// This test is to make sure no coins are selected when all coins are private.
 	/// </summary>
 	[Fact]
-	public async void SelectNothingFromFullyPrivateAndBelowMinAllowedSetOfCoinsAsync()
+	public async Task SelectNothingFromFullyPrivateAndBelowMinAllowedSetOfCoinsAsync()
 	{
 		var rnd = TestRandom.Get();
 		const int AnonymitySet = 10;
