@@ -140,7 +140,7 @@ public class UpdateManager : IDisposable
 				using MemoryStream stream = new(installerFileBytes);
 				await CopyStreamContentToFileAsync(stream, installerFilePath, cancellationToken).ConfigureAwait(false);
 			}
-			string expectedHash = await GetHashFromSha256SumsFileAsync(result.InstallerFileName, sha256SumsFilePath).ConfigureAwait(false);
+			string expectedHash = await GetHashFromSha256SumsFileAsync(result.InstallerFileName, sha256SumsFilePath, cancellationToken).ConfigureAwait(false);
 			await VerifyInstallerHashAsync(installerFilePath, expectedHash, cancellationToken).ConfigureAwait(false);
 		}
 		catch (IOException)
@@ -155,7 +155,7 @@ public class UpdateManager : IDisposable
 	private async Task VerifyInstallerHashAsync(string installerFilePath, string expectedHash, CancellationToken cancellationToken)
 	{
 		var bytes = await WasabiSignerHelpers.GetShaComputedBytesOfFileAsync(installerFilePath, cancellationToken).ConfigureAwait(false);
-		string downloadedHash = Convert.ToHexString(bytes).ToLower();
+		string downloadedHash = Convert.ToHexString(bytes).ToLowerInvariant();
 
 		if (expectedHash != downloadedHash)
 		{
@@ -163,12 +163,17 @@ public class UpdateManager : IDisposable
 		}
 	}
 
-	private async Task<string> GetHashFromSha256SumsFileAsync(string installerFileName, string sha256SumsFilePath)
+	private async Task<string> GetHashFromSha256SumsFileAsync(string installerFileName, string sha256SumsFilePath, CancellationToken cancellationToken)
 	{
-		string[] lines = await File.ReadAllLinesAsync(sha256SumsFilePath).ConfigureAwait(false);
-		var correctLine = lines.FirstOrDefault(line => line.Contains(installerFileName))
-			?? throw new InvalidOperationException($"{installerFileName} was not found.");
-		return correctLine.Split(" ")[0];
+		string[] lines = await File.ReadAllLinesAsync(sha256SumsFilePath, cancellationToken).ConfigureAwait(false);
+		var expectedHash = lines
+			.Select(line => line.Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
+			.Where(parts => parts.Length == 2)
+			.Select(parts => (Hash: parts[0], FileName: parts[1].StartsWith("./", StringComparison.Ordinal) ? parts[1][2..] : parts[1]))
+			.FirstOrDefault(entry => entry.FileName == installerFileName)
+			.Hash;
+
+		return expectedHash ?? throw new InvalidOperationException($"{installerFileName} was not found.");
 	}
 
 	private async Task CopyStreamContentToFileAsync(Stream stream, string filePath, CancellationToken cancellationToken)

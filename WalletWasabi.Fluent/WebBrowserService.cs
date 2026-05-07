@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using WalletWasabi.Helpers;
 
 namespace WalletWasabi.Fluent;
 
@@ -39,7 +38,7 @@ public sealed class WebBrowserService
 		}
 	}
 
-	public async Task OpenUrlInPreferredBrowserAsync(string url)
+	public Task OpenUrlInPreferredBrowserAsync(string url)
 	{
 		if (PreferredBrowserType is BrowserType.Tor || IsLikelyTorPath(CustomBrowserPath))
 		{
@@ -49,19 +48,21 @@ public sealed class WebBrowserService
 			}
 		}
 
+		var safeUrl = GetSafeBrowserUrl(url);
+
 		// First priority: Custom browser path
 		if (!string.IsNullOrWhiteSpace(CustomBrowserPath))
 		{
-			OpenInBrowser(url, CustomBrowserPath);
-			return;
+			OpenInBrowser(safeUrl, CustomBrowserPath);
+			return Task.CompletedTask;
 		}
 
 		// Second priority: Preferred browser if specified
 		if (PreferredBrowserType.HasValue)
 		{
-			if (TryOpenPreferredBrowser(url, PreferredBrowserType.Value))
+			if (TryOpenPreferredBrowser(safeUrl, PreferredBrowserType.Value))
 			{
-				return;
+				return Task.CompletedTask;
 			}
 			else
 			{
@@ -75,26 +76,27 @@ public sealed class WebBrowserService
 		{
 			// If no associated application/json MimeType is found xdg-open opens return error
 			// but it tries to open it anyway using the console editor (nano, vim, other..)
-			await EnvironmentHelpers.ShellExecAsync($"xdg-open {url}", waitForExit: false).ConfigureAwait(false);
+			OpenInBrowser(safeUrl, "xdg-open");
+		}
+		else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+		{
+			OpenInBrowser(safeUrl, "open");
+		}
+		else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+		{
+			using var process = Process.Start(new ProcessStartInfo
+			{
+				FileName = safeUrl,
+				CreateNoWindow = true,
+				UseShellExecute = true
+			});
 		}
 		else
 		{
-			if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-			{
-				url = url.Replace(" ", "\\ ");
-
-				await EnvironmentHelpers.ShellExecAsync($"open {url}").ConfigureAwait(false);
-			}
-			else
-			{
-				using var process = Process.Start(new ProcessStartInfo
-				{
-					FileName = url,
-					CreateNoWindow = true,
-					UseShellExecute = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-				});
-			}
+			throw new PlatformNotSupportedException("Cannot open browser on this platform.");
 		}
+
+		return Task.CompletedTask;
 	}
 
 	private static bool TryOpenPreferredBrowser(string url, BrowserType preferredBrowser)
@@ -119,7 +121,7 @@ public sealed class WebBrowserService
 					string iePath = InternetExplorerDefaultPath;
 					if (File.Exists(iePath))
 					{
-						Process.Start(iePath, url);
+						OpenInBrowser(url, iePath);
 						return true;
 					}
 
@@ -155,7 +157,7 @@ public sealed class WebBrowserService
 		string torBrowserPath = GetTorBrowserPath();
 		if (!string.IsNullOrEmpty(torBrowserPath) && File.Exists(torBrowserPath))
 		{
-			Process.Start(torBrowserPath, url);
+			OpenInBrowser(url, torBrowserPath);
 			return true;
 		}
 
@@ -167,7 +169,7 @@ public sealed class WebBrowserService
 		string chromePath = GetChromePath();
 		if (!string.IsNullOrEmpty(chromePath) && File.Exists(chromePath))
 		{
-			Process.Start(chromePath, url);
+			OpenInBrowser(url, chromePath);
 			return true;
 		}
 
@@ -179,7 +181,7 @@ public sealed class WebBrowserService
 		string bravePath = GetBravePath();
 		if (!string.IsNullOrEmpty(bravePath) && File.Exists(bravePath))
 		{
-			Process.Start(bravePath, url);
+			OpenInBrowser(url, bravePath);
 			return true;
 		}
 
@@ -191,7 +193,7 @@ public sealed class WebBrowserService
 		string operaPath = GetOperaPath();
 		if (!string.IsNullOrEmpty(operaPath) && File.Exists(operaPath))
 		{
-			Process.Start(operaPath, url);
+			OpenInBrowser(url, operaPath);
 			return true;
 		}
 
@@ -200,7 +202,23 @@ public sealed class WebBrowserService
 
 	private static void OpenInBrowser(string url, string browserPath)
 	{
-		Process.Start(browserPath, url);
+		using var process = Process.Start(new ProcessStartInfo(browserPath)
+		{
+			ArgumentList = { url },
+			CreateNoWindow = true,
+			UseShellExecute = false
+		});
+	}
+
+	private static string GetSafeBrowserUrl(string url)
+	{
+		if (!Uri.TryCreate(url, UriKind.Absolute, out var uri) ||
+		    (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps))
+		{
+			throw new ArgumentException("URL must be a valid HTTP or HTTPS address.", nameof(url));
+		}
+
+		return uri.ToString();
 	}
 
 	private static string GetTorBrowserPath()

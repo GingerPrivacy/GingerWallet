@@ -82,14 +82,15 @@
       },
       "NNostr.Client": {
         "type": "Direct",
-        "requested": "[0.0.49, )",
-        "resolved": "0.0.49",
-        "contentHash": "UqmOBSCuUxw6qTk5+3TTWWtlyetx1btEuBJIS9beidviV45iMjlgOMK0ThB1CrYuPfg4DDzMu5rpzRYnM8eHWA==",
+        "requested": "[0.0.54, )",
+        "resolved": "0.0.54",
+        "contentHash": "wN/7Thnu7g0l7LedUcO7DzXinw3bu9C5nKn2p6VZSNG3vymRuyH35VG64Qr63wEM+bHfPuxrQ9IyQNOwwKl4Mg==",
         "dependencies": {
+          "LibChaCha20": "1.0.1",
           "LinqKit.Core": "1.2.5",
-          "NBitcoin.Secp256k1": "3.1.4",
+          "NBitcoin.Secp256k1": "3.1.6",
           "System.Interactive.Async": "6.0.1",
-          "System.Text.Json": "8.0.3",
+          "System.Text.Json": "8.0.4",
           "System.Threading.Channels": "8.0.0"
         }
       },
@@ -113,6 +114,11 @@
         "dependencies": {
           "NBitcoin.Secp256k1": "3.1.0"
         }
+      },
+      "LibChaCha20": {
+        "type": "Transitive",
+        "resolved": "1.0.1",
+        "contentHash": "pLKTZWVPKf5vd1MthOCph/p7iR3DM8PQOeBLe7e5VGXVqju4GOWT+JAgKReQ+7sWU4HDC+hJF/Thrj08YFkugg=="
       },
       "LinqKit.Core": {
         "type": "Transitive",
@@ -266,8 +272,8 @@
       },
       "NBitcoin.Secp256k1": {
         "type": "Transitive",
-        "resolved": "3.1.4",
-        "contentHash": "23N1DCusSRCx1hoNiIMl3JnMZrdY78a/WcsiN1LIAg6sq8MiC7mszDiUgHKD6txm+m9PxJBigBLH7MPBQCRCDQ=="
+        "resolved": "3.1.6",
+        "contentHash": "Ao9jN/16lhQoI0aMdUxgiEfuyFdg2nd2SdinqqEFuCyYl1NH6upa++Tp0wbXHTr6jf7klXh3wjmsX+ArzliZRQ=="
       },
       "SQLitePCLRaw.bundle_e_sqlite3": {
         "type": "Transitive",

@@ -113,11 +113,15 @@ public record CircuitInfo
 			}
 			else if (key == "REASON")
 			{
-				reason = Tokenizer.ParseEnumValue(value, Messages.CircuitStatus.Reason.UNKNOWN);
+				remoteReason = Tokenizer.ParseEnumValue(value, Messages.CircuitStatus.Reason.UNKNOWN);
 			}
 			else if (key == "REMOTE_REASON")
 			{
-				reason = Tokenizer.ParseEnumValue(value, Messages.CircuitStatus.Reason.UNKNOWN);
+				remoteReason = Tokenizer.ParseEnumValue(value, Messages.CircuitStatus.Reason.UNKNOWN);
+			}
+			else if (key == "CONFLUX_ID")
+			{
+				// Tor 0.4.8+ (Tor Browser 15+) - can be safely ignored if you don't use it.
 			}
 			else
 			{

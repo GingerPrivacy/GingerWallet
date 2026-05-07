@@ -17,7 +17,7 @@
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageVersion Include="System.IO.Pipelines" Version="8.0.0" />
     <!-- Nostr-->
-    <PackageVersion Include="NNostr.Client" Version="0.0.49" />
+    <PackageVersion Include="NNostr.Client" Version="0.0.54" />
     <!-- JSON. -->
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.19" />
     <!-- SQLite. -->
@@ -47,6 +47,7 @@
     <PackageVersion Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
     <PackageVersion Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
     <PackageVersion Include="System.Runtime" Version="4.3.1" />
+    <PackageVersion Include="Tmds.DBus.Protocol" Version="0.21.3" />
     <PackageVersion Include="QRackers" Version="1.1.0" />
     <PackageVersion Include="DynamicData" Version="8.4.1" />
     <!-- UI Mobile. -->
@@ -58,7 +59,7 @@
     <PackageVersion Include="Avalonia.Headless.XUnit" Version="$(AvaloniaVersion)" />
     <!-- Testing. -->
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.19" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
     <PackageVersion Include="Moq" Version="4.20.72" />
     <PackageVersion Include="xunit" Version="2.9.3" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
