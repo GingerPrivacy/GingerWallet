@@ -3,6 +3,8 @@
 ###############################################################################
 * text=auto
 **/osx64/Tor/tor text eol=lf
+**/Tor/LICENSE text eol=lf
+WalletWasabi/Tor/Geoip/geoip* text eol=lf
 
 *.axaml text eol=lf
 *.cs text eol=lf

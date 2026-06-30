@@ -14,8 +14,7 @@
 param(
   [Parameter(Mandatory=$true)] [string] $version,
   [Parameter(Mandatory=$false)] [Switch] $skipDownloading,
-  [Parameter(Mandatory=$false)] [Alias("skipExtractingBrowserArchives")] [Switch] $skipExtractingArchives,
-  [Parameter(Mandatory=$false)] [Switch] $skipExtractingTorBinaries,
+  [Parameter(Mandatory=$false)] [Alias("skipExtractingBrowserArchives", "skipExtractingTorBinaries")] [Switch] $skipExtractingArchives,
   [Parameter(Mandatory=$false)] [Switch] $skipReplacingTorBinaries,
   [Parameter(Mandatory=$false)] [Switch] $skipReplacingGeoIpFiles)
 
@@ -176,7 +175,7 @@ function Copy-RuntimeFiles {
   }
 
   Copy-Item -LiteralPath $licensePath -Destination (Join-Path $destinationDirectory "LICENSE") -Force
-  Set-NativeLineEndings (Join-Path $destinationDirectory "LICENSE")
+  Set-LfLineEndings (Join-Path $destinationDirectory "LICENSE")
 }
 
 function Clear-TorDestination {
@@ -192,16 +191,12 @@ function Clear-TorDestination {
     Remove-Item -Force -Recurse
 }
 
-function Set-NativeLineEndings {
+function Set-LfLineEndings {
   param([Parameter(Mandatory=$true)] [string] $path)
-
-  if (!$IsWindows) {
-    return
-  }
 
   $resolvedPath = (Resolve-Path -LiteralPath $path).Path
   $content = [System.IO.File]::ReadAllText($resolvedPath)
-  $content = $content -replace "\r?\n", [Environment]::NewLine
+  $content = $content -replace "\r?\n", "`n"
   [System.IO.File]::WriteAllText($resolvedPath, $content)
 }
 
@@ -242,7 +237,7 @@ try {
     Assert-FileHash $expectedHashes $platform.Package
   }
 
-  if ($skipExtractingArchives -or $skipExtractingTorBinaries) {
+  if ($skipExtractingArchives) {
     Write-Output "# Skip extracting Tor Expert Bundles."
   } else {
     Remove-Item -LiteralPath "Extracted" -Force -Recurse -ErrorAction SilentlyContinue
@@ -275,8 +270,8 @@ try {
     $geoIpDestination = Join-Path -Resolve $PSScriptRoot ".." ".." "Tor" "Geoip"
     Write-Output "# Replace geoip files in folder '${geoIpDestination}'."
     Copy-Item -Force -Path (Join-Path $geoIpSource "geoip*") -Destination $geoIpDestination
-    Set-NativeLineEndings (Join-Path $geoIpDestination "geoip")
-    Set-NativeLineEndings (Join-Path $geoIpDestination "geoip6")
+    Set-LfLineEndings (Join-Path $geoIpDestination "geoip")
+    Set-LfLineEndings (Join-Path $geoIpDestination "geoip6")
   }
 
   Write-Output "# Done."
