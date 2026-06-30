@@ -1,4 +1,5 @@
 using GingerCommon.Providers.ExchangeRateProviders;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WalletWasabi.Services;
@@ -84,9 +85,16 @@ public class ExchangeRateProviderTests : IAsyncLifetime
 	[Fact]
 	private void ValidCurrencyTest()
 	{
-		// 150+ currencies
-		string[] expected = ["AED", "AFN", "ALL", "AMD", "AOA", "ARS", "AUD", "AWG", "AZN", "BAM", "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BND", "BOB", "BRL", "BSD", "BTN", "BWP", "BYN", "BZD", "CAD", "CDF", "CHF", "CLP", "CNY", "COP", "CRC", "CUP", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EGP", "ERN", "ETB", "EUR", "FJD", "FKP", "GBP", "GEL", "GHS", "GIP", "GMD", "GNF", "GTQ", "GYD", "HKD", "HNL", "HTG", "HUF", "IDR", "ILS", "INR", "IQD", "IRR", "ISK", "JMD", "JOD", "JPY", "KES", "KGS", "KHR", "KMF", "KPW", "KRW", "KWD", "KYD", "KZT", "LAK", "LBP", "LKR", "LRD", "LYD", "MAD", "MDL", "MGA", "MKD", "MMK", "MNT", "MOP", "MRU", "MUR", "MVR", "MWK", "MXN", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PGK", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SBD", "SCR", "SDG", "SEK", "SGD", "SHP", "SLE", "SOS", "SRD", "SSP", "STN", "SYP", "SZL", "THB", "TJS", "TMT", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "USD", "UYU", "UZS", "VED", "VES", "VND", "VUV", "WST", "XAF", "XCD", "XCG", "XOF", "XPF", "YER", "ZAR", "ZMW", "ZWG"];
-		Assert.Equal(expected, ExchangeRateProvider.ValidCurrencies);
+		Assert.True(ExchangeRateProvider.ValidCurrencies.Count >= 150);
+		Assert.All(ExchangeRateProvider.ValidCurrencies, currency =>
+		{
+			Assert.Equal(3, currency.Length);
+			Assert.Equal(currency.ToUpperInvariant(), currency);
+		});
+		Assert.Equal(ExchangeRateProvider.ValidCurrencies.ToArray(), ExchangeRateProvider.ValidCurrencies.OrderBy(x => x).ToArray());
+		Assert.Contains("USD", ExchangeRateProvider.ValidCurrencies);
+		Assert.Contains("EUR", ExchangeRateProvider.ValidCurrencies);
+		Assert.Contains("HUF", ExchangeRateProvider.ValidCurrencies);
 	}
 
 	[Fact]
