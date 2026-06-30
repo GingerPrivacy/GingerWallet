@@ -16,6 +16,10 @@ param(
 Set-StrictMode -Version 3
 $ErrorActionPreference = "Stop"
 
+if ($version -notmatch "^\d+\.\d+\.\d+(-rc\d+)?$") {
+  throw "Invalid HWI version format: '${version}'."
+}
+
 $distUri = "https://github.com/bitcoin-core/HWI/releases/download/${version}"
 $checksumFileName = "SHA256SUMS.txt.asc"
 $signingKeyFingerprint = "152812300785C96444D3334D17565732E08E5E41"
@@ -95,7 +99,7 @@ function Assert-ChecksumSignature {
   $validFingerprints = @(
     $verifyOutput |
       Where-Object { $_ -match "^\[GNUPG:\] VALIDSIG\s+" } |
-      ForEach-Object { Get-NormalizedFingerprint (($_ -split "\s+")[2]) } |
+      ForEach-Object { Get-NormalizedFingerprint (($_ -split "\s+")[-1]) } |
       Select-Object -Unique
   )
 
@@ -159,6 +163,7 @@ try {
 
   $workDir = Join-Path $PSScriptRoot "temp/hwi-${version}"
   $extractDir = Join-Path $workDir "extracted"
+  $gpgHomePath = Join-Path $workDir "gnupg"
 
   if (!$skipDownloading) {
     Remove-Item -LiteralPath $workDir -Force -Recurse -ErrorAction SilentlyContinue
@@ -177,7 +182,7 @@ try {
     Write-Output "# Skip downloading HWI archives."
   }
 
-  Assert-ChecksumSignature -checksumFilePath $checksumFileName -signingKeyFilePath $signingKeyFileName -gpgHomePath (Join-Path $workDir "gnupg")
+  Assert-ChecksumSignature -checksumFilePath $checksumFileName -signingKeyFilePath $signingKeyFileName -gpgHomePath $gpgHomePath
 
   foreach ($package in $packages) {
     $expectedHash = Get-ExpectedSha256 -sha256SumsPath $checksumFileName -fileName $package.Archive
@@ -218,5 +223,9 @@ try {
   Write-Output "# Done."
 }
 finally {
+  if (Test-Path -LiteralPath $gpgHomePath) {
+    Remove-Item -LiteralPath $gpgHomePath -Force -Recurse -ErrorAction SilentlyContinue
+  }
+
   Set-Location -LiteralPath $prevPwd | Out-Null
 }
