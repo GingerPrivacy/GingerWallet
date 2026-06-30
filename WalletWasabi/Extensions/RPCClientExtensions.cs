@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using WalletWasabi.Bases;
 using WalletWasabi.BitcoinCore.Monitoring;
 using WalletWasabi.BitcoinCore.Rpc;
 using WalletWasabi.Blockchain.Analysis.FeesEstimation;
@@ -16,6 +17,8 @@ namespace WalletWasabi.Extensions;
 public static class RPCClientExtensions
 {
 	private const EstimateSmartFeeMode EstimateMode = EstimateSmartFeeMode.Conservative;
+	private static readonly LastExceptionTracker RpcStatusExceptionTracker = new();
+	private static readonly object RpcStatusExceptionTrackerLock = new();
 
 	public static async Task<EstimateSmartFeeResponse> EstimateConservativeSmartFeeAsync(this IRPCClient rpc, int confirmationTarget, CancellationToken cancellationToken = default)
 	{
@@ -215,13 +218,30 @@ public static class RPCClientExtensions
 		try
 		{
 			var bci = await rpc.GetBlockchainInfoAsync(cancel).ConfigureAwait(false);
-			var pi = await rpc.GetPeersInfoAsync(cancel).ConfigureAwait(false);
+			var peersCount = await rpc.GetConnectionCountAsync(cancel).ConfigureAwait(false);
 
-			return RpcStatus.Responsive(bci.Headers, bci.Blocks, pi.Length);
+			lock (RpcStatusExceptionTrackerLock)
+			{
+				if (RpcStatusExceptionTracker.LastException is { } info)
+				{
+					Logger.LogInfo($"Bitcoin node RPC status check recovered after {(DateTimeOffset.UtcNow - info.FirstAppeared).TotalSeconds:F0} seconds and {info.ExceptionCount} failed attempt(s).");
+					RpcStatusExceptionTracker.Reset();
+				}
+			}
+
+			return RpcStatus.Responsive(bci.Headers, bci.Blocks, peersCount);
 		}
 		catch (Exception ex) when (ex is not OperationCanceledException and not TimeoutException)
 		{
-			Logger.LogTrace(ex);
+			lock (RpcStatusExceptionTrackerLock)
+			{
+				ExceptionInfo info = RpcStatusExceptionTracker.Process(ex);
+				if (info.IsFirst)
+				{
+					Logger.LogWarning($"Bitcoin node RPC status check failed: {ex.ToTypeMessageString()}");
+				}
+			}
+
 			return RpcStatus.Unresponsive;
 		}
 	}

@@ -36,7 +36,18 @@ public class RpcStatus : IEquatable<RpcStatus>
 		PeersCount = peersCount;
 	}
 
+	private RpcStatus(string status)
+	{
+		Status = status;
+		Success = false;
+		Headers = 0;
+		Blocks = 0;
+		PeersCount = 0;
+		Synchronized = false;
+	}
+
 	public static RpcStatus Unresponsive { get; } = new RpcStatus(false, 0, 0, 0);
+	public static RpcStatus Connecting { get; } = new RpcStatus(Resources.FullNodeConnecting);
 
 	public string Status { get; }
 	public bool Success { get; }
@@ -55,9 +66,17 @@ public class RpcStatus : IEquatable<RpcStatus>
 
 	public bool Equals(RpcStatus? other) => this == other;
 
-	public override int GetHashCode() => Status.GetHashCode();
+	public override int GetHashCode() => HashCode.Combine(Status, Success, Headers, Blocks, PeersCount, Synchronized);
 
-	public static bool operator ==(RpcStatus? x, RpcStatus? y) => y?.Status == x?.Status;
+	public static bool operator ==(RpcStatus? x, RpcStatus? y) =>
+		x is null ? y is null :
+		y is not null &&
+		x.Status == y.Status &&
+		x.Success == y.Success &&
+		x.Headers == y.Headers &&
+		x.Blocks == y.Blocks &&
+		x.PeersCount == y.PeersCount &&
+		x.Synchronized == y.Synchronized;
 
 	public static bool operator !=(RpcStatus? x, RpcStatus? y) => !(x == y);
 

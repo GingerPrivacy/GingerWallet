@@ -280,7 +280,7 @@ public class CoreNode
 		// If it isn't already running, then we run it.
 		if (await coreNode.RpcClient.TestAsync(cancel).ConfigureAwait(false) is null)
 		{
-			Logger.LogInfo("A Bitcoin node is already running.");
+			await coreNode.LogAndValidateAlreadyRunningNodeAsync(cancel).ConfigureAwait(false);
 		}
 		else
 		{
@@ -293,6 +293,25 @@ public class CoreNode
 		await coreNode.P2pNode.ConnectAsync(cancel).ConfigureAwait(false);
 
 		return coreNode;
+	}
+
+	private async Task LogAndValidateAlreadyRunningNodeAsync(CancellationToken cancel)
+	{
+		BlockchainInfo blockchainInfo = await RpcClient.GetBlockchainInfoAsync(cancel).ConfigureAwait(false);
+		int connectionCount = await RpcClient.GetConnectionCountAsync(cancel).ConfigureAwait(false);
+
+		Logger.LogInfo(
+			$"A Bitcoin node is already running on RPC endpoint {RpcEndPoint}. " +
+			$"Chain={blockchainInfo.Chain}, Blocks={blockchainInfo.Blocks}, Headers={blockchainInfo.Headers}, " +
+			$"InitialBlockDownload={blockchainInfo.InitialBlockDownload}, VerificationProgress={blockchainInfo.VerificationProgress:P2}, " +
+			$"Peers={connectionCount}, DataDir={DataDir}, P2PEndpoint={P2pEndPoint}.");
+
+		if (blockchainInfo.Chain != Network)
+		{
+			throw new InvalidOperationException(
+				$"The Bitcoin node responding on RPC endpoint {RpcEndPoint} is on the {blockchainInfo.Chain} network, " +
+				$"but Ginger Wallet is configured for the {Network} network.");
+		}
 	}
 
 	private static EndPoint? GetConnectableBindEndPoint(EndPoint? bindEndPoint)
