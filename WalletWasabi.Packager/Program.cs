@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -295,27 +296,13 @@ public static class Program
 
 			Tools.ClearSha512Tags(currentBinDistDirectory);
 
-			// Remove Tor binaries that are not relevant to the platform.
-			var toNotRemove = "";
-			if (target.StartsWith("win"))
-			{
-				toNotRemove = "win";
-			}
-			else if (target.StartsWith("linux"))
-			{
-				toNotRemove = "lin";
-			}
-			else if (target.StartsWith("osx"))
-			{
-				toNotRemove = "osx";
-			}
-
 			// Remove binaries that are not relevant to the platform.
 			var binaryFolder = new DirectoryInfo(Path.Combine(currentBinDistDirectory, "Microservices", "Binaries"));
+			var binaryFoldersToKeep = GetBinaryFoldersToKeep(target);
 
 			foreach (var dir in binaryFolder.EnumerateDirectories())
 			{
-				if (!dir.Name.Contains(toNotRemove, StringComparison.OrdinalIgnoreCase))
+				if (!binaryFoldersToKeep.Contains(dir.Name))
 				{
 					await IoHelpers.TryDeleteDirectoryAsync(dir.FullName).ConfigureAwait(false);
 				}
@@ -671,6 +658,18 @@ public static class Program
 		}
 
 		return target;
+	}
+
+	private static HashSet<string> GetBinaryFoldersToKeep(string target)
+	{
+		return target switch
+		{
+			"win-x64" => new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "win64" },
+			"linux-x64" => new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "lin64" },
+			"osx-x64" => new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "osx64" },
+			"osx-arm64" => new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "osx-arm64" },
+			_ => throw new NotSupportedException($"Unsupported package target '{target}'.")
+		};
 	}
 
 	private static void DeleteGitMetadataFiles(string rootDir)

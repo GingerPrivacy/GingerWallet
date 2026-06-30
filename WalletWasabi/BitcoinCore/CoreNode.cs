@@ -3,6 +3,7 @@ using NBitcoin.DataEncoders;
 using NBitcoin.Protocol;
 using NBitcoin.RPC;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -22,6 +23,20 @@ namespace WalletWasabi.BitcoinCore;
 
 public class CoreNode
 {
+	private static readonly string[] BitcoinKnotsOnlyConfigKeys =
+	[
+		"softwareexpiry",
+		"corepolicy",
+		"consensusrules",
+		"rejectparasites",
+		"subdustfeepenalty",
+		"datacarriercost",
+		"datacarrierfullcount",
+		"acceptnonstddatacarrier",
+		"permitbaredatacarrier",
+		"bytespersigopstrict"
+	];
+
 	public CoreNode(string dataDir, Network network, MempoolService mempoolService, CoreConfig config, EndPoint p2pEndPoint, EndPoint rpcEndPoint, IRPCClient rpcClient)
 	{
 		DataDir = dataDir;
@@ -135,7 +150,6 @@ public class CoreNode
 			$"{configPrefix}.rpcbind		= {rpcBindParameter}",
 			$"{configPrefix}.rpcallowip		= {IPAddress.Loopback}",
 			$"{configPrefix}.rpcport		= {rpcPortParameter}",
-			$"{configPrefix}.softwareexpiry	= 0",
 		};
 
 		if (!cookieAuth)
@@ -231,9 +245,16 @@ public class CoreNode
 			desiredConfigLines.Insert(0, sectionComment);
 		}
 
+		int removedKnotsOnlyOptions = coreNode.Config.RemoveAll(BitcoinKnotsOnlyConfigKeys);
+		if (removedKnotsOnlyOptions > 0 && File.Exists(configPath))
+		{
+			await BackupConfigFileAsync(configPath, cancel).ConfigureAwait(false);
+			Logger.LogInfo($"Removed {removedKnotsOnlyOptions} Bitcoin Knots-only configuration option(s) from bitcoin.conf before starting {Constants.BuiltinBitcoinNodeName}.");
+		}
+
 		bool removedReplacement = coreNode.Config.RemoveAll("mempoolreplacement") != 0; // We remove the line, so it will use the default - that is full-RBF
 		bool updated = coreNode.Config.AddOrUpdate(string.Join(Environment.NewLine, desiredConfigLines)); // We always need to check AddOrUpdate
-		if (removedReplacement || updated || !File.Exists(configPath))
+		if (removedKnotsOnlyOptions > 0 || removedReplacement || updated || !File.Exists(configPath))
 		{
 			IoHelpers.EnsureContainingDirectoryExists(configPath);
 			await File.WriteAllTextAsync(configPath, coreNode.Config.ToString(), CancellationToken.None).ConfigureAwait(false);
@@ -255,6 +276,15 @@ public class CoreNode
 		await coreNode.P2pNode.ConnectAsync(cancel).ConfigureAwait(false);
 
 		return coreNode;
+	}
+
+	private static async Task BackupConfigFileAsync(string configPath, CancellationToken cancel)
+	{
+		string timestamp = DateTimeOffset.UtcNow.ToString("yyyyMMddHHmmssfff", CultureInfo.InvariantCulture);
+		string backupPath = $"{configPath}.ginger-knots-backup-{timestamp}.bak";
+		using FileStream source = File.Open(configPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+		using FileStream destination = File.Create(backupPath);
+		await source.CopyToAsync(destination, cancel).ConfigureAwait(false);
 	}
 
 	public async Task<Node> CreateNewP2pNodeAsync()

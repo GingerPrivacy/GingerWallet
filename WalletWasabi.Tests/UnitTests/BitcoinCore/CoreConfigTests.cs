@@ -219,6 +219,36 @@ public class CoreConfigTests
 		Assert.Equal(expectedConfig, coreConfig.ToString());
 	}
 
+	[Fact]
+	public void RemovesExactKeysAcrossNetworkPrefixes()
+	{
+		var testConfig = EnsureNewLine(
+			"""
+			softwareexpiry=0
+			main.corepolicy=1
+			test.rejectparasites=0
+			regtest.subdustfeepenalty=0
+			notsoftwareexpiry=1
+			mycorepolicy=1
+			server=1
+			""");
+		var coreConfig = new CoreConfig();
+		coreConfig.AddOrUpdate(testConfig);
+
+		int removed = coreConfig.RemoveAll("softwareexpiry", "corepolicy", "rejectparasites", "subdustfeepenalty");
+
+		Assert.Equal(4, removed);
+		var expectedConfig = EnsureNewLine(
+			"""
+			notsoftwareexpiry = 1
+			mycorepolicy = 1
+			server = 1
+
+			""");
+
+		Assert.Equal(expectedConfig, coreConfig.ToString());
+	}
+
 	// Depending on the source the new lines in """...""" block might be a simple '\n' regardless of the OS
 	public string EnsureNewLine(string text) => text.Replace("\r\n", "\n").Replace("\n", Environment.NewLine);
 }

@@ -310,7 +310,7 @@
         <value>O endereço Bitcoin é válido para {0} e não para {1}.</value>
     </data>
     <data name="BitcoinCoreKnotsDataFolder" xml:space="preserve">
-        <value>Pasta de Dados do Bitcoin Core/Knots</value>
+        <value>Pasta de Dados do Bitcoin Core</value>
     </data>
     <data name="BitcoinFractionGrouping" xml:space="preserve">
         <value>Agrupamento de frações de Bitcoin</value>
@@ -517,7 +517,7 @@
         <value>A senha de compatibilidade foi usada! Por favor, considere gerar uma nova carteira para garantir a recuperabilidade!</value>
     </data>
     <data name="CompatibleBitcoinCoreKnotsVersion" xml:space="preserve">
-        <value>Versão compatível do Bitcoin Core e Bitcoin Knots</value>
+        <value>Versão compatível do Bitcoin Core</value>
     </data>
     <data name="CompatibleCoordinatorVersions" xml:space="preserve">
         <value>Versões compatíveis do Coordenador</value>
@@ -1066,7 +1066,7 @@
         <value>- {0} restante</value>
     </data>
     <data name="LocalBitcoinCoreKnotsVersion" xml:space="preserve">
-        <value>Versão local do Bitcoin Core/Knots</value>
+        <value>Versão local do Bitcoin Core</value>
     </data>
     <data name="MarkAllAsRead" xml:space="preserve">
         <value>Marcar todos como lidos</value>
@@ -1454,7 +1454,7 @@
         <value>inicialização, boot</value>
     </data>
     <data name="RunBitcoinKnotsOnStartup" xml:space="preserve">
-        <value>(EXPERIMENTAL) Executar Bitcoin Knots na inicialização</value>
+        <value>(EXPERIMENTAL) Executar Bitcoin Core na inicialização</value>
     </data>
     <data name="RunInBackgroundKeywords" xml:space="preserve">
         <value>ocultar, bandeja</value>
@@ -1634,7 +1634,7 @@
         <value>Status</value>
     </data>
     <data name="StopBitcoinKnotsOnShutdown" xml:space="preserve">
-        <value>Parar Bitcoin Knots ao desligar</value>
+        <value>Parar Bitcoin Core ao desligar</value>
     </data>
     <data name="StoppedMessage" xml:space="preserve">
         <value>Coinjoin foi interrompido</value>

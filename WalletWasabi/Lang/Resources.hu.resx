@@ -835,16 +835,16 @@
     <value>Hálózat</value>
   </data>
   <data name="RunBitcoinKnotsOnStartup" xml:space="preserve">
-    <value>(KÍSÉRLETI) Bitcoin Knots futtatása indításkor</value>
+    <value>(KÍSÉRLETI) Bitcoin Core futtatása indításkor</value>
   </data>
   <data name="StopBitcoinKnotsOnShutdown" xml:space="preserve">
-    <value>Bitcoin Knots leállítása a program bezárásakor</value>
+    <value>Bitcoin Core leállítása a program bezárásakor</value>
   </data>
   <data name="LocalBitcoinCoreKnotsVersion" xml:space="preserve">
-    <value>Helyi Bitcoin Core/Knots verzió</value>
+    <value>Helyi Bitcoin Core verzió</value>
   </data>
   <data name="BitcoinCoreKnotsDataFolder" xml:space="preserve">
-    <value>Bitcoin Core/Knots könyvtár</value>
+    <value>Bitcoin Core könyvtár</value>
   </data>
   <data name="WasabiDownloadBlocksFromFullNode" xml:space="preserve">
     <value>A Ginger egy Full Node-tól tölt le blokkokat, amelyet te vezérelsz.</value>
@@ -1777,7 +1777,7 @@
     <value>Jelenlegi koordinátor verzió</value>
   </data>
   <data name="CompatibleBitcoinCoreKnotsVersion" xml:space="preserve">
-    <value>Kompatibilis Bitcoin Core és Bitcoin Knots verzió</value>
+    <value>Kompatibilis Bitcoin Core verzió</value>
   </data>
   <data name="CompatibleHardwareWalletInterfaceVersion" xml:space="preserve">
     <value>Kompatibilis HWI verzió</value>

@@ -105,3 +105,30 @@ You will need to install `7z` (or something else) to extract the `.dmg`. You can
 7z x Wasabi-1.1.6.dmg -oWasabiOsx
 git diff --no-index osx-x64/ WasabiOsx/Wasabi\ Wallet.App/Contents/MacOS/
 ```
+
+## Bitcoin Core bundled binaries
+
+Ginger bundles upstream Bitcoin Core `bitcoind` binaries as microservice runtime artifacts. Ginger does not independently rebuild Bitcoin Core release binaries as part of its deterministic build process.
+
+`WalletWasabi/Microservices/Binaries/UpgradeBitcoinCoreBinaries.ps1` verifies official Bitcoin Core release authenticity and integrity before replacing bundled binaries:
+
+1. Downloads release archives, `SHA256SUMS`, and `SHA256SUMS.asc` from `https://bitcoincore.org/bin/bitcoin-core-<version>/`.
+2. Verifies `SHA256SUMS.asc` with pinned Bitcoin Core release signer fingerprints.
+3. Verifies each downloaded archive against the signed `SHA256SUMS` entry.
+4. Extracts only `bitcoind` / `bitcoind.exe` into the platform microservice folders.
+
+This release verification is separate from independently proving that Bitcoin Core's published binaries are reproducible builds. Bitcoin Core documents that additional verification path under "Additional verification with reproducible builds" on the official download page:
+
+https://bitcoincore.org/en/download/
+
+Bitcoin Core reproducible build attestations are published in the `bitcoin-core/guix.sigs` repository:
+
+https://github.com/bitcoin-core/guix.sigs
+
+For website release binaries, the relevant per-release files are the signed `all.SHA256SUMS` files under the version-specific builder directories, for example:
+
+```text
+<version>/<builder>/all.SHA256SUMS
+```
+
+Those attestations can be used to verify that independent Guix builders reproduced the same release artifact hashes as the official website binaries. For Ginger client packaging, this deterministic build boundary is intentionally upstream: use the Bitcoin Core documentation and `bitcoin-core/guix.sigs` attestations as the source of truth for independent Bitcoin Core reproducible build verification.

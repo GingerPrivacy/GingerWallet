@@ -835,16 +835,16 @@
     <value>网络</value>
   </data>
   <data name="RunBitcoinKnotsOnStartup" xml:space="preserve">
-    <value>（实验性）启动时运行 Bitcoin Knots</value>
+    <value>（实验性）启动时运行 Bitcoin Core</value>
   </data>
   <data name="StopBitcoinKnotsOnShutdown" xml:space="preserve">
-    <value>在程序关闭时关闭 Bitcoin Knots</value>
+    <value>在程序关闭时关闭 Bitcoin Core</value>
   </data>
   <data name="LocalBitcoinCoreKnotsVersion" xml:space="preserve">
-    <value>本地 Bitcoin Core/Knots 版本</value>
+    <value>本地 Bitcoin Core 版本</value>
   </data>
   <data name="BitcoinCoreKnotsDataFolder" xml:space="preserve">
-    <value>Bitcoin Core/Knots 数据文件夹</value>
+    <value>Bitcoin Core 数据文件夹</value>
   </data>
   <data name="WasabiDownloadBlocksFromFullNode" xml:space="preserve">
     <value>Ginger从您控制的全节点同步区块数据。</value>
@@ -1777,7 +1777,7 @@
     <value>当前协调器版本</value>
   </data>
   <data name="CompatibleBitcoinCoreKnotsVersion" xml:space="preserve">
-    <value>兼容的 Bitcoin Core 和 Bitcoin Knots 版本</value>
+    <value>兼容的 Bitcoin Core 版本</value>
   </data>
   <data name="CompatibleHardwareWalletInterfaceVersion" xml:space="preserve">
     <value>兼容的HIW（硬件钱包接口）版本</value>

@@ -44,7 +44,8 @@ public static class MicroserviceHelpers
 		}
 		else if (platform == OSPlatform.OSX)
 		{
-			path = Path.Combine(commonPartialPath, "osx64");
+			string folderName = RuntimeInformation.ProcessArchitecture == Architecture.Arm64 ? "osx-arm64" : "osx64";
+			path = Path.Combine(commonPartialPath, folderName);
 		}
 		else
 		{

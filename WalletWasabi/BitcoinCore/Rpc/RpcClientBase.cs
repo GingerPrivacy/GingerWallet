@@ -71,7 +71,7 @@ public class RpcClientBase : IRPCClient
 			var response = await Rpc.SendCommandAsync(RPCOperations.getmempoolinfo, cancel, true)
 				.ConfigureAwait(false);
 
-			static IEnumerable<FeeRateGroup> ExtractFeeRateGroups(JToken jt) =>
+			static IEnumerable<FeeRateGroup> ExtractFeeRateGroups(JToken? jt) =>
 				jt switch
 				{
 					JObject jo => jo.Properties()
@@ -102,7 +102,7 @@ public class RpcClientBase : IRPCClient
 				MinRelayTxFee = double.Parse(
 					(string)response.Result["minrelaytxfee"]!,
 					CultureInfo.InvariantCulture),
-				Histogram = ExtractFeeRateGroups(response.Result["fee_histogram"]!).ToArray()
+				Histogram = ExtractFeeRateGroups(response.Result["fee_histogram"]).ToArray()
 			};
 		}
 		catch (RPCException ex) when (ex.RPCCode == RPCErrorCode.RPC_MISC_ERROR)

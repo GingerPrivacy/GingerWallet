@@ -655,7 +655,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bitcoin Core/Knots Data Folder.
+        ///   Looks up a localized string similar to Bitcoin Core Data Folder.
         /// </summary>
         public static string BitcoinCoreKnotsDataFolder {
             get {
@@ -1303,7 +1303,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Compatible Bitcoin Core and Bitcoin Knots Version.
+        ///   Looks up a localized string similar to Compatible Bitcoin Core Version.
         /// </summary>
         public static string CompatibleBitcoinCoreKnotsVersion {
             get {
@@ -3031,7 +3031,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Local Bitcoin Core/Knots version.
+        ///   Looks up a localized string similar to Local Bitcoin Core version.
         /// </summary>
         public static string LocalBitcoinCoreKnotsVersion {
             get {
@@ -4301,7 +4301,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to (EXPERIMENTAL) Run Bitcoin Knots on startup.
+        ///   Looks up a localized string similar to (EXPERIMENTAL) Run Bitcoin Core on startup.
         /// </summary>
         public static string RunBitcoinKnotsOnStartup {
             get {
@@ -4976,7 +4976,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stop Bitcoin Knots on shutdown.
+        ///   Looks up a localized string similar to Stop Bitcoin Core on shutdown.
         /// </summary>
         public static string StopBitcoinKnotsOnShutdown {
             get {
