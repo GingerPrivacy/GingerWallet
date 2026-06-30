@@ -30,6 +30,8 @@ public interface IRPCClient
 
 	Task<PeerInfo[]> GetPeersInfoAsync(CancellationToken cancellationToken = default);
 
+	Task<int> GetConnectionCountAsync(CancellationToken cancellationToken = default);
+
 	Task<TimeSpan> UptimeAsync(CancellationToken cancellationToken = default);
 
 	Task<uint256> SendRawTransactionAsync(Transaction transaction, CancellationToken cancellationToken = default);

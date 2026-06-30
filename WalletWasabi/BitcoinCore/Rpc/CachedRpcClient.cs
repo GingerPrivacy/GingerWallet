@@ -134,6 +134,17 @@ public class CachedRpcClient : RpcClientBase
 			cancellationToken).ConfigureAwait(false);
 	}
 
+	public override async Task<int> GetConnectionCountAsync(CancellationToken cancellationToken = default)
+	{
+		string cacheKey = nameof(GetConnectionCountAsync);
+
+		return await IdempotencyRequestCache.GetCachedResponseAsync(
+			cacheKey,
+			action: (string request, CancellationToken cancellationToken) => base.GetConnectionCountAsync(cancellationToken),
+			options: GetPeersInfoCacheOptions,
+			cancellationToken).ConfigureAwait(false);
+	}
+
 	public override async Task<MempoolEntry> GetMempoolEntryAsync(uint256 txid, bool throwIfNotFound = true, CancellationToken cancellationToken = default)
 	{
 		string cacheKey = $"{nameof(GetMempoolEntryAsync)}:{txid}";

@@ -59,6 +59,12 @@ public class RpcClientBase : IRPCClient
 		return await Rpc.GetPeersInfoAsync(cancellationToken).ConfigureAwait(false);
 	}
 
+	public virtual async Task<int> GetConnectionCountAsync(CancellationToken cancellationToken = default)
+	{
+		var response = await Rpc.SendCommandAsync(RPCOperations.getconnectioncount, cancellationToken).ConfigureAwait(false);
+		return response.Result.Value<int>();
+	}
+
 	public virtual async Task<MempoolEntry> GetMempoolEntryAsync(uint256 txid, bool throwIfNotFound = true, CancellationToken cancellationToken = default)
 	{
 		return await Rpc.GetMempoolEntryAsync(txid, throwIfNotFound, cancellationToken).ConfigureAwait(false);

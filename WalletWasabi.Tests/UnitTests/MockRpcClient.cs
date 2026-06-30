@@ -23,6 +23,7 @@ public class MockRpcClient : IRPCClient
 	public Func<uint256, bool, Task<Transaction>>? OnGetRawTransactionAsync { get; set; }
 	public Func<int, EstimateSmartFeeMode, Task<EstimateSmartFeeResponse>>? OnEstimateSmartFeeAsync { get; set; }
 	public Func<Task<PeerInfo[]>>? OnGetPeersInfoAsync { get; set; }
+	public Func<Task<int>>? OnGetConnectionCountAsync { get; set; }
 	public Func<int, BitcoinAddress, Task<uint256[]>>? OnGenerateToAddressAsync { get; set; }
 	public Func<Task<int>>? OnGetBlockCountAsync { get; set; }
 	public Func<Task<TimeSpan>>? OnUptimeAsync { get; set; }
@@ -90,6 +91,11 @@ public class MockRpcClient : IRPCClient
 	public Task<PeerInfo[]> GetPeersInfoAsync(CancellationToken cancellationToken = default)
 	{
 		return OnGetPeersInfoAsync?.Invoke() ?? NotImplementedTask<PeerInfo[]>(nameof(GetPeersInfoAsync));
+	}
+
+	public Task<int> GetConnectionCountAsync(CancellationToken cancellationToken = default)
+	{
+		return OnGetConnectionCountAsync?.Invoke() ?? NotImplementedTask<int>(nameof(GetConnectionCountAsync));
 	}
 
 	public Task<uint256[]> GetRawMempoolAsync(CancellationToken cancellationToken = default)
