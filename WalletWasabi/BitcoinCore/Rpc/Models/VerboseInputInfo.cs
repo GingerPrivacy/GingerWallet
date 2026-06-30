@@ -10,6 +10,11 @@ public class VerboseInputInfo
 	{
 	}
 
+	public VerboseInputInfo(OutPoint outPoint)
+		: this(outPoint, null, null)
+	{
+	}
+
 	public VerboseInputInfo(OutPoint outPoint, VerboseOutputInfo prevOutput)
 		: this(outPoint, prevOutput, null)
 	{

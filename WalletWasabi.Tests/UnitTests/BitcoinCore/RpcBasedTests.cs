@@ -2,6 +2,7 @@ using NBitcoin;
 using NBitcoin.RPC;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
 using WalletWasabi.BitcoinCore.Rpc;
@@ -268,6 +269,21 @@ public class RpcBasedTests
 		Assert.Equal(Money.Coins((decimal)1.00000000), blockInfo.Transactions.ElementAt(1).Outputs.ElementAt(1).Value);
 		Assert.Equal(RpcPubkeyType.TxPubkeyhash, blockInfo.Transactions.ElementAt(1).Outputs.ElementAt(0).PubkeyType);
 		Assert.Equal(RpcPubkeyType.TxPubkeyhash, blockInfo.Transactions.ElementAt(1).Outputs.ElementAt(1).PubkeyType);
+	}
+
+	[Fact]
+	public void ParseBitcoinCoreVerboseBlockInfoWithoutPrevout()
+	{
+		var response = JsonNode.Parse(RpcOutput)!.AsObject();
+		response["tx"]![1]!["vin"]![0]!.AsObject().Remove("prevout");
+
+		var blockInfo = RpcParser.ParseVerboseBlockResponse(response.ToJsonString());
+
+		var input = blockInfo.Transactions.ElementAt(1).Inputs.Single();
+		Assert.False(input.IsCoinbase);
+		Assert.Equal(new uint256("4815e72e2d967b666097c476473d0175b94d2a22f384e6389ab44dc9260dd8e0"), input.OutPoint?.Hash);
+		Assert.Equal(0U, input.OutPoint?.N);
+		Assert.Null(input.PrevOutput);
 	}
 
 	[Fact]

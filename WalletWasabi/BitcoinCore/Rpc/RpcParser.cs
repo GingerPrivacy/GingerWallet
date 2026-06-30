@@ -68,14 +68,21 @@ public static class RpcParser
 				}
 				else
 				{
-					var prevOut = txInJson.GetProperty("prevout");
-					var scriptPubKey = prevOut.GetProperty("scriptPubKey");
-					input = new VerboseInputInfo(
-						outPoint: new OutPoint(uint256.Parse(txInJson.GetProperty("txid").GetString()), txInJson.GetProperty("vout").GetUInt32()),
-						prevOutput: new VerboseOutputInfo(
+					var outPoint = new OutPoint(uint256.Parse(txInJson.GetProperty("txid").GetString()), txInJson.GetProperty("vout").GetUInt32());
+					if (txInJson.TryGetProperty("prevout", out var prevOut))
+					{
+						var scriptPubKey = prevOut.GetProperty("scriptPubKey");
+						input = new VerboseInputInfo(
+							outPoint,
+							new VerboseOutputInfo(
 							value: Money.Coins(prevOut.GetProperty("value").GetDecimal()),
 							scriptPubKey: Script.FromHex(scriptPubKey.GetProperty("hex").GetString()),
 							pubkeyType: scriptPubKey.GetProperty("type").GetString()));
+					}
+					else
+					{
+						input = new VerboseInputInfo(outPoint);
+					}
 				}
 
 				inputs.Add(input);
