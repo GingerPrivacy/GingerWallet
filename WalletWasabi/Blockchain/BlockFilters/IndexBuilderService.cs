@@ -81,6 +81,8 @@ public class IndexBuilderService
 			}
 		}
 
+		IsPrevOutputCacheAuthoritative = _indexList.Count == 0;
+
 		BlockNotifier.OnBlock += BlockNotifier_OnBlock;
 	}
 
@@ -93,6 +95,8 @@ public class IndexBuilderService
 	private ReaderWriterLockSlim _indexListLock = new();
 	private List<FilterModel> _indexList = [];
 	private Dictionary<uint256, int> _blockIndex = [];
+	private Dictionary<OutPoint, VerboseOutputInfo> PrevOutputCache { get; } = [];
+	private bool IsPrevOutputCacheAuthoritative { get; set; }
 
 	private uint StartingHeight { get; }
 	public bool IsRunning => Interlocked.Read(ref _serviceStatus) == Running;
@@ -217,7 +221,7 @@ public class IndexBuilderService
 								continue;
 							}
 
-							var filter = BuildFilterForBlock(block, PubKeyTypes);
+							var filter = BuildFilterForBlock(block, PubKeyTypes, PrevOutputCache, IsPrevOutputCacheAuthoritative);
 
 							var smartHeader = new SmartHeader(block.Hash, block.PrevBlockHash, nextHeight, block.BlockTime);
 							var filterModel = new FilterModel(smartHeader, filter);
@@ -268,9 +272,16 @@ public class IndexBuilderService
 		});
 	}
 
-	internal static GolombRiceFilter BuildFilterForBlock(VerboseBlockInfo block, RpcPubkeyType[] pubKeyTypes)
+	internal static GolombRiceFilter BuildFilterForBlock(VerboseBlockInfo block, RpcPubkeyType[] pubKeyTypes) =>
+		BuildFilterForBlock(block, pubKeyTypes, prevOutputCache: null, isPrevOutputCacheAuthoritative: false);
+
+	internal static GolombRiceFilter BuildFilterForBlock(
+		VerboseBlockInfo block,
+		RpcPubkeyType[] pubKeyTypes,
+		IDictionary<OutPoint, VerboseOutputInfo>? prevOutputCache,
+		bool isPrevOutputCacheAuthoritative)
 	{
-		var scripts = FetchScripts(block, pubKeyTypes);
+		var scripts = FetchScripts(block, pubKeyTypes, prevOutputCache, isPrevOutputCacheAuthoritative);
 
 		if (scripts.Count != 0)
 		{
@@ -289,7 +300,11 @@ public class IndexBuilderService
 		}
 	}
 
-	private static List<Script> FetchScripts(VerboseBlockInfo block, RpcPubkeyType[] pubKeyTypes)
+	private static List<Script> FetchScripts(
+		VerboseBlockInfo block,
+		RpcPubkeyType[] pubKeyTypes,
+		IDictionary<OutPoint, VerboseOutputInfo>? prevOutputCache,
+		bool isPrevOutputCacheAuthoritative)
 	{
 		var scripts = new List<Script>();
 
@@ -297,28 +312,48 @@ public class IndexBuilderService
 		{
 			foreach (var input in tx.Inputs)
 			{
+				if (input.IsCoinbase)
+				{
+					continue;
+				}
+
 				var prevOut = input.PrevOutput;
 				if (prevOut is null)
 				{
-					if (!input.IsCoinbase)
+					var outPoint = input.OutPoint;
+					if (outPoint is null)
 					{
-						throw new InvalidOperationException($"Cannot build filter for block '{block.Hash}' because transaction '{tx.Id}' is missing prevout data for input '{input.OutPoint}'.");
+						throw new InvalidOperationException($"Cannot build filter for block '{block.Hash}' because transaction '{tx.Id}' is missing input outpoint data.");
 					}
 
-					continue;
+					if (prevOutputCache?.TryGetValue(outPoint, out prevOut) is not true)
+					{
+						if (isPrevOutputCacheAuthoritative)
+						{
+							continue;
+						}
+
+						throw new InvalidOperationException($"Cannot build filter for block '{block.Hash}' because transaction '{tx.Id}' is missing prevout data for input '{outPoint}', and the local prevout cache was not built from the index starting height.");
+					}
 				}
 
 				if (pubKeyTypes.Contains(prevOut.PubkeyType))
 				{
 					scripts.Add(prevOut.ScriptPubKey);
 				}
+
+				if (input.OutPoint is { } spentOutPoint)
+				{
+					prevOutputCache?.Remove(spentOutPoint);
+				}
 			}
 
-			foreach (var output in tx.Outputs)
+			foreach (var (output, index) in tx.Outputs.Select((output, index) => (output, index)))
 			{
 				if (pubKeyTypes.Contains(output.PubkeyType))
 				{
 					scripts.Add(output.ScriptPubKey);
+					prevOutputCache?.Add(new OutPoint(tx.Id, (uint)index), output);
 				}
 			}
 		}
