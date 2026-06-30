@@ -44,8 +44,8 @@
       },
       "Microsoft.Data.Sqlite.Core": {
         "type": "Transitive",
-        "resolved": "8.0.19",
-        "contentHash": "ugQbXR+SwaFHXkfMW+Q6Dn9VSQn6uUoaFp49Zqe+EQGDNMb8dviFCratqnRiBXZKAqt2aFRsV+Cj5gqcTWU/dA==",
+        "resolved": "8.0.28",
+        "contentHash": "tBFB6FTHmKPpNpZbm79asyQ5A84QR81u1co4S3TQMqaN/e8eQHtc7rEZQclWy5HliLzxXz7yEnktKJRa7gQZyw==",
         "dependencies": {
           "SQLitePCLRaw.core": "2.1.6"
         }
@@ -176,8 +176,8 @@
       },
       "Microsoft.Net.Http.Headers": {
         "type": "Transitive",
-        "resolved": "8.0.19",
-        "contentHash": "f2hSRVq5rR97YlfGcScVMXJvQpNpbbpnZjwsZ4kmN5/T3xk9DBVt1SPZDJIPrp/sSfdjz8aQtD8jKLXHyoHVng==",
+        "resolved": "8.0.28",
+        "contentHash": "SSN+lIVFTV97WUujUyEChnfjuTo5fKI3F1s2cKsueqai1QY3chzZQouYBZitxXWrD8qf44Z75Iy1tuQWZKNHcQ==",
         "dependencies": {
           "Microsoft.Extensions.Primitives": "8.0.0"
         }
@@ -241,15 +241,15 @@
           "Microsoft.Extensions.Logging.Console": "[8.0.1, )",
           "Microsoft.Extensions.Logging.Debug": "[8.0.1, )",
           "NBitcoin": "[9.0.0, )",
-          "Newtonsoft.Json": "[13.0.3, )"
+          "Newtonsoft.Json": "[13.0.4, )"
         }
       },
       "walletwasabi": {
         "type": "Project",
         "dependencies": {
           "GingerCommon": "[1.0.0, )",
-          "Microsoft.AspNetCore.WebUtilities": "[8.0.19, )",
-          "Microsoft.Data.Sqlite": "[8.0.19, )",
+          "Microsoft.AspNetCore.WebUtilities": "[8.0.28, )",
+          "Microsoft.Data.Sqlite": "[8.0.28, )",
           "Microsoft.Extensions.Caching.Abstractions": "[8.0.0, )",
           "Microsoft.Extensions.Hosting.Abstractions": "[8.0.1, )",
           "Microsoft.Extensions.Http": "[8.0.1, )",
@@ -264,21 +264,21 @@
       },
       "Microsoft.AspNetCore.WebUtilities": {
         "type": "CentralTransitive",
-        "requested": "[8.0.19, )",
-        "resolved": "8.0.19",
-        "contentHash": "fB3ikXAlz6yQuy029zDAS3J4qW3o6HQYL+kqsTjhiog1JwgpfkRTELCTGxMv7fL6VljFtfNJIQ/2684soCuI9A==",
+        "requested": "[8.0.28, )",
+        "resolved": "8.0.28",
+        "contentHash": "pXPP85yKDxFurpRWvXwSGvg0Arxw8wW8zdroHdGTZ9oE3KN8U4yPbTiArGQUDJHS/HBIYf/gK88QAHXrNmcmuw==",
         "dependencies": {
-          "Microsoft.Net.Http.Headers": "8.0.19",
+          "Microsoft.Net.Http.Headers": "8.0.28",
           "System.IO.Pipelines": "8.0.0"
         }
       },
       "Microsoft.Data.Sqlite": {
         "type": "CentralTransitive",
-        "requested": "[8.0.19, )",
-        "resolved": "8.0.19",
-        "contentHash": "GcYP5qUdpnF3FPoVZ6EewQ7EESRWuX79pTBYxRo/KCCiz9HTDtTka0FH+h3fUGJqk21nc0Q9BApThywO1enFaw==",
+        "requested": "[8.0.28, )",
+        "resolved": "8.0.28",
+        "contentHash": "YM522Q363v0GBq/3xpjWvUALurnwxDoAhhihlYoWhkBQ98XHQxZf01IOwLiUaWFl3PL45PLa4Wbm3FqyijMZGg==",
         "dependencies": {
-          "Microsoft.Data.Sqlite.Core": "8.0.19",
+          "Microsoft.Data.Sqlite.Core": "8.0.28",
           "SQLitePCLRaw.bundle_e_sqlite3": "2.1.6"
         }
       },
@@ -360,9 +360,9 @@
       },
       "Newtonsoft.Json": {
         "type": "CentralTransitive",
-        "requested": "[13.0.3, )",
-        "resolved": "13.0.3",
-        "contentHash": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ=="
+        "requested": "[13.0.4, )",
+        "resolved": "13.0.4",
+        "contentHash": "pdgNNMai3zv51W5aq268sujXUyx7SNdE2bj1wZcWjAQrKMFZV260lbqYop1d2GM67JI1huLRwxo9ZqnfF/lC6A=="
       },
       "NNostr.Client": {
         "type": "CentralTransitive",
