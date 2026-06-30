@@ -106,14 +106,14 @@
       },
       "Markdown.Avalonia": {
         "type": "Direct",
-        "requested": "[11.0.3-a1, )",
-        "resolved": "11.0.3-a1",
-        "contentHash": "KtqVVB/2c6F5yB+juGjIPg8PHZ+7nXh9O1bdsR223Wq+H6G72cOnMbjEE+uX1+K4SOPlTPHVDci9CvcfXI4sZg==",
+        "requested": "[11.0.3, )",
+        "resolved": "11.0.3",
+        "contentHash": "z1eLnzv+FWquHaiFOGXd5+i8fa9sm4NbK+rr/6bTIk+HnXrt/asvgNfIrDVei2Bsy3f4Mjx7AyeiVnEdsxGKZw==",
         "dependencies": {
-          "Markdown.Avalonia.Html": "11.0.3-a1",
-          "Markdown.Avalonia.Svg": "11.0.3-a1",
-          "Markdown.Avalonia.SyntaxHigh": "11.0.3-a1",
-          "Markdown.Avalonia.Tight": "11.0.3-a1"
+          "Markdown.Avalonia.Html": "11.0.3",
+          "Markdown.Avalonia.Svg": "11.0.3",
+          "Markdown.Avalonia.SyntaxHigh": "11.0.3",
+          "Markdown.Avalonia.Tight": "11.0.3"
         }
       },
       "Microsoft.CodeAnalysis.BannedApiAnalyzers": {
@@ -276,17 +276,17 @@
       },
       "ColorDocument.Avalonia": {
         "type": "Transitive",
-        "resolved": "11.0.3-a1",
-        "contentHash": "nFWvafA7sRsTztrYtLqPKnL0EQ/nHz0Vf3xx8q5v8kY/8RFD9uFv7NKhj4niAdama/ej2GlBZW8x477LJlHySQ==",
+        "resolved": "11.0.3",
+        "contentHash": "3lKt5G7v7nHMZOQ7fbLRb8DgpLw3lC7lELWEErPnFS1nblT4MbV9kzPZXQ7G4NcE8vpEjU01gw6dDfRIy65NBA==",
         "dependencies": {
           "Avalonia": "11.0.0",
-          "ColorTextBlock.Avalonia": "11.0.3-a1"
+          "ColorTextBlock.Avalonia": "11.0.3"
         }
       },
       "ColorTextBlock.Avalonia": {
         "type": "Transitive",
-        "resolved": "11.0.3-a1",
-        "contentHash": "eEVGVPe+r0llDaeJHJw4zbK48LQMgqwV2vBL0njUUEJSuqiqqbn32A2xkEQLd/TXePPcxjMzsauwQVec3a/75w==",
+        "resolved": "11.0.3",
+        "contentHash": "oqj4yK4jD4XIvGJiTIh97+fVMVUHVWQZIdG+8PbENBkmLTg9TkZMga+hm8SOwB+W/r6m0coSmoH7NUMz2Wn6lg==",
         "dependencies": {
           "Avalonia": "11.0.0"
         }
@@ -347,30 +347,31 @@
       },
       "Markdown.Avalonia.Html": {
         "type": "Transitive",
-        "resolved": "11.0.3-a1",
-        "contentHash": "ZGJ7QHsO1G6MofgwiBPuhVufXnhfFfrLRHXwcQ4UPxqpJxRgqjYUnhqc5zvmQDCR7yh5YG918xGAYZxmChJkJA==",
+        "resolved": "11.0.3",
+        "contentHash": "/AGoL4soYQLVMzlnKYQmd4QWSAIYQVdp/6mnAdMPqnfrFSd8oXs0sHUvh1IRf+MwcPkrxunNrtDYmKu684y6ZA==",
         "dependencies": {
           "Avalonia": "11.0.0",
-          "ColorTextBlock.Avalonia": "11.0.3-a1",
+          "ColorDocument.Avalonia": "11.0.3",
+          "ColorTextBlock.Avalonia": "11.0.3",
           "HtmlAgilityPack": "1.11.42",
-          "Markdown.Avalonia.SyntaxHigh": "11.0.3-a1",
-          "Markdown.Avalonia.Tight": "11.0.3-a1"
+          "Markdown.Avalonia.SyntaxHigh": "11.0.3",
+          "Markdown.Avalonia.Tight": "11.0.3"
         }
       },
       "Markdown.Avalonia.Svg": {
         "type": "Transitive",
-        "resolved": "11.0.3-a1",
-        "contentHash": "1kBIAx1WWVtDKXqLNXm1x5vRGnqHcwffOzq74p1MYX49AZO+++xMuxwjq/zeH48sHbOVwb2eTp58afdDyx/XEQ==",
+        "resolved": "11.0.3",
+        "contentHash": "R/043ura/6Q5QfmI2KsqkRIKDer6LlZKZ1shy9zZmWqFEPvRc6aeEl2f2VCgkB/TBZt5PhC6hGt7ljmyWHn/eQ==",
         "dependencies": {
           "Avalonia": "11.0.0",
           "Avalonia.Svg": "11.0.0",
-          "Markdown.Avalonia.Tight": "11.0.3-a1"
+          "Markdown.Avalonia.Tight": "11.0.3"
         }
       },
       "Markdown.Avalonia.SyntaxHigh": {
         "type": "Transitive",
-        "resolved": "11.0.3-a1",
-        "contentHash": "DkbcpPaGOMDplXqbpnL0joEoG0wxiQ2gxd3YlCFO4EhtRSZrteQ+o4ZoGcowqgrv1IQEEA0Gpvsw/7Mx9lARxg==",
+        "resolved": "11.0.3",
+        "contentHash": "+DYkzuZwPrm6tJaVqXU5/ke7TKLj5RFzJV9mAQZdxWZTZxLrbEaSVLupjU9YFFwRUi2jdWCrH51OqM14mC3hww==",
         "dependencies": {
           "Avalonia": "11.0.0",
           "Avalonia.AvaloniaEdit": "11.0.0"
@@ -378,12 +379,12 @@
       },
       "Markdown.Avalonia.Tight": {
         "type": "Transitive",
-        "resolved": "11.0.3-a1",
-        "contentHash": "FBDzAOvDitTYftA0RZ2luIkcqWt5IXn67gR2guTBJka9Fn6QApHnAGbHqQWmo+R4Is/zi5s5zMoBNULK1AjyEQ==",
+        "resolved": "11.0.3",
+        "contentHash": "yV61pNsz8GfVzaNy2IM/K6eGEoL5J0uqPY3TCpWfVpwkH9gZEi48BIhoY3Lz/fmqbLR74aE2s1/N01z7jZQavQ==",
         "dependencies": {
           "Avalonia": "11.0.0",
-          "ColorDocument.Avalonia": "11.0.3-a1",
-          "ColorTextBlock.Avalonia": "11.0.3-a1"
+          "ColorDocument.Avalonia": "11.0.3",
+          "ColorTextBlock.Avalonia": "11.0.3"
         }
       },
       "MicroCom.Runtime": {
@@ -398,8 +399,8 @@
       },
       "Microsoft.Data.Sqlite.Core": {
         "type": "Transitive",
-        "resolved": "8.0.19",
-        "contentHash": "ugQbXR+SwaFHXkfMW+Q6Dn9VSQn6uUoaFp49Zqe+EQGDNMb8dviFCratqnRiBXZKAqt2aFRsV+Cj5gqcTWU/dA==",
+        "resolved": "8.0.28",
+        "contentHash": "tBFB6FTHmKPpNpZbm79asyQ5A84QR81u1co4S3TQMqaN/e8eQHtc7rEZQclWy5HliLzxXz7yEnktKJRa7gQZyw==",
         "dependencies": {
           "SQLitePCLRaw.core": "2.1.6"
         }
@@ -530,8 +531,8 @@
       },
       "Microsoft.Net.Http.Headers": {
         "type": "Transitive",
-        "resolved": "8.0.19",
-        "contentHash": "f2hSRVq5rR97YlfGcScVMXJvQpNpbbpnZjwsZ4kmN5/T3xk9DBVt1SPZDJIPrp/sSfdjz8aQtD8jKLXHyoHVng==",
+        "resolved": "8.0.28",
+        "contentHash": "SSN+lIVFTV97WUujUyEChnfjuTo5fKI3F1s2cKsueqai1QY3chzZQouYBZitxXWrD8qf44Z75Iy1tuQWZKNHcQ==",
         "dependencies": {
           "Microsoft.Extensions.Primitives": "8.0.0"
         }
@@ -820,15 +821,15 @@
           "Microsoft.Extensions.Logging.Console": "[8.0.1, )",
           "Microsoft.Extensions.Logging.Debug": "[8.0.1, )",
           "NBitcoin": "[9.0.0, )",
-          "Newtonsoft.Json": "[13.0.3, )"
+          "Newtonsoft.Json": "[13.0.4, )"
         }
       },
       "walletwasabi": {
         "type": "Project",
         "dependencies": {
           "GingerCommon": "[1.0.0, )",
-          "Microsoft.AspNetCore.WebUtilities": "[8.0.19, )",
-          "Microsoft.Data.Sqlite": "[8.0.19, )",
+          "Microsoft.AspNetCore.WebUtilities": "[8.0.28, )",
+          "Microsoft.Data.Sqlite": "[8.0.28, )",
           "Microsoft.Extensions.Caching.Abstractions": "[8.0.0, )",
           "Microsoft.Extensions.Hosting.Abstractions": "[8.0.1, )",
           "Microsoft.Extensions.Http": "[8.0.1, )",
@@ -851,21 +852,21 @@
       },
       "Microsoft.AspNetCore.WebUtilities": {
         "type": "CentralTransitive",
-        "requested": "[8.0.19, )",
-        "resolved": "8.0.19",
-        "contentHash": "fB3ikXAlz6yQuy029zDAS3J4qW3o6HQYL+kqsTjhiog1JwgpfkRTELCTGxMv7fL6VljFtfNJIQ/2684soCuI9A==",
+        "requested": "[8.0.28, )",
+        "resolved": "8.0.28",
+        "contentHash": "pXPP85yKDxFurpRWvXwSGvg0Arxw8wW8zdroHdGTZ9oE3KN8U4yPbTiArGQUDJHS/HBIYf/gK88QAHXrNmcmuw==",
         "dependencies": {
-          "Microsoft.Net.Http.Headers": "8.0.19",
+          "Microsoft.Net.Http.Headers": "8.0.28",
           "System.IO.Pipelines": "8.0.0"
         }
       },
       "Microsoft.Data.Sqlite": {
         "type": "CentralTransitive",
-        "requested": "[8.0.19, )",
-        "resolved": "8.0.19",
-        "contentHash": "GcYP5qUdpnF3FPoVZ6EewQ7EESRWuX79pTBYxRo/KCCiz9HTDtTka0FH+h3fUGJqk21nc0Q9BApThywO1enFaw==",
+        "requested": "[8.0.28, )",
+        "resolved": "8.0.28",
+        "contentHash": "YM522Q363v0GBq/3xpjWvUALurnwxDoAhhihlYoWhkBQ98XHQxZf01IOwLiUaWFl3PL45PLa4Wbm3FqyijMZGg==",
         "dependencies": {
-          "Microsoft.Data.Sqlite.Core": "8.0.19",
+          "Microsoft.Data.Sqlite.Core": "8.0.28",
           "SQLitePCLRaw.bundle_e_sqlite3": "2.1.6"
         }
       },
@@ -960,9 +961,9 @@
       },
       "Newtonsoft.Json": {
         "type": "CentralTransitive",
-        "requested": "[13.0.3, )",
-        "resolved": "13.0.3",
-        "contentHash": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ=="
+        "requested": "[13.0.4, )",
+        "resolved": "13.0.4",
+        "contentHash": "pdgNNMai3zv51W5aq268sujXUyx7SNdE2bj1wZcWjAQrKMFZV260lbqYop1d2GM67JI1huLRwxo9ZqnfF/lC6A=="
       },
       "NNostr.Client": {
         "type": "CentralTransitive",
