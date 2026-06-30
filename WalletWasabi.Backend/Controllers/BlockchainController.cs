@@ -510,14 +510,19 @@ public class BlockchainController : ControllerBase
 
 	private async Task<UnconfirmedTransactionChainItem> ComputeUnconfirmedTransactionChainItemAsync(uint256 currentTxId, IEnumerable<uint256> mempoolHashes, CancellationToken cancellationToken)
 	{
+		var mempoolHashSet = mempoolHashes as ISet<uint256> ?? mempoolHashes.ToHashSet();
 		var currentTx = (await FetchTransactionsAsync([currentTxId], cancellationToken).ConfigureAwait(false)).First();
 
-		var txsToFetch = currentTx.Inputs.Select(input => input.PrevOut.Hash).Distinct().ToArray();
+		var mempoolParentTxIds = currentTx.Inputs
+			.Select(input => input.PrevOut.Hash)
+			.Distinct()
+			.Where(mempoolHashSet.Contains)
+			.ToArray();
 
 		Transaction[] parentTxs;
 		try
 		{
-			parentTxs = await FetchTransactionsAsync(txsToFetch, cancellationToken).ConfigureAwait(false);
+			parentTxs = await FetchTransactionsAsync(mempoolParentTxIds, cancellationToken).ConfigureAwait(false);
 		}
 		catch (AggregateException ex)
 		{
@@ -525,34 +530,21 @@ public class BlockchainController : ControllerBase
 		}
 
 		// Get unconfirmed parents and children
-		var unconfirmedParents = parentTxs.Where(x => mempoolHashes.Contains(x.GetHash())).ToHashSet();
+		var unconfirmedParents = parentTxs.ToHashSet();
 		var unconfirmedChildrenTxs = Mempool.GetSpenderTransactions(currentTx.Outputs.Select((txo, index) => new OutPoint(currentTx, index))).ToHashSet();
+		var fee = await UnconfirmedTransactionFeeResolver.ComputeFeeAsync(currentTx, parentTxs, GetConfirmedTxOutAsync, cancellationToken).ConfigureAwait(false);
 
 		return new UnconfirmedTransactionChainItem(
 			TxId: currentTxId,
 			Size: currentTx.GetVirtualSize(),
-			Fee: ComputeFee(currentTx, parentTxs, cancellationToken),
+			Fee: fee,
 			Parents: unconfirmedParents.Select(x => x.GetHash()).ToHashSet(),
 			Children: unconfirmedChildrenTxs.Select(x => x.GetHash()).ToHashSet());
-	}
 
-	private Money ComputeFee(Transaction currentTx, IEnumerable<Transaction> parentTxs, CancellationToken cancellationToken)
-	{
-		cancellationToken.ThrowIfCancellationRequested();
-
-		var inputs = new List<Coin>();
-
-		var prevOutsForCurrentTx = currentTx.Inputs
-			.Select(input => input.PrevOut)
-			.ToList();
-
-		foreach (var prevOut in prevOutsForCurrentTx)
+		async Task<TxOut?> GetConfirmedTxOutAsync(OutPoint prevOut, CancellationToken token)
 		{
-			var parentTx = parentTxs.First(x => x.GetHash() == prevOut.Hash);
-			var txOut = parentTx.Outputs[prevOut.N];
-			inputs.Add(new Coin(prevOut, txOut));
+			var response = await RpcClient.GetTxOutAsync(prevOut.Hash, checked((int)prevOut.N), includeMempool: false, token).ConfigureAwait(false);
+			return response?.TxOut;
 		}
-
-		return currentTx.GetFee(inputs.ToArray());
 	}
 }
