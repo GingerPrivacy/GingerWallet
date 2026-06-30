@@ -1,5 +1,6 @@
 using NBitcoin;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -8,6 +9,7 @@ using WalletWasabi.Hwi;
 using WalletWasabi.Hwi.Models;
 using WalletWasabi.Hwi.Parsers;
 using WalletWasabi.Hwi.ProcessBridge;
+using WalletWasabi.Microservices;
 using Xunit;
 using WalletWasabi.Helpers;
 
@@ -206,5 +208,21 @@ public class DefaultResponseTests
 		result = await pb.SendCommandAsync("--version", openConsole: false, cts.Token, (sw) => stdInputActionCalled = true);
 		Assert.Contains(Constants.HwiVersion.ToString(), result.response);
 		Assert.True(stdInputActionCalled);
+	}
+
+	/// <summary>Verify that the bundled HWI binary for the current operating system can start and report its version.</summary>
+	[Fact]
+	public async Task BundledHwiForCurrentPlatformReturnsExpectedVersionAsync()
+	{
+		string hwiPath = MicroserviceHelpers.GetBinaryPath("hwi");
+		Assert.True(File.Exists(hwiPath), $"Bundled HWI binary was not found: '{hwiPath}'.");
+
+		using var cts = new CancellationTokenSource(ReasonableRequestTimeout);
+		HwiProcessBridge pb = new();
+		(string response, int exitCode) = await pb.SendCommandAsync("--version", openConsole: false, cts.Token);
+
+		Assert.Equal(0, exitCode);
+		Assert.True(HwiParser.TryParseVersion(response, out Version? version), $"Could not parse HWI version response: '{response}'.");
+		Assert.Equal(Constants.HwiVersion, version);
 	}
 }
