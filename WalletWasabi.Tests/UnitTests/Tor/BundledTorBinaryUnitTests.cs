@@ -9,10 +9,10 @@ using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests.Tor;
 
-public class BundledTorBinaryTests
+public class BundledTorBinaryUnitTests
 {
 	[Fact]
-	public async Task BundledTorBinaryCanReportVersionAsync()
+	public async Task BundledTorBinaryUnitTestCanReportVersionAsync()
 	{
 		string torBinaryDir = Path.Combine(MicroserviceHelpers.GetBinaryFolder(), "Tor");
 		string torBinaryPath = TorSettings.GetTorBinaryFilePath(torBinaryDir);
