@@ -176,6 +176,7 @@ function Copy-RuntimeFiles {
   }
 
   Copy-Item -LiteralPath $licensePath -Destination (Join-Path $destinationDirectory "LICENSE") -Force
+  Set-NativeLineEndings (Join-Path $destinationDirectory "LICENSE")
 }
 
 function Clear-TorDestination {
@@ -189,6 +190,19 @@ function Clear-TorDestination {
   Get-ChildItem -LiteralPath $destinationDirectory -Force |
     Where-Object { $_.Name -ne ".gitattributes" } |
     Remove-Item -Force -Recurse
+}
+
+function Set-NativeLineEndings {
+  param([Parameter(Mandatory=$true)] [string] $path)
+
+  if (!$IsWindows) {
+    return
+  }
+
+  $resolvedPath = (Resolve-Path -LiteralPath $path).Path
+  $content = [System.IO.File]::ReadAllText($resolvedPath)
+  $content = $content -replace "\r?\n", [Environment]::NewLine
+  [System.IO.File]::WriteAllText($resolvedPath, $content)
 }
 
 $prevPwd = $PWD
@@ -261,6 +275,8 @@ try {
     $geoIpDestination = Join-Path -Resolve $PSScriptRoot ".." ".." "Tor" "Geoip"
     Write-Output "# Replace geoip files in folder '${geoIpDestination}'."
     Copy-Item -Force -Path (Join-Path $geoIpSource "geoip*") -Destination $geoIpDestination
+    Set-NativeLineEndings (Join-Path $geoIpDestination "geoip")
+    Set-NativeLineEndings (Join-Path $geoIpDestination "geoip6")
   }
 
   Write-Output "# Done."
