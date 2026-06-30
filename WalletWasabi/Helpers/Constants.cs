@@ -86,14 +86,14 @@ public static class Constants
 	public const string SilentPlistName = "com.gingerwallet.startup.plist";
 
 	public const string AppName = "Ginger Wallet";
-	public const string BuiltinBitcoinNodeName = "Bitcoin Knots";
+	public const string BuiltinBitcoinNodeName = "Bitcoin Core";
 
 	public static readonly Money MaximumNumberOfBitcoinsMoney = Money.Coins(MaximumNumberOfBitcoins);
 
 	public static readonly Version ClientVersion = new(2, 0, 25, 0);
 
 	public static readonly Version HwiVersion = new("3.1.0");
-	public static readonly Version BitcoinCoreVersion = new("23.0");
+	public static readonly Version BitcoinCoreVersion = new("31.0");
 	public static readonly Version GingerLegalDocumentsVersion = new(9, 0);
 
 	public static readonly FeeRate MinRelayFeeRate = new(1m);

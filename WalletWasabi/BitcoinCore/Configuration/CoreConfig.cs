@@ -140,5 +140,21 @@ public class CoreConfig
 		return retLines.Select(x => new CoreConfigLine(x));
 	}
 
-	public int RemoveAll(string configKey) => Lines.RemoveAll(line => line.Key.Contains(configKey));
+	public int RemoveAll(params string[] configKeys) => Lines.RemoveAll(line => configKeys.Any(configKey => IsConfigKeyMatch(line.Key, configKey)));
+
+	private static bool IsConfigKeyMatch(string lineKey, string configKey)
+	{
+		if (string.IsNullOrWhiteSpace(lineKey) || string.IsNullOrWhiteSpace(configKey))
+		{
+			return false;
+		}
+
+		if (lineKey.Equals(configKey, StringComparison.OrdinalIgnoreCase))
+		{
+			return true;
+		}
+
+		string[] networkPrefixes = ["main.", "test.", "regtest."];
+		return networkPrefixes.Any(prefix => lineKey.Equals($"{prefix}{configKey}", StringComparison.OrdinalIgnoreCase));
+	}
 }

@@ -310,7 +310,7 @@
         <value>Bitcoin-Adresse ist gültig für {0} und nicht für {1}.</value>
     </data>
     <data name="BitcoinCoreKnotsDataFolder" xml:space="preserve">
-        <value>Bitcoin Core/Knots Datenordner</value>
+        <value>Bitcoin Core Datenordner</value>
     </data>
     <data name="BitcoinFractionGrouping" xml:space="preserve">
         <value>Bitcoin-Bruchteile gruppieren</value>
@@ -517,7 +517,7 @@
         <value>Kompatible Passphrase verwendet! Bitte erwägen Sie, eine neue Wallet zu erstellen, um die Wiederherstellbarkeit sicherzustellen!</value>
     </data>
     <data name="CompatibleBitcoinCoreKnotsVersion" xml:space="preserve">
-        <value>Kompatible Versionen von Bitcoin Core und Bitcoin Knots</value>
+        <value>Kompatible Bitcoin Core-Version</value>
     </data>
     <data name="CompatibleCoordinatorVersions" xml:space="preserve">
         <value>Kompatible Koordinator-Versionen</value>
@@ -1066,7 +1066,7 @@
         <value>– {0} verbleibend</value>
     </data>
     <data name="LocalBitcoinCoreKnotsVersion" xml:space="preserve">
-        <value>Lokale Bitcoin Core/Knots-Version</value>
+        <value>Lokale Bitcoin Core-Version</value>
     </data>
     <data name="MarkAllAsRead" xml:space="preserve">
         <value>Alle als gelesen markieren</value>
@@ -1454,7 +1454,7 @@
         <value>Start, Boot</value>
     </data>
     <data name="RunBitcoinKnotsOnStartup" xml:space="preserve">
-        <value>(EXPERIMENTELL) Bitcoin Knots beim Start ausführen</value>
+        <value>(EXPERIMENTELL) Bitcoin Core beim Start ausführen</value>
     </data>
     <data name="RunInBackgroundKeywords" xml:space="preserve">
         <value>Verstecken, Taskleiste</value>
@@ -1634,7 +1634,7 @@
         <value>Status</value>
     </data>
     <data name="StopBitcoinKnotsOnShutdown" xml:space="preserve">
-        <value>Bitcoin Knots beim Herunterfahren stoppen</value>
+        <value>Bitcoin Core beim Herunterfahren stoppen</value>
     </data>
     <data name="StoppedMessage" xml:space="preserve">
         <value>Coinjoin wurde gestoppt</value>

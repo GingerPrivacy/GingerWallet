@@ -310,7 +310,7 @@
         <value>Bitcoin adresi {0} için geçerli, ancak {1} için geçerli değil.</value>
     </data>
     <data name="BitcoinCoreKnotsDataFolder" xml:space="preserve">
-        <value>Bitcoin Core/Knots Veri Klasörü</value>
+        <value>Bitcoin Core Veri Klasörü</value>
     </data>
     <data name="BitcoinFractionGrouping" xml:space="preserve">
         <value>Bitcoin kesirli gruplama</value>
@@ -517,7 +517,7 @@
         <value>Uyumlu gizli kelime kullanıldı! Kurtarılabilirliği sağlamak için yeni bir cüzdan oluşturmayı düşünün!</value>
     </data>
     <data name="CompatibleBitcoinCoreKnotsVersion" xml:space="preserve">
-        <value>Uyumlu Bitcoin Core ve Bitcoin Knots Sürümü</value>
+        <value>Uyumlu Bitcoin Core Sürümü</value>
     </data>
     <data name="CompatibleCoordinatorVersions" xml:space="preserve">
         <value>Uyumlu Koordinatör Sürümleri</value>
@@ -1066,7 +1066,7 @@
         <value>- {0} kaldı</value>
     </data>
     <data name="LocalBitcoinCoreKnotsVersion" xml:space="preserve">
-        <value>Yerel Bitcoin Core/Knots sürümü</value>
+        <value>Yerel Bitcoin Core sürümü</value>
     </data>
     <data name="MarkAllAsRead" xml:space="preserve">
         <value>Tümünü okundu olarak işaretle</value>
@@ -1454,7 +1454,7 @@
         <value>başlangıç, önyükleme</value>
     </data>
     <data name="RunBitcoinKnotsOnStartup" xml:space="preserve">
-        <value>(EXPERIMENTAL) Bitcoin Knots'u başlangıçta çalıştır</value>
+        <value>(EXPERIMENTAL) Bitcoin Core'u başlangıçta çalıştır</value>
     </data>
     <data name="RunInBackgroundKeywords" xml:space="preserve">
         <value>gizle, tepsi</value>
@@ -1634,7 +1634,7 @@
         <value>Durum</value>
     </data>
     <data name="StopBitcoinKnotsOnShutdown" xml:space="preserve">
-        <value>Bitcoin Knots'u kapatma sırasında durdur</value>
+        <value>Bitcoin Core'u kapatma sırasında durdur</value>
     </data>
     <data name="StoppedMessage" xml:space="preserve">
         <value>Coinjoin durdu</value>

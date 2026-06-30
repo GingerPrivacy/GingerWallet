@@ -213,7 +213,7 @@ public class RpcBasedTests
 			var doubleSpend = Transaction.Create(network);
 			doubleSpend.Inputs.Add(coinBaseTx, 0);
 			using var k3 = new Key();
-			doubleSpend.Outputs.Add(Money.Coins(49.998m), k3.PubKey.WitHash.GetAddress(network));
+			doubleSpend.Outputs.Add(Money.Coins(49.99995m), k3.PubKey.WitHash.GetAddress(network));
 			doubleSpend.Sign(k1.GetBitcoinSecret(network), coinBaseTx.Outputs.AsCoins().First());
 			valid = doubleSpend.Check();
 

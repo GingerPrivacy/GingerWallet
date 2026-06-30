@@ -1,7 +1,9 @@
 using NBitcoin;
 using System.Linq;
+using System.Net;
 using WalletWasabi.BitcoinCore.Configuration.Whitening;
 using WalletWasabi.Helpers;
+using WalletWasabi.Userfacing;
 
 namespace WalletWasabi.BitcoinCore.Configuration;
 
@@ -31,6 +33,20 @@ public class CoreConfigTranslator
 	public string? TryGetRpcCookieFile() => TryGetValue("rpccookiefile");
 
 	public string? TryGetRpcBind() => TryGetValue("rpcbind");
+
+	public string? TryGetBind() => TryGetValue("bind");
+
+	public EndPoint? TryGetBindEndPoint()
+	{
+		var stringValue = TryGetBind();
+		var endPointValue = stringValue?.Split('=').FirstOrDefault();
+		if (endPointValue is { } && EndPointParser.TryParse(endPointValue, Network.DefaultPort, out EndPoint? value))
+		{
+			return value;
+		}
+
+		return null;
+	}
 
 	public ushort? TryGetRpcPort()
 	{

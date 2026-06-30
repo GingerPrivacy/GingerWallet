@@ -839,16 +839,16 @@
     <value>Network</value>
   </data>
   <data name="RunBitcoinKnotsOnStartup" xml:space="preserve">
-    <value>(EXPERIMENTAL) Run Bitcoin Knots on startup</value>
+    <value>(EXPERIMENTAL) Run Bitcoin Core on startup</value>
   </data>
   <data name="StopBitcoinKnotsOnShutdown" xml:space="preserve">
-    <value>Stop Bitcoin Knots on shutdown</value>
+    <value>Stop Bitcoin Core on shutdown</value>
   </data>
   <data name="LocalBitcoinCoreKnotsVersion" xml:space="preserve">
-    <value>Local Bitcoin Core/Knots version</value>
+    <value>Local Bitcoin Core version</value>
   </data>
   <data name="BitcoinCoreKnotsDataFolder" xml:space="preserve">
-    <value>Bitcoin Core/Knots Data Folder</value>
+    <value>Bitcoin Core Data Folder</value>
   </data>
   <data name="WasabiDownloadBlocksFromFullNode" xml:space="preserve">
     <value>Ginger will download blocks from a full node you control.</value>
@@ -1782,7 +1782,7 @@
     <value>Current Coordinator Version</value>
   </data>
   <data name="CompatibleBitcoinCoreKnotsVersion" xml:space="preserve">
-    <value>Compatible Bitcoin Core and Bitcoin Knots Version</value>
+    <value>Compatible Bitcoin Core Version</value>
   </data>
   <data name="CompatibleHardwareWalletInterfaceVersion" xml:space="preserve">
     <value>Compatible HWI Version</value>
