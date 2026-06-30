@@ -298,7 +298,17 @@ public class IndexBuilderService
 			foreach (var input in tx.Inputs)
 			{
 				var prevOut = input.PrevOutput;
-				if (prevOut is not null && pubKeyTypes.Contains(prevOut.PubkeyType))
+				if (prevOut is null)
+				{
+					if (!input.IsCoinbase)
+					{
+						throw new InvalidOperationException($"Cannot build filter for block '{block.Hash}' because transaction '{tx.Id}' is missing prevout data for input '{input.OutPoint}'.");
+					}
+
+					continue;
+				}
+
+				if (pubKeyTypes.Contains(prevOut.PubkeyType))
 				{
 					scripts.Add(prevOut.ScriptPubKey);
 				}

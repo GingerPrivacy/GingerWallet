@@ -141,6 +141,31 @@ public class IndexBuilderServiceTests
 	}
 
 	[Fact]
+	public void ThrowsWhenInputPrevoutIsMissing()
+	{
+		var blockHash = BlockHashFromHeight(1);
+		var outPoint = new OutPoint(BlockHashFromHeight(2), 0);
+		var transaction = new VerboseTransactionInfo(
+			new TransactionBlockInfo(blockHash, DateTimeOffset.UtcNow, 0),
+			BlockHashFromHeight(3),
+			[new VerboseInputInfo(outPoint)],
+			[]);
+		var block = new VerboseBlockInfo(
+			uint256.Zero,
+			1,
+			blockHash,
+			DateTimeOffset.UtcNow,
+			1,
+			[transaction]);
+
+		var ex = Assert.Throws<InvalidOperationException>(
+			() => IndexBuilderService.BuildFilterForBlock(block, [RpcPubkeyType.TxWitnessV1Taproot]));
+
+		Assert.Contains("missing prevout data", ex.Message);
+		Assert.Contains(outPoint.ToString(), ex.Message);
+	}
+
+	[Fact]
 	public async Task SegwitTaprootSynchronizedBitcoinNodeAsync()
 	{
 		var blockchain = GenerateBlockchain().Take(10).ToArray();
