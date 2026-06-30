@@ -76,6 +76,30 @@ public class ConfigTranslatorTests
 	}
 
 	[Fact]
+	public void TryGetBindEndPointTests()
+	{
+		var config = new CoreConfig();
+		var translator = new CoreConfigTranslator(config, Network.Main);
+		Assert.Null(translator.TryGetBindEndPoint());
+
+		config.AddOrUpdate("bind=127.0.0.1:8333");
+		var bindEndPoint = translator.TryGetBindEndPoint();
+		var ipEndPoint = bindEndPoint as IPEndPoint;
+		Assert.NotNull(ipEndPoint);
+		Assert.Equal(IPAddress.Loopback, ipEndPoint!.Address);
+		Assert.Equal(8333, ipEndPoint.Port);
+
+		config = new CoreConfig();
+		translator = new CoreConfigTranslator(config, Network.Main);
+		config.AddOrUpdate("bind=127.0.0.1:8334=onion");
+		bindEndPoint = translator.TryGetBindEndPoint();
+		ipEndPoint = bindEndPoint as IPEndPoint;
+		Assert.NotNull(ipEndPoint);
+		Assert.Equal(IPAddress.Loopback, ipEndPoint!.Address);
+		Assert.Equal(8334, ipEndPoint.Port);
+	}
+
+	[Fact]
 	public void TryGetWhiteBindTests()
 	{
 		var config = new CoreConfig();

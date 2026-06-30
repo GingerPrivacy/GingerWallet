@@ -1,4 +1,3 @@
-using System.Linq;
 using WalletWasabi.Helpers;
 
 namespace WalletWasabi.BitcoinCore.Configuration;
@@ -14,15 +13,19 @@ public class CoreConfigLine
 			return;
 		}
 
-		var parts = Line.Split('=', StringSplitOptions.RemoveEmptyEntries).Select(x => Guard.Correct(x)).ToArray();
-
-		if (parts.Length != 2 || parts.Any(x => x.Length == 0))
+		var separatorIndex = Line.IndexOf('=');
+		if (separatorIndex <= 0 || separatorIndex == Line.Length - 1)
 		{
 			return;
 		}
 
-		Key = parts[0];
-		Value = parts[1];
+		Key = Guard.Correct(Line[..separatorIndex]);
+		Value = Guard.Correct(Line[(separatorIndex + 1)..]);
+		if (Key.Length == 0 || Value.Length == 0)
+		{
+			return;
+		}
+
 		Line = $"{Key} = {Value}";
 	}
 

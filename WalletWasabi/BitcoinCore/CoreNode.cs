@@ -77,6 +77,7 @@ public class CoreNode
 		string? rpcCookieFilePath = configTranslator.TryGetRpcCookieFile();
 		string? rpcHost = configTranslator.TryGetRpcBind();
 		int? rpcPort = configTranslator.TryGetRpcPort();
+		EndPoint? bindEndPoint = configTranslator.TryGetBindEndPoint();
 		WhiteBind? whiteBind = configTranslator.TryGetWhiteBind();
 
 		string authString;
@@ -92,7 +93,7 @@ public class CoreNode
 			authString = $"{rpcUser}:{rpcPassword}";
 		}
 
-		EndPoint p2pEndPoint = whiteBind?.EndPoint ?? coreNodeParams.P2pEndPointStrategy.EndPoint;
+		EndPoint p2pEndPoint = whiteBind?.EndPoint ?? GetConnectableBindEndPoint(bindEndPoint) ?? coreNodeParams.P2pEndPointStrategy.EndPoint;
 
 		if (rpcHost is null)
 		{
@@ -135,6 +136,8 @@ public class CoreNode
 
 		var configPrefix = NetworkTranslator.GetConfigPrefix(coreNode.Network);
 		var whiteBindPermissionsPart = !string.IsNullOrWhiteSpace(whiteBind?.Permissions) ? $"{whiteBind?.Permissions}@" : "";
+		bool migrateWhiteBindToBind = whiteBind is not null;
+		bool addBind = migrateWhiteBindToBind || bindEndPoint is null;
 
 		if (!coreNode.RpcEndPoint.TryGetHost(out string? rpcBindParameter) || !coreNode.RpcEndPoint.TryGetPort(out int? rpcPortParameter))
 		{
@@ -146,11 +149,20 @@ public class CoreNode
 			$"{configPrefix}.server			= 1",
 			$"{configPrefix}.listen			= 1",
 			$"{configPrefix}.daemon			= 0", // https://github.com/zkSNACKs/WalletWasabi/issues/3588
-			$"{configPrefix}.whitebind		= {whiteBindPermissionsPart}{coreNode.P2pEndPoint.ToString(coreNode.Network.DefaultPort)}",
 			$"{configPrefix}.rpcbind		= {rpcBindParameter}",
 			$"{configPrefix}.rpcallowip		= {IPAddress.Loopback}",
 			$"{configPrefix}.rpcport		= {rpcPortParameter}",
 		};
+
+		if (addBind)
+		{
+			desiredConfigLines.Add($"{configPrefix}.bind			= {coreNode.P2pEndPoint.ToString(coreNode.Network.DefaultPort)}");
+		}
+
+		if (migrateWhiteBindToBind && coreNode.P2pEndPoint.TryGetHost(out string? whiteListHost))
+		{
+			desiredConfigLines.Add($"{configPrefix}.whitelist		= {whiteBindPermissionsPart}{whiteListHost}");
+		}
 
 		if (!cookieAuth)
 		{
@@ -171,11 +183,6 @@ public class CoreNode
 		if (coreNodeParams.DisableWallet is { })
 		{
 			desiredConfigLines.Add($"{configPrefix}.disablewallet = {coreNodeParams.DisableWallet}");
-		}
-
-		if (coreNodeParams.MempoolReplacement is { })
-		{
-			desiredConfigLines.Add($"{configPrefix}.mempoolreplacement = {coreNodeParams.MempoolReplacement}");
 		}
 
 		if (coreNodeParams.FallbackFee is { })
@@ -206,11 +213,6 @@ public class CoreNode
 		if (coreNodeParams.FixedSeeds is { })
 		{
 			desiredConfigLines.Add($"{configPrefix}.fixedseeds = {coreNodeParams.FixedSeeds}");
-		}
-
-		if (coreNodeParams.Upnp is { })
-		{
-			desiredConfigLines.Add($"{configPrefix}.upnp = {coreNodeParams.Upnp}");
 		}
 
 		if (coreNodeParams.NatPmp is { })
@@ -246,15 +248,30 @@ public class CoreNode
 		}
 
 		int removedKnotsOnlyOptions = coreNode.Config.RemoveAll(BitcoinKnotsOnlyConfigKeys);
-		if (removedKnotsOnlyOptions > 0 && File.Exists(configPath))
+		int removedWhiteBindOptions = coreNode.Config.RemoveAll("whitebind");
+		int removedObsoleteCoreOptions = coreNode.Config.RemoveAll("mempoolreplacement", "upnp"); // Bitcoin Core 31 ignores these options.
+		if ((removedKnotsOnlyOptions > 0 || removedWhiteBindOptions > 0 || removedObsoleteCoreOptions > 0) && File.Exists(configPath))
 		{
 			await BackupConfigFileAsync(configPath, cancel).ConfigureAwait(false);
+		}
+
+		if (removedKnotsOnlyOptions > 0)
+		{
 			Logger.LogInfo($"Removed {removedKnotsOnlyOptions} Bitcoin Knots-only configuration option(s) from bitcoin.conf before starting {Constants.BuiltinBitcoinNodeName}.");
 		}
 
-		bool removedReplacement = coreNode.Config.RemoveAll("mempoolreplacement") != 0; // We remove the line, so it will use the default - that is full-RBF
+		if (removedWhiteBindOptions > 0)
+		{
+			Logger.LogInfo($"Migrated {removedWhiteBindOptions} whitebind configuration option(s) to Bitcoin Core compatible bind/whitelist settings.");
+		}
+
+		if (removedObsoleteCoreOptions > 0)
+		{
+			Logger.LogInfo($"Removed {removedObsoleteCoreOptions} obsolete Bitcoin Core configuration option(s) from bitcoin.conf before starting Bitcoin Core.");
+		}
+
 		bool updated = coreNode.Config.AddOrUpdate(string.Join(Environment.NewLine, desiredConfigLines)); // We always need to check AddOrUpdate
-		if (removedKnotsOnlyOptions > 0 || removedReplacement || updated || !File.Exists(configPath))
+		if (removedKnotsOnlyOptions > 0 || removedWhiteBindOptions > 0 || removedObsoleteCoreOptions > 0 || updated || !File.Exists(configPath))
 		{
 			IoHelpers.EnsureContainingDirectoryExists(configPath);
 			await File.WriteAllTextAsync(configPath, coreNode.Config.ToString(), CancellationToken.None).ConfigureAwait(false);
@@ -278,10 +295,28 @@ public class CoreNode
 		return coreNode;
 	}
 
+	private static EndPoint? GetConnectableBindEndPoint(EndPoint? bindEndPoint)
+	{
+		if (bindEndPoint is IPEndPoint { Address: { } address, Port: var port })
+		{
+			if (IPAddress.Any.Equals(address))
+			{
+				return new IPEndPoint(IPAddress.Loopback, port);
+			}
+
+			if (IPAddress.IPv6Any.Equals(address))
+			{
+				return new IPEndPoint(IPAddress.IPv6Loopback, port);
+			}
+		}
+
+		return bindEndPoint;
+	}
+
 	private static async Task BackupConfigFileAsync(string configPath, CancellationToken cancel)
 	{
 		string timestamp = DateTimeOffset.UtcNow.ToString("yyyyMMddHHmmssfff", CultureInfo.InvariantCulture);
-		string backupPath = $"{configPath}.ginger-knots-backup-{timestamp}.bak";
+		string backupPath = $"{configPath}.ginger-core-migration-backup-{timestamp}.bak";
 		using FileStream source = File.Open(configPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 		using FileStream destination = File.Create(backupPath);
 		await source.CopyToAsync(destination, cancel).ConfigureAwait(false);
