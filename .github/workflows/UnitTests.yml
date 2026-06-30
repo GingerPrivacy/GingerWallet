@@ -10,26 +10,37 @@ on:
 
 jobs:
   build:
+    name: Unit tests (${{ matrix.runtime }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-      
+        include:
+          - os: ubuntu-latest
+            runtime: linux-x64
+          - os: windows-latest
+            runtime: win-x64
+          - os: macos-15-intel
+            runtime: osx-x64
+          - os: macos-15
+            runtime: osx-arm64
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
 
       - name: Cache NuGet packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}-${{ hashFiles('**/packages.lock.json') }}
+          key: ${{ runner.os }}-${{ matrix.runtime }}-nuget-${{ hashFiles('**/*.csproj') }}-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
+            ${{ runner.os }}-${{ matrix.runtime }}-nuget-
             ${{ runner.os }}-nuget-
 
       - name: Install dependencies
