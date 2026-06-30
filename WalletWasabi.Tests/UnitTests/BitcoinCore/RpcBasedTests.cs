@@ -1,5 +1,6 @@
 using NBitcoin;
 using NBitcoin.RPC;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Nodes;
@@ -284,6 +285,37 @@ public class RpcBasedTests
 		Assert.Equal(new uint256("4815e72e2d967b666097c476473d0175b94d2a22f384e6389ab44dc9260dd8e0"), input.OutPoint?.Hash);
 		Assert.Equal(0U, input.OutPoint?.N);
 		Assert.Null(input.PrevOutput);
+	}
+
+	[Fact]
+	public void ParseBitcoinCoreMempoolInfoWithoutFeeHistogram()
+	{
+		var result = JObject.Parse(
+			"""
+			{
+				"loaded": true,
+				"size": 12,
+				"bytes": 3456,
+				"usage": 7890,
+				"total_fee": 0.001,
+				"maxmempool": 300000000,
+				"mempoolminfee": 0.00001000,
+				"minrelaytxfee": 0.00001000,
+				"incrementalrelayfee": 0.00001000,
+				"unbroadcastcount": 0,
+				"fullrbf": false
+			}
+			""");
+
+		var mempoolInfo = RpcClientBase.ParseMempoolInfo(result);
+
+		Assert.Equal(12, mempoolInfo.Size);
+		Assert.Equal(3456, mempoolInfo.Bytes);
+		Assert.Equal(7890, mempoolInfo.Usage);
+		Assert.Equal(300000000, mempoolInfo.MaxMemPool);
+		Assert.Equal(0.00001000, mempoolInfo.MemPoolMinFee);
+		Assert.Equal(0.00001000, mempoolInfo.MinRelayTxFee);
+		Assert.Empty(mempoolInfo.Histogram);
 	}
 
 	[Fact]
