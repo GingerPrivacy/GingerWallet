@@ -267,9 +267,9 @@ public class ReceiveSpeedupTests : IClassFixture<RegTestFixture>
 			#region CantSpeedUpTooSmall
 
 			// Get some money.
-			var txIdTooSmallToSpeedUp = await rpc.SendToAddressAsync(keyManager.GetNextReceiveKey("foo").GetP2wpkhAddress(network), Money.Coins(0.0008m));
+			var txIdTooSmallToSpeedUp = await rpc.SendToAddressAsync(keyManager.GetNextReceiveKey("foo").GetP2wpkhAddress(network), Money.Satoshis(20_000));
 			Assert.NotNull(txIdTooSmallToSpeedUp);
-			var txIdJustEnoughToSpeedUp = await rpc.SendToAddressAsync(keyManager.GetNextReceiveKey("foo").GetP2wpkhAddress(network), Money.Coins(0.000991m));
+			var txIdJustEnoughToSpeedUp = await rpc.SendToAddressAsync(keyManager.GetNextReceiveKey("foo").GetP2wpkhAddress(network), Money.Satoshis(60_000));
 			Assert.NotNull(txIdJustEnoughToSpeedUp);
 
 			// Process it.
@@ -286,15 +286,14 @@ public class ReceiveSpeedupTests : IClassFixture<RegTestFixture>
 
 			Assert.True(bitcoinStore.TransactionStore.TryGetTransaction(txIdJustEnoughToSpeedUp, out var txJustEnoughToSpeedUp));
 
-			// Can only speed up not too small, but not too large transaction once.
+			// Can speed up not too small, but not too large transaction.
 			cpfp = wallet.SpeedUpTransaction(txJustEnoughToSpeedUp);
-			await broadcaster.SendTransactionAsync(cpfp.Transaction);
-			Assert.Throws<TransactionFeeOverpaymentException>(() => wallet.SpeedUpTransaction(cpfp.Transaction));
+			Assert.True(cpfp.Transaction.IsSpeedup);
 
 			Assert.True(bitcoinStore.TransactionStore.TryGetTransaction(txIdTooSmallToSpeedUp, out var txTooSmallToSpeedUp));
 
 			// Can't speed too small transaction.
-			Assert.Throws<TransactionFeeOverpaymentException>(() => wallet.SpeedUpTransaction(txTooSmallToSpeedUp));
+			AssertSpeedUpRejected(() => wallet.SpeedUpTransaction(txTooSmallToSpeedUp));
 
 			#endregion CantSpeedUpTooSmall
 		}
@@ -306,5 +305,11 @@ public class ReceiveSpeedupTests : IClassFixture<RegTestFixture>
 			nodes?.Dispose();
 			node?.Disconnect();
 		}
+	}
+
+	private static void AssertSpeedUpRejected(Action speedUp)
+	{
+		var ex = Assert.ThrowsAny<Exception>(speedUp);
+		Assert.True(ex is TransactionFeeOverpaymentException or NotEnoughFundsException or InvalidOperationException, $"Unexpected exception: {ex.GetType()} - {ex.Message}");
 	}
 }

@@ -162,7 +162,16 @@ public class BuildTransactionValidationsTest : IClassFixture<RegTestFixture>
 
 			// Add new money with no confirmation
 			var txId2 = await rpc.SendToAddressAsync(keyManager.GetNextReceiveKey("bar").GetP2wpkhAddress(network), Money.Coins(2m));
-			await Task.Delay(1000); // Wait tx to arrive and get processed.
+			var waitCount = 0;
+			while (!bitcoinStore.TransactionStore.TryGetTransaction(txId2, out _))
+			{
+				await Task.Delay(1000);
+				waitCount++;
+				if (waitCount >= 21)
+				{
+					throw new InvalidOperationException($"Unconfirmed funding transaction '{txId2}' did not arrive.");
+				}
+			}
 
 			// Enough money (one confirmed coin and one unconfirmed coin, unconfirmed are NOT allowed)
 			Assert.Throws<InsufficientBalanceException>(() => wallet.BuildTransaction("", operations, FeeStrategy.TwentyMinutesConfirmationTargetStrategy, false));

@@ -98,6 +98,11 @@ public class FeeRateProvider : BackgroundService, IWalletFeeRateProvider
 			if (_network == Network.RegTest)
 			{
 				_feeRateProvider = new RegTestFeeRateProvider();
+				lock (_cacheLock)
+				{
+					_allFeeEstimate = _feeRateProvider.GetFeeRatesAsync(CancellationToken.None).GetAwaiter().GetResult();
+					_lastRefresh = DateTimeOffset.UtcNow;
+				}
 			}
 			else if (Provider == FeeRateProviderSource.BlockstreamInfo)
 			{

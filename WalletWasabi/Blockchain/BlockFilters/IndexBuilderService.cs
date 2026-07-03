@@ -353,7 +353,10 @@ public class IndexBuilderService
 				if (pubKeyTypes.Contains(output.PubkeyType))
 				{
 					scripts.Add(output.ScriptPubKey);
-					prevOutputCache?.Add(new OutPoint(tx.Id, (uint)index), output);
+					if (prevOutputCache is { })
+					{
+						prevOutputCache[new OutPoint(tx.Id, (uint)index)] = output;
+					}
 				}
 			}
 		}
@@ -380,9 +383,37 @@ public class IndexBuilderService
 
 		Logger.LogInfo($"REORG invalid block: {blockHash}");
 
+		await UndoBlockFromPrevOutputCacheAsync(blockHash).ConfigureAwait(false);
+
 		// 2. Serialize Index. (Remove last line.)
 		var lines = await File.ReadAllLinesAsync(IndexFilePath).ConfigureAwait(false);
 		await File.WriteAllLinesAsync(IndexFilePath, lines.Take(lines.Length - 1).ToArray()).ConfigureAwait(false);
+	}
+
+	private async Task UndoBlockFromPrevOutputCacheAsync(uint256 blockHash)
+	{
+		VerboseBlockInfo block = await RpcClient.GetVerboseBlockAsync(blockHash).ConfigureAwait(false);
+
+		foreach (var tx in block.Transactions.AsEnumerable().Reverse())
+		{
+			foreach (var (_, index) in tx.Outputs.Select((output, index) => (output, index)))
+			{
+				PrevOutputCache.Remove(new OutPoint(tx.Id, (uint)index));
+			}
+
+			foreach (var input in tx.Inputs)
+			{
+				if (input.IsCoinbase || input.OutPoint is not { } spentOutPoint || input.PrevOutput is not { } prevOut)
+				{
+					continue;
+				}
+
+				if (PubKeyTypes.Contains(prevOut.PubkeyType))
+				{
+					PrevOutputCache[spentOutPoint] = prevOut;
+				}
+			}
+		}
 	}
 
 	private async Task<SyncInfo> GetSyncInfoAsync()

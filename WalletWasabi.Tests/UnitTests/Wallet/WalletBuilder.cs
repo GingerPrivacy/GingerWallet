@@ -57,7 +57,6 @@ public class WalletBuilder : IAsyncDisposable
 
 	public async Task<WalletWasabi.Wallets.Wallet> CreateRealWalletBasedOnTestWalletAsync(TestWallet wallet, int? minGapLimit = null)
 	{
-		await BlockDownloadService.StartAsync(CancellationToken.None).ConfigureAwait(false);
 		await BitcoinStore.InitializeAsync().ConfigureAwait(false); // StartingFilter already added to IndexStore after this line.
 
 		await BitcoinStore.IndexStore.AddNewFiltersAsync(Filters.Skip(1)).ConfigureAwait(false);

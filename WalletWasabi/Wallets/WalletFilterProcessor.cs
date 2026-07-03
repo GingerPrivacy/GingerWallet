@@ -295,6 +295,7 @@ public class WalletFilterProcessor : BackgroundService
 	public override async Task StartAsync(CancellationToken cancellationToken)
 	{
 		BitcoinStore.IndexStore.Reorged += ReorgedAsync;
+		await BlockDownloadService.StartAsync(cancellationToken).ConfigureAwait(false);
 		await base.StartAsync(cancellationToken).ConfigureAwait(false);
 	}
 
@@ -302,6 +303,7 @@ public class WalletFilterProcessor : BackgroundService
 	{
 		BitcoinStore.IndexStore.Reorged -= ReorgedAsync;
 		await base.StopAsync(cancellationToken).ConfigureAwait(false);
+		await BlockDownloadService.StopAsync(cancellationToken).ConfigureAwait(false);
 	}
 
 	public override void Dispose()

@@ -297,7 +297,9 @@ public class BlockchainController : ControllerBase
 		{
 			await RpcClient.SendRawTransactionAsync(transaction, cancellationToken);
 		}
-		catch (RPCException ex) when (ex.Message.Contains("already in block chain", StringComparison.InvariantCultureIgnoreCase))
+		catch (RPCException ex) when (
+			ex.Message.Contains("already in block chain", StringComparison.InvariantCultureIgnoreCase)
+			|| ex.Message.Contains("Transaction outputs already in utxo set", StringComparison.InvariantCultureIgnoreCase))
 		{
 			return Ok("Transaction is already in the blockchain.");
 		}
@@ -344,6 +346,7 @@ public class BlockchainController : ControllerBase
 
 		var knownHash = new uint256(bestKnownBlockHash);
 
+		Global.IndexBuilderService.Synchronize();
 		var (bestHeight, filters) = Global.IndexBuilderService.GetFilterLinesExcluding(knownHash, count, out bool found);
 
 		if (!found)
@@ -460,10 +463,25 @@ public class BlockchainController : ControllerBase
 
 	private async Task<IActionResult> GetUnconfirmedTransactionChainNoCacheAsync(uint256 txId, CancellationToken cancellationToken)
 	{
-		var mempoolHashes = Mempool.GetMempoolHashes();
+		var mempoolHashes = (await RpcClient.GetRawMempoolAsync(cancellationToken).ConfigureAwait(false)).ToHashSet();
 		if (!mempoolHashes.Contains(txId))
 		{
-			return BadRequest("Requested transaction is not present in the mempool, probably confirmed.");
+			MempoolEntry? mempoolEntry = null;
+			try
+			{
+				mempoolEntry = await RpcClient.GetMempoolEntryAsync(txId, throwIfNotFound: false, cancellationToken).ConfigureAwait(false);
+			}
+			catch (RPCException)
+			{
+				// Bitcoin Core returns an RPC error for transactions that are not in the mempool.
+			}
+
+			if (mempoolEntry is null)
+			{
+				return BadRequest("Requested transaction is not present in the mempool, probably confirmed.");
+			}
+
+			mempoolHashes.Add(txId);
 		}
 
 		using CancellationTokenSource timeoutCts = new(TimeSpan.FromSeconds(10));

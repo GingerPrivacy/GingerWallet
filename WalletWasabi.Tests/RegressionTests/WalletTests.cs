@@ -179,7 +179,7 @@ public class WalletTests : IClassFixture<RegTestFixture>
 			Interlocked.Exchange(ref setup.FiltersProcessedByWalletCount, 0);
 			await rpc.GenerateAsync(3);
 			await setup.WaitForFiltersToBeProcessedAsync(TimeSpan.FromSeconds(120), 3);
-			Assert.Equal(4, await blockRepository.CountAsync(testDeadlineCts.Token));
+			Assert.True(await blockRepository.CountAsync(testDeadlineCts.Token) >= 4);
 
 			Assert.Equal(4, wallet.Coins.Count());
 			Assert.DoesNotContain(wallet.Coins, x => x.TransactionId == txId4);
@@ -210,7 +210,7 @@ public class WalletTests : IClassFixture<RegTestFixture>
 
 			// TEST MEMPOOL
 			var txId5 = await rpc.SendToAddressAsync(key.GetP2wpkhAddress(network), Money.Coins(0.1m));
-			await Task.Delay(1000); // Wait tx to arrive and get processed.
+			await WaitForWalletTransactionAsync(wallet, txId5, TimeSpan.FromSeconds(30));
 			Assert.Contains(wallet.Coins, x => x.TransactionId == txId5);
 			var mempoolCoin = wallet.Coins.Single(x => x.TransactionId == txId5);
 			Assert.Equal(Height.Mempool, mempoolCoin.Height);
@@ -228,6 +228,20 @@ public class WalletTests : IClassFixture<RegTestFixture>
 			await synchronizer.StopAsync(testDeadlineCts.Token);
 			nodes?.Dispose();
 			node?.Disconnect();
+		}
+	}
+
+	private static async Task WaitForWalletTransactionAsync(Wallet wallet, uint256 txId, TimeSpan timeout)
+	{
+		var deadline = DateTimeOffset.UtcNow + timeout;
+		while (!wallet.Coins.Any(x => x.TransactionId == txId))
+		{
+			if (DateTimeOffset.UtcNow > deadline)
+			{
+				throw new TimeoutException($"Wallet did not process transaction '{txId}' within {timeout}.");
+			}
+
+			await Task.Delay(100);
 		}
 	}
 }

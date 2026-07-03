@@ -94,7 +94,7 @@ public class BackendTests : IClassFixture<RegTestFixture>
 		Logger.TurnOff();
 
 		using var response = await BackendApiHttpClient.SendAsync(HttpMethod.Post, "btc/blockchain/broadcast", content);
-		Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+		Assert.True(response.StatusCode == HttpStatusCode.OK, await response.Content.ReadAsStringAsync());
 		Assert.Equal("Transaction is already in the blockchain.", await response.Content.ReadAsJsonAsync<string>());
 
 		Logger.TurnOn();
@@ -188,11 +188,11 @@ public class BackendTests : IClassFixture<RegTestFixture>
 		var txId = await rpc.SendToAddressAsync(key.GetP2wpkhAddress(network), Money.Coins(1m));
 		Assert.NotNull(txId);
 
-		await Task.Delay(1000);
+		await WaitForWalletTransactionAsync(wallet, txId, TimeSpan.FromSeconds(30));
 
 		using var response = await BackendApiHttpClient.SendAsync(HttpMethod.Get, $"btc/blockchain/unconfirmed-transaction-chain?transactionId={txId}");
 
-		Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+		Assert.True(response.StatusCode == HttpStatusCode.OK, await response.Content.ReadAsStringAsync());
 
 		var unconfirmedChain = await response.Content.ReadAsJsonAsync<UnconfirmedTransactionChainItem[]>();
 
@@ -238,6 +238,20 @@ public class BackendTests : IClassFixture<RegTestFixture>
 		node?.Disconnect();
 	}
 
+	private static async Task WaitForWalletTransactionAsync(Wallet wallet, uint256 txId, TimeSpan timeout)
+	{
+		var deadline = DateTimeOffset.UtcNow + timeout;
+		while (!wallet.Coins.Any(x => x.TransactionId == txId))
+		{
+			if (DateTimeOffset.UtcNow > deadline)
+			{
+				throw new TimeoutException($"Wallet did not process transaction '{txId}' within {timeout}.");
+			}
+
+			await Task.Delay(100);
+		}
+	}
+
 	[Fact]
 	public async Task FilterBuilderTestAsync()
 	{
@@ -256,7 +270,8 @@ public class BackendTests : IClassFixture<RegTestFixture>
 			// Test initial synchronization.
 			var times = 0;
 			uint256 firstHash = await rpc.GetBlockHashAsync(0);
-			while (indexBuilderService.GetFilterLinesExcluding(firstHash, 101, out _).filters.Count() != 101)
+			var initialBlockCount = await rpc.GetBlockCountAsync();
+			while (indexBuilderService.GetFilterLinesExcluding(firstHash, initialBlockCount, out _).filters.Count() != initialBlockCount)
 			{
 				if (times > 500) // 30 sec
 				{
@@ -268,13 +283,17 @@ public class BackendTests : IClassFixture<RegTestFixture>
 
 			// Test later synchronization.
 			await rpc.GenerateAsync(10);
+			indexBuilderService.Synchronize();
 			times = 0;
-			while (indexBuilderService.GetFilterLinesExcluding(firstHash, 111, out bool found5).filters.Count() != 111)
+			var finalBlockCount = initialBlockCount + 10;
+			while (indexBuilderService.GetFilterLinesExcluding(firstHash, finalBlockCount, out bool found5).filters.Count() != finalBlockCount)
 			{
 				Assert.True(found5);
 				if (times > 500) // 30 sec
 				{
-					throw new TimeoutException($"{nameof(IndexBuilderService)} test timed out.");
+					var count = indexBuilderService.GetFilterLinesExcluding(firstHash, finalBlockCount, out _).filters.Count();
+					var blockCount = await rpc.GetBlockCountAsync();
+					throw new TimeoutException($"{nameof(IndexBuilderService)} test timed out. Count: {count}. Core block count: {blockCount}.");
 				}
 				await Task.Delay(100);
 				times++;
@@ -290,9 +309,9 @@ public class BackendTests : IClassFixture<RegTestFixture>
 			Assert.False(found3);
 
 			// Test filter block hashes are correct.
-			var filters = indexBuilderService.GetFilterLinesExcluding(firstHash, 111, out bool found4).filters.ToArray();
+			var filters = indexBuilderService.GetFilterLinesExcluding(firstHash, finalBlockCount, out bool found4).filters.ToArray();
 			Assert.True(found4);
-			for (int i = 0; i < 111; i++)
+			for (int i = 0; i < finalBlockCount; i++)
 			{
 				var expectedHash = await rpc.GetBlockHashAsync(i + 1);
 				var filterModel = filters[i];

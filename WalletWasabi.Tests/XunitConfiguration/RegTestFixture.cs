@@ -25,9 +25,14 @@ public class RegTestFixture : IDisposable
 
 	public RegTestFixture()
 	{
-		RuntimeParams.SetDataDir(Path.Combine(TestDirectory.DataDir, "RegTests", "Backend"));
+		var backendDataDir = Path.Combine(TestDirectory.DataDir, "RegTests", "Backend");
+		Directory.CreateDirectory(backendDataDir);
+		RuntimeParams.SetDataDir(backendDataDir);
 		RuntimeParams.LoadAsync().GetAwaiter().GetResult();
-		BackendRegTestNode = TestNodeBuilder.CreateAsync(callerFilePath: "RegTests", callerMemberName: "BitcoinCoreData").GetAwaiter().GetResult();
+		BackendRegTestNode = TestNodeBuilder.CreateAsync(
+			callerFilePath: "RegTests",
+			callerMemberName: "BitcoinCoreData",
+			additionalFolder: Guid.NewGuid().ToString("N")[..8]).GetAwaiter().GetResult();
 
 		var walletName = "wallet";
 		BackendRegTestNode.RpcClient.CreateWalletAsync(walletName).GetAwaiter().GetResult();

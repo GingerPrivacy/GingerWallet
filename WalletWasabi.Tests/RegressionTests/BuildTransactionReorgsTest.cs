@@ -142,7 +142,7 @@ public class BuildTransactionReorgsTest : IClassFixture<RegTestFixture>
 			Interlocked.Exchange(ref setup.FiltersProcessedByWalletCount, 0);
 			await rpc.GenerateAsync(3);
 			await setup.WaitForFiltersToBeProcessedAsync(TimeSpan.FromSeconds(120), 3);
-			await Task.Delay(100); // Wait for tx processing.
+			await WaitForSingleConfirmedWalletCoinAsync(wallet, TimeSpan.FromSeconds(30));
 
 			var coin4 = Assert.Single(wallet.Coins);
 			Assert.Equal(coin3, coin4);
@@ -223,6 +223,8 @@ public class BuildTransactionReorgsTest : IClassFixture<RegTestFixture>
 				h => wallet.TransactionProcessor.WalletRelevantTransactionProcessed -= h);
 			await rpc.SendRawTransactionAsync(srtxwwres.SignedTransaction);
 			await rpc.GenerateAsync(10);
+			global.IndexBuilderService.Synchronize();
+			await synchronizer.TriggerAndWaitRoundAsync(TimeSpan.FromSeconds(30));
 			await setup.WaitForFiltersToBeProcessedAsync(TimeSpan.FromSeconds(120), 10);
 			var eventArgs = await eventAwaiter.WaitAsync(TimeSpan.FromSeconds(21));
 			var doubleSpend = Assert.Single(eventArgs.SuccessfullyDoubleSpentCoins);
@@ -249,16 +251,12 @@ public class BuildTransactionReorgsTest : IClassFixture<RegTestFixture>
 
 			// Get some money, make it confirm.
 			// this is necessary because we are in a fork now.
-			eventAwaiter = new EventAwaiter<ProcessedResult>(
-							h => wallet.TransactionProcessor.WalletRelevantTransactionProcessed += h,
-							h => wallet.TransactionProcessor.WalletRelevantTransactionProcessed -= h);
 			fundingTxId = await rpc.SendToAddressAsync(key.GetP2wpkhAddress(network), Money.Coins(1m), replaceable: true);
-			eventArgs = await eventAwaiter.WaitAsync(TimeSpan.FromSeconds(21));
-			Assert.Equal(fundingTxId, eventArgs.NewlyReceivedCoins.Single().TransactionId);
+			await WaitForWalletCoinAsync(wallet, fundingTxId, TimeSpan.FromSeconds(30));
 			Assert.Contains(fundingTxId, wallet.Coins.Select(x => x.TransactionId));
 
 			var fundingBumpTxId = await rpc.BumpFeeAsync(fundingTxId);
-			await Task.Delay(2000); // Waits for the funding transaction get to the mempool.
+			await WaitForWalletCoinAsync(wallet, fundingBumpTxId.TransactionId, TimeSpan.FromSeconds(30));
 			Assert.Contains(fundingBumpTxId.TransactionId, wallet.Coins.Select(x => x.TransactionId));
 			Assert.DoesNotContain(fundingTxId, wallet.Coins.Select(x => x.TransactionId));
 			Assert.Single(wallet.Coins, x => x.TransactionId == fundingBumpTxId.TransactionId);
@@ -277,6 +275,34 @@ public class BuildTransactionReorgsTest : IClassFixture<RegTestFixture>
 			await synchronizer.StopAsync(testDeadlineCts.Token);
 			nodes?.Dispose();
 			node?.Disconnect();
+		}
+	}
+
+	private static async Task WaitForWalletCoinAsync(Wallet wallet, uint256 txId, TimeSpan timeout)
+	{
+		var deadline = DateTimeOffset.UtcNow + timeout;
+		while (!wallet.Coins.Any(x => x.TransactionId == txId))
+		{
+			if (DateTimeOffset.UtcNow > deadline)
+			{
+				throw new TimeoutException($"Wallet did not process replacement transaction '{txId}'.");
+			}
+
+			await Task.Delay(100);
+		}
+	}
+
+	private static async Task WaitForSingleConfirmedWalletCoinAsync(Wallet wallet, TimeSpan timeout)
+	{
+		var deadline = DateTimeOffset.UtcNow + timeout;
+		while (wallet.Coins.Count() != 1 || wallet.Coins.Any(x => !x.Confirmed))
+		{
+			if (DateTimeOffset.UtcNow > deadline)
+			{
+				throw new TimeoutException("Wallet did not process a single confirmed coin.");
+			}
+
+			await Task.Delay(100);
 		}
 	}
 
