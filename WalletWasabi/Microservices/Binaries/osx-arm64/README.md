@@ -1,5 +1,10 @@
 # macOS ARM64 microservices
 
-This folder contains the native ARM64 Bitcoin Core `bitcoind` binary.
+This folder contains native ARM64 macOS microservice binaries.
 
-`Tor` and `hwi` are currently copied from the `osx64` microservice folder and are not native ARM64 binaries yet. They are kept here so the macOS ARM64 package has a complete microservice folder. Replace them with native ARM64 builds when those runtimes are upgraded.
+Included native ARM64 binaries:
+
+- `bitcoind`
+- `hwi`
+- `Tor/tor`
+- `Tor/libevent-2.1.7.dylib`
