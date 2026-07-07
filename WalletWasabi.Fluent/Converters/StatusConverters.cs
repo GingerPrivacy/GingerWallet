@@ -25,7 +25,7 @@ public static class StatusConverters
 		});
 
 	public static readonly IValueConverter RpcStatusStringConverter =
-		new FuncValueConverter<RpcStatus?, string>(status => status is null ? RpcStatus.Unresponsive.ToString() : status.ToString());
+		new FuncValueConverter<RpcStatus?, string>(status => status is null ? RpcStatus.Connecting.ToString() : status.ToString());
 
 	public static readonly IValueConverter PeerStatusStringConverter =
 		new FuncValueConverter<int, string>(peerCount => Resources.PeersConnected.SafeInject(peerCount));

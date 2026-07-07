@@ -12,7 +12,7 @@ public class RpcMonitor : PeriodicRunner
 
 	public RpcMonitor(TimeSpan period, IRPCClient rpcClient) : base(period)
 	{
-		_rpcStatus = RpcStatus.Unresponsive;
+		_rpcStatus = RpcStatus.Connecting;
 		RpcClient = rpcClient;
 	}
 
