@@ -188,7 +188,7 @@ public static class MacSignTools
 				WaitProcessToFinish(process, "ditto");
 			}
 
-			Notarize(appleId, appNotarizeFilePath);
+			Notarize(appNotarizeFilePath);
 			Staple(appPath);
 
 			using (var process = Process.Start(new ProcessStartInfo
@@ -284,7 +284,7 @@ public static class MacSignTools
 			Verify(dmgFilePath, teamId);
 
 			Console.WriteLine("Phase: notarize dmg");
-			Notarize(appleId, dmgFilePath);
+			Notarize(dmgFilePath);
 
 			Console.WriteLine("Phase: staple dmp");
 			Staple(dmgFilePath);
@@ -351,14 +351,14 @@ public static class MacSignTools
 		return string.Join(Environment.NewLine, output.Where(x => !string.IsNullOrWhiteSpace(x)));
 	}
 
-	private static void Notarize(string appleId, string filePath)
+	private static void Notarize(string filePath)
 	{
 		Console.WriteLine("Start notarizing, uploading file.");
 
 		using var process = Process.Start(new ProcessStartInfo
 		{
 			FileName = "xcrun",
-			Arguments = $"notarytool submit --wait --apple-id \"{appleId}\" -p \"WasabiNotarize\" \"{filePath}\" ",
+			Arguments = $"notarytool submit --wait --keychain-profile \"WasabiNotarize\" \"{filePath}\" ",
 			RedirectStandardOutput = true,
 			RedirectStandardError = true,
 		});
@@ -481,11 +481,7 @@ public static class MacSignTools
 	private static void ValidateMachOArchitectures(string appPath, string packageArchitecture)
 	{
 		string result = ExecuteBashCommand($"find -H \"{appPath}\" -type f -print0 | xargs -0 file | grep \"Mach-O\"");
-		var invalidFiles = result
-			.Split("\n")
-			.Where(x => !string.IsNullOrWhiteSpace(x))
-			.Where(x => !ContainsArchitecture(x, packageArchitecture))
-			.ToArray();
+		var invalidFiles = GetMachOFilesWithoutArchitecture(result, packageArchitecture);
 
 		if (invalidFiles.Length > 0)
 		{
@@ -493,6 +489,36 @@ public static class MacSignTools
 				$"The macOS {packageArchitecture} package contains Mach-O files without a {packageArchitecture} slice:{Environment.NewLine}" +
 				string.Join(Environment.NewLine, invalidFiles));
 		}
+	}
+
+	private static string[] GetMachOFilesWithoutArchitecture(string fileOutput, string architecture)
+	{
+		return fileOutput
+			.Split("\n")
+			.Where(x => !string.IsNullOrWhiteSpace(x))
+			.Select(x => new
+			{
+				Path = GetFilePathFromFileOutput(x),
+				Line = x
+			})
+			.GroupBy(x => x.Path, StringComparer.OrdinalIgnoreCase)
+			.Where(x => !x.Any(y => ContainsArchitecture(y.Line, architecture)))
+			.SelectMany(x => x.Select(y => y.Line))
+			.ToArray();
+	}
+
+	private static string GetFilePathFromFileOutput(string fileOutputLine)
+	{
+		int architectureMarkerIndex = fileOutputLine.IndexOf(" (for architecture ", StringComparison.Ordinal);
+		if (architectureMarkerIndex >= 0)
+		{
+			return fileOutputLine[..architectureMarkerIndex];
+		}
+
+		int fileTypeSeparatorIndex = fileOutputLine.IndexOf(':');
+		return fileTypeSeparatorIndex >= 0
+			? fileOutputLine[..fileTypeSeparatorIndex]
+			: fileOutputLine;
 	}
 
 	private static bool ContainsArchitecture(string fileOutputLine, string architecture)
