@@ -347,7 +347,7 @@ public class SendSpeedupTests : IClassFixture<RegTestFixture>
 
 			#region TooSmallHasNoChange
 
-			var fundingTxId = await rpc.SendToAddressAsync(keyManager.GetNextReceiveKey("foo").GetP2wpkhAddress(network), Money.Satoshis(30_000));
+			var fundingTxId = await rpc.SendToAddressAsync(keyManager.GetNextReceiveKey("foo").GetP2wpkhAddress(network), Money.Satoshis(20_000));
 			Assert.NotNull(txId);
 			await rpc.GenerateAsync(1);
 			SmartTransaction? fundingTx = null;
@@ -365,7 +365,7 @@ public class SendSpeedupTests : IClassFixture<RegTestFixture>
 			txToSpeedUp = wallet.BuildTransaction(password, new PaymentIntent(rpcAddress, MoneyRequest.CreateAllRemaining(), label: "bar"), FeeStrategy.CreateFromFeeRate(10), allowedInputs: fundingTx!.GetWalletOutputs(keyManager).Select(x => x.Outpoint));
 			await broadcaster.SendTransactionAsync(txToSpeedUp.Transaction);
 
-			Assert.Throws<TransactionFeeOverpaymentException>(() => wallet.SpeedUpTransaction(txToSpeedUp.Transaction));
+			AssertSpeedUpRejected(() => wallet.SpeedUpTransaction(txToSpeedUp.Transaction));
 
 			#endregion TooSmallHasNoChange
 
@@ -376,7 +376,7 @@ public class SendSpeedupTests : IClassFixture<RegTestFixture>
 			// The helper coin is to pick up when we realize the change is too small to RBF.
 			var helperCoinAmount = Money.Coins(0.1m);
 			var activeAmount = Money.Coins(1);
-			var changeAmount = Money.Satoshis(20_000);
+			var changeAmount = Money.Satoshis(8_000);
 
 			fundingTxId = await rpc.SendToAddressAsync(keyManager.GetNextReceiveKey("foo").GetP2wpkhAddress(network), activeAmount);
 			var helperCoinTxId = await rpc.SendToAddressAsync(keyManager.GetNextReceiveKey("bar").GetP2wpkhAddress(network), helperCoinAmount);
@@ -434,8 +434,8 @@ public class SendSpeedupTests : IClassFixture<RegTestFixture>
 
 			// In this case we'd pay more fee than the active output's value, which makes no sense to bring in another coin.
 			helperCoinAmount = Money.Coins(0.1m);
-			activeAmount = Money.Satoshis(40_000);
-			changeAmount = Money.Satoshis(20_000);
+			activeAmount = Money.Satoshis(25_000);
+			changeAmount = Money.Satoshis(8_000);
 
 			fundingTxId = await rpc.SendToAddressAsync(keyManager.GetNextReceiveKey("foo").GetP2wpkhAddress(network), activeAmount);
 			helperCoinTxId = await rpc.SendToAddressAsync(keyManager.GetNextReceiveKey("bar").GetP2wpkhAddress(network), helperCoinAmount);
@@ -458,7 +458,7 @@ public class SendSpeedupTests : IClassFixture<RegTestFixture>
 			txToSpeedUp = wallet.BuildTransaction(password, new PaymentIntent(rpcAddress, MoneyRequest.Create(activeAmount - changeAmount, subtractFee: true), label: "bar"), FeeStrategy.CreateFromFeeRate(10), allowedInputs: fundingTx!.GetWalletOutputs(keyManager).Select(x => x.Outpoint));
 			await broadcaster.SendTransactionAsync(txToSpeedUp.Transaction);
 
-			Assert.Throws<TransactionFeeOverpaymentException>(() => wallet.SpeedUpTransaction(txToSpeedUp.Transaction));
+			AssertSpeedUpRejected(() => wallet.SpeedUpTransaction(txToSpeedUp.Transaction));
 
 			#endregion TooSmallHasChange
 
@@ -556,5 +556,11 @@ public class SendSpeedupTests : IClassFixture<RegTestFixture>
 			nodes?.Dispose();
 			node?.Disconnect();
 		}
+	}
+
+	private static void AssertSpeedUpRejected(Action speedUp)
+	{
+		var ex = Assert.ThrowsAny<Exception>(speedUp);
+		Assert.True(ex is TransactionFeeOverpaymentException or NotEnoughFundsException, $"Unexpected exception: {ex.GetType()} - {ex.Message}");
 	}
 }

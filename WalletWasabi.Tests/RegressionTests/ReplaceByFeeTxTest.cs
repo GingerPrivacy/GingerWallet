@@ -109,14 +109,14 @@ public class ReplaceByFeeTxTest : IClassFixture<RegTestFixture>
 
 			var bfr = await rpc.BumpFeeAsync(tx0Id);
 			var tx1Id = bfr.TransactionId;
-			await Task.Delay(2000); // Waits for the replacement transaction get to the mempool.
+			await WaitForWalletCoinAsync(wallet, tx1Id, TimeSpan.FromSeconds(30));
 			Assert.Single(wallet.Coins);
 			Assert.False(wallet.Coins.First().Transaction.Confirmed);
 			Assert.Equal(tx1Id, wallet.Coins.First().TransactionId);
 
 			bfr = await rpc.BumpFeeAsync(tx1Id);
 			var tx2Id = bfr.TransactionId;
-			await Task.Delay(2000); // Waits for the replacement transaction get to the mempool.
+			await WaitForWalletCoinAsync(wallet, tx2Id, TimeSpan.FromSeconds(30));
 			Assert.Single(wallet.Coins);
 			Assert.False(wallet.Coins.First().Transaction.Confirmed);
 			Assert.Equal(tx2Id, wallet.Coins.First().TransactionId);
@@ -136,6 +136,20 @@ public class ReplaceByFeeTxTest : IClassFixture<RegTestFixture>
 			await synchronizer.StopAsync(CancellationToken.None);
 			nodes?.Dispose();
 			node?.Disconnect();
+		}
+	}
+
+	private static async Task WaitForWalletCoinAsync(Wallet wallet, uint256 txId, TimeSpan timeout)
+	{
+		var deadline = DateTimeOffset.UtcNow + timeout;
+		while (!wallet.Coins.Any(x => x.TransactionId == txId))
+		{
+			if (DateTimeOffset.UtcNow > deadline)
+			{
+				throw new TimeoutException($"Wallet did not process replacement transaction '{txId}'.");
+			}
+
+			await Task.Delay(100);
 		}
 	}
 }

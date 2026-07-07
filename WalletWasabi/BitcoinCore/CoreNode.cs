@@ -117,6 +117,7 @@ public class CoreNode
 		CachedRpcClient cachedRpcClient = new(rpcClient, coreNodeParams.Cache);
 
 		CoreNode coreNode = new(coreNodeParams.DataDir, coreNodeParams.Network, coreNodeParams.MempoolService, coreConfig, p2pEndPoint, rpcEndPoint, cachedRpcClient);
+		Logger.LogInfo($"Preparing {Constants.BuiltinBitcoinNodeName}. Network: {coreNode.Network}. Data directory: '{coreNode.DataDir}'. RPC endpoint: '{coreNode.RpcEndPoint}'. P2P endpoint: '{coreNode.P2pEndPoint}'. Authentication: {(cookieAuth ? "cookie file" : "configured user/password")}.");
 
 		if (coreNodeParams.TryRestart)
 		{
@@ -286,10 +287,11 @@ public class CoreNode
 		{
 			coreNode.Bridge = new BitcoindRpcProcessBridge(coreNode.RpcClient, coreNode.DataDir, printToConsole: false);
 			await coreNode.Bridge.StartAsync(cancel).ConfigureAwait(false);
-			Logger.LogInfo($"Started {Constants.BuiltinBitcoinNodeName}.");
+			Logger.LogInfo($"Started {Constants.BuiltinBitcoinNodeName} using data directory '{coreNode.DataDir}' and RPC endpoint '{coreNode.RpcEndPoint}'.");
 		}
 
 		coreNode.P2pNode = new P2pNode(coreNode.Network, coreNode.P2pEndPoint, coreNode.MempoolService, coreNodeParams.UserAgent);
+		Logger.LogInfo($"Connecting to {Constants.BuiltinBitcoinNodeName} P2P endpoint '{coreNode.P2pEndPoint}'.");
 		await coreNode.P2pNode.ConnectAsync(cancel).ConfigureAwait(false);
 
 		return coreNode;
@@ -339,6 +341,7 @@ public class CoreNode
 		using FileStream source = File.Open(configPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 		using FileStream destination = File.Create(backupPath);
 		await source.CopyToAsync(destination, cancel).ConfigureAwait(false);
+		Logger.LogInfo($"Backed up bitcoin.conf to '{backupPath}' before applying Bitcoin Core migration settings.");
 	}
 
 	public async Task<Node> CreateNewP2pNodeAsync()

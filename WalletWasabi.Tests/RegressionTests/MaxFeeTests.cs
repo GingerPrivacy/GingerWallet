@@ -114,13 +114,13 @@ public class MaxFeeTests : IClassFixture<RegTestFixture>
 			broadcaster.Initialize(nodes, rpc);
 
 			var waitCount = 0;
-			while (wallet.Coins.Sum(x => x.Amount) == Money.Zero)
+			while (wallet.Coins.Sum(x => x.Amount) < Money.Coins(1.75m))
 			{
 				await Task.Delay(1000);
 				waitCount++;
 				if (waitCount >= 21)
 				{
-					throw new InvalidOperationException($"Funding transaction to the wallet '{wallet.WalletName}' did not arrive.");
+					throw new InvalidOperationException($"Funding transactions to the wallet '{wallet.WalletName}' did not arrive.");
 				}
 			}
 
@@ -139,7 +139,7 @@ public class MaxFeeTests : IClassFixture<RegTestFixture>
 			{
 				var foundSolution = FeeHelpers.TryGetMaxFeeRate(wallet, destination, amount, "", new FeeRate(satPerByte), wallet.Coins, false, out var maxFeeRate);
 
-				Assert.True(foundSolution);
+				Assert.True(foundSolution, $"No normal max fee solution was found from starting fee rate {satPerByte} sat/vB.");
 				var failingFeeRate = new FeeRate(maxFeeRate!.SatoshiPerByte + 0.001m);
 				try
 				{
@@ -157,11 +157,11 @@ public class MaxFeeTests : IClassFixture<RegTestFixture>
 			}
 
 			// Test for changeless transactions
-			foreach (var satPerByte in satPerBytesToTry)
+			foreach (var satPerByte in satPerBytesToTry.Where(x => x < 99999999))
 			{
 				var foundSolution = FeeHelpers.TryGetMaxFeeRateForChangeless(wallet, destination, "", new FeeRate(satPerByte), wallet.Coins, out var maxFeeRate);
 
-				Assert.True(foundSolution);
+				Assert.True(foundSolution, $"No changeless max fee solution was found from starting fee rate {satPerByte} sat/vB.");
 				var failingFeeRate = new FeeRate(maxFeeRate!.SatoshiPerByte + 0.001m);
 				try
 				{

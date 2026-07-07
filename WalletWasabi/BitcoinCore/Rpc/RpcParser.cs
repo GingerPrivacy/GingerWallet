@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text.Json;
 using NBitcoin;
 using WalletWasabi.BitcoinCore.Rpc.Models;
+using WalletWasabi.Logging;
 
 namespace WalletWasabi.BitcoinCore.Rpc;
 
@@ -10,7 +11,7 @@ public static class RpcParser
 {
 	public static RpcPubkeyType ConvertPubkeyType(string? pubKeyType)
 	{
-		return pubKeyType switch
+		var converted = pubKeyType switch
 		{
 			"nonstandard" => RpcPubkeyType.TxNonstandard,
 			"pubkey" => RpcPubkeyType.TxPubkey,
@@ -22,8 +23,16 @@ public static class RpcParser
 			"witness_v0_scripthash" => RpcPubkeyType.TxWitnessV0Scripthash,
 			"witness_v1_taproot" => RpcPubkeyType.TxWitnessV1Taproot,
 			"witness_unknown" => RpcPubkeyType.TxWitnessUnknown,
+			"anchor" => RpcPubkeyType.TxAnchor,
 			_ => RpcPubkeyType.Unknown
 		};
+
+		if (converted == RpcPubkeyType.Unknown)
+		{
+			Logger.LogWarning($"Bitcoin Core returned an unknown scriptPubKey type: '{pubKeyType ?? "<null>"}'.");
+		}
+
+		return converted;
 	}
 
 	public static VerboseBlockInfo ParseVerboseBlockResponse(string getBlockResponse)
@@ -68,14 +77,21 @@ public static class RpcParser
 				}
 				else
 				{
-					var prevOut = txInJson.GetProperty("prevout");
-					var scriptPubKey = prevOut.GetProperty("scriptPubKey");
-					input = new VerboseInputInfo(
-						outPoint: new OutPoint(uint256.Parse(txInJson.GetProperty("txid").GetString()), txInJson.GetProperty("vout").GetUInt32()),
-						prevOutput: new VerboseOutputInfo(
+					var outPoint = new OutPoint(uint256.Parse(txInJson.GetProperty("txid").GetString()), txInJson.GetProperty("vout").GetUInt32());
+					if (txInJson.TryGetProperty("prevout", out var prevOut))
+					{
+						var scriptPubKey = prevOut.GetProperty("scriptPubKey");
+						input = new VerboseInputInfo(
+							outPoint,
+							new VerboseOutputInfo(
 							value: Money.Coins(prevOut.GetProperty("value").GetDecimal()),
 							scriptPubKey: Script.FromHex(scriptPubKey.GetProperty("hex").GetString()),
 							pubkeyType: scriptPubKey.GetProperty("type").GetString()));
+					}
+					else
+					{
+						input = new VerboseInputInfo(outPoint);
+					}
 				}
 
 				inputs.Add(input);

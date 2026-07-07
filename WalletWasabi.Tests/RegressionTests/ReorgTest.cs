@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WalletWasabi.Backend.Models;
 using WalletWasabi.BitcoinCore.Rpc;
+using WalletWasabi.BitcoinCore.Rpc.Models;
 using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Blockchain.BlockFilters;
 using WalletWasabi.Blockchain.Keys;
@@ -116,13 +117,12 @@ public class ReorgTest : IClassFixture<RegTestFixture>
 			for (int i = 0; i < blockCountIncludingGenesis; i++)
 			{
 				var expectedHash = await rpc.GetBlockHashAsync(i);
+				var expectedBlock = await rpc.GetVerboseBlockAsync(expectedHash);
+				var expectedFilter = IndexBuilderService.BuildFilterForBlock(expectedBlock, [RpcPubkeyType.TxWitnessV0Keyhash, RpcPubkeyType.TxWitnessV1Taproot]);
 				var filter = filters[i];
 				Assert.Equal(i, (int)filter.Header.Height);
 				Assert.Equal(expectedHash, filter.Header.BlockHash);
-				if (i < 101) // Later other tests may fill the filter.
-				{
-					Assert.Equal(IndexBuilderService.CreateDummyEmptyFilter(expectedHash).ToString(), filter.Filter.ToString());
-				}
+				Assert.Equal(expectedFilter.ToString(), filter.Filter.ToString());
 			}
 
 			// Test the serialization, too.

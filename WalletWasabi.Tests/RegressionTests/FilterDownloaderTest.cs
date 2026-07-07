@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WalletWasabi.Backend.Models;
 using WalletWasabi.BitcoinCore.Rpc;
+using WalletWasabi.BitcoinCore.Rpc.Models;
 using WalletWasabi.Blockchain.BlockFilters;
 using WalletWasabi.Services;
 using WalletWasabi.Stores;
@@ -75,10 +76,12 @@ public class FilterDownloaderTest : IClassFixture<RegTestFixture>
 			for (int i = 0; i < 101; i++)
 			{
 				var expectedHash = await rpc.GetBlockHashAsync(i);
+				var expectedBlock = await rpc.GetVerboseBlockAsync(expectedHash);
+				var expectedFilter = IndexBuilderService.BuildFilterForBlock(expectedBlock, [RpcPubkeyType.TxWitnessV0Keyhash, RpcPubkeyType.TxWitnessV1Taproot]);
 				var filter = filters[i];
 				Assert.Equal(i, (int)filter.Header.Height);
 				Assert.Equal(expectedHash, filter.Header.BlockHash);
-				Assert.Equal(IndexBuilderService.CreateDummyEmptyFilter(expectedHash).ToString(), filter.Filter.ToString());
+				Assert.Equal(expectedFilter.ToString(), filter.Filter.ToString());
 			}
 		}
 		finally

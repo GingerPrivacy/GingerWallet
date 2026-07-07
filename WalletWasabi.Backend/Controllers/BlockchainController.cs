@@ -297,14 +297,18 @@ public class BlockchainController : ControllerBase
 		{
 			await RpcClient.SendRawTransactionAsync(transaction, cancellationToken);
 		}
-		catch (RPCException ex) when (ex.Message.Contains("already in block chain", StringComparison.InvariantCultureIgnoreCase))
+		catch (RPCException ex) when (
+			ex.Message.Contains("already in block chain", StringComparison.InvariantCultureIgnoreCase)
+			|| ex.Message.Contains("Transaction outputs already in utxo set", StringComparison.InvariantCultureIgnoreCase))
 		{
+			Logger.LogDebug($"Broadcasted transaction '{transaction.GetHash()}' was already known by Bitcoin Core as confirmed. Core RPC message: {ex.Message}");
 			return Ok("Transaction is already in the blockchain.");
 		}
 		catch (RPCException ex)
 		{
-			Logger.LogDebug(ex);
 			var spenders = Global.HostedServices.Get<MempoolMirror>().GetSpenderTransactions(transaction.Inputs.Select(x => x.PrevOut));
+			Logger.LogWarning($"Broadcast failed for transaction '{transaction.GetHash()}'. Core RPC message: {ex.Message}. Mempool spenders found: {spenders.Count}.");
+			Logger.LogDebug(ex);
 			return BadRequest($"{ex.Message}:::{string.Join(":::", spenders.Select(x => x.ToHex()))}");
 		}
 
@@ -460,10 +464,30 @@ public class BlockchainController : ControllerBase
 
 	private async Task<IActionResult> GetUnconfirmedTransactionChainNoCacheAsync(uint256 txId, CancellationToken cancellationToken)
 	{
-		var mempoolHashes = Mempool.GetMempoolHashes();
+		var mempoolHashes = (await RpcClient.GetRawMempoolAsync(cancellationToken).ConfigureAwait(false)).ToHashSet();
 		if (!mempoolHashes.Contains(txId))
 		{
-			return BadRequest("Requested transaction is not present in the mempool, probably confirmed.");
+			Logger.LogDebug($"Transaction '{txId}' was missing from the raw mempool snapshot. Checking Bitcoin Core getmempoolentry as a fallback.");
+
+			MempoolEntry? mempoolEntry = null;
+			try
+			{
+				mempoolEntry = await RpcClient.GetMempoolEntryAsync(txId, throwIfNotFound: false, cancellationToken).ConfigureAwait(false);
+			}
+			catch (RPCException ex)
+			{
+				// Bitcoin Core returns an RPC error for transactions that are not in the mempool.
+				Logger.LogDebug($"Bitcoin Core getmempoolentry did not find transaction '{txId}'. Core RPC message: {ex.Message}");
+			}
+
+			if (mempoolEntry is null)
+			{
+				Logger.LogWarning($"Unconfirmed chain request for transaction '{txId}' could not continue because Bitcoin Core does not report it in the mempool.");
+				return BadRequest("Requested transaction is not present in the mempool, probably confirmed.");
+			}
+
+			Logger.LogWarning($"Transaction '{txId}' was absent from the raw mempool snapshot but present in getmempoolentry. Continuing with the explicit entry.");
+			mempoolHashes.Add(txId);
 		}
 
 		using CancellationTokenSource timeoutCts = new(TimeSpan.FromSeconds(10));
@@ -510,49 +534,47 @@ public class BlockchainController : ControllerBase
 
 	private async Task<UnconfirmedTransactionChainItem> ComputeUnconfirmedTransactionChainItemAsync(uint256 currentTxId, IEnumerable<uint256> mempoolHashes, CancellationToken cancellationToken)
 	{
+		var mempoolHashSet = mempoolHashes as ISet<uint256> ?? mempoolHashes.ToHashSet();
 		var currentTx = (await FetchTransactionsAsync([currentTxId], cancellationToken).ConfigureAwait(false)).First();
 
-		var txsToFetch = currentTx.Inputs.Select(input => input.PrevOut.Hash).Distinct().ToArray();
+		var mempoolParentTxIds = currentTx.Inputs
+			.Select(input => input.PrevOut.Hash)
+			.Distinct()
+			.Where(mempoolHashSet.Contains)
+			.ToArray();
 
 		Transaction[] parentTxs;
 		try
 		{
-			parentTxs = await FetchTransactionsAsync(txsToFetch, cancellationToken).ConfigureAwait(false);
+			parentTxs = await FetchTransactionsAsync(mempoolParentTxIds, cancellationToken).ConfigureAwait(false);
 		}
 		catch (AggregateException ex)
 		{
+			Logger.LogWarning($"Failed to fetch one or more unconfirmed parent transactions for '{currentTxId}'. {ex}");
 			throw new InvalidOperationException($"Some transactions part of the chain were not found: {ex}");
 		}
 
 		// Get unconfirmed parents and children
-		var unconfirmedParents = parentTxs.Where(x => mempoolHashes.Contains(x.GetHash())).ToHashSet();
+		var unconfirmedParents = parentTxs.ToHashSet();
 		var unconfirmedChildrenTxs = Mempool.GetSpenderTransactions(currentTx.Outputs.Select((txo, index) => new OutPoint(currentTx, index))).ToHashSet();
+		var fee = await UnconfirmedTransactionFeeResolver.ComputeFeeAsync(currentTx, parentTxs, GetConfirmedTxOutAsync, cancellationToken).ConfigureAwait(false);
 
 		return new UnconfirmedTransactionChainItem(
 			TxId: currentTxId,
 			Size: currentTx.GetVirtualSize(),
-			Fee: ComputeFee(currentTx, parentTxs, cancellationToken),
+			Fee: fee,
 			Parents: unconfirmedParents.Select(x => x.GetHash()).ToHashSet(),
 			Children: unconfirmedChildrenTxs.Select(x => x.GetHash()).ToHashSet());
-	}
 
-	private Money ComputeFee(Transaction currentTx, IEnumerable<Transaction> parentTxs, CancellationToken cancellationToken)
-	{
-		cancellationToken.ThrowIfCancellationRequested();
-
-		var inputs = new List<Coin>();
-
-		var prevOutsForCurrentTx = currentTx.Inputs
-			.Select(input => input.PrevOut)
-			.ToList();
-
-		foreach (var prevOut in prevOutsForCurrentTx)
+		async Task<TxOut?> GetConfirmedTxOutAsync(OutPoint prevOut, CancellationToken token)
 		{
-			var parentTx = parentTxs.First(x => x.GetHash() == prevOut.Hash);
-			var txOut = parentTx.Outputs[prevOut.N];
-			inputs.Add(new Coin(prevOut, txOut));
-		}
+			var response = await RpcClient.GetTxOutAsync(prevOut.Hash, checked((int)prevOut.N), includeMempool: false, token).ConfigureAwait(false);
+			if (response is null)
+			{
+				Logger.LogWarning($"Bitcoin Core returned no confirmed txout for prevout '{prevOut}' while computing unconfirmed chain item '{currentTxId}'.");
+			}
 
-		return currentTx.GetFee(inputs.ToArray());
+			return response?.TxOut;
+		}
 	}
 }

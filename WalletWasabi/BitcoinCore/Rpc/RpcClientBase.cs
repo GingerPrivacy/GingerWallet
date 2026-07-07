@@ -77,39 +77,7 @@ public class RpcClientBase : IRPCClient
 			var response = await Rpc.SendCommandAsync(RPCOperations.getmempoolinfo, cancel, true)
 				.ConfigureAwait(false);
 
-			static IEnumerable<FeeRateGroup> ExtractFeeRateGroups(JToken? jt) =>
-				jt switch
-				{
-					JObject jo => jo.Properties()
-						.Where(p => p.Name != "total_fees")
-						.Select(
-							p => new FeeRateGroup
-							{
-								Group = int.Parse(p.Name),
-								Sizes = p.Value.Value<ulong>("sizes"),
-								Count = p.Value.Value<uint>("count"),
-								Fees = Money.Satoshis(p.Value.Value<ulong>("fees")),
-								From = new FeeRate(p.Value.Value<decimal>("from_feerate")),
-								To = new FeeRate(Math.Min(50_000, p.Value.Value<decimal>("to_feerate")))
-							}),
-					_ => Enumerable.Empty<FeeRateGroup>()
-				};
-
-			return new MemPoolInfo()
-			{
-				Size = int.Parse((string)response.Result["size"]!, CultureInfo.InvariantCulture),
-				Bytes = int.Parse((string)response.Result["bytes"]!, CultureInfo.InvariantCulture),
-				Usage = int.Parse((string)response.Result["usage"]!, CultureInfo.InvariantCulture),
-				MaxMemPool =
-					double.Parse((string)response.Result["maxmempool"]!, CultureInfo.InvariantCulture),
-				MemPoolMinFee = double.Parse(
-					(string)response.Result["mempoolminfee"]!,
-					CultureInfo.InvariantCulture),
-				MinRelayTxFee = double.Parse(
-					(string)response.Result["minrelaytxfee"]!,
-					CultureInfo.InvariantCulture),
-				Histogram = ExtractFeeRateGroups(response.Result["fee_histogram"]).ToArray()
-			};
+			return ParseMempoolInfo(response.Result);
 		}
 		catch (RPCException ex) when (ex.RPCCode == RPCErrorCode.RPC_MISC_ERROR)
 		{
@@ -117,6 +85,43 @@ public class RpcClientBase : IRPCClient
 
 			return await Rpc.GetMemPoolAsync(cancel).ConfigureAwait(false);
 		}
+	}
+
+	internal static MemPoolInfo ParseMempoolInfo(JToken result)
+	{
+		static IEnumerable<FeeRateGroup> ExtractFeeRateGroups(JToken? jt) =>
+			jt switch
+			{
+				JObject jo => jo.Properties()
+					.Where(p => p.Name != "total_fees")
+					.Select(
+						p => new FeeRateGroup
+						{
+							Group = int.Parse(p.Name),
+							Sizes = p.Value.Value<ulong>("sizes"),
+							Count = p.Value.Value<uint>("count"),
+							Fees = Money.Satoshis(p.Value.Value<ulong>("fees")),
+							From = new FeeRate(p.Value.Value<decimal>("from_feerate")),
+							To = new FeeRate(Math.Min(50_000, p.Value.Value<decimal>("to_feerate")))
+						}),
+				_ => Enumerable.Empty<FeeRateGroup>()
+			};
+
+		return new MemPoolInfo()
+		{
+			Size = int.Parse((string)result["size"]!, CultureInfo.InvariantCulture),
+			Bytes = int.Parse((string)result["bytes"]!, CultureInfo.InvariantCulture),
+			Usage = int.Parse((string)result["usage"]!, CultureInfo.InvariantCulture),
+			MaxMemPool =
+				double.Parse((string)result["maxmempool"]!, CultureInfo.InvariantCulture),
+			MemPoolMinFee = double.Parse(
+				(string)result["mempoolminfee"]!,
+				CultureInfo.InvariantCulture),
+			MinRelayTxFee = double.Parse(
+				(string)result["minrelaytxfee"]!,
+				CultureInfo.InvariantCulture),
+			Histogram = ExtractFeeRateGroups(result["fee_histogram"]).ToArray()
+		};
 	}
 
 	public virtual async Task<uint256[]> GetRawMempoolAsync(CancellationToken cancellationToken = default)

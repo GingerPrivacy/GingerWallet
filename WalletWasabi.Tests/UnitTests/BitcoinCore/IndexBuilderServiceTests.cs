@@ -141,6 +141,66 @@ public class IndexBuilderServiceTests
 	}
 
 	[Fact]
+	public void ThrowsWhenInputPrevoutIsMissing()
+	{
+		var blockHash = BlockHashFromHeight(1);
+		var outPoint = new OutPoint(BlockHashFromHeight(2), 0);
+		var transaction = new VerboseTransactionInfo(
+			new TransactionBlockInfo(blockHash, DateTimeOffset.UtcNow, 0),
+			BlockHashFromHeight(3),
+			[new VerboseInputInfo(outPoint)],
+			[]);
+		var block = new VerboseBlockInfo(
+			uint256.Zero,
+			1,
+			blockHash,
+			DateTimeOffset.UtcNow,
+			1,
+			[transaction]);
+
+		var ex = Assert.Throws<InvalidOperationException>(
+			() => IndexBuilderService.BuildFilterForBlock(block, [RpcPubkeyType.TxWitnessV1Taproot]));
+
+		Assert.Contains("missing prevout data", ex.Message);
+		Assert.Contains(outPoint.ToString(), ex.Message);
+	}
+
+	[Fact]
+	public void UsesAuthoritativePrevoutCacheWhenCoreOmitsPrevout()
+	{
+		var blockHash = BlockHashFromHeight(1);
+		var txId = BlockHashFromHeight(2);
+		var script = Script.FromHex("51200102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20");
+		var output = new VerboseOutputInfo(Money.Satoshis(10_000), script, "witness_v1_taproot");
+		var outPoint = new OutPoint(txId, 0);
+		var fundingTx = new VerboseTransactionInfo(
+			new TransactionBlockInfo(blockHash, DateTimeOffset.UtcNow, 0),
+			txId,
+			[new VerboseInputInfo("00")],
+			[output]);
+		var spendingTx = new VerboseTransactionInfo(
+			new TransactionBlockInfo(blockHash, DateTimeOffset.UtcNow, 1),
+			BlockHashFromHeight(3),
+			[new VerboseInputInfo(outPoint)],
+			[]);
+		var block = new VerboseBlockInfo(
+			uint256.Zero,
+			1,
+			blockHash,
+			DateTimeOffset.UtcNow,
+			1,
+			[fundingTx, spendingTx]);
+		var cache = new Dictionary<OutPoint, VerboseOutputInfo>();
+
+		var filter = IndexBuilderService.BuildFilterForBlock(block, [RpcPubkeyType.TxWitnessV1Taproot], cache, isPrevOutputCacheAuthoritative: true);
+
+		static byte[] ComputeKey(uint256 blockId) => blockId.ToBytes()[0..16];
+
+		Assert.True(filter.Match(script.ToCompressedBytes(), ComputeKey(block.Hash)));
+		Assert.DoesNotContain(outPoint, cache.Keys);
+	}
+
+	[Fact]
 	public async Task SegwitTaprootSynchronizedBitcoinNodeAsync()
 	{
 		var blockchain = GenerateBlockchain().Take(10).ToArray();

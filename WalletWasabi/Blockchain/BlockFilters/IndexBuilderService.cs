@@ -81,6 +81,8 @@ public class IndexBuilderService
 			}
 		}
 
+		IsPrevOutputCacheAuthoritative = _indexList.Count == 0;
+
 		BlockNotifier.OnBlock += BlockNotifier_OnBlock;
 	}
 
@@ -93,6 +95,8 @@ public class IndexBuilderService
 	private ReaderWriterLockSlim _indexListLock = new();
 	private List<FilterModel> _indexList = [];
 	private Dictionary<uint256, int> _blockIndex = [];
+	private Dictionary<OutPoint, VerboseOutputInfo> PrevOutputCache { get; } = [];
+	private bool IsPrevOutputCacheAuthoritative { get; set; }
 
 	private uint StartingHeight { get; }
 	public bool IsRunning => Interlocked.Read(ref _serviceStatus) == Running;
@@ -142,6 +146,7 @@ public class IndexBuilderService
 
 					while (IsRunning)
 					{
+						uint? lastKnownHeight = null;
 						try
 						{
 							SyncInfo syncInfo = await GetSyncInfoAsync().ConfigureAwait(false);
@@ -173,6 +178,7 @@ public class IndexBuilderService
 									: await RpcClient.GetBlockHashAsync((int)StartingHeight - 1).ConfigureAwait(false);
 								currentHeight = StartingHeight - 1;
 							}
+							lastKnownHeight = currentHeight;
 
 							var coreNotSynced = !syncInfo.IsCoreSynchronized;
 							var tipReached = syncInfo.BlockCount == currentHeight;
@@ -217,7 +223,7 @@ public class IndexBuilderService
 								continue;
 							}
 
-							var filter = BuildFilterForBlock(block, PubKeyTypes);
+							var filter = BuildFilterForBlock(block, PubKeyTypes, PrevOutputCache, IsPrevOutputCacheAuthoritative);
 
 							var smartHeader = new SmartHeader(block.Hash, block.PrevBlockHash, nextHeight, block.BlockTime);
 							var filterModel = new FilterModel(smartHeader, filter);
@@ -248,6 +254,7 @@ public class IndexBuilderService
 						}
 						catch (Exception ex)
 						{
+							Logger.LogWarning($"Filter synchronization failed and will retry. Last known filter height: {lastKnownHeight?.ToString() ?? "unknown"}. {ex.Message}");
 							Logger.LogDebug(ex);
 
 							// Pause the while loop for a while to not flood logs in case of permanent error.
@@ -268,9 +275,16 @@ public class IndexBuilderService
 		});
 	}
 
-	internal static GolombRiceFilter BuildFilterForBlock(VerboseBlockInfo block, RpcPubkeyType[] pubKeyTypes)
+	internal static GolombRiceFilter BuildFilterForBlock(VerboseBlockInfo block, RpcPubkeyType[] pubKeyTypes) =>
+		BuildFilterForBlock(block, pubKeyTypes, prevOutputCache: null, isPrevOutputCacheAuthoritative: false);
+
+	internal static GolombRiceFilter BuildFilterForBlock(
+		VerboseBlockInfo block,
+		RpcPubkeyType[] pubKeyTypes,
+		IDictionary<OutPoint, VerboseOutputInfo>? prevOutputCache,
+		bool isPrevOutputCacheAuthoritative)
 	{
-		var scripts = FetchScripts(block, pubKeyTypes);
+		var scripts = FetchScripts(block, pubKeyTypes, prevOutputCache, isPrevOutputCacheAuthoritative);
 
 		if (scripts.Count != 0)
 		{
@@ -289,7 +303,11 @@ public class IndexBuilderService
 		}
 	}
 
-	private static List<Script> FetchScripts(VerboseBlockInfo block, RpcPubkeyType[] pubKeyTypes)
+	private static List<Script> FetchScripts(
+		VerboseBlockInfo block,
+		RpcPubkeyType[] pubKeyTypes,
+		IDictionary<OutPoint, VerboseOutputInfo>? prevOutputCache,
+		bool isPrevOutputCacheAuthoritative)
 	{
 		var scripts = new List<Script>();
 
@@ -297,18 +315,56 @@ public class IndexBuilderService
 		{
 			foreach (var input in tx.Inputs)
 			{
+				if (input.IsCoinbase)
+				{
+					continue;
+				}
+
 				var prevOut = input.PrevOutput;
-				if (prevOut is not null && pubKeyTypes.Contains(prevOut.PubkeyType))
+				if (prevOut is null)
+				{
+					var outPoint = input.OutPoint;
+					if (outPoint is null)
+					{
+						Logger.LogWarning($"Cannot build filter for block '{block.Hash}' because transaction '{tx.Id}' is missing input outpoint data.");
+						throw new InvalidOperationException($"Cannot build filter for block '{block.Hash}' because transaction '{tx.Id}' is missing input outpoint data.");
+					}
+
+					if (prevOutputCache?.TryGetValue(outPoint, out prevOut) is not true)
+					{
+						if (isPrevOutputCacheAuthoritative)
+						{
+							Logger.LogDebug($"Skipping input '{outPoint}' while building filter for block '{block.Hash}' because Bitcoin Core omitted prevout data and the local prevout cache has no entry.");
+							continue;
+						}
+
+						Logger.LogWarning($"Cannot build filter for block '{block.Hash}' because transaction '{tx.Id}' is missing prevout data for input '{outPoint}', and the local prevout cache is not authoritative.");
+						throw new InvalidOperationException($"Cannot build filter for block '{block.Hash}' because transaction '{tx.Id}' is missing prevout data for input '{outPoint}', and the local prevout cache was not built from the index starting height.");
+					}
+
+					Logger.LogDebug($"Using local prevout cache for input '{outPoint}' while building filter for block '{block.Hash}'.");
+				}
+
+				if (pubKeyTypes.Contains(prevOut.PubkeyType))
 				{
 					scripts.Add(prevOut.ScriptPubKey);
 				}
+
+				if (input.OutPoint is { } spentOutPoint)
+				{
+					prevOutputCache?.Remove(spentOutPoint);
+				}
 			}
 
-			foreach (var output in tx.Outputs)
+			foreach (var (output, index) in tx.Outputs.Select((output, index) => (output, index)))
 			{
 				if (pubKeyTypes.Contains(output.PubkeyType))
 				{
 					scripts.Add(output.ScriptPubKey);
+					if (prevOutputCache is { })
+					{
+						prevOutputCache[new OutPoint(tx.Id, (uint)index)] = output;
+					}
 				}
 			}
 		}
@@ -335,9 +391,42 @@ public class IndexBuilderService
 
 		Logger.LogInfo($"REORG invalid block: {blockHash}");
 
+		await UndoBlockFromPrevOutputCacheAsync(blockHash).ConfigureAwait(false);
+
 		// 2. Serialize Index. (Remove last line.)
 		var lines = await File.ReadAllLinesAsync(IndexFilePath).ConfigureAwait(false);
 		await File.WriteAllLinesAsync(IndexFilePath, lines.Take(lines.Length - 1).ToArray()).ConfigureAwait(false);
+	}
+
+	private async Task UndoBlockFromPrevOutputCacheAsync(uint256 blockHash)
+	{
+		VerboseBlockInfo block = await RpcClient.GetVerboseBlockAsync(blockHash).ConfigureAwait(false);
+
+		foreach (var tx in block.Transactions.AsEnumerable().Reverse())
+		{
+			foreach (var (_, index) in tx.Outputs.Select((output, index) => (output, index)))
+			{
+				PrevOutputCache.Remove(new OutPoint(tx.Id, (uint)index));
+			}
+
+			foreach (var input in tx.Inputs)
+			{
+				if (input.IsCoinbase || input.OutPoint is not { } spentOutPoint || input.PrevOutput is not { } prevOut)
+				{
+					if (!input.IsCoinbase && input.OutPoint is { } missingPrevOutPoint && input.PrevOutput is null)
+					{
+						Logger.LogDebug($"Cannot restore prevout cache entry for input '{missingPrevOutPoint}' while undoing block '{blockHash}' because Bitcoin Core omitted prevout data.");
+					}
+
+					continue;
+				}
+
+				if (PubKeyTypes.Contains(prevOut.PubkeyType))
+				{
+					PrevOutputCache[spentOutPoint] = prevOut;
+				}
+			}
+		}
 	}
 
 	private async Task<SyncInfo> GetSyncInfoAsync()

@@ -203,7 +203,7 @@ public class SpendUnconfirmedTxTests : IClassFixture<RegTestFixture>
 			Assert.Contains(block.Transactions, x => x.GetHash() == tx1Res.Transaction.GetHash());
 			Assert.Contains(block.Transactions, x => x.GetHash() == tx0Id);
 
-			Assert.True(wallet.Coins.All(x => x.Confirmed));
+			await WaitForAllCoinsToConfirmAsync(wallet, TimeSpan.FromSeconds(30));
 
 			// Test coin basic count.
 			ICoinsView GetAllCoins() => wallet.TransactionProcessor.Coins.AsAllCoinsView();
@@ -226,6 +226,20 @@ public class SpendUnconfirmedTxTests : IClassFixture<RegTestFixture>
 			await synchronizer.StopAsync(CancellationToken.None);
 			nodes?.Dispose();
 			node?.Disconnect();
+		}
+	}
+
+	private static async Task WaitForAllCoinsToConfirmAsync(Wallet wallet, TimeSpan timeout)
+	{
+		var deadline = DateTimeOffset.UtcNow + timeout;
+		while (wallet.Coins.Any(x => !x.Confirmed))
+		{
+			if (DateTimeOffset.UtcNow > deadline)
+			{
+				throw new TimeoutException("Wallet coins did not become confirmed.");
+			}
+
+			await Task.Delay(100);
 		}
 	}
 }

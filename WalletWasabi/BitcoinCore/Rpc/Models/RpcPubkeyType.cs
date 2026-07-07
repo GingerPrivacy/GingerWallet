@@ -13,4 +13,5 @@ public enum RpcPubkeyType
 	TxWitnessV0Scripthash,
 	TxWitnessV1Taproot,
 	TxWitnessUnknown,
+	TxAnchor,
 }
