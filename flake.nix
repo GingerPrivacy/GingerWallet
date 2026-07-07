@@ -32,7 +32,7 @@
              # for backend
              openssl zlib
              # for client
-             tor hwi bitcoind-knots
+             tor hwi bitcoind
              xorg.libX11 xorg.libXrandr xorg.libX11.dev xorg.libICE xorg.libSM fontconfig.lib ];
           dotnet-sdk = pkgs.dotnetCorePackages.sdk_8_0;
           selfContainedBuild = true;
@@ -58,7 +58,7 @@
           preBuild = ''
             cp -r ${pkgs.tor}/bin/tor ${microservices}/Tor/tor
             cp ${pkgs.hwi}/bin/hwi ${microservices}/hwi
-            cp ${pkgs.bitcoind-knots}/bin/bitcoind ${microservices}/bitcoind
+            cp ${pkgs.bitcoind}/bin/bitcoind ${microservices}/bitcoind
           '';
 
           skiaSharp = toString ./. + "WalletWasabi.Fluent.Desktop/bin/Debug/net8.0/runtimes/linux-x64/native";
