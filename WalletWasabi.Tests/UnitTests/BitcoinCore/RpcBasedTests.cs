@@ -288,6 +288,12 @@ public class RpcBasedTests
 	}
 
 	[Fact]
+	public void ParseBitcoinCoreAnchorScriptType()
+	{
+		Assert.Equal(RpcPubkeyType.TxAnchor, RpcParser.ConvertPubkeyType("anchor"));
+	}
+
+	[Fact]
 	public void ParseBitcoinCoreMempoolInfoWithoutFeeHistogram()
 	{
 		var result = JObject.Parse(

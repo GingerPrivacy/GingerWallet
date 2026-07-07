@@ -146,6 +146,7 @@ public class IndexBuilderService
 
 					while (IsRunning)
 					{
+						uint? lastKnownHeight = null;
 						try
 						{
 							SyncInfo syncInfo = await GetSyncInfoAsync().ConfigureAwait(false);
@@ -177,6 +178,7 @@ public class IndexBuilderService
 									: await RpcClient.GetBlockHashAsync((int)StartingHeight - 1).ConfigureAwait(false);
 								currentHeight = StartingHeight - 1;
 							}
+							lastKnownHeight = currentHeight;
 
 							var coreNotSynced = !syncInfo.IsCoreSynchronized;
 							var tipReached = syncInfo.BlockCount == currentHeight;
@@ -252,6 +254,7 @@ public class IndexBuilderService
 						}
 						catch (Exception ex)
 						{
+							Logger.LogWarning($"Filter synchronization failed and will retry. Last known filter height: {lastKnownHeight?.ToString() ?? "unknown"}. {ex.Message}");
 							Logger.LogDebug(ex);
 
 							// Pause the while loop for a while to not flood logs in case of permanent error.
@@ -323,6 +326,7 @@ public class IndexBuilderService
 					var outPoint = input.OutPoint;
 					if (outPoint is null)
 					{
+						Logger.LogWarning($"Cannot build filter for block '{block.Hash}' because transaction '{tx.Id}' is missing input outpoint data.");
 						throw new InvalidOperationException($"Cannot build filter for block '{block.Hash}' because transaction '{tx.Id}' is missing input outpoint data.");
 					}
 
@@ -330,11 +334,15 @@ public class IndexBuilderService
 					{
 						if (isPrevOutputCacheAuthoritative)
 						{
+							Logger.LogDebug($"Skipping input '{outPoint}' while building filter for block '{block.Hash}' because Bitcoin Core omitted prevout data and the local prevout cache has no entry.");
 							continue;
 						}
 
+						Logger.LogWarning($"Cannot build filter for block '{block.Hash}' because transaction '{tx.Id}' is missing prevout data for input '{outPoint}', and the local prevout cache is not authoritative.");
 						throw new InvalidOperationException($"Cannot build filter for block '{block.Hash}' because transaction '{tx.Id}' is missing prevout data for input '{outPoint}', and the local prevout cache was not built from the index starting height.");
 					}
+
+					Logger.LogDebug($"Using local prevout cache for input '{outPoint}' while building filter for block '{block.Hash}'.");
 				}
 
 				if (pubKeyTypes.Contains(prevOut.PubkeyType))
@@ -405,6 +413,11 @@ public class IndexBuilderService
 			{
 				if (input.IsCoinbase || input.OutPoint is not { } spentOutPoint || input.PrevOutput is not { } prevOut)
 				{
+					if (!input.IsCoinbase && input.OutPoint is { } missingPrevOutPoint && input.PrevOutput is null)
+					{
+						Logger.LogDebug($"Cannot restore prevout cache entry for input '{missingPrevOutPoint}' while undoing block '{blockHash}' because Bitcoin Core omitted prevout data.");
+					}
+
 					continue;
 				}
 
