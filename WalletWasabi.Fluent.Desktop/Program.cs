@@ -65,11 +65,6 @@ public class Program
 
 			var exitCode = await app.RunAsGuiAsync();
 
-			if (exitCode is ExitCode.FailedAlreadyRunningSignaled or ExitCode.FailedAlreadyRunningError)
-			{
-				ShowAlreadyRunningMessage(exitCode);
-			}
-
 			if (app.TerminateService.GracefulCrashException is not null)
 			{
 				throw app.TerminateService.GracefulCrashException;
@@ -134,28 +129,6 @@ public class Program
 
 	private static void LogUnhandledException(object? sender, Exception e) =>
 		Logger.LogWarning(e);
-
-	private static void ShowAlreadyRunningMessage(ExitCode exitCode)
-	{
-		const string title = "Ginger Wallet";
-		string message = exitCode == ExitCode.FailedAlreadyRunningSignaled
-			? "Ginger Wallet is already running for this Windows user. The existing window was requested to open."
-			: "Ginger Wallet is already running for this Windows user, but the existing instance could not be signaled.";
-
-		Logger.LogWarning(message);
-
-		if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-		{
-			_ = MessageBoxW(IntPtr.Zero, message, title, 0x00000030);
-		}
-		else
-		{
-			Console.Error.WriteLine(message);
-		}
-	}
-
-	[DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = false)]
-	private static extern int MessageBoxW(IntPtr hWnd, string text, string caption, uint type);
 
 	[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Required to bootstrap Avalonia's Visual Previewer")]
 	private static AppBuilder BuildAvaloniaApp() => AppBuilder.Configure(() => new App()).UseReactiveUI().SetupAppBuilder();

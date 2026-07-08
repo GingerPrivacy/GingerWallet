@@ -39,15 +39,23 @@ public class SingleInstanceCheckerTests
 	}
 
 	[Fact]
-	public async Task DefaultNetworkConstructorsUseBindableUserScopedPortsAsync()
+	public async Task DefaultNetworkConstructorsUseCurrentUserScopedPortsAsync()
 	{
+		string userScope = SingleInstanceChecker.GetUserScope();
+
+		Assert.False(string.IsNullOrWhiteSpace(userScope));
+
 		await using SingleInstanceChecker mainNet = new(Network.Main);
 		await using SingleInstanceChecker testNet = new(Network.TestNet);
 		await using SingleInstanceChecker regTest = new(Network.RegTest);
 
-		Assert.Equal(WasabiInstanceStatus.NoOtherInstanceIsRunning, await mainNet.CheckSingleInstanceAsync());
-		Assert.Equal(WasabiInstanceStatus.NoOtherInstanceIsRunning, await testNet.CheckSingleInstanceAsync());
-		Assert.Equal(WasabiInstanceStatus.NoOtherInstanceIsRunning, await regTest.CheckSingleInstanceAsync());
+		Assert.Equal(SingleInstanceChecker.NetworkToPort(Network.Main, userScope), mainNet.Port);
+		Assert.Equal(SingleInstanceChecker.NetworkToPort(Network.TestNet, userScope), testNet.Port);
+		Assert.Equal(SingleInstanceChecker.NetworkToPort(Network.RegTest, userScope), regTest.Port);
+
+		Assert.NotEqual(mainNet.Port, testNet.Port);
+		Assert.NotEqual(mainNet.Port, regTest.Port);
+		Assert.NotEqual(testNet.Port, regTest.Port);
 	}
 
 	[Fact]

@@ -60,7 +60,7 @@ public class SingleInstanceChecker : BackgroundService, IAsyncDisposable
 		}
 	}
 
-	private int Port { get; }
+	internal int Port { get; }
 
 	private CancellationTokenSource DisposeCts { get; } = new();
 	private TaskCompletionSource? TaskStartTcpListener { get; set; }
@@ -155,7 +155,7 @@ public class SingleInstanceChecker : BackgroundService, IAsyncDisposable
 		return UserScopedPortRangeStart + ((int)userSlot * 3) + networkIndex;
 	}
 
-	private static string GetUserScope()
+	internal static string GetUserScope()
 	{
 		if (OperatingSystem.IsWindows())
 		{
