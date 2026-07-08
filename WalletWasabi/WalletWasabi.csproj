@@ -51,40 +51,40 @@
 		<None Update="Legal\Assets\LegalDocumentsGingerWallet.txt">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Update="Microservices\Binaries\win64\Tor\**\*">
+		<None Update="Microservices\Binaries\win-x64\Tor\**\*">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Update="Microservices\Binaries\lin64\Tor\**\*">
+		<None Update="Microservices\Binaries\linux-x64\Tor\**\*">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Update="Microservices\Binaries\osx64\Tor\**\*">
+		<None Update="Microservices\Binaries\osx-x64\Tor\**\*">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="Microservices\Binaries\osx-arm64\Tor\**\*">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Update="Microservices\Binaries\lin64\bitcoind">
+		<None Update="Microservices\Binaries\linux-x64\bitcoind">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Update="Microservices\Binaries\osx64\bitcoind">
+		<None Update="Microservices\Binaries\osx-x64\bitcoind">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="Microservices\Binaries\osx-arm64\bitcoind">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Update="Microservices\Binaries\win64\bitcoind.exe">
+		<None Update="Microservices\Binaries\win-x64\bitcoind.exe">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Update="Microservices\Binaries\lin64\hwi">
+		<None Update="Microservices\Binaries\linux-x64\hwi">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Update="Microservices\Binaries\osx64\hwi">
+		<None Update="Microservices\Binaries\osx-x64\hwi">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="Microservices\Binaries\osx-arm64\hwi">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Update="Microservices\Binaries\win64\hwi.exe">
+		<None Update="Microservices\Binaries\win-x64\hwi.exe">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="Tor\Geoip\geoip">
@@ -110,5 +110,22 @@
 	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	</ItemGroup>
+
+	<Target Name="AdHocSignMacOsMicroserviceBinaries" AfterTargets="CopyFilesToOutputDirectory" Condition="$([MSBuild]::IsOSPlatform('OSX')) and '$(Configuration)' == 'Debug'">
+		<ItemGroup>
+			<MacOsMicroserviceBinary Include="$(TargetDir)Microservices/Binaries/osx-*/bitcoind" />
+			<MacOsMicroserviceBinary Include="$(TargetDir)Microservices/Binaries/osx-*/hwi" />
+			<MacOsMicroserviceBinary Include="$(TargetDir)Microservices/Binaries/osx-*/Tor/tor" />
+			<MacOsMicroserviceBinary Include="$(TargetDir)Microservices/Binaries/osx-*/Tor/*.dylib" />
+		</ItemGroup>
+
+		<!--
+			Development builds run these helper binaries directly from bin/Debug via dotnet run.
+			On Apple Silicon, macOS can kill unsigned Mach-O helpers before they print an error.
+			Ad-hoc signing is a local-development tradeoff: it makes the raw copied binaries runnable
+			but does not prove publisher identity like release Developer ID signing/notarization does.
+		-->
+		<Exec Command="codesign -s - --force @(MacOsMicroserviceBinary->'&quot;%(FullPath)&quot;', ' ')" Condition="'@(MacOsMicroserviceBinary)' != ''" />
+	</Target>
 
 </Project>

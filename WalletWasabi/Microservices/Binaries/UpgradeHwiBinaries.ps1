@@ -27,9 +27,9 @@ $signingKeyFileName = "achow101.pgp"
 $signingKeyUri = "https://achow101.com/achow101.pgp"
 
 $packages = @(
-  @{ Runtime = "win64"; Archive = "hwi-${version}-windows-x86_64.zip"; BinaryPath = "hwi.exe"; BinaryName = "hwi.exe" },
-  @{ Runtime = "lin64"; Archive = "hwi-${version}-linux-x86_64.tar.gz"; BinaryPath = "hwi"; BinaryName = "hwi" },
-  @{ Runtime = "osx64"; Archive = "hwi-${version}-mac-x86_64.tar.gz"; BinaryPath = "hwi"; BinaryName = "hwi" },
+  @{ Runtime = "win-x64"; Archive = "hwi-${version}-windows-x86_64.zip"; BinaryPath = "hwi.exe"; BinaryName = "hwi.exe" },
+  @{ Runtime = "linux-x64"; Archive = "hwi-${version}-linux-x86_64.tar.gz"; BinaryPath = "hwi"; BinaryName = "hwi" },
+  @{ Runtime = "osx-x64"; Archive = "hwi-${version}-mac-x86_64.tar.gz"; BinaryPath = "hwi"; BinaryName = "hwi" },
   @{ Runtime = "osx-arm64"; Archive = "hwi-${version}-mac-arm64.tar.gz"; BinaryPath = "hwi"; BinaryName = "hwi" }
 )
 

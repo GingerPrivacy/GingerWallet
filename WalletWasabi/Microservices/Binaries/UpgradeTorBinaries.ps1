@@ -30,17 +30,17 @@ $signingKeyUri = "https://keys.openpgp.org/vks/v1/by-fingerprint/${signingKeyFin
 
 $platforms = @(
   @{
-    Name = "win64"
+    Name = "win-x64"
     Package = "tor-expert-bundle-windows-x86_64-${version}.tar.gz"
     RuntimeFiles = @("tor.exe")
   },
   @{
-    Name = "lin64"
+    Name = "linux-x64"
     Package = "tor-expert-bundle-linux-x86_64-${version}.tar.gz"
     RuntimeFiles = @("libcrypto.so.3", "libevent-2.1.so.7", "libssl.so.3", "tor")
   },
   @{
-    Name = "osx64"
+    Name = "osx-x64"
     Package = "tor-expert-bundle-macos-x86_64-${version}.tar.gz"
     RuntimeFiles = @("libevent-2.1.7.dylib", "tor")
   },
@@ -266,7 +266,7 @@ try {
   if ($skipReplacingGeoIpFiles) {
     Write-Output "# Skip replacing geoip files."
   } else {
-    $geoIpSource = Join-Path "Extracted" "lin64" "data"
+    $geoIpSource = Join-Path "Extracted" "linux-x64" "data"
     $geoIpDestination = Join-Path -Resolve $PSScriptRoot ".." ".." "Tor" "Geoip"
     Write-Output "# Replace geoip files in folder '${geoIpDestination}'."
     Copy-Item -Force -Path (Join-Path $geoIpSource "geoip*") -Destination $geoIpDestination

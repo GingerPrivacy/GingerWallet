@@ -394,7 +394,9 @@ public class TorProcessManager : IAsyncDisposable
 
 			if (process.HasExited)
 			{
-				Logger.LogError("Tor process failed to start!");
+				Logger.LogError($"Tor process failed to start! Exit code: {process.ExitCode}.");
+				LogProcessOutput("stdout", process.StandardOutput);
+				LogProcessOutput("stderr", process.StandardError);
 				return false;
 			}
 
@@ -421,6 +423,7 @@ public class TorProcessManager : IAsyncDisposable
 			UseShellExecute = false,
 			CreateNoWindow = true,
 			RedirectStandardOutput = true,
+			RedirectStandardError = true,
 			WorkingDirectory = Settings.TorBinaryDir
 		};
 
@@ -440,6 +443,23 @@ public class TorProcessManager : IAsyncDisposable
 		process.Start();
 
 		return process;
+	}
+
+	private static void LogProcessOutput(string streamName, StreamReader stream)
+	{
+		try
+		{
+			string output = stream.ReadToEnd();
+
+			if (!string.IsNullOrWhiteSpace(output))
+			{
+				Logger.LogError($"Tor {streamName}: {output.Trim()}");
+			}
+		}
+		catch (Exception ex)
+		{
+			Logger.LogDebug($"Failed to read Tor {streamName}: {ex.Message}");
+		}
 	}
 
 	/// <summary>Connects to Tor control using a TCP client or throws <see cref="TorControlException"/>.</summary>

@@ -158,7 +158,7 @@ public static class Program
 			}
 			else if (target.StartsWith("osx", StringComparison.OrdinalIgnoreCase))
 			{
-				string dmgFileName = target.Contains("arm") ? $"Ginger-{VersionPrefix}.dmg" : $"Ginger-{VersionPrefix}-arm64.dmg";
+				string dmgFileName = target.Contains("arm64", StringComparison.OrdinalIgnoreCase) ? $"Ginger-{VersionPrefix}-arm64.dmg" : $"Ginger-{VersionPrefix}.dmg";
 				string destinationFilePath = Path.Combine(BinDistDirectory, dmgFileName);
 				if (File.Exists(destinationFilePath))
 				{
@@ -466,7 +466,7 @@ public static class Program
 
 				string postInstScriptContent = """
 											   #!/bin/sh
-											   /usr/local/bin/gingerwallet/Microservices/Binaries/lin64/hwi installudevrules
+											   /usr/local/bin/gingerwallet/Microservices/Binaries/linux-x64/hwi installudevrules
 											   exit 0
 											   """.ReplaceLineEndings("\n");
 
@@ -664,9 +664,9 @@ public static class Program
 	{
 		return target switch
 		{
-			"win-x64" => new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "win64" },
-			"linux-x64" => new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "lin64" },
-			"osx-x64" => new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "osx64" },
+			"win-x64" => new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "win-x64" },
+			"linux-x64" => new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "linux-x64" },
+			"osx-x64" => new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "osx-x64" },
 			"osx-arm64" => new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "osx-arm64" },
 			_ => throw new NotSupportedException($"Unsupported package target '{target}'.")
 		};
