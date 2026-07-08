@@ -38,15 +38,22 @@ public class SubActionButton : ContentControl
 	{
 		SetDefaultCommand = ReactiveCommand.Create<string>(key =>
 		{
-			var current = UiContext.Default.ApplicationSettings.DefaultCommands;
+			var applicationSettings = UiContext.Default.ApplicationSettings;
+
+			if (applicationSettings is null)
+			{
+				return;
+			}
+
+			var current = applicationSettings.DefaultCommands;
 
 			if (DefaultSource == DefaultCommandSource.Receive)
 			{
-				UiContext.Default.ApplicationSettings.DefaultCommands = current with { ReceiveDefaultKey = key };
+				applicationSettings.DefaultCommands = current with { ReceiveDefaultKey = key };
 			}
 			else if (DefaultSource == DefaultCommandSource.Send)
 			{
-				UiContext.Default.ApplicationSettings.DefaultCommands = current with { SendDefaultKey = key };
+				applicationSettings.DefaultCommands = current with { SendDefaultKey = key };
 			}
 
 			UpdateDefaultCommand(key);
@@ -91,7 +98,12 @@ public class SubActionButton : ContentControl
 
 	private string? GetDefaultCommandKey()
 	{
-		var defaults = UiContext.Default.ApplicationSettings.DefaultCommands;
+		var defaults = UiContext.Default.ApplicationSettings?.DefaultCommands;
+
+		if (defaults is null)
+		{
+			return null;
+		}
 
 		return DefaultSource switch
 		{
@@ -116,8 +128,15 @@ public class SubActionButton : ContentControl
 		base.OnLoaded(e);
 		UpdateDefaultCommand(GetDefaultCommandKey());
 
+		var applicationSettings = UiContext.Default.ApplicationSettings;
+
+		if (applicationSettings is null)
+		{
+			return;
+		}
+
 		_disposable = new();
-		UiContext.Default.ApplicationSettings
+		applicationSettings
 			.WhenAnyValue(x => x.DefaultCommands)
 			.Subscribe(_ => UpdateDefaultCommand(GetDefaultCommandKey()))
 			.DisposeWith(_disposable);

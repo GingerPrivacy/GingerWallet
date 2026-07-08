@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Sockets;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using WalletWasabi.Logging;
@@ -19,6 +20,16 @@ namespace WalletWasabi.Tests.UnitTests.Tor.Socks5;
 public class TorTcpConnectionFactoryTests
 {
 	private static readonly TimeSpan TimeoutLimit = TimeSpan.FromMinutes(2);
+
+	[Fact]
+	public void CreateSslClientAuthenticationOptionsUsesPlatformRevocationChecks()
+	{
+		var expectedRevocationMode = OperatingSystem.IsMacOS()
+			? X509RevocationMode.NoCheck
+			: X509RevocationMode.Online;
+
+		Assert.Equal(expectedRevocationMode, TorTcpConnectionFactory.GetCertificateRevocationCheckMode());
+	}
 
 	/// <summary>
 	/// <list type="bullet">
