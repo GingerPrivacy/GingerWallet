@@ -64,12 +64,12 @@ public class WasabiApplication
 			var instanceResult = await SingleInstanceChecker.CheckSingleInstanceAsync();
 			if (instanceResult == WasabiInstanceStatus.AnotherInstanceIsRunning)
 			{
-				Logger.LogDebug("Ginger Wallet is already running, signaled the first instance.");
+				Logger.LogWarning("Ginger Wallet startup was stopped because another instance is already running for this user and network. The already running instance was signaled.");
 				return ExitCode.FailedAlreadyRunningSignaled;
 			}
 			if (instanceResult == WasabiInstanceStatus.Error)
 			{
-				Logger.LogCritical($"Ginger Wallet is already running, but cannot be signaled");
+				Logger.LogCritical("Ginger Wallet startup was stopped because another instance appears to be running for this user and network, but it could not be signaled.");
 				return ExitCode.FailedAlreadyRunningError;
 			}
 		}
