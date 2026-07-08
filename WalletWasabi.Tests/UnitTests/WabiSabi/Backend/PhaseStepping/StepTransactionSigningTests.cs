@@ -290,7 +290,7 @@ public class StepTransactionSigningTests
 		var arenaClient = WabiSabiTestFactory.CreateArenaClient(arena);
 
 		// Register Alices.
-		using RoundStateUpdater roundStateUpdater = new(TimeSpan.FromSeconds(2), ["CoinJoinCoordinatorIdentifier"], arena);
+		using RoundStateUpdater roundStateUpdater = new(TimeSpan.FromMilliseconds(100), ["CoinJoinCoordinatorIdentifier"], arena, false);
 		await roundStateUpdater.StartAsync(token);
 
 		var task1 = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round), arenaClient, coin1, keyChain, roundStateUpdater, token, token, token, silentLeaveToken);

@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading.Tasks;
 using WalletWasabi.Tests.Helpers;
 using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.WabiSabi.Backend.Banning;
@@ -10,11 +9,11 @@ namespace WalletWasabi.Tests.UnitTests.WabiSabi.Backend;
 public class WhitelistTests
 {
 	[Fact]
-	public async Task WhitelistChangeTrafficAsync()
+	public void WhitelistChangeTrafficAsync()
 	{
 		var rnd = TestRandom.Get();
 		var cfg = WabiSabiTestFactory.CreateDefaultWabiSabiConfig();
-		cfg.ReleaseFromWhitelistAfter = TimeSpan.FromSeconds(1);
+		cfg.ReleaseFromWhitelistAfter = TimeSpan.Zero;
 
 		Whitelist whitelist = new(Enumerable.Empty<Innocent>(), string.Empty, cfg);
 		var currentChangeId = whitelist.ChangeId;
@@ -36,7 +35,6 @@ public class WhitelistTests
 		whitelist.Add(outpoint3);
 		Assert.NotEqual(currentChangeId, whitelist.ChangeId);
 
-		await Task.Delay(1000);
 		whitelist.RemoveAllExpired();
 
 		Assert.Equal(0, whitelist.CountInnocents());

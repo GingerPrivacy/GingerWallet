@@ -632,7 +632,8 @@ public class TransactionFactoryTests
 		Money paymentAmount = Money.Coins(0.29943925m);
 
 		using Key key = new();
-		TransactionFactory transactionFactory = ServiceFactory.CreateTransactionFactory(TestRandom.Get(), DemoCoinSets.LotOfCoins);
+		// The prefix is enough to exceed the target amount while still requiring too many inputs.
+		TransactionFactory transactionFactory = ServiceFactory.CreateTransactionFactory(TestRandom.Get(), DemoCoinSets.LotOfCoins.Take(2601));
 
 		PaymentIntent payment = new(key, MoneyRequest.Create(paymentAmount));
 		Assert.Equal(ChangeStrategy.Auto, payment.ChangeStrategy);
@@ -640,7 +641,7 @@ public class TransactionFactoryTests
 		var txParameters = CreateBuilder().SetPayment(payment).SetFeeRate(12m).Build();
 		TransactionSizeException ex = Assert.Throws<TransactionSizeException>(() => transactionFactory.BuildTransaction(txParameters));
 		Assert.Equal(paymentAmount, ex.Target);
-		Assert.Equal(Money.Coins(0.24209089m), ex.MaximumPossible);
+		Assert.Equal(Money.Coins(0.22127989m), ex.MaximumPossible);
 	}
 
 	[Fact]

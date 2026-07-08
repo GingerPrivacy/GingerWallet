@@ -17,14 +17,15 @@ namespace WalletWasabi.Tests.UnitTests.UserInterfaceTest;
 
 public class PocketSelectionTests
 {
+	private const string Password = "";
+	private static readonly KeyManager TestKeyManager = KeyManager.Recover(
+		new Mnemonic("all all all all all all all all all all all all"),
+		Password,
+		Network.Main,
+		KeyManager.GetAccountKeyPath(Network.Main, ScriptPubKeyType.Segwit));
+
 	private LabelSelectionViewModel CreateLabelSelectionViewModel(Money amount, LabelsArray recipient)
 	{
-		var pw = "";
-		var km = KeyManager.Recover(
-			new Mnemonic("all all all all all all all all all all all all"),
-			pw,
-			Network.Main,
-			KeyManager.GetAccountKeyPath(Network.Main, ScriptPubKeyType.Segwit));
 		var address = BitcoinAddress.Create("bc1q7v7qfhwx55erxkc66nsv39x4azwufvy6zq8ya4", Network.Main);
 		var info = new TransactionInfo(address, 100)
 		{
@@ -33,7 +34,7 @@ public class PocketSelectionTests
 			Recipient = recipient
 		};
 
-		return new LabelSelectionViewModel(km, pw, info, isSilent: false);
+		return new LabelSelectionViewModel(TestKeyManager, Password, info, isSilent: false);
 	}
 
 	[Fact]
