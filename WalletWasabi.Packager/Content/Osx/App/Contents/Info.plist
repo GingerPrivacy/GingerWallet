@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>LSArchitecturePriority</key>
-	<array>
-		<string>x86_64</string>
-	</array>
 	<key>CFBundleIconFile</key>
 	<string>WasabiLogo.icns</string>
 	<key>CFBundlePackageType</key>

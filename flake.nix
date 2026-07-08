@@ -54,7 +54,7 @@
             wrapDotnetProgram $out/lib/${pname}/WalletWasabi.Backend $out/bin/wbend
           '';
 
-          microservices = "./WalletWasabi/Microservices/Binaries/lin64/";
+          microservices = "./WalletWasabi/Microservices/Binaries/linux-x64/";
           preBuild = ''
             cp -r ${pkgs.tor}/bin/tor ${microservices}/Tor/tor
             cp ${pkgs.hwi}/bin/hwi ${microservices}/hwi

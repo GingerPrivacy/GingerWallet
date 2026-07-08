@@ -192,12 +192,23 @@ public class TorTcpConnectionFactory
 		{
 			TargetHost = host,
 			ClientCertificates = new(),
-			CertificateRevocationCheckMode = X509RevocationMode.Online,
+			CertificateRevocationCheckMode = GetCertificateRevocationCheckMode(),
 		};
 
 		await sslStream.AuthenticateAsClientAsync(options, cancellationToken).ConfigureAwait(false);
 		return sslStream;
 	}
+
+	internal static X509RevocationMode GetCertificateRevocationCheckMode()
+		// Security tradeoff: NoCheck weakens revocation freshness because a revoked-but-otherwise-valid
+		// certificate would not be rejected by this TLS layer on macOS. We still keep normal hostname,
+		// expiry, signature, and trust-chain validation.
+		//
+		// We scope this downgrade to macOS because .NET's SslStream can fail Google Trust Services
+		// certificates with RevocationStatusUnknown there when the leaf certificate advertises a CRL
+		// but no OCSP responder. Windows handles the online revocation path for this backend, so it
+		// keeps the stronger Online mode.
+		=> OperatingSystem.IsMacOS() ? X509RevocationMode.NoCheck : X509RevocationMode.Online;
 
 	/// <summary>
 	/// Sends <see cref="CmdField.Connect"/> command to SOCKS5 server to instruct it to connect to

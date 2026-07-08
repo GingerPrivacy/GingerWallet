@@ -47,6 +47,7 @@ public static class MacSignTools
 		{
 			var zipFile = Path.GetFileName(zipPath);
 			var versionPrefix = Path.GetFileNameWithoutExtension(zipPath).Split('-')[1]; // Example: "WasabiToNotarize-2.0.0.0-arm64.zip or WasabiToNotarize-2.0.0.0.zip ".
+			var packageArchitecture = zipFile.Contains("-arm64.", StringComparison.OrdinalIgnoreCase) ? "arm64" : "x86_64";
 			var workingDir = Path.Combine(desktopPath, "gingerTemp");
 			var dmgPath = Path.Combine(workingDir, "dmg");
 			var unzippedPath = Path.Combine(workingDir, "unzipped");
@@ -149,6 +150,7 @@ public static class MacSignTools
 			IoHelpers.EnsureDirectoryExists(appMacOsPath);
 
 			var executables = GetExecutables(appPath);
+			ValidateMachOArchitectures(appPath, packageArchitecture);
 
 			// The main executable needs to be signed last.
 			var filesToSignInOrder = Directory.GetFiles(appPath, "*.*", SearchOption.AllDirectories)
@@ -186,7 +188,7 @@ public static class MacSignTools
 				WaitProcessToFinish(process, "ditto");
 			}
 
-			Notarize(appleId, appNotarizeFilePath);
+			Notarize(appNotarizeFilePath);
 			Staple(appPath);
 
 			using (var process = Process.Start(new ProcessStartInfo
@@ -282,7 +284,7 @@ public static class MacSignTools
 			Verify(dmgFilePath, teamId);
 
 			Console.WriteLine("Phase: notarize dmg");
-			Notarize(appleId, dmgFilePath);
+			Notarize(dmgFilePath);
 
 			Console.WriteLine("Phase: staple dmp");
 			Staple(dmgFilePath);
@@ -323,27 +325,53 @@ public static class MacSignTools
 	{
 		if (process is null)
 		{
-			throw new InvalidOperationException($"Could not start ${processName} process.");
+			throw new InvalidOperationException($"Could not start {processName} process.");
 		}
 		process.WaitForExit();
+		if (process.ExitCode != 0)
+		{
+			string output = ReadRedirectedProcessOutput(process).Trim();
+			throw new InvalidOperationException($"{processName} failed with exit code {process.ExitCode}.{Environment.NewLine}{output}");
+		}
 		return process;
 	}
 
-	private static void Notarize(string appleId, string filePath)
+	private static string ReadRedirectedProcessOutput(Process process)
+	{
+		var output = new List<string>();
+		if (process.StartInfo.RedirectStandardOutput)
+		{
+			output.Add(process.StandardOutput.ReadToEnd());
+		}
+		if (process.StartInfo.RedirectStandardError)
+		{
+			output.Add(process.StandardError.ReadToEnd());
+		}
+
+		return string.Join(Environment.NewLine, output.Where(x => !string.IsNullOrWhiteSpace(x)));
+	}
+
+	private static void Notarize(string filePath)
 	{
 		Console.WriteLine("Start notarizing, uploading file.");
 
 		using var process = Process.Start(new ProcessStartInfo
 		{
 			FileName = "xcrun",
-			Arguments = $"notarytool submit --wait --apple-id \"{appleId}\" -p \"WasabiNotarize\" \"{filePath}\" ",
+			Arguments = $"notarytool submit --wait --keychain-profile \"WasabiNotarize\" \"{filePath}\" ",
 			RedirectStandardOutput = true,
+			RedirectStandardError = true,
 		});
 
-		var nonNullProcess = WaitProcessToFinish(process, "xcrum");
+		var nonNullProcess = WaitProcessToFinish(process, "xcrun notarytool");
 		string result = nonNullProcess.StandardOutput.ReadToEnd();
 
 		Console.WriteLine(result);
+
+		if (!result.Contains("status: Accepted", StringComparison.OrdinalIgnoreCase))
+		{
+			throw new InvalidOperationException($"Apple notarization did not return Accepted status for '{filePath}'.");
+		}
 	}
 
 	private static void Staple(string filePath)
@@ -352,8 +380,17 @@ public static class MacSignTools
 		{
 			FileName = "xcrun",
 			Arguments = $"stapler staple \"{filePath}\"",
+			RedirectStandardError = true,
 		});
-		WaitProcessToFinish(process, "xcrum");
+		WaitProcessToFinish(process, "xcrun stapler staple");
+
+		using var validateProcess = Process.Start(new ProcessStartInfo
+		{
+			FileName = "xcrun",
+			Arguments = $"stapler validate \"{filePath}\"",
+			RedirectStandardError = true,
+		});
+		WaitProcessToFinish(validateProcess, "xcrun stapler validate");
 	}
 
 	private static void DeleteWithChmod(string path)
@@ -441,6 +478,54 @@ public static class MacSignTools
 		return files;
 	}
 
+	private static void ValidateMachOArchitectures(string appPath, string packageArchitecture)
+	{
+		string result = ExecuteBashCommand($"find -H \"{appPath}\" -type f -print0 | xargs -0 file | grep \"Mach-O\"");
+		var invalidFiles = GetMachOFilesWithoutArchitecture(result, packageArchitecture);
+
+		if (invalidFiles.Length > 0)
+		{
+			throw new InvalidOperationException(
+				$"The macOS {packageArchitecture} package contains Mach-O files without a {packageArchitecture} slice:{Environment.NewLine}" +
+				string.Join(Environment.NewLine, invalidFiles));
+		}
+	}
+
+	private static string[] GetMachOFilesWithoutArchitecture(string fileOutput, string architecture)
+	{
+		return fileOutput
+			.Split("\n")
+			.Where(x => !string.IsNullOrWhiteSpace(x))
+			.Select(x => new
+			{
+				Path = GetFilePathFromFileOutput(x),
+				Line = x
+			})
+			.GroupBy(x => x.Path, StringComparer.OrdinalIgnoreCase)
+			.Where(x => !x.Any(y => ContainsArchitecture(y.Line, architecture)))
+			.SelectMany(x => x.Select(y => y.Line))
+			.ToArray();
+	}
+
+	private static string GetFilePathFromFileOutput(string fileOutputLine)
+	{
+		int architectureMarkerIndex = fileOutputLine.IndexOf(" (for architecture ", StringComparison.Ordinal);
+		if (architectureMarkerIndex >= 0)
+		{
+			return fileOutputLine[..architectureMarkerIndex];
+		}
+
+		int fileTypeSeparatorIndex = fileOutputLine.IndexOf(':');
+		return fileTypeSeparatorIndex >= 0
+			? fileOutputLine[..fileTypeSeparatorIndex]
+			: fileOutputLine;
+	}
+
+	private static bool ContainsArchitecture(string fileOutputLine, string architecture)
+	{
+		return fileOutputLine.Contains(architecture, StringComparison.OrdinalIgnoreCase);
+	}
+
 	private static string ExecuteBashCommand(string command)
 	{
 		// according to: https://stackoverflow.com/a/15262019/637142
@@ -458,7 +543,12 @@ public static class MacSignTools
 		})
 		?? throw new InvalidOperationException("Could not start bash process.");
 		var result = process.StandardOutput.ReadToEnd();
+		var error = process.StandardError.ReadToEnd();
 		process.WaitForExit();
+		if (process.ExitCode != 0)
+		{
+			throw new InvalidOperationException($"Bash command failed with exit code {process.ExitCode}: {command}{Environment.NewLine}{error}");
+		}
 
 		return result;
 	}
