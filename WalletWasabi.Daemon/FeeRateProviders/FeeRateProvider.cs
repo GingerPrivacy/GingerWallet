@@ -18,6 +18,8 @@ namespace WalletWasabi.Daemon.FeeRateProviders;
 /// </summary>
 public class FeeRateProvider : BackgroundService, IWalletFeeRateProvider
 {
+	public const string FullNodeFeeEstimatesUnavailableMessage = "Full node fee estimates are unavailable because no full node RPC provider is active.";
+
 	private IFeeRateProvider? _feeRateProvider;
 
 	private readonly AsyncLock _lock = new();
@@ -113,7 +115,7 @@ public class FeeRateProvider : BackgroundService, IWalletFeeRateProvider
 				if (rpcFeeRateProvider == null)
 				{
 					_feeRateProvider = null;
-					Logger.LogError($"{nameof(FeeRateProvider)} set to '{Provider}' but {nameof(RpcFeeRateProvider)} is null. Full node seems to be not present.");
+					Logger.LogWarning($"{nameof(FeeRateProvider)} set to '{Provider}' but {nameof(RpcFeeRateProvider)} is null. {FullNodeFeeEstimatesUnavailableMessage}");
 				}
 				else
 				{
@@ -161,7 +163,9 @@ public class FeeRateProvider : BackgroundService, IWalletFeeRateProvider
 
 		if (_feeRateProvider is null)
 		{
-			throw new InvalidOperationException($"{nameof(FeeRateProvider)} is null. Call Initialize first.");
+			throw new InvalidOperationException(IsFullNodeFeeProviderUnavailable()
+				? FullNodeFeeEstimatesUnavailableMessage
+				: $"{nameof(FeeRateProvider)} is null. Call Initialize first.");
 		}
 
 		// Synchronous cache read with dedicated lock
@@ -231,7 +235,9 @@ public class FeeRateProvider : BackgroundService, IWalletFeeRateProvider
 
 		if (_feeRateProvider is null)
 		{
-			throw new InvalidOperationException($"{nameof(FeeRateProvider)} is null. Cannot refresh.");
+			throw new InvalidOperationException(IsFullNodeFeeProviderUnavailable()
+				? FullNodeFeeEstimatesUnavailableMessage
+				: $"{nameof(FeeRateProvider)} is null. Cannot refresh.");
 		}
 
 		// Use async lock for the actual refresh operation
@@ -268,6 +274,12 @@ public class FeeRateProvider : BackgroundService, IWalletFeeRateProvider
 		catch (Exception ex)
 		{
 			Logger.LogError($"Initialization failed: {ex}");
+			return;
+		}
+
+		if (IsFullNodeFeeProviderUnavailable())
+		{
+			Logger.LogInfo($"{FullNodeFeeEstimatesUnavailableMessage} Fee rate refresh loop will not start.");
 			return;
 		}
 
@@ -341,6 +353,9 @@ public class FeeRateProvider : BackgroundService, IWalletFeeRateProvider
 
 		Logger.LogInfo("Fee rate refresh loop stopped.");
 	}
+
+	private bool IsFullNodeFeeProviderUnavailable()
+		=> Provider == FeeRateProviderSource.FullNode && _initialized.Task.IsCompleted && _feeRateProvider is null;
 
 	/// <summary>
 	/// Throws ObjectDisposedException if disposed.
