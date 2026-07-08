@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NBitcoin;
 using WalletWasabi.Services;
 using Xunit;
 
@@ -21,6 +22,33 @@ public class SingleInstanceCheckerTests
 	/// so we need some sort of non-determinism here (i.e. random numbers).
 	/// </summary>
 	private static int GenerateRandomPort() => Random.Shared.Next(37128, 50000);
+
+	[Fact]
+	public void NetworkToPortUsesUserScope()
+	{
+		int aliceMainPort = SingleInstanceChecker.NetworkToPort(Network.Main, "alice");
+		int aliceMainPortAgain = SingleInstanceChecker.NetworkToPort(Network.Main, "alice");
+		int aliceTestNetPort = SingleInstanceChecker.NetworkToPort(Network.TestNet, "alice");
+		int aliceRegTestPort = SingleInstanceChecker.NetworkToPort(Network.RegTest, "alice");
+		int bobMainPort = SingleInstanceChecker.NetworkToPort(Network.Main, "bob");
+
+		Assert.Equal(aliceMainPort, aliceMainPortAgain);
+		Assert.NotEqual(aliceMainPort, aliceTestNetPort);
+		Assert.NotEqual(aliceMainPort, aliceRegTestPort);
+		Assert.NotEqual(aliceMainPort, bobMainPort);
+	}
+
+	[Fact]
+	public async Task DefaultNetworkConstructorsUseBindableUserScopedPortsAsync()
+	{
+		await using SingleInstanceChecker mainNet = new(Network.Main);
+		await using SingleInstanceChecker testNet = new(Network.TestNet);
+		await using SingleInstanceChecker regTest = new(Network.RegTest);
+
+		Assert.Equal(WasabiInstanceStatus.NoOtherInstanceIsRunning, await mainNet.CheckSingleInstanceAsync());
+		Assert.Equal(WasabiInstanceStatus.NoOtherInstanceIsRunning, await testNet.CheckSingleInstanceAsync());
+		Assert.Equal(WasabiInstanceStatus.NoOtherInstanceIsRunning, await regTest.CheckSingleInstanceAsync());
+	}
 
 	[Fact]
 	public async Task SingleInstanceTestsAsync()

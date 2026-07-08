@@ -1,8 +1,11 @@
 using Microsoft.Extensions.Hosting;
 using NBitcoin;
+using System.Buffers.Binary;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Security.Cryptography;
+using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,17 +23,19 @@ public enum WasabiInstanceStatus
 public class SingleInstanceChecker : BackgroundService, IAsyncDisposable
 {
 	private const string GingerMagicString = "PrivacyByDefault";
+	private const int UserScopedPortRangeStart = 20000;
+	private const int UserScopedPortSlots = 9000;
 	public static readonly TimeSpan ClientTimeOut = TimeSpan.FromSeconds(2);
 
 	/// <summary>Multiplier to be applied to all timeouts in this class.</summary>
 	private readonly int _timeoutMultiplier;
 
 	/// <summary>
-	/// Creates an object to ensure mutual exclusion of Wasabi instances per Network <paramref name="network"/>.
+	/// Creates an object to ensure mutual exclusion of Wasabi instances per OS user and Network <paramref name="network"/>.
 	/// The solution based on TCP socket.
 	/// </summary>
-	/// <param name="network">Bitcoin network selected when Wasabi Wallet was started. It will use the port 37129, 37130, 37131 according to network main, test, reg.</param>
-	public SingleInstanceChecker(Network network) : this(NetworkToPort(network))
+	/// <param name="network">Bitcoin network selected when Wasabi Wallet was started.</param>
+	public SingleInstanceChecker(Network network) : this(NetworkToPort(network, GetUserScope()))
 	{
 	}
 
@@ -103,8 +108,8 @@ public class SingleInstanceChecker : BackgroundService, IAsyncDisposable
 		catch (SocketException ex) when (ex.ErrorCode is 10048 or 48 or 98)
 		{
 			// ErrorCodes are different on every OS: win, macOS, Linux.
-			// It is already used -> another Wasabi is running on this network.
-			Logger.LogDebug("Another Ginger/Wasabi instance is already running.");
+			// It is already used -> another Wasabi is running for this user on this network.
+			Logger.LogInfo("Another Ginger instance is already running for this user and network. Signaling the first instance.");
 		}
 
 		// Signal to the other instance, that there was an attempt to start the software.
@@ -128,17 +133,48 @@ public class SingleInstanceChecker : BackgroundService, IAsyncDisposable
 		await writer.FlushAsync().ConfigureAwait(false);
 		await networkStream.FlushAsync(cts.Token).ConfigureAwait(false);
 
+		Logger.LogInfo("The already running Ginger instance was signaled successfully.");
+
 		// I was able to signal to the other instance successfully so just continue.
 		return false;
 	}
 
-	private static int NetworkToPort(Network network) => network switch
+	internal static int NetworkToPort(Network network, string userScope)
 	{
-		_ when network == Network.Main => 37132,
-		_ when network == Network.TestNet => 37133,
-		_ when network == Network.RegTest => 37134,
-		_ => throw new Exception($"Network {network} is unknown")
-	};
+		int networkIndex = network switch
+		{
+			_ when network == Network.Main => 0,
+			_ when network == Network.TestNet => 1,
+			_ when network == Network.RegTest => 2,
+			_ => throw new Exception($"Network {network} is unknown")
+		};
+
+		byte[] hash = SHA256.HashData(Encoding.UTF8.GetBytes(userScope));
+		uint userSlot = BinaryPrimitives.ReadUInt32LittleEndian(hash) % UserScopedPortSlots;
+
+		return UserScopedPortRangeStart + ((int)userSlot * 3) + networkIndex;
+	}
+
+	private static string GetUserScope()
+	{
+		if (OperatingSystem.IsWindows())
+		{
+			try
+			{
+				string? sid = WindowsIdentity.GetCurrent().User?.Value;
+				if (!string.IsNullOrWhiteSpace(sid))
+				{
+					return sid;
+				}
+			}
+			catch (Exception ex)
+			{
+				Logger.LogDebug("Failed to get Windows user SID for single instance scope.", ex);
+			}
+		}
+
+		return $"{Environment.UserDomainName}\\{Environment.UserName}";
+	}
 
 	protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 	{
@@ -157,6 +193,7 @@ public class SingleInstanceChecker : BackgroundService, IAsyncDisposable
 
 			// Indicate that the Listener is created successfully.
 			task.TrySetResult();
+			Logger.LogInfo($"{nameof(SingleInstanceChecker)} is listening on {IPAddress.Loopback}:{Port}.");
 
 			while (!stoppingToken.IsCancellationRequested)
 			{
