@@ -61,7 +61,7 @@ public class WabiSabiApiApplicationFactory<TStartup> : WebApplicationFactory<TSt
 			services.AddScoped<Prison>(_ => WabiSabiTestFactory.CreatePrison());
 			services.AddScoped(services => CreateConfig(10));
 			services.AddScoped<RoundParameterFactory>();
-			services.AddScoped(typeof(TimeSpan), _ => TimeSpan.FromSeconds(2));
+			services.AddScoped(typeof(TimeSpan), _ => WabiSabiIntegrationTestConstants.RequestInterval);
 			services.AddScoped<ICoinJoinIdStore>(s => new CoinJoinIdStore());
 			services.AddScoped(s => new CoinJoinScriptStore());
 			services.AddSingleton<CoinJoinFeeRateStatStore>();
@@ -76,11 +76,13 @@ public class WabiSabiApiApplicationFactory<TStartup> : WebApplicationFactory<TSt
 	{
 		WabiSabiConfig config = WabiSabiBackendFactory.Instance.CreateWabiSabiConfig();
 		config.MaxInputCountByRound = maxIputCount;
-		config.StandardInputRegistrationTimeout = TimeSpan.FromSeconds(40);
-		config.BlameInputRegistrationTimeout = TimeSpan.FromSeconds(40);
-		config.ConnectionConfirmationTimeout = TimeSpan.FromSeconds(40);
-		config.OutputRegistrationTimeout = TimeSpan.FromSeconds(40);
-		config.TransactionSigningTimeout = TimeSpan.FromSeconds(40);
+		config.StandardInputRegistrationTimeout = WabiSabiIntegrationTestConstants.PhaseTimeout;
+		config.BlameInputRegistrationTimeout = WabiSabiIntegrationTestConstants.PhaseTimeout;
+		config.ConnectionConfirmationTimeout = WabiSabiIntegrationTestConstants.PhaseTimeout;
+		config.OutputRegistrationTimeout = WabiSabiIntegrationTestConstants.PhaseTimeout;
+		config.TransactionSigningTimeout = WabiSabiIntegrationTestConstants.PhaseTimeout;
+		config.FailFastOutputRegistrationTimeout = WabiSabiIntegrationTestConstants.PhaseTimeout;
+		config.FailFastTransactionSigningTimeout = WabiSabiIntegrationTestConstants.PhaseTimeout;
 		config.MaxSuggestedAmountBase = Money.Satoshis(ProtocolConstants.MaxAmountCredentialValue);
 		config.CreateNewRoundBeforeInputRegEnd = TimeSpan.Zero;
 		return config;
@@ -106,4 +108,10 @@ public class WabiSabiApiApplicationFactory<TStartup> : WebApplicationFactory<TSt
 
 	public WabiSabiHttpApiClient CreateWabiSabiHttpApiClient(HttpClient httpClient) =>
 		new(new ClearnetHttpClient(httpClient));
+}
+
+internal static class WabiSabiIntegrationTestConstants
+{
+	public static readonly TimeSpan RequestInterval = TimeSpan.FromMilliseconds(100);
+	public static readonly TimeSpan PhaseTimeout = TimeSpan.FromSeconds(5);
 }

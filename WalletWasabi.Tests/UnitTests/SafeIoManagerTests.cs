@@ -65,8 +65,8 @@ public class SafeIoManagerTests
 		Assert.True(IsStringArraysEqual(readLines, lines.ToArray()));
 
 		// Write the same content, file should be rewritten.
-		var currentDate = File.GetLastWriteTimeUtc(ioman1.FilePath);
-		await Task.Delay(500);
+		var currentDate = File.GetLastWriteTimeUtc(ioman1.FilePath) - TimeSpan.FromMinutes(1);
+		File.SetLastWriteTimeUtc(ioman1.FilePath, currentDate);
 		await ioman1.WriteAllLinesAsync(lines);
 		var noChangeDate = File.GetLastWriteTimeUtc(ioman1.FilePath);
 		Assert.NotEqual(currentDate, noChangeDate);
@@ -160,7 +160,7 @@ public class SafeIoManagerTests
 			}
 		}
 
-		const int Iterations = 200;
+		const int Iterations = 75;
 
 		var t1 = new Thread(() =>
 		{

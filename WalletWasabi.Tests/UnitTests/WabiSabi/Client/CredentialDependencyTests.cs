@@ -58,7 +58,7 @@ public class CredentialDependencyTests
 			Assert.DoesNotContain(node, sent);
 			sent.Add(node);
 
-			await Task.Delay(1 + Random.Shared.Next(10));
+			await Task.Yield();
 
 			return requested;
 		}

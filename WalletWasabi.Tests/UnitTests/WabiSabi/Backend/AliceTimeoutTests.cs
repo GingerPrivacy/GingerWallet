@@ -35,14 +35,14 @@ public class AliceTimeoutTests
 		using Arena arena = await ArenaTestFactory.From(cfg).With(rpc).CreateAndStartAsync(rnd, round);
 		var arenaClient = WabiSabiTestFactory.CreateArenaClient(arena);
 
-		using RoundStateUpdater roundStateUpdater = new(TimeSpan.FromSeconds(2), ["CoinJoinCoordinatorIdentifier"], arena);
+		using RoundStateUpdater roundStateUpdater = new(TimeSpan.FromMilliseconds(100), ["CoinJoinCoordinatorIdentifier"], arena, false);
 		await roundStateUpdater.StartAsync(testDeadlineCts.Token);
 
 		// Register Alices.
 		KeyChain keyChain = new(km, new Kitchen(ingredients: ""));
 
 		using CancellationTokenSource registrationCts = new();
-		Task<AliceClient> task = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round), arenaClient, smartCoin, keyChain, roundStateUpdater, registrationCts.Token, registrationCts.Token, confirmationCancellationToken: testDeadlineCts.Token, silentLeaveToken);
+		Task<AliceClient> task = AliceClient.CreateRegisterAndConfirmInputAsync(RoundState.FromRound(round), arenaClient, smartCoin, keyChain, roundStateUpdater, registrationCts.Token, registrationCts.Token, confirmationCancellationToken: registrationCts.Token, silentLeaveToken);
 
 		while (round.Alices.Count == 0)
 		{

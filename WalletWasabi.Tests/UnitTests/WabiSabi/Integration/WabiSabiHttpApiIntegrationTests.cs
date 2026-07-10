@@ -146,7 +146,18 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 			{
 				// Instruct the coordinator DI container to use these two scoped
 				// services to build everything (WabiSabi controller, arena, etc)
-				services.AddScoped(s => WabiSabiApiApplicationFactory<Startup>.CreateConfig(inputCount - 1)); // Make sure that at least one IR fails for WrongPhase
+				services.AddScoped(s =>
+				{
+					WabiSabiConfig config = WabiSabiApiApplicationFactory<Startup>.CreateConfig(inputCount - 1); // Make sure that at least one IR fails for WrongPhase
+					config.StandardInputRegistrationTimeout = TimeSpan.FromSeconds(40);
+					config.BlameInputRegistrationTimeout = TimeSpan.FromSeconds(40);
+					config.ConnectionConfirmationTimeout = TimeSpan.FromSeconds(40);
+					config.OutputRegistrationTimeout = TimeSpan.FromSeconds(40);
+					config.TransactionSigningTimeout = TimeSpan.FromSeconds(40);
+					config.FailFastOutputRegistrationTimeout = TimeSpan.FromMinutes(3);
+					config.FailFastTransactionSigningTimeout = TimeSpan.FromMinutes(1);
+					return config;
+				});
 
 				// Emulate that the first coin is coming from a coinjoin.
 				services.AddScoped(s => new InMemoryCoinJoinIdStore(new[] { coins[0].Coin.Outpoint.Hash }));
@@ -166,7 +177,7 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 		using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(200));
 		cts.Token.Register(() => transactionCompleted.TrySetCanceled(), useSynchronizationContext: false);
 
-		using var roundStateUpdater = new RoundStateUpdater(TimeSpan.FromSeconds(1), ["CoinJoinCoordinatorIdentifier"], apiClient);
+		using var roundStateUpdater = new RoundStateUpdater(WabiSabiIntegrationTestConstants.RequestInterval, ["CoinJoinCoordinatorIdentifier"], apiClient, false);
 
 		await roundStateUpdater.StartAsync(CancellationToken.None);
 
@@ -231,7 +242,7 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 		using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(200));
 		cts.Token.Register(() => transactionCompleted.TrySetCanceled(), useSynchronizationContext: false);
 
-		using var roundStateUpdater = new RoundStateUpdater(TimeSpan.FromSeconds(1), ["CoinJoinCoordinatorIdentifier"], apiClient);
+		using var roundStateUpdater = new RoundStateUpdater(WabiSabiIntegrationTestConstants.RequestInterval, ["CoinJoinCoordinatorIdentifier"], apiClient, false);
 
 		await roundStateUpdater.StartAsync(CancellationToken.None);
 
@@ -322,8 +333,13 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 				WabiSabiConfig config = WabiSabiApiApplicationFactory<Startup>.CreateConfig(2 * inputCount);
 				config.AllowP2trInputs = true;
 				config.AllowP2trOutputs = true;
-				config.TransactionSigningTimeout = TimeSpan.FromSeconds(5 * inputCount);
-				config.BlameInputRegistrationTimeout = TimeSpan.FromSeconds(5 * inputCount);
+				config.StandardInputRegistrationTimeout = TimeSpan.FromSeconds(40);
+				config.ConnectionConfirmationTimeout = TimeSpan.FromSeconds(40);
+				config.OutputRegistrationTimeout = TimeSpan.FromSeconds(40);
+				config.TransactionSigningTimeout = TimeSpan.FromSeconds(20);
+				config.BlameInputRegistrationTimeout = TimeSpan.FromSeconds(20);
+				config.FailFastOutputRegistrationTimeout = TimeSpan.FromMinutes(3);
+				config.FailFastTransactionSigningTimeout = TimeSpan.FromMinutes(1);
 				return config;
 			}))).CreateClient();
 
@@ -354,7 +370,7 @@ public class WabiSabiHttpApiIntegrationTests : IClassFixture<WabiSabiApiApplicat
 		mockNonSigningHttpClientFactory.OnNewHttpClientWithPersonCircuit = () => (personCircuit, nonSigningHttpClient);
 		mockNonSigningHttpClientFactory.OnNewHttpClientWithCircuitPerRequest = () => nonSigningHttpClient;
 
-		using var roundStateUpdater = new RoundStateUpdater(TimeSpan.FromSeconds(1), [], apiClient, false);
+		using var roundStateUpdater = new RoundStateUpdater(WabiSabiIntegrationTestConstants.RequestInterval, [], apiClient, false);
 		await roundStateUpdater.StartAsync(CancellationToken.None);
 
 		var roundState = await roundStateUpdater.CreateRoundAwaiterAsync(roundState => roundState.Phase == Phase.InputRegistration, cts.Token);

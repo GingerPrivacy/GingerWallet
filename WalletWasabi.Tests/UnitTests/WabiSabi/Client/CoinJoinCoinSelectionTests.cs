@@ -243,9 +243,21 @@ public class CoinJoinCoinSelectionTests
 		const int AnonymitySet = 10;
 		var km = KeyManager.CreateNew(out _, "", Network.Main);
 		SmartCoin smallerAnonCoin = BitcoinFactory.CreateSmartCoin(rnd, BitcoinFactory.CreateHdPubKey(km), Money.Coins(1m), anonymitySet: AnonymitySet - 1);
-		var coinsToSelectFrom = Enumerable
+		var privateCoins = Enumerable
 			.Range(0, 10)
 			.Select(i => BitcoinFactory.CreateSmartCoin(rnd, BitcoinFactory.CreateHdPubKey(km), Money.Coins(1m), anonymitySet: AnonymitySet + 1))
+			.ToList();
+
+		// Keep the background coins actually private so the only non-private coin is deterministic.
+		foreach (var coin in privateCoins)
+		{
+			var parent = BitcoinFactory.CreateSmartCoin(rnd, BitcoinFactory.CreateHdPubKey(km, isInternal: true), Money.Coins(1m), anonymitySet: AnonymitySet + 1);
+			parent.Transaction.TryAddWalletInput(BitcoinFactory.CreateSmartCoin(rnd, BitcoinFactory.CreateHdPubKey(km, isInternal: true), Money.Coins(1m), anonymitySet: AnonymitySet + 1));
+			coin.Transaction.TryAddWalletInput(parent);
+			BlockchainAnalyzer.SetIsSufficientlyDistancedFromExternalKeys(coin);
+		}
+
+		var coinsToSelectFrom = privateCoins
 			.Prepend(smallerAnonCoin)
 			.ToList();
 

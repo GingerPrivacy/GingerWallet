@@ -1,5 +1,5 @@
 using NBitcoin;
-using System.Globalization;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,23 +13,23 @@ namespace WalletWasabi.Tests.UnitTests;
 [Collection("Serial unit tests collection")]
 public class BlockNotifierTests
 {
+	private static readonly TimeSpan RoundTimeout = TimeSpan.FromSeconds(1);
+
 	[Fact]
 	public async Task GenesisBlockOnlyAsync()
 	{
 		var chain = new ConcurrentChain(Network.RegTest);
 		using var notifier = CreateNotifier(chain);
-		var blockAwaiter = new EventAwaiter<Block>(
-			h => notifier.OnBlock += h,
-			h => notifier.OnBlock -= h);
-		var reorgAwaiter = new EventAwaiter<uint256>(
-			h => notifier.OnReorg += h,
-			h => notifier.OnReorg -= h);
+		int blockCount = 0;
+		int reorgCount = 0;
+		notifier.OnBlock += (_, _) => blockCount++;
+		notifier.OnReorg += (_, _) => reorgCount++;
 
-		await notifier.StartAsync(CancellationToken.None);
+		await StartAndWaitRoundAsync(notifier);
 
 		// No block notifications nor reorg notifications
-		await Assert.ThrowsAsync<TimeoutException>(() => blockAwaiter.WaitAsync(TimeSpan.FromSeconds(1)));
-		await Assert.ThrowsAsync<TimeoutException>(() => reorgAwaiter.WaitAsync(TimeSpan.FromSeconds(1)));
+		Assert.Equal(0, blockCount);
+		Assert.Equal(0, reorgCount);
 
 		Assert.Equal(Network.RegTest.GenesisHash, notifier.BestBlockHash);
 
@@ -45,18 +45,16 @@ public class BlockNotifierTests
 			await AddBlockAsync(chain);
 		}
 		using var notifier = CreateNotifier(chain);
-		var blockAwaiter = new EventAwaiter<Block>(
-			h => notifier.OnBlock += h,
-			h => notifier.OnBlock -= h);
-		var reorgAwaiter = new EventAwaiter<uint256>(
-			h => notifier.OnReorg += h,
-			h => notifier.OnReorg -= h);
+		int blockCount = 0;
+		int reorgCount = 0;
+		notifier.OnBlock += (_, _) => blockCount++;
+		notifier.OnReorg += (_, _) => reorgCount++;
 
-		await notifier.StartAsync(CancellationToken.None);
+		await StartAndWaitRoundAsync(notifier);
 
 		// No block notifications nor reorg notifications
-		await Assert.ThrowsAsync<TimeoutException>(() => blockAwaiter.WaitAsync(TimeSpan.FromSeconds(1)));
-		await Assert.ThrowsAsync<TimeoutException>(() => reorgAwaiter.WaitAsync(TimeSpan.FromSeconds(1)));
+		Assert.Equal(0, blockCount);
+		Assert.Equal(0, reorgCount);
 
 		Assert.Equal(chain.Tip.HashBlock, notifier.BestBlockHash);
 
@@ -66,64 +64,35 @@ public class BlockNotifierTests
 	[Fact]
 	public async Task NotifyBlocksAsync()
 	{
-		using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(1.5));
-
 		const int BlockCount = 3;
 		var chain = new ConcurrentChain(Network.RegTest);
 		using var notifier = CreateNotifier(chain);
 
-		var reorgAwaiter = new EventAwaiter<uint256>(
-			h => notifier.OnReorg += h,
-			h => notifier.OnReorg -= h);
+		var notifiedBlocks = new List<Block>();
+		int reorgCount = 0;
+		notifier.OnBlock += (_, block) => notifiedBlocks.Add(block);
+		notifier.OnReorg += (_, _) => reorgCount++;
 
-		await notifier.StartAsync(CancellationToken.None);
-
-		// Assert that the blocks come in the right order
-		var height = 0;
-		string message = string.Empty;
-
-		void OnBlockInv(object? blockNotifier, Block b)
-		{
-			uint256 h1 = b.GetHash();
-			uint256 h2 = chain.GetBlock(height + 1).HashBlock;
-
-			if (h1 != h2)
-			{
-				message = string.Format(CultureInfo.InvariantCulture, "height={0}, [h1] {1} != [h2] {2}", height, h1, h2);
-				cts.Cancel();
-				return;
-			}
-
-			height++;
-
-			if (height == BlockCount)
-			{
-				cts.Cancel();
-			}
-		}
-
-		notifier.OnBlock += OnBlockInv;
+		await StartAndWaitRoundAsync(notifier);
 
 		foreach (var n in Enumerable.Range(0, BlockCount))
 		{
 			await AddBlockAsync(chain);
 		}
 
-		notifier.TriggerRound();
-
-		// Waits at most 1.5s given CancellationTokenSource definition
-		await Task.WhenAny(Task.Delay(Timeout.InfiniteTimeSpan, cts.Token));
-
-		Assert.True(string.IsNullOrEmpty(message), message);
+		await TriggerAndWaitRoundAsync(notifier);
 
 		// Three blocks notifications
-		Assert.Equal(chain.Height, height);
+		Assert.Equal(BlockCount, notifiedBlocks.Count);
+		for (int i = 0; i < notifiedBlocks.Count; i++)
+		{
+			Assert.Equal(chain.GetBlock(i + 1).HashBlock, notifiedBlocks[i].GetHash());
+		}
 
 		// No reorg notifications
-		await Assert.ThrowsAsync<TimeoutException>(() => reorgAwaiter.WaitAsync(TimeSpan.FromSeconds(1)));
+		Assert.Equal(0, reorgCount);
 		Assert.Equal(chain.Tip.HashBlock, notifier.BestBlockHash);
 
-		notifier.OnBlock -= OnBlockInv;
 		await notifier.StopAsync(CancellationToken.None);
 	}
 
@@ -133,33 +102,29 @@ public class BlockNotifierTests
 		var chain = new ConcurrentChain(Network.RegTest);
 		using var notifier = CreateNotifier(chain);
 
-		var blockAwaiter = new EventsAwaiter<Block>(
-			h => notifier.OnBlock += h,
-			h => notifier.OnBlock -= h,
-			5);
+		var notifiedBlocks = new List<Block>();
+		var reorgedBlocks = new List<uint256>();
+		notifier.OnBlock += (_, block) => notifiedBlocks.Add(block);
+		notifier.OnReorg += (_, blockHash) => reorgedBlocks.Add(blockHash);
 
-		var reorgAwaiter = new EventAwaiter<uint256>(
-			h => notifier.OnReorg += h,
-			h => notifier.OnReorg -= h);
-
-		await notifier.StartAsync(CancellationToken.None);
+		await StartAndWaitRoundAsync(notifier);
 
 		await AddBlockAsync(chain);
+		await TriggerAndWaitRoundAsync(notifier);
 		var forkPoint = chain.Tip;
 		var blockToBeReorged = await AddBlockAsync(chain);
+		await TriggerAndWaitRoundAsync(notifier);
 
 		chain.SetTip(forkPoint);
 		await AddBlockAsync(chain, wait: false);
 		await AddBlockAsync(chain, wait: false);
 		await AddBlockAsync(chain);
-		notifier.TriggerRound();
+		await TriggerAndWaitRoundAsync(notifier);
 
-		// Three blocks notifications
-		await blockAwaiter.WaitAsync(TimeSpan.FromSeconds(2));
+		Assert.Equal(5, notifiedBlocks.Count);
 
-		// No reorg notifications
-		var reorgedkBlock = await reorgAwaiter.WaitAsync(TimeSpan.FromSeconds(1));
-		Assert.Equal(blockToBeReorged.HashBlock, reorgedkBlock);
+		var reorgedBlock = Assert.Single(reorgedBlocks);
+		Assert.Equal(blockToBeReorged.HashBlock, reorgedBlock);
 		Assert.Equal(chain.Tip.HashBlock, notifier.BestBlockHash);
 
 		await notifier.StopAsync(CancellationToken.None);
@@ -171,19 +136,15 @@ public class BlockNotifierTests
 		var chain = new ConcurrentChain(Network.RegTest);
 		using var notifier = CreateNotifier(chain);
 
-		var blockAwaiter = new EventsAwaiter<Block>(
-			h => notifier.OnBlock += h,
-			h => notifier.OnBlock -= h,
-			11);
+		var notifiedBlocks = new List<Block>();
+		var reorgedBlocks = new List<uint256>();
+		notifier.OnBlock += (_, block) => notifiedBlocks.Add(block);
+		notifier.OnReorg += (_, blockHash) => reorgedBlocks.Add(blockHash);
 
-		var reorgAwaiter = new EventsAwaiter<uint256>(
-			h => notifier.OnReorg += h,
-			h => notifier.OnReorg -= h,
-			3);
-
-		await notifier.StartAsync(CancellationToken.None);
+		await StartAndWaitRoundAsync(notifier);
 
 		await AddBlockAsync(chain);
+		await TriggerAndWaitRoundAsync(notifier);
 
 		var forkPoint = chain.Tip;
 		var firstReorgedChain = new[]
@@ -191,6 +152,7 @@ public class BlockNotifierTests
 				await AddBlockAsync(chain, wait: false),
 				await AddBlockAsync(chain)
 			};
+		await TriggerAndWaitRoundAsync(notifier);
 
 		chain.SetTip(forkPoint);
 		var secondReorgedChain = new[]
@@ -199,6 +161,7 @@ public class BlockNotifierTests
 				await AddBlockAsync(chain, wait: false),
 				await AddBlockAsync(chain)
 			};
+		await TriggerAndWaitRoundAsync(notifier);
 
 		chain.SetTip(secondReorgedChain[1]);
 		await AddBlockAsync(chain, wait: false);
@@ -206,14 +169,13 @@ public class BlockNotifierTests
 		await AddBlockAsync(chain, wait: false);
 		await AddBlockAsync(chain, wait: false);
 		await AddBlockAsync(chain);
+		await TriggerAndWaitRoundAsync(notifier);
 
-		// Three blocks notifications
-		await blockAwaiter.WaitAsync(TimeSpan.FromSeconds(2));
+		Assert.Equal(11, notifiedBlocks.Count);
 
-		// No reorg notifications
-		var reorgedkBlock = await reorgAwaiter.WaitAsync(TimeSpan.FromSeconds(1));
+		Assert.Equal(3, reorgedBlocks.Count);
 		var expectedReorgedBlocks = firstReorgedChain.ToList().Concat(new[] { secondReorgedChain[2] });
-		Assert.Subset(reorgedkBlock.ToHashSet(), expectedReorgedBlocks.Select(x => x.Header.GetHash()).ToHashSet());
+		Assert.Subset(reorgedBlocks.ToHashSet(), expectedReorgedBlocks.Select(x => x.Header.GetHash()).ToHashSet());
 		Assert.Equal(chain.Tip.HashBlock, notifier.BestBlockHash);
 
 		await notifier.StopAsync(CancellationToken.None);
@@ -229,20 +191,21 @@ public class BlockNotifierTests
 			h => notifier.OnBlock -= h,
 			144);
 
-		await notifier.StartAsync(CancellationToken.None);
+		await StartAndWaitRoundAsync(notifier);
 
-		var lastKnownBlock = await AddBlockAsync(chain);
+		await AddBlockAsync(chain);
+		await TriggerAndWaitRoundAsync(notifier);
 
 		foreach (var i in Enumerable.Range(0, 200))
 		{
 			await AddBlockAsync(chain, wait: false);
 		}
 		await AddBlockAsync(chain, wait: true);
-		notifier.TriggerRound();
+		await TriggerAndWaitRoundAsync(notifier);
 
 		Assert.Equal(chain.Tip.HashBlock, notifier.BestBlockHash);
 
-		var nofifiedBlocks = (await blockAwaiter.WaitAsync(TimeSpan.FromSeconds(1))).ToArray();
+		var nofifiedBlocks = (await blockAwaiter.WaitAsync(RoundTimeout)).ToArray();
 
 		var tip = chain.Tip;
 		var pos = nofifiedBlocks.Length - 1;
@@ -274,8 +237,19 @@ public class BlockNotifierTests
 
 		rpc.OnGetBlockHeaderAsync = (blockHash) => Task.FromResult(chain.GetBlock(blockHash).Header);
 
-		var notifier = new BlockNotifier(TimeSpan.FromMilliseconds(100), rpc);
+		var notifier = new BlockNotifier(TimeSpan.FromHours(1), rpc);
 		return notifier;
+	}
+
+	private static async Task StartAndWaitRoundAsync(BlockNotifier notifier)
+	{
+		await notifier.StartAsync(CancellationToken.None);
+		await TriggerAndWaitRoundAsync(notifier);
+	}
+
+	private static async Task TriggerAndWaitRoundAsync(BlockNotifier notifier)
+	{
+		await notifier.TriggerAndWaitRoundAsync(RoundTimeout);
 	}
 
 	private async Task<ChainedBlock> AddBlockAsync(ConcurrentChain chain, bool wait = true)
@@ -287,7 +261,7 @@ public class BlockNotifierTests
 		var block = chain.GetBlock(header.GetHash());
 		if (wait)
 		{
-			await Task.Delay(TimeSpan.FromSeconds(1));
+			await Task.Yield();
 		}
 		return block;
 	}
