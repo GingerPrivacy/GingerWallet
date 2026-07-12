@@ -25,6 +25,9 @@ namespace WalletWasabi.Packager;
 public static class Program
 {
 	public const string PfxPath = "C:\\digicert.pfx";
+	private const string DefaultWindowsSigningCertificateThumbprint = "11b23b66b96261629cff1b08a28518309352ff7d";
+	private const string WindowsSigningCertificateThumbprintEnvironmentVariable = "GINGER_WINDOWS_SIGN_CERT_SHA1";
+	private const string WindowsSignToolDirectory = @"C:\Program Files (x86)\Microsoft SDKs\ClickOnce\SignTool";
 
 	public const string DaemonExecutableName = Constants.DaemonExecutableName;
 	public const string ExecutableName = Constants.ExecutableName;
@@ -93,6 +96,11 @@ public static class Program
 		{
 			await SignAsync().ConfigureAwait(false);
 		}
+
+		if (argsProcessor.IsSignWindowsBinaries())
+		{
+			SignWindowsPublishedBinaries();
+		}
 	}
 
 	private static void ReportStatus()
@@ -145,13 +153,7 @@ public static class Program
 				}
 
 				File.Move(msiPath, newMsiPath);
-
-				StartProcessAndWaitForExit(
-					"cmd.exe",
-					@"C:\Program Files (x86)\Microsoft SDKs\ClickOnce\SignTool",  // Set the working directory
-					null,
-					$"/c \"signtool.exe sign /sha1 \"11b23b66b96261629cff1b08a28518309352ff7d\" /tr http://time.certum.pl /td sha256 /fd sha256 /v \"{newMsiPath}\" && exit\""
-				);
+				SignWindowsFile(newMsiPath);
 
 				await IoHelpers.TryDeleteDirectoryAsync(publishedFolder).ConfigureAwait(false);
 				Console.WriteLine($"Deleted {publishedFolder}");
@@ -208,6 +210,55 @@ public static class Program
 		await WasabiSignerHelpers.VerifyInstallerFileHashesAsync(finalFiles, sha256sumAscFilePath).ConfigureAwait(false);
 
 		IoHelpers.OpenFolderInFileExplorer(BinDistDirectory);
+	}
+
+	private static void SignWindowsPublishedBinaries()
+	{
+		if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+		{
+			throw new PlatformNotSupportedException("Windows binaries can only be signed on Windows.");
+		}
+
+		string publishedFolder = Path.Combine(BinDistDirectory, "win-x64");
+		if (!Directory.Exists(publishedFolder))
+		{
+			throw new DirectoryNotFoundException($"Published Windows binaries do not exist. Expected path: {publishedFolder}.");
+		}
+
+		string[] gingerExecutables =
+		{
+			Path.Combine(publishedFolder, $"{ExecutableName}.exe"),
+			Path.Combine(publishedFolder, $"{DaemonExecutableName}.exe")
+		};
+
+		foreach (var executablePath in gingerExecutables)
+		{
+			if (!File.Exists(executablePath))
+			{
+				throw new FileNotFoundException("Published executable does not exist.", executablePath);
+			}
+
+			SignWindowsFile(executablePath);
+		}
+	}
+
+	private static void SignWindowsFile(string filePath)
+	{
+		string certificateThumbprint =
+			Environment.GetEnvironmentVariable(WindowsSigningCertificateThumbprintEnvironmentVariable)
+			?? DefaultWindowsSigningCertificateThumbprint;
+
+		string arguments = string.Join(
+			" ",
+			"sign",
+			$"/sha1 {certificateThumbprint}",
+			"/tr http://time.certum.pl",
+			"/td sha256",
+			"/fd sha256",
+			"/v",
+			$"\"{filePath}\"");
+
+		StartProcessAndWaitForExit(Path.Combine(WindowsSignToolDirectory, "signtool.exe"), WindowsSignToolDirectory, arguments: arguments);
 	}
 
 	private static async Task PublishAsync()
