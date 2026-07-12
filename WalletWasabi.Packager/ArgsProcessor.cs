@@ -24,6 +24,8 @@ public class ArgsProcessor
 
 	public bool IsSign() => IsOneOf("sign");
 
+	public bool IsSignWindowsBinaries() => IsOneOf("sign-windows-binaries");
+
 	public bool IsGeneratePrivateKey() => IsOneOf("generatekeys");
 
 	private bool IsOneOf(params string[] values)

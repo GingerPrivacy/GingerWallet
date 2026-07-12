@@ -15,6 +15,7 @@ $visualStudioPath = "C:\Program Files\Microsoft Visual Studio\2022\Community\Com
 # Change directory to the wallet wasabi packager folder
 cd $walletWasabiPath
 dotnet run -- publish
+dotnet run -- sign-windows-binaries
 
 $host.UI.RawUI.ForegroundColor = "Green"
 $host.UI.RawUI.BackgroundColor = "Black"

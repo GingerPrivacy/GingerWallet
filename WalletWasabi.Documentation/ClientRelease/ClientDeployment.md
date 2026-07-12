@@ -34,6 +34,10 @@ Make sure to run a virus detection scan on one of the Release candidate's .msi i
 - Run the [script file](https://github.com/zkSNACKs/WalletWasabi/blob/master/WalletWasabi.Packager/scripts/Wasabi_release.ps1) on the **Windows Release Laptop** and follow the instructions.
 - At some point you will need to run [this script](https://github.com/zkSNACKs/WalletWasabi/blob/master/WalletWasabi.Packager/scripts/WasabiNoratize.scpt) file on Mac. Don't forget to open the script file on Mac and insert your Apple dev username and password. Guide how to setup it: [macOS release environment](https://github.com/zkSNACKs/WalletWasabi/blob/master/WalletWasabi.Documentation/Guides/MacOsSigning.md).
 - Finish the script on Windows. Now a folder should pop up with all the files that need to be uploaded to GitHub.
+- Verify the Windows Authenticode signatures before uploading:
+  - `signtool.exe verify /pa /v Ginger-<version>.msi`
+  - `signtool.exe verify /pa /v win-x64\wassabee.exe`
+  - `signtool.exe verify /pa /v win-x64\wassabeed.exe`
 - Test asc file for `.msi`.
 - Final `.msi` test on own computer. Check the About dialog and optionally the BUILDINFO.json next to the wasabi executable, the commit ID should match with the one on GitHub. 
 
@@ -80,6 +84,14 @@ Digicert holds our Code Signing Certificate under the name "zkSNACKs Limited".
 - Type: Code Signing
 - CSR Key Size: 3072
 
+The release script signs the Windows application executables before the MSI is built, then signs the final MSI after WiX finishes. By default it uses the thumbprint compiled into the packager, but the release machine can override it without code changes:
+
+```
+setx GINGER_WINDOWS_SIGN_CERT_SHA1 <certificate-thumbprint>
+```
+
+SmartScreen reputation is controlled by Microsoft and can still show warnings for newly signed or low-reputation releases even when Authenticode verification succeeds. Keep signing every Windows release with the same publisher certificate where possible so reputation can build over time.
+
 **Renewal**
 
 - Create a new Certificate Signing Request (CSR) file with DigiCert® Certificate Utility application. 
@@ -104,5 +116,4 @@ echo "`whoami` ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/`whoami` && sud
 ```
 
 Use WSL 1 otherwise you cannot enter anything to the console (sudo password, appleid). https://github.com/microsoft/WSL/issues/4424
-
 
