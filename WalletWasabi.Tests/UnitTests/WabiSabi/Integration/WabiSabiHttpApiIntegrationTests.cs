@@ -224,8 +224,10 @@ public class WabiSabiHttpApiIntegrationTests : IAsyncLifetime
 		await roundStateUpdater.StopAsync(CancellationToken.None);
 	}
 
-	[Fact]
-	public async Task ErrorWhileRegisterOutputsCoinJoinTestAsync()
+	[Theory]
+	[InlineData(true)]
+	[InlineData(false)]
+	public async Task ErrorWhileRegisterOutputsCoinJoinTestAsync(bool signalReadyToSign)
 	{
 		long[] amounts = new long[] { 10_000_000, 20_000_000, 30_000_000 };
 		int inputCount = amounts.Length;
@@ -266,6 +268,12 @@ public class WabiSabiHttpApiIntegrationTests : IAsyncLifetime
 		recordingHttpClient.Setup(client => client.SendAsync(It.IsAny<HttpRequestMessage>(), It.IsAny<CancellationToken>()))
 			.Returns(async (HttpRequestMessage request, CancellationToken cancellationToken) =>
 			{
+				if (!signalReadyToSign && request.RequestUri!.AbsolutePath.EndsWith("/ready-to-sign", StringComparison.Ordinal))
+				{
+					// Exercise the abort path when no Alice signals readiness before the phase expires.
+					return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+				}
+
 				// TestServer consumes the request content; capture the round before sending it.
 				var registration = request.RequestUri!.AbsolutePath.EndsWith("/output-registration", StringComparison.Ordinal)
 					? JsonConvert.DeserializeObject<OutputRegistrationRequest>(await request.Content!.ReadAsStringAsync(cancellationToken), JsonSerializationOptions.Default.Settings)
@@ -330,8 +338,13 @@ public class WabiSabiHttpApiIntegrationTests : IAsyncLifetime
 
 		// Check both completion paths: an unrelated failed round must not pass this test.
 		Assert.NotNull(endedRound);
-		Assert.Equal(EndRoundState.NotAllAlicesSign, endedRound.EndRoundState);
 		Assert.Contains(endedRound.Id, rejectedOutputRounds);
+		// Readiness timing determines whether enough Alices remain to start a blame round.
+		Assert.Contains(endedRound.EndRoundState, new[] { EndRoundState.NotAllAlicesSign, EndRoundState.AbortedNotEnoughAlicesSigned });
+		if (!signalReadyToSign)
+		{
+			Assert.Equal(EndRoundState.AbortedNotEnoughAlicesSigned, endedRound.EndRoundState);
+		}
 	}
 
 	[Theory]
