@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Resources;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using WalletWasabi.Extensions;
+using WalletWasabi.JsonConverters;
 using WalletWasabi.Lang;
 using WalletWasabi.Models;
 using Xunit;
@@ -14,6 +16,51 @@ namespace WalletWasabi.Tests.UnitTests.Localization;
 public class LocalizationTests
 {
 	private readonly Regex _placeholderRegex = new(@"{\d+}", RegexOptions.Compiled);
+
+	[Theory]
+	[InlineData(DisplayLanguage.German, "de-DE", "de", "Deutsch", "Sprache")]
+	[InlineData(DisplayLanguage.Spanish, "es-ES", "es", "Español", "Idioma")]
+	[InlineData(DisplayLanguage.French, "fr-FR", "fr", "Français", "Langue")]
+	[InlineData(DisplayLanguage.BrazilianPortuguese, "pt-BR", "pt-BR", "Português (Brasil)", "Idioma")]
+	[InlineData(DisplayLanguage.Russian, "ru-RU", "ru", "Русский", "Язык")]
+	public void RequestedLanguagesHaveCompleteTranslations(DisplayLanguage language, string cultureName, string resourceCultureName, string nativeName, string languageLabel)
+	{
+		Assert.Equal(cultureName, language.GetDescription());
+		Assert.Equal(nativeName, language.ToLocalTranslation());
+		Assert.Equal(languageLabel, Resources.ResourceManager.GetString(nameof(Resources.Language), CultureInfo.GetCultureInfo(cultureName)));
+
+		// Disable parent fallback so a missing translation cannot pass using English resources.
+		var translations = Resources.ResourceManager.GetResourceSet(CultureInfo.GetCultureInfo(resourceCultureName), true, false);
+		var english = Resources.ResourceManager.GetResourceSet(CultureInfo.InvariantCulture, true, false);
+		Assert.NotNull(translations);
+		Assert.NotNull(english);
+		Assert.Equal(english.Cast<DictionaryEntry>().Select(x => x.Key).OrderBy(x => x), translations.Cast<DictionaryEntry>().Select(x => x.Key).OrderBy(x => x));
+
+		foreach (DictionaryEntry entry in english)
+		{
+			var key = (string)entry.Key;
+			var translation = translations.GetString(key);
+			Assert.False(string.IsNullOrWhiteSpace(translation), $"Missing translation for '{key}' in {cultureName}.");
+			Assert.Equal(GetFormatItems((string)entry.Value!), GetFormatItems(translation!));
+		}
+	}
+
+	[Theory]
+	[InlineData(10, DisplayLanguage.BrazilianPortuguese)]
+	[InlineData(11, DisplayLanguage.Russian)]
+	public void NewLanguageSettingsSurviveSerialization(int savedValue, DisplayLanguage language)
+	{
+		var options = new JsonSerializerOptions();
+		options.Converters.Add(new DisplayLanguageJsonConverter());
+		var restoredValue = JsonSerializer.Deserialize<int>(savedValue.ToString(CultureInfo.InvariantCulture), options);
+		Assert.Equal(language, (DisplayLanguage)restoredValue);
+		Assert.Equal(savedValue.ToString(CultureInfo.InvariantCulture), JsonSerializer.Serialize(restoredValue, options));
+	}
+
+	private static IEnumerable<string> GetFormatItems(string value)
+	{
+		return Regex.Matches(value, @"(?<!\{)\{\d+(?:,[^}:]+)?(?::[^}]+)?\}(?!\})").Select(x => x.Value).OrderBy(x => x);
+	}
 
 	[Fact]
 	public void SafeInjectTest()

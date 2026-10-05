@@ -29,6 +29,8 @@ public static class LocalizationExtension
 			DisplayLanguage.Portuguese => "Português",
 			DisplayLanguage.Turkish => "Türkçe",
 			DisplayLanguage.Italian => "Italiano",
+			DisplayLanguage.BrazilianPortuguese => "Português (Brasil)",
+			DisplayLanguage.Russian => "Русский",
 			_ => language.ToString()
 		};
 	}
