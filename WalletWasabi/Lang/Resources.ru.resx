@@ -368,7 +368,7 @@
     <value>Получить</value>
   </data>
   <data name="ExcludedCoinsViewModelTitle" xml:space="preserve">
-    <value>Исключить монеты</value>
+    <value>Исключить монеты из Coinjoin</value>
   </data>
   <data name="CoinjoinSettings" xml:space="preserve">
     <value>Настройки Coinjoin</value>
@@ -446,7 +446,7 @@
     <value>Доступны только незрелые средства</value>
   </data>
   <data name="OnlyExcludedCoinsAvailableMessage" xml:space="preserve">
-    <value>Доступны только исключённые средства</value>
+    <value>Доступны только средства, исключённые из Coinjoin</value>
   </data>
   <data name="MiningFeeRateTooHighMessage" xml:space="preserve">
     <value>Ставка комиссии майнеров была слишком высокой</value>
@@ -458,7 +458,7 @@
     <value>Минимальное количество входов было слишком малым</value>
   </data>
   <data name="ServerDidNotGiveFeeExemptionMessage" xml:space="preserve">
-    <value>Сервер не предоставил освобождение от комиссии за повторный Coinjoin</value>
+    <value>Сервер не предоставил освобождение от комиссии координатора за повторный Coinjoin</value>
   </data>
   <data name="WaitingForResponse" xml:space="preserve">
     <value>Ожидание ответа</value>
@@ -488,7 +488,7 @@
     <value>Автоматически запускать Coinjoin</value>
   </data>
   <data name="CoinjoinToThisWallet" xml:space="preserve">
-    <value>Отправлять средства из Coinjoin в этот кошелёк</value>
+    <value>Получать средства из Coinjoin в этот кошелёк</value>
   </data>
   <data name="CoinjoinToOtherWalletRestrictions1" xml:space="preserve">
     <value>- Можно выбрать только загруженные кошельки.</value>
@@ -542,13 +542,13 @@
     <value>Минимальная оценка анонимности, при которой монета считается приватной.</value>
   </data>
   <data name="SafeFeeText" xml:space="preserve">
-    <value>Игнорировать временное предпочтение Coinjoin ниже</value>
+    <value>Игнорировать период сравнения при комиссии ниже</value>
   </data>
   <data name="SafeFeeToolTip" xml:space="preserve">
-    <value>Всегда выполнять Coinjoin, когда ставка комиссии ниже этого значения (имеет приоритет над временным предпочтением Coinjoin).</value>
+    <value>Всегда выполнять Coinjoin, когда ставка комиссии ниже этого значения (имеет приоритет над периодом сравнения комиссий).</value>
   </data>
   <data name="CoinJoinTimePrefText" xml:space="preserve">
-    <value>Временное предпочтение Coinjoin</value>
+    <value>Период сравнения комиссий Coinjoin</value>
   </data>
   <data name="CoinJoinTimePrefToolTip" xml:space="preserve">
     <value>Выполнять Coinjoin только тогда, когда ставка комиссии ниже медианы за этот период.</value>
@@ -608,13 +608,13 @@
     <value>По крайней мере одна монета, которую вы пытаетесь потратить, уже потрачена.</value>
   </data>
   <data name="CoinInUnconfirmedChain" xml:space="preserve">
-    <value>По крайней мере одна монета, которую вы пытаетесь потратить, входит в длинную или ресурсоёмкую цепочку неподтверждённых транзакций. Дождитесь подтверждения предыдущих транзакций.</value>
+    <value>По крайней мере одна монета, которую вы пытаетесь потратить, входит в слишком длинную или большую по общему размеру цепочку неподтверждённых транзакций. Дождитесь подтверждения некоторых предыдущих транзакций.</value>
   </data>
   <data name="TransactionDuplicatedInputs" xml:space="preserve">
     <value>Транзакция содержит повторяющиеся входы.</value>
   </data>
   <data name="TransactionNotFinal" xml:space="preserve">
-    <value>Транзакция не является окончательной и не может быть отправлена в сеть.</value>
+    <value>Транзакция пока не соответствует условиям включения в блок и не может быть отправлена в сеть.</value>
   </data>
   <data name="TransactionTooBig" xml:space="preserve">
     <value>Транзакция слишком большая.</value>
@@ -695,7 +695,7 @@
     <value>Комиссии майнеров взимаются за каждый Coinjoin.</value>
   </data>
   <data name="PlebsDontPay" xml:space="preserve">
-    <value>Малые суммы без комиссии</value>
+    <value>Льгота для малых сумм</value>
   </data>
   <data name="PlebsDontPayInfo" xml:space="preserve">
     <value>Комиссия координатора не взимается с монет размером не более 0,01 BTC.</value>
@@ -938,13 +938,13 @@
     <value>Кому известно, что транзакция ваша:</value>
   </data>
   <data name="EntitiesKnowThisIsYourTransaction" xml:space="preserve">
-    <value>Этим участникам известно, что транзакция принадлежит вам. Выполните дополнительные Coinjoin или используйте управление метками, чтобы внимательно выбрать, кому будет известно о принадлежности этой транзакции.</value>
+    <value>Этим людям или организациям известно, что транзакция принадлежит вам. Выполните дополнительные Coinjoin или используйте управление метками, чтобы внимательно выбрать, кому будет известно, что эта транзакция ваша.</value>
   </data>
   <data name="TransactionUsesNonPrivateCoins" xml:space="preserve">
     <value>Транзакция использует неприватные монеты.</value>
   </data>
   <data name="EntitiesCanDeanonymizeTransaction" xml:space="preserve">
-    <value>Некоторые участники могут деанонимизировать эту транзакцию, поскольку она расходует неприватные монеты. Выполните дополнительные Coinjoin, чтобы получить достаточно приватных монет для этой транзакции.</value>
+    <value>Некоторые люди или организации могут связать эту транзакцию с вами, поскольку она расходует неприватные монеты. Выполните дополнительные Coinjoin, чтобы получить достаточно приватных монет для этой транзакции.</value>
   </data>
   <data name="TransactionUsesSemiPrivateCoins" xml:space="preserve">
     <value>Транзакция использует частично приватные монеты.</value>
@@ -1109,7 +1109,7 @@
     <value>Подтвердить слова восстановления</value>
   </data>
   <data name="ConfirmRecoveryWordsViewModelStoreSafely" xml:space="preserve">
-    <value>Надёжно храните парольную фразу: её нельзя восстановить в случае потери. Она нужна для открытия и восстановления кошелька и обеспечивает дополнительную защиту, дополняя слова восстановления.</value>
+    <value>Надёжно храните парольную фразу: её нельзя восстановить в случае потери. Она нужна для открытия и восстановления кошелька и обеспечивает дополнительную защиту при использовании вместе со словами восстановления.</value>
   </data>
   <data name="ConfirmRecoveryWordsViewModelClickRecovery" xml:space="preserve">
     <value>Нажмите слово восстановления №{0}</value>
@@ -1184,13 +1184,13 @@
     <value>Дополнительные параметры восстановления</value>
   </data>
   <data name="AdvancedRecoveryOptionsViewModelMinimumGapLimit" xml:space="preserve">
-    <value>Минимальный лимит пропуска адресов:</value>
+    <value>Минимальный запас неиспользованных адресов:</value>
   </data>
   <data name="PeersConnected" xml:space="preserve">
     <value>Подключено: {0}</value>
   </data>
   <data name="AmountLessThanTotalSupply" xml:space="preserve">
-    <value>Сумма должна быть меньше общего количества BTC.</value>
+    <value>Сумма должна быть меньше максимального количества BTC.</value>
   </data>
   <data name="InsufficientFunds" xml:space="preserve">
     <value>Недостаточно средств для запрошенной суммы.</value>
@@ -1233,7 +1233,7 @@
     <value>Сведения о монете</value>
   </data>
   <data name="SelfCoinJoinToolTip" xml:space="preserve">
-    <value>В этом Coinjoin большинство монет принадлежит вам. Это значительно снизит прогресс приватности. Используйте меньше кошельков, пока не присоединятся другие участники.</value>
+    <value>В этом Coinjoin большинство монет принадлежит вам. Это значительно уменьшит прирост приватности. Рассмотрите участие с меньшим количеством кошельков, пока не присоединятся другие участники.</value>
   </data>
   <data name="AuthCodePrompt" xml:space="preserve">
     <value>Отсканируйте QR-код ниже в приложении аутентификации, затем введите код подтверждения.</value>
@@ -1263,7 +1263,7 @@
     <value>Введённая комиссия слишком высокая.</value>
   </data>
   <data name="ExcludedCoinsViewModelCaption" xml:space="preserve">
-    <value>Показать исключённые монеты</value>
+    <value>Показать монеты, исключённые из Coinjoin</value>
   </data>
   <data name="ExcludedCoinsViewModelKeywords" xml:space="preserve">
     <value>Кошелёк, Исключить, Монеты, Coinjoin, Заморозить, UTXO</value>
@@ -1332,34 +1332,34 @@
     <value>Количество использованных адресов</value>
   </data>
   <data name="ExtendedMasterPrivateKey" xml:space="preserve">
-    <value>Расширенный главный закрытый ключ</value>
+    <value>Расширенный закрытый мастер-ключ</value>
   </data>
   <data name="ExtendedMasterZprv" xml:space="preserve">
-    <value>Расширенный главный zprv</value>
+    <value>Расширенный мастер-ключ (zprv)</value>
   </data>
   <data name="ExtendedMasterFingerprint" xml:space="preserve">
-    <value>Отпечаток главного ключа</value>
+    <value>Отпечаток мастер-ключа</value>
   </data>
   <data name="AccountKeyPathSegWit" xml:space="preserve">
-    <value>Путь ключа аккаунта (SegWit)</value>
+    <value>Путь деривации аккаунта (SegWit)</value>
   </data>
   <data name="AccountKeyPathTaproot" xml:space="preserve">
-    <value>Путь ключа аккаунта (Taproot)</value>
+    <value>Путь деривации аккаунта (Taproot)</value>
   </data>
   <data name="ExtendedAccountPrivateKeyXpriv" xml:space="preserve">
     <value>Расширенный закрытый ключ аккаунта xpriv</value>
   </data>
   <data name="PublicExternalOutputDescriptor" xml:space="preserve">
-    <value>Открытый дескриптор внешних выходов</value>
+    <value>Дескриптор получения с открытыми ключами</value>
   </data>
   <data name="PublicInternalOutputDescriptor" xml:space="preserve">
-    <value>Открытый дескриптор внутренних выходов</value>
+    <value>Дескриптор сдачи с открытыми ключами</value>
   </data>
   <data name="PrivateExternalOutputDescriptor" xml:space="preserve">
-    <value>Закрытый дескриптор внешних выходов</value>
+    <value>Дескриптор получения с закрытыми ключами</value>
   </data>
   <data name="PrivateInternalOutputDescriptor" xml:space="preserve">
-    <value>Закрытый дескриптор внутренних выходов</value>
+    <value>Дескриптор сдачи с закрытыми ключами</value>
   </data>
   <data name="ExtendedAccountPublicKeySegWit" xml:space="preserve">
     <value>Расширенный открытый ключ аккаунта (SegWit)</value>
@@ -1536,7 +1536,7 @@
     <value>Другое</value>
   </data>
   <data name="RandomSkip" xml:space="preserve">
-    <value>Случайный пропуск</value>
+    <value>Случайный пропуск раундов</value>
   </data>
   <data name="Months" xml:space="preserve">
     <value>Месяцы</value>
@@ -1689,7 +1689,7 @@
     <value>Срок истёк</value>
   </data>
   <data name="Failed" xml:space="preserve">
-    <value>Не удалось</value>
+    <value>Сбой</value>
   </data>
   <data name="Completed" xml:space="preserve">
     <value>Завершено</value>
@@ -1899,7 +1899,7 @@
     <value>Переименовать кошелёк</value>
   </data>
   <data name="WalletCannotBeRenamed" xml:space="preserve">
-    <value>Не удалось переименовать кошелёк в {0}</value>
+    <value>Нельзя переименовать кошелёк в {0}</value>
   </data>
   <data name="GingerWalletUnableToOpenFile" xml:space="preserve">
     <value>Ginger Wallet не удалось открыть файл.</value>
@@ -1980,7 +1980,7 @@
     <value>Внешний вид</value>
   </data>
   <data name="ExchangeCurrency" xml:space="preserve">
-    <value>Валюта обменного курса</value>
+    <value>Валюта отображения</value>
   </data>
   <data name="Cut" xml:space="preserve">
     <value>Вырезать</value>

@@ -6,6 +6,7 @@ using System.Resources;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using WalletWasabi.Extensions;
+using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.JsonConverters;
 using WalletWasabi.Lang;
 using WalletWasabi.Models;
@@ -13,9 +14,37 @@ using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests.Localization;
 
+[Collection("Serial unit tests collection")]
 public class LocalizationTests
 {
 	private readonly Regex _placeholderRegex = new(@"{\d+}", RegexOptions.Compiled);
+
+	[Theory]
+	[InlineData("pt-BR", 0, "", "Confirmado (confirmações: 0)", "Confirmações: 0")]
+	[InlineData("pt-BR", 1, "1 d, 1 h, 1 min e 1 s", "Confirmado (confirmações: 1)", "Confirmações: 1")]
+	[InlineData("pt-BR", 2, "2 d, 2 h, 2 min e 2 s", "Confirmado (confirmações: 2)", "Confirmações: 2")]
+	[InlineData("pt-BR", 5, "5 d, 5 h, 5 min e 5 s", "Confirmado (confirmações: 5)", "Confirmações: 5")]
+	[InlineData("ru-RU", 0, "", "Подтверждено (подтверждений: 0)", "Подтверждений: 0")]
+	[InlineData("ru-RU", 1, "1 дн., 1 ч., 1 мин. и 1 с.", "Подтверждено (подтверждений: 1)", "Подтверждений: 1")]
+	[InlineData("ru-RU", 2, "2 дн., 2 ч., 2 мин. и 2 с.", "Подтверждено (подтверждений: 2)", "Подтверждений: 2")]
+	[InlineData("ru-RU", 5, "5 дн., 5 ч., 5 мин. и 5 с.", "Подтверждено (подтверждений: 5)", "Подтверждений: 5")]
+	[InlineData("en-US", 0, "", "Confirmed (0 confirmations)", "0 confirmations")]
+	[InlineData("en-US", 2, "2 days, 2 hours, 2 minutes and 2 seconds", "Confirmed (2 confirmations)", "2 confirmations")]
+	public void LocalizedCountsRenderCorrectly(string cultureName, int count, string expectedDuration, string expectedStatus, string expectedCount)
+	{
+		var previousCulture = Resources.Culture;
+		try
+		{
+			Resources.Culture = CultureInfo.GetCultureInfo(cultureName);
+			Assert.Equal(expectedDuration, TextHelpers.TimeSpanToFriendlyString(new TimeSpan(count, count, count, count)));
+			Assert.Equal(expectedStatus, TextHelpers.GetConfirmationText(count));
+			Assert.Equal(expectedCount, Resources.ConfirmationCount.SafeInject(count, TextHelpers.AddSIfPlural(count)));
+		}
+		finally
+		{
+			Resources.Culture = previousCulture;
+		}
+	}
 
 	[Theory]
 	[InlineData(DisplayLanguage.German, "de-DE", "de", "Deutsch", "Sprache")]
