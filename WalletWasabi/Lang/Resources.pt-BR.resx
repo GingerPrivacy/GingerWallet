@@ -148,7 +148,7 @@
         <value>Caminho de derivação da conta (Taproot)</value>
     </data>
     <data name="AddPassphrase" xml:space="preserve">
-        <value>Adicionar frase-senha</value>
+        <value>Adicionar frase de segurança</value>
     </data>
     <data name="Address" xml:space="preserve">
         <value>Endereço</value>
@@ -481,7 +481,7 @@
         <value>Período de referência para Coinjoin</value>
     </data>
     <data name="CoinJoinTimePrefToolTip" xml:space="preserve">
-        <value>Realizar Coinjoin apenas quando a taxa por byte estiver abaixo da mediana desse período.</value>
+        <value>Realizar Coinjoin somente quando a taxa por byte virtual estiver abaixo da mediana deste período.</value>
     </data>
     <data name="CoinjoinToOtherWalletRestrictions1" xml:space="preserve">
         <value>- Somente carteiras carregadas podem ser selecionadas.</value>
@@ -514,7 +514,7 @@
         <value>Vírgula</value>
     </data>
     <data name="CompatibilityPassphraseUsed" xml:space="preserve">
-        <value>Foi usada uma frase-senha de compatibilidade! Considere criar uma nova carteira para garantir que ela possa ser recuperada!</value>
+        <value>Foi usada uma frase de segurança de compatibilidade! Considere criar uma nova carteira para garantir que ela possa ser recuperada!</value>
     </data>
     <data name="CompatibleBitcoinCoreKnotsVersion" xml:space="preserve">
         <value>Versão compatível do Bitcoin Core</value>
@@ -559,7 +559,7 @@
         <value>Clique na palavra de recuperação #{0}</value>
     </data>
     <data name="ConfirmRecoveryWordsViewModelStoreSafely" xml:space="preserve">
-        <value>Guarde sua frase-senha com segurança; ela não pode ser recuperada se for perdida. Ela é necessária para abrir e restaurar a carteira e oferece proteção adicional ao ser usada junto às palavras de recuperação.</value>
+        <value>Mantenha sua frase de segurança protegida; ela não pode ser recuperada se for perdida. Ela é necessária para abrir e restaurar a carteira e oferece proteção adicional ao ser usada junto às palavras de recuperação.</value>
     </data>
     <data name="ConnectHardwareWalletViewModelAlreadyAdded" xml:space="preserve">
         <value>A carteira de hardware conectada já foi adicionada ao software. Clique abaixo para abri-la ou em Buscar novamente para repetir a busca.</value>
@@ -571,10 +571,10 @@
         <value>Conecte a carteira de hardware ao PC / Digite o PIN no dispositivo.</value>
     </data>
     <data name="ConnectHardwareWalletViewModelEnterPassphrase" xml:space="preserve">
-        <value>Digite sua frase-senha na carteira de hardware, se necessário.</value>
+        <value>Digite sua frase de segurança na carteira de hardware, se necessário.</value>
     </data>
     <data name="ConnectHardwareWalletViewModelEnterPassphraseOnDevice" xml:space="preserve">
-        <value>Digite sua frase-senha no dispositivo.</value>
+        <value>Digite sua frase de segurança no dispositivo.</value>
     </data>
     <data name="ConnectHardwareWalletViewModelEnterPin" xml:space="preserve">
         <value>Digite seu PIN no dispositivo.</value>
@@ -634,10 +634,10 @@
         <value>Novo</value>
     </data>
     <data name="CreatePasswordDialogConfirmPassphrase" xml:space="preserve">
-        <value>Confirme a frase-senha</value>
+        <value>Confirme a frase de segurança</value>
     </data>
     <data name="CreatePasswordDialogTypePassphrase" xml:space="preserve">
-        <value>Digite uma frase-senha</value>
+        <value>Digite uma frase de segurança</value>
     </data>
     <data name="CriticalUpdateRequired" xml:space="preserve">
         <value>Atualização crítica necessária</value>
@@ -652,7 +652,7 @@
         <value>Personalizado</value>
     </data>
     <data name="CustomFeeRate" xml:space="preserve">
-        <value>Taxa por byte personalizada</value>
+        <value>Taxa por byte virtual personalizada</value>
     </data>
     <data name="Cut" xml:space="preserve">
         <value>Cortar</value>
@@ -739,10 +739,10 @@
         <value>Digite os nomes das pessoas ou empresas para as quais você dará este endereço</value>
     </data>
     <data name="EnterPassphrase" xml:space="preserve">
-        <value>Digite a frase-senha</value>
+        <value>Digite a frase de segurança</value>
     </data>
     <data name="EnterPassphraseAuth" xml:space="preserve">
-        <value>Digite sua frase-senha</value>
+        <value>Digite sua frase de segurança</value>
     </data>
     <data name="EntitiesCanDeanonymizeTransaction" xml:space="preserve">
         <value>Algumas pessoas ou empresas podem identificar você nesta transação porque ela gasta moedas sem privacidade. Realize mais Coinjoins para ter moedas privadas suficientes para esta transação.</value>
@@ -832,13 +832,13 @@
         <value>Unidade de exibição de taxa</value>
     </data>
     <data name="FeeRate" xml:space="preserve">
-        <value>Taxa por byte</value>
+        <value>Taxa por byte virtual</value>
     </data>
     <data name="FeeRateFormatted" xml:space="preserve">
-        <value>Taxa por byte: {0:0} sat/vByte</value>
+        <value>Taxa por byte virtual: {0:0} sat/vByte</value>
     </data>
     <data name="FeeRateSatPerVByte" xml:space="preserve">
-        <value>Taxa por byte (sat/vByte)</value>
+        <value>Taxa por byte virtual (sat/vByte)</value>
     </data>
     <data name="Fees" xml:space="preserve">
         <value>Taxas</value>
@@ -961,10 +961,10 @@
         <value>Entrada</value>
     </data>
     <data name="IncorrectPassphrase" xml:space="preserve">
-        <value>A frase-senha está incorreta.{0}Tente novamente.</value>
+        <value>A frase de segurança está incorreta.{0}Tente novamente.</value>
     </data>
     <data name="IncorrectPassphraseRetry" xml:space="preserve">
-        <value>A frase-senha está incorreta! Tente novamente.</value>
+        <value>A frase de segurança está incorreta! Tente novamente.</value>
     </data>
     <data name="Index" xml:space="preserve">
         <value>Índice</value>
@@ -1081,7 +1081,7 @@
         <value>Não pode ser menor que 1 sat/vByte.</value>
     </data>
     <data name="MiningFeeRateTooHighMessage" xml:space="preserve">
-        <value>A taxa de mineração por byte estava muito alta</value>
+        <value>A taxa de mineração por byte virtual estava muito alta</value>
     </data>
     <data name="MinInputCountTooLowMessage" xml:space="preserve">
         <value>A contagem mínima de entradas foi muito baixa</value>
@@ -1222,7 +1222,7 @@
         <value>Logs</value>
     </data>
     <data name="OpenPasswordBoxWatermark" xml:space="preserve">
-        <value>Frase-senha</value>
+        <value>Frase de segurança</value>
     </data>
     <data name="OpenTorLogsViewModelKeywords" xml:space="preserve">
         <value>Procurar, Abrir, Tor, Logs</value>
@@ -1249,10 +1249,10 @@
         <value>Saída</value>
     </data>
     <data name="PassphrasesNotMatch" xml:space="preserve">
-        <value>As frases-senha não coincidem.</value>
+        <value>As frases de segurança não coincidem.</value>
     </data>
     <data name="PassphraseTooLong" xml:space="preserve">
-        <value>A frase-senha é muito longa.</value>
+        <value>A frase de segurança é muito longa.</value>
     </data>
     <data name="Paste" xml:space="preserve">
         <value>Colar</value>
@@ -1397,7 +1397,7 @@
         <value>Recuperar</value>
     </data>
     <data name="RecoverWalletViewModelPassphraseMessage" xml:space="preserve">
-        <value>Se você usou uma frase-senha ao criar a carteira, digite-a abaixo. Caso contrário, deixe este campo em branco.</value>
+        <value>Se você usou uma frase de segurança ao criar a carteira, digite-a abaixo. Caso contrário, deixe este campo em branco.</value>
     </data>
     <data name="RecoveryWords" xml:space="preserve">
         <value>Palavras de Recuperação</value>
@@ -1466,7 +1466,7 @@
         <value>Ignorar o período de referência abaixo de</value>
     </data>
     <data name="SafeFeeToolTip" xml:space="preserve">
-        <value>Sempre realizar Coinjoin quando a taxa por byte estiver abaixo deste valor (tem prioridade sobre o período de referência para Coinjoin).</value>
+        <value>Sempre realizar Coinjoin quando a taxa por byte virtual estiver abaixo deste valor (tem prioridade sobre o período de referência para Coinjoin).</value>
     </data>
     <data name="Save" xml:space="preserve">
         <value>Salvar</value>
@@ -1598,7 +1598,7 @@
         <value>Pular</value>
     </data>
     <data name="SomethingHappenedWithDevice" xml:space="preserve">
-        <value>Ocorreu um problema com o dispositivo. Desbloqueie-o com seu PIN/frase-senha ou reconecte-o ao computador.</value>
+        <value>Ocorreu um problema com o dispositivo. Desbloqueie-o com seu PIN/frase de segurança ou reconecte-o ao computador.</value>
     </data>
     <data name="SomethingWrong" xml:space="preserve">
         <value>Algo deu errado. Por favor, tente novamente.</value>
@@ -1733,7 +1733,7 @@
         <value>Taxa de transação</value>
     </data>
     <data name="TransactionFeeEstimationsUnavailable" xml:space="preserve">
-        <value>As estimativas de taxa de transação não estão disponíveis no momento. Tente novamente mais tarde ou você pode inserir a taxa manualmente.</value>
+        <value>As estimativas de taxa de transação não estão disponíveis no momento. Tente novamente mais tarde ou insira a taxa por byte virtual manualmente.</value>
     </data>
     <data name="TransactionFeeExceedsPaymentAmount" xml:space="preserve">
         <value>A transação não pode ser enviada porque sua taxa é maior do que o valor do pagamento.</value>
@@ -1742,7 +1742,7 @@
         <value>Você pagará taxas de mineração para cada coinjoin.</value>
     </data>
     <data name="TransactionFeeRate" xml:space="preserve">
-        <value>_Taxa por byte da transação:</value>
+        <value>_Taxa por byte virtual da transação:</value>
     </data>
     <data name="TransactionID" xml:space="preserve">
         <value>ID da transação</value>
@@ -2036,7 +2036,7 @@
         <value>Estatísticas da carteira</value>
     </data>
     <data name="WalletToolsDoNotForget" xml:space="preserve">
-        <value>Sua frase-senha também é necessária para restaurar a carteira. Não se esqueça dela.</value>
+        <value>Sua frase de segurança também é necessária para restaurar a carteira. Não se esqueça dela.</value>
     </data>
     <data name="WalletToolsRecommend" xml:space="preserve">
         <value>Recomenda-se que você verifique suas palavras de recuperação de tempos em tempos.</value>
@@ -2075,7 +2075,7 @@
         <value>Gostaria de personalizá-lo?</value>
     </data>
     <data name="WrongPassphrase" xml:space="preserve">
-        <value>Frase-senha incorreta.</value>
+        <value>Frase de segurança incorreta.</value>
     </data>
     <data name="Yes" xml:space="preserve">
         <value>Sim</value>

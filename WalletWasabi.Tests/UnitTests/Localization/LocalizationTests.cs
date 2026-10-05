@@ -20,6 +20,18 @@ public class LocalizationTests
 	private readonly Regex _placeholderRegex = new(@"{\d+}", RegexOptions.Compiled);
 
 	[Theory]
+	[InlineData("de-DE", 0, "", "Bestätigt (Bestätigungen: 0)", "Bestätigungen: 0")]
+	[InlineData("de-DE", 1, "1 d, 1 h, 1 min und 1 s", "Bestätigt (Bestätigungen: 1)", "Bestätigungen: 1")]
+	[InlineData("de-DE", 2, "2 d, 2 h, 2 min und 2 s", "Bestätigt (Bestätigungen: 2)", "Bestätigungen: 2")]
+	[InlineData("de-DE", 5, "5 d, 5 h, 5 min und 5 s", "Bestätigt (Bestätigungen: 5)", "Bestätigungen: 5")]
+	[InlineData("es-ES", 0, "", "Confirmado (confirmaciones: 0)", "Confirmaciones: 0")]
+	[InlineData("es-ES", 1, "1 d, 1 h, 1 min y 1 s", "Confirmado (confirmaciones: 1)", "Confirmaciones: 1")]
+	[InlineData("es-ES", 2, "2 d, 2 h, 2 min y 2 s", "Confirmado (confirmaciones: 2)", "Confirmaciones: 2")]
+	[InlineData("es-ES", 5, "5 d, 5 h, 5 min y 5 s", "Confirmado (confirmaciones: 5)", "Confirmaciones: 5")]
+	[InlineData("fr-FR", 0, "", "Confirmé (confirmations : 0)", "Confirmations : 0")]
+	[InlineData("fr-FR", 1, "1 j, 1 h, 1 min et 1 s", "Confirmé (confirmations : 1)", "Confirmations : 1")]
+	[InlineData("fr-FR", 2, "2 j, 2 h, 2 min et 2 s", "Confirmé (confirmations : 2)", "Confirmations : 2")]
+	[InlineData("fr-FR", 5, "5 j, 5 h, 5 min et 5 s", "Confirmé (confirmations : 5)", "Confirmations : 5")]
 	[InlineData("pt-BR", 0, "", "Confirmado (confirmações: 0)", "Confirmações: 0")]
 	[InlineData("pt-BR", 1, "1 d, 1 h, 1 min e 1 s", "Confirmado (confirmações: 1)", "Confirmações: 1")]
 	[InlineData("pt-BR", 2, "2 d, 2 h, 2 min e 2 s", "Confirmado (confirmações: 2)", "Confirmações: 2")]

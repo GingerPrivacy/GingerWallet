@@ -689,7 +689,7 @@
     <value>Комиссия координатора</value>
   </data>
   <data name="TransactionFee" xml:space="preserve">
-    <value>Комиссия транзакции</value>
+    <value>Комиссия за транзакцию</value>
   </data>
   <data name="TransactionFeeInfo" xml:space="preserve">
     <value>Комиссии майнеров взимаются за каждый Coinjoin.</value>
@@ -1010,7 +1010,7 @@
     <value>Получатель</value>
   </data>
   <data name="ChangeTransactionFeeOrConfirmationTime" xml:space="preserve">
-    <value>Изменить комиссию транзакции или время подтверждения</value>
+    <value>Изменить комиссию за транзакцию или время подтверждения</value>
   </data>
   <data name="ExpectedConfirmationTime" xml:space="preserve">
     <value>Ожидаемое время подтверждения</value>
@@ -1079,7 +1079,7 @@
     <value>Оценка времени подтверждения</value>
   </data>
   <data name="TransactionFeeEstimationsUnavailable" xml:space="preserve">
-    <value>Оценки комиссии транзакции сейчас недоступны. Повторите попытку позже или введите ставку комиссии вручную.</value>
+    <value>Оценки комиссии за транзакцию сейчас недоступны. Повторите попытку позже или введите ставку комиссии вручную.</value>
   </data>
   <data name="ChooseTransactionVisibility" xml:space="preserve">
     <value>Выберите, кто сможет увидеть эту транзакцию, а кто нет.</value>
@@ -1251,7 +1251,7 @@
     <value>Двухфакторная аутентификация</value>
   </data>
   <data name="TransactionFeeRate" xml:space="preserve">
-    <value>_Ставка комиссии транзакции:</value>
+    <value>_Ставка комиссии за транзакцию:</value>
   </data>
   <data name="InvalidFee" xml:space="preserve">
     <value>Введена недопустимая комиссия.</value>
@@ -1332,7 +1332,7 @@
     <value>Количество использованных адресов</value>
   </data>
   <data name="ExtendedMasterPrivateKey" xml:space="preserve">
-    <value>Расширенный закрытый мастер-ключ</value>
+    <value>Расширенный приватный мастер-ключ</value>
   </data>
   <data name="ExtendedMasterZprv" xml:space="preserve">
     <value>Расширенный мастер-ключ (zprv)</value>
@@ -1347,25 +1347,25 @@
     <value>Путь деривации аккаунта (Taproot)</value>
   </data>
   <data name="ExtendedAccountPrivateKeyXpriv" xml:space="preserve">
-    <value>Расширенный закрытый ключ аккаунта xpriv</value>
+    <value>Расширенный приватный ключ аккаунта xpriv</value>
   </data>
   <data name="PublicExternalOutputDescriptor" xml:space="preserve">
-    <value>Дескриптор получения с открытыми ключами</value>
+    <value>Дескриптор получения с публичными ключами</value>
   </data>
   <data name="PublicInternalOutputDescriptor" xml:space="preserve">
-    <value>Дескриптор сдачи с открытыми ключами</value>
+    <value>Дескриптор сдачи с публичными ключами</value>
   </data>
   <data name="PrivateExternalOutputDescriptor" xml:space="preserve">
-    <value>Дескриптор получения с закрытыми ключами</value>
+    <value>Дескриптор получения с приватными ключами</value>
   </data>
   <data name="PrivateInternalOutputDescriptor" xml:space="preserve">
-    <value>Дескриптор сдачи с закрытыми ключами</value>
+    <value>Дескриптор сдачи с приватными ключами</value>
   </data>
   <data name="ExtendedAccountPublicKeySegWit" xml:space="preserve">
-    <value>Расширенный открытый ключ аккаунта (SegWit)</value>
+    <value>Расширенный публичный ключ аккаунта (SegWit)</value>
   </data>
   <data name="ExtendedAccountPublicKeyTaproot" xml:space="preserve">
-    <value>Расширенный открытый ключ аккаунта (Taproot)</value>
+    <value>Расширенный публичный ключ аккаунта (Taproot)</value>
   </data>
   <data name="HideSensitiveData" xml:space="preserve">
     <value>Скрыть конфиденциальные данные</value>
@@ -1392,7 +1392,7 @@
     <value>(подтверждений: {0})</value>
   </data>
   <data name="BlockHash" xml:space="preserve">
-    <value>Хеш блока</value>
+    <value>Хэш блока</value>
   </data>
   <data name="BlockHeight" xml:space="preserve">
     <value>Высота блока</value>

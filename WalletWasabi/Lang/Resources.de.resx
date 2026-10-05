@@ -406,10 +406,10 @@
         <value>Diese Transaktion kann nicht angezeigt werden:</value>
     </data>
     <data name="ChangeAvoidance" xml:space="preserve">
-        <value>Restbetrag vermeiden</value>
+        <value>Wechselgeld vermeiden</value>
     </data>
     <data name="ChangeCanLinkTransactions" xml:space="preserve">
-        <value>Restbetrag kann verwendet werden, um diese Transaktion mit der nächsten zu verknüpfen. Verwende den Vorschlag zur Restbetrag vermeiden, um etwas mehr oder weniger zu senden, wenn das für den Empfänger in Ordnung ist, oder coinjoin den Restbetrag später.</value>
+        <value>Wechselgeld kann verwendet werden, um diese Transaktion mit der nächsten Transaktion zu verknüpfen, die es ausgibt. Verwende den Vorschlag zur Vermeidung von Wechselgeld, um etwas mehr oder weniger zu senden, wenn das für den Empfänger in Ordnung ist, oder nutze später Coinjoin für das Wechselgeld.</value>
     </data>
     <data name="ChangesAppliedAfterRestart" xml:space="preserve">
         <value>Änderungen werden nach dem Neustart der Anwendung übernommen.</value>
@@ -442,7 +442,7 @@
         <value>Mindestens eine der auszugebenden Coins ist bereits ausgegeben worden.</value>
     </data>
     <data name="CoinControl" xml:space="preserve">
-        <value>Coin Verwaltung</value>
+        <value>Coin Control</value>
     </data>
     <data name="CoinDetails" xml:space="preserve">
         <value>Coin Details</value>
@@ -535,10 +535,10 @@
         <value>Bestätigen</value>
     </data>
     <data name="ConfirmationCount" xml:space="preserve">
-        <value>{0} Bestätigung{1}</value>
+        <value>Bestätigungen: {0}{1}</value>
     </data>
     <data name="Confirmations" xml:space="preserve">
-        <value>({0} Bestätigungen)</value>
+        <value>(Bestätigungen: {0})</value>
     </data>
     <data name="ConfirmationTimeEstimation" xml:space="preserve">
         <value>Dies ist nur eine Schätzung basierend auf einigen Daten zu Transaktionen und Blöcken. Die Bestätigungszeit kann sich ändern.</value>
@@ -550,7 +550,7 @@
         <value>Bestätigtes Guthaben</value>
     </data>
     <data name="ConfirmedWithConfirmationCount" xml:space="preserve">
-        <value>Bestätigt ({0} Bestätigung{1})</value>
+        <value>Bestätigt (Bestätigungen: {0}{1})</value>
     </data>
     <data name="ConfirmRecoveryWordsViewModel" xml:space="preserve">
         <value>Wiederherstellungswörter bestätigen</value>
@@ -652,7 +652,7 @@
         <value>Benutzerdefiniert</value>
     </data>
     <data name="CustomFeeRate" xml:space="preserve">
-        <value>Benutzerdefinierte Gebührenrate</value>
+        <value>Benutzerdefinierter Gebührensatz</value>
     </data>
     <data name="Cut" xml:space="preserve">
         <value>Ausschneiden</value>
@@ -667,7 +667,7 @@
         <value>Datum / Uhrzeit</value>
     </data>
     <data name="day" xml:space="preserve">
-        <value>Tag</value>
+        <value>d</value>
     </data>
     <data name="Days" xml:space="preserve">
         <value>Tage</value>
@@ -709,7 +709,7 @@
         <value>Punkt</value>
     </data>
     <data name="DustThreshold" xml:space="preserve">
-        <value>Dust Attack-Schwelle</value>
+        <value>Staubschwelle</value>
     </data>
     <data name="Edit" xml:space="preserve">
         <value>Bearbeiten</value>
@@ -742,7 +742,7 @@
         <value>Passphrase eingeben</value>
     </data>
     <data name="EnterPassphraseAuth" xml:space="preserve">
-        <value>Gib Dein Passphrase ein</value>
+        <value>Gib Deine Passphrase ein</value>
     </data>
     <data name="EntitiesCanDeanonymizeTransaction" xml:space="preserve">
         <value>Einige Stellen können diese Transaktion deanonymisieren, da sie Coins mit wenig Anonymität verwenden. Führe weitere Coinjoins durch, um genügend anonyme Coins für diese Transaktion zu haben.</value>
@@ -805,7 +805,7 @@
         <value>Erweiterter öffentlicher Kontoschlüssel (Taproot)</value>
     </data>
     <data name="ExtendedMasterFingerprint" xml:space="preserve">
-        <value>Erweiterter Haupt-Fingerabdruck</value>
+        <value>Fingerabdruck des Hauptschlüssels</value>
     </data>
     <data name="ExtendedMasterPrivateKey" xml:space="preserve">
         <value>Erweiterter privater Hauptschlüssel</value>
@@ -934,7 +934,7 @@
         <value>Sensible Daten verbergen</value>
     </data>
     <data name="hour" xml:space="preserve">
-        <value>Stunde</value>
+        <value>h</value>
     </data>
     <data name="Hours" xml:space="preserve">
         <value>Stunden</value>
@@ -994,7 +994,7 @@
         <value>Geben Sie eine gültige BTC-Adresse oder URI ein.</value>
     </data>
     <data name="InvalidDustThreshold" xml:space="preserve">
-        <value>Ungültiger Dust Attack-Schwellenwert.</value>
+        <value>Ungültige Staubschwelle.</value>
     </data>
     <data name="InvalidEndpoint" xml:space="preserve">
         <value>Ungültiger Endpunkt.</value>
@@ -1087,7 +1087,7 @@
         <value>Minimale Eingabeanzahl war zu niedrig</value>
     </data>
     <data name="minute" xml:space="preserve">
-        <value>Minute</value>
+        <value>min</value>
     </data>
     <data name="MITLicense" xml:space="preserve">
         <value>MIT-Lizenz</value>
@@ -1277,7 +1277,7 @@
         <value>Zahlung</value>
     </data>
     <data name="Peers" xml:space="preserve">
-        <value>Teilnehmer</value>
+        <value>Peers</value>
     </data>
     <data name="PeersConnected" xml:space="preserve">
         <value>{0} verbunden</value>
@@ -1337,13 +1337,13 @@
         <value>Anonyme Coins</value>
     </data>
     <data name="PrivateExternalOutputDescriptor" xml:space="preserve">
-        <value>Privater externer Ausgabedeskriptor</value>
+        <value>Deskriptor für Empfang mit privaten Schlüsseln</value>
     </data>
     <data name="PrivateFunds" xml:space="preserve">
         <value>Anonyme Mittel</value>
     </data>
     <data name="PrivateInternalOutputDescriptor" xml:space="preserve">
-        <value>Privater interner Ausgabedeskriptor</value>
+        <value>Deskriptor für Wechselgeld mit privaten Schlüsseln</value>
     </data>
     <data name="ProceedConfirmation" xml:space="preserve">
         <value>Möchten Sie fortfahren?</value>
@@ -1355,10 +1355,10 @@
         <value>PSBT Signaturprozess</value>
     </data>
     <data name="PublicExternalOutputDescriptor" xml:space="preserve">
-        <value>Öffentlicher externer Ausgabedeskriptor</value>
+        <value>Deskriptor für Empfang mit öffentlichen Schlüsseln</value>
     </data>
     <data name="PublicInternalOutputDescriptor" xml:space="preserve">
-        <value>Öffentlicher interner Ausgabedeskriptor</value>
+        <value>Deskriptor für Wechselgeld mit öffentlichen Schlüsseln</value>
     </data>
     <data name="QRCode" xml:space="preserve">
         <value>QR-Code</value>
@@ -1484,7 +1484,7 @@
         <value>Suchen</value>
     </data>
     <data name="second" xml:space="preserve">
-        <value>Sekunde</value>
+        <value>s</value>
     </data>
     <data name="Security" xml:space="preserve">
         <value>Sicherheit</value>
@@ -1718,7 +1718,7 @@
         <value>Transaktion konsolidiert über {0} Münzen.</value>
     </data>
     <data name="TransactionCreatesChange" xml:space="preserve">
-        <value>Transaktion erzeugt Resrbetrag.</value>
+        <value>Transaktion erzeugt Wechselgeld.</value>
     </data>
     <data name="TransactionDetails" xml:space="preserve">
         <value>Transaktionsdetails</value>
@@ -1733,7 +1733,7 @@
         <value>Transaktionsgebühr</value>
     </data>
     <data name="TransactionFeeEstimationsUnavailable" xml:space="preserve">
-        <value>Transaktionsgebührenschätzungen sind derzeit nicht verfügbar. Versuche es später erneut oder gib die Gebühr manuell ein.</value>
+        <value>Transaktionsgebührenschätzungen sind derzeit nicht verfügbar. Versuche es später erneut oder gib den Gebührensatz manuell ein.</value>
     </data>
     <data name="TransactionFeeExceedsPaymentAmount" xml:space="preserve">
         <value>Transaktion kann nicht gesendet werden, da die Gebühr höher ist als der Zahlungsbetrag.</value>
@@ -2132,13 +2132,13 @@
         <value>Mit Hardware-Wallet signieren</value>
     </data>
     <data name="SignMessageToVerifyYouOwnAddressForExchange" xml:space="preserve">
-        <value>Signieren Sie eine Nachricht, um zu bestätigen, dass Sie die Adresse für die Börse besitzen</value>
+        <value>Signiere eine Nachricht, um der Börse zu bestätigen, dass Dir die Adresse gehört</value>
     </data>
     <data name="AddressWithColon" xml:space="preserve">
         <value>Adresse:</value>
     </data>
     <data name="PasteTheAddressProvidedByTheExchange" xml:space="preserve">
-        <value>Fügen Sie die von der Wechselstelle bereitgestellte Adresse ein</value>
+        <value>Füge die von der Börse bereitgestellte Adresse ein</value>
     </data>
     <data name="MessageWithColon" xml:space="preserve">
         <value>Nachricht:</value>
