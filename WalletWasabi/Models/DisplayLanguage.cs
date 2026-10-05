@@ -29,5 +29,11 @@ public enum DisplayLanguage
 	Turkish = 8,
 
 	[Description("it-IT")]
-	Italian = 9
+	Italian = 9,
+
+	[Description("pt-BR")]
+	BrazilianPortuguese = 10,
+
+	[Description("ru-RU")]
+	Russian = 11
 }

@@ -11,7 +11,16 @@ namespace WalletWasabi.Fluent.Helpers;
 
 public static partial class TextHelpers
 {
-	public static string AddSIfPlural(int n) => n > 1 ? Resources.Plural.ToEscapeSequenceString() : "";
+	public static string AddSIfPlural(int n)
+	{
+		if (n == 1)
+		{
+			return "";
+		}
+
+		var suffix = Resources.Plural.ToEscapeSequenceString();
+		return suffix == "\0" ? "" : suffix;
+	}
 
 	private static string ConcatNumberAndUnit(int n, string unit) => n > 0 ? $"{n} {unit}{AddSIfPlural(n)}" : "";
 

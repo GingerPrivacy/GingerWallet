@@ -60,45 +60,45 @@
                 : and then encoded with base64 encoding.
         -->
     <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-        <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+        <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
         <xsd:element name="root" msdata:IsDataSet="true">
             <xsd:complexType>
                 <xsd:choice maxOccurs="unbounded">
                     <xsd:element name="metadata">
                         <xsd:complexType>
                             <xsd:sequence>
-                                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" />
                             </xsd:sequence>
-                            <xsd:attribute name="name" use="required" type="xsd:string"/>
-                            <xsd:attribute name="type" type="xsd:string"/>
-                            <xsd:attribute name="mimetype" type="xsd:string"/>
-                            <xsd:attribute ref="xml:space"/>
+                            <xsd:attribute name="name" use="required" type="xsd:string" />
+                            <xsd:attribute name="type" type="xsd:string" />
+                            <xsd:attribute name="mimetype" type="xsd:string" />
+                            <xsd:attribute ref="xml:space" />
                         </xsd:complexType>
                     </xsd:element>
                     <xsd:element name="assembly">
                         <xsd:complexType>
-                            <xsd:attribute name="alias" type="xsd:string"/>
-                            <xsd:attribute name="name" type="xsd:string"/>
+                            <xsd:attribute name="alias" type="xsd:string" />
+                            <xsd:attribute name="name" type="xsd:string" />
                         </xsd:complexType>
                     </xsd:element>
                     <xsd:element name="data">
                         <xsd:complexType>
                             <xsd:sequence>
-                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
                             </xsd:sequence>
-                            <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-                            <xsd:attribute ref="xml:space"/>
+                            <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+                            <xsd:attribute ref="xml:space" />
                         </xsd:complexType>
                     </xsd:element>
                     <xsd:element name="resheader">
                         <xsd:complexType>
                             <xsd:sequence>
-                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                             </xsd:sequence>
-                            <xsd:attribute name="name" type="xsd:string" use="required"/>
+                            <xsd:attribute name="name" type="xsd:string" use="required" />
                         </xsd:complexType>
                     </xsd:element>
                 </xsd:choice>
@@ -118,2101 +118,2101 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="AbortedNotEnoughAlicesMessage" xml:space="preserve">
-        <value>Unzureichende Teilnehmer, erneuter Versuch...</value>
+        <value>Participantes insuficientes, tentando novamente...</value>
     </data>
     <data name="AboutViewModelCaption" xml:space="preserve">
-        <value>Anzeige der aktuellen Informationen von Ginger Wallet</value>
+        <value>Exibir informações atuais do Ginger Wallet</value>
     </data>
     <data name="AboutViewModelKeywords" xml:space="preserve">
-        <value>Über, Software, Version, Quelle, Code, Github, Webseite, Koordinator, Statistiken, Tor, Onion, Benutzer, Support, Fehler, Bericht, FAQ, Fragen, Dokumente, Dokumentation, Lizenz, Erweitert, Informationen, Hardware, Wallet</value>
+        <value>Sobre, Software, Versão, Fonte, Código, Github, Site, Coordenador, Estatísticas, Tor, Onion, Usuário, Suporte, Bug, Relatar, FAQ, Perguntas, Docs, Documentação, Licença, Avançado, Informações, Hardware, Carteira</value>
     </data>
     <data name="AboutViewModelTitle" xml:space="preserve">
-        <value>Über Ginger Wallet</value>
+        <value>Sobre o Ginger Wallet</value>
     </data>
     <data name="Accelerator" xml:space="preserve">
-        <value>Beschleuniger</value>
+        <value>Acelerador</value>
     </data>
     <data name="Accept" xml:space="preserve">
-        <value>Akzeptieren</value>
+        <value>Aceitar</value>
     </data>
     <data name="AcceptingOfferRedirect" xml:space="preserve">
-        <value>Die Annahme eines Angebots leitet Dich zur Seite des Anbieters weiter, um den Vorgang abzuschließen.</value>
+        <value>Aceitar uma oferta o redirecionará para a página do provedor para concluir o processo.</value>
     </data>
     <data name="AcceptTermsAndConditions" xml:space="preserve">
-        <value>Du musst die Allgemeinen Geschäftsbedingungen akzeptieren!</value>
+        <value>Você deve aceitar os Termos e Condições!</value>
     </data>
     <data name="AccountKeyPathSegWit" xml:space="preserve">
-        <value>Kontoschlüssel Pfad (SegWit)</value>
+        <value>Caminho de derivação da conta (SegWit)</value>
     </data>
     <data name="AccountKeyPathTaproot" xml:space="preserve">
-        <value>Kontoschlüssel Pfad (Taproot)</value>
+        <value>Caminho de derivação da conta (Taproot)</value>
     </data>
     <data name="AddPassphrase" xml:space="preserve">
-        <value>Passphrase hinzufügen</value>
+        <value>Adicionar frase de segurança</value>
     </data>
     <data name="Address" xml:space="preserve">
-        <value>Adresse</value>
+        <value>Endereço</value>
     </data>
     <data name="AddressAwaitingPayment" xml:space="preserve">
-        <value>Adresse wartet auf Zahlung</value>
+        <value>Endereço Aguardando Pagamento</value>
     </data>
     <data name="AddressesAwaitingPayment" xml:space="preserve">
-        <value>Adressen warten auf Zahlung</value>
+        <value>Endereços Aguardando Pagamento</value>
     </data>
     <data name="AddWalletPageViewModelCaption" xml:space="preserve">
-        <value>Erstellen, verbinden, importieren oder wiederherstellen</value>
+        <value>Criar, conectar, importar ou recuperar</value>
     </data>
     <data name="AddWalletPageViewModelKeywords" xml:space="preserve">
-        <value>Wallet, Hinzufügen, Erstellen, Neu, Wiederherstellen, Importieren, Verbinden, Hardware, ColdCard, Trezor, Ledger</value>
+        <value>Carteira, Adicionar, Criar, Nova, Recuperar, Importar, Conectar, Hardware, ColdCard, Trezor, Ledger</value>
     </data>
     <data name="AddWalletPageViewModelTitle" xml:space="preserve">
-        <value>Wallet hinzufügen</value>
+        <value>Adicionar Carteira</value>
     </data>
     <data name="Advanced" xml:space="preserve">
-        <value>Erweitert</value>
+        <value>Avançado</value>
     </data>
     <data name="AdvancedInformation" xml:space="preserve">
-        <value>Version Informationen</value>
+        <value>Informações da Versão</value>
     </data>
     <data name="AdvancedRecoveryOptionsViewModelMinimumGapLimit" xml:space="preserve">
-        <value>Minimale Ermittlungsgrenze:</value>
+        <value>Limite mínimo de endereços não usados:</value>
     </data>
     <data name="AdvancedRecoveryOptionsViewModelTitle" xml:space="preserve">
-        <value>Erweiterte Wiederherstellungsoptionen</value>
+        <value>Opções Avançadas de Recuperação</value>
     </data>
     <data name="AdvancedSettingsTabViewModelCaption" xml:space="preserve">
-        <value>Erweiterte Einstellungen verwalten</value>
+        <value>Gerenciar configurações avançadas</value>
     </data>
     <data name="AdvancedSettingsTabViewModelKeywords" xml:space="preserve">
-        <value>Einstellungen, Erweitert, Aktivieren, GPU</value>
+        <value>Configurações, Avançado, Habilitar, GPU</value>
     </data>
     <data name="AdvancedSettingsTabViewModelTitle" xml:space="preserve">
-        <value>Erweitert</value>
+        <value>Avançado</value>
     </data>
     <data name="AfterDeductingFee" xml:space="preserve">
-        <value>Nach Abzug der Gebühr von {0} erhälst Du {1} — es fallen keine weiteren Gebühren an.</value>
+        <value>Após deduzir a taxa de {0}, você receberá {1} — sem taxas adicionais.</value>
     </data>
     <data name="All" xml:space="preserve">
-        <value>Alle</value>
+        <value>Todos</value>
     </data>
     <data name="AllCoinsConfirmed" xml:space="preserve">
-        <value>Alle Coins sind bestätigt.</value>
+        <value>Todas as moedas estão confirmadas.</value>
     </data>
     <data name="AllPrivateMessage" xml:space="preserve">
-        <value>Hurra! Alle Ihre Gelder sind anonym!</value>
+        <value>Uhul! Todos os seus fundos são privados!</value>
     </data>
     <data name="AMLKYCNotice" xml:space="preserve">
-        <value>Durch Klicken auf Akzeptieren erkenne ich an, dass die Transaktion später eine AML/KYC-Verifizierung durch den Drittanbieter erfordern kann.</value>
+        <value>Ao clicar em Aceitar, reconheço que um provedor terceirizado poderá exigir uma verificação AML/KYC para esta transação posteriormente.</value>
     </data>
     <data name="Amount" xml:space="preserve">
-        <value>Betrag</value>
+        <value>Quantia</value>
     </data>
     <data name="AmountCannotExceed" xml:space="preserve">
-        <value>Betrag darf {0} nicht überschreiten.</value>
+        <value>A quantia não pode exceder {0}.</value>
     </data>
     <data name="AmountLessThanTotalSupply" xml:space="preserve">
-        <value>Betrag muss kleiner als das gesamte BTC-Angebot sein.</value>
+        <value>O valor deve ser menor que a quantidade máxima de BTC.</value>
     </data>
     <data name="AmountMoreThanZero" xml:space="preserve">
-        <value>Betrag muss größer als 0 BTC sein.</value>
+        <value>A quantia deve ser maior que 0 BTC.</value>
     </data>
     <data name="AmountMustBeAtLeast" xml:space="preserve">
-        <value>Betrag muss mindestens {0} betragen.</value>
+        <value>A quantia deve ser pelo menos {0}.</value>
     </data>
     <data name="AmountReceived" xml:space="preserve">
-        <value>Erhaltener Betrag</value>
+        <value>Quantia recebida</value>
     </data>
     <data name="AmountSent" xml:space="preserve">
-        <value>Gesendeter Betrag</value>
+        <value>Quantia enviada</value>
     </data>
     <data name="AmountWithColom" xml:space="preserve">
-        <value>Betrag:</value>
+        <value>Quantia:</value>
     </data>
     <data name="and" xml:space="preserve">
-        <value>und</value>
+        <value>e</value>
     </data>
     <data name="Announcements" xml:space="preserve">
-        <value>Ankündigungen</value>
+        <value>Anúncios</value>
     </data>
     <data name="AnonTargetText" xml:space="preserve">
-        <value>Zielwert für die Anonymität</value>
+        <value>Meta de pontuação de anonimato</value>
     </data>
     <data name="AnonTargetTooltip" xml:space="preserve">
-        <value>Mindestwert der Anonymitätsbewertung, damit ein Coin als anonym gilt.</value>
+        <value>Pontuação mínima de anonimato para que uma moeda seja considerada privada.</value>
     </data>
     <data name="AnonymityScore" xml:space="preserve">
-        <value>Anonymitätsbewertung</value>
+        <value>Pontuação de Anonimato</value>
     </data>
     <data name="ApostropheEnum" xml:space="preserve">
-        <value>Apostroph</value>
+        <value>Apóstrofo</value>
     </data>
     <data name="Appearance" xml:space="preserve">
-        <value>Darstellung</value>
+        <value>Aparência</value>
     </data>
     <data name="AppearanceSettingsTabViewModelCaption" xml:space="preserve">
-        <value>Darstellungsoptionen verwalten</value>
+        <value>Gerenciar configurações de aparência</value>
     </data>
     <data name="AppearanceSettingsTabViewModelKeywords" xml:space="preserve">
-        <value>Einstellungen, Darstellung, Bitcoin, Dunkel, Modus, Gebühr, Anzeige, Format, BTC, sats, Wechselkurs, Währung</value>
+        <value>Configurações, Aparência, Bitcoin, Escuro, Modo, Taxa, Exibição, Formato, BTC, sats, Câmbio, Moeda</value>
     </data>
     <data name="AppearanceSettingsTabViewModelTitle" xml:space="preserve">
-        <value>Darstellung</value>
+        <value>Aparência</value>
     </data>
     <data name="AppearanceThemeKeywords" xml:space="preserve">
-        <value>Schwarz, Weiß, Thema, Dunkel, Hell</value>
+        <value>Preto, Branco, Tema, Escuro, Claro</value>
     </data>
     <data name="ApplicationRestartApplyChanges" xml:space="preserve">
-        <value>Nach dem Klicken auf Weiter wird die Anwendung neu gestartet, um die Änderungen anzuwenden.</value>
+        <value>Após pressionar Continuar, o aplicativo será reiniciado para aplicar as mudanças.</value>
     </data>
     <data name="ApplicationRestartRescan" xml:space="preserve">
-        <value>Die Anwendung wird neu gestartet, und beim erneuten Öffnen Ihrer Wallet beginnt das erneute Scannen. Dieser Vorgang kann je nach Anzahl der Transaktionen in Ihrer Wallet einige Zeit dauern.</value>
+        <value>O aplicativo será reiniciado, e ao reabrir sua carteira, o novo escaneamento começará. Esse processo pode levar algum tempo, dependendo do número de transações na sua carteira.</value>
     </data>
     <data name="ApplyNewSettingRestart" xml:space="preserve">
-        <value>Um die neue Einstellung anzuwenden, muss Ginger Wallet neu gestartet werden.</value>
+        <value>Para aplicar a nova configuração, o Ginger Wallet precisa ser reiniciado.</value>
     </data>
     <data name="AskMeLater" xml:space="preserve">
-        <value>Später erinnern</value>
+        <value>Me avise mais tarde</value>
     </data>
     <data name="AuthCodePrompt" xml:space="preserve">
-        <value>Scann den untenstehenden QR-Code mit Deiner bevorzugten Authentifizierungs-App und gib dann den Bestätigungscode ein.</value>
+        <value>Escaneie o código QR abaixo usando o aplicativo autenticador preferido, depois insira o código de verificação.</value>
     </data>
     <data name="AuthorizationFailed" xml:space="preserve">
-        <value>Die Autorisierung ist fehlgeschlagen, bitte versuche es erneut.</value>
+        <value>A autorização falhou, por favor tente novamente.</value>
     </data>
     <data name="AuthorizationFailedWithDeviceCheck" xml:space="preserve">
-        <value>Autorisierung ist fehlgeschlagen.{0}Bitte überprüfe Dein Gerät und versuche es erneut.</value>
+        <value>Autorização falhou.{0}Por favor, verifique seu dispositivo e tente novamente.</value>
     </data>
     <data name="AuthorizeWithHardwareWallet" xml:space="preserve">
-        <value>Mit Hardware-Wallet autorisieren</value>
+        <value>Autorizar com Carteira de Hardware</value>
     </data>
     <data name="AutoCopyAddresses" xml:space="preserve">
-        <value>Adressen automatisch kopieren</value>
+        <value>Copiar endereços automaticamente</value>
     </data>
     <data name="AutoDownloadNewVersion" xml:space="preserve">
-        <value>Neue Version automatisch herunterladen</value>
+        <value>Baixar nova versão automaticamente</value>
     </data>
     <data name="AutomaticallyStartCoinjoin" xml:space="preserve">
-        <value>Coinjoin automatisch starten</value>
+        <value>Iniciar coinjoin automaticamente</value>
     </data>
     <data name="AutoPasteAddresses" xml:space="preserve">
-        <value>Adressen automatisch einfügen</value>
+        <value>Colar endereços automaticamente</value>
     </data>
     <data name="BackendNotConnected" xml:space="preserve">
-        <value>Auf Verbindung warten</value>
+        <value>Aguardando conexão</value>
     </data>
     <data name="BalanceNotAccurateServerConnection" xml:space="preserve">
-        <value>Das gemeldete Guthaben ist möglicherweise nicht korrekt, und einige Funktionen stehen möglicherweise nicht zur Verfügung, da Ginger keine Verbindung zum Server herstellen konnte. Verbindung wird erneut versucht.</value>
+        <value>O saldo informado pode não ser preciso, e alguns outros recursos podem não estar disponíveis porque o Ginger não conseguiu se conectar ao servidor. Tentando se reconectar.</value>
     </data>
     <data name="BetterPrivacy" xml:space="preserve">
-        <value>Bessere Anonymität</value>
+        <value>Melhor Privacidade</value>
     </data>
     <data name="BitcoinAddressValidity" xml:space="preserve">
-        <value>Bitcoin-Adresse ist gültig für {0} und nicht für {1}.</value>
+        <value>O endereço Bitcoin é válido para {0} e não para {1}.</value>
     </data>
     <data name="BitcoinCoreKnotsDataFolder" xml:space="preserve">
-        <value>Bitcoin Core Datenordner</value>
+        <value>Pasta de Dados do Bitcoin Core</value>
     </data>
     <data name="BitcoinFractionGrouping" xml:space="preserve">
-        <value>Bitcoin-Bruchteile gruppieren</value>
+        <value>Agrupamento dos dígitos decimais de Bitcoin</value>
     </data>
     <data name="BitcoinP2PEndpoint" xml:space="preserve">
-        <value>Bitcoin P2P-Endpunkt</value>
+        <value>Endereço P2P do Bitcoin</value>
     </data>
     <data name="BitcoinTabSettingsViewModelCaption" xml:space="preserve">
-        <value>Bitcoin-Einstellungen verwalten</value>
+        <value>Gerenciar configurações do Bitcoin</value>
     </data>
     <data name="BitcoinTabSettingsViewModelKeywords" xml:space="preserve">
-        <value>Einstellungen, Bitcoin, Netzwerk, Main, TestNet, RegTest, Starten, Node, Core, Knots, Version, Start, P2P, Endpunkt, Dust, Schwellenbetrag, BTC</value>
+        <value>Configurações, Bitcoin, Rede, Principal, TestNet, RegTest, Executar, Nó, Core, Knots, Versão, Inicialização, P2P, Endereço, Poeira, Limite, BTC</value>
     </data>
     <data name="BitcoinTabSettingsViewModelTitle" xml:space="preserve">
         <value>Bitcoin</value>
     </data>
     <data name="BlockHash" xml:space="preserve">
-        <value>Block-Hash</value>
+        <value>Hash de Bloco</value>
     </data>
     <data name="BlockHeight" xml:space="preserve">
-        <value>Blockhöhe</value>
+        <value>Altura do Bloco</value>
     </data>
     <data name="Broadcast" xml:space="preserve">
-        <value>Weiterleiten</value>
+        <value>Transmitir</value>
     </data>
     <data name="BroadcasterViewModelCaption" xml:space="preserve">
-        <value>Leite deine Transaktion weiter</value>
+        <value>Transmitir sua transação aqui</value>
     </data>
     <data name="BroadcasterViewModelKeywords" xml:space="preserve">
-        <value>Transaktions-ID, Eingabe, Ausgabe, Betrag, Netzwerk, Gebühr, Anzahl, BTC, Signiert, Einfügen, Importieren, Weiterleiten, Transaktion</value>
+        <value>ID da Transação, Entrada, Saída, Quantia, Rede, Taxa, Contagem, BTC, Assinado, Colar, Importar, Transmitir, Transação</value>
     </data>
     <data name="BroadcasterViewModelTitle" xml:space="preserve">
-        <value>Weiterleiten</value>
+        <value>Transmitir</value>
     </data>
     <data name="BroadcastTransaction" xml:space="preserve">
-        <value>Transaktion weiterleiten</value>
+        <value>Transmitir Transação</value>
     </data>
     <data name="Browser" xml:space="preserve">
-        <value>Browser</value>
+        <value>Navegador</value>
     </data>
     <data name="BrowserError" xml:space="preserve">
-        <value>Ginger Wallet konnte den Browser nicht öffnen, bitte prüfe die Protokolle für weitere Details.</value>
+        <value>O Ginger Wallet não conseguiu abrir o navegador, por favor verifique os logs para mais detalhes.</value>
     </data>
     <data name="BugReport" xml:space="preserve">
-        <value>Fehlermeldung</value>
+        <value>Relatar Bug</value>
     </data>
     <data name="BugReportLinkViewModelCaption" xml:space="preserve">
-        <value>Ginger Wallets Fehlermeldeseite öffnen</value>
+        <value>Abrir a página de relatos de problemas do Ginger Wallet no GitHub</value>
     </data>
     <data name="BugReportLinkViewModelKeywords" xml:space="preserve">
-        <value>Support, Webseite, Fehler, Bericht</value>
+        <value>Suporte, Site, Bug, Erro, Relatar</value>
     </data>
     <data name="BugReportLinkViewModelTitle" xml:space="preserve">
-        <value>Fehler melden</value>
+        <value>Relatar um erro</value>
     </data>
     <data name="Buy" xml:space="preserve">
-        <value>Kaufen</value>
+        <value>Comprar</value>
     </data>
     <data name="BuyAmountWatermark" xml:space="preserve">
-        <value>Betrag hier eingeben...</value>
+        <value>Digite a quantia aqui...</value>
     </data>
     <data name="BuyBitcoin" xml:space="preserve">
-        <value>Bitcoin kaufen</value>
+        <value>Comprar Bitcoin</value>
     </data>
     <data name="ByAmount" xml:space="preserve">
-        <value>von {0}</value>
+        <value>por {0}</value>
     </data>
     <data name="Camera" xml:space="preserve">
-        <value>Kamera</value>
+        <value>Câmera</value>
     </data>
     <data name="Cancel" xml:space="preserve">
-        <value>Abbrechen</value>
+        <value>Cancelar</value>
     </data>
     <data name="Cancellation" xml:space="preserve">
-        <value>Stornierung</value>
+        <value>Cancelamento</value>
     </data>
     <data name="CancellationFailed" xml:space="preserve">
-        <value>Stornierung fehlgeschlagen</value>
+        <value>Cancelamento Falhou</value>
     </data>
     <data name="CancellingThisTransactionWillCostYou" xml:space="preserve">
-        <value>Das Abbrechen dieser Transaktion kostet Dich</value>
+        <value>Cancelar esta transação custará</value>
     </data>
     <data name="CancelTransaction" xml:space="preserve">
-        <value>Transaktion abbrechen</value>
+        <value>Cancelar Transação</value>
     </data>
     <data name="CannotModifyWithTwoFactorEnabled" xml:space="preserve">
-        <value>Kann nicht geändert werden, wenn Zwei-Faktor-Authentifizierung aktiviert ist.</value>
+        <value>Não pode ser modificado quando a autenticação de dois fatores está ativada.</value>
     </data>
     <data name="CantParticipateInCoinjoinUntil" xml:space="preserve">
-        <value>Teilnahme an Coinjoin erst möglich ab: {0}</value>
+        <value>Não pode participar do coinjoin até: {0}</value>
     </data>
     <data name="CantSeeThisTransaction" xml:space="preserve">
-        <value>Diese Transaktion kann nicht angezeigt werden:</value>
+        <value>Não podem ver esta transação:</value>
     </data>
     <data name="ChangeAvoidance" xml:space="preserve">
-        <value>Wechselgeld vermeiden</value>
+        <value>Evitar Troco</value>
     </data>
     <data name="ChangeCanLinkTransactions" xml:space="preserve">
-        <value>Wechselgeld kann verwendet werden, um diese Transaktion mit der nächsten Transaktion zu verknüpfen, die es ausgibt. Verwende den Vorschlag zur Vermeidung von Wechselgeld, um etwas mehr oder weniger zu senden, wenn das für den Empfänger in Ordnung ist, oder nutze später Coinjoin für das Wechselgeld.</value>
+        <value>O troco pode vincular esta transação à próxima que o utilizar. Use a sugestão de evitar troco para enviar um pouco mais ou menos, se o destinatário concordar, ou realize Coinjoin com o troco depois.</value>
     </data>
     <data name="ChangesAppliedAfterRestart" xml:space="preserve">
-        <value>Änderungen werden nach dem Neustart der Anwendung übernommen.</value>
+        <value>As mudanças serão aplicadas após reiniciar o aplicativo.</value>
     </data>
     <data name="ChangeTransactionFeeOrConfirmationTime" xml:space="preserve">
-        <value>Transaktionsgebühr oder Bestätigungszeit ändern</value>
+        <value>Alterar taxa de transação ou tempo de confirmação</value>
     </data>
     <data name="CheckDeviceAndFinishInitialization" xml:space="preserve">
-        <value>Überprüfe Dein Gerät und schließe die Initialisierung ab.</value>
+        <value>Verifique seu dispositivo e termine a inicialização.</value>
     </data>
     <data name="ChooseHideModifyDisplayAddresses" xml:space="preserve">
-        <value>Du kannst wählen, ob Du die unten aufgeführten Adressen ausblenden, ändern oder anzeigen möchtest.</value>
+        <value>Você pode escolher ocultar, modificar ou exibir os endereços abaixo</value>
     </data>
     <data name="ChooseLabelsForTransaction" xml:space="preserve">
-        <value>Wähle Label, die mit dieser Transaktion verknüpft werden sollen.</value>
+        <value>Escolha os rótulos para vincular a esta transação.</value>
     </data>
     <data name="ChooseTransactionVisibility" xml:space="preserve">
-        <value>Wähle aus, wer diese Transaktion sehen darf und wer nicht.</value>
+        <value>Escolha quem pode ou não ver esta transação.</value>
     </data>
     <data name="ClickIconForDetails" xml:space="preserve">
-        <value>Klicke auf dieses Symbol für Details</value>
+        <value>Clique neste ícone para detalhes</value>
     </data>
     <data name="ClipboardEmpty" xml:space="preserve">
-        <value>Die Zwischenablage ist leer!</value>
+        <value>A área de transferência está vazia!</value>
     </data>
     <data name="CloseAndUpdate" xml:space="preserve">
-        <value>Schließen und aktualisieren.</value>
+        <value>Fechar e atualizar.</value>
     </data>
     <data name="CoinAlreadySpent" xml:space="preserve">
-        <value>Mindestens eine der auszugebenden Coins ist bereits ausgegeben worden.</value>
+        <value>Pelo menos uma moeda que você está tentando gastar já foi gasta.</value>
     </data>
     <data name="CoinControl" xml:space="preserve">
-        <value>Coin Control</value>
+        <value>Controle de moedas</value>
     </data>
     <data name="CoinDetails" xml:space="preserve">
-        <value>Coin Details</value>
+        <value>Detalhes da Moeda</value>
     </data>
     <data name="CoinInUnconfirmedChain" xml:space="preserve">
-        <value>Mindestens eine der auszugebenden Coins ist Teil einer langen oder komplexen Kette unbestätigter Transaktionen. Du musst warten, bis frühere Transaktionen bestätigt werden.</value>
+        <value>Pelo menos uma moeda que você está tentando gastar faz parte de uma cadeia de transações não confirmadas muito longa ou com tamanho total elevado. Aguarde a confirmação de algumas transações anteriores.</value>
     </data>
     <data name="Coinjoin" xml:space="preserve">
         <value>Coinjoin</value>
     </data>
     <data name="CoinJoinCoinSelection" xml:space="preserve">
-        <value>Coin Auswahl</value>
+        <value>Seleção de moedas</value>
     </data>
     <data name="CoinjoinDetails" xml:space="preserve">
-        <value>Coinjoin-Details</value>
+        <value>Detalhes do Coinjoin</value>
     </data>
     <data name="CoinjoinFees" xml:space="preserve">
-        <value>Coinjoin-Gebühren</value>
+        <value>Taxas de Coinjoin</value>
     </data>
     <data name="Coinjoining" xml:space="preserve">
-        <value>Coinjoining</value>
+        <value>Participando de Coinjoin</value>
     </data>
     <data name="CoinJoinInProgress" xml:space="preserve">
-        <value>Coinjoin läuft</value>
+        <value>Coinjoin em andamento</value>
     </data>
     <data name="CoinJoinProfilesCaption" xml:space="preserve">
-        <value>Ginger sorgt für Deine finanzielle Anoymität, indem es automatisch alle Deiner Coins für eine feste Koordinierungsgebühr von 0,3 % plus Mining-Gebühren coinjoint. Die Standardkonfiguration wurde für einfache Nutzung vorausgewählt.</value>
+        <value>O Ginger cuida da sua privacidade financeira realizando automaticamente Coinjoin com todos os seus fundos, com uma taxa de coordenação fixa de 0,3% mais as taxas de mineração. A configuração padrão já foi aplicada para facilitar o uso.</value>
     </data>
     <data name="Coinjoins" xml:space="preserve">
         <value>Coinjoins</value>
     </data>
     <data name="CoinjoinSettings" xml:space="preserve">
-        <value>Coinjoin-Einstellungen</value>
+        <value>Configurações do Coinjoin</value>
     </data>
     <data name="CoinJoinTimePrefText" xml:space="preserve">
-        <value>Coinjoin-Zeitpräferenz</value>
+        <value>Período de referência para Coinjoin</value>
     </data>
     <data name="CoinJoinTimePrefToolTip" xml:space="preserve">
-        <value>Nur coinjoin, wenn die Gebührenrate unter dem Median dieses Zeitraums liegt.</value>
+        <value>Realizar Coinjoin somente quando a taxa por byte virtual estiver abaixo da mediana deste período.</value>
     </data>
     <data name="CoinjoinToOtherWalletRestrictions1" xml:space="preserve">
-        <value>- Nur geladene Wallets können ausgewählt werden.</value>
+        <value>- Somente carteiras carregadas podem ser selecionadas.</value>
     </data>
     <data name="CoinjoinToOtherWalletRestrictions2" xml:space="preserve">
-        <value>- Coins aus der Coinjoin-Transaktion werden in dieser Wallet empfangen. Diese Einstellung wird jedoch nach dem Neustart von Ginger zurückgesetzt.</value>
+        <value>- Moedas da transação coinjoin serão recebidas por esta carteira. No entanto, esta configuração será redefinida após o Ginger reiniciar.</value>
     </data>
     <data name="CoinjoinToOtherWalletRestrictions3" xml:space="preserve">
-        <value>- Die ausgewählte Wallet kann während eines laufenden Coinjoins nicht geändert werden.</value>
+        <value>- A carteira selecionada não pode ser alterada quando um coinjoin estiver em andamento.</value>
     </data>
     <data name="CoinjoinToThisWallet" xml:space="preserve">
-        <value>Coinjoin auf dieses Wallet</value>
+        <value>Receber os fundos do Coinjoin nesta carteira</value>
     </data>
     <data name="CoinjoinTransactions" xml:space="preserve">
-        <value>Anzahl der Coinjoin-Transaktionen</value>
+        <value>Número de transações coinjoin</value>
     </data>
     <data name="CoinsCantParticipateCoinJoin" xml:space="preserve">
-        <value>Einige Coins können nicht am Coinjoin teilnehmen.</value>
+        <value>Algumas moedas não podem participar do Coinjoin.</value>
     </data>
     <data name="CoinsReceivedFromOthers" xml:space="preserve">
-        <value>Coins, die von anderen an bereits verwendete Adressen gesendet wurden, erscheinen nicht unterhalb dieses Betrags. Dies dient dem Schutz vor Staubangriffen.</value>
+        <value>Moedas recebidas de terceiros em endereços já usados não serão exibidas se o valor for menor que este limite. Isso ajuda a evitar ataques de poeira.</value>
     </data>
     <data name="CoinsRejectedMessage" xml:space="preserve">
-        <value>Einige Gelder wurden vom Coinjoin ausgeschlossen</value>
+        <value>Alguns fundos foram rejeitados para participar do Coinjoin</value>
     </data>
     <data name="CoinsWaitingForConfirmation" xml:space="preserve">
-        <value>{0} Coins warten auf Bestätigung.</value>
+        <value>{0} moedas estão aguardando confirmação.</value>
     </data>
     <data name="CommaEnum" xml:space="preserve">
-        <value>Komma</value>
+        <value>Vírgula</value>
     </data>
     <data name="CompatibilityPassphraseUsed" xml:space="preserve">
-        <value>Kompatible Passphrase verwendet! Bitte erwägen Sie, eine neue Wallet zu erstellen, um die Wiederherstellbarkeit sicherzustellen!</value>
+        <value>Foi usada uma frase de segurança de compatibilidade! Considere criar uma nova carteira para garantir que ela possa ser recuperada!</value>
     </data>
     <data name="CompatibleBitcoinCoreKnotsVersion" xml:space="preserve">
-        <value>Kompatible Bitcoin Core-Version</value>
+        <value>Versão compatível do Bitcoin Core</value>
     </data>
     <data name="CompatibleCoordinatorVersions" xml:space="preserve">
-        <value>Kompatible Koordinator-Versionen</value>
+        <value>Versões compatíveis do Coordenador</value>
     </data>
     <data name="CompatibleHardwareWalletInterfaceVersion" xml:space="preserve">
-        <value>Kompatible HWI-Version</value>
+        <value>Versão compatível do HWI</value>
     </data>
     <data name="Completed" xml:space="preserve">
-        <value>Abgeschlossen</value>
+        <value>Concluído</value>
     </data>
     <data name="Configuration" xml:space="preserve">
-        <value>Konfiguration</value>
+        <value>Configuração</value>
     </data>
     <data name="Confirm" xml:space="preserve">
-        <value>Bestätigen</value>
+        <value>Confirmar</value>
     </data>
     <data name="ConfirmationCount" xml:space="preserve">
-        <value>Bestätigungen: {0}{1}</value>
+        <value>Confirmações: {0}{1}</value>
     </data>
     <data name="Confirmations" xml:space="preserve">
-        <value>(Bestätigungen: {0})</value>
+        <value>({0} confirmações)</value>
     </data>
     <data name="ConfirmationTimeEstimation" xml:space="preserve">
-        <value>Dies ist nur eine Schätzung basierend auf einigen Daten zu Transaktionen und Blöcken. Die Bestätigungszeit kann sich ändern.</value>
+        <value>Isso é apenas uma estimativa baseada em alguns dados de transações e blocos. O tempo de confirmação pode mudar.</value>
     </data>
     <data name="Confirmed" xml:space="preserve">
-        <value>Bestätigt</value>
+        <value>Confirmado</value>
     </data>
     <data name="ConfirmedBalance" xml:space="preserve">
-        <value>Bestätigtes Guthaben</value>
+        <value>Saldo confirmado</value>
     </data>
     <data name="ConfirmedWithConfirmationCount" xml:space="preserve">
-        <value>Bestätigt (Bestätigungen: {0}{1})</value>
+        <value>Confirmado (confirmações: {0}{1})</value>
     </data>
     <data name="ConfirmRecoveryWordsViewModel" xml:space="preserve">
-        <value>Wiederherstellungswörter bestätigen</value>
+        <value>Confirmar Palavras de Recuperação</value>
     </data>
     <data name="ConfirmRecoveryWordsViewModelClickRecovery" xml:space="preserve">
-        <value>Klicken Sie auf das Wiederherstellungswort #{0}</value>
+        <value>Clique na palavra de recuperação #{0}</value>
     </data>
     <data name="ConfirmRecoveryWordsViewModelStoreSafely" xml:space="preserve">
-        <value>Bewahre Dein Passphrase sicher auf; sie kann nicht wiederhergestellt werden, wenn sie verloren geht. Sie wird benötigt, um Dein Wallet zu öffnen und wiederherzustellen und bietet zusätzlichen Schutz durch Erweiterung der Wiederherstellungswörter.</value>
+        <value>Mantenha sua frase de segurança protegida; ela não pode ser recuperada se for perdida. Ela é necessária para abrir e restaurar a carteira e oferece proteção adicional ao ser usada junto às palavras de recuperação.</value>
     </data>
     <data name="ConnectHardwareWalletViewModelAlreadyAdded" xml:space="preserve">
-        <value>Die verbundene Hardware-Wallet ist bereits in der Software hinzugefügt, klicke unten, um sie zu öffnen, oder klicke auf „Erneut suchen“.</value>
+        <value>A carteira de hardware conectada já foi adicionada ao software. Clique abaixo para abri-la ou em Buscar novamente para repetir a busca.</value>
     </data>
     <data name="ConnectHardwareWalletViewModelCaption" xml:space="preserve">
-        <value>Verbinde Dein Hardware-Wallet mit dem PC</value>
+        <value>Conecte sua carteira de hardware ao PC</value>
     </data>
     <data name="ConnectHardwareWalletViewModelConnectPc" xml:space="preserve">
-        <value>Verbinde Dein Hardware-Wallet mit dem PC / Gib Deine PIN auf dem Gerät ein.</value>
+        <value>Conecte a carteira de hardware ao PC / Digite o PIN no dispositivo.</value>
     </data>
     <data name="ConnectHardwareWalletViewModelEnterPassphrase" xml:space="preserve">
-        <value>Gib bei Bedarf Deine Passphrase auf der Hardware-Wallet ein.</value>
+        <value>Digite sua frase de segurança na carteira de hardware, se necessário.</value>
     </data>
     <data name="ConnectHardwareWalletViewModelEnterPassphraseOnDevice" xml:space="preserve">
-        <value>Gib Deine Passphrase auf Deinem Gerät ein.</value>
+        <value>Digite sua frase de segurança no dispositivo.</value>
     </data>
     <data name="ConnectHardwareWalletViewModelEnterPin" xml:space="preserve">
-        <value>Gib Deine PIN auf Deinem Gerät ein.</value>
+        <value>Digite seu PIN no dispositivo.</value>
     </data>
     <data name="ConnectHardwareWalletViewModelMakeSureOnlyOne" xml:space="preserve">
-        <value>Stelle sicher, dass nur eine Hardware-Wallet mit dem PC verbunden ist.</value>
+        <value>Certifique-se de que você tenha apenas uma carteira de hardware conectada ao PC.</value>
     </data>
     <data name="Continue" xml:space="preserve">
-        <value>Fortfahren</value>
+        <value>Continuar</value>
     </data>
     <data name="CoordinationFee" xml:space="preserve">
-        <value>Koordinierungsgebühr</value>
+        <value>Taxa de Coordenação</value>
     </data>
     <data name="CoordinationFeeInfo" xml:space="preserve">
-        <value>Du zahlst nur 0,3 % Gebühr für neue Coins, die du coinjoinst.</value>
+        <value>Você pagará uma taxa de 0,3% apenas sobre as moedas novas que participarem do Coinjoin.</value>
     </data>
     <data name="CoordinationFeeRateTooHighMessage" xml:space="preserve">
-        <value>Koordinierungsgebühr war zu hoch</value>
+        <value>A taxa de coordenação estava muito alta</value>
     </data>
     <data name="Copy" xml:space="preserve">
-        <value>Kopieren</value>
+        <value>Copiar</value>
     </data>
     <data name="CopyAmount" xml:space="preserve">
-        <value>Betrag kopieren</value>
+        <value>Copiar Quantia</value>
     </data>
     <data name="CopyLabel" xml:space="preserve">
-        <value>Label kopieren</value>
+        <value>Copiar Rótulo</value>
     </data>
     <data name="CopyLink" xml:space="preserve">
-        <value>Link kopieren</value>
+        <value>Copiar link</value>
     </data>
     <data name="CopyTransactionId" xml:space="preserve">
-        <value>Transaktions-ID kopieren</value>
+        <value>Copiar ID da Transação</value>
     </data>
     <data name="CostEfficiency" xml:space="preserve">
-        <value>Kosten-Effizienz</value>
+        <value>Eficiência de custos</value>
     </data>
     <data name="CouldNotSaveChange" xml:space="preserve">
-        <value>Änderung konnte nicht gespeichert werden, bitte schaue in den Protokollen nach weiteren Informationen.</value>
+        <value>Não foi possível salvar sua alteração. Consulte os logs para obter mais informações.</value>
     </data>
     <data name="CouldSeeThisTransaction" xml:space="preserve">
-        <value>Diese Transaktion ist sichtbar:</value>
+        <value>Podem ver esta transação:</value>
     </data>
     <data name="CountDownMessage" xml:space="preserve">
-        <value>Warten auf automatischen Start des Coinjoin</value>
+        <value>Aguardando o início automático do coinjoin</value>
     </data>
     <data name="CountryOfResidenceRequired" xml:space="preserve">
-        <value>Das Land Ihres Wohnsitzes wird für gesetzliche Vorgaben und Transaktionsabwicklung benötigt</value>
+        <value>O país de sua residência é necessário para conformidade regulatória e processamento de transações</value>
     </data>
     <data name="CountryWithColon" xml:space="preserve">
-        <value>Land:</value>
+        <value>País:</value>
     </data>
     <data name="Created" xml:space="preserve">
-        <value>Erstellt</value>
+        <value>Criado</value>
     </data>
     <data name="CreateNewWallet" xml:space="preserve">
-        <value>Neu</value>
+        <value>Novo</value>
     </data>
     <data name="CreatePasswordDialogConfirmPassphrase" xml:space="preserve">
-        <value>Passphrase bestätigen</value>
+        <value>Confirme a frase de segurança</value>
     </data>
     <data name="CreatePasswordDialogTypePassphrase" xml:space="preserve">
-        <value>Passphrase eingeben</value>
+        <value>Digite uma frase de segurança</value>
     </data>
     <data name="CriticalUpdateRequired" xml:space="preserve">
-        <value>Kritisches Update erforderlich</value>
+        <value>Atualização crítica necessária</value>
     </data>
     <data name="CurrentCoordinatorVersion" xml:space="preserve">
-        <value>Aktuelle Koordinator-Version</value>
+        <value>Versão Atual do Coordenador</value>
     </data>
     <data name="CustomBrowserPath" xml:space="preserve">
-        <value>Benutzerdefinierter Browserpfad</value>
+        <value>Caminho do navegador personalizado</value>
     </data>
     <data name="CustomEnum" xml:space="preserve">
-        <value>Benutzerdefiniert</value>
+        <value>Personalizado</value>
     </data>
     <data name="CustomFeeRate" xml:space="preserve">
-        <value>Benutzerdefinierter Gebührensatz</value>
+        <value>Taxa por byte virtual personalizada</value>
     </data>
     <data name="Cut" xml:space="preserve">
-        <value>Ausschneiden</value>
+        <value>Cortar</value>
     </data>
     <data name="DarkMode" xml:space="preserve">
-        <value>Dunkelmodus</value>
+        <value>Modo escuro</value>
     </data>
     <data name="Date" xml:space="preserve">
-        <value>Datum</value>
+        <value>Data</value>
     </data>
     <data name="DateTime" xml:space="preserve">
-        <value>Datum / Uhrzeit</value>
+        <value>Data / Hora</value>
     </data>
     <data name="day" xml:space="preserve">
         <value>d</value>
     </data>
     <data name="Days" xml:space="preserve">
-        <value>Tage</value>
+        <value>Dias</value>
     </data>
     <data name="DecimalSeparator" xml:space="preserve">
-        <value>Dezimaltrennzeichen</value>
+        <value>Separador decimal</value>
     </data>
     <data name="Default" xml:space="preserve">
-        <value>Standard</value>
+        <value>Padrão</value>
     </data>
     <data name="DestinationAddresses" xml:space="preserve">
-        <value>Zieladressen</value>
+        <value>Endereços de destino</value>
     </data>
     <data name="DetectedConfirmation" xml:space="preserve">
-        <value>{0} wurde erkannt. Ist das korrekt?</value>
+        <value>{0} foi detectado. Está correto?</value>
     </data>
     <data name="Disabled" xml:space="preserve">
-        <value>Deaktiviert</value>
+        <value>Desabilitado</value>
     </data>
     <data name="DisabledEnum" xml:space="preserve">
-        <value>Deaktiviert</value>
+        <value>Desabilitado</value>
     </data>
     <data name="DiscreetMode" xml:space="preserve">
-        <value>Diskreter Modus</value>
+        <value>Modo Discreto</value>
     </data>
     <data name="DocsLinkViewModelCaption" xml:space="preserve">
-        <value>Ginger Wallets FAQ-Seite öffnen</value>
+        <value>Abrir o site de FAQ do Ginger Wallet</value>
     </data>
     <data name="DocsLinkViewModelKeywords" xml:space="preserve">
-        <value>Benutzer, Support, Webseite, Dokumente, Dokumentation, Anleitung</value>
+        <value>Usuário, Suporte, Site, Docs, Documentação, Guia</value>
     </data>
     <data name="DocsLinkViewModelTitle" xml:space="preserve">
-        <value>Benutzerhandbuch/FAQ</value>
+        <value>Guia do Usuário/FAQ</value>
     </data>
     <data name="Done" xml:space="preserve">
-        <value>Fertig</value>
+        <value>Feito</value>
     </data>
     <data name="DotEnum" xml:space="preserve">
-        <value>Punkt</value>
+        <value>Ponto</value>
     </data>
     <data name="DustThreshold" xml:space="preserve">
-        <value>Staubschwelle</value>
+        <value>Limite de Poeira</value>
     </data>
     <data name="Edit" xml:space="preserve">
-        <value>Bearbeiten</value>
+        <value>Editar</value>
     </data>
     <data name="EditLabels" xml:space="preserve">
-        <value>Label bearbeiten</value>
+        <value>Editar Rótulos</value>
     </data>
     <data name="EditSelectedAddressLabels" xml:space="preserve">
-        <value>Hier kannst du das ausgewählte Label bearbeiten:</value>
+        <value>Edite os rótulos do endereço selecionado aqui:</value>
     </data>
     <data name="EnabledEnum" xml:space="preserve">
-        <value>Aktiviert</value>
+        <value>Habilitado</value>
     </data>
     <data name="EnabledOnlyRunningEnum" xml:space="preserve">
-        <value>Aktiviert (nur-Verbindungsmodus)</value>
+        <value>Habilitado (modo de conexão apenas)</value>
     </data>
     <data name="EnableGPU" xml:space="preserve">
-        <value>GPU aktivieren</value>
+        <value>Habilitar GPU</value>
     </data>
     <data name="EnableGPURendering" xml:space="preserve">
-        <value>Wenn aktiviert, wird eine Grafikkarte (GPU) zur Darstellung der Benutzeroberfläche verwendet. Die Verwendung einer GPU anstelle der CPU kann die Leistung verbessern.</value>
+        <value>Quando habilitado, use uma placa gráfica (GPU) para renderizar a interface do usuário. Usar uma GPU ao invés da CPU pode melhorar o desempenho.</value>
     </data>
     <data name="EnterAmountForOffers" xml:space="preserve">
-        <value>Gib den Betrag ein, und wir berechnen die besten Angebote für Dich.</value>
+        <value>Digite a quantia, e nós calcularemos as melhores ofertas para você.</value>
     </data>
     <data name="EnterNamesForAddress" xml:space="preserve">
-        <value>Gib die Namen der Personen oder Firmen ein, denen Du diese Adresse sendest</value>
+        <value>Digite os nomes das pessoas ou empresas para as quais você dará este endereço</value>
     </data>
     <data name="EnterPassphrase" xml:space="preserve">
-        <value>Passphrase eingeben</value>
+        <value>Digite a frase de segurança</value>
     </data>
     <data name="EnterPassphraseAuth" xml:space="preserve">
-        <value>Gib Deine Passphrase ein</value>
+        <value>Digite sua frase de segurança</value>
     </data>
     <data name="EntitiesCanDeanonymizeTransaction" xml:space="preserve">
-        <value>Einige Stellen können diese Transaktion deanonymisieren, da sie Coins mit wenig Anonymität verwenden. Führe weitere Coinjoins durch, um genügend anonyme Coins für diese Transaktion zu haben.</value>
+        <value>Algumas pessoas ou empresas podem identificar você nesta transação porque ela gasta moedas sem privacidade. Realize mais Coinjoins para ter moedas privadas suficientes para esta transação.</value>
     </data>
     <data name="EntitiesKnowThisIsYourTransaction" xml:space="preserve">
-        <value>Diese Stellen wissen, dass dies Deine Transaktion ist. Führe weitere Coinjoins durch oder verwende das Label-Werkzeug, um sorgfältig auszuwählen, wer wissen darf, dass dies Deine Transaktion ist.</value>
+        <value>Essas pessoas ou empresas sabem que esta transação é sua. Realize mais Coinjoins ou use o gerenciamento de rótulos para escolher cuidadosamente quem saberá que a transação é sua.</value>
     </data>
     <data name="Error" xml:space="preserve">
-        <value>Fehler</value>
+        <value>Erro</value>
     </data>
     <data name="ErrorAddingWallet" xml:space="preserve">
-        <value>Beim Hinzufügen Deiner Wallet ist ein Fehler aufgetreten.</value>
+        <value>Ocorreu um erro ao adicionar sua carteira.</value>
     </data>
     <data name="EstimatedConfirmationTime" xml:space="preserve">
-        <value>Geschätzte Bestätigungszeit</value>
+        <value>Tempo Estimado de Confirmação</value>
     </data>
     <data name="EstimatedConfirmationTimeWithValue" xml:space="preserve">
-        <value>Geschätzte Bestätigungszeit: {0}</value>
+        <value>Tempo Estimado de Confirmação: {0}</value>
     </data>
     <data name="ExampleBitcoinAddressOrPayjoinURI" xml:space="preserve">
-        <value>(z. B. Bitcoin-Adresse oder Payjoin-URI)</value>
+        <value>(exemplo, endereço Bitcoin ou URI payjoin)</value>
     </data>
     <data name="ExchangeCurrency" xml:space="preserve">
-        <value>Währung austauschen</value>
+        <value>Moeda de referência</value>
     </data>
     <data name="ExcludeCoinjoinDescription" xml:space="preserve">
-        <value>Die gewählte Coins werden vom Coinjoin ausgeschlossen. Es ist wichtig zu beachten, dass sich die Anonymität dieses Coins dadurch nicht verbessert.</value>
+        <value>As moedas escolhidas serão excluídas do coinjoin. É importante observar que não haverá aumento na privacidade dessas moedas.</value>
     </data>
     <data name="ExcludedCoinsViewModelCaption" xml:space="preserve">
-        <value>Ausgeschlossene Coins anzeigen</value>
+        <value>Exibir moedas excluídas do Coinjoin</value>
     </data>
     <data name="ExcludedCoinsViewModelKeywords" xml:space="preserve">
-        <value>Wallet, Ausschließen, Coins, Coinjoin, Einfrieren, UTXO</value>
+        <value>Carteira, Excluir, Moedas, Coinjoin, Congelar, UTXO</value>
     </data>
     <data name="ExcludedCoinsViewModelTitle" xml:space="preserve">
-        <value>Coins ausschließen</value>
+        <value>Excluir moedas do Coinjoin</value>
     </data>
     <data name="ExcludedFromCoinjoins" xml:space="preserve">
-        <value>Vom Coinjoin ausgeschlossen</value>
+        <value>Excluídas de coinjoins</value>
     </data>
     <data name="ExpectedConfirmationTime" xml:space="preserve">
-        <value>Erwartete Bestätigungszeit</value>
+        <value>Tempo de confirmação esperado</value>
     </data>
     <data name="ExperimentalCoinJoinCoinSelector" xml:space="preserve">
-        <value>(EXPERIMENTELL) Erweiterte Münzauswahl</value>
+        <value>(EXPERIMENTAL) Seleção de moedas aprimorada</value>
     </data>
     <data name="Expired" xml:space="preserve">
-        <value>Abgelaufen</value>
+        <value>Expirado</value>
     </data>
     <data name="ExportTransaction" xml:space="preserve">
-        <value>Transaktion exportieren</value>
+        <value>Exportar transação</value>
     </data>
     <data name="ExtendedAccountPrivateKeyXpriv" xml:space="preserve">
-        <value>Erweiterter privater Kontoschlüssel xpriv</value>
+        <value>Chave Privada Estendida da Conta xpriv</value>
     </data>
     <data name="ExtendedAccountPublicKeySegWit" xml:space="preserve">
-        <value>Erweiterter öffentlicher Kontoschlüssel (SegWit)</value>
+        <value>Chave Pública Estendida da Conta (SegWit)</value>
     </data>
     <data name="ExtendedAccountPublicKeyTaproot" xml:space="preserve">
-        <value>Erweiterter öffentlicher Kontoschlüssel (Taproot)</value>
+        <value>Chave Pública Estendida da Conta (Taproot)</value>
     </data>
     <data name="ExtendedMasterFingerprint" xml:space="preserve">
-        <value>Fingerabdruck des Hauptschlüssels</value>
+        <value>Impressão digital da chave mestra</value>
     </data>
     <data name="ExtendedMasterPrivateKey" xml:space="preserve">
-        <value>Erweiterter privater Hauptschlüssel</value>
+        <value>Chave privada mestra estendida</value>
     </data>
     <data name="ExtendedMasterZprv" xml:space="preserve">
-        <value>Erweiterter Hauptschlüssel zprv</value>
+        <value>Chave mestra estendida (zprv)</value>
     </data>
     <data name="Failed" xml:space="preserve">
-        <value>Fehlgeschlagen</value>
+        <value>Falhou</value>
     </data>
     <data name="FailedToGetLegalDocuments" xml:space="preserve">
-        <value>Rechtliche Dokumente konnten nicht abgerufen werden.</value>
+        <value>Falhou ao obter documentos legais.</value>
     </data>
     <data name="FAQ" xml:space="preserve">
         <value>FAQ</value>
     </data>
     <data name="Fastest" xml:space="preserve">
-        <value>schnellste</value>
+        <value>mais rápido</value>
     </data>
     <data name="Fee" xml:space="preserve">
-        <value>Gebühr</value>
+        <value>Taxa</value>
     </data>
     <data name="FeeDisplayUnit" xml:space="preserve">
-        <value>Gebührenanzeigeeinheit</value>
+        <value>Unidade de exibição de taxa</value>
     </data>
     <data name="FeeRate" xml:space="preserve">
-        <value>Gebührensatz</value>
+        <value>Taxa por byte virtual</value>
     </data>
     <data name="FeeRateFormatted" xml:space="preserve">
-        <value>Gebührensatz: {0:0} sat/vByte</value>
+        <value>Taxa por byte virtual: {0:0} sat/vByte</value>
     </data>
     <data name="FeeRateSatPerVByte" xml:space="preserve">
-        <value>Gebührensatz (sat/vByte)</value>
+        <value>Taxa por byte virtual (sat/vByte)</value>
     </data>
     <data name="Fees" xml:space="preserve">
-        <value>Gebühren</value>
+        <value>Taxas</value>
     </data>
     <data name="FeeTooHigh" xml:space="preserve">
-        <value>Die eingegebene Gebühr ist zu hoch.</value>
+        <value>A taxa inserida é muito alta.</value>
     </data>
     <data name="ForceUsingLowPrivacyCoinsInCoinJoinCoinSelector" xml:space="preserve">
-        <value>Wenig anonyme Coins zur Nutzung zwingen</value>
+        <value>Forçar o uso de moedas de baixa privacidade</value>
     </data>
     <data name="ForceUsingLowPrivacyCoinsInCoinJoinCoinSelectorToolTip" xml:space="preserve">
-        <value>Die Auswahl muss mindestens eine der wenig anonymen Coins enthalten.</value>
+        <value>A seleção deve conter pelo menos uma das moedas de menor privacidade.</value>
     </data>
     <data name="FoundIn" xml:space="preserve">
-        <value>Gefunden in „{0}“</value>
+        <value>Encontrado em "{0}"</value>
     </data>
     <data name="FriendsDontPay" xml:space="preserve">
-        <value>Freunde zahlen nicht</value>
+        <value>Amigos Não Pagam</value>
     </data>
     <data name="FriendsDontPayInfo" xml:space="preserve">
-        <value>Du zahlst keine Koordinationsgebühr für Coins, die aus anderen Ginger Coinjoins stammen.</value>
+        <value>Você não pagará a taxa de coordenação para moedas recebidas de outros coinjoins do Ginger.</value>
     </data>
     <data name="FullNodeConnecting" xml:space="preserve">
-        <value>Full Node verbindet…</value>
+        <value>O nó completo está se conectando...</value>
     </data>
     <data name="FullNodeDownloadingBlocks" xml:space="preserve">
-        <value>Full Node lädt {0} Blöcke herunter…</value>
+        <value>O nó completo está baixando {0} blocos...</value>
     </data>
     <data name="FullNodeSynchronized" xml:space="preserve">
-        <value>Full Node ist synchronisiert</value>
+        <value>O nó completo está sincronizado</value>
     </data>
     <data name="FullNodeUnresponsive" xml:space="preserve">
-        <value>Full Node antwortet nicht</value>
+        <value>O nó completo não responde</value>
     </data>
     <data name="FullPrivacy" xml:space="preserve">
-        <value>Volle Anonymität</value>
+        <value>Privacidade Total</value>
     </data>
     <data name="General" xml:space="preserve">
-        <value>Allgemein</value>
+        <value>Geral</value>
     </data>
     <data name="GeneralErrorMessage" xml:space="preserve">
-        <value>Warten auf gültige Bedingungen</value>
+        <value>Aguardando condições válidas</value>
     </data>
     <data name="GeneralSettingsTabViewModelCaption" xml:space="preserve">
-        <value>Allgemeine Einstellungen verwalten</value>
+        <value>Gerenciar configurações gerais</value>
     </data>
     <data name="GeneralSettingsTabViewModelKeywords" xml:space="preserve">
-        <value>Einstellungen, Allgemein, Bitcoin, Ausführen, Ginger, Computer, System, Start, Hintergrund, Schließen, Automatisch, Kopieren, Einfügen, Adressen, Benutzerdefiniert, Ändern, Adresse, Browser</value>
+        <value>Configurações, Geral, Bitcoin, Executar, Ginger, Computador, Sistema, Iniciar, Segundo plano, Fechar, Automático, Copiar, Colar, Endereços, Personalizado, Alterar, Endereço, Navegador</value>
     </data>
     <data name="GeneralSettingsTabViewModelTitle" xml:space="preserve">
-        <value>Allgemein</value>
+        <value>Geral</value>
     </data>
     <data name="Generate" xml:space="preserve">
-        <value>Erzeugen</value>
+        <value>Gerar</value>
     </data>
     <data name="GetStarted" xml:space="preserve">
-        <value>Loslegen</value>
+        <value>Começar</value>
     </data>
     <data name="GingerUnableToCloseCoinJoinInProgress" xml:space="preserve">
-        <value>Ginger kann derzeit nicht geschlossen werden. Coinjoin läuft.</value>
+        <value>Ginger não pode ser fechado no momento. Coinjoin em andamento.</value>
     </data>
     <data name="GingerWalletUnableToCancelTransaction" xml:space="preserve">
-        <value>Ginger Wallet konnte Deine Transaktion nicht abbrechen.</value>
+        <value>O Ginger Wallet não conseguiu cancelar sua transação.</value>
     </data>
     <data name="GingerWalletUnableToOpenFile" xml:space="preserve">
-        <value>Ginger Wallet konnte die Datei nicht öffnen.</value>
+        <value>O Ginger Wallet não conseguiu abrir o arquivo.</value>
     </data>
     <data name="GingerWalletUnableToSpeedUpTransaction" xml:space="preserve">
-        <value>Ginger Wallet konnte Deine Transaktion nicht beschleunigen.</value>
+        <value>O Ginger Wallet não conseguiu acelerar sua transação.</value>
     </data>
     <data name="GroupSeparator" xml:space="preserve">
-        <value>Zahlentrennzeichen</value>
+        <value>Separador de grupos de dígitos</value>
     </data>
     <data name="HardwareWallet" xml:space="preserve">
-        <value>Hardware Wallet</value>
+        <value>Carteira de Hardware</value>
     </data>
     <data name="HardwareWalletAuthDialogViewModelCaption" xml:space="preserve">
-        <value>Verbinde Dein Hardware-Wallet, drücke auf Weiter und folge dann den Anweisungen auf dem Gerät.</value>
+        <value>Conecte sua carteira de hardware, pressione Continuar e depois siga as instruções no dispositivo.</value>
     </data>
     <data name="HardwareWalletNotFound" xml:space="preserve">
-        <value>Hardware-Wallet konnte nicht gefunden werden. Stelle sicher, dass sie angeschlossen ist.</value>
+        <value>Não foi possível encontrar a carteira de hardware. Certifique-se de que ela está conectada.</value>
     </data>
     <data name="HelpAndSupport" xml:space="preserve">
-        <value>Hilfe &amp; Support</value>
+        <value>Ajuda e suporte</value>
     </data>
     <data name="Hide" xml:space="preserve">
-        <value>Ausblenden</value>
+        <value>Ocultar</value>
     </data>
     <data name="HideAddress" xml:space="preserve">
-        <value>Adresse ausblenden</value>
+        <value>Ocultar endereço</value>
     </data>
     <data name="HideSensitiveData" xml:space="preserve">
-        <value>Sensible Daten verbergen</value>
+        <value>Ocultar dados sensíveis</value>
     </data>
     <data name="hour" xml:space="preserve">
         <value>h</value>
     </data>
     <data name="Hours" xml:space="preserve">
-        <value>Stunden</value>
+        <value>Horas</value>
     </data>
     <data name="HoverOverRingSegments" xml:space="preserve">
-        <value>Fahre mit der Maus über die Ringsegmente, um Münzdetails zu sehen</value>
+        <value>Passe o mouse sobre os segmentos do anel para ver os detalhes da moeda</value>
     </data>
     <data name="ImportOrPasteTransactionHex" xml:space="preserve">
-        <value>Importiere oder füge den Transaktions-Hex ein und sende ihn ins Netzwerk.</value>
+        <value>Importe ou cole a transação em formato hexadecimal e transmita-a para a rede.</value>
     </data>
     <data name="ImportTransaction" xml:space="preserve">
-        <value>Transaktion importieren</value>
+        <value>Importar Transação</value>
     </data>
     <data name="ImportTransactionFileDialogTitle" xml:space="preserve">
-        <value>Transaktion importieren</value>
+        <value>Importar Transação</value>
     </data>
     <data name="ImportWallet" xml:space="preserve">
-        <value>Datei importieren</value>
+        <value>Importar Arquivo</value>
     </data>
     <data name="ImproveThisTransaction" xml:space="preserve">
-        <value>Diese Transaktion optimalisieren:</value>
+        <value>Melhore esta transação:</value>
     </data>
     <data name="Incoming" xml:space="preserve">
-        <value>Eingehend</value>
+        <value>Entrada</value>
     </data>
     <data name="IncorrectPassphrase" xml:space="preserve">
-        <value>Die Passphrase ist falsch.{0}Bitte versuche es erneut.</value>
+        <value>A frase de segurança está incorreta.{0}Tente novamente.</value>
     </data>
     <data name="IncorrectPassphraseRetry" xml:space="preserve">
-        <value>Die Passphrase ist falsch! Bitte versuche es erneut.</value>
+        <value>A frase de segurança está incorreta! Tente novamente.</value>
     </data>
     <data name="Index" xml:space="preserve">
-        <value>Index</value>
+        <value>Índice</value>
     </data>
     <data name="InitializeDeviceFirst" xml:space="preserve">
-        <value>Initialisiere zuerst Dein Gerät.</value>
+        <value>Inicialize seu dispositivo primeiro.</value>
     </data>
     <data name="InputRegistrationMessage" xml:space="preserve">
-        <value>Warten auf andere Teilnehmer</value>
+        <value>Aguardando outros participantes</value>
     </data>
     <data name="InputTooLong" xml:space="preserve">
-        <value>Eingabe ist zu lang.</value>
+        <value>A entrada é muito longa.</value>
     </data>
     <data name="InsufficientFunds" xml:space="preserve">
-        <value>Nicht genügend Guthaben für den gewünschten Betrag.</value>
+        <value>Fundos insuficientes para cobrir o valor solicitado.</value>
     </data>
     <data name="InsufficientFundsForTransactionFee" xml:space="preserve">
-        <value>Es sind nicht genügend Guthaben vorhanden, um die Transaktionsgebühr zu decken.</value>
+        <value>Não há fundos suficientes para cobrir a taxa de transação.</value>
     </data>
     <data name="InternalError" xml:space="preserve">
-        <value>Interner Fehler.</value>
+        <value>Erro interno.</value>
     </data>
     <data name="InvalidBTCAddress" xml:space="preserve">
-        <value>Adresse ist keine gültige BTC-Adresse.</value>
+        <value>O endereço não é um endereço BTC válido.</value>
     </data>
     <data name="InvalidBTCAddressOrURI" xml:space="preserve">
-        <value>Geben Sie eine gültige BTC-Adresse oder URI ein.</value>
+        <value>Digite um endereço ou URI BTC válido.</value>
     </data>
     <data name="InvalidDustThreshold" xml:space="preserve">
-        <value>Ungültige Staubschwelle.</value>
+        <value>Limite de poeira inválido.</value>
     </data>
     <data name="InvalidEndpoint" xml:space="preserve">
-        <value>Ungültiger Endpunkt.</value>
+        <value>Endereço de conexão inválido.</value>
     </data>
     <data name="InvalidFee" xml:space="preserve">
-        <value>Die eingegebene Gebühr ist ungültig.</value>
+        <value>A taxa inserida não é válida.</value>
     </data>
     <data name="InvalidInputLength" xml:space="preserve">
-        <value>Eingabelänge ist ungültig.</value>
+        <value>O comprimento da entrada é inválido.</value>
     </data>
     <data name="InvalidRecoveryWords" xml:space="preserve">
-        <value>Wiederherstellungswörter sind ungültig.</value>
+        <value>As palavras de recuperação não são válidas.</value>
     </data>
     <data name="InvalidSetRecoveryWords" xml:space="preserve">
-        <value>Ungültige Eingabe. Stelle sicher, dass Du alle Wiederherstellungswörter in der richtigen Reihenfolge eingegeben hast.</value>
+        <value>Conjunto inválido. Certifique-se de que digitou todas as suas palavras de recuperação na ordem correta.</value>
     </data>
     <data name="InvalidWalletName" xml:space="preserve">
-        <value>Ungültiger Wallet-Name.</value>
+        <value>Nome da carteira inválido.</value>
     </data>
     <data name="IsConnected" xml:space="preserve">
-        <value>ist verbunden</value>
+        <value>está conectado</value>
     </data>
     <data name="IsNotConnected" xml:space="preserve">
-        <value>ist nicht verbunden</value>
+        <value>não está conectado</value>
     </data>
     <data name="IsNotRunning" xml:space="preserve">
-        <value>läuft nicht</value>
+        <value>não está em execução</value>
     </data>
     <data name="IsRunning" xml:space="preserve">
-        <value>läuft</value>
+        <value>está em execução</value>
     </data>
     <data name="IsTurnedOff" xml:space="preserve">
-        <value>ist ausgeschaltet</value>
+        <value>está desligado</value>
     </data>
     <data name="Label" xml:space="preserve">
-        <value>Label</value>
+        <value>Rótulo</value>
     </data>
     <data name="LabelManagement" xml:space="preserve">
-        <value>Label verwalten</value>
+        <value>Gerenciamento de Rótulos</value>
     </data>
     <data name="LabelsWatermarkText" xml:space="preserve">
-        <value>Person oder Firma, z. B. Alice, Bob, Pizza GmbH</value>
+        <value>Pessoa ou empresa, por exemplo, Alice, Bob, Pizza Inc</value>
     </data>
     <data name="Language" xml:space="preserve">
-        <value>Sprache</value>
+        <value>Idioma</value>
     </data>
     <data name="LegalDocumentsViewModelCaption" xml:space="preserve">
-        <value>Nutzungsbedingungen anzeigen</value>
+        <value>Exibir termos e condições</value>
     </data>
     <data name="LegalDocumentsViewModelKeywords" xml:space="preserve">
-        <value>Anzeigen, Rechtliches, Dokument, Bedingungen, Datenschutz, Richtlinie, Erklärung</value>
+        <value>Ver, Legal, Documento, Termos, Condições, Privacidade, Política, Declaração</value>
     </data>
     <data name="LegalDocumentsViewModelTitle" xml:space="preserve">
-        <value>Rechtliches Dokument</value>
+        <value>Documento Legal</value>
     </data>
     <data name="Less" xml:space="preserve">
-        <value>weniger</value>
+        <value>menos</value>
     </data>
     <data name="LessThan" xml:space="preserve">
-        <value>Weniger als</value>
+        <value>Menos que</value>
     </data>
     <data name="LightningAddressesNotSupported" xml:space="preserve">
-        <value>Lightning-Adressen werden nicht unterstützt.</value>
+        <value>Endereços Lightning não são suportados.</value>
     </data>
     <data name="LoadingViewModelPercentCompleted" xml:space="preserve">
-        <value>{0} % abgeschlossen</value>
+        <value>{0}% concluído</value>
     </data>
     <data name="LoadingViewModelTimeRemaining" xml:space="preserve">
-        <value>– {0} verbleibend</value>
+        <value>- {0} restante</value>
     </data>
     <data name="LocalBitcoinCoreKnotsVersion" xml:space="preserve">
-        <value>Lokale Bitcoin Core-Version</value>
+        <value>Versão local do Bitcoin Core</value>
     </data>
     <data name="MarkAllAsRead" xml:space="preserve">
-        <value>Alle als gelesen markieren</value>
+        <value>Marcar todos como lidos</value>
     </data>
     <data name="Max" xml:space="preserve">
-        <value>Max:</value>
+        <value>Máx:</value>
     </data>
     <data name="min" xml:space="preserve">
         <value>min</value>
     </data>
     <data name="MinFeeLimit" xml:space="preserve">
-        <value>Darf nicht kleiner als 1 sat/vByte sein.</value>
+        <value>Não pode ser menor que 1 sat/vByte.</value>
     </data>
     <data name="MiningFeeRateTooHighMessage" xml:space="preserve">
-        <value>Mining-Gebührensatz war zu hoch</value>
+        <value>A taxa de mineração por byte virtual estava muito alta</value>
     </data>
     <data name="MinInputCountTooLowMessage" xml:space="preserve">
-        <value>Minimale Eingabeanzahl war zu niedrig</value>
+        <value>A contagem mínima de entradas foi muito baixa</value>
     </data>
     <data name="minute" xml:space="preserve">
         <value>min</value>
     </data>
     <data name="MITLicense" xml:space="preserve">
-        <value>MIT-Lizenz</value>
+        <value>Licença MIT</value>
     </data>
     <data name="ModifyingSettingsNotPossible" xml:space="preserve">
-        <value>Einstellungen können nicht geändert werden, da bestimmte Parameter beim Start überschrieben wurden.</value>
+        <value>Não é possível modificar as configurações, pois certos parâmetros foram substituídos durante a inicialização.</value>
     </data>
     <data name="Months" xml:space="preserve">
-        <value>Monate</value>
+        <value>Meses</value>
     </data>
     <data name="More" xml:space="preserve">
-        <value>mehr</value>
+        <value>mais</value>
     </data>
     <data name="MustBeNumberBetween" xml:space="preserve">
-        <value>Muss eine Zahl zwischen {0} und {1} sein.</value>
+        <value>Deve ser um número entre {0} e {1}.</value>
     </data>
     <data name="Name" xml:space="preserve">
-        <value>Bezeichnung</value>
+        <value>Nome</value>
     </data>
     <data name="Network" xml:space="preserve">
-        <value>Netzwerk</value>
+        <value>Rede</value>
     </data>
     <data name="NetworkAnonymizationTor" xml:space="preserve">
-        <value>Netzwerkanonymisierung (Tor)</value>
+        <value>Anonimização de rede (Tor)</value>
     </data>
     <data name="Next" xml:space="preserve">
-        <value>Weiter</value>
+        <value>Próximo</value>
     </data>
     <data name="No" xml:space="preserve">
-        <value>Nein</value>
+        <value>Não</value>
     </data>
     <data name="NoCategory" xml:space="preserve">
-        <value>Keine Kategorie</value>
+        <value>Sem categoria</value>
     </data>
     <data name="NoCoinsEligibleToMixMessage" xml:space="preserve">
-        <value>Nicht genügend Guthaben für Coinjoin verfügbar</value>
+        <value>Fundos insuficientes para coinjoin</value>
     </data>
     <data name="NoInformationAboutPeople" xml:space="preserve">
-        <value>Es gibt keine Informationen über diese Personen, verwende es nur, wenn es notwendig ist!</value>
+        <value>Não há informações sobre essas pessoas, use apenas quando necessário!</value>
     </data>
     <data name="NonCoinjoinTransactions" xml:space="preserve">
-        <value>Anzahl der Nicht-Coinjoin-Transaktionen</value>
+        <value>Número de transações não-coinjoin</value>
     </data>
     <data name="NoneEnum" xml:space="preserve">
-        <value>Keine</value>
+        <value>Nenhum</value>
     </data>
     <data name="NonPrivate" xml:space="preserve">
-        <value>Nicht anonym</value>
+        <value>Não privado</value>
     </data>
     <data name="NonPrivateFunds" xml:space="preserve">
-        <value>Nicht anonyme Coins</value>
+        <value>Fundos não privados</value>
     </data>
     <data name="NoOfferForAmount" xml:space="preserve">
-        <value>Für den angegebenen Betrag konnte kein Angebot gefunden werden.</value>
+        <value>Não foi possível encontrar nenhuma oferta para o valor especificado.</value>
     </data>
     <data name="NoProgressYet" xml:space="preserve">
-        <value>Noch kein Fortschritt</value>
+        <value>Nenhum progresso ainda</value>
     </data>
     <data name="NoResults" xml:space="preserve">
-        <value>Keine Ergebnisse</value>
+        <value>Sem resultados</value>
     </data>
     <data name="NotAvailable" xml:space="preserve">
-        <value>Nicht verfügbar</value>
+        <value>Indisponível</value>
     </data>
     <data name="NotCoinjoining" xml:space="preserve">
-        <value>Nicht im Coinjoin</value>
+        <value>Não está participando de Coinjoin</value>
     </data>
     <data name="NumberOfAddresses" xml:space="preserve">
-        <value>Anzahl der Adressen</value>
+        <value>Número de endereços</value>
     </data>
     <data name="NumberOfCleanAddresses" xml:space="preserve">
-        <value>Anzahl der sauberen Adressen</value>
+        <value>Número de endereços limpos</value>
     </data>
     <data name="NumberOfCoins" xml:space="preserve">
-        <value>Anzahl der Coins (UTXOs)</value>
+        <value>Número de moedas (UTXOs)</value>
     </data>
     <data name="NumberOfLockedAddresses" xml:space="preserve">
-        <value>Anzahl der gesperrten Adressen</value>
+        <value>Número de endereços bloqueados</value>
     </data>
     <data name="NumberOfTransactions" xml:space="preserve">
-        <value>Anzahl der Transaktionen</value>
+        <value>Número de transações</value>
     </data>
     <data name="NumberOfUsedAddresses" xml:space="preserve">
-        <value>Anzahl der verwendeten Adressen</value>
+        <value>Número de endereços usados</value>
     </data>
     <data name="Offers" xml:space="preserve">
-        <value>Angebote</value>
+        <value>Ofertas</value>
     </data>
     <data name="Often" xml:space="preserve">
-        <value>Oft</value>
+        <value>Frequentemente</value>
     </data>
     <data name="Ok" xml:space="preserve">
-        <value>OK</value>
+        <value>Ok</value>
     </data>
     <data name="OnlyAvailableWhenTorEnabled" xml:space="preserve">
-        <value>Nur verfügbar, wenn Tor aktiviert ist.</value>
+        <value>Disponível apenas quando o Tor estiver ativado.</value>
     </data>
     <data name="OnlyExcludedCoinsAvailableMessage" xml:space="preserve">
-        <value>Nur ausgeschlossene Mittel sind verfügbar</value>
+        <value>Somente fundos excluídos do Coinjoin estão disponíveis</value>
     </data>
     <data name="OnlyImmatureCoinsAvailableMessage" xml:space="preserve">
-        <value>Nur unreife Mittel sind verfügbar</value>
+        <value>Somente fundos imaturos estão disponíveis</value>
     </data>
     <data name="Open" xml:space="preserve">
-        <value>Öffnen</value>
+        <value>Abrir</value>
     </data>
     <data name="OpenConfigFileViewModelKeywords" xml:space="preserve">
-        <value>Durchsuchen, Öffnen, Konfig, Datei</value>
+        <value>Procurar, Abrir, Configuração, Arquivo</value>
     </data>
     <data name="OpenConfigFileViewModelTitle" xml:space="preserve">
-        <value>Konfigurationsdatei</value>
+        <value>Arquivo de Configuração</value>
     </data>
     <data name="OpenDataFolderViewModelKeywords" xml:space="preserve">
-        <value>Durchsuchen, Öffnen, Daten, Ordner</value>
+        <value>Procurar, Abrir, Dados, Pasta</value>
     </data>
     <data name="OpenDataFolderViewModelTitle" xml:space="preserve">
-        <value>Datenordner</value>
+        <value>Pasta de Dados</value>
     </data>
     <data name="OpenInBrowser" xml:space="preserve">
-        <value>Von Ginger verwendeter Browser</value>
+        <value>Navegador usado pelo Ginger</value>
     </data>
     <data name="OpenInTheBrowser" xml:space="preserve">
-        <value>Im Browser öffnen</value>
+        <value>Abrir no navegador</value>
     </data>
     <data name="OpenLink" xml:space="preserve">
-        <value>Link öffnen</value>
+        <value>Abrir Link</value>
     </data>
     <data name="OpenLogsViewModelKeywords" xml:space="preserve">
-        <value>Durchsuchen, Öffnen, Logs</value>
+        <value>Procurar, Abrir, Logs</value>
     </data>
     <data name="OpenLogsViewModelTitle" xml:space="preserve">
-        <value>Log File</value>
+        <value>Logs</value>
     </data>
     <data name="OpenPasswordBoxWatermark" xml:space="preserve">
-        <value>Passphrase</value>
+        <value>Frase de segurança</value>
     </data>
     <data name="OpenTorLogsViewModelKeywords" xml:space="preserve">
-        <value>Durchsuchen, Öffnen, Tor, Logs</value>
+        <value>Procurar, Abrir, Tor, Logs</value>
     </data>
     <data name="OpenTorLogsViewModelTitle" xml:space="preserve">
-        <value>Tor-Logs</value>
+        <value>Logs do Tor</value>
     </data>
     <data name="OpenWallet" xml:space="preserve">
-        <value>Wallet öffnen</value>
+        <value>Abrir carteira</value>
     </data>
     <data name="OpenWalletsFolderViewModelKeywords" xml:space="preserve">
-        <value>Durchsuchen, Öffnen, Wallet, Ordner</value>
+        <value>Procurar, Abrir, Pasta da Carteira</value>
     </data>
     <data name="OpenWalletsFolderViewModelTitle" xml:space="preserve">
-        <value>Wallet-Ordner</value>
+        <value>Pasta da Carteira</value>
     </data>
     <data name="OrderDetails" xml:space="preserve">
-        <value>Bestelldetails</value>
+        <value>Detalhes do Pedido</value>
     </data>
     <data name="Other" xml:space="preserve">
-        <value>Sonstiges</value>
+        <value>Outro</value>
     </data>
     <data name="Outgoing" xml:space="preserve">
-        <value>Ausgehend</value>
+        <value>Saída</value>
     </data>
     <data name="PassphrasesNotMatch" xml:space="preserve">
-        <value>Passphrasen stimmen nicht überein.</value>
+        <value>As frases de segurança não coincidem.</value>
     </data>
     <data name="PassphraseTooLong" xml:space="preserve">
-        <value>Passphrase ist zu lang.</value>
+        <value>A frase de segurança é muito longa.</value>
     </data>
     <data name="Paste" xml:space="preserve">
-        <value>Einfügen</value>
+        <value>Colar</value>
     </data>
     <data name="PasteBTCAddress" xml:space="preserve">
-        <value>BTC-Adresse einfügen:
+        <value>Colar Endereço BTC:
 {0}</value>
     </data>
     <data name="PasteFromClipboard" xml:space="preserve">
-        <value>Aus Zwischenablage einfügen</value>
+        <value>Colar da área de transferência</value>
     </data>
     <data name="PastOrdersDetails" xml:space="preserve">
-        <value>Du kannst Deine vergangenen Bestellungen verfolgen, verwalten und deren Details einsehen.</value>
+        <value>Você pode rastrear, gerenciar e visualizar os detalhes de seus pedidos anteriores.</value>
     </data>
     <data name="PauseMessage" xml:space="preserve">
-        <value>Coinjoin ist pausiert</value>
+        <value>Coinjoin está pausado</value>
     </data>
     <data name="PayjoinNotPossibleWithHardwareWallets" xml:space="preserve">
-        <value>Payjoin ist mit Hardware-Wallets nicht möglich.</value>
+        <value>Payjoin não é possível com carteiras de hardware.</value>
     </data>
     <data name="Payment" xml:space="preserve">
-        <value>Zahlung</value>
+        <value>Pagamento</value>
     </data>
     <data name="Peers" xml:space="preserve">
-        <value>Peers</value>
+        <value>Nós da rede</value>
     </data>
     <data name="PeersConnected" xml:space="preserve">
-        <value>{0} verbunden</value>
+        <value>Nós conectados: {0}</value>
     </data>
     <data name="Pending" xml:space="preserve">
-        <value>Ausstehend</value>
+        <value>Pendente</value>
     </data>
     <data name="PendingConfirmingIn" xml:space="preserve">
-        <value>Ausstehend (Bestätigung in ≈ {0})</value>
+        <value>Pendente (confirmando em ≈ {0})</value>
     </data>
     <data name="PermissionError" xml:space="preserve">
-        <value>Ginger Wallet konnte diese Aktion aufgrund fehlender Berechtigungen nicht ausführen.</value>
+        <value>O Ginger Wallet não conseguiu realizar esta ação devido à falta de permissão.</value>
     </data>
     <data name="PleaseWaitToShutDown" xml:space="preserve">
-        <value>Herunterfahren läuft</value>
+        <value>Encerrando o aplicativo</value>
     </data>
     <data name="PlebsDontPay" xml:space="preserve">
-        <value>Plebs zahlen nicht</value>
+        <value>Isenção para valores pequenos</value>
     </data>
     <data name="PlebsDontPayInfo" xml:space="preserve">
-        <value>Du zahlst keine Koordinationsgebühr für Coins, die kleiner oder gleich 0,01 BTC sind.</value>
+        <value>Você não pagará a taxa de coordenação sobre moedas com valor menor ou igual a 0,01 BTC.</value>
     </data>
     <data name="PlebStopMessage" xml:space="preserve">
-        <value>Coinjoin kann unwirtschaftlich sein</value>
+        <value>Coinjoin pode ser antieconômico</value>
     </data>
     <data name="PlebStopMessageBelow" xml:space="preserve">
-        <value>Füge mehr Guthaben hinzu oder drücke auf Play, um fortzufahren</value>
+        <value>Adicione mais fundos ou pressione o botão de iniciar para continuar</value>
     </data>
     <data name="PlebStopThreshold" xml:space="preserve">
-        <value>Coinjoin-Stopp-Schwelle</value>
+        <value>Limite para interromper o Coinjoin</value>
     </data>
     <data name="PlebStopToolTip" xml:space="preserve">
-        <value>Coinjoin wird automatisch gestoppt, wenn das Wallet-Guthaben unter diesem Wert liegt.</value>
+        <value>Coinjoin será automaticamente interrompido se o saldo da carteira for menor que este valor.</value>
     </data>
     <data name="PressPlayToStartMessage" xml:space="preserve">
-        <value>Drücke auf Play, um zu starten</value>
+        <value>Pressione o botão de iniciar para começar</value>
     </data>
     <data name="PreviewTransaction" xml:space="preserve">
-        <value>Transaktion Vorschau</value>
+        <value>Pré-visualizar Transação</value>
     </data>
     <data name="PreviousOrders" xml:space="preserve">
-        <value>Vorherige Bestellungen</value>
+        <value>Pedidos Anteriores</value>
     </data>
     <data name="Privacy" xml:space="preserve">
-        <value>Anonymität</value>
+        <value>Privacidade</value>
     </data>
     <data name="PrivacyProgress" xml:space="preserve">
-        <value>Fortschritt der Anonymität</value>
+        <value>Progresso de Privacidade</value>
     </data>
     <data name="PrivacyProtectedWithPayjoin" xml:space="preserve">
-        <value>Deine Anonymität wird mit Payjoin geschützt.</value>
+        <value>Sua privacidade está sendo protegida com payjoin.</value>
     </data>
     <data name="Private" xml:space="preserve">
-        <value>Anonym</value>
+        <value>Privado</value>
     </data>
     <data name="PrivateCoins" xml:space="preserve">
-        <value>Anonyme Coins</value>
+        <value>Moedas Privadas</value>
     </data>
     <data name="PrivateExternalOutputDescriptor" xml:space="preserve">
-        <value>Deskriptor für Empfang mit privaten Schlüsseln</value>
+        <value>Descritor de recebimento com chaves privadas</value>
     </data>
     <data name="PrivateFunds" xml:space="preserve">
-        <value>Anonyme Mittel</value>
+        <value>Fundos Privados</value>
     </data>
     <data name="PrivateInternalOutputDescriptor" xml:space="preserve">
-        <value>Deskriptor für Wechselgeld mit privaten Schlüsseln</value>
+        <value>Descritor de troco com chaves privadas</value>
     </data>
     <data name="ProceedConfirmation" xml:space="preserve">
-        <value>Möchten Sie fortfahren?</value>
+        <value>Você gostaria de continuar?</value>
     </data>
     <data name="Provider" xml:space="preserve">
-        <value>Anbieter</value>
+        <value>Provedor</value>
     </data>
     <data name="PSBTworkflow" xml:space="preserve">
-        <value>PSBT Signaturprozess</value>
+        <value>Fluxo de Trabalho PSBT</value>
     </data>
     <data name="PublicExternalOutputDescriptor" xml:space="preserve">
-        <value>Deskriptor für Empfang mit öffentlichen Schlüsseln</value>
+        <value>Descritor de recebimento com chaves públicas</value>
     </data>
     <data name="PublicInternalOutputDescriptor" xml:space="preserve">
-        <value>Deskriptor für Wechselgeld mit öffentlichen Schlüsseln</value>
+        <value>Descritor de troco com chaves públicas</value>
     </data>
     <data name="QRCode" xml:space="preserve">
-        <value>QR-Code</value>
+        <value>QR Code</value>
     </data>
     <data name="Quit" xml:space="preserve">
-        <value>Beenden</value>
+        <value>Sair</value>
     </data>
     <data name="RandomlySkippedRoundMessage" xml:space="preserve">
-        <value>Runde übersprungen für bessere Anonymität</value>
+        <value>Ignorando uma rodada para melhor privacidade</value>
     </data>
     <data name="RandomSkip" xml:space="preserve">
-        <value>Zufälliges Überspringen</value>
+        <value>Pular rodadas aleatoriamente</value>
     </data>
     <data name="Rarely" xml:space="preserve">
-        <value>Selten</value>
+        <value>Raramente</value>
     </data>
     <data name="ReceiveInWithColom" xml:space="preserve">
-        <value>Empfangen in:</value>
+        <value>Receber em:</value>
     </data>
     <data name="ReceiveViewModelCaption" xml:space="preserve">
-        <value>Wallet-Empfangsdialog anzeigen</value>
+        <value>Exibir caixa de diálogo de recebimento da carteira</value>
     </data>
     <data name="ReceiveViewModelKeywords" xml:space="preserve">
-        <value>Wallet, Empfangen, Aktion</value>
+        <value>Carteira, Receber, Ação</value>
     </data>
     <data name="ReceiveViewModelTitle" xml:space="preserve">
-        <value>Empfangen</value>
+        <value>Receber</value>
     </data>
     <data name="Recipient" xml:space="preserve">
-        <value>Empfänger</value>
+        <value>Destinatário</value>
     </data>
     <data name="RecipientWithColon" xml:space="preserve">
-        <value>Empfänger:</value>
+        <value>Destinatário:</value>
     </data>
     <data name="RecoverWallet" xml:space="preserve">
-        <value>Wiederherstellen</value>
+        <value>Recuperar</value>
     </data>
     <data name="RecoverWalletViewModelPassphraseMessage" xml:space="preserve">
-        <value>Wenn Du beim Erstellen Deines Wallets eine Passphrase verwendet hast, musst Du es unten eingeben, andernfalls leer lassen.</value>
+        <value>Se você usou uma frase de segurança ao criar a carteira, digite-a abaixo. Caso contrário, deixe este campo em branco.</value>
     </data>
     <data name="RecoveryWords" xml:space="preserve">
-        <value>Wiederherstellungswörter</value>
+        <value>Palavras de Recuperação</value>
     </data>
     <data name="RecoveryWordsViewCaption" xml:space="preserve">
-        <value>Notiere die Wiederherstellungswörter in der richtigen Reihenfolge und bewahre sie an einem sicheren Ort auf. Sie werden benötigt, um Dein Wallet wiederherzustellen.</value>
+        <value>Anote as palavras de recuperação na ordem correta e guarde-as em um lugar seguro. Elas são necessárias para recuperar sua carteira.</value>
     </data>
     <data name="RecoveryWordsViewCopyRecoveryWords" xml:space="preserve">
-        <value>Wiederherstellungswörter kopieren</value>
+        <value>Copiar palavras de recuperação</value>
     </data>
     <data name="RecoveryWordsViewNotSeeAfter" xml:space="preserve">
-        <value>Du wirst diese Wörter nach der Erstellung des Wallets nicht mehr sehen können.</value>
+        <value>Você não poderá ver essas palavras novamente após a criação da carteira.</value>
     </data>
     <data name="RedcoinText" xml:space="preserve">
-        <value>Einschränkung auf einzelnes nicht-privates Coin</value>
+        <value>Permitir apenas uma moeda não privada</value>
     </data>
     <data name="RedcoinToolTip" xml:space="preserve">
-        <value>Nur ein Coin mit dem Anonymitätswert 1 zur Coinjoin-Registrierung zulassen.</value>
+        <value>Permitir apenas uma moeda com pontuação de anonimato 1 na inscrição para coinjoin.</value>
     </data>
     <data name="ReducePrivacyOfTransaction" xml:space="preserve">
-        <value>Dies könnte die Anonymität Deiner Transaktion verringern.</value>
+        <value>Isso pode reduzir a privacidade da sua transação.</value>
     </data>
     <data name="Refunded" xml:space="preserve">
-        <value>Erstattet</value>
+        <value>Reembolsado</value>
     </data>
     <data name="RegionSelection" xml:space="preserve">
-        <value>Region auswählen</value>
+        <value>Seleção de Região</value>
     </data>
     <data name="RenameWallet" xml:space="preserve">
-        <value>Wallet umbenennen</value>
+        <value>Renomear Carteira</value>
     </data>
     <data name="Rescan" xml:space="preserve">
-        <value>Erneut suchen</value>
+        <value>Buscar novamente</value>
     </data>
     <data name="RestartApplication" xml:space="preserve">
-        <value>Anwendung neu starten</value>
+        <value>Reiniciar Aplicativo</value>
     </data>
     <data name="ResyncWallet" xml:space="preserve">
-        <value>Wallet erneut synchronisieren</value>
+        <value>Ressincronizar carteira</value>
     </data>
     <data name="ReviewCoins" xml:space="preserve">
-        <value>Coins überprüfen</value>
+        <value>Revisar moedas</value>
     </data>
     <data name="RoundFinishedMessage" xml:space="preserve">
-        <value>Runde beendet, warte auf die nächste Runde</value>
+        <value>Rodada encerrada, aguardando próxima rodada</value>
     </data>
     <data name="RoundSucceedMessage" xml:space="preserve">
-        <value>Coinjoin erfolgreich! Fortsetzung...</value>
+        <value>Coinjoin bem-sucedido! Continuando...</value>
     </data>
     <data name="RunAtStartup" xml:space="preserve">
-        <value>Ginger beim Start des Computers ausführen</value>
+        <value>Executar Ginger quando o computador iniciar</value>
     </data>
     <data name="RunAtStartupKeywords" xml:space="preserve">
-        <value>Start, Boot</value>
+        <value>inicialização, boot</value>
     </data>
     <data name="RunBitcoinKnotsOnStartup" xml:space="preserve">
-        <value>(EXPERIMENTELL) Bitcoin Core beim Start ausführen</value>
+        <value>(EXPERIMENTAL) Executar Bitcoin Core na inicialização</value>
     </data>
     <data name="RunInBackgroundKeywords" xml:space="preserve">
-        <value>Verstecken, Taskleiste</value>
+        <value>ocultar, bandeja</value>
     </data>
     <data name="RunInBackgroundWhenClosed" xml:space="preserve">
-        <value>Im Hintergrund ausführen, wenn das Fenster geschlossen ist</value>
+        <value>Executar em segundo plano quando a janela for fechada</value>
     </data>
     <data name="SafeFeeText" xml:space="preserve">
-        <value>Bevorzugte Coinjoin-Zeit unten ignorieren</value>
+        <value>Ignorar o período de referência abaixo de</value>
     </data>
     <data name="SafeFeeToolTip" xml:space="preserve">
-        <value>Immer coinjoinen, wenn die Gebühr unter diesem Wert liegt (hat Vorrang vor Coinjoin-Zeit).</value>
+        <value>Sempre realizar Coinjoin quando a taxa por byte virtual estiver abaixo deste valor (tem prioridade sobre o período de referência para Coinjoin).</value>
     </data>
     <data name="Save" xml:space="preserve">
-        <value>Speichern</value>
+        <value>Salvar</value>
     </data>
     <data name="SavePSBTFile" xml:space="preserve">
-        <value>PSBT-Datei speichern</value>
+        <value>Salvar arquivo PSBT</value>
     </data>
     <data name="SaveQRCode" xml:space="preserve">
-        <value>QR-Code speichern</value>
+        <value>Salvar QR Code</value>
     </data>
     <data name="ScanQRCode" xml:space="preserve">
-        <value>QR-Code scannen</value>
+        <value>Escanear QR Code</value>
     </data>
     <data name="SearchBoxWatermark" xml:space="preserve">
-        <value>Suchen</value>
+        <value>Pesquisar</value>
     </data>
     <data name="second" xml:space="preserve">
         <value>s</value>
     </data>
     <data name="Security" xml:space="preserve">
-        <value>Sicherheit</value>
+        <value>Segurança</value>
     </data>
     <data name="SecuritySettingsTabViewModelCaption" xml:space="preserve">
-        <value>Sicherheitseinstellungen verwalten</value>
+        <value>Gerenciar configurações de segurança</value>
     </data>
     <data name="SecuritySettingsTabViewModelKeywords" xml:space="preserve">
-        <value>Sicherheit, Einstellungen, 2FA, Zwei-Faktor, Authentifizierung, Zwei, Faktor</value>
+        <value>Segurança, Configurações, 2FA, Autenticação de Dois Fatores</value>
     </data>
     <data name="SecuritySettingsTabViewModelTitle" xml:space="preserve">
-        <value>Sicherheit</value>
+        <value>Segurança</value>
     </data>
     <data name="SelectAll" xml:space="preserve">
-        <value>Alle auswählen</value>
+        <value>Selecionar tudo</value>
     </data>
     <data name="SelectAllowedCoins" xml:space="preserve">
-        <value>Wähle die Coins aus, die für die Transaktion verwendet werden dürfen</value>
+        <value>Selecione as moedas que a transação pode usar</value>
     </data>
     <data name="SelectPreferredLanguage" xml:space="preserve">
-        <value>Bevorzugte Sprache auswählen:</value>
+        <value>Selecione seu idioma preferido:</value>
     </data>
     <data name="SelfCoinJoinToolTip" xml:space="preserve">
-        <value>Bei diesem Coinjoin, gehören die meisten Coins Dir. Das wird wesentlich dein Anonymitätsfortschritt verringern. Erwäge, vorerst mit weniger Wallets teilzunehmen, bis sich mehr Teilnehmer anschließen.</value>
+        <value>Neste Coinjoin, a maioria das moedas pertence a você. Isso reduzirá significativamente o ganho de privacidade. Considere participar com menos carteiras até que mais participantes entrem.</value>
     </data>
     <data name="SelfTransfer" xml:space="preserve">
-        <value>Selbstüberweisung</value>
+        <value>Transferência Própria</value>
     </data>
     <data name="Sell" xml:space="preserve">
-        <value>Verkaufen</value>
+        <value>Vender</value>
     </data>
     <data name="SellBitcoin" xml:space="preserve">
-        <value>Bitcoin verkaufen</value>
+        <value>Vender Bitcoin</value>
     </data>
     <data name="SellSuccessText1" xml:space="preserve">
-        <value>Folge den Anweisungen auf der Seite des Anbieters. Zu einem bestimmten Zeitpunkt erhälst Du eine</value>
+        <value>Siga as instruções na página do provedor. Em determinado momento, você receberá um</value>
     </data>
     <data name="SellSuccessText2" xml:space="preserve">
-        <value>Adresse</value>
+        <value>endereço</value>
     </data>
     <data name="SellSuccessText3" xml:space="preserve">
-        <value>und den</value>
+        <value>e o</value>
     </data>
     <data name="SellSuccessText4" xml:space="preserve">
-        <value>exakten Betrag,</value>
+        <value>valor exato</value>
     </data>
     <data name="SellSuccessText5" xml:space="preserve">
-        <value>den Du senden musst. Kehre hierher zurück, sobald Du beides erhlaten hast.</value>
+        <value>para enviar. Volte aqui quando tiver ambos.</value>
     </data>
     <data name="SemiPrivate" xml:space="preserve">
-        <value>Zum Teil Anonym</value>
+        <value>Semi-privado</value>
     </data>
     <data name="SemiPrivateCoins" xml:space="preserve">
-        <value>Zum Teil Anonyme Coins</value>
+        <value>Moedas Semi-privadas</value>
     </data>
     <data name="SemiPrivateFunds" xml:space="preserve">
-        <value>Zum Teil Anonyme Mittel</value>
+        <value>Fundos Semi-privados</value>
     </data>
     <data name="SendNow" xml:space="preserve">
-        <value>Jetzt senden</value>
+        <value>Enviar Agora</value>
     </data>
     <data name="SendSuggestion" xml:space="preserve">
-        <value>Senden</value>
+        <value>Enviar</value>
     </data>
     <data name="SendViewModelCaption" xml:space="preserve">
-        <value>Wallet-Sendedialog anzeigen</value>
+        <value>Exibir caixa de diálogo de envio da carteira</value>
     </data>
     <data name="SendViewModelKeywords" xml:space="preserve">
-        <value>Wallet, Senden, Aktion</value>
+        <value>Carteira, Enviar, Ação</value>
     </data>
     <data name="SendViewModelTitle" xml:space="preserve">
-        <value>Senden</value>
+        <value>Enviar</value>
     </data>
     <data name="ServerDidNotGiveFeeExemptionMessage" xml:space="preserve">
-        <value>Server hat keine Remix-Gebührenbefreiung gewährt</value>
+        <value>O servidor não concedeu isenção da taxa de coordenação para repetir o Coinjoin</value>
     </data>
     <data name="ServiceNotAvailable" xml:space="preserve">
-        <value>Dienst ist momentan nicht verfügbar. Bitte versuche es später erneut.</value>
+        <value>O serviço não está disponível no momento. Tente novamente mais tarde.</value>
     </data>
     <data name="SetPreferredBrowserPath" xml:space="preserve">
-        <value>Vollständigen Pfad des bevorzugten Browsers festlegen</value>
+        <value>Defina o caminho completo do navegador preferido</value>
     </data>
     <data name="Settings" xml:space="preserve">
-        <value>Einstellungen</value>
+        <value>Configurações</value>
     </data>
     <data name="SettingsPageViewModelCaption" xml:space="preserve">
-        <value>Allgemeine, erweiterte und andere Einstellungen verwalten</value>
+        <value>Gerenciar configurações gerais, avançadas e outras</value>
     </data>
     <data name="SettingsPageViewModelKeywords" xml:space="preserve">
-        <value>Einstellungen, Allgemein, Benutzer, Oberfläche, Erweitert</value>
+        <value>Configurações, Geral, Usuário, Interface, Avançadas</value>
     </data>
     <data name="SettingsPageViewModelTitle" xml:space="preserve">
-        <value>Einstellungen</value>
+        <value>Configurações</value>
     </data>
     <data name="SetTransactionConfirmationPreference" xml:space="preserve">
-        <value>Lege fest, wie schnell die Transaktion bestätigt werden soll.</value>
+        <value>Defina sua preferência para quão rápido a transação deve ser confirmada.</value>
     </data>
     <data name="Show" xml:space="preserve">
-        <value>Anzeigen</value>
+        <value>Mostrar</value>
     </data>
     <data name="ShowDetails" xml:space="preserve">
-        <value>Details anzeigen</value>
+        <value>Mostrar Detalhes</value>
     </data>
     <data name="ShowOnHardwareWallet" xml:space="preserve">
-        <value>Auf der Hardware-Wallet anzeigen</value>
+        <value>Mostrar na carteira de hardware</value>
     </data>
     <data name="ShowSensitiveData" xml:space="preserve">
-        <value>Sensible Daten anzeigen</value>
+        <value>Mostrar dados sensíveis</value>
     </data>
     <data name="Skip" xml:space="preserve">
-        <value>Überspringen</value>
+        <value>Pular</value>
     </data>
     <data name="SomethingHappenedWithDevice" xml:space="preserve">
-        <value>Etwas ist mit Deinem Gerät passiert, entsperre es mit Deiner PIN/Passphrase oder verbinde es erneut mit dem PC.</value>
+        <value>Ocorreu um problema com o dispositivo. Desbloqueie-o com seu PIN/frase de segurança ou reconecte-o ao computador.</value>
     </data>
     <data name="SomethingWrong" xml:space="preserve">
-        <value>Etwas ist schiefgelaufen. Bitte versuche es erneut.</value>
+        <value>Algo deu errado. Por favor, tente novamente.</value>
     </data>
     <data name="Sometimes" xml:space="preserve">
-        <value>Manchmal</value>
+        <value>Às vezes</value>
     </data>
     <data name="Sorting" xml:space="preserve">
-        <value>Sortierung</value>
+        <value>Ordenação</value>
     </data>
     <data name="SourceCodeGitHub" xml:space="preserve">
-        <value>Quellcode (GitHub)</value>
+        <value>Código Fonte (GitHub)</value>
     </data>
     <data name="SpaceEnum" xml:space="preserve">
-        <value>Leerzeichen</value>
+        <value>Espaço</value>
     </data>
     <data name="SpeedingUpTransactionCostAmount" xml:space="preserve">
-        <value>Das Beschleunigen dieser Transaktion kostet</value>
+        <value>Acelerar esta transação custará</value>
     </data>
     <data name="SpeedingUpTransactionDeductFromRecipient" xml:space="preserve">
-        <value>Das Beschleunigen dieser Transaktion verringert den Betrag für den Empfänger</value>
+        <value>Acelerar esta transação deduzirá do valor do destinatário</value>
     </data>
     <data name="SpeedUpFailed" xml:space="preserve">
-        <value>Beschleunigung fehlgeschlagen</value>
+        <value>Aceleração Falhou</value>
     </data>
     <data name="SpeedUpTransaction" xml:space="preserve">
-        <value>Transaktion beschleunigen</value>
+        <value>Acelerar Transação</value>
     </data>
     <data name="StateWithColon" xml:space="preserve">
-        <value>Status:</value>
+        <value>Estado:</value>
     </data>
     <data name="Status" xml:space="preserve">
         <value>Status</value>
     </data>
     <data name="StopBitcoinKnotsOnShutdown" xml:space="preserve">
-        <value>Bitcoin Core beim Herunterfahren stoppen</value>
+        <value>Parar Bitcoin Core ao desligar</value>
     </data>
     <data name="StoppedMessage" xml:space="preserve">
-        <value>Coinjoin wurde gestoppt</value>
+        <value>Coinjoin foi interrompido</value>
     </data>
     <data name="Success" xml:space="preserve">
-        <value>Erfolgreich</value>
+        <value>Sucesso</value>
     </data>
     <data name="SystemDefaultEnum" xml:space="preserve">
-        <value>Systemstandard</value>
+        <value>Padrão do Sistema</value>
     </data>
     <data name="TargetCoinCountPerBucketInCoinJoinCoinSelector" xml:space="preserve">
-        <value>Zielanzahl der Coins pro Wallet-Bucket</value>
+        <value>Número alvo de moedas por faixa de valor</value>
     </data>
     <data name="TargetCoinCountPerBucketInCoinJoinCoinSelectorToolTip" xml:space="preserve">
-        <value>Der Coin-wähler bevorzugt Coins aus überfüllten Buckets (10k.., 20k.., 40k.. usw. Satoshi-Bereich).</value>
+        <value>O seletor de moedas dará preferência às faixas de valor com excesso de moedas (intervalos de 10k.., 20k.., 40k.. etc. satoshis).</value>
     </data>
     <data name="TerminateTorWhenShutdown" xml:space="preserve">
-        <value>Tor beenden, wenn Ginger geschlossen wird</value>
+        <value>Encerrar Tor quando o Ginger for desligado</value>
     </data>
     <data name="TermsAndConditions" xml:space="preserve">
-        <value>Allgemeine Geschäftsbedingungen</value>
+        <value>Termos e condições</value>
     </data>
     <data name="TermsAndConditionsViewCaption" xml:space="preserve">
-        <value>Um Ginger weiterhin zu nutzen, akzeptiere bitte die allgemeinen Geschäftsbedingungen</value>
+        <value>Para continuar usando o Ginger, por favor aceite os termos e condições</value>
     </data>
     <data name="TermsAndConditionsViewIAgree" xml:space="preserve">
-        <value>Ich _stimme den</value>
+        <value>Eu _concordo com os</value>
     </data>
     <data name="TermsAndConditionsViewTermsAndConditions" xml:space="preserve">
-        <value>Allgemeinen Geschäftsbedingungen zu</value>
+        <value>Termos e condições</value>
     </data>
     <data name="TheSameAmount" xml:space="preserve">
-        <value>derselbe Betrag</value>
+        <value>o mesmo valor</value>
     </data>
     <data name="ThisCannotBeUndone" xml:space="preserve">
-        <value>Dies kann nicht rückgängig gemacht werden.</value>
+        <value>Isso não pode ser desfeito.</value>
     </data>
     <data name="ThisMayTakeAFewMinutes" xml:space="preserve">
-        <value>Dies kann einige Minuten dauern. Ginger wird automatisch geschlossen, wenn der Vorgang abgeschlossen ist.</value>
+        <value>Isso pode levar alguns minutos. O Ginger será fechado automaticamente quando terminar.</value>
     </data>
     <data name="ThisOpenSourceSoftwareIsLicensedWith" xml:space="preserve">
-        <value>Diese Open-Source-Software ist lizenziert mit </value>
+        <value>Este software de código aberto é distribuído sob a licença </value>
     </data>
     <data name="To" xml:space="preserve">
-        <value>An:</value>
+        <value>Para:</value>
     </data>
     <data name="Today" xml:space="preserve">
-        <value>Heute</value>
+        <value>Hoje</value>
     </data>
     <data name="TokenVerificationFailed" xml:space="preserve">
-        <value>Token konnte nicht verifiziert werden, bitte sehe in den Protokollen nach weiteren Informationen.</value>
+        <value>Não foi possível verificar o token, consulte os logs para mais informações.</value>
     </data>
     <data name="Tools" xml:space="preserve">
-        <value>Werkzeuge</value>
+        <value>Ferramentas</value>
     </data>
     <data name="TorNetworkIssues" xml:space="preserve">
-        <value>Tor-Netzwerk hat Probleme:</value>
+        <value>A rede Tor está com problemas:</value>
     </data>
     <data name="TotalBalance" xml:space="preserve">
-        <value>Gesamtguthaben</value>
+        <value>Saldo total</value>
     </data>
     <data name="TotalCostIncludesFee" xml:space="preserve">
-        <value>Die Gesamtkosten von {0} beinhalten eine Gebühr von {1}.</value>
+        <value>O custo total de {0} inclui uma taxa de {1}.</value>
     </data>
     <data name="TotalTransactions" xml:space="preserve">
-        <value>Gesamtanzahl der Transaktionen</value>
+        <value>Número total de transações</value>
     </data>
     <data name="Transaction" xml:space="preserve">
-        <value>Transaktion</value>
+        <value>Transação</value>
     </data>
     <data name="TransactionAlreadyConfirmed" xml:space="preserve">
-        <value>Die Transaktion ist bereits bestätigt.</value>
+        <value>A transação já foi confirmada.</value>
     </data>
     <data name="TransactionBuilding" xml:space="preserve">
-        <value>Transaktion wird aufgebaut</value>
+        <value>Construção de Transação</value>
     </data>
     <data name="TransactionCanceledOnDevice" xml:space="preserve">
-        <value>Vorgang wurde auf dem Gerät abgebrochen.</value>
+        <value>A operação foi cancelada no dispositivo.</value>
     </data>
     <data name="TransactionConsolidatesCoins" xml:space="preserve">
-        <value>Transaktion konsolidiert über {0} Münzen.</value>
+        <value>A transação consolida mais de {0} moedas.</value>
     </data>
     <data name="TransactionCreatesChange" xml:space="preserve">
-        <value>Transaktion erzeugt Wechselgeld.</value>
+        <value>A transação cria troco.</value>
     </data>
     <data name="TransactionDetails" xml:space="preserve">
-        <value>Transaktionsdetails</value>
+        <value>Detalhes da transação</value>
     </data>
     <data name="TransactionDuplicatedInputs" xml:space="preserve">
-        <value>Die Transaktion enthält doppelte Eingaben.</value>
+        <value>A transação contém entradas duplicadas.</value>
     </data>
     <data name="TransactionExport" xml:space="preserve">
-        <value>Transaktion exportieren</value>
+        <value>Exportação de transação</value>
     </data>
     <data name="TransactionFee" xml:space="preserve">
-        <value>Transaktionsgebühr</value>
+        <value>Taxa de transação</value>
     </data>
     <data name="TransactionFeeEstimationsUnavailable" xml:space="preserve">
-        <value>Transaktionsgebührenschätzungen sind derzeit nicht verfügbar. Versuche es später erneut oder gib den Gebührensatz manuell ein.</value>
+        <value>As estimativas de taxa de transação não estão disponíveis no momento. Tente novamente mais tarde ou insira a taxa por byte virtual manualmente.</value>
     </data>
     <data name="TransactionFeeExceedsPaymentAmount" xml:space="preserve">
-        <value>Transaktion kann nicht gesendet werden, da die Gebühr höher ist als der Zahlungsbetrag.</value>
+        <value>A transação não pode ser enviada porque sua taxa é maior do que o valor do pagamento.</value>
     </data>
     <data name="TransactionFeeInfo" xml:space="preserve">
-        <value>Du zahlst Mining-Gebühren für jeden Coinjoin.</value>
+        <value>Você pagará taxas de mineração para cada coinjoin.</value>
     </data>
     <data name="TransactionFeeRate" xml:space="preserve">
-        <value>_Transaktionsgebührensatz:</value>
+        <value>_Taxa por byte virtual da transação:</value>
     </data>
     <data name="TransactionID" xml:space="preserve">
-        <value>Transaktions-ID</value>
+        <value>ID da transação</value>
     </data>
     <data name="TransactionIDs" xml:space="preserve">
-        <value>Transaktions-IDs</value>
+        <value>IDs de transações</value>
     </data>
     <data name="TransactionInterlinksLabels" xml:space="preserve">
-        <value>Transaktion verknüpft Labels:</value>
+        <value>A transação vincula os rótulos:</value>
     </data>
     <data name="TransactionKnownAsYoursBy" xml:space="preserve">
-        <value>Transaktion als Deine bekannt durch:</value>
+        <value>Transação conhecida como sua por:</value>
     </data>
     <data name="TransactionMayBeReplacedByCoinjoin" xml:space="preserve">
-        <value>Dies kann dazu führen, dass Deine Transaktion durch den Coinjoin ersetzt wird. Warte, bis der aktuelle Coinjoin abgeschlossen ist, bevor Du diese Transaktion sendest.</value>
+        <value>Isso pode fazer com que sua transação seja substituída pelo coinjoin. Considere esperar a conclusão do coinjoin atual antes de enviar esta transação.</value>
     </data>
     <data name="TransactionNotFinal" xml:space="preserve">
-        <value>Die Transaktion ist nicht final und kann nicht übertragen werden.</value>
+        <value>A transação ainda não atende às condições para ser incluída em um bloco e não pode ser transmitida.</value>
     </data>
     <data name="TransactionNotPrivateEnough" xml:space="preserve">
-        <value>Diese Transaktion ist nicht anonym genug, da sie nicht vollständig private Münzen verwendet. Coinjoine mehr, um genug anonyme Münzen für diese Transaktion zu haben.</value>
+        <value>Esta transação não é privada o suficiente porque gasta moedas não totalmente privadas. Faça mais coinjoins para ter moedas privadas suficientes para esta transação.</value>
     </data>
     <data name="TransactionOnHold" xml:space="preserve">
-        <value>Deine Transaktion ist in Warteschleife. Bitte kontaktiere den Support.</value>
+        <value>Sua transação está suspensa. Entre em contato com o suporte.</value>
     </data>
     <data name="TransactionTooBig" xml:space="preserve">
-        <value>Die Transaktion ist zu groß.</value>
+        <value>A transação é muito grande.</value>
     </data>
     <data name="TransactionUsesCoinjoiningCoins" xml:space="preserve">
-        <value>Transaktion verwendet Coinjoining-Münzen.</value>
+        <value>A transação usa moedas que estão participando de Coinjoin.</value>
     </data>
     <data name="TransactionUsesNonPrivateCoins" xml:space="preserve">
-        <value>Transaktion verwendet nicht-anonyme Münzen.</value>
+        <value>A transação usa moedas não privadas.</value>
     </data>
     <data name="TransactionUsesSemiPrivateCoins" xml:space="preserve">
-        <value>Transaktion verwendet halb-anonyme Münzen.</value>
+        <value>A transação usa moedas parcialmente privadas.</value>
     </data>
     <data name="TransactionUsesUnconfirmedCoins" xml:space="preserve">
-        <value>Transaktion verwendet unbestätigte Münzen.</value>
+        <value>A transação usa moedas não confirmadas.</value>
     </data>
     <data name="TransactionWellOptimized" xml:space="preserve">
-        <value>Diese Transaktion ist gut optimiert.</value>
+        <value>Esta transação está bem otimizada.</value>
     </data>
     <data name="TrimWarnMessage" xml:space="preserve">
-        <value>Führende und nachfolgende Leerzeichen werden entfernt!</value>
+        <value>Os espaços em branco no início e no fim serão removidos!</value>
     </data>
     <data name="TwoFactorAuthentication" xml:space="preserve">
-        <value>Zwei-Faktor-Authentifizierung</value>
+        <value>Autenticação de dois fatores</value>
     </data>
     <data name="TwoFactorAuthenticationWithCapitals" xml:space="preserve">
-        <value>Zwei-Faktor-Authentifizierung</value>
+        <value>Autenticação de dois fatores</value>
     </data>
     <data name="TwoFactorSetup" xml:space="preserve">
-        <value>Einrichtung der Zwei-Faktor-Authentifizierung</value>
+        <value>Configuração da Autenticação de Dois Fatores</value>
     </data>
     <data name="Type" xml:space="preserve">
-        <value>Typ</value>
+        <value>Tipo</value>
     </data>
     <data name="TypeInWalletName" xml:space="preserve">
-        <value>Gib einen Wallet-Namen ein</value>
+        <value>Digite um nome para a carteira</value>
     </data>
     <data name="TypeInYourRecoveryWords" xml:space="preserve">
-        <value>Gib Deine Wiederherstellungswörter in der richtigen Reihenfolge ein</value>
+        <value>Digite suas palavras de recuperação na ordem correta</value>
     </data>
     <data name="UnableToBroadcastTransaction" xml:space="preserve">
-        <value>Transaktion konnte nicht übertragen werden.</value>
+        <value>Não foi possível transmitir a transação.</value>
     </data>
     <data name="UnableToCreateTransaction" xml:space="preserve">
-        <value>Ginger Wallet konnte DeineTransaktion nicht erstellen.</value>
+        <value>O Ginger Wallet não conseguiu criar sua transação.</value>
     </data>
     <data name="UnableToExportPSBT" xml:space="preserve">
-        <value>Ginger Wallet konnte die PSBT nicht exportieren.</value>
+        <value>O Ginger Wallet não conseguiu exportar o PSBT.</value>
     </data>
     <data name="UnableToLoadTransaction" xml:space="preserve">
-        <value>Transaktion konnte nicht geladen werden.</value>
+        <value>Não foi possível carregar a transação.</value>
     </data>
     <data name="UnableToPasteTransaction" xml:space="preserve">
-        <value>Transaktion konnte nicht eingefügt werden.</value>
+        <value>Não foi possível colar a transação.</value>
     </data>
     <data name="UnableToRecoverWallet" xml:space="preserve">
-        <value>Ginger Wallet konnte das Wallet nicht wiederherstellen.</value>
+        <value>O Ginger Wallet não conseguiu recuperar a carteira.</value>
     </data>
     <data name="UnableToSendAddressToDevice" xml:space="preserve">
-        <value>Adresse konnte nicht an das Gerät gesendet werden</value>
+        <value>Não foi possível enviar o endereço para o dispositivo</value>
     </data>
     <data name="UnableToSendTransaction" xml:space="preserve">
-        <value>Ginger Wallet konnte Deine Transaktion nicht senden.</value>
+        <value>O Ginger Wallet não conseguiu enviar sua transação.</value>
     </data>
     <data name="UnableToVerifyRecoveryWords" xml:space="preserve">
-        <value>Ginger Wallet konnte die Wiederherstellungswörter nicht verifizieren.</value>
+        <value>O Ginger Wallet não conseguiu verificar as palavras de recuperação.</value>
     </data>
     <data name="UnconfirmedBalance" xml:space="preserve">
-        <value>Unbestätigtes Guthaben</value>
+        <value>Saldo não confirmado</value>
     </data>
     <data name="UnconfirmedCoinsMayCauseIssues" xml:space="preserve">
-        <value>Dies kann dazu führen, dass Deine Transaktion abgelehnt wird, sich verzögert oder mehr kostet als nötig. Warte auf eine Bestätigung, um nur bestätigte Coins zu verwenden.</value>
+        <value>Isso pode fazer com que sua transação seja rejeitada, atrase sua confirmação ou custe mais do que o necessário para ser confirmada dentro do tempo desejado. Aguarde uma confirmação para usar apenas moedas confirmadas.</value>
     </data>
     <data name="UndoLastModification" xml:space="preserve">
-        <value>Letzte Änderung rückgängig machen</value>
+        <value>Desfazer a última modificação</value>
     </data>
     <data name="UneconomicalRoundMessage" xml:space="preserve">
-        <value>Warte auf günstigere Coinjoins</value>
+        <value>Aguardando coinjoins mais baratos</value>
     </data>
     <data name="UnexpextedError" xml:space="preserve">
-        <value>Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut oder kontaktiere den Support.</value>
+        <value>Ocorreu um erro inesperado. Tente novamente ou entre em contato com o suporte.</value>
     </data>
     <data name="Unknown" xml:space="preserve">
-        <value>Unbekannt</value>
+        <value>Desconhecido</value>
     </data>
     <data name="UnknownErrorDeviceCheck" xml:space="preserve">
-        <value>Unbekannter Fehler. Stelle sicher, dass das Gerät verbunden ist und nicht in Benutzung ist, und versuche es erneut.</value>
+        <value>Erro desconhecido. Certifique-se de que o dispositivo está conectado e não está ocupado, depois tente novamente.</value>
     </data>
     <data name="UnknownPeople" xml:space="preserve">
-        <value>Unbekannte Personen</value>
+        <value>Pessoas desconhecidas</value>
     </data>
     <data name="UnselectAll" xml:space="preserve">
-        <value>Alle abwählen</value>
+        <value>Desmarcar tudo</value>
     </data>
     <data name="Update" xml:space="preserve">
-        <value>Aktualisieren</value>
+        <value>Atualizar</value>
     </data>
     <data name="UpdateAvailable" xml:space="preserve">
-        <value>Aktualisierung verfügbar.</value>
+        <value>Atualização disponível.</value>
     </data>
     <data name="UseDecimalPoint" xml:space="preserve">
-        <value>Dezimalpunkt anstelle von Komma verwenden.</value>
+        <value>Use ponto decimal em vez de vírgula.</value>
     </data>
     <data name="UseOldCoinSelectorAsFallbackInCoinJoinCoinSelector" xml:space="preserve">
-        <value>Alten Coin-wähler als Fallback verwenden</value>
+        <value>Usar o seletor de moedas antigo como alternativa</value>
     </data>
     <data name="UseOldCoinSelectorAsFallbackInCoinJoinCoinSelectorToolTip" xml:space="preserve">
-        <value>Sowohl der alte als auch der neue Coin-wähler werden verwendet, und das bessere Ergebnis wird gewählt.</value>
+        <value>Tanto o seletor de moedas antigo quanto o novo serão usados, e o melhor resultado será escolhido.</value>
     </data>
     <data name="UserInSendWorkflowMessage" xml:space="preserve">
-        <value>Warten auf Schließen des Sendedialogs</value>
+        <value>Aguardando o fechamento do diálogo de envio</value>
     </data>
     <data name="UserSupportViewModelCaption" xml:space="preserve">
-        <value>Ginger Wallets Support-Website öffnen</value>
+        <value>Abrir o site de suporte do usuário do Ginger Wallet</value>
     </data>
     <data name="UserSupportViewModelKeywords" xml:space="preserve">
-        <value>Benutzer, Support, Website</value>
+        <value>Usuário, Suporte, Website</value>
     </data>
     <data name="UserSupportViewModelTitle" xml:space="preserve">
-        <value>Benutzersupport</value>
+        <value>Suporte ao usuário</value>
     </data>
     <data name="ValidationErrorNotInRange" xml:space="preserve">
-        <value>Wert muss zwischen {0} und {1} liegen.</value>
+        <value>O valor deve estar entre {0} e {1}.</value>
     </data>
     <data name="ValidationErrorNotNumber" xml:space="preserve">
-        <value>Keine Zahl.</value>
+        <value>Não é um número.</value>
     </data>
     <data name="ValueLossRateNormalInCoinJoinCoinSelector" xml:space="preserve">
-        <value>Betragsverlust-Normalisierung zur Score-Berechnung</value>
+        <value>Normalização da perda de valor para cálculo de pontuação</value>
     </data>
     <data name="ValueLossRateNormalInCoinJoinCoinSelectorToolTip" xml:space="preserve">
-        <value>Bei niedrigem Wert bevorzugt der Coin-wähler Coinauswahlen mit weniger Betragsverlust.</value>
+        <value>Com valor mais baixo, o seletor de moedas favorecerá seleções de moedas com menor taxa de perda de valor.</value>
     </data>
     <data name="Verify" xml:space="preserve">
-        <value>Verifizieren</value>
+        <value>Verificar</value>
     </data>
     <data name="VerifyRecoveryWords" xml:space="preserve">
-        <value>Wiederherstellungswörter verifizieren</value>
+        <value>Verificar palavras de recuperação</value>
     </data>
     <data name="VerifyRecoveryWordsErrorCaption" xml:space="preserve">
-        <value>Die eingegebenen Wiederherstellungswörter waren falsch.</value>
+        <value>As palavras de recuperação que você inseriu estavam incorretas.</value>
     </data>
     <data name="VerifyRecoveryWordsErrorMessage" xml:space="preserve">
-        <value>Versuche es erneut, aber wenn Du Deine Wiederherstellungswörter nicht verifizieren kannst, MÜSST Du Deine Gelder so schnell wie möglich auf ein neues Wallet übertragen.</value>
+        <value>Tente novamente, mas se você não conseguir verificar suas palavras de recuperação, DEVE mover seus fundos para uma nova carteira o mais rápido possível.</value>
     </data>
     <data name="VersionAvailable" xml:space="preserve">
-        <value>Version {0} ist jetzt verfügbar</value>
+        <value>A versão {0} já está disponível</value>
     </data>
     <data name="VersionReadyToInstall" xml:space="preserve">
-        <value>Version {0} ist jetzt bereit zur Installation</value>
+        <value>A versão {0} está pronta para ser instalada</value>
     </data>
     <data name="WaitingForBlameRoundMessage" xml:space="preserve">
-        <value>Warten auf Fehlerrunde</value>
+        <value>Aguardando a rodada de recuperação</value>
     </data>
     <data name="WaitingForConfirmedFunds" xml:space="preserve">
-        <value>Warten auf bestätigte Mittel</value>
+        <value>Aguardando fundos confirmados</value>
     </data>
     <data name="WaitingForResponse" xml:space="preserve">
-        <value>Warten auf Antwort</value>
+        <value>Aguardando resposta</value>
     </data>
     <data name="WaitingMessage" xml:space="preserve">
-        <value>Warten auf Coinjoin</value>
+        <value>Aguardando coinjoin</value>
     </data>
     <data name="WaitingRoundMessage" xml:space="preserve">
-        <value>Auf eine Runde warten</value>
+        <value>Aguardando uma rodada</value>
     </data>
     <data name="Wallet" xml:space="preserve">
-        <value>Wallet</value>
+        <value>Carteira</value>
     </data>
     <data name="WalletAutomatic" xml:space="preserve">
-        <value>Automatisch</value>
+        <value>Automático</value>
     </data>
     <data name="WalletBalance" xml:space="preserve">
-        <value>GUTHABEN</value>
+        <value>SALDO</value>
     </data>
     <data name="WalletCannotBeRenamed" xml:space="preserve">
-        <value>Wallet kann nicht in {0} umbenannt werden</value>
+        <value>Não é possível renomear a carteira para {0}</value>
     </data>
     <data name="WalletCoinJoinSettingsViewModelCaption" xml:space="preserve">
-        <value>Wallet-Coinjoin-Einstellungen anzeigen</value>
+        <value>Exibir configurações de coinjoin da carteira</value>
     </data>
     <data name="WalletCoinJoinSettingsViewModelKeywords" xml:space="preserve">
-        <value>Wallet, Einstellungen</value>
+        <value>Carteira, Configurações</value>
     </data>
     <data name="WalletCoinJoinSettingsViewModelTitle" xml:space="preserve">
-        <value>Coinjoin-Einstellungen</value>
+        <value>Configurações de Coinjoin</value>
     </data>
     <data name="WalletCoinsDescription" xml:space="preserve">
-        <value>Eine Liste von Coins, die Du besitzt.</value>
+        <value>Uma lista de moedas que você possui.</value>
     </data>
     <data name="WalletCoinsViewModelCaption" xml:space="preserve">
-        <value>Wallet-Coins anzeigen</value>
+        <value>Exibir moedas da carteira</value>
     </data>
     <data name="WalletCoinsViewModelKeywords" xml:space="preserve">
-        <value>Wallet, Coins, UTXO</value>
+        <value>Carteira, Moedas, UTXO</value>
     </data>
     <data name="WalletCoinsViewModelTitle" xml:space="preserve">
-        <value>Wallet-Coins</value>
+        <value>Moedas da carteira</value>
     </data>
     <data name="WalletExchangeRate" xml:space="preserve">
-        <value>WECHSELKURS</value>
+        <value>TAXA DE CÂMBIO</value>
     </data>
     <data name="WalletImportFailed" xml:space="preserve">
-        <value>Ginger Wallet konnte Dein Wallet nicht importieren.</value>
+        <value>O Ginger Wallet não conseguiu importar sua carteira.</value>
     </data>
     <data name="WalletInfoViewModelCaption" xml:space="preserve">
-        <value>Wallet-Informationen anzeigen</value>
+        <value>Exibir informações da carteira</value>
     </data>
     <data name="WalletInfoViewModelKeywords" xml:space="preserve">
-        <value>Wallet, Informationen</value>
+        <value>Carteira, Informações</value>
     </data>
     <data name="WalletInfoViewModelTitle" xml:space="preserve">
-        <value>Wallet-Informationen</value>
+        <value>Informações da carteira</value>
     </data>
     <data name="WalletManualControl" xml:space="preserve">
-        <value>Manuelle Steuerung</value>
+        <value>Controle manual</value>
     </data>
     <data name="WalletName" xml:space="preserve">
-        <value>Wallet-Name</value>
+        <value>Nome da carteira</value>
     </data>
     <data name="WalletNameAlreadyExists" xml:space="preserve">
-        <value>Ein Wallet mit dem Namen {0} existiert bereits. Bitte wähle einen anderen Namen.</value>
+        <value>Já existe uma carteira chamada {0}. Tente um nome diferente.</value>
     </data>
     <data name="WalletNameCannotBeEmpty" xml:space="preserve">
-        <value>Wallet-Name darf nicht leer sein.</value>
+        <value>O nome da carteira não pode estar vazio.</value>
     </data>
     <data name="WalletNameInvalid" xml:space="preserve">
-        <value>Ausgewählter Wallet-Name ist ungültig. Bitte wähle einen anderen Namen.</value>
+        <value>O nome da carteira selecionado não é válido. Tente um nome diferente.</value>
     </data>
     <data name="WalletNameTaken" xml:space="preserve">
-        <value>Wallet-Name ist bereits vergeben.</value>
+        <value>O nome da carteira já está em uso.</value>
     </data>
     <data name="WalletPrivacyProgress" xml:space="preserve">
-        <value>ANONYMITÄTSFORTSCHRITT</value>
+        <value>PROGRESSO DA PRIVACIDADE</value>
     </data>
     <data name="WalletReceive" xml:space="preserve">
-        <value>Empfangen</value>
+        <value>Receber</value>
     </data>
     <data name="WalletRenameCaption" xml:space="preserve">
-        <value>Du kannst den Namen Deines Wallets ändern</value>
+        <value>Você pode modificar o nome de sua carteira</value>
     </data>
     <data name="WalletSend" xml:space="preserve">
-        <value>Senden</value>
+        <value>Enviar</value>
     </data>
     <data name="WalletSettings" xml:space="preserve">
-        <value>Wallet-Einstellungen</value>
+        <value>Configurações da carteira</value>
     </data>
     <data name="WalletSettingsKeywords" xml:space="preserve">
-        <value>Wallet, Einstellungen</value>
+        <value>Carteira, Configurações</value>
     </data>
     <data name="WalletSettingsViewModelCaption" xml:space="preserve">
-        <value>Wallet-Einstellungen anzeigen</value>
+        <value>Exibir configurações da carteira</value>
     </data>
     <data name="WalletSettingsViewModelKeywords" xml:space="preserve">
-        <value>Wallet, Einstellungen</value>
+        <value>Carteira, Configurações</value>
     </data>
     <data name="WalletSettingsViewModelTitle" xml:space="preserve">
-        <value>Wallet-Einstellungen</value>
+        <value>Configurações da carteira</value>
     </data>
     <data name="WalletStatsViewModelCaption" xml:space="preserve">
-        <value>Wallet-Statistiken anzeigen</value>
+        <value>Exibir estatísticas da carteira</value>
     </data>
     <data name="WalletStatsViewModelKeywords" xml:space="preserve">
-        <value>Wallet, Statistiken</value>
+        <value>Carteira, Estatísticas</value>
     </data>
     <data name="WalletStatsViewModelTitle" xml:space="preserve">
-        <value>Wallet-Statistiken</value>
+        <value>Estatísticas da carteira</value>
     </data>
     <data name="WalletToolsDoNotForget" xml:space="preserve">
-        <value>Deine Passphrase ist auch erforderlich, um Dein Wallet wiederherzustellen – vergiss sie nicht.</value>
+        <value>Sua frase de segurança também é necessária para restaurar a carteira. Não se esqueça dela.</value>
     </data>
     <data name="WalletToolsRecommend" xml:space="preserve">
-        <value>Es wird empfohlen, Deine Wiederherstellungswörter regelmäßig zu überprüfen.</value>
+        <value>Recomenda-se que você verifique suas palavras de recuperação de tempos em tempos.</value>
     </data>
     <data name="WalletToolsVerifyRecoveryWords" xml:space="preserve">
-        <value>Wiederherstellungswörter verifizieren</value>
+        <value>Verificar palavras de recuperação</value>
     </data>
     <data name="WalletTransactions" xml:space="preserve">
-        <value>Transaktionen</value>
+        <value>Transações</value>
     </data>
     <data name="WasabiDownloadBlocksFromFullNode" xml:space="preserve">
-        <value>Ginger lädt Blöcke von einem full Node, den Du kontrollierst.</value>
+        <value>O Ginger fará o download de blocos de um nó completo que você controla.</value>
     </data>
     <data name="WebsiteClearnet" xml:space="preserve">
         <value>Website (Clearnet)</value>
     </data>
     <data name="Weeks" xml:space="preserve">
-        <value>Wochen</value>
+        <value>Semanas</value>
     </data>
     <data name="WeightedAnonymityLossNormalInCoinJoinCoinSelector" xml:space="preserve">
-        <value>Anonymitätsunterschieds-Normalisierung zur Score-Berechnung</value>
+        <value>Normalização da diferença de privacidade das moedas para cálculo de pontuação</value>
     </data>
     <data name="WeightedAnonymityLossNormalInCoinJoinCoinSelectorToolTip" xml:space="preserve">
-        <value>Bei niedrigem Wert bevorzugt der Coin-wähler Coins mit geringerem Unterschied im Anyomitäts-Score.</value>
+        <value>Com valor mais baixo, o seletor de moedas favorecerá moedas com menor diferença na pontuação de privacidade.</value>
     </data>
     <data name="WelcomeToGingerWallet" xml:space="preserve">
-        <value>Willkommen bei Ginger Wallet</value>
+        <value>Bem-vindo ao Ginger Wallet</value>
     </data>
     <data name="WhitespaceMessage" xml:space="preserve">
-        <value>Führende und nachfolgende Leerzeichen sind nicht erlaubt!</value>
+        <value>Não são permitidos espaços em branco no início e no fim!</value>
     </data>
     <data name="WishToHideAddressWithLabels" xml:space="preserve">
-        <value>Möchtest Du die Adresse mit den folgenden Labels ausblenden?</value>
+        <value>Você deseja ocultar o endereço com os seguintes rótulos?</value>
     </data>
     <data name="WouldYouLikeToPersonalizeIt" xml:space="preserve">
-        <value>Möchtest Du sie personalisieren?</value>
+        <value>Gostaria de personalizá-lo?</value>
     </data>
     <data name="WrongPassphrase" xml:space="preserve">
-        <value>Falsche Passphrase.</value>
+        <value>Frase de segurança incorreta.</value>
     </data>
     <data name="Yes" xml:space="preserve">
-        <value>Ja</value>
+        <value>Sim</value>
     </data>
     <data name="Yesterday" xml:space="preserve">
-        <value>Gestern</value>
+        <value>Ontem</value>
     </data>
     <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
-        <value>Conjoin starten, um deine Anonymität zu verbessern</value>
+        <value>Comece a realizar Coinjoin para aumentar a privacidade</value>
     </data>
     <data name="Plural" xml:space="preserve">
         <value>\0</value>
     </data>
     <data name="Resync" xml:space="preserve">
-        <value>Erneut synchronisieren</value>
+        <value>Ressincronizar</value>
     </data>
     <data name="DeleteWallet" xml:space="preserve">
-        <value>Wallet löschen</value>
+        <value>Excluir carteira</value>
     </data>
     <data name="Delete" xml:space="preserve">
-        <value>Löschen</value>
+        <value>Excluir</value>
     </data>
     <data name="DeletingAWalletIsPermanentAndCannotBeUndone" xml:space="preserve">
-        <value>Das Löschen einer Wallet ist dauerhaft und kann nicht rückgängig gemacht werden. Die Wallet kann nur mit deinen Wiederherstellungswörtern wiederhergestellt werden, also stelle sicher, dass du sie hast. Um das Löschen zu bestätigen, gib bitte ein</value>
+        <value>Excluir uma carteira é permanente e não pode ser desfeito. A carteira só pode ser restaurada usando suas palavras de recuperação, então certifique-se de tê-las. Para confirmar a exclusão, digite</value>
     </data>
     <data name="InTheFieldBelow" xml:space="preserve">
-        <value>in das Feld unten.</value>
+        <value>no campo abaixo.</value>
     </data>
     <data name="NoKYC" xml:space="preserve">
-        <value>Kein Dokumenten-Upload erforderlich für Käufe unter 1000 USD bei diesem Anbieter.</value>
+        <value>Nenhum envio de documento é necessário para compras abaixo de 1000 USD com este provedor.</value>
     </data>
     <data name="SensitiveData" xml:space="preserve">
-        <value>Sensible Daten</value>
+        <value>Dados sensíveis</value>
     </data>
     <data name="CouldntDeleteWalletCheckLogs" xml:space="preserve">
-        <value>Konnte die Wallet nicht löschen, siehe Protokolle für weitere Details.</value>
+        <value>Não foi possível excluir a carteira, verifique os logs para mais detalhes.</value>
     </data>
     <data name="SyncingYourWallet" xml:space="preserve">
-        <value>Deine Wallet wird synchronisiert...</value>
+        <value>Sincronizando sua carteira...</value>
     </data>
     <data name="SetAsDefault" xml:space="preserve">
-        <value>Als Standard festlegen</value>
+        <value>Definir como padrão</value>
     </data>
     <data name="SignMessage" xml:space="preserve">
-        <value>Nachricht signieren</value>
+        <value>Assinar mensagem</value>
     </data>
     <data name="InvalidBitcoinAddress" xml:space="preserve">
-        <value>Ungültige Bitcoin-Adresse.</value>
+        <value>Endereço de Bitcoin inválido.</value>
     </data>
     <data name="TheAddressDoesNotBelongToThisWallet" xml:space="preserve">
-        <value>Die Adresse gehört nicht zu dieser Wallet.</value>
+        <value>O endereço não pertence a esta carteira.</value>
     </data>
     <data name="SignWithHardwareWallet" xml:space="preserve">
-        <value>Mit Hardware-Wallet signieren</value>
+        <value>Assinar com carteira de hardware</value>
     </data>
     <data name="SignMessageToVerifyYouOwnAddressForExchange" xml:space="preserve">
-        <value>Signiere eine Nachricht, um der Börse zu bestätigen, dass Dir die Adresse gehört</value>
+        <value>Assine uma mensagem para comprovar à corretora que o endereço pertence a você</value>
     </data>
     <data name="AddressWithColon" xml:space="preserve">
-        <value>Adresse:</value>
+        <value>Endereço:</value>
     </data>
     <data name="PasteTheAddressProvidedByTheExchange" xml:space="preserve">
-        <value>Füge die von der Börse bereitgestellte Adresse ein</value>
+        <value>Cole o endereço fornecido pela corretora</value>
     </data>
     <data name="MessageWithColon" xml:space="preserve">
-        <value>Nachricht:</value>
+        <value>Mensagem:</value>
     </data>
     <data name="EnterTheMessageYouWishToSign" xml:space="preserve">
-        <value>Geben Sie die Nachricht ein, die Sie signieren möchten</value>
+        <value>Insira a mensagem que deseja assinar</value>
     </data>
     <data name="Signature" xml:space="preserve">
-        <value>Signatur</value>
+        <value>Assinatura</value>
     </data>
     <data name="Reason" xml:space="preserve">
-        <value>Grund: {0}</value>
+        <value>Motivo: {0}</value>
     </data>
     <data name="UnknownEnum" xml:space="preserve">
-        <value>Unbekannt</value>
+        <value>Desconhecido</value>
     </data>
     <data name="BackendStabilitySafetyEnum" xml:space="preserve">
-        <value>Vorübergehendes Serverproblem</value>
+        <value>Problema temporário no servidor</value>
     </data>
     <data name="CheatingEnum" xml:space="preserve">
-        <value>Protokollverletzung</value>
+        <value>Violação de protocolo</value>
     </data>
     <data name="RoundDisruption" xml:space="preserve">
-        <value>Rundenunterbrechung</value>
+        <value>Interrupção da rodada</value>
     </data>
     <data name="FailedToVerifyEnum" xml:space="preserve">
-        <value>Potenzielles Risiko</value>
+        <value>Risco potencial</value>
     </data>
     <data name="InheritedEnum" xml:space="preserve">
-        <value>(Von einer anderen Münze geerbt)</value>
+        <value>(Herdado de outra moeda)</value>
     </data>
     <data name="LocalCoinVerifierEnum" xml:space="preserve">
-        <value>Vorübergehende Einschränkung</value>
+        <value>Restrição temporária</value>
     </data>
     <data name="RoundDisruptionMethodDidNotConfirmEnum" xml:space="preserve">
-        <value>Rundenunterbrechung</value>
+        <value>Interrupção da rodada</value>
     </data>
     <data name="RoundDisruptionMethodDidNotSignEnum" xml:space="preserve">
-        <value>Rundenunterbrechung</value>
+        <value>Interrupção da rodada</value>
     </data>
     <data name="RoundDisruptionMethodDoubleSpentEnum" xml:space="preserve">
-        <value>Münze wurde während der Runde ausgegeben</value>
+        <value>A moeda foi gasta durante a rodada</value>
     </data>
     <data name="RoundDisruptionMethodDidNotSignalReadyToSignEnum" xml:space="preserve">
-        <value>Rundenunterbrechung</value>
+        <value>Interrupção da rodada</value>
     </data>
   <data name="CanSelectPrivateCoinsInCoinJoinCoinSelector" xml:space="preserve">
-    <value>Bereits private Coins können ausgewählt werden</value>
+    <value>Permitir a seleção de moedas já privadas</value>
   </data>
   <data name="CanSelectPrivateCoinsInCoinJoinCoinSelectorToolTip" xml:space="preserve">
-    <value>Die Auswahl darf bereits private Coins enthalten.</value>
+    <value>A seleção pode conter moedas já privadas.</value>
   </data>
   <data name="SecretHuntViewModelTitle" xml:space="preserve">
-    <value>Geheimnisjagd</value>
+    <value>Caça aos Segredos</value>
   </data>
   <data name="SecretHuntViewModelCaption" xml:space="preserve">
-    <value>Der aktuelle Status der Geheimnisjagd-Ereignisse.</value>
+    <value>O status atual dos eventos da Caça aos Segredos.</value>
   </data>
   <data name="SecretHuntViewModelKeywords" xml:space="preserve">
-    <value>Geheimnis, Jagd, Coinjoin</value>
+    <value>Segredo, Caça, Coinjoin</value>
   </data>
   <data name="SecretHuntSecret" xml:space="preserve">
-    <value>Ein Geheimnis – ein Wort oder ein Satz.</value>
+    <value>Um Segredo – uma palavra ou frase.</value>
   </data>
   <data name="SecretHuntExtraSecret" xml:space="preserve">
-    <value>Ein Extra-Geheimnis, das enthüllt wird, wenn alle normalen Geheimnisse bekannt sind.</value>
+    <value>Um Segredo Extra que é revelado quando todos os Segredos normais são conhecidos.</value>
   </data>
   <data name="SecretHuntEventUnsolved" xml:space="preserve">
-    <value>Dieses Ereignis wurde noch nicht gelöst.</value>
+    <value>Este evento ainda não foi resolvido.</value>
   </data>
   <data name="SecretHuntEventSolved" xml:space="preserve">
-    <value>Für dieses Ereignis sind alle Geheimnisse und das Extra-Geheimnis enthüllt. Es liegt an dir, was du damit machst.</value>
+    <value>Para este evento, todos os Segredos e o Segredo Extra foram revelados. Cabe a você decidir o que fazer com eles.</value>
   </data>
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
-    <value>Aktiviere oder deaktiviere die Nutzung dieser Wallet für die Geheimnisjagd.</value>
+    <value>Ativar ou desativar o uso desta carteira para a Caça aos Segredos.</value>
   </data>
 </root>

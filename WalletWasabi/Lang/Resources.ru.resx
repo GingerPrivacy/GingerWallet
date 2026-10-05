@@ -1,0 +1,2220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Open" xml:space="preserve">
+    <value>Открыть</value>
+    <comment>This is a button which is used to open your bitcoin wallet. One word only. </comment>
+  </data>
+  <data name="AddWalletPageViewModelTitle" xml:space="preserve">
+    <value>Добавить кошелёк</value>
+  </data>
+  <data name="AddWalletPageViewModelCaption" xml:space="preserve">
+    <value>Создать, подключить, импортировать или восстановить</value>
+  </data>
+  <data name="AddWalletPageViewModelKeywords" xml:space="preserve">
+    <value>Кошелёк, Добавить, Создать, Новый, Восстановить, Импортировать, Подключить, Аппаратный, ColdCard, Trezor, Ledger</value>
+  </data>
+  <data name="NoCategory" xml:space="preserve">
+    <value>Без категории</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>Общие</value>
+  </data>
+  <data name="Wallet" xml:space="preserve">
+    <value>Кошелёк</value>
+  </data>
+  <data name="HelpAndSupport" xml:space="preserve">
+    <value>Помощь и поддержка</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="GeneralSettingsTabViewModelTitle" xml:space="preserve">
+    <value>Общие</value>
+  </data>
+  <data name="GeneralSettingsTabViewModelCaption" xml:space="preserve">
+    <value>Управление общими настройками</value>
+  </data>
+  <data name="GeneralSettingsTabViewModelKeywords" xml:space="preserve">
+    <value>Настройки, Общие, Bitcoin, Запуск, Ginger, Компьютер, Система, Начало, Фон, Закрыть, Автоматически, Копировать, Вставить, Адреса, Пользовательский, Изменить, Адрес, Браузер</value>
+  </data>
+  <data name="BitcoinTabSettingsViewModelTitle" xml:space="preserve">
+    <value>Bitcoin</value>
+  </data>
+  <data name="BitcoinTabSettingsViewModelCaption" xml:space="preserve">
+    <value>Управление настройками Bitcoin</value>
+  </data>
+  <data name="BitcoinTabSettingsViewModelKeywords" xml:space="preserve">
+    <value>Настройки, Bitcoin, Сеть, Основная, TestNet, RegTest, Запуск, Узел, Core, Knots, Версия, Автозапуск, P2P, Адрес, Пыль, Порог, BTC</value>
+  </data>
+  <data name="AdvancedSettingsTabViewModelTitle" xml:space="preserve">
+    <value>Дополнительные</value>
+  </data>
+  <data name="AdvancedSettingsTabViewModelCaption" xml:space="preserve">
+    <value>Управление дополнительными настройками</value>
+  </data>
+  <data name="AdvancedSettingsTabViewModelKeywords" xml:space="preserve">
+    <value>Настройки, Дополнительные, Включить, GPU</value>
+  </data>
+  <data name="SecuritySettingsTabViewModelTitle" xml:space="preserve">
+    <value>Безопасность</value>
+  </data>
+  <data name="SecuritySettingsTabViewModelCaption" xml:space="preserve">
+    <value>Управление настройками безопасности</value>
+  </data>
+  <data name="SecuritySettingsTabViewModelKeywords" xml:space="preserve">
+    <value>Безопасность, Настройки, 2FA, Двухфакторная, Аутентификация, Два, Фактор</value>
+  </data>
+  <data name="AboutViewModelCaption" xml:space="preserve">
+    <value>Показать текущие сведения о Ginger Wallet</value>
+  </data>
+  <data name="AboutViewModelTitle" xml:space="preserve">
+    <value>О Ginger Wallet</value>
+  </data>
+  <data name="AboutViewModelKeywords" xml:space="preserve">
+    <value>О программе, Программа, Версия, Исходный, Код, Github, Сайт, Координатор, Статистика, Tor, Onion, Пользователь, Поддержка, Ошибка, Сообщить, FAQ, Вопросы, Документация, Руководство, Лицензия, Дополнительные, Сведения, Аппаратный, Кошелёк</value>
+  </data>
+  <data name="BroadcasterViewModelTitle" xml:space="preserve">
+    <value>Трансляция</value>
+  </data>
+  <data name="BroadcasterViewModelCaption" xml:space="preserve">
+    <value>Отправить транзакцию в сеть</value>
+  </data>
+  <data name="BroadcasterViewModelKeywords" xml:space="preserve">
+    <value>Идентификатор транзакции, Вход, Выход, Сумма, Сеть, Комиссия, Количество, BTC, Подписанная, Вставить, Импортировать, Трансляция, Транзакция</value>
+  </data>
+  <data name="LegalDocumentsViewModelTitle" xml:space="preserve">
+    <value>Правовой документ</value>
+  </data>
+  <data name="LegalDocumentsViewModelCaption" xml:space="preserve">
+    <value>Показать условия использования</value>
+  </data>
+  <data name="LegalDocumentsViewModelKeywords" xml:space="preserve">
+    <value>Просмотр, Правовой, Документ, Условия, Конфиденциальность, Политика, Заявление</value>
+  </data>
+  <data name="UserSupportViewModelTitle" xml:space="preserve">
+    <value>Поддержка пользователей</value>
+  </data>
+  <data name="UserSupportViewModelCaption" xml:space="preserve">
+    <value>Открыть сайт поддержки пользователей Ginger Wallet</value>
+  </data>
+  <data name="UserSupportViewModelKeywords" xml:space="preserve">
+    <value>Пользователь, Поддержка, Сайт</value>
+  </data>
+  <data name="BugReportLinkViewModelTitle" xml:space="preserve">
+    <value>Сообщить об ошибке</value>
+  </data>
+  <data name="BugReportLinkViewModelCaption" xml:space="preserve">
+    <value>Открыть страницу ошибок Ginger Wallet на GitHub</value>
+  </data>
+  <data name="BugReportLinkViewModelKeywords" xml:space="preserve">
+    <value>Поддержка, Сайт, Ошибка, Сообщить</value>
+  </data>
+  <data name="DocsLinkViewModelTitle" xml:space="preserve">
+    <value>Руководство пользователя/FAQ</value>
+  </data>
+  <data name="DocsLinkViewModelCaption" xml:space="preserve">
+    <value>Открыть сайт ответов на частые вопросы о Ginger Wallet</value>
+  </data>
+  <data name="DocsLinkViewModelKeywords" xml:space="preserve">
+    <value>Пользователь, Поддержка, Сайт, Документы, Документация, Руководство</value>
+  </data>
+  <data name="OpenDataFolderViewModelTitle" xml:space="preserve">
+    <value>Папка данных</value>
+  </data>
+  <data name="OpenDataFolderViewModelKeywords" xml:space="preserve">
+    <value>Обзор, Открыть, Данные, Папка</value>
+  </data>
+  <data name="OpenWalletsFolderViewModelTitle" xml:space="preserve">
+    <value>Папка кошельков</value>
+  </data>
+  <data name="OpenWalletsFolderViewModelKeywords" xml:space="preserve">
+    <value>Обзор, Открыть, Кошелёк, Папка</value>
+  </data>
+  <data name="OpenLogsViewModelTitle" xml:space="preserve">
+    <value>Журналы</value>
+  </data>
+  <data name="OpenLogsViewModelKeywords" xml:space="preserve">
+    <value>Обзор, Открыть, Журналы</value>
+  </data>
+  <data name="OpenTorLogsViewModelKeywords" xml:space="preserve">
+    <value>Обзор, Открыть, Tor, Журналы</value>
+  </data>
+  <data name="OpenTorLogsViewModelTitle" xml:space="preserve">
+    <value>Журналы Tor</value>
+  </data>
+  <data name="OpenConfigFileViewModelTitle" xml:space="preserve">
+    <value>Файл конфигурации</value>
+  </data>
+  <data name="OpenConfigFileViewModelKeywords" xml:space="preserve">
+    <value>Обзор, Открыть, Конфигурация, Файл</value>
+  </data>
+  <data name="SearchBoxWatermark" xml:space="preserve">
+    <value>Поиск</value>
+  </data>
+  <data name="OpenPasswordBoxWatermark" xml:space="preserve">
+    <value>Парольная фраза</value>
+  </data>
+  <data name="DiscreetMode" xml:space="preserve">
+    <value>Режим скрытия данных</value>
+  </data>
+  <data name="SettingsPageViewModelKeywords" xml:space="preserve">
+    <value>Настройки, Общие, Пользователь, Интерфейс, Дополнительные</value>
+  </data>
+  <data name="SettingsPageViewModelCaption" xml:space="preserve">
+    <value>Управление общими, дополнительными и другими настройками</value>
+  </data>
+  <data name="SettingsPageViewModelTitle" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="LoadingViewModelPercentCompleted" xml:space="preserve">
+    <value>Завершено: {0}%</value>
+  </data>
+  <data name="LoadingViewModelTimeRemaining" xml:space="preserve">
+    <value>- осталось {0}</value>
+  </data>
+  <data name="day" xml:space="preserve">
+    <value>дн.</value>
+  </data>
+  <data name="hour" xml:space="preserve">
+    <value>ч.</value>
+  </data>
+  <data name="minute" xml:space="preserve">
+    <value>мин.</value>
+  </data>
+  <data name="second" xml:space="preserve">
+    <value>с.</value>
+  </data>
+  <data name="and" xml:space="preserve">
+    <value>и</value>
+  </data>
+  <data name="Plural" xml:space="preserve">
+    <value>\0</value>
+  </data>
+  <data name="WalletBalance" xml:space="preserve">
+    <value>БАЛАНС</value>
+  </data>
+  <data name="WalletPrivacyProgress" xml:space="preserve">
+    <value>ПРОГРЕСС ПРИВАТНОСТИ</value>
+  </data>
+  <data name="WalletExchangeRate" xml:space="preserve">
+    <value>ОБМЕННЫЙ КУРС</value>
+  </data>
+  <data name="WalletTransactions" xml:space="preserve">
+    <value>Транзакции</value>
+  </data>
+  <data name="Sorting" xml:space="preserve">
+    <value>Сортировка</value>
+  </data>
+  <data name="ShowDetails" xml:space="preserve">
+    <value>Показать подробности</value>
+  </data>
+  <data name="CopyTransactionId" xml:space="preserve">
+    <value>Копировать идентификатор транзакции</value>
+  </data>
+  <data name="CopyLabel" xml:space="preserve">
+    <value>Копировать метку</value>
+  </data>
+  <data name="CopyAmount" xml:space="preserve">
+    <value>Копировать сумму</value>
+  </data>
+  <data name="WalletSend" xml:space="preserve">
+    <value>Отправить</value>
+  </data>
+  <data name="WalletAutomatic" xml:space="preserve">
+    <value>Автоматически</value>
+  </data>
+  <data name="WalletManualControl" xml:space="preserve">
+    <value>Ручное управление</value>
+  </data>
+  <data name="SpeedUpTransaction" xml:space="preserve">
+    <value>Ускорить транзакцию</value>
+  </data>
+  <data name="CancelTransaction" xml:space="preserve">
+    <value>Отменить транзакцию</value>
+  </data>
+  <data name="OpenInTheBrowser" xml:space="preserve">
+    <value>Открыть в браузере</value>
+  </data>
+  <data name="WalletSettings" xml:space="preserve">
+    <value>Настройки кошелька</value>
+  </data>
+  <data name="WalletCoinsViewModelTitle" xml:space="preserve">
+    <value>Монеты кошелька</value>
+  </data>
+  <data name="WalletStatsViewModelTitle" xml:space="preserve">
+    <value>Статистика кошелька</value>
+  </data>
+  <data name="WalletInfoViewModelTitle" xml:space="preserve">
+    <value>Сведения о кошельке</value>
+  </data>
+  <data name="WalletReceive" xml:space="preserve">
+    <value>Получить</value>
+  </data>
+  <data name="ExcludedCoinsViewModelTitle" xml:space="preserve">
+    <value>Исключить монеты из Coinjoin</value>
+  </data>
+  <data name="CoinjoinSettings" xml:space="preserve">
+    <value>Настройки Coinjoin</value>
+  </data>
+  <data name="CountDownMessage" xml:space="preserve">
+    <value>Ожидание автоматического запуска Coinjoin</value>
+  </data>
+  <data name="WaitingMessage" xml:space="preserve">
+    <value>Ожидание Coinjoin</value>
+  </data>
+  <data name="UneconomicalRoundMessage" xml:space="preserve">
+    <value>Ожидание более дешёвого Coinjoin</value>
+  </data>
+  <data name="RandomlySkippedRoundMessage" xml:space="preserve">
+    <value>Пропуск раунда для повышения приватности</value>
+  </data>
+  <data name="PauseMessage" xml:space="preserve">
+    <value>Coinjoin приостановлен</value>
+  </data>
+  <data name="StoppedMessage" xml:space="preserve">
+    <value>Coinjoin остановлен</value>
+  </data>
+  <data name="PressPlayToStartMessage" xml:space="preserve">
+    <value>Нажмите кнопку запуска, чтобы начать</value>
+  </data>
+  <data name="RoundSucceedMessage" xml:space="preserve">
+    <value>Coinjoin завершён успешно! Продолжаем...</value>
+  </data>
+  <data name="RoundFinishedMessage" xml:space="preserve">
+    <value>Раунд завершён, ожидание следующего раунда</value>
+  </data>
+  <data name="AbortedNotEnoughAlicesMessage" xml:space="preserve">
+    <value>Недостаточно участников, повторная попытка...</value>
+  </data>
+  <data name="CoinJoinInProgress" xml:space="preserve">
+    <value>Выполняется Coinjoin</value>
+  </data>
+  <data name="InputRegistrationMessage" xml:space="preserve">
+    <value>Ожидание других участников</value>
+  </data>
+  <data name="WaitingForBlameRoundMessage" xml:space="preserve">
+    <value>Ожидание повторного раунда</value>
+  </data>
+  <data name="WaitingRoundMessage" xml:space="preserve">
+    <value>Ожидание раунда</value>
+  </data>
+  <data name="PlebStopMessage" xml:space="preserve">
+    <value>Coinjoin может быть невыгодным</value>
+  </data>
+  <data name="PlebStopMessageBelow" xml:space="preserve">
+    <value>Добавьте средства или нажмите кнопку запуска, чтобы продолжить</value>
+  </data>
+  <data name="NoCoinsEligibleToMixMessage" xml:space="preserve">
+    <value>Недостаточно средств, подходящих для Coinjoin</value>
+  </data>
+  <data name="UserInSendWorkflowMessage" xml:space="preserve">
+    <value>Ожидание закрытия диалога отправки</value>
+  </data>
+  <data name="AllPrivateMessage" xml:space="preserve">
+    <value>Ура! Все ваши средства приватны!</value>
+  </data>
+  <data name="BackendNotConnected" xml:space="preserve">
+    <value>Ожидание подключения</value>
+  </data>
+  <data name="GeneralErrorMessage" xml:space="preserve">
+    <value>Ожидание подходящих условий</value>
+  </data>
+  <data name="WaitingForConfirmedFunds" xml:space="preserve">
+    <value>Ожидание подтверждённых средств</value>
+  </data>
+  <data name="CoinsRejectedMessage" xml:space="preserve">
+    <value>Некоторые средства отклонены при участии в Coinjoin</value>
+  </data>
+  <data name="OnlyImmatureCoinsAvailableMessage" xml:space="preserve">
+    <value>Доступны только незрелые средства</value>
+  </data>
+  <data name="OnlyExcludedCoinsAvailableMessage" xml:space="preserve">
+    <value>Доступны только средства, исключённые из Coinjoin</value>
+  </data>
+  <data name="MiningFeeRateTooHighMessage" xml:space="preserve">
+    <value>Ставка комиссии майнеров была слишком высокой</value>
+  </data>
+  <data name="CoordinationFeeRateTooHighMessage" xml:space="preserve">
+    <value>Ставка комиссии координатора была слишком высокой</value>
+  </data>
+  <data name="MinInputCountTooLowMessage" xml:space="preserve">
+    <value>Минимальное количество входов было слишком малым</value>
+  </data>
+  <data name="ServerDidNotGiveFeeExemptionMessage" xml:space="preserve">
+    <value>Сервер не предоставил освобождение от комиссии координатора за повторный Coinjoin</value>
+  </data>
+  <data name="WaitingForResponse" xml:space="preserve">
+    <value>Ожидание ответа</value>
+  </data>
+  <data name="WalletSettingsViewModelTitle" xml:space="preserve">
+    <value>Настройки кошелька</value>
+  </data>
+  <data name="WalletSettingsViewModelCaption" xml:space="preserve">
+    <value>Показать настройки кошелька</value>
+  </data>
+  <data name="WalletSettingsViewModelKeywords" xml:space="preserve">
+    <value>Кошелёк, Настройки</value>
+  </data>
+  <data name="Coinjoin" xml:space="preserve">
+    <value>Coinjoin</value>
+  </data>
+  <data name="Tools" xml:space="preserve">
+    <value>Инструменты</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="PSBTworkflow" xml:space="preserve">
+    <value>Работа с PSBT</value>
+  </data>
+  <data name="AutomaticallyStartCoinjoin" xml:space="preserve">
+    <value>Автоматически запускать Coinjoin</value>
+  </data>
+  <data name="CoinjoinToThisWallet" xml:space="preserve">
+    <value>Получать средства из Coinjoin в этот кошелёк</value>
+  </data>
+  <data name="CoinjoinToOtherWalletRestrictions1" xml:space="preserve">
+    <value>- Можно выбрать только загруженные кошельки.</value>
+  </data>
+  <data name="CoinjoinToOtherWalletRestrictions2" xml:space="preserve">
+    <value>- Монеты из транзакции Coinjoin будут получены этим кошельком. Эта настройка сбрасывается после перезапуска Ginger.</value>
+  </data>
+  <data name="CoinjoinToOtherWalletRestrictions3" xml:space="preserve">
+    <value>- Выбранный кошелёк нельзя изменить во время выполнения Coinjoin.</value>
+  </data>
+  <data name="PlebStopToolTip" xml:space="preserve">
+    <value>Coinjoin автоматически остановится, если баланс кошелька ниже этого значения.</value>
+  </data>
+  <data name="PlebStopThreshold" xml:space="preserve">
+    <value>Порог остановки Coinjoin</value>
+  </data>
+  <data name="WalletToolsRecommend" xml:space="preserve">
+    <value>Рекомендуется время от времени проверять слова восстановления кошелька.</value>
+  </data>
+  <data name="WalletToolsDoNotForget" xml:space="preserve">
+    <value>Для восстановления кошелька также нужна парольная фраза. Не забывайте её.</value>
+  </data>
+  <data name="WalletToolsVerifyRecoveryWords" xml:space="preserve">
+    <value>Проверить слова восстановления</value>
+  </data>
+  <data name="WalletCoinJoinSettingsViewModelTitle" xml:space="preserve">
+    <value>Настройки Coinjoin</value>
+  </data>
+  <data name="WalletCoinJoinSettingsViewModelCaption" xml:space="preserve">
+    <value>Показать настройки Coinjoin кошелька</value>
+  </data>
+  <data name="WalletCoinJoinSettingsViewModelKeywords" xml:space="preserve">
+    <value>Кошелёк, Настройки</value>
+  </data>
+  <data name="CoinJoinProfilesCaption" xml:space="preserve">
+    <value>Ginger заботится о вашей финансовой приватности, автоматически выполняя Coinjoin для всех ваших средств с фиксированной комиссией координатора 0,3% плюс комиссии майнеров. Для удобства уже применены настройки по умолчанию.</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Готово</value>
+  </data>
+  <data name="RedcoinText" xml:space="preserve">
+    <value>Ограничение одной неприватной монетой</value>
+  </data>
+  <data name="RedcoinToolTip" xml:space="preserve">
+    <value>Разрешать регистрацию в Coinjoin только одной монеты с оценкой анонимности 1.</value>
+  </data>
+  <data name="AnonTargetText" xml:space="preserve">
+    <value>Целевая оценка анонимности</value>
+  </data>
+  <data name="AnonTargetTooltip" xml:space="preserve">
+    <value>Минимальная оценка анонимности, при которой монета считается приватной.</value>
+  </data>
+  <data name="SafeFeeText" xml:space="preserve">
+    <value>Игнорировать период сравнения при комиссии ниже</value>
+  </data>
+  <data name="SafeFeeToolTip" xml:space="preserve">
+    <value>Всегда выполнять Coinjoin, когда ставка комиссии ниже этого значения (имеет приоритет над периодом сравнения комиссий).</value>
+  </data>
+  <data name="CoinJoinTimePrefText" xml:space="preserve">
+    <value>Период сравнения комиссий Coinjoin</value>
+  </data>
+  <data name="CoinJoinTimePrefToolTip" xml:space="preserve">
+    <value>Выполнять Coinjoin только тогда, когда ставка комиссии ниже медианы за этот период.</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Далее</value>
+  </data>
+  <data name="Skip" xml:space="preserve">
+    <value>Пропустить</value>
+  </data>
+  <data name="CreateNewWallet" xml:space="preserve">
+    <value>Новый</value>
+  </data>
+  <data name="ImportWallet" xml:space="preserve">
+    <value>Импортировать файл</value>
+  </data>
+  <data name="RecoverWallet" xml:space="preserve">
+    <value>Восстановить</value>
+  </data>
+  <data name="WalletName" xml:space="preserve">
+    <value>Имя кошелька</value>
+  </data>
+  <data name="WalletRenameCaption" xml:space="preserve">
+    <value>Вы можете изменить имя кошелька</value>
+  </data>
+  <data name="TypeInWalletName" xml:space="preserve">
+    <value>Введите имя кошелька</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Продолжить</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Успешно</value>
+  </data>
+  <data name="UnexpextedError" xml:space="preserve">
+    <value>Произошла непредвиденная ошибка. Повторите попытку или обратитесь в поддержку.</value>
+  </data>
+  <data name="SomethingWrong" xml:space="preserve">
+    <value>Что-то пошло не так. Повторите попытку.</value>
+  </data>
+  <data name="PermissionError" xml:space="preserve">
+    <value>Ginger Wallet не удалось выполнить это действие из-за отсутствия разрешения.</value>
+  </data>
+  <data name="HardwareWalletNotFound" xml:space="preserve">
+    <value>Аппаратный кошелёк не найден. Убедитесь, что он подключён.</value>
+  </data>
+  <data name="TransactionCanceledOnDevice" xml:space="preserve">
+    <value>Операция отменена на устройстве.</value>
+  </data>
+  <data name="UnknownErrorDeviceCheck" xml:space="preserve">
+    <value>Неизвестная ошибка. Убедитесь, что устройство подключено и не занято, затем повторите попытку.</value>
+  </data>
+  <data name="CoinAlreadySpent" xml:space="preserve">
+    <value>По крайней мере одна монета, которую вы пытаетесь потратить, уже потрачена.</value>
+  </data>
+  <data name="CoinInUnconfirmedChain" xml:space="preserve">
+    <value>По крайней мере одна монета, которую вы пытаетесь потратить, входит в слишком длинную или большую по общему размеру цепочку неподтверждённых транзакций. Дождитесь подтверждения некоторых предыдущих транзакций.</value>
+  </data>
+  <data name="TransactionDuplicatedInputs" xml:space="preserve">
+    <value>Транзакция содержит повторяющиеся входы.</value>
+  </data>
+  <data name="TransactionNotFinal" xml:space="preserve">
+    <value>Транзакция пока не соответствует условиям включения в блок и не может быть отправлена в сеть.</value>
+  </data>
+  <data name="TransactionTooBig" xml:space="preserve">
+    <value>Транзакция слишком большая.</value>
+  </data>
+  <data name="WrongPassphrase" xml:space="preserve">
+    <value>Неверная парольная фраза.</value>
+  </data>
+  <data name="InvalidWalletName" xml:space="preserve">
+    <value>Недопустимое имя кошелька.</value>
+  </data>
+  <data name="WalletNameTaken" xml:space="preserve">
+    <value>Имя кошелька уже занято.</value>
+  </data>
+  <data name="BalanceNotAccurateServerConnection" xml:space="preserve">
+    <value>Отображаемый баланс может быть неточным, а некоторые функции недоступными, поскольку Ginger не удалось подключиться к серверу. Повторная попытка подключения.</value>
+  </data>
+  <data name="UpdateAvailable" xml:space="preserve">
+    <value>Доступно обновление.</value>
+  </data>
+  <data name="CloseAndUpdate" xml:space="preserve">
+    <value>Закрыть и обновить.</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="AskMeLater" xml:space="preserve">
+    <value>Напомнить позже</value>
+  </data>
+  <data name="IsRunning" xml:space="preserve">
+    <value>работает</value>
+  </data>
+  <data name="IsNotRunning" xml:space="preserve">
+    <value>не работает</value>
+  </data>
+  <data name="IsTurnedOff" xml:space="preserve">
+    <value>выключен</value>
+  </data>
+  <data name="IsConnected" xml:space="preserve">
+    <value>подключён</value>
+  </data>
+  <data name="IsNotConnected" xml:space="preserve">
+    <value>не подключён</value>
+  </data>
+  <data name="FullNodeConnecting" xml:space="preserve">
+    <value>Полный узел подключается...</value>
+  </data>
+  <data name="FullNodeSynchronized" xml:space="preserve">
+    <value>Полный узел синхронизирован</value>
+  </data>
+  <data name="FullNodeDownloadingBlocks" xml:space="preserve">
+    <value>Полный узел загружает блоки: {0}...</value>
+  </data>
+  <data name="FullNodeUnresponsive" xml:space="preserve">
+    <value>Полный узел не отвечает</value>
+  </data>
+  <data name="ApplicationRestartApplyChanges" xml:space="preserve">
+    <value>После нажатия «Продолжить» приложение перезапустится, чтобы применить изменения.</value>
+  </data>
+  <data name="WelcomeToGingerWallet" xml:space="preserve">
+    <value>Добро пожаловать в Ginger Wallet</value>
+  </data>
+  <data name="SelectPreferredLanguage" xml:space="preserve">
+    <value>Выберите предпочитаемый язык:</value>
+  </data>
+  <data name="CoinjoinFees" xml:space="preserve">
+    <value>Комиссии Coinjoin</value>
+  </data>
+  <data name="CoordinationFeeInfo" xml:space="preserve">
+    <value>Комиссия 0,3% взимается только с новых монет, участвующих в Coinjoin.</value>
+  </data>
+  <data name="CoordinationFee" xml:space="preserve">
+    <value>Комиссия координатора</value>
+  </data>
+  <data name="TransactionFee" xml:space="preserve">
+    <value>Комиссия за транзакцию</value>
+  </data>
+  <data name="TransactionFeeInfo" xml:space="preserve">
+    <value>Комиссии майнеров взимаются за каждый Coinjoin.</value>
+  </data>
+  <data name="PlebsDontPay" xml:space="preserve">
+    <value>Льгота для малых сумм</value>
+  </data>
+  <data name="PlebsDontPayInfo" xml:space="preserve">
+    <value>Комиссия координатора не взимается с монет размером не более 0,01 BTC.</value>
+  </data>
+  <data name="FriendsDontPay" xml:space="preserve">
+    <value>Друзья не платят</value>
+  </data>
+  <data name="FriendsDontPayInfo" xml:space="preserve">
+    <value>Комиссия координатора не взимается с монет, полученных из других Coinjoin в Ginger.</value>
+  </data>
+  <data name="GetStarted" xml:space="preserve">
+    <value>Начать</value>
+  </data>
+  <data name="AddressesAwaitingPayment" xml:space="preserve">
+    <value>Адреса, ожидающие оплаты</value>
+  </data>
+  <data name="EnterNamesForAddress" xml:space="preserve">
+    <value>Введите имена людей или названия компаний, которым вы передадите этот адрес</value>
+  </data>
+  <data name="ReceiveViewModelTitle" xml:space="preserve">
+    <value>Получить</value>
+  </data>
+  <data name="ReceiveViewModelCaption" xml:space="preserve">
+    <value>Показать диалог получения средств кошельком</value>
+  </data>
+  <data name="ReceiveViewModelKeywords" xml:space="preserve">
+    <value>Кошелёк, Получить, Действие</value>
+  </data>
+  <data name="AddressAwaitingPayment" xml:space="preserve">
+    <value>Адрес, ожидающий оплаты</value>
+  </data>
+  <data name="ShowOnHardwareWallet" xml:space="preserve">
+    <value>Показать на аппаратном кошельке</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Копировать</value>
+  </data>
+  <data name="UnableToSendAddressToDevice" xml:space="preserve">
+    <value>Не удалось отправить адрес на устройство</value>
+  </data>
+  <data name="ChooseHideModifyDisplayAddresses" xml:space="preserve">
+    <value>Вы можете скрыть, изменить или показать адреса из списка ниже</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Адрес</value>
+  </data>
+  <data name="Label" xml:space="preserve">
+    <value>Метка</value>
+  </data>
+  <data name="HideAddress" xml:space="preserve">
+    <value>Скрыть адрес</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Изменить</value>
+  </data>
+  <data name="QRCode" xml:space="preserve">
+    <value>QR-код</value>
+  </data>
+  <data name="WishToHideAddressWithLabels" xml:space="preserve">
+    <value>Скрыть адрес со следующими метками?</value>
+  </data>
+  <data name="ThisCannotBeUndone" xml:space="preserve">
+    <value>Это действие нельзя отменить.</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Да</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="EditSelectedAddressLabels" xml:space="preserve">
+    <value>Измените метки выбранного адреса здесь:</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="ChangesAppliedAfterRestart" xml:space="preserve">
+    <value>Изменения будут применены после перезапуска приложения.</value>
+  </data>
+  <data name="RestartApplication" xml:space="preserve">
+    <value>Перезапустить приложение</value>
+  </data>
+  <data name="ModifyingSettingsNotPossible" xml:space="preserve">
+    <value>Изменение настроек недоступно, поскольку некоторые параметры были переопределены при запуске.</value>
+  </data>
+  <data name="Advanced" xml:space="preserve">
+    <value>Дополнительные</value>
+  </data>
+  <data name="Security" xml:space="preserve">
+    <value>Безопасность</value>
+  </data>
+  <data name="ApplyNewSettingRestart" xml:space="preserve">
+    <value>Для применения новой настройки нужно перезапустить Ginger Wallet.</value>
+  </data>
+  <data name="DarkMode" xml:space="preserve">
+    <value>Тёмная тема</value>
+  </data>
+  <data name="RunAtStartup" xml:space="preserve">
+    <value>Запускать Ginger при включении компьютера</value>
+  </data>
+  <data name="RunInBackgroundWhenClosed" xml:space="preserve">
+    <value>Работать в фоновом режиме после закрытия окна</value>
+  </data>
+  <data name="AutoCopyAddresses" xml:space="preserve">
+    <value>Автоматически копировать адреса</value>
+  </data>
+  <data name="AutoPasteAddresses" xml:space="preserve">
+    <value>Автоматически вставлять адреса</value>
+  </data>
+  <data name="NetworkAnonymizationTor" xml:space="preserve">
+    <value>Анонимизация сети (Tor)</value>
+  </data>
+  <data name="CannotModifyWithTwoFactorEnabled" xml:space="preserve">
+    <value>Нельзя изменить при включённой двухфакторной аутентификации.</value>
+  </data>
+  <data name="TerminateTorWhenShutdown" xml:space="preserve">
+    <value>Завершать Tor при выходе из Ginger</value>
+  </data>
+  <data name="AutoDownloadNewVersion" xml:space="preserve">
+    <value>Автоматически загружать новую версию</value>
+  </data>
+  <data name="FeeDisplayUnit" xml:space="preserve">
+    <value>Единица отображения комиссии</value>
+  </data>
+  <data name="SetPreferredBrowserPath" xml:space="preserve">
+    <value>Укажите полный путь к предпочитаемому браузеру</value>
+  </data>
+  <data name="CustomBrowserPath" xml:space="preserve">
+    <value>Путь к другому браузеру</value>
+  </data>
+  <data name="OpenInBrowser" xml:space="preserve">
+    <value>Браузер для Ginger</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="CouldNotSaveChange" xml:space="preserve">
+    <value>Не удалось сохранить изменение. Подробности см. в журналах.</value>
+  </data>
+  <data name="Network" xml:space="preserve">
+    <value>Сеть</value>
+  </data>
+  <data name="RunBitcoinKnotsOnStartup" xml:space="preserve">
+    <value>(ЭКСПЕРИМЕНТАЛЬНО) Запускать Bitcoin Core при запуске приложения</value>
+  </data>
+  <data name="StopBitcoinKnotsOnShutdown" xml:space="preserve">
+    <value>Останавливать Bitcoin Core при выходе</value>
+  </data>
+  <data name="LocalBitcoinCoreKnotsVersion" xml:space="preserve">
+    <value>Локальная версия Bitcoin Core</value>
+  </data>
+  <data name="BitcoinCoreKnotsDataFolder" xml:space="preserve">
+    <value>Папка данных Bitcoin Core</value>
+  </data>
+  <data name="WasabiDownloadBlocksFromFullNode" xml:space="preserve">
+    <value>Ginger будет загружать блоки с полного узла, которым вы управляете.</value>
+  </data>
+  <data name="BitcoinP2PEndpoint" xml:space="preserve">
+    <value>Адрес Bitcoin P2P</value>
+  </data>
+  <data name="CoinsReceivedFromOthers" xml:space="preserve">
+    <value>Монеты, полученные от других людей на уже использованные адреса, не будут отображаться, если их сумма ниже этого значения. Это помогает предотвратить пылевые атаки.</value>
+  </data>
+  <data name="DustThreshold" xml:space="preserve">
+    <value>Порог пыли</value>
+  </data>
+  <data name="InvalidEndpoint" xml:space="preserve">
+    <value>Недопустимый адрес узла.</value>
+  </data>
+  <data name="UseDecimalPoint" xml:space="preserve">
+    <value>Используйте десятичную точку вместо запятой.</value>
+  </data>
+  <data name="InvalidDustThreshold" xml:space="preserve">
+    <value>Недопустимый порог пыли.</value>
+  </data>
+  <data name="EnableGPURendering" xml:space="preserve">
+    <value>При включении видеокарта (GPU) используется для отображения интерфейса. Использование GPU вместо CPU может повысить производительность.</value>
+  </data>
+  <data name="EnableGPU" xml:space="preserve">
+    <value>Включить GPU</value>
+  </data>
+  <data name="TwoFactorAuthentication" xml:space="preserve">
+    <value>Двухфакторная аутентификация</value>
+  </data>
+  <data name="OnlyAvailableWhenTorEnabled" xml:space="preserve">
+    <value>Доступно только при включённом Tor.</value>
+  </data>
+  <data name="SystemDefaultEnum" xml:space="preserve">
+    <value>Системный по умолчанию</value>
+  </data>
+  <data name="CustomEnum" xml:space="preserve">
+    <value>Другой</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Макс.:</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>Кому:</value>
+  </data>
+  <data name="ExampleBitcoinAddressOrPayjoinURI" xml:space="preserve">
+    <value>(например, адрес Bitcoin или URI payjoin)</value>
+  </data>
+  <data name="Paste" xml:space="preserve">
+    <value>Вставить</value>
+  </data>
+  <data name="ScanQRCode" xml:space="preserve">
+    <value>Сканировать QR-код</value>
+  </data>
+  <data name="AmountWithColom" xml:space="preserve">
+    <value>Сумма:</value>
+  </data>
+  <data name="RecipientWithColon" xml:space="preserve">
+    <value>Получатель:</value>
+  </data>
+  <data name="SendViewModelTitle" xml:space="preserve">
+    <value>Отправить</value>
+  </data>
+  <data name="SendViewModelCaption" xml:space="preserve">
+    <value>Показать диалог отправки средств кошельком</value>
+  </data>
+  <data name="SendViewModelKeywords" xml:space="preserve">
+    <value>Кошелёк, Отправить, Действие</value>
+  </data>
+  <data name="SendNow" xml:space="preserve">
+    <value>Отправить сейчас</value>
+  </data>
+  <data name="PreviewTransaction" xml:space="preserve">
+    <value>Предпросмотр транзакции</value>
+  </data>
+  <data name="PrivacyProtectedWithPayjoin" xml:space="preserve">
+    <value>Payjoin защищает вашу приватность.</value>
+  </data>
+  <data name="UndoLastModification" xml:space="preserve">
+    <value>Отменить последнее изменение</value>
+  </data>
+  <data name="TransactionInterlinksLabels" xml:space="preserve">
+    <value>Транзакция связывает метки:</value>
+  </data>
+  <data name="TransactionKnownAsYoursBy" xml:space="preserve">
+    <value>Кому известно, что транзакция ваша:</value>
+  </data>
+  <data name="EntitiesKnowThisIsYourTransaction" xml:space="preserve">
+    <value>Этим людям или организациям известно, что транзакция принадлежит вам. Выполните дополнительные Coinjoin или используйте управление метками, чтобы внимательно выбрать, кому будет известно, что эта транзакция ваша.</value>
+  </data>
+  <data name="TransactionUsesNonPrivateCoins" xml:space="preserve">
+    <value>Транзакция использует неприватные монеты.</value>
+  </data>
+  <data name="EntitiesCanDeanonymizeTransaction" xml:space="preserve">
+    <value>Некоторые люди или организации могут связать эту транзакцию с вами, поскольку она расходует неприватные монеты. Выполните дополнительные Coinjoin, чтобы получить достаточно приватных монет для этой транзакции.</value>
+  </data>
+  <data name="TransactionUsesSemiPrivateCoins" xml:space="preserve">
+    <value>Транзакция использует частично приватные монеты.</value>
+  </data>
+  <data name="TransactionNotPrivateEnough" xml:space="preserve">
+    <value>Эта транзакция недостаточно приватна, поскольку она расходует не полностью приватные монеты. Выполните дополнительные Coinjoin, чтобы получить достаточно приватных монет для этой транзакции.</value>
+  </data>
+  <data name="TransactionCreatesChange" xml:space="preserve">
+    <value>Транзакция создаёт сдачу.</value>
+  </data>
+  <data name="ChangeCanLinkTransactions" xml:space="preserve">
+    <value>Сдача может связать эту транзакцию со следующей транзакцией, которая её использует. Если получатель согласен, воспользуйтесь предложением избежать сдачи и отправьте немного больше или меньше, либо позже выполните Coinjoin для сдачи.</value>
+  </data>
+  <data name="TransactionConsolidatesCoins" xml:space="preserve">
+    <value>Транзакция объединяет более {0} монет.</value>
+  </data>
+  <data name="ReducePrivacyOfTransaction" xml:space="preserve">
+    <value>Это может снизить приватность вашей транзакции.</value>
+  </data>
+  <data name="TransactionUsesUnconfirmedCoins" xml:space="preserve">
+    <value>Транзакция использует неподтверждённые монеты.</value>
+  </data>
+  <data name="UnconfirmedCoinsMayCauseIssues" xml:space="preserve">
+    <value>Это может привести к отклонению транзакции, задержке подтверждения или лишним расходам для её подтверждения в нужное время. Дождитесь подтверждения, чтобы использовать только подтверждённые монеты.</value>
+  </data>
+  <data name="TransactionUsesCoinjoiningCoins" xml:space="preserve">
+    <value>Транзакция использует монеты, участвующие в Coinjoin.</value>
+  </data>
+  <data name="TransactionMayBeReplacedByCoinjoin" xml:space="preserve">
+    <value>Из-за этого ваша транзакция может быть заменена транзакцией Coinjoin. Дождитесь завершения текущего Coinjoin перед отправкой этой транзакции.</value>
+  </data>
+  <data name="ImproveThisTransaction" xml:space="preserve">
+    <value>Улучшите эту транзакцию:</value>
+  </data>
+  <data name="LabelManagement" xml:space="preserve">
+    <value>Управление метками</value>
+  </data>
+  <data name="ChooseLabelsForTransaction" xml:space="preserve">
+    <value>Выберите метки для связи с этой транзакцией.</value>
+  </data>
+  <data name="FullPrivacy" xml:space="preserve">
+    <value>Полная приватность</value>
+  </data>
+  <data name="SendSuggestion" xml:space="preserve">
+    <value>Отправить</value>
+  </data>
+  <data name="BetterPrivacy" xml:space="preserve">
+    <value>Повысить приватность</value>
+  </data>
+  <data name="ChangeAvoidance" xml:space="preserve">
+    <value>Избежать сдачи</value>
+  </data>
+  <data name="TransactionWellOptimized" xml:space="preserve">
+    <value>Эта транзакция хорошо оптимизирована.</value>
+  </data>
+  <data name="ReviewCoins" xml:space="preserve">
+    <value>Проверить монеты</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Сумма</value>
+  </data>
+  <data name="Recipient" xml:space="preserve">
+    <value>Получатель</value>
+  </data>
+  <data name="ChangeTransactionFeeOrConfirmationTime" xml:space="preserve">
+    <value>Изменить комиссию за транзакцию или время подтверждения</value>
+  </data>
+  <data name="ExpectedConfirmationTime" xml:space="preserve">
+    <value>Ожидаемое время подтверждения</value>
+  </data>
+  <data name="ConfirmationTimeEstimation" xml:space="preserve">
+    <value>Это лишь оценка на основе данных о транзакциях и блоках. Время подтверждения может измениться.</value>
+  </data>
+  <data name="Fee" xml:space="preserve">
+    <value>Комиссия</value>
+  </data>
+  <data name="SavePSBTFile" xml:space="preserve">
+    <value>Сохранить файл PSBT</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Подтвердить</value>
+  </data>
+  <data name="TransactionExport" xml:space="preserve">
+    <value>Экспорт транзакции</value>
+  </data>
+  <data name="UnableToExportPSBT" xml:space="preserve">
+    <value>Ginger Wallet не удалось экспортировать PSBT.</value>
+  </data>
+  <data name="TransactionBuilding" xml:space="preserve">
+    <value>Создание транзакции</value>
+  </data>
+  <data name="TransactionFeeExceedsPaymentAmount" xml:space="preserve">
+    <value>Транзакцию нельзя отправить, поскольку комиссия превышает сумму платежа.</value>
+  </data>
+  <data name="UnableToCreateTransaction" xml:space="preserve">
+    <value>Ginger Wallet не удалось создать транзакцию.</value>
+  </data>
+  <data name="InsufficientFundsForTransactionFee" xml:space="preserve">
+    <value>Недостаточно средств для оплаты комиссии транзакции.</value>
+  </data>
+  <data name="Transaction" xml:space="preserve">
+    <value>Транзакция</value>
+  </data>
+  <data name="UnableToSendTransaction" xml:space="preserve">
+    <value>Ginger Wallet не удалось отправить транзакцию.</value>
+  </data>
+  <data name="Camera" xml:space="preserve">
+    <value>Камера</value>
+  </data>
+  <data name="InternalError" xml:space="preserve">
+    <value>Внутренняя ошибка.</value>
+  </data>
+  <data name="InvalidInputLength" xml:space="preserve">
+    <value>Недопустимая длина ввода.</value>
+  </data>
+  <data name="InputTooLong" xml:space="preserve">
+    <value>Ввод слишком длинный.</value>
+  </data>
+  <data name="LightningAddressesNotSupported" xml:space="preserve">
+    <value>Адреса Lightning не поддерживаются.</value>
+  </data>
+  <data name="BitcoinAddressValidity" xml:space="preserve">
+    <value>Адрес Bitcoin подходит для {0}, но не для {1}.</value>
+  </data>
+  <data name="SetTransactionConfirmationPreference" xml:space="preserve">
+    <value>Укажите, как быстро должна подтвердиться транзакция.</value>
+  </data>
+  <data name="FeeRateSatPerVByte" xml:space="preserve">
+    <value>Ставка комиссии (sat/vByte)</value>
+  </data>
+  <data name="EstimatedConfirmationTime" xml:space="preserve">
+    <value>Оценка времени подтверждения</value>
+  </data>
+  <data name="TransactionFeeEstimationsUnavailable" xml:space="preserve">
+    <value>Оценки комиссии за транзакцию сейчас недоступны. Повторите попытку позже или введите ставку комиссии вручную.</value>
+  </data>
+  <data name="ChooseTransactionVisibility" xml:space="preserve">
+    <value>Выберите, кто сможет увидеть эту транзакцию, а кто нет.</value>
+  </data>
+  <data name="CouldSeeThisTransaction" xml:space="preserve">
+    <value>Могут увидеть эту транзакцию:</value>
+  </data>
+  <data name="CantSeeThisTransaction" xml:space="preserve">
+    <value>Не могут увидеть эту транзакцию:</value>
+  </data>
+  <data name="NoInformationAboutPeople" xml:space="preserve">
+    <value>Об этих людях нет сведений. Используйте только при необходимости!</value>
+  </data>
+  <data name="CoinControl" xml:space="preserve">
+    <value>Управление монетами</value>
+  </data>
+  <data name="RecoveryWordsViewCaption" xml:space="preserve">
+    <value>Запишите слова восстановления в правильном порядке и храните их в безопасном месте. Они нужны для восстановления кошелька.</value>
+  </data>
+  <data name="RecoveryWordsViewCopyRecoveryWords" xml:space="preserve">
+    <value>Копировать слова восстановления</value>
+  </data>
+  <data name="RecoveryWordsViewNotSeeAfter" xml:space="preserve">
+    <value>После создания кошелька вы больше не сможете увидеть эти слова.</value>
+  </data>
+  <data name="ConfirmRecoveryWordsViewModel" xml:space="preserve">
+    <value>Подтвердить слова восстановления</value>
+  </data>
+  <data name="ConfirmRecoveryWordsViewModelStoreSafely" xml:space="preserve">
+    <value>Надёжно храните парольную фразу: её нельзя восстановить в случае потери. Она нужна для открытия и восстановления кошелька и обеспечивает дополнительную защиту при использовании вместе со словами восстановления.</value>
+  </data>
+  <data name="ConfirmRecoveryWordsViewModelClickRecovery" xml:space="preserve">
+    <value>Нажмите слово восстановления №{0}</value>
+  </data>
+  <data name="RecoveryWords" xml:space="preserve">
+    <value>Слова восстановления</value>
+  </data>
+  <data name="VerifyRecoveryWords" xml:space="preserve">
+    <value>Проверить слова восстановления</value>
+  </data>
+  <data name="CreatePasswordDialogTypePassphrase" xml:space="preserve">
+    <value>Введите парольную фразу</value>
+  </data>
+  <data name="CreatePasswordDialogConfirmPassphrase" xml:space="preserve">
+    <value>Подтвердите парольную фразу</value>
+  </data>
+  <data name="PassphrasesNotMatch" xml:space="preserve">
+    <value>Парольные фразы не совпадают.</value>
+  </data>
+  <data name="TrimWarnMessage" xml:space="preserve">
+    <value>Пробелы в начале и в конце будут удалены!</value>
+  </data>
+  <data name="WhitespaceMessage" xml:space="preserve">
+    <value>Пробелы в начале и в конце недопустимы!</value>
+  </data>
+  <data name="AddPassphrase" xml:space="preserve">
+    <value>Добавить парольную фразу</value>
+  </data>
+  <data name="HardwareWallet" xml:space="preserve">
+    <value>Аппаратный кошелёк</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelCaption" xml:space="preserve">
+    <value>Подключите аппаратный кошелёк к компьютеру</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelEnterPassphrase" xml:space="preserve">
+    <value>При необходимости введите парольную фразу на аппаратном кошельке.</value>
+  </data>
+  <data name="HardwareWalletAuthDialogViewModelCaption" xml:space="preserve">
+    <value>Подключите аппаратный кошелёк, нажмите «Продолжить» и следуйте инструкциям на устройстве.</value>
+  </data>
+  <data name="Rescan" xml:space="preserve">
+    <value>Повторить поиск</value>
+  </data>
+  <data name="OpenWallet" xml:space="preserve">
+    <value>Открыть кошелёк</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelConnectPc" xml:space="preserve">
+    <value>Подключите аппаратный кошелёк к компьютеру / Введите PIN на устройстве.</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelMakeSureOnlyOne" xml:space="preserve">
+    <value>Убедитесь, что к компьютеру подключён только один аппаратный кошелёк.</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelAlreadyAdded" xml:space="preserve">
+    <value>Подключённый аппаратный кошелёк уже добавлен в программу. Нажмите ниже, чтобы открыть его, или «Повторить поиск», чтобы найти устройства заново.</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelEnterPassphraseOnDevice" xml:space="preserve">
+    <value>Введите парольную фразу на устройстве.</value>
+  </data>
+  <data name="ConnectHardwareWalletViewModelEnterPin" xml:space="preserve">
+    <value>Введите PIN на устройстве.</value>
+  </data>
+  <data name="TypeInYourRecoveryWords" xml:space="preserve">
+    <value>Введите слова восстановления в правильном порядке</value>
+  </data>
+  <data name="EnterPassphrase" xml:space="preserve">
+    <value>Введите парольную фразу</value>
+  </data>
+  <data name="RecoverWalletViewModelPassphraseMessage" xml:space="preserve">
+    <value>Если при создании кошелька вы использовали парольную фразу, введите её ниже. В противном случае оставьте поле пустым.</value>
+  </data>
+  <data name="AdvancedRecoveryOptionsViewModelTitle" xml:space="preserve">
+    <value>Дополнительные параметры восстановления</value>
+  </data>
+  <data name="AdvancedRecoveryOptionsViewModelMinimumGapLimit" xml:space="preserve">
+    <value>Минимальный запас неиспользованных адресов:</value>
+  </data>
+  <data name="PeersConnected" xml:space="preserve">
+    <value>Подключено: {0}</value>
+  </data>
+  <data name="AmountLessThanTotalSupply" xml:space="preserve">
+    <value>Сумма должна быть меньше максимального количества BTC.</value>
+  </data>
+  <data name="InsufficientFunds" xml:space="preserve">
+    <value>Недостаточно средств для запрошенной суммы.</value>
+  </data>
+  <data name="AmountMoreThanZero" xml:space="preserve">
+    <value>Сумма должна быть больше 0 BTC.</value>
+  </data>
+  <data name="InvalidBTCAddressOrURI" xml:space="preserve">
+    <value>Введите действительный адрес BTC или URI.</value>
+    <comment>mycomment</comment>
+  </data>
+  <data name="PayjoinNotPossibleWithHardwareWallets" xml:space="preserve">
+    <value>Payjoin недоступен для аппаратных кошельков.</value>
+  </data>
+  <data name="TermsAndConditionsViewCaption" xml:space="preserve">
+    <value>Чтобы продолжить использование Ginger, примите условия использования</value>
+  </data>
+  <data name="TermsAndConditionsViewTermsAndConditions" xml:space="preserve">
+    <value>Условия использования</value>
+  </data>
+  <data name="TermsAndConditionsViewIAgree" xml:space="preserve">
+    <value>Я _принимаю</value>
+  </data>
+  <data name="ResyncWallet" xml:space="preserve">
+    <value>Повторно синхронизировать кошелёк</value>
+  </data>
+  <data name="ApplicationRestartRescan" xml:space="preserve">
+    <value>Приложение перезапустится, и при повторном открытии кошелька начнётся сканирование. Это может занять некоторое время в зависимости от количества транзакций в кошельке.</value>
+  </data>
+  <data name="ProceedConfirmation" xml:space="preserve">
+    <value>Продолжить?</value>
+  </data>
+  <data name="TransactionID" xml:space="preserve">
+    <value>Идентификатор транзакции</value>
+  </data>
+  <data name="Index" xml:space="preserve">
+    <value>Индекс</value>
+  </data>
+  <data name="CoinDetails" xml:space="preserve">
+    <value>Сведения о монете</value>
+  </data>
+  <data name="SelfCoinJoinToolTip" xml:space="preserve">
+    <value>В этом Coinjoin большинство монет принадлежит вам. Это значительно уменьшит прирост приватности. Рассмотрите участие с меньшим количеством кошельков, пока не присоединятся другие участники.</value>
+  </data>
+  <data name="AuthCodePrompt" xml:space="preserve">
+    <value>Отсканируйте QR-код ниже в приложении аутентификации, затем введите код подтверждения.</value>
+  </data>
+  <data name="Verify" xml:space="preserve">
+    <value>Проверить</value>
+  </data>
+  <data name="TwoFactorSetup" xml:space="preserve">
+    <value>Настройка двухфакторной аутентификации</value>
+  </data>
+  <data name="TokenVerificationFailed" xml:space="preserve">
+    <value>Не удалось проверить токен. Подробности см. в журналах.</value>
+  </data>
+  <data name="TwoFactorAuthenticationWithCapitals" xml:space="preserve">
+    <value>Двухфакторная аутентификация</value>
+  </data>
+  <data name="TransactionFeeRate" xml:space="preserve">
+    <value>_Ставка комиссии за транзакцию:</value>
+  </data>
+  <data name="InvalidFee" xml:space="preserve">
+    <value>Введена недопустимая комиссия.</value>
+  </data>
+  <data name="MinFeeLimit" xml:space="preserve">
+    <value>Значение не может быть ниже 1 sat/vByte.</value>
+  </data>
+  <data name="FeeTooHigh" xml:space="preserve">
+    <value>Введённая комиссия слишком высокая.</value>
+  </data>
+  <data name="ExcludedCoinsViewModelCaption" xml:space="preserve">
+    <value>Показать монеты, исключённые из Coinjoin</value>
+  </data>
+  <data name="ExcludedCoinsViewModelKeywords" xml:space="preserve">
+    <value>Кошелёк, Исключить, Монеты, Coinjoin, Заморозить, UTXO</value>
+  </data>
+  <data name="WalletCoinsViewModelCaption" xml:space="preserve">
+    <value>Показать монеты кошелька</value>
+  </data>
+  <data name="WalletCoinsViewModelKeywords" xml:space="preserve">
+    <value>Кошелёк, Монеты, UTXO</value>
+  </data>
+  <data name="WalletStatsViewModelCaption" xml:space="preserve">
+    <value>Показать статистику кошелька</value>
+  </data>
+  <data name="WalletStatsViewModelKeywords" xml:space="preserve">
+    <value>Кошелёк, Статистика</value>
+  </data>
+  <data name="WalletInfoViewModelCaption" xml:space="preserve">
+    <value>Показать сведения о кошельке</value>
+  </data>
+  <data name="WalletInfoViewModelKeywords" xml:space="preserve">
+    <value>Кошелёк, Сведения</value>
+  </data>
+  <data name="ExcludeCoinjoinDescription" xml:space="preserve">
+    <value>Выбранные монеты будут исключены из Coinjoin. Приватность этих монет не будет повышаться.</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Статус</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Дата</value>
+  </data>
+  <data name="WalletCoinsDescription" xml:space="preserve">
+    <value>Список монет, которыми вы владеете.</value>
+  </data>
+  <data name="NumberOfCoins" xml:space="preserve">
+    <value>Количество монет (UTXO)</value>
+  </data>
+  <data name="UnconfirmedBalance" xml:space="preserve">
+    <value>Неподтверждённый баланс</value>
+  </data>
+  <data name="ConfirmedBalance" xml:space="preserve">
+    <value>Подтверждённый баланс</value>
+  </data>
+  <data name="TotalBalance" xml:space="preserve">
+    <value>Общий баланс</value>
+  </data>
+  <data name="TotalTransactions" xml:space="preserve">
+    <value>Общее количество транзакций</value>
+  </data>
+  <data name="NonCoinjoinTransactions" xml:space="preserve">
+    <value>Количество транзакций без Coinjoin</value>
+  </data>
+  <data name="CoinjoinTransactions" xml:space="preserve">
+    <value>Количество транзакций Coinjoin</value>
+  </data>
+  <data name="NumberOfAddresses" xml:space="preserve">
+    <value>Количество адресов</value>
+  </data>
+  <data name="NumberOfCleanAddresses" xml:space="preserve">
+    <value>Количество чистых адресов</value>
+  </data>
+  <data name="NumberOfLockedAddresses" xml:space="preserve">
+    <value>Количество заблокированных адресов</value>
+  </data>
+  <data name="NumberOfUsedAddresses" xml:space="preserve">
+    <value>Количество использованных адресов</value>
+  </data>
+  <data name="ExtendedMasterPrivateKey" xml:space="preserve">
+    <value>Расширенный приватный мастер-ключ</value>
+  </data>
+  <data name="ExtendedMasterZprv" xml:space="preserve">
+    <value>Расширенный мастер-ключ (zprv)</value>
+  </data>
+  <data name="ExtendedMasterFingerprint" xml:space="preserve">
+    <value>Отпечаток мастер-ключа</value>
+  </data>
+  <data name="AccountKeyPathSegWit" xml:space="preserve">
+    <value>Путь деривации аккаунта (SegWit)</value>
+  </data>
+  <data name="AccountKeyPathTaproot" xml:space="preserve">
+    <value>Путь деривации аккаунта (Taproot)</value>
+  </data>
+  <data name="ExtendedAccountPrivateKeyXpriv" xml:space="preserve">
+    <value>Расширенный приватный ключ аккаунта xpriv</value>
+  </data>
+  <data name="PublicExternalOutputDescriptor" xml:space="preserve">
+    <value>Дескриптор получения с публичными ключами</value>
+  </data>
+  <data name="PublicInternalOutputDescriptor" xml:space="preserve">
+    <value>Дескриптор сдачи с публичными ключами</value>
+  </data>
+  <data name="PrivateExternalOutputDescriptor" xml:space="preserve">
+    <value>Дескриптор получения с приватными ключами</value>
+  </data>
+  <data name="PrivateInternalOutputDescriptor" xml:space="preserve">
+    <value>Дескриптор сдачи с приватными ключами</value>
+  </data>
+  <data name="ExtendedAccountPublicKeySegWit" xml:space="preserve">
+    <value>Расширенный публичный ключ аккаунта (SegWit)</value>
+  </data>
+  <data name="ExtendedAccountPublicKeyTaproot" xml:space="preserve">
+    <value>Расширенный публичный ключ аккаунта (Taproot)</value>
+  </data>
+  <data name="HideSensitiveData" xml:space="preserve">
+    <value>Скрыть конфиденциальные данные</value>
+  </data>
+  <data name="ShowSensitiveData" xml:space="preserve">
+    <value>Показать конфиденциальные данные</value>
+  </data>
+  <data name="DateTime" xml:space="preserve">
+    <value>Дата / время</value>
+  </data>
+  <data name="DestinationAddresses" xml:space="preserve">
+    <value>Адреса назначения</value>
+  </data>
+  <data name="FeeRate" xml:space="preserve">
+    <value>Ставка комиссии</value>
+  </data>
+  <data name="Confirmed" xml:space="preserve">
+    <value>Подтверждено</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Ожидает подтверждения</value>
+  </data>
+  <data name="Confirmations" xml:space="preserve">
+    <value>(подтверждений: {0})</value>
+  </data>
+  <data name="BlockHash" xml:space="preserve">
+    <value>Хэш блока</value>
+  </data>
+  <data name="BlockHeight" xml:space="preserve">
+    <value>Высота блока</value>
+  </data>
+  <data name="TransactionDetails" xml:space="preserve">
+    <value>Сведения о транзакции</value>
+  </data>
+  <data name="AmountSent" xml:space="preserve">
+    <value>Отправленная сумма</value>
+  </data>
+  <data name="AmountReceived" xml:space="preserve">
+    <value>Полученная сумма</value>
+  </data>
+  <data name="Fees" xml:space="preserve">
+    <value>Комиссии</value>
+  </data>
+  <data name="CoinjoinDetails" xml:space="preserve">
+    <value>Сведения о Coinjoin</value>
+  </data>
+  <data name="NumberOfTransactions" xml:space="preserve">
+    <value>Количество транзакций</value>
+  </data>
+  <data name="TransactionIDs" xml:space="preserve">
+    <value>Идентификаторы транзакций</value>
+  </data>
+  <data name="Incoming" xml:space="preserve">
+    <value>Входящие</value>
+  </data>
+  <data name="Outgoing" xml:space="preserve">
+    <value>Исходящие</value>
+  </data>
+  <data name="SelfTransfer" xml:space="preserve">
+    <value>Перевод себе</value>
+  </data>
+  <data name="Coinjoins" xml:space="preserve">
+    <value>Coinjoin</value>
+  </data>
+  <data name="Cancellation" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="Accelerator" xml:space="preserve">
+    <value>Ускорение</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>Сегодня</value>
+  </data>
+  <data name="Yesterday" xml:space="preserve">
+    <value>Вчера</value>
+  </data>
+  <data name="PendingConfirmingIn" xml:space="preserve">
+    <value>Ожидает подтверждения (≈ {0})</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Неизвестно</value>
+  </data>
+  <data name="ConfirmedWithConfirmationCount" xml:space="preserve">
+    <value>Подтверждено (подтверждений: {0}{1})</value>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>Менее</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>больше</value>
+  </data>
+  <data name="Less" xml:space="preserve">
+    <value>меньше</value>
+  </data>
+  <data name="TheSameAmount" xml:space="preserve">
+    <value>та же сумма</value>
+  </data>
+  <data name="EditLabels" xml:space="preserve">
+    <value>Изменить метки</value>
+  </data>
+  <data name="UnknownPeople" xml:space="preserve">
+    <value>Неизвестные люди</value>
+  </data>
+  <data name="PrivateCoins" xml:space="preserve">
+    <value>Приватные монеты</value>
+  </data>
+  <data name="SemiPrivateCoins" xml:space="preserve">
+    <value>Частично приватные монеты</value>
+  </data>
+  <data name="Coinjoining" xml:space="preserve">
+    <value>Участвует в Coinjoin</value>
+  </data>
+  <data name="NotCoinjoining" xml:space="preserve">
+    <value>Не участвует в Coinjoin</value>
+  </data>
+  <data name="ExcludedFromCoinjoins" xml:space="preserve">
+    <value>Исключено из Coinjoin</value>
+  </data>
+  <data name="ConfirmationCount" xml:space="preserve">
+    <value>Подтверждений: {0}{1}</value>
+  </data>
+  <data name="CantParticipateInCoinjoinUntil" xml:space="preserve">
+    <value>Участие в Coinjoin недоступно до: {0}</value>
+  </data>
+  <data name="AnonymityScore" xml:space="preserve">
+    <value>Оценка анонимности</value>
+  </data>
+  <data name="EstimatedConfirmationTimeWithValue" xml:space="preserve">
+    <value>Оценка времени подтверждения: {0}</value>
+  </data>
+  <data name="FeeRateFormatted" xml:space="preserve">
+    <value>Ставка комиссии: {0:0} sat/vByte</value>
+  </data>
+  <data name="Fastest" xml:space="preserve">
+    <value>самое быстрое</value>
+  </data>
+  <data name="min" xml:space="preserve">
+    <value>мин.</value>
+  </data>
+  <data name="DisabledEnum" xml:space="preserve">
+    <value>Выключено</value>
+  </data>
+  <data name="EnabledEnum" xml:space="preserve">
+    <value>Включено</value>
+  </data>
+  <data name="EnabledOnlyRunningEnum" xml:space="preserve">
+    <value>Включено (только подключение)</value>
+  </data>
+  <data name="WouldYouLikeToPersonalizeIt" xml:space="preserve">
+    <value>Хотите настроить под себя?</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Выключено</value>
+  </data>
+  <data name="Weeks" xml:space="preserve">
+    <value>Недели</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>Дни</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Приватность</value>
+  </data>
+  <data name="CostEfficiency" xml:space="preserve">
+    <value>Экономичность</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Другое</value>
+  </data>
+  <data name="RandomSkip" xml:space="preserve">
+    <value>Случайный пропуск раундов</value>
+  </data>
+  <data name="Months" xml:space="preserve">
+    <value>Месяцы</value>
+  </data>
+  <data name="Often" xml:space="preserve">
+    <value>Часто</value>
+  </data>
+  <data name="Sometimes" xml:space="preserve">
+    <value>Иногда</value>
+  </data>
+  <data name="Rarely" xml:space="preserve">
+    <value>Редко</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Часы</value>
+  </data>
+  <data name="Announcements" xml:space="preserve">
+    <value>Объявления</value>
+  </data>
+  <data name="MarkAllAsRead" xml:space="preserve">
+    <value>Отметить все как прочитанные</value>
+  </data>
+  <data name="LabelsWatermarkText" xml:space="preserve">
+    <value>Человек или компания, например Alice, Bob, Pizza Inc</value>
+  </data>
+  <data name="ValidationErrorNotNumber" xml:space="preserve">
+    <value>Не число.</value>
+  </data>
+  <data name="ValidationErrorNotInRange" xml:space="preserve">
+    <value>Значение должно быть между {0} и {1}.</value>
+  </data>
+  <data name="CoinJoinCoinSelection" xml:space="preserve">
+    <value>Выбор монет</value>
+  </data>
+  <data name="ExperimentalCoinJoinCoinSelector" xml:space="preserve">
+    <value>(ЭКСПЕРИМЕНТАЛЬНО) Улучшенный выбор монет</value>
+  </data>
+  <data name="ForceUsingLowPrivacyCoinsInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Обязательно использовать монеты с низкой приватностью</value>
+  </data>
+  <data name="ForceUsingLowPrivacyCoinsInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>Выбор должен содержать хотя бы одну из монет с самой низкой приватностью.</value>
+  </data>
+  <data name="WeightedAnonymityLossNormalInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Нормализация разницы приватности монет для расчёта оценки</value>
+  </data>
+  <data name="WeightedAnonymityLossNormalInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>При меньшем значении алгоритм выбора предпочитает монеты с меньшей разницей в оценке приватности.</value>
+  </data>
+  <data name="ValueLossRateNormalInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Нормализация потери суммы для расчёта оценки</value>
+  </data>
+  <data name="ValueLossRateNormalInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>При меньшем значении алгоритм выбора предпочитает наборы монет с меньшей долей потери суммы.</value>
+  </data>
+  <data name="TargetCoinCountPerBucketInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Целевое количество монет в каждой группе кошелька</value>
+  </data>
+  <data name="TargetCoinCountPerBucketInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>Алгоритм выбора предпочитает монеты из переполненных групп (диапазоны 10k.., 20k.., 40k.. и т. д. сатоши).</value>
+  </data>
+  <data name="UseOldCoinSelectorAsFallbackInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Использовать старый алгоритм выбора монет как запасной</value>
+  </data>
+  <data name="UseOldCoinSelectorAsFallbackInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>Будут использованы старый и новый алгоритмы выбора монет, после чего будет выбран лучший результат.</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>Конфигурация</value>
+  </data>
+  <data name="Buy" xml:space="preserve">
+    <value>Купить</value>
+  </data>
+  <data name="Sell" xml:space="preserve">
+    <value>Продать</value>
+  </data>
+  <data name="Broadcast" xml:space="preserve">
+    <value>Трансляция</value>
+  </data>
+  <data name="CountryOfResidenceRequired" xml:space="preserve">
+    <value>Страна проживания нужна для соблюдения нормативных требований и обработки транзакции</value>
+  </data>
+  <data name="RegionSelection" xml:space="preserve">
+    <value>Выбор региона</value>
+  </data>
+  <data name="BuyBitcoin" xml:space="preserve">
+    <value>Купить Bitcoin</value>
+  </data>
+  <data name="NoOfferForAmount" xml:space="preserve">
+    <value>Не удалось найти предложения для указанной суммы.</value>
+  </data>
+  <data name="AmountCannotExceed" xml:space="preserve">
+    <value>Сумма не может превышать {0}.</value>
+  </data>
+  <data name="AmountMustBeAtLeast" xml:space="preserve">
+    <value>Сумма должна быть не менее {0}.</value>
+  </data>
+  <data name="ServiceNotAvailable" xml:space="preserve">
+    <value>Сервис сейчас недоступен. Повторите попытку позже.</value>
+  </data>
+  <data name="EnterAmountForOffers" xml:space="preserve">
+    <value>Введите сумму, и мы подберём лучшие предложения.</value>
+  </data>
+  <data name="BuyAmountWatermark" xml:space="preserve">
+    <value>Введите сумму...</value>
+  </data>
+  <data name="PreviousOrders" xml:space="preserve">
+    <value>Предыдущие заказы</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Все</value>
+  </data>
+  <data name="Offers" xml:space="preserve">
+    <value>Предложения</value>
+  </data>
+  <data name="InvalidBTCAddress" xml:space="preserve">
+    <value>Указан недействительный адрес BTC.</value>
+  </data>
+  <data name="Browser" xml:space="preserve">
+    <value>Браузер</value>
+  </data>
+  <data name="BrowserError" xml:space="preserve">
+    <value>Ginger Wallet не удалось открыть браузер. Подробности см. в журналах.</value>
+  </data>
+  <data name="AMLKYCNotice" xml:space="preserve">
+    <value>Нажимая «Принять», я подтверждаю, что сторонний поставщик впоследствии может потребовать проверку AML/KYC для этой транзакции.</value>
+  </data>
+  <data name="Accept" xml:space="preserve">
+    <value>Принять</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>Оплата</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Поставщик</value>
+  </data>
+  <data name="PastOrdersDetails" xml:space="preserve">
+    <value>Вы можете отслеживать предыдущие заказы, управлять ими и просматривать их подробности.</value>
+  </data>
+  <data name="Created" xml:space="preserve">
+    <value>Создано</value>
+  </data>
+  <data name="TransactionOnHold" xml:space="preserve">
+    <value>Ваша транзакция приостановлена. Обратитесь в поддержку.</value>
+  </data>
+  <data name="Refunded" xml:space="preserve">
+    <value>Возвращено</value>
+  </data>
+  <data name="Expired" xml:space="preserve">
+    <value>Срок истёк</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>Сбой</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Завершено</value>
+  </data>
+  <data name="OpenLink" xml:space="preserve">
+    <value>Открыть ссылку</value>
+  </data>
+  <data name="OrderDetails" xml:space="preserve">
+    <value>Сведения о заказе</value>
+  </data>
+  <data name="CountryWithColon" xml:space="preserve">
+    <value>Страна:</value>
+  </data>
+  <data name="StateWithColon" xml:space="preserve">
+    <value>Штат:</value>
+  </data>
+  <data name="TotalCostIncludesFee" xml:space="preserve">
+    <value>Общая стоимость {0} включает комиссию {1}.</value>
+  </data>
+  <data name="SellBitcoin" xml:space="preserve">
+    <value>Продать Bitcoin</value>
+  </data>
+  <data name="ReceiveInWithColom" xml:space="preserve">
+    <value>Получить в:</value>
+  </data>
+  <data name="SellSuccessText1" xml:space="preserve">
+    <value>Следуйте инструкциям на странице поставщика. На одном из шагов вы получите</value>
+  </data>
+  <data name="SellSuccessText2" xml:space="preserve">
+    <value>адрес</value>
+  </data>
+  <data name="SellSuccessText3" xml:space="preserve">
+    <value>и</value>
+  </data>
+  <data name="SellSuccessText4" xml:space="preserve">
+    <value>точную сумму</value>
+  </data>
+  <data name="SellSuccessText5" xml:space="preserve">
+    <value>для отправки. Вернитесь сюда, когда получите оба значения.</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Тип</value>
+  </data>
+  <data name="Generate" xml:space="preserve">
+    <value>Создать</value>
+  </data>
+  <data name="ErrorAddingWallet" xml:space="preserve">
+    <value>При добавлении кошелька произошла ошибка.</value>
+  </data>
+  <data name="DetectedConfirmation" xml:space="preserve">
+    <value>Обнаружено: {0}. Всё верно?</value>
+  </data>
+  <data name="TermsAndConditions" xml:space="preserve">
+    <value>Условия использования</value>
+  </data>
+  <data name="WalletImportFailed" xml:space="preserve">
+    <value>Ginger Wallet не удалось импортировать кошелёк.</value>
+  </data>
+  <data name="AllCoinsConfirmed" xml:space="preserve">
+    <value>Все монеты подтверждены.</value>
+  </data>
+  <data name="CoinsWaitingForConfirmation" xml:space="preserve">
+    <value>Ожидают подтверждения монеты: {0}.</value>
+  </data>
+  <data name="CoinsCantParticipateCoinJoin" xml:space="preserve">
+    <value>Некоторые монеты не могут участвовать в Coinjoin.</value>
+  </data>
+  <data name="SourceCodeGitHub" xml:space="preserve">
+    <value>Исходный код (GitHub)</value>
+  </data>
+  <data name="WebsiteClearnet" xml:space="preserve">
+    <value>Сайт (Clearnet)</value>
+  </data>
+  <data name="BugReport" xml:space="preserve">
+    <value>Сообщить об ошибке</value>
+  </data>
+  <data name="FAQ" xml:space="preserve">
+    <value>Частые вопросы</value>
+  </data>
+  <data name="MITLicense" xml:space="preserve">
+    <value>Лицензия MIT</value>
+  </data>
+  <data name="AdvancedInformation" xml:space="preserve">
+    <value>Сведения о версии</value>
+  </data>
+  <data name="CompatibleCoordinatorVersions" xml:space="preserve">
+    <value>Совместимые версии координатора</value>
+  </data>
+  <data name="CurrentCoordinatorVersion" xml:space="preserve">
+    <value>Текущая версия координатора</value>
+  </data>
+  <data name="CompatibleBitcoinCoreKnotsVersion" xml:space="preserve">
+    <value>Совместимая версия Bitcoin Core</value>
+  </data>
+  <data name="CompatibleHardwareWalletInterfaceVersion" xml:space="preserve">
+    <value>Совместимая версия HWI</value>
+  </data>
+  <data name="PrivacyProgress" xml:space="preserve">
+    <value>Прогресс приватности</value>
+  </data>
+  <data name="HoverOverRingSegments" xml:space="preserve">
+    <value>Наведите указатель на сегменты кольца, чтобы увидеть сведения о монетах</value>
+  </data>
+  <data name="Private" xml:space="preserve">
+    <value>Приватные</value>
+  </data>
+  <data name="SemiPrivate" xml:space="preserve">
+    <value>Частично приватные</value>
+  </data>
+  <data name="NonPrivate" xml:space="preserve">
+    <value>Неприватные</value>
+  </data>
+  <data name="PleaseWaitToShutDown" xml:space="preserve">
+    <value>Завершение работы</value>
+  </data>
+  <data name="GingerUnableToCloseCoinJoinInProgress" xml:space="preserve">
+    <value>Ginger сейчас не может закрыться. Выполняется Coinjoin.</value>
+  </data>
+  <data name="ThisMayTakeAFewMinutes" xml:space="preserve">
+    <value>Это может занять несколько минут. Ginger закроется автоматически после завершения.</value>
+  </data>
+  <data name="TransactionAlreadyConfirmed" xml:space="preserve">
+    <value>Транзакция уже подтверждена.</value>
+  </data>
+  <data name="GingerWalletUnableToSpeedUpTransaction" xml:space="preserve">
+    <value>Ginger Wallet не удалось ускорить транзакцию.</value>
+  </data>
+  <data name="SpeedingUpTransactionCostAmount" xml:space="preserve">
+    <value>Ускорение этой транзакции обойдётся вам в</value>
+  </data>
+  <data name="SpeedingUpTransactionDeductFromRecipient" xml:space="preserve">
+    <value>При ускорении этой транзакции из суммы получателя будет вычтено</value>
+  </data>
+  <data name="Appearance" xml:space="preserve">
+    <value>Внешний вид</value>
+  </data>
+  <data name="AppearanceThemeKeywords" xml:space="preserve">
+    <value>Чёрный, Белый, Тема, Тёмная, Светлая</value>
+  </data>
+  <data name="RunInBackgroundKeywords" xml:space="preserve">
+    <value>скрыть, трей</value>
+  </data>
+  <data name="RunAtStartupKeywords" xml:space="preserve">
+    <value>автозапуск, загрузка</value>
+  </data>
+  <data name="NoResults" xml:space="preserve">
+    <value>Нет результатов</value>
+  </data>
+  <data name="CriticalUpdateRequired" xml:space="preserve">
+    <value>Требуется критическое обновление</value>
+  </data>
+  <data name="VersionReadyToInstall" xml:space="preserve">
+    <value>Версия {0} готова к установке</value>
+  </data>
+  <data name="VersionAvailable" xml:space="preserve">
+    <value>Доступна версия {0}</value>
+  </data>
+  <data name="Peers" xml:space="preserve">
+    <value>Узлы сети</value>
+  </data>
+  <data name="BroadcastTransaction" xml:space="preserve">
+    <value>Отправить транзакцию в сеть</value>
+  </data>
+  <data name="UnableToBroadcastTransaction" xml:space="preserve">
+    <value>Не удалось отправить транзакцию в сеть.</value>
+  </data>
+  <data name="ImportTransactionFileDialogTitle" xml:space="preserve">
+    <value>Импорт транзакции</value>
+  </data>
+  <data name="UnableToLoadTransaction" xml:space="preserve">
+    <value>Не удалось загрузить транзакцию.</value>
+  </data>
+  <data name="ClipboardEmpty" xml:space="preserve">
+    <value>Буфер обмена пуст!</value>
+  </data>
+  <data name="UnableToPasteTransaction" xml:space="preserve">
+    <value>Не удалось вставить транзакцию.</value>
+  </data>
+  <data name="CancellationFailed" xml:space="preserve">
+    <value>Не удалось отменить</value>
+  </data>
+  <data name="GingerWalletUnableToCancelTransaction" xml:space="preserve">
+    <value>Ginger Wallet не удалось отменить транзакцию.</value>
+  </data>
+  <data name="SpeedUpFailed" xml:space="preserve">
+    <value>Не удалось ускорить</value>
+  </data>
+  <data name="AuthorizationFailed" xml:space="preserve">
+    <value>Авторизация не удалась. Повторите попытку.</value>
+  </data>
+  <data name="AuthorizeWithHardwareWallet" xml:space="preserve">
+    <value>Авторизоваться с аппаратным кошельком</value>
+  </data>
+  <data name="AuthorizationFailedWithDeviceCheck" xml:space="preserve">
+    <value>Авторизация не удалась.{0}Проверьте устройство и повторите попытку.</value>
+  </data>
+  <data name="EnterPassphraseAuth" xml:space="preserve">
+    <value>Введите парольную фразу</value>
+  </data>
+  <data name="IncorrectPassphrase" xml:space="preserve">
+    <value>Неверная парольная фраза.{0}Повторите попытку.</value>
+  </data>
+  <data name="SelectAllowedCoins" xml:space="preserve">
+    <value>Выберите монеты, которые разрешено использовать в транзакции</value>
+  </data>
+  <data name="RenameWallet" xml:space="preserve">
+    <value>Переименовать кошелёк</value>
+  </data>
+  <data name="WalletCannotBeRenamed" xml:space="preserve">
+    <value>Нельзя переименовать кошелёк в {0}</value>
+  </data>
+  <data name="GingerWalletUnableToOpenFile" xml:space="preserve">
+    <value>Ginger Wallet не удалось открыть файл.</value>
+  </data>
+  <data name="FoundIn" xml:space="preserve">
+    <value>Найдено в «{0}»</value>
+  </data>
+  <data name="IncorrectPassphraseRetry" xml:space="preserve">
+    <value>Неверная парольная фраза! Повторите попытку.</value>
+  </data>
+  <data name="AcceptTermsAndConditions" xml:space="preserve">
+    <value>Необходимо принять условия использования!</value>
+  </data>
+  <data name="CompatibilityPassphraseUsed" xml:space="preserve">
+    <value>Использована парольная фраза для совместимости! Рассмотрите создание нового кошелька, чтобы обеспечить возможность восстановления!</value>
+  </data>
+  <data name="PassphraseTooLong" xml:space="preserve">
+    <value>Парольная фраза слишком длинная.</value>
+  </data>
+  <data name="WalletSettingsKeywords" xml:space="preserve">
+    <value>Кошелёк, Настройки</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+  <data name="VerifyRecoveryWordsErrorMessage" xml:space="preserve">
+    <value>Повторите попытку. Если вы не можете проверить слова восстановления, НЕОБХОДИМО как можно скорее перевести средства в новый кошелёк.</value>
+  </data>
+  <data name="VerifyRecoveryWordsErrorCaption" xml:space="preserve">
+    <value>Введены неверные слова восстановления.</value>
+  </data>
+  <data name="InvalidRecoveryWords" xml:space="preserve">
+    <value>Недействительные слова восстановления.</value>
+  </data>
+  <data name="UnableToVerifyRecoveryWords" xml:space="preserve">
+    <value>Ginger Wallet не удалось проверить слова восстановления.</value>
+  </data>
+  <data name="AfterDeductingFee" xml:space="preserve">
+    <value>После вычета комиссии {0} вы получите {1} — дополнительных платежей нет.</value>
+  </data>
+  <data name="UnableToRecoverWallet" xml:space="preserve">
+    <value>Ginger Wallet не удалось восстановить кошелёк.</value>
+  </data>
+  <data name="InvalidSetRecoveryWords" xml:space="preserve">
+    <value>Недействительный набор. Убедитесь, что все слова восстановления введены в правильном порядке.</value>
+  </data>
+  <data name="FailedToGetLegalDocuments" xml:space="preserve">
+    <value>Не удалось получить правовые документы.</value>
+  </data>
+  <data name="MustBeNumberBetween" xml:space="preserve">
+    <value>Введите число между {0} и {1}.</value>
+  </data>
+  <data name="InitializeDeviceFirst" xml:space="preserve">
+    <value>Сначала инициализируйте устройство.</value>
+  </data>
+  <data name="CheckDeviceAndFinishInitialization" xml:space="preserve">
+    <value>Проверьте устройство и завершите инициализацию.</value>
+  </data>
+  <data name="SomethingHappenedWithDevice" xml:space="preserve">
+    <value>Возникла проблема с устройством. Разблокируйте его с помощью PIN/парольной фразы или заново подключите к компьютеру.</value>
+  </data>
+  <data name="ExportTransaction" xml:space="preserve">
+    <value>Экспортировать транзакцию</value>
+  </data>
+  <data name="SaveQRCode" xml:space="preserve">
+    <value>Сохранить QR-код</value>
+  </data>
+  <data name="ByAmount" xml:space="preserve">
+    <value>на {0}</value>
+  </data>
+  <data name="AppearanceSettingsTabViewModelCaption" xml:space="preserve">
+    <value>Управление настройками внешнего вида</value>
+  </data>
+  <data name="AppearanceSettingsTabViewModelKeywords" xml:space="preserve">
+    <value>Настройки, Внешний вид, Bitcoin, Тёмный, Режим, Комиссия, Отображение, Формат, BTC, sats, Обмен, Валюта</value>
+  </data>
+  <data name="AppearanceSettingsTabViewModelTitle" xml:space="preserve">
+    <value>Внешний вид</value>
+  </data>
+  <data name="ExchangeCurrency" xml:space="preserve">
+    <value>Валюта отображения</value>
+  </data>
+  <data name="Cut" xml:space="preserve">
+    <value>Вырезать</value>
+  </data>
+  <data name="ThisOpenSourceSoftwareIsLicensedWith" xml:space="preserve">
+    <value>Это программное обеспечение с открытым исходным кодом распространяется по лицензии </value>
+  </data>
+  <data name="CancellingThisTransactionWillCostYou" xml:space="preserve">
+    <value>Отмена этой транзакции обойдётся вам в</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>ОК</value>
+  </data>
+  <data name="TorNetworkIssues" xml:space="preserve">
+    <value>Проблемы в сети Tor:</value>
+  </data>
+  <data name="ClickIconForDetails" xml:space="preserve">
+    <value>Нажмите этот значок для подробностей</value>
+  </data>
+  <data name="PasteFromClipboard" xml:space="preserve">
+    <value>Вставить из буфера обмена</value>
+  </data>
+  <data name="ImportTransaction" xml:space="preserve">
+    <value>Импортировать транзакцию</value>
+  </data>
+  <data name="Quit" xml:space="preserve">
+    <value>Выйти</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Скрыть</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Показать</value>
+  </data>
+  <data name="Default" xml:space="preserve">
+    <value>По умолчанию</value>
+  </data>
+  <data name="CopyLink" xml:space="preserve">
+    <value>Копировать ссылку</value>
+  </data>
+  <data name="NonPrivateFunds" xml:space="preserve">
+    <value>Неприватные средства</value>
+  </data>
+  <data name="SemiPrivateFunds" xml:space="preserve">
+    <value>Частично приватные средства</value>
+  </data>
+  <data name="PrivateFunds" xml:space="preserve">
+    <value>Приватные средства</value>
+  </data>
+  <data name="CustomFeeRate" xml:space="preserve">
+    <value>Своя ставка комиссии</value>
+  </data>
+  <data name="WalletNameCannotBeEmpty" xml:space="preserve">
+    <value>Имя кошелька не может быть пустым.</value>
+  </data>
+  <data name="WalletNameAlreadyExists" xml:space="preserve">
+    <value>Кошелёк с именем {0} уже существует. Выберите другое имя.</value>
+  </data>
+  <data name="WalletNameInvalid" xml:space="preserve">
+    <value>Выбрано недопустимое имя кошелька. Выберите другое имя.</value>
+  </data>
+  <data name="AcceptingOfferRedirect" xml:space="preserve">
+    <value>При принятии предложения вы будете перенаправлены на страницу поставщика для завершения процесса.</value>
+  </data>
+  <data name="ImportOrPasteTransactionHex" xml:space="preserve">
+    <value>Импортируйте или вставьте транзакцию в шестнадцатеричном формате и отправьте её в сеть.</value>
+  </data>
+  <data name="UnselectAll" xml:space="preserve">
+    <value>Снять выбор со всех</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Выбрать все</value>
+  </data>
+  <data name="PasteBTCAddress" xml:space="preserve">
+    <value>Вставить адрес BTC:
+{0}</value>
+  </data>
+  <data name="DecimalSeparator" xml:space="preserve">
+    <value>Десятичный разделитель</value>
+  </data>
+  <data name="GroupSeparator" xml:space="preserve">
+    <value>Разделитель групп разрядов</value>
+  </data>
+  <data name="DotEnum" xml:space="preserve">
+    <value>Точка</value>
+  </data>
+  <data name="CommaEnum" xml:space="preserve">
+    <value>Запятая</value>
+  </data>
+  <data name="NoneEnum" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="SpaceEnum" xml:space="preserve">
+    <value>Пробел</value>
+  </data>
+  <data name="BitcoinFractionGrouping" xml:space="preserve">
+    <value>Группировка дробной части Bitcoin</value>
+  </data>
+  <data name="ApostropheEnum" xml:space="preserve">
+    <value>Апостроф</value>
+  </data>
+  <data name="NotAvailable" xml:space="preserve">
+    <value>Недоступно</value>
+  </data>
+  <data name="NoProgressYet" xml:space="preserve">
+    <value>Пока нет прогресса</value>
+  </data>
+  <data name="StartCoinjoiningToGainPrivacy" xml:space="preserve">
+    <value>Начните Coinjoin для повышения приватности</value>
+  </data>
+  <data name="Resync" xml:space="preserve">
+    <value>Повторная синхронизация</value>
+  </data>
+    <data name="DeleteWallet" xml:space="preserve">
+    <value>Удалить кошелёк</value>
+  </data>
+    <data name="Delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+    <data name="DeletingAWalletIsPermanentAndCannotBeUndone" xml:space="preserve">
+    <value>Удаление кошелька необратимо. Восстановить кошелёк можно только с помощью слов восстановления, поэтому убедитесь, что они у вас есть. Для подтверждения удаления введите</value>
+  </data>
+  <data name="InTheFieldBelow" xml:space="preserve">
+    <value>в поле ниже.</value>
+  </data>
+  <data name="NoKYC" xml:space="preserve">
+    <value>Для покупок менее 1000 USD у этого поставщика загрузка документов не требуется.</value>
+  </data>
+  <data name="SensitiveData" xml:space="preserve">
+    <value>Конфиденциальные данные</value>
+  </data>
+  <data name="CouldntDeleteWalletCheckLogs" xml:space="preserve">
+    <value>Не удалось удалить кошелёк. Подробности см. в журналах.</value>
+  </data>
+    <data name="SyncingYourWallet" xml:space="preserve">
+    <value>Синхронизация кошелька...</value>
+  </data>
+    <data name="SetAsDefault" xml:space="preserve">
+    <value>Сделать по умолчанию</value>
+  </data>
+    <data name="SignMessage" xml:space="preserve">
+    <value>Подписать сообщение</value>
+  </data>
+    <data name="InvalidBitcoinAddress" xml:space="preserve">
+    <value>Недействительный адрес Bitcoin.</value>
+  </data>
+    <data name="TheAddressDoesNotBelongToThisWallet" xml:space="preserve">
+    <value>Адрес не принадлежит этому кошельку.</value>
+  </data>
+    <data name="SignWithHardwareWallet" xml:space="preserve">
+    <value>Подписать аппаратным кошельком</value>
+  </data>
+    <data name="SignMessageToVerifyYouOwnAddressForExchange" xml:space="preserve">
+    <value>Подпишите сообщение, чтобы подтвердить бирже, что адрес принадлежит вам</value>
+  </data>
+    <data name="AddressWithColon" xml:space="preserve">
+    <value>Адрес:</value>
+  </data>
+    <data name="PasteTheAddressProvidedByTheExchange" xml:space="preserve">
+    <value>Вставьте адрес, предоставленный биржей</value>
+  </data>
+    <data name="MessageWithColon" xml:space="preserve">
+    <value>Сообщение:</value>
+  </data>
+    <data name="EnterTheMessageYouWishToSign" xml:space="preserve">
+    <value>Введите сообщение, которое хотите подписать</value>
+  </data>
+    <data name="Signature" xml:space="preserve">
+    <value>Подпись</value>
+  </data>
+    <data name="Reason" xml:space="preserve">
+    <value>Причина: {0}</value>
+  </data>
+    <data name="UnknownEnum" xml:space="preserve">
+    <value>Неизвестно</value>
+  </data>
+  <data name="BackendStabilitySafetyEnum" xml:space="preserve">
+    <value>Временная проблема сервера</value>
+  </data>
+  <data name="CheatingEnum" xml:space="preserve">
+    <value>Нарушение протокола</value>
+  </data>
+  <data name="RoundDisruption" xml:space="preserve">
+    <value>Прерывание раунда</value>
+  </data>
+    <data name="FailedToVerifyEnum" xml:space="preserve">
+    <value>Потенциальный риск</value>
+  </data>
+  <data name="InheritedEnum" xml:space="preserve">
+    <value>(Унаследовано от другой монеты)</value>
+  </data>
+  <data name="LocalCoinVerifierEnum" xml:space="preserve">
+    <value>Временное ограничение</value>
+  </data>
+  <data name="RoundDisruptionMethodDidNotConfirmEnum" xml:space="preserve">
+    <value>Прерывание раунда</value>
+  </data>
+  <data name="RoundDisruptionMethodDidNotSignEnum" xml:space="preserve">
+    <value>Прерывание раунда</value>
+  </data>
+    <data name="RoundDisruptionMethodDoubleSpentEnum" xml:space="preserve">
+    <value>Монета потрачена во время раунда</value>
+  </data>
+  <data name="RoundDisruptionMethodDidNotSignalReadyToSignEnum" xml:space="preserve">
+    <value>Прерывание раунда</value>
+  </data>
+  <data name="CanSelectPrivateCoinsInCoinJoinCoinSelector" xml:space="preserve">
+    <value>Разрешить выбор уже приватных монет</value>
+  </data>
+  <data name="CanSelectPrivateCoinsInCoinJoinCoinSelectorToolTip" xml:space="preserve">
+    <value>Выбор может содержать уже приватные монеты.</value>
+  </data>
+  <data name="SecretHuntViewModelTitle" xml:space="preserve">
+    <value>Охота за секретами</value>
+  </data>
+  <data name="SecretHuntViewModelCaption" xml:space="preserve">
+    <value>Текущий статус событий охоты за секретами.</value>
+  </data>
+  <data name="SecretHuntViewModelKeywords" xml:space="preserve">
+    <value>Секрет, Охота, Coinjoin</value>
+  </data>
+  <data name="SecretHuntSecret" xml:space="preserve">
+    <value>Секретное слово или предложение.</value>
+  </data>
+  <data name="SecretHuntExtraSecret" xml:space="preserve">
+    <value>Дополнительный секрет, который раскрывается, когда известны все обычные секреты.</value>
+  </data>
+  <data name="SecretHuntEventUnsolved" xml:space="preserve">
+    <value>Это событие ещё не разгадано.</value>
+  </data>
+  <data name="SecretHuntEventSolved" xml:space="preserve">
+    <value>Для этого события раскрыты все секреты и дополнительный секрет. Вы сами решаете, что с ними делать.</value>
+  </data>
+  <data name="SecretHuntSettingsEnable" xml:space="preserve">
+    <value>Включить/выключить использование этого кошелька для охоты за секретами.</value>
+  </data>
+</root>

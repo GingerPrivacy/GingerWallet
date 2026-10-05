@@ -265,7 +265,7 @@
     <value>Rechercher</value>
   </data>
   <data name="OpenPasswordBoxWatermark" xml:space="preserve">
-    <value>Passphrase</value>
+    <value>Phrase de passe</value>
   </data>
   <data name="DiscreetMode" xml:space="preserve">
     <value>Mode Discret</value>
@@ -286,16 +286,16 @@
     <value>- {0} restant</value>
   </data>
   <data name="day" xml:space="preserve">
-    <value>jour</value>
+    <value>j</value>
   </data>
   <data name="hour" xml:space="preserve">
-    <value>heure</value>
+    <value>h</value>
   </data>
   <data name="minute" xml:space="preserve">
-    <value>minute</value>
+    <value>min</value>
   </data>
   <data name="second" xml:space="preserve">
-    <value>deuxième</value>
+    <value>s</value>
   </data>
   <data name="and" xml:space="preserve">
     <value>et</value>
@@ -349,7 +349,7 @@
     <value>Paramètres du portefeuille</value>
   </data>
   <data name="WalletCoinsViewModelTitle" xml:space="preserve">
-    <value>Coins du jetons</value>
+    <value>Pièces du portefeuille</value>
   </data>
   <data name="WalletStatsViewModelTitle" xml:space="preserve">
     <value>Statistiques du portefeuille</value>
@@ -361,7 +361,7 @@
     <value>Recevoir</value>
   </data>
   <data name="ExcludedCoinsViewModelTitle" xml:space="preserve">
-    <value>Exclure les jetons</value>
+    <value>Exclure des pièces du Coinjoin</value>
   </data>
   <data name="CoinjoinSettings" xml:space="preserve">
     <value>Paramètres de Coinjoin</value>
@@ -439,10 +439,10 @@
     <value>Seuls les fonds exclus sont disponibles</value>
   </data>
   <data name="MiningFeeRateTooHighMessage" xml:space="preserve">
-    <value>Les frais d'extraction étaient trop hauts</value>
+    <value>Le taux de frais de minage était trop élevé</value>
   </data>
   <data name="CoordinationFeeRateTooHighMessage" xml:space="preserve">
-    <value>Les frais de coordination étaient trop hauts</value>
+    <value>Le taux de frais de coordination était trop élevé</value>
   </data>
   <data name="MinInputCountTooLowMessage" xml:space="preserve">
     <value>Le nombre d’entrées minimum était trop bas</value>
@@ -484,10 +484,10 @@
     <value>- Seuls des portefeuilles alimentés peuvent être sélectionnés.</value>
   </data>
   <data name="CoinjoinToOtherWalletRestrictions2" xml:space="preserve">
-    <value>- Les jetons issus de la transaction Coinjoin seront reçus dans ce portefeuille. Cependant, ce paramètre se remet à zéro lorsque Ginger redémarre.</value>
+    <value>- Les pièces issues de la transaction Coinjoin seront reçues dans ce portefeuille. Cependant, ce paramètre se remet à zéro lorsque Ginger redémarre.</value>
   </data>
   <data name="CoinjoinToOtherWalletRestrictions3" xml:space="preserve">
-    <value>- Les frais sélectionnés ne peuvent pas être modifiés lorsque Coinjoin est en cours.</value>
+    <value>- Le portefeuille sélectionné ne peut pas être changé lorsqu&apos;un Coinjoin est en cours.</value>
   </data>
   <data name="PlebStopToolTip" xml:space="preserve">
     <value>Coinjoin va automatiquement s’arrêter si le solde du portefeuille est inférieur à cela.</value>
@@ -499,7 +499,7 @@
     <value>Il est recommandé de vérifier de temps en temps les mots de récupération de votre portefeuille.</value>
   </data>
   <data name="WalletToolsDoNotForget" xml:space="preserve">
-    <value>Votre passphrase est également nécessaire pour restaurer votre portefeuille, ne l'oubliez pas.</value>
+    <value>Votre phrase de passe est également nécessaire pour restaurer votre portefeuille, ne l&apos;oubliez pas.</value>
   </data>
   <data name="WalletToolsVerifyRecoveryWords" xml:space="preserve">
     <value>Vérifiez les mots de récupération</value>
@@ -514,22 +514,22 @@
     <value>Portefeuille, Paramètres</value>
   </data>
   <data name="CoinJoinProfilesCaption" xml:space="preserve">
-    <value>Ginger s'occupe de votre confidentialité financière en commençant automatiquement à coinjoin tous vos fonds pour des frais de coordination fixes de 0,3% plus les frais d'extraction. Nous avons préappliqué la configuration par défaut pour faciliter l'utilisation.</value>
+    <value>Ginger s&apos;occupe de votre confidentialité financière en commençant automatiquement à coinjoin tous vos fonds pour des frais de coordination fixes de 0,3% plus les frais de minage. Nous avons préappliqué la configuration par défaut pour faciliter l&apos;utilisation.</value>
   </data>
   <data name="Done" xml:space="preserve">
     <value>Fait</value>
   </data>
   <data name="RedcoinText" xml:space="preserve">
-    <value>Restriction à un seul jeton non privé</value>
+    <value>Restriction à une seule pièce non privée</value>
   </data>
   <data name="RedcoinToolTip" xml:space="preserve">
-    <value>Autoriser seulement un seul jeton avec un score de confidentialité de 1 durant l’inscription Coinjoin.</value>
+    <value>Autoriser seulement une seule pièce avec un score d&apos;anonymat de 1 durant l&apos;inscription au Coinjoin.</value>
   </data>
   <data name="AnonTargetText" xml:space="preserve">
     <value>Objectif de score d’anonymat</value>
   </data>
   <data name="AnonTargetTooltip" xml:space="preserve">
-    <value>Score minimum d’anonymat pour qu’un jeton soit considéré confidentiel.</value>
+    <value>Score minimum d&apos;anonymat pour qu&apos;une pièce soit considérée confidentielle.</value>
   </data>
   <data name="SafeFeeText" xml:space="preserve">
     <value>Ignorer la préférence de temps de Coinjoin ci-dessous</value>
@@ -595,10 +595,10 @@
     <value>Erreur inconnue. Assurez-vous que l'appareil soit bien connecté et qu'il ne soit pas occupé, puis réessayez.</value>
   </data>
   <data name="CoinAlreadySpent" xml:space="preserve">
-    <value>Au moins un jeton que vous essayez de dépenser est déjà dépensé.</value>
+    <value>Au moins une pièce que vous essayez de dépenser est déjà dépensée.</value>
   </data>
   <data name="CoinInUnconfirmedChain" xml:space="preserve">
-    <value>Au moins un jeton que vous essayez de dépenser fait partie d'une longue chaîne de transactions non confirmées. Vous devez attendre que certaines transactions antérieures soient confirmées.</value>
+    <value>Au moins une pièce que vous essayez de dépenser fait partie d&apos;une chaîne de transactions non confirmées trop longue ou dont la taille totale est trop élevée. Vous devez attendre que certaines transactions antérieures soient confirmées.</value>
   </data>
   <data name="TransactionDuplicatedInputs" xml:space="preserve">
     <value>La transaction contient des entrées dupliquées.</value>
@@ -610,7 +610,7 @@
     <value>Cette transaction est trop grande.</value>
   </data>
   <data name="WrongPassphrase" xml:space="preserve">
-    <value>Passphrase erronée.</value>
+    <value>Phrase de passe erronée.</value>
   </data>
   <data name="InvalidWalletName" xml:space="preserve">
     <value>Nom de portefeuille invalide.</value>
@@ -649,16 +649,16 @@
     <value>n’est pas connecté</value>
   </data>
   <data name="FullNodeConnecting" xml:space="preserve">
-    <value>Le full node se connecte...</value>
+    <value>Le nœud complet se connecte...</value>
   </data>
   <data name="FullNodeSynchronized" xml:space="preserve">
-    <value>Le full node est synchronisé</value>
+    <value>Le nœud complet est synchronisé</value>
   </data>
   <data name="FullNodeDownloadingBlocks" xml:space="preserve">
-    <value>Le full node télécharge {0} blocks...</value>
+    <value>Le nœud complet télécharge {0} blocs...</value>
   </data>
   <data name="FullNodeUnresponsive" xml:space="preserve">
-    <value>Le full node ne répond pas</value>
+    <value>Le nœud complet ne répond pas</value>
   </data>
   <data name="ApplicationRestartApplyChanges" xml:space="preserve">
     <value>Après avoir appuyé sur Entrée, l’application va redémarrer pour appliquer les changements.</value>
@@ -673,7 +673,7 @@
     <value>Frais de Coinjoin</value>
   </data>
   <data name="CoordinationFeeInfo" xml:space="preserve">
-    <value>Vous allez payer des frais de 0,3% seulement pour les Coinjoin de vos nouveaux jetons.</value>
+    <value>Vous paierez des frais de 0,3% seulement pour les Coinjoin de vos nouvelles pièces.</value>
   </data>
   <data name="CoordinationFee" xml:space="preserve">
     <value>Frais de coordination</value>
@@ -682,19 +682,19 @@
     <value>Frais de transaction</value>
   </data>
   <data name="TransactionFeeInfo" xml:space="preserve">
-    <value>Vous paierez des frais de mining pour chaque Coinjoin.</value>
+    <value>Vous paierez des frais de minage pour chaque Coinjoin.</value>
   </data>
   <data name="PlebsDontPay" xml:space="preserve">
     <value>Les plebs ne paient pas</value>
   </data>
   <data name="PlebsDontPayInfo" xml:space="preserve">
-    <value>Vous ne paierez pas les frais de coordination pour les jetons de moins ou égaux à 0,01 BTC.</value>
+    <value>Vous ne paierez pas de frais de coordination pour les pièces dont le montant est inférieur ou égal à 0,01 BTC.</value>
   </data>
   <data name="FriendsDontPay" xml:space="preserve">
     <value>Les amis ne paient pas</value>
   </data>
   <data name="FriendsDontPayInfo" xml:space="preserve">
-    <value>Vous ne paierez pas de frais de coordination pour les jetons reçus provenant d'autres Coinjoin Ginger.</value>
+    <value>Vous ne paierez pas de frais de coordination pour les pièces reçues provenant d&apos;autres Coinjoin Ginger.</value>
   </data>
   <data name="GetStarted" xml:space="preserve">
     <value>Pour commencer</value>
@@ -841,16 +841,16 @@
     <value>Dossier de données Bitcoin Core</value>
   </data>
   <data name="WasabiDownloadBlocksFromFullNode" xml:space="preserve">
-    <value>Ginger va télécharger les blocks depuis un noeud complet que vous contrôlez.</value>
+    <value>Ginger téléchargera les blocs depuis un nœud complet que vous contrôlez.</value>
   </data>
   <data name="BitcoinP2PEndpoint" xml:space="preserve">
     <value>Point final de P2P Bitcoin</value>
   </data>
   <data name="CoinsReceivedFromOthers" xml:space="preserve">
-    <value>Les jetons reçus d'autres personnes à des adresses déjà utilisées n'apparaîtront pas en dessous de ce montant. Pour éviter les attaques dust potentielles.</value>
+    <value>Les pièces reçues d&apos;autres personnes à des adresses déjà utilisées ne seront pas affichées si leur montant est inférieur à ce seuil. Cela permet de prévenir les attaques de poussière.</value>
   </data>
   <data name="DustThreshold" xml:space="preserve">
-    <value>Seuil des dust</value>
+    <value>Seuil de poussière</value>
   </data>
   <data name="InvalidEndpoint" xml:space="preserve">
     <value>Point d'arrivée non valide.</value>
@@ -859,7 +859,7 @@
     <value>Utiliser le point au lieu de la virgule.</value>
   </data>
   <data name="InvalidDustThreshold" xml:space="preserve">
-    <value>Seuil de dust non valide.</value>
+    <value>Seuil de poussière non valide.</value>
   </data>
   <data name="EnableGPURendering" xml:space="preserve">
     <value>Lorsque c'est activé, une carte graphique (GPU) est utilisée pour afficher l'interface utilisateur. L'utilisation d'une carte graphique plutôt que du processeur peut améliorer les performances.</value>
@@ -931,19 +931,19 @@
     <value>Ces entités savent qu’il s’agit de votre transaction. Utilisez Coinjoin ou utilisez l’outil de gestion d’étiquettes pour choisir avec précaution qui pourra savoir que cette transaction est la votre.</value>
   </data>
   <data name="TransactionUsesNonPrivateCoins" xml:space="preserve">
-    <value>La transaction utilise des jetons non-confidentiels.</value>
+    <value>La transaction utilise des pièces non confidentielles.</value>
   </data>
   <data name="EntitiesCanDeanonymizeTransaction" xml:space="preserve">
-    <value>Certaines entités pourraient désanonymiser cette transaction parce qu'elle inclut des jetons sans aucune confidentialité. Utilisez plus Coinjoin pour avoir suffisamment de jetons privés pour cette transaction.</value>
+    <value>Certaines entités pourraient désanonymiser cette transaction parce qu&apos;elle dépense des pièces sans confidentialité. Faites davantage de Coinjoin pour avoir suffisamment de pièces privées pour cette transaction.</value>
   </data>
   <data name="TransactionUsesSemiPrivateCoins" xml:space="preserve">
-    <value>La transaction utilise des jetons semi-confidentiels.</value>
+    <value>La transaction utilise des pièces partiellement confidentielles.</value>
   </data>
   <data name="TransactionNotPrivateEnough" xml:space="preserve">
-    <value>Cette transaction n'est pas assez confidentielle parce qu'elle dépense des jetons qui ne sont pas entièrement confidentiels. Utilisez Coinjoin pour avoir assez de jetons confidentiels pour cette transaction.</value>
+    <value>Cette transaction n&apos;est pas assez confidentielle parce qu&apos;elle dépense des pièces qui ne sont pas entièrement confidentielles. Faites davantage de Coinjoin pour avoir suffisamment de pièces confidentielles pour cette transaction.</value>
   </data>
   <data name="TransactionCreatesChange" xml:space="preserve">
-    <value>La transaction créée de la monnaie.</value>
+    <value>La transaction crée de la monnaie.</value>
   </data>
   <data name="ChangeCanLinkTransactions" xml:space="preserve">
     <value>La monnaie peut être utilisée pour lier cette transaction à la prochaine transaction qui l'utilisera. Utilisez la suggestion d'éviter la monnaie pour envoyer un peu plus ou un peu moins si cela convient au destinataire, ou utilisez CoinJoin pour la monnaie plus tard.</value>
@@ -955,13 +955,13 @@
     <value>Cela pourrait réduire la confidentialité de votre transaction.</value>
   </data>
   <data name="TransactionUsesUnconfirmedCoins" xml:space="preserve">
-    <value>La transaction utilise des jetons non-confirmés.</value>
+    <value>La transaction utilise des pièces non confirmées.</value>
   </data>
   <data name="UnconfirmedCoinsMayCauseIssues" xml:space="preserve">
-    <value>Cela peut entraîner le rejet de votre transaction, retarder sa confirmation ou coûter plus cher que nécessaire pour qu'elle soit confirmée dans les délais souhaités. Attendez une confirmation pour n'utiliser que des dépôts confirmés.</value>
+    <value>Cela peut entraîner le rejet de votre transaction, retarder sa confirmation ou coûter plus cher que nécessaire pour qu&apos;elle soit confirmée dans les délais souhaités. Attendez une confirmation pour n&apos;utiliser que des pièces confirmées.</value>
   </data>
   <data name="TransactionUsesCoinjoiningCoins" xml:space="preserve">
-    <value>La transaction utilise des jetons issus de Coinjoin.</value>
+    <value>La transaction utilise des pièces en cours de Coinjoin.</value>
   </data>
   <data name="TransactionMayBeReplacedByCoinjoin" xml:space="preserve">
     <value>Cela peut entraîner le remplacement de votre transaction par le Coinjoin. Pensez à attendre que le Coinjoin en cours soit terminé avant d'envoyer cette transaction.</value>
@@ -1081,7 +1081,7 @@
     <value>Il n'y a pas d'informations sur ces personnes, utilisez-les uniquement lorsque c'est nécessaire !</value>
   </data>
   <data name="CoinControl" xml:space="preserve">
-    <value>Contrôle du jeton</value>
+    <value>Contrôle des pièces</value>
   </data>
   <data name="RecoveryWordsViewCaption" xml:space="preserve">
     <value>Notez les mots de récupération dans le bon ordre et conservez-les en lieu sûr. Ils sont nécessaires pour restaurer votre portefeuille.</value>
@@ -1096,7 +1096,7 @@
     <value>Confirmer les mots de récupération</value>
   </data>
   <data name="ConfirmRecoveryWordsViewModelStoreSafely" xml:space="preserve">
-    <value>Stockez votre passphrase en toute sécurité ; elle ne peut pas être récupérée en cas de perte. Elle est nécessaire pour ouvrir et restaurer votre portefeuille et offre une protection supplémentaire en prolongeant les mots de récupération.</value>
+    <value>Conservez votre phrase de passe en toute sécurité ; elle ne peut pas être récupérée en cas de perte. Elle est nécessaire pour ouvrir et restaurer votre portefeuille et offre une protection supplémentaire en étant utilisée avec les mots de récupération.</value>
   </data>
   <data name="ConfirmRecoveryWordsViewModelClickRecovery" xml:space="preserve">
     <value>Cliquez sur le mot de récupération #{0}</value>
@@ -1108,13 +1108,13 @@
     <value>Vérifier les mots de récupération</value>
   </data>
   <data name="CreatePasswordDialogTypePassphrase" xml:space="preserve">
-    <value>Entrez une passphrase</value>
+    <value>Entrez une phrase de passe</value>
   </data>
   <data name="CreatePasswordDialogConfirmPassphrase" xml:space="preserve">
-    <value>Confirmer la passphrase</value>
+    <value>Confirmer la phrase de passe</value>
   </data>
   <data name="PassphrasesNotMatch" xml:space="preserve">
-    <value>Les passphrases sont différentes.</value>
+    <value>Les phrases de passe sont différentes.</value>
   </data>
   <data name="TrimWarnMessage" xml:space="preserve">
     <value>Les espaces au début et à la fin seront supprimés !</value>
@@ -1123,7 +1123,7 @@
     <value>Les espaces au début et à la fin ne sont pas autorisés !</value>
   </data>
   <data name="AddPassphrase" xml:space="preserve">
-    <value>Ajouter une passphrase</value>
+    <value>Ajouter une phrase de passe</value>
   </data>
   <data name="HardwareWallet" xml:space="preserve">
     <value>Portefeuille matériel</value>
@@ -1132,7 +1132,7 @@
     <value>Connectez votre portefeuille matériel au PC</value>
   </data>
   <data name="ConnectHardwareWalletViewModelEnterPassphrase" xml:space="preserve">
-    <value>Entrez votre passphrase sur le portefeuille matériel si nécessaire.</value>
+    <value>Entrez votre phrase de passe sur le portefeuille matériel si nécessaire.</value>
   </data>
   <data name="HardwareWalletAuthDialogViewModelCaption" xml:space="preserve">
     <value>Connectez votre portefeuille matériel, appuyez sur Continuer puis suivez les instructions sur l’appareil.</value>
@@ -1153,7 +1153,7 @@
     <value>Le portefeuille matériel connecté est déjà ajouté au logiciel, cliquez ci-dessous pour l’ouvrir ou cliquez sur Rescanner pour chercher à nouveau.</value>
   </data>
   <data name="ConnectHardwareWalletViewModelEnterPassphraseOnDevice" xml:space="preserve">
-    <value>Entrez votre passphrase sur l’appareil.</value>
+    <value>Entrez votre phrase de passe sur l’appareil.</value>
   </data>
   <data name="ConnectHardwareWalletViewModelEnterPin" xml:space="preserve">
     <value>Entrez le PIN sur votre appareil.</value>
@@ -1162,10 +1162,10 @@
     <value>Tapez vos mots de récupération dans le bon ordre</value>
   </data>
   <data name="EnterPassphrase" xml:space="preserve">
-    <value>Saisissez la passphrase</value>
+    <value>Saisissez la phrase de passe</value>
   </data>
   <data name="RecoverWalletViewModelPassphraseMessage" xml:space="preserve">
-    <value>Si vous avez utilisé une passphrase lors de la création du portefeuille, vous devez la rentrer ci-dessous, autrement laissez l’espace vide.</value>
+    <value>Si vous avez utilisé une phrase de passe lors de la création du portefeuille, vous devez la rentrer ci-dessous, autrement laissez l’espace vide.</value>
   </data>
   <data name="AdvancedRecoveryOptionsViewModelTitle" xml:space="preserve">
     <value>Options de récupération avancées</value>
@@ -1174,7 +1174,7 @@
     <value>Limite minimale de recherche:</value>
   </data>
   <data name="PeersConnected" xml:space="preserve">
-    <value>{0} connecté</value>
+    <value>Pairs connectés : {0}</value>
   </data>
   <data name="AmountLessThanTotalSupply" xml:space="preserve">
     <value>Le montant doit être inférieur à l'offre totale de BTC.</value>
@@ -1225,10 +1225,10 @@
     <value>Index</value>
   </data>
   <data name="CoinDetails" xml:space="preserve">
-    <value>Détails du jeton</value>
+    <value>Détails de la pièce</value>
   </data>
   <data name="SelfCoinJoinToolTip" xml:space="preserve">
-    <value>Dans ce Coinjoin, la majorité des jetons vous appartiennent. Cela réduira significativement vos progrès en matière de confidentialité. Envisagez de participer avec moins de portefeuilles jusqu'à ce que davantage de participants se joignent.</value>
+    <value>Dans ce Coinjoin, la majorité des pièces vous appartiennent. Cela réduira significativement vos progrès en matière de confidentialité. Envisagez de participer avec moins de portefeuilles jusqu&apos;à ce que davantage de participants se joignent.</value>
   </data>
   <data name="AuthCodePrompt" xml:space="preserve">
     <value>Scannez le code QR ci-dessous avec votre application d'authentification préférée, puis entrez le code de vérification.</value>
@@ -1258,16 +1258,16 @@
     <value>Les frais saisis sont trop élevés.</value>
   </data>
   <data name="ExcludedCoinsViewModelCaption" xml:space="preserve">
-    <value>Afficher les jetons exclus</value>
+    <value>Afficher les pièces exclues du Coinjoin</value>
   </data>
   <data name="ExcludedCoinsViewModelKeywords" xml:space="preserve">
-    <value>Portefeuille, Exclure, Jetons, Coinjoin, Geler, UTXO</value>
+    <value>Portefeuille, Exclure, Pièces, Coinjoin, Geler, UTXO</value>
   </data>
   <data name="WalletCoinsViewModelCaption" xml:space="preserve">
-    <value>Afficher les jetons du portefeuille</value>
+    <value>Afficher les pièces du portefeuille</value>
   </data>
   <data name="WalletCoinsViewModelKeywords" xml:space="preserve">
-    <value>Portefeuille, jetons, UTXO</value>
+    <value>Portefeuille, pièces, UTXO</value>
   </data>
   <data name="WalletStatsViewModelCaption" xml:space="preserve">
     <value>Afficher les statistiques du portefeuille</value>
@@ -1282,7 +1282,7 @@
     <value>Portefeuille, Informations</value>
   </data>
   <data name="ExcludeCoinjoinDescription" xml:space="preserve">
-    <value>Les jetons choisis seront exclus de Coinjoin. Il est important de noter qu'il n'y aura aucune augmentation de la confidentialité de ces jetons.</value>
+    <value>Les pièces choisies seront exclues du Coinjoin. La confidentialité de ces pièces ne sera donc pas améliorée.</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Statut</value>
@@ -1291,10 +1291,10 @@
     <value>Date</value>
   </data>
   <data name="WalletCoinsDescription" xml:space="preserve">
-    <value>Une liste des jetons que vous possédez.</value>
+    <value>Une liste des pièces que vous possédez.</value>
   </data>
   <data name="NumberOfCoins" xml:space="preserve">
-    <value>Nombre de jetons (UTXOs)</value>
+    <value>Nombre de pièces (UTXO)</value>
   </data>
   <data name="UnconfirmedBalance" xml:space="preserve">
     <value>Solde non confirmé</value>
@@ -1327,13 +1327,13 @@
     <value>Nombre d'adresses utilisées</value>
   </data>
   <data name="ExtendedMasterPrivateKey" xml:space="preserve">
-    <value>Clé privée maître étendue</value>
+    <value>Clé privée maîtresse étendue</value>
   </data>
   <data name="ExtendedMasterZprv" xml:space="preserve">
-    <value>Clé privée maître étendue zprv</value>
+    <value>Clé maîtresse étendue (zprv)</value>
   </data>
   <data name="ExtendedMasterFingerprint" xml:space="preserve">
-    <value>Empreinte maître étendue</value>
+    <value>Empreinte de la clé maîtresse</value>
   </data>
   <data name="AccountKeyPathSegWit" xml:space="preserve">
     <value>Chemin de clé de compte (SegWit)</value>
@@ -1345,16 +1345,16 @@
     <value>Clé privée étendue de compte xpriv</value>
   </data>
   <data name="PublicExternalOutputDescriptor" xml:space="preserve">
-    <value>Descripteur de sortie externe publique</value>
+    <value>Descripteur de réception avec des clés publiques</value>
   </data>
   <data name="PublicInternalOutputDescriptor" xml:space="preserve">
-    <value>Descripteur de sortie interne publique</value>
+    <value>Descripteur de monnaie avec des clés publiques</value>
   </data>
   <data name="PrivateExternalOutputDescriptor" xml:space="preserve">
-    <value>Descripteur de sortie externe privée</value>
+    <value>Descripteur de réception avec des clés privées</value>
   </data>
   <data name="PrivateInternalOutputDescriptor" xml:space="preserve">
-    <value>Descripteur de sortie interne privée</value>
+    <value>Descripteur de monnaie avec des clés privées</value>
   </data>
   <data name="ExtendedAccountPublicKeySegWit" xml:space="preserve">
     <value>Clé publique étendue de compte (SegWit)</value>
@@ -1384,10 +1384,10 @@
     <value>En attente</value>
   </data>
   <data name="Confirmations" xml:space="preserve">
-    <value>({0} confirmations)</value>
+    <value>(confirmations : {0})</value>
   </data>
   <data name="BlockHash" xml:space="preserve">
-    <value>Hachage de bloc</value>
+    <value>Empreinte du bloc</value>
   </data>
   <data name="BlockHeight" xml:space="preserve">
     <value>Hauteur du bloc</value>
@@ -1444,7 +1444,7 @@
     <value>Inconnu</value>
   </data>
   <data name="ConfirmedWithConfirmationCount" xml:space="preserve">
-    <value>Confirmé ({0} confirmation{1})</value>
+    <value>Confirmé (confirmations : {0}{1})</value>
   </data>
   <data name="LessThan" xml:space="preserve">
     <value>Moins que</value>
@@ -1465,10 +1465,10 @@
     <value>Personnes inconnues</value>
   </data>
   <data name="PrivateCoins" xml:space="preserve">
-    <value>Jetons privés</value>
+    <value>Pièces privées</value>
   </data>
   <data name="SemiPrivateCoins" xml:space="preserve">
-    <value>Jetons semi-privés</value>
+    <value>Pièces semi-privées</value>
   </data>
   <data name="Coinjoining" xml:space="preserve">
     <value>Coinjoining</value>
@@ -1480,7 +1480,7 @@
     <value>Exclu des coinjoins</value>
   </data>
   <data name="ConfirmationCount" xml:space="preserve">
-    <value>{0} confirmation{1}</value>
+    <value>Confirmations : {0}{1}</value>
   </data>
   <data name="CantParticipateInCoinjoinUntil" xml:space="preserve">
     <value>Impossible de participer au coinjoin jusqu'à : {0}</value>
@@ -1564,40 +1564,40 @@
     <value>La valeur doit être entre {0} et {1}.</value>
   </data>
   <data name="CoinJoinCoinSelection" xml:space="preserve">
-    <value>Sélection du jeton</value>
+    <value>Sélection des pièces</value>
   </data>
   <data name="ExperimentalCoinJoinCoinSelector" xml:space="preserve">
-    <value>(EXPÉRIMENTAL) Sélection de Jeton Améliorée</value>
+    <value>(EXPÉRIMENTAL) Sélection des pièces améliorée</value>
   </data>
   <data name="ForceUsingLowPrivacyCoinsInCoinJoinCoinSelector" xml:space="preserve">
-    <value>Forcer l'utilisation de jetons à faible confidentialité</value>
+    <value>Forcer l&apos;utilisation de pièces à faible confidentialité</value>
   </data>
   <data name="ForceUsingLowPrivacyCoinsInCoinJoinCoinSelectorToolTip" xml:space="preserve">
-    <value>La sélection doit contenir au moins un des jetons avec la plus faible confidentialité.</value>
+    <value>La sélection doit contenir au moins une des pièces avec la plus faible confidentialité.</value>
   </data>
   <data name="WeightedAnonymityLossNormalInCoinJoinCoinSelector" xml:space="preserve">
-    <value>Normalisation de la différence de confidentialité des jetons pour le calcul du score</value>
+    <value>Normalisation de la différence de confidentialité des pièces pour le calcul du score</value>
   </data>
   <data name="WeightedAnonymityLossNormalInCoinJoinCoinSelectorToolTip" xml:space="preserve">
-    <value>Avec une valeur plus basse, le sélecteur de jetons privilégiera celles avec une différence plus faible dans le score de confidentialité.</value>
+    <value>Avec une valeur plus basse, le sélecteur de pièces privilégiera celles avec une différence plus faible dans le score de confidentialité.</value>
   </data>
   <data name="ValueLossRateNormalInCoinJoinCoinSelector" xml:space="preserve">
     <value>Normalisation de la perte de montant pour le calcul du score</value>
   </data>
   <data name="ValueLossRateNormalInCoinJoinCoinSelectorToolTip" xml:space="preserve">
-    <value>Avec une valeur plus basse, le sélecteur de jetons privilégiera les sélections avec une perte de montant proportionnelle plus faible.</value>
+    <value>Avec une valeur plus basse, le sélecteur de pièces privilégiera les sélections avec une perte de montant proportionnelle plus faible.</value>
   </data>
   <data name="TargetCoinCountPerBucketInCoinJoinCoinSelector" xml:space="preserve">
-    <value>Nombre cible de jetons par groupe de portefeuille</value>
+    <value>Nombre cible de pièces par groupe de portefeuille</value>
   </data>
   <data name="TargetCoinCountPerBucketInCoinJoinCoinSelectorToolTip" xml:space="preserve">
-    <value>Le sélecteur de jetons privilégiera les jetons des groupes (plages de jetons de 10k, 20k, 40k satoshis, etc.) qui sont surpeuplés.</value>
+    <value>Le sélecteur de pièces privilégiera les pièces des groupes (plages de pièces de 10k, 20k, 40k satoshis, etc.) qui sont surpeuplés.</value>
   </data>
   <data name="UseOldCoinSelectorAsFallbackInCoinJoinCoinSelector" xml:space="preserve">
-    <value>Utiliser l'ancien sélecteur de jetons en secours</value>
+    <value>Utiliser l&apos;ancien sélecteur de pièces en secours</value>
   </data>
   <data name="UseOldCoinSelectorAsFallbackInCoinJoinCoinSelectorToolTip" xml:space="preserve">
-    <value>Le sélecteur de jetons ancien et le nouveau seront utilisés, et le meilleur résultat sera choisi.</value>
+    <value>Le sélecteur de pièces ancien et le nouveau seront utilisés, et le meilleur résultat sera choisi.</value>
   </data>
   <data name="Configuration" xml:space="preserve">
     <value>Configuration</value>
@@ -1744,13 +1744,13 @@
     <value>Ginger Wallet n'a pas pu importer votre portefeuille.</value>
   </data>
   <data name="AllCoinsConfirmed" xml:space="preserve">
-    <value>Tous les jetons sont confirmés.</value>
+    <value>Toutes les pièces sont confirmées.</value>
   </data>
   <data name="CoinsWaitingForConfirmation" xml:space="preserve">
-    <value>{0} jetons attendent une confirmation.</value>
+    <value>{0} pièces attendent une confirmation.</value>
   </data>
   <data name="CoinsCantParticipateCoinJoin" xml:space="preserve">
-    <value>Certains jetons ne peuvent pas participer à Coinjoin.</value>
+    <value>Certaines pièces ne peuvent pas participer au Coinjoin.</value>
   </data>
   <data name="SourceCodeGitHub" xml:space="preserve">
     <value>Code source (GitHub)</value>
@@ -1786,7 +1786,7 @@
     <value>Progrès de la confidentialité</value>
   </data>
   <data name="HoverOverRingSegments" xml:space="preserve">
-    <value>Survolez les segments du cercle pour voir les détails des jetons</value>
+    <value>Survolez les segments du cercle pour voir les détails des pièces</value>
   </data>
   <data name="Private" xml:space="preserve">
     <value>Privé</value>
@@ -1843,7 +1843,7 @@
     <value>La version {0} est maintenant disponible</value>
   </data>
   <data name="Peers" xml:space="preserve">
-    <value>Paires</value>
+    <value>Pairs</value>
   </data>
   <data name="BroadcastTransaction" xml:space="preserve">
     <value>Diffusion de la transaction</value>
@@ -1882,10 +1882,10 @@
     <value>L'autorisation a échoué.{0}Veuillez vérifier votre appareil et réessayer.</value>
   </data>
   <data name="EnterPassphraseAuth" xml:space="preserve">
-    <value>Entrez votre passphrase</value>
+    <value>Entrez votre phrase de passe</value>
   </data>
   <data name="IncorrectPassphrase" xml:space="preserve">
-    <value>La passphrase est incorrecte.{0}Veuillez réessayer.</value>
+    <value>La phrase de passe est incorrecte.{0}Veuillez réessayer.</value>
   </data>
   <data name="SelectAllowedCoins" xml:space="preserve">
     <value>Sélectionnez les pièces autorisées pour la transaction</value>
@@ -1903,16 +1903,16 @@
     <value>Trouvé dans "{0}"</value>
   </data>
   <data name="IncorrectPassphraseRetry" xml:space="preserve">
-    <value>La passphrase est incorrecte ! Veuillez réessayer.</value>
+    <value>La phrase de passe est incorrecte ! Veuillez réessayer.</value>
   </data>
   <data name="AcceptTermsAndConditions" xml:space="preserve">
     <value>Vous devez accepter les Termes et Conditions !</value>
   </data>
   <data name="CompatibilityPassphraseUsed" xml:space="preserve">
-    <value>Une passphrase de compatibilité a été utilisée ! Veuillez envisager de générer un nouveau portefeuille pour garantir la récupérabilité!</value>
+    <value>Une phrase de passe de compatibilité a été utilisée ! Veuillez envisager de générer un nouveau portefeuille pour garantir la récupérabilité!</value>
   </data>
   <data name="PassphraseTooLong" xml:space="preserve">
-    <value>La passphrase est trop longue.</value>
+    <value>La phrase de passe est trop longue.</value>
   </data>
   <data name="WalletSettingsKeywords" xml:space="preserve">
     <value>Portefeuille, Paramètres</value>
@@ -1954,7 +1954,7 @@
     <value>Vérifiez votre appareil et terminez l'initialisation.</value>
   </data>
   <data name="SomethingHappenedWithDevice" xml:space="preserve">
-    <value>Quelque chose s'est passé avec votre appareil, déverrouillez-le avec votre code PIN/passphrase ou reconnectez-le au PC.</value>
+    <value>Quelque chose s&apos;est passé avec votre appareil, déverrouillez-le avec votre code PIN/phrase de passe ou reconnectez-le au PC.</value>
   </data>
   <data name="ExportTransaction" xml:space="preserve">
     <value>Exporter la transaction</value>
@@ -1975,7 +1975,7 @@
     <value>Paramètres, Apparence, Bitcoin, Sombre, Mode, Frais, Affichage, Format, BTC, sats, Échange, Devise</value>
   </data>
   <data name="ExchangeCurrency" xml:space="preserve">
-    <value>Changer de devise</value>
+    <value>Devise d&apos;affichage</value>
   </data>
   <data name="Cut" xml:space="preserve">
     <value>Couper</value>
@@ -2132,13 +2132,13 @@
     <value>Signer avec un portefeuille matériel</value>
   </data>
     <data name="SignMessageToVerifyYouOwnAddressForExchange" xml:space="preserve">
-    <value>Signez un message pour vérifier que vous possédez l'adresse pour l'échange</value>
+    <value>Signez un message pour prouver à la plateforme d&apos;échange que l&apos;adresse vous appartient</value>
   </data>
     <data name="AddressWithColon" xml:space="preserve">
     <value>Adresse :</value>
   </data>
     <data name="PasteTheAddressProvidedByTheExchange" xml:space="preserve">
-    <value>Collez l'adresse fournie par le service de change</value>
+    <value>Collez l&apos;adresse fournie par la plateforme d&apos;échange</value>
   </data>
     <data name="MessageWithColon" xml:space="preserve">
     <value>Message :</value>
