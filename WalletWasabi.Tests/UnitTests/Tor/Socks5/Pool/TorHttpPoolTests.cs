@@ -201,7 +201,8 @@ public class TorHttpPoolTests
 	[InlineData(1)]
 	public async Task RedirectSupportAsync(int maximumRedirects)
 	{
-		using CancellationTokenSource timeoutCts = new(TimeSpan.FromSeconds(5));
+		// This bounds the whole pipe exchange, including scheduling delays on busy CI runners.
+		using CancellationTokenSource timeoutCts = new(TimeSpan.FromMinutes(1));
 
 		// TODO: Test with OneOffCircuit (disposing?)
 		INamedCircuit circuit = DefaultCircuit.Instance;
@@ -228,7 +229,9 @@ public class TorHttpPoolTests
 		await using TorHttpPool pool = new(mockFactory.Object);
 		using HttpRequestMessage request = new(HttpMethod.Get, "http://api.github.com/redirect/123456");
 
-		Task sendTask = Task.Run(async () =>
+		Task sendTask = SendRequestAsync();
+
+		async Task SendRequestAsync()
 		{
 			Debug.WriteLine("[client] About to send HTTP request.");
 
@@ -241,7 +244,7 @@ public class TorHttpPoolTests
 			Assert.Equal(expectedStatusCode, httpResponseMessage.StatusCode);
 
 			Debug.WriteLine("[client] Done sending HTTP request.");
-		});
+		}
 
 		Debug.WriteLine("[server] Handle the first request.");
 		{
