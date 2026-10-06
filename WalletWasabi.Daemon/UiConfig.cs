@@ -28,6 +28,15 @@ public class UiConfig : ConfigBase
 	private string _selectedBrowser = "";
 	private BuySellConfiguration _buySellConfiguration = new ();
 	private DefaultCommands _defaultCommands = new();
+	private int _trezorSuiteTargetAnonymity = 3;
+
+	[DefaultValue(3)]
+	[JsonProperty(DefaultValueHandling = DefaultValueHandling.Populate)]
+	public int TrezorSuiteTargetAnonymity
+	{
+		get => _trezorSuiteTargetAnonymity;
+		set => RaiseAndSetIfChanged(ref _trezorSuiteTargetAnonymity, value);
+	}
 
 	public UiConfig() : base()
 	{

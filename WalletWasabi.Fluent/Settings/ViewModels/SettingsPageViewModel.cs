@@ -41,6 +41,7 @@ public partial class SettingsPageViewModel : RoutableViewModel
 		AppearanceSettingsTab = new AppearanceSettingsTabViewModel(UiContext.ApplicationSettings);
 		BitcoinTabSettings = new BitcoinTabSettingsViewModel(UiContext.ApplicationSettings);
 		SecuritySettingsTab = new SecuritySettingsTabViewModel(UiContext.ApplicationSettings);
+		TrezorSuiteSettingsTab = new TrezorSuiteSettingsTabViewModel();
 
 		RestartCommand = ReactiveCommand.Create(() => AppLifetimeHelper.Shutdown(withShutdownPrevention: true, restart: true));
 		NextCommand = CancelCommand;
@@ -68,6 +69,7 @@ public partial class SettingsPageViewModel : RoutableViewModel
 	public AppearanceSettingsTabViewModel AppearanceSettingsTab { get; }
 	public BitcoinTabSettingsViewModel BitcoinTabSettings { get; }
 	public SecuritySettingsTabViewModel SecuritySettingsTab { get; }
+	public TrezorSuiteSettingsTabViewModel TrezorSuiteSettingsTab { get; }
 
 	public Task Activate()
 	{
