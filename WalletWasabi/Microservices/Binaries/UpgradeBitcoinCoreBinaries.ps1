@@ -55,6 +55,12 @@ $packages = @(
     BinaryName = "bitcoind"
   },
   @{
+    Runtime = "linux-arm64"
+    Archive = "bitcoin-${version}-aarch64-linux-gnu.tar.gz"
+    BinaryPath = "bitcoin-${version}/bin/bitcoind"
+    BinaryName = "bitcoind"
+  },
+  @{
     Runtime = "osx-x64"
     Archive = "bitcoin-${version}-x86_64-apple-darwin.tar.gz"
     BinaryPath = "bitcoin-${version}/bin/bitcoind"

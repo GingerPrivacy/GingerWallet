@@ -26,9 +26,10 @@ public static class MicroserviceHelpers
 		}
 	}
 
-	public static string GetBinaryFolder(OSPlatform? platform = null)
+	public static string GetBinaryFolder(OSPlatform? platform = null, Architecture? architecture = null)
 	{
 		platform ??= GetCurrentPlatform();
+		architecture ??= RuntimeInformation.ProcessArchitecture;
 
 		string fullBaseDirectory = EnvironmentHelpers.GetFullBaseDirectory();
 		string commonPartialPath = Path.Combine(fullBaseDirectory, "Microservices", "Binaries");
@@ -40,11 +41,12 @@ public static class MicroserviceHelpers
 		}
 		else if (platform == OSPlatform.Linux)
 		{
-			path = Path.Combine(commonPartialPath, "linux-x64");
+			string folderName = architecture == Architecture.Arm64 ? "linux-arm64" : "linux-x64";
+			path = Path.Combine(commonPartialPath, folderName);
 		}
 		else if (platform == OSPlatform.OSX)
 		{
-			string folderName = RuntimeInformation.ProcessArchitecture == Architecture.Arm64 ? "osx-arm64" : "osx-x64";
+			string folderName = architecture == Architecture.Arm64 ? "osx-arm64" : "osx-x64";
 			path = Path.Combine(commonPartialPath, folderName);
 		}
 		else

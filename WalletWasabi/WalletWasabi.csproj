@@ -57,6 +57,9 @@
 		<None Update="Microservices\Binaries\linux-x64\Tor\**\*">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
+		<None Update="Microservices\Binaries\linux-arm64\Tor\**\*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 		<None Update="Microservices\Binaries\osx-x64\Tor\**\*">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
@@ -64,6 +67,9 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="Microservices\Binaries\linux-x64\bitcoind">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Microservices\Binaries\linux-arm64\bitcoind">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="Microservices\Binaries\osx-x64\bitcoind">
@@ -76,6 +82,9 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="Microservices\Binaries\linux-x64\hwi">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Microservices\Binaries\linux-arm64\hwi">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="Microservices\Binaries\osx-x64\hwi">
