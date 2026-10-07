@@ -254,7 +254,13 @@ public class WabiSabiHttpApiIntegrationTests : IAsyncLifetime
 			{
 				// Instruct the coordinator DI container to use this scoped
 				// services to build everything (WabiSabi controller, arena, etc)
-				services.AddScoped(s => WabiSabiApiApplicationFactory<Startup>.CreateConfig(inputCount));
+				services.AddScoped(s =>
+				{
+					var config = WabiSabiApiApplicationFactory<Startup>.CreateConfig(inputCount);
+					// Credential proofs can outlast the default five-second phase on busy CI runners.
+					config.OutputRegistrationTimeout = TimeSpan.FromSeconds(20);
+					return config;
+				});
 
 				// Emulate that all our outputs had been already used in the past.
 				// the server will prevent the registration and fail with a WabiSabiProtocolError.
