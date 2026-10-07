@@ -125,6 +125,15 @@ public class PaymentBatch
 		}
 	}
 
+	public Money GetInProgressPaymentsTotal(Transaction transaction)
+	{
+		lock (_syncObj)
+		{
+			var scripts = _payments.Where(p => p.State is InProgressPayment).Select(p => p.Destination.ScriptPubKey).ToHashSet();
+			return transaction.Outputs.Where(output => scripts.Contains(output.ScriptPubKey)).Sum(output => output.Value);
+		}
+	}
+
 	private static void LogPaymentSetDetails(PaymentSet paymentSet)
 	{
 		Logger.LogInfo($"Best payment set contains {paymentSet.PaymentCount} payments.");

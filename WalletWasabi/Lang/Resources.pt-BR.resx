@@ -2215,4 +2215,16 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Ativar ou desativar o uso desta carteira para a Caça aos Segredos.</value>
   </data>
+  <data name="CoinJoinMiningFee" xml:space="preserve">
+    <value>Taxa de mineração</value>
+  </data>
+  <data name="CoinJoinWastedDust" xml:space="preserve">
+    <value>Restante não utilizado</value>
+  </data>
+  <data name="CoinJoinPaymentsTotal" xml:space="preserve">
+    <value>Pagamentos neste CoinJoin</value>
+  </data>
+  <data name="CoinJoinBalanceChange" xml:space="preserve">
+    <value>Variação líquida do saldo (detalhamento indisponível)</value>
+  </data>
 </root>

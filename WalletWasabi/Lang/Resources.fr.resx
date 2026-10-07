@@ -2215,4 +2215,16 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Activer ou désactiver l’utilisation de ce portefeuille pour la Chasse aux Secrets.</value>
   </data>
+  <data name="CoinJoinMiningFee" xml:space="preserve">
+    <value>Frais de minage</value>
+  </data>
+  <data name="CoinJoinWastedDust" xml:space="preserve">
+    <value>Reliquat inutilisé</value>
+  </data>
+  <data name="CoinJoinPaymentsTotal" xml:space="preserve">
+    <value>Paiements dans ce CoinJoin</value>
+  </data>
+  <data name="CoinJoinBalanceChange" xml:space="preserve">
+    <value>Variation nette du solde (détail indisponible)</value>
+  </data>
 </root>

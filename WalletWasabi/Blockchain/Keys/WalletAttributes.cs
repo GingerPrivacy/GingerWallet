@@ -6,6 +6,7 @@ using System.Linq;
 using WalletWasabi.WabiSabi.Client.CoinJoin.Client;
 using System.Text.Json.Serialization;
 using WalletWasabi.SecretHunt;
+using WalletWasabi.WabiSabi.Client;
 
 namespace WalletWasabi.Blockchain.Keys;
 
@@ -68,6 +69,9 @@ public class WalletAttributes : IJsonOnSerializing
 
 	[JsonInclude]
 	public List<uint256> CoinJoinTransactions { get; internal set; } = new();
+
+	[JsonInclude]
+	public Dictionary<string, CoinJoinCosts> CoinJoinCosts { get; internal set; } = new();
 
 	[JsonInclude]
 	public List<OutPoint> ExcludedCoinsFromCoinJoin { get; internal set; } = new();

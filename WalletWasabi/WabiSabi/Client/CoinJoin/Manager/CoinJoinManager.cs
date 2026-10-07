@@ -509,6 +509,11 @@ public class CoinJoinManager : BackgroundService
 				var txHash = successfulCoinjoin.UnsignedCoinJoin.GetHash();
 				wallet.AddCoinJoinTransaction(txHash);
 				CoinRefrigerator.Freeze(successfulCoinjoin.Coins);
+				if (successfulCoinjoin.Costs is { } costs)
+				{
+					var paymentsTotal = batchedPayments.GetInProgressPaymentsTotal(successfulCoinjoin.UnsignedCoinJoin);
+					wallet.AddCoinJoinCosts(txHash, costs with { PaymentsTotal = paymentsTotal });
+				}
 				batchedPayments.MovePaymentsToFinished(txHash);
 				MarkDestinationsUsed(destinationProvider, successfulCoinjoin.OutputScripts);
 				wallet.LogInfo($"{nameof(CoinJoinClient)} finished. Coinjoin transaction was broadcast.");

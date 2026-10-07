@@ -2217,4 +2217,16 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Включить/выключить использование этого кошелька для охоты за секретами.</value>
   </data>
+  <data name="CoinJoinMiningFee" xml:space="preserve">
+    <value>Комиссия майнерам</value>
+  </data>
+  <data name="CoinJoinWastedDust" xml:space="preserve">
+    <value>Неиспользованный остаток</value>
+  </data>
+  <data name="CoinJoinPaymentsTotal" xml:space="preserve">
+    <value>Платежи в этом CoinJoin</value>
+  </data>
+  <data name="CoinJoinBalanceChange" xml:space="preserve">
+    <value>Чистое изменение баланса (разбивка недоступна)</value>
+  </data>
 </root>

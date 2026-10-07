@@ -8,6 +8,7 @@
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.HomeScreen.History.Views.Actions.CoinJoinDetailsView"
              xmlns:lang="using:WalletWasabi.Lang"
+             xmlns:history="clr-namespace:WalletWasabi.Fluent.HomeScreen.History.Views.Actions"
              xmlns:actions="clr-namespace:WalletWasabi.Fluent.HomeScreen.History.ViewModels.Actions"
              Name="CoinJoinDetails">
   <ContentArea Title="{Binding Title}"
@@ -64,7 +65,7 @@
 
       <!-- CJ fee  -->
       <PreviewItem Icon="{StaticResource btc_logo}"
-                   Label="{x:Static lang:Resources.Fees}"
+                   Label="{Binding CostLabel}"
                    CopyableContent="{Binding CoinJoinFeeAmount.Btc, Converter={x:Static conv:MoneyConverters.ToFeeWithoutUnit}}">
         <AmountControl Classes="Fee" Amount="{Binding CoinJoinFeeAmount}" />
       </PreviewItem>
@@ -82,6 +83,7 @@
       </PreviewItem>
 
       <Separator IsVisible="{Binding IsConfirmationTimeVisible}" />
+      <Border IsVisible="{Binding !!Costs}"><history:CoinJoinCostsView DataContext="{Binding Costs}" /></Border>
     </StackPanel>
   </ContentArea>
 </UserControl>

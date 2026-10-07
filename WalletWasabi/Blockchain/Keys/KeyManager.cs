@@ -18,6 +18,7 @@ using WalletWasabi.Logging;
 using WalletWasabi.Models;
 using WalletWasabi.SecretHunt;
 using WalletWasabi.Wallets;
+using WalletWasabi.WabiSabi.Client;
 using static WalletWasabi.Blockchain.Keys.WpkhOutputDescriptorHelper;
 
 namespace WalletWasabi.Blockchain.Keys;
@@ -669,6 +670,29 @@ public class KeyManager : IJsonOnSerializing, IJsonOnDeserialized
 		}
 
 		return availableCandidates.Count > 0;
+	}
+
+	public void AddCoinJoinCosts(uint256 transactionId, CoinJoinCosts costs)
+	{
+		ArgumentNullException.ThrowIfNull(costs);
+		if (!costs.IsValid)
+		{
+			throw new ArgumentException("CoinJoin costs must be non-negative.", nameof(costs));
+		}
+		lock (CriticalStateLock)
+		{
+			Attributes.CoinJoinCosts ??= new();
+			Attributes.CoinJoinCosts[transactionId.ToString()] = costs;
+			ToFile();
+		}
+	}
+
+	public CoinJoinCosts? GetCoinJoinCosts(uint256 transactionId)
+	{
+		lock (CriticalStateLock)
+		{
+			return Attributes.CoinJoinCosts is { } entries && entries.TryGetValue(transactionId.ToString(), out var costs) && costs is { IsValid: true } ? costs : null;
+		}
 	}
 
 	public void ToFile()

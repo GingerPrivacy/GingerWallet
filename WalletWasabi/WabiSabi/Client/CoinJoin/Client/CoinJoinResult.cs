@@ -9,7 +9,10 @@ public abstract record CoinJoinResult;
 public record SuccessfulCoinJoinResult(
 	ImmutableList<SmartCoin> Coins,
 	ImmutableList<Script> OutputScripts,
-	Transaction UnsignedCoinJoin) : CoinJoinResult;
+	Transaction UnsignedCoinJoin) : CoinJoinResult
+{
+	public CoinJoinCosts? Costs { get; init; }
+}
 
 public record FailedCoinJoinResult : CoinJoinResult;
 

@@ -353,7 +353,12 @@ public class CoinJoinClient
 				EndRoundState.TransactionBroadcasted => new SuccessfulCoinJoinResult(
 					Coins: signedCoins,
 					OutputScripts: outputTxOuts.Select(o => o.ScriptPubKey).ToImmutableList(),
-					UnsignedCoinJoin: unsignedCoinJoin!),
+					UnsignedCoinJoin: unsignedCoinJoin!)
+				{
+					Costs = CoinJoinCosts.Calculate(roundState.CoinjoinState.Parameters.MiningFeeRate,
+						roundState.CoinjoinState.Parameters.CoordinationFeeRate,
+						aliceClientsThatSigned.Select(a => (a.SmartCoin.Coin, a.IsCoordinationFeeExempted)), outputTxOuts, unsignedCoinJoin!.Outputs)
+				},
 				EndRoundState.NotAllAlicesSign => new DisruptedCoinJoinResult(signedCoins),
 				_ => new FailedCoinJoinResult()
 			};

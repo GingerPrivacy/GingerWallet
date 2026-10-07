@@ -2215,4 +2215,16 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Activar o desactivar el uso de este monedero para la Caza de Secretos.</value>
   </data>
+  <data name="CoinJoinMiningFee" xml:space="preserve">
+    <value>Comisión de minería</value>
+  </data>
+  <data name="CoinJoinWastedDust" xml:space="preserve">
+    <value>Remanente no utilizado</value>
+  </data>
+  <data name="CoinJoinPaymentsTotal" xml:space="preserve">
+    <value>Pagos en este CoinJoin</value>
+  </data>
+  <data name="CoinJoinBalanceChange" xml:space="preserve">
+    <value>Cambio neto del saldo (desglose no disponible)</value>
+  </data>
 </root>

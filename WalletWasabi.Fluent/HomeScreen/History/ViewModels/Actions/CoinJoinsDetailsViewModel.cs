@@ -6,6 +6,7 @@ using NBitcoin;
 using WalletWasabi.Fluent.Models.Wallets;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Lang;
+using WalletWasabi.WabiSabi.Client;
 
 namespace WalletWasabi.Fluent.HomeScreen.History.ViewModels.Actions;
 
@@ -23,6 +24,8 @@ public partial class CoinJoinsDetailsViewModel : RoutableViewModel
 	[AutoNotify] private uint256? _transactionId;
 	[AutoNotify] private ObservableCollection<uint256>? _transactionIds;
 	[AutoNotify] private int _txCount;
+	[AutoNotify] private CoinJoinCostsViewModel? _costs;
+	[AutoNotify] private string _costLabel = "";
 
 	public CoinJoinsDetailsViewModel(WalletModel wallet, TransactionModel transaction)
 	{
@@ -58,7 +61,10 @@ public partial class CoinJoinsDetailsViewModel : RoutableViewModel
 		{
 			Date = transaction.DateToolTipString;
 			Status = transaction.IsConfirmed ? Resources.Confirmed : Resources.Pending;
-			CoinJoinFeeAmount = _wallet.AmountProvider.Create((Money)Math.Abs(transaction.DisplayAmount));
+			var costs = CoinJoinCosts.Aggregate(transaction.Children.Select(x => _wallet.Transactions.GetCoinJoinCosts(x.Id)));
+			Costs = costs is { } ? new CoinJoinCostsViewModel(costs, _wallet.AmountProvider) : null;
+			CostLabel = costs is { } ? Resources.Fees : Resources.CoinJoinBalanceChange;
+			CoinJoinFeeAmount = _wallet.AmountProvider.Create(costs?.TotalFee ?? transaction.DisplayAmount);
 			TransactionId = transaction.Id;
 			TransactionIds = new ObservableCollection<uint256>(transaction.Children.Select(x => x.Id));
 			TxCount = TransactionIds.Count;

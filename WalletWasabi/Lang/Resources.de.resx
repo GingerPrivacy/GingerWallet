@@ -2215,4 +2215,16 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Aktiviere oder deaktiviere die Nutzung dieser Wallet für die Geheimnisjagd.</value>
   </data>
+  <data name="CoinJoinMiningFee" xml:space="preserve">
+    <value>Mining-Gebühr</value>
+  </data>
+  <data name="CoinJoinWastedDust" xml:space="preserve">
+    <value>Nicht genutzter Restbetrag</value>
+  </data>
+  <data name="CoinJoinPaymentsTotal" xml:space="preserve">
+    <value>Zahlungen in diesem CoinJoin</value>
+  </data>
+  <data name="CoinJoinBalanceChange" xml:space="preserve">
+    <value>Nettoänderung des Guthabens (Aufschlüsselung nicht verfügbar)</value>
+  </data>
 </root>
