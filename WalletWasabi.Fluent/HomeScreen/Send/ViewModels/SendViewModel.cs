@@ -28,6 +28,7 @@ using WalletWasabi.Userfacing;
 using WalletWasabi.Userfacing.Bip21;
 using WalletWasabi.WabiSabi.Client;
 using WalletWasabi.Wallets;
+using WalletWasabi.Wallets.SilentPayment;
 using WalletWasabi.WebClients.PayJoin;
 using Constants = WalletWasabi.Helpers.Constants;
 
@@ -157,7 +158,11 @@ public partial class SendViewModel : RoutableViewModel
 		}
 
 		var amount = new Money(amountBtc, MoneyUnit.BTC);
-		var transactionInfo = new TransactionInfo(BitcoinAddress.Create(To, _walletModel.Network), _walletModel.Settings.AnonScoreTarget)
+		if (!AddressStringParser.TryParseDestination(To, _walletModel.Network, out var destination))
+		{
+			return;
+		}
+		var transactionInfo = new TransactionInfo(destination, _walletModel.Settings.AnonScoreTarget)
 		{
 			Amount = amount,
 			Recipient = label,
@@ -267,6 +272,11 @@ public partial class SendViewModel : RoutableViewModel
 		{
 			errors.Add(ErrorSeverity.Error, Resources.PayjoinNotPossibleWithHardwareWallets);
 		}
+		else if (AddressStringParser.TryParseDestination(To, _walletModel.Network, out var destination) && destination is SilentPaymentAddress &&
+			(_walletModel.IsWatchOnlyWallet || _walletModel.IsHardwareWallet || IsPayJoin))
+		{
+			errors.Add(ErrorSeverity.Error, Resources.SilentPaymentUnsupportedCombination);
+		}
 	}
 
 	private void ParseToField(string s)
@@ -306,7 +316,7 @@ public partial class SendViewModel : RoutableViewModel
 
 			if (parserResult.Address is { })
 			{
-				To = parserResult.Address.ToString();
+				To = parserResult.Address.ToString() ?? "";
 			}
 
 			if (parserResult.Amount is { })

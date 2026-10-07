@@ -2215,4 +2215,7 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Activer ou désactiver l’utilisation de ce portefeuille pour la Chasse aux Secrets.</value>
   </data>
+  <data name="SilentPaymentUnsupportedCombination" xml:space="preserve">
+    <value>Silent Payments nécessite un portefeuille logiciel et ne peut pas être combiné avec Payjoin.</value>
+  </data>
 </root>

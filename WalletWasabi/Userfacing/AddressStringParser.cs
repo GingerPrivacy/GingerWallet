@@ -4,6 +4,7 @@ using System.Globalization;
 using WalletWasabi.Extensions;
 using WalletWasabi.Lang;
 using WalletWasabi.Userfacing.Bip21;
+using WalletWasabi.Wallets.SilentPayment;
 
 namespace WalletWasabi.Userfacing;
 
@@ -11,6 +12,25 @@ public static class AddressStringParser
 {
 	public static bool TryParse(string text, Network expectedNetwork, [NotNullWhen(true)] out Bip21UriParser.Result? result)
 		=> TryParse(text, expectedNetwork, out result, out _);
+
+	public static bool TryParseDestination(string text, Network network, [NotNullWhen(true)] out IDestination? destination)
+	{
+		if (WalletWasabi.Extensions.NBitcoinExtensions.TryParseBitcoinAddressForNetwork(text, network, out var address))
+		{
+			destination = address;
+			return true;
+		}
+		try
+		{
+			destination = SilentPaymentAddress.Parse(text, network);
+			return true;
+		}
+		catch (Exception ex) when (ex is FormatException or ArgumentException)
+		{
+			destination = null;
+			return false;
+		}
+	}
 
 	/// <summary>
 	/// Parses either a Bitcoin address or a BIP21 URI string.
@@ -64,7 +84,7 @@ public static class AddressStringParser
 		// Parse a Bitcoin address (not BIP21 URI string)
 		if (!text.StartsWith($"{Bip21UriParser.UriScheme}:", StringComparison.OrdinalIgnoreCase))
 		{
-			if (NBitcoinExtensions.TryParseBitcoinAddressForNetwork(text, expectedNetwork, out BitcoinAddress? address))
+			if (TryParseDestination(text, expectedNetwork, out IDestination? address))
 			{
 				Uri uri = new($"{Bip21UriParser.UriScheme}:{text}");
 				result = new Bip21UriParser.Result(uri, expectedNetwork, address);
@@ -88,7 +108,7 @@ public static class AddressStringParser
 		{
 			Network networkGuess = expectedNetwork == Network.TestNet ? Network.Main : Network.TestNet;
 
-			if (NBitcoinExtensions.TryParseBitcoinAddressForNetwork(error.Details!, networkGuess, out _))
+			if (TryParseDestination(error.Details!, networkGuess, out _))
 			{
 				errorMessage = string.Format(CultureInfo.InvariantCulture, Resources.BitcoinAddressValidity, networkGuess, expectedNetwork);;
 				return false;

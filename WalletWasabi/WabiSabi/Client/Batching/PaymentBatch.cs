@@ -6,6 +6,7 @@ using WalletWasabi.Extensions;
 using WalletWasabi.Helpers;
 using WalletWasabi.Logging;
 using WalletWasabi.WabiSabi.Backend.Rounds;
+using WalletWasabi.Wallets.SilentPayment;
 
 namespace WalletWasabi.WabiSabi.Client.Batching;
 
@@ -27,6 +28,10 @@ public class PaymentBatch
 
 	public Guid AddPayment(IDestination destination, Money amount)
 	{
+		if (destination is SilentPaymentAddress)
+		{
+			throw new InvalidOperationException("Silent payments cannot be included in CoinJoin payments.");
+		}
 		var payment = new Payment(destination, amount);
 		lock (_syncObj)
 		{

@@ -13,7 +13,7 @@ public partial class TransactionInfo
 	[AutoNotify] private FeeRate _feeRate = FeeRate.Zero;
 	[AutoNotify] private IEnumerable<SmartCoin> _coins = Enumerable.Empty<SmartCoin>();
 
-	public TransactionInfo(BitcoinAddress destination, int anonScoreTarget)
+	public TransactionInfo(IDestination destination, int anonScoreTarget)
 	{
 		Destination = destination;
 		PrivateCoinThreshold = anonScoreTarget;
@@ -29,7 +29,7 @@ public partial class TransactionInfo
 
 	public Money Amount { get; init; } = Money.Zero;
 
-	public BitcoinAddress Destination { get; init; }
+	public IDestination Destination { get; init; }
 
 	public LabelsArray Recipient { get; set; } = LabelsArray.Empty;
 

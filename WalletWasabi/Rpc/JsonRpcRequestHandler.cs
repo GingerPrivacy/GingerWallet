@@ -26,7 +26,8 @@ public class JsonRpcRequestHandler<TService>
 		{
 			new Uint256JsonConverter(),
 			new OutPointAsTxoRefJsonConverter(),
-			new BitcoinAddressJsonConverter()
+			new BitcoinAddressJsonConverter(),
+			new PaymentDestinationJsonConverter()
 		}
 	};
 

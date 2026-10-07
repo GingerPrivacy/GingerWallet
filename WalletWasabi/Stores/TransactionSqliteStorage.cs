@@ -13,8 +13,8 @@ namespace WalletWasabi.Stores;
 
 public class TransactionSqliteStorage : IDisposable
 {
-	private const string AllColumns = "txid, block_height, block_hash, block_index, labels, first_seen, is_replacement, is_speedup, is_cancellation, tx";
-	private const string AllParameters = "$txid, $block_height, $block_hash, $block_index, $labels, $first_seen, $is_replacement, $is_speedup, $is_cancellation, $tx";
+	private const string AllColumns = "txid, block_height, block_hash, block_index, labels, first_seen, is_replacement, is_speedup, is_cancellation, tx, is_silent_payment";
+	private const string AllParameters = "$txid, $block_height, $block_hash, $block_index, $labels, $first_seen, $is_replacement, $is_speedup, $is_cancellation, $tx, $is_silent_payment";
 	private bool _disposedValue;
 
 	private TransactionSqliteStorage(SqliteConnection connection, Network network)
@@ -48,8 +48,10 @@ public class TransactionSqliteStorage : IDisposable
 			connectionToDispose = connection;
 			connection.Open();
 
+			using (SqliteTransaction schemaTransaction = connection.BeginTransaction())
 			using (SqliteCommand command = connection.CreateCommand())
 			{
+				command.Transaction = schemaTransaction;
 				command.CommandText = $$"""
 					CREATE TABLE IF NOT EXISTS "transaction" (
 						txid BLOB NOT NULL PRIMARY KEY, /* bytes are in little endian; we consider TXIDs to be unique */
@@ -61,11 +63,19 @@ public class TransactionSqliteStorage : IDisposable
 						is_replacement BOOLEAN NOT NULL,
 						is_speedup BOOLEAN NOT NULL,
 						is_cancellation BOOLEAN NOT NULL,
-						tx BLOB NOT NULL /* transaction as a binary array */
+						tx BLOB NOT NULL, /* transaction as a binary array */
+						is_silent_payment BOOLEAN NOT NULL DEFAULT 0
 					);
 					CREATE INDEX IF NOT EXISTS transaction_blockchain_idx ON "transaction" (block_height, block_index, first_seen);
 					""";
 				command.ExecuteNonQuery();
+				command.CommandText = "SELECT COUNT(*) FROM pragma_table_info('transaction') WHERE name = 'is_silent_payment';";
+				if ((long)command.ExecuteScalar()! == 0)
+				{
+					command.CommandText = "ALTER TABLE \"transaction\" ADD COLUMN is_silent_payment BOOLEAN NOT NULL DEFAULT 0;";
+					command.ExecuteNonQuery();
+				}
+				schemaTransaction.Commit();
 			}
 
 			// Enable write-ahead logging.
@@ -125,7 +135,8 @@ public class TransactionSqliteStorage : IDisposable
 					first_seen=excluded.first_seen,
 					is_replacement=excluded.is_replacement,
 					is_speedup=excluded.is_speedup,
-					is_cancellation=excluded.is_cancellation
+					is_cancellation=excluded.is_cancellation,
+					is_silent_payment=MAX("transaction".is_silent_payment, excluded.is_silent_payment)
 				""";
 		}
 		else
@@ -167,6 +178,8 @@ public class TransactionSqliteStorage : IDisposable
 
 		SqliteParameter txParameter = CreateParameter(command, "$tx");
 		command.Parameters.Add(txParameter);
+		SqliteParameter isSilentPaymentParameter = CreateParameter(command, "$is_silent_payment");
+		command.Parameters.Add(isSilentPaymentParameter);
 
 		int changedRows = 0;
 
@@ -185,6 +198,7 @@ public class TransactionSqliteStorage : IDisposable
 			isSpeedupParameter.Value = tx.IsSpeedup ? 1 : 0;
 			isCancellationParameter.Value = tx.IsCancellation ? 1 : 0;
 			txParameter.Value = tx.Transaction.ToBytes();
+			isSilentPaymentParameter.Value = tx.IsSilentPayment ? 1 : 0;
 
 			int affectedRows = command.ExecuteNonQuery();
 
@@ -234,7 +248,8 @@ public class TransactionSqliteStorage : IDisposable
 				first_seen = $first_seen,
 				is_replacement = $is_replacement,
 				is_speedup = $is_speedup,
-				is_cancellation = $is_cancellation
+				is_cancellation = $is_cancellation,
+				is_silent_payment = MAX(is_silent_payment, $is_silent_payment)
 			WHERE txid = $txid
 			""";
 
@@ -268,6 +283,8 @@ public class TransactionSqliteStorage : IDisposable
 		command.Parameters.Add(isCancellationParameter);
 
 		int changedRows = 0;
+		SqliteParameter isSilentPaymentParameter = CreateParameter(command, "$is_silent_payment");
+		command.Parameters.Add(isSilentPaymentParameter);
 
 		foreach (SmartTransaction tx in transactions)
 		{
@@ -284,6 +301,7 @@ public class TransactionSqliteStorage : IDisposable
 			isSpeedupParameter.Value = tx.IsSpeedup ? 1 : 0;
 			isCancellationParameter.Value = tx.IsCancellation ? 1 : 0;
 
+			isSilentPaymentParameter.Value = tx.IsSilentPayment ? 1 : 0;
 			int affectedRows = command.ExecuteNonQuery();
 
 			if (affectedRows > -1)
@@ -432,6 +450,7 @@ public class TransactionSqliteStorage : IDisposable
 		bool isSpeedup = reader.GetInt32(ordinal: 7) == 1;
 		bool isCancellation = reader.GetInt32(ordinal: 8) == 1;
 		byte[] tx = reader.GetFieldValue<byte[]>(ordinal: 9);
+		bool isSilentPayment = reader.GetInt32(ordinal: 10) == 1;
 
 		Transaction transaction = Transaction.Load(tx, Network);
 
@@ -439,7 +458,7 @@ public class TransactionSqliteStorage : IDisposable
 		LabelsArray labelsArray = new(labelsString);
 		DateTimeOffset firstSeen = DateTimeOffset.FromUnixTimeSeconds(firstSeenLong);
 
-		SmartTransaction stx = new(transaction, height, blockHash, blockIndex, labelsArray, isReplacement, isSpeedup, isCancellation, firstSeen);
+		SmartTransaction stx = new(transaction, height, blockHash, blockIndex, labelsArray, isReplacement, isSpeedup, isCancellation, firstSeen, isSilentPayment);
 
 		if (stx.GetHash() != txid)
 		{

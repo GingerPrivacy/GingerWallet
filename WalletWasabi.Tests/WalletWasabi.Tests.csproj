@@ -59,6 +59,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Update="UnitTests/Data/SilentPaymentTestVectors.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="./UnitTests/Data/StrobeTestVectors.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>

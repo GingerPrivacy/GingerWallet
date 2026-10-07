@@ -29,7 +29,7 @@ public partial class TransactionSummaryViewModel : ViewModelBase
 		Parent = parent;
 		_wallet = wallet;
 		IsPreview = isPreview;
-		AddressText = info.Destination.ToString();
+		AddressText = info.Destination.ToString() ?? throw new InvalidOperationException("Missing payment destination.");
 		PayJoinUrl = info.PayJoinClient?.PaymentUrl.AbsoluteUri;
 		IsPayJoin = PayJoinUrl is not null;
 	}

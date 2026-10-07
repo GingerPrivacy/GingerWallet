@@ -60,7 +60,7 @@ public class Bip21UriParser
 		string? label = null;
 		string? message = null;
 
-		if (!NBitcoinExtensions.TryParseBitcoinAddressForNetwork(addressString, network, out BitcoinAddress? address))
+		if (!AddressStringParser.TryParseDestination(addressString, network, out IDestination? address))
 		{
 			error = ErrorInvalidAddress with { Details = addressString };
 			return false;
@@ -141,12 +141,12 @@ public class Bip21UriParser
 	/// <summary>
 	/// Successful result of parsing a BIP21 URI string.
 	/// </summary>
-	public record Result(Uri Uri, Network Network, BitcoinAddress Address, Money? Amount, string? Label, string? Message, Dictionary<string, string> UnknownParameters)
+	public record Result(Uri Uri, Network Network, IDestination Address, Money? Amount, string? Label, string? Message, Dictionary<string, string> UnknownParameters)
 	{
 		/// <summary>
 		/// Special constructor for <c>bitcoin:address</c> cases.
 		/// </summary>
-		public Result(Uri uri, Network network, BitcoinAddress address)
+		public Result(Uri uri, Network network, IDestination address)
 			: this(uri, network, address, Amount: null, Label: null, Message: null, UnknownParameters: new())
 		{
 		}

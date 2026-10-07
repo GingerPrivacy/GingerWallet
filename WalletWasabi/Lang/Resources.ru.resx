@@ -2217,4 +2217,7 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Включить/выключить использование этого кошелька для охоты за секретами.</value>
   </data>
+  <data name="SilentPaymentUnsupportedCombination" xml:space="preserve">
+    <value>Для Silent Payments требуется программный кошелёк; использование вместе с Payjoin невозможно.</value>
+  </data>
 </root>

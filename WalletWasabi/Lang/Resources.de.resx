@@ -2215,4 +2215,7 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Aktiviere oder deaktiviere die Nutzung dieser Wallet für die Geheimnisjagd.</value>
   </data>
+  <data name="SilentPaymentUnsupportedCombination" xml:space="preserve">
+    <value>Silent Payments erfordern eine Software-Wallet und können nicht mit Payjoin kombiniert werden.</value>
+  </data>
 </root>

@@ -111,7 +111,7 @@ public static class NBitcoinExtensions
 	public static SmartTransaction ExtractSmartTransaction(this PSBT psbt)
 	{
 		var extractedTx = psbt.ExtractTransaction();
-		return new SmartTransaction(extractedTx, Height.Unknown);
+		return new SmartTransaction(extractedTx, Height.Unknown, isSilentPayment: WalletWasabi.Wallets.SilentPayment.SilentPaymentTransaction.HasSilentPaymentOutputs(psbt));
 	}
 
 	public static SmartTransaction ExtractSmartTransaction(this PSBT psbt, SmartTransaction unsignedSmartTransaction)
@@ -126,7 +126,8 @@ public static class NBitcoinExtensions
 			unsignedSmartTransaction.IsReplacement,
 			unsignedSmartTransaction.IsSpeedup,
 			unsignedSmartTransaction.IsCancellation,
-			unsignedSmartTransaction.FirstSeen);
+			unsignedSmartTransaction.FirstSeen,
+			unsignedSmartTransaction.IsSilentPayment || WalletWasabi.Wallets.SilentPayment.SilentPaymentTransaction.HasSilentPaymentOutputs(psbt));
 	}
 
 	public static SigningState Finalize(this ConstructionState constructionState)

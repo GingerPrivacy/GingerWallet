@@ -142,6 +142,11 @@ public class TransactionBroadcaster
 
 	public async Task SendTransactionAsync(SmartTransaction transaction)
 	{
+		if (BitcoinStore.TransactionStore.TryGetTransaction(transaction.GetHash(), out var knownTransaction))
+		{
+			transaction.TryUpdate(knownTransaction);
+		}
+
 		try
 		{
 			// Broadcast to a random node.

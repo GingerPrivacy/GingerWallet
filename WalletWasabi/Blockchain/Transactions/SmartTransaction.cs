@@ -31,7 +31,8 @@ public class SmartTransaction : IEquatable<SmartTransaction>
 		bool isReplacement = false,
 		bool isSpeedup = false,
 		bool isCancellation = false,
-		DateTimeOffset firstSeen = default)
+		DateTimeOffset firstSeen = default,
+		bool isSilentPayment = false)
 	{
 		Transaction = transaction;
 
@@ -49,6 +50,7 @@ public class SmartTransaction : IEquatable<SmartTransaction>
 		IsReplacement = isReplacement;
 		IsSpeedup = isSpeedup;
 		IsCancellation = isCancellation;
+		IsSilentPayment = isSilentPayment;
 		WalletInputsInternal = new HashSet<SmartCoin>(Transaction.Inputs.Count);
 		WalletOutputsInternal = new HashSet<SmartCoin>(Transaction.Outputs.Count);
 
@@ -175,6 +177,7 @@ public class SmartTransaction : IEquatable<SmartTransaction>
 	public bool IsSpeedup { get; private set; }
 
 	public bool IsCancellation { get; private set; }
+	public bool IsSilentPayment { get; private set; }
 
 	public bool IsCPFP => ParentsThisTxPaysFor.Any();
 	public bool IsCPFPd => ChildrenPayForThisTx.Any();
@@ -266,6 +269,7 @@ public class SmartTransaction : IEquatable<SmartTransaction>
 	public bool IsRbfable(KeyManager keyManager) =>
 		!keyManager.IsWatchOnly && !keyManager.IsHardwareWallet // [Difficultly] Watch-only and hardware wallets are problematic. It remains a ToDo for the future.
 		&& !Confirmed // [Impossibility] We can only speed up unconfirmed transactions.
+		&& !IsSilentPayment // Changing inputs invalidates silent payment outputs; use CPFP instead.
 		&& !GetForeignInputs(keyManager).Any() // [Impossibility] Must not have foreign inputs, otherwise we couldn't do RBF.
 		&& WalletOutputs.All(x => !x.IsSpent()); // [Dangerous] All the outputs we know of should not be spent, otherwise we shouldn't do RBF.
 
@@ -371,6 +375,11 @@ public class SmartTransaction : IEquatable<SmartTransaction>
 		}
 
 		// If we have a flag set on the other, then we make sure it is set on this as well.
+		if (!IsSilentPayment && tx.IsSilentPayment)
+		{
+			IsSilentPayment = true;
+			updated = true;
+		}
 		if (IsReplacement is false && tx.IsReplacement is true)
 		{
 			IsReplacement = true;
@@ -558,7 +567,8 @@ public class SmartTransaction : IEquatable<SmartTransaction>
 				isCancellation = false;
 			}
 
-			return new SmartTransaction(transaction, height, blockHash, blockIndex, label, isReplacement, isSpeedup, isCancellation, firstSeen);
+			var isSilentPayment = parts.Length > 10 && bool.TryParse(parts[10], out var silentPayment) && silentPayment;
+			return new SmartTransaction(transaction, height, blockHash, blockIndex, label, isReplacement, isSpeedup, isCancellation, firstSeen, isSilentPayment);
 		}
 		catch (Exception ex)
 		{

@@ -2215,4 +2215,7 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Activar o desactivar el uso de este monedero para la Caza de Secretos.</value>
   </data>
+  <data name="SilentPaymentUnsupportedCombination" xml:space="preserve">
+    <value>Silent Payments requiere una cartera de software y no se puede combinar con Payjoin.</value>
+  </data>
 </root>

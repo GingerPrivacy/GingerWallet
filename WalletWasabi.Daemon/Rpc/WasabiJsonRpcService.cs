@@ -23,6 +23,7 @@ using WalletWasabi.WabiSabi.Client;
 using WalletWasabi.WabiSabi.Client.Batching;
 using WalletWasabi.WabiSabi.Client.CoinJoin.Client;
 using WalletWasabi.Wallets;
+using WalletWasabi.Wallets.SilentPayment;
 using JsonRpcResult = System.Collections.Generic.Dictionary<string, object?>;
 using JsonRpcResultList = System.Collections.Immutable.ImmutableArray<System.Collections.Generic.Dictionary<string, object?>>;
 
@@ -228,26 +229,8 @@ public class WasabiJsonRpcService : IJsonRpcService
 	[JsonRpcMethod("build")]
 	public string BuildTransaction(PaymentInfo[] payments, OutPoint[] coins, int? feeTarget = null, decimal? feeRate = null, string? password = null)
 	{
-		Guard.NotNull(nameof(payments), payments);
-		Guard.NotNull(nameof(coins), coins);
-		password = Guard.Correct(password);
-
-		var feeStrategy = GetFeeStrategy(feeTarget, feeRate);
-
-		AssertWalletIsLoaded();
-		var payment = new PaymentIntent(
-			payments.Select(
-				p =>
-				new DestinationRequest(p.Sendto.ScriptPubKey, MoneyRequest.Create(p.Amount, p.SubtractFee), new LabelsArray(p.Label))));
-		var result = ActiveWallet!.BuildTransaction(
-			password,
-			payment,
-			feeStrategy,
-			allowUnconfirmed: true,
-			allowedInputs: coins);
-		var smartTx = result.Transaction;
-
-		return smartTx.Transaction.ToHex();
+		AssertRawExportSupported(payments);
+		return BuildPaymentTransaction(payments, coins, feeTarget, feeRate, password).Transaction.ToHex();
 	}
 
 	/// <summary>
@@ -256,6 +239,21 @@ public class WasabiJsonRpcService : IJsonRpcService
 	/// </summary>
 	[JsonRpcMethod("buildunsafetransaction")]
 	public string BuildUnsafeTransaction(PaymentInfo[] payments, OutPoint[] coins, int? feeTarget = null, decimal? feeRate = null, string? password = null)
+	{
+		AssertRawExportSupported(payments);
+		return BuildPaymentTransaction(payments, coins, feeTarget, feeRate, password, unsafeFee: true).Transaction.ToHex();
+	}
+
+	private static void AssertRawExportSupported(PaymentInfo[] payments)
+	{
+		Guard.NotNull(nameof(payments), payments);
+		if (payments.Any(p => p.Sendto is SilentPaymentAddress))
+		{
+			throw new InvalidOperationException("Silent payments require the send RPC or a GUI PSBT export so their fee-bump protection is preserved.");
+		}
+	}
+
+	private SmartTransaction BuildPaymentTransaction(PaymentInfo[] payments, OutPoint[] coins, int? feeTarget, decimal? feeRate, string? password, bool unsafeFee = false)
 	{
 		Guard.NotNull(nameof(payments), payments);
 		Guard.NotNull(nameof(coins), coins);
@@ -267,16 +265,11 @@ public class WasabiJsonRpcService : IJsonRpcService
 		var payment = new PaymentIntent(
 			payments.Select(
 				p =>
-				new DestinationRequest(p.Sendto.ScriptPubKey, MoneyRequest.Create(p.Amount, p.SubtractFee), new LabelsArray(p.Label))));
-		var result = ActiveWallet!.BuildTransactionWithoutOverpaymentProtection(
-			password,
-			payment,
-			feeStrategy,
-			allowUnconfirmed: true,
-			allowedInputs: coins);
-		var smartTx = result.Transaction;
-
-		return smartTx.Transaction.ToHex();
+				new DestinationRequest(p.Sendto, MoneyRequest.Create(p.Amount, p.SubtractFee), new LabelsArray(p.Label))));
+		var result = unsafeFee
+			? ActiveWallet!.BuildTransactionWithoutOverpaymentProtection(password, payment, feeStrategy, allowUnconfirmed: true, allowedInputs: coins)
+			: ActiveWallet!.BuildTransaction(password, payment, feeStrategy, allowUnconfirmed: true, allowedInputs: coins);
+		return result.Transaction;
 	}
 
 	[JsonRpcMethod("payincoinjoin")]
@@ -358,9 +351,9 @@ public class WasabiJsonRpcService : IJsonRpcService
 	[JsonRpcMethod("send")]
 	public async Task<JsonRpcResult> SendTransactionAsync(PaymentInfo[] payments, OutPoint[] coins, int? feeTarget = null, int? feeRate = null, string? password = null)
 	{
-		password = Guard.Correct(password);
-		var txHex = BuildTransaction(payments, coins, feeTarget, feeRate, password);
-		var smartTx = new SmartTransaction(Transaction.Parse(txHex, Global.Network), Height.Mempool);
+		var smartTx = BuildPaymentTransaction(payments, coins, feeTarget, feeRate, password);
+		smartTx.SetUnconfirmed();
+		var txHex = smartTx.Transaction.ToHex();
 
 		await Global.TransactionBroadcaster.SendTransactionAsync(smartTx).ConfigureAwait(false);
 		return new JsonRpcResult

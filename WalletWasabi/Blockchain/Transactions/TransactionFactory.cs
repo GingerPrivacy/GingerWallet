@@ -14,6 +14,7 @@ using WalletWasabi.Logging;
 using WalletWasabi.Models;
 using WalletWasabi.Tor.Socks5.Exceptions;
 using WalletWasabi.WebClients.PayJoin;
+using WalletWasabi.Wallets.SilentPayment;
 
 namespace WalletWasabi.Blockchain.Transactions;
 
@@ -42,6 +43,27 @@ public class TransactionFactory
 		lockTimeSelector ??= () => LockTime.Zero;
 
 		var payments = parameters.PaymentIntent;
+		var silentAddresses = payments.Requests.Select(r => r.Destination).OfType<SilentPaymentAddress>().Distinct().ToArray();
+		if (silentAddresses.Length > 0)
+		{
+			if (KeyManager.IsWatchOnly || KeyManager.IsHardwareWallet)
+			{
+				throw new InvalidOperationException("Silent payments require a hot wallet.");
+			}
+			if (payjoinClient is not null)
+			{
+				throw new InvalidOperationException("Silent payments cannot be combined with Payjoin.");
+			}
+			if (silentAddresses.Any(a => a.Version != 0 || a.Network != Network))
+			{
+				throw new ArgumentException("Unsupported silent payment version or network.");
+			}
+			var placeholders = silentAddresses.Select(a => a.ScriptPubKey).ToHashSet();
+			if (payments.Requests.Any(r => r.Destination is not SilentPaymentAddress && placeholders.Contains(r.Destination.ScriptPubKey)))
+			{
+				throw new ArgumentException("A payment destination conflicts with a silent payment placeholder.");
+			}
+		}
 		long totalAmount = payments.TotalAmount.Satoshi;
 		if (totalAmount is < 0 or > Constants.MaximumNumberOfSatoshis)
 		{
@@ -208,6 +230,10 @@ public class TransactionFactory
 		}
 
 		// Build the transaction
+		if (silentAddresses.Length > 0)
+		{
+			psbt = SilentPaymentTransaction.Resolve(psbt, silentAddresses, spentCoins, KeyManager, Password, Network);
+		}
 
 		// It must be watch only, too, because if we have the key and also hardware wallet, we do not care we can sign.
 		psbt.AddKeyPaths(KeyManager);
@@ -248,7 +274,7 @@ public class TransactionFactory
 			}
 		}
 
-		var smartTransaction = new SmartTransaction(tx, Height.Unknown, labels: LabelsArray.Merge(payments.Requests.Select(x => x.Labels)));
+		var smartTransaction = new SmartTransaction(tx, Height.Unknown, labels: LabelsArray.Merge(payments.Requests.Select(x => x.Labels)), isSilentPayment: silentAddresses.Length > 0);
 		foreach (var coin in spentCoins)
 		{
 			smartTransaction.TryAddWalletInput(coin);
