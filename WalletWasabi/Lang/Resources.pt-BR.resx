@@ -2215,4 +2215,22 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Ativar ou desativar o uso desta carteira para a Caça aos Segredos.</value>
   </data>
+  <data name="BatchPayments" xml:space="preserve">
+    <value>Pagar a vários destinatários</value>
+  </data>
+  <data name="BatchPrivacyCaption" xml:space="preserve">
+    <value>Estes pagamentos compartilham uma transação e podem ser vinculados entre si. Insira endereços Bitcoin; URIs de pagamento e Payjoin estão disponíveis ao enviar a um único destinatário.</value>
+  </data>
+  <data name="BatchAddPayment" xml:space="preserve">
+    <value>Adicionar outro pagamento</value>
+  </data>
+  <data name="BatchSubtractFee" xml:space="preserve">
+    <value>Descontar a taxa da transação do primeiro pagamento</value>
+  </data>
+  <data name="BatchDuplicateAddress" xml:space="preserve">
+    <value>Cada pagamento deve usar um endereço Bitcoin diferente.</value>
+  </data>
+  <data name="BatchAmountPrecision" xml:space="preserve">
+    <value>Os valores podem ter no máximo oito casas decimais.</value>
+  </data>
 </root>

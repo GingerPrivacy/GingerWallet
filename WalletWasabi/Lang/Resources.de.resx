@@ -2215,4 +2215,22 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Aktiviere oder deaktiviere die Nutzung dieser Wallet für die Geheimnisjagd.</value>
   </data>
+  <data name="BatchPayments" xml:space="preserve">
+    <value>An mehrere Empfänger zahlen</value>
+  </data>
+  <data name="BatchPrivacyCaption" xml:space="preserve">
+    <value>Diese Zahlungen teilen sich eine Transaktion und können miteinander verknüpft werden. Gib Bitcoin-Adressen ein; Zahlungs-URIs und Payjoin stehen beim Senden an einen einzelnen Empfänger zur Verfügung.</value>
+  </data>
+  <data name="BatchAddPayment" xml:space="preserve">
+    <value>Weitere Zahlung hinzufügen</value>
+  </data>
+  <data name="BatchSubtractFee" xml:space="preserve">
+    <value>Transaktionsgebühr von der ersten Zahlung abziehen</value>
+  </data>
+  <data name="BatchDuplicateAddress" xml:space="preserve">
+    <value>Jede Zahlung muss eine andere Bitcoin-Adresse verwenden.</value>
+  </data>
+  <data name="BatchAmountPrecision" xml:space="preserve">
+    <value>Beträge dürfen höchstens acht Nachkommastellen haben.</value>
+  </data>
 </root>

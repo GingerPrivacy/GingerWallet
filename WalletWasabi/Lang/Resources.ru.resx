@@ -2217,4 +2217,22 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Включить/выключить использование этого кошелька для охоты за секретами.</value>
   </data>
+  <data name="BatchPayments" xml:space="preserve">
+    <value>Отправить нескольким получателям</value>
+  </data>
+  <data name="BatchPrivacyCaption" xml:space="preserve">
+    <value>Эти платежи входят в одну транзакцию и могут быть связаны друг с другом. Введите адреса Bitcoin; платежные URI и Payjoin доступны при отправке одному получателю.</value>
+  </data>
+  <data name="BatchAddPayment" xml:space="preserve">
+    <value>Добавить платеж</value>
+  </data>
+  <data name="BatchSubtractFee" xml:space="preserve">
+    <value>Вычесть комиссию транзакции из первого платежа</value>
+  </data>
+  <data name="BatchDuplicateAddress" xml:space="preserve">
+    <value>Для каждого платежа нужен отдельный адрес Bitcoin.</value>
+  </data>
+  <data name="BatchAmountPrecision" xml:space="preserve">
+    <value>Суммы могут содержать не более восьми знаков после запятой.</value>
+  </data>
 </root>
