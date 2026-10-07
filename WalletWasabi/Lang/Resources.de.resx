@@ -2215,4 +2215,10 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Aktiviere oder deaktiviere die Nutzung dieser Wallet für die Geheimnisjagd.</value>
   </data>
+  <data name="ResyncStartingHeightDescription" xml:space="preserve">
+    <value>Die Suche beginnt ab dieser Blockhöhe. Verwende 0 für einen vollständigen Scan; vorher empfangene Beträge können übersehen werden.</value>
+  </data>
+  <data name="ResyncGapLimitDescription" xml:space="preserve">
+    <value>Erhöhe das Gap-Limit, um Guthaben auf Adressen außerhalb des aktuellen Bereichs zu finden.</value>
+  </data>
 </root>

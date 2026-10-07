@@ -2215,4 +2215,10 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Activer ou désactiver l’utilisation de ce portefeuille pour la Chasse aux Secrets.</value>
   </data>
+  <data name="ResyncStartingHeightDescription" xml:space="preserve">
+    <value>L’analyse commence à cette hauteur de bloc. Utilisez 0 pour une analyse complète ; les fonds reçus avant la hauteur choisie peuvent être ignorés.</value>
+  </data>
+  <data name="ResyncGapLimitDescription" xml:space="preserve">
+    <value>Augmentez la limite d’adresses inutilisées pour retrouver les fonds sur des adresses au-delà de la plage actuelle.</value>
+  </data>
 </root>

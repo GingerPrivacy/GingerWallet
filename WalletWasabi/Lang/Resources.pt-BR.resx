@@ -2215,4 +2215,10 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Ativar ou desativar o uso desta carteira para a Caça aos Segredos.</value>
   </data>
+  <data name="ResyncStartingHeightDescription" xml:space="preserve">
+    <value>A busca começa nesta altura de bloco. Use 0 para uma busca completa; fundos recebidos antes da altura escolhida podem não ser encontrados.</value>
+  </data>
+  <data name="ResyncGapLimitDescription" xml:space="preserve">
+    <value>Aumente o limite de endereços não utilizados para encontrar fundos em endereços além do intervalo atual.</value>
+  </data>
 </root>

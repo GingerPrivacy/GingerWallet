@@ -2217,4 +2217,10 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Включить/выключить использование этого кошелька для охоты за секретами.</value>
   </data>
+  <data name="ResyncStartingHeightDescription" xml:space="preserve">
+    <value>Сканирование начнётся с этой высоты блока. Укажите 0 для полного сканирования; средства, полученные раньше выбранной высоты, могут быть пропущены.</value>
+  </data>
+  <data name="ResyncGapLimitDescription" xml:space="preserve">
+    <value>Увеличьте лимит неиспользованных адресов, чтобы найти средства на адресах за пределами текущего диапазона.</value>
+  </data>
 </root>

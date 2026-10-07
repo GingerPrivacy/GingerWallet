@@ -2215,4 +2215,10 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Activar o desactivar el uso de este monedero para la Caza de Secretos.</value>
   </data>
+  <data name="ResyncStartingHeightDescription" xml:space="preserve">
+    <value>El análisis comienza en esta altura de bloque. Usa 0 para un análisis completo; podrían omitirse fondos recibidos antes de la altura elegida.</value>
+  </data>
+  <data name="ResyncGapLimitDescription" xml:space="preserve">
+    <value>Aumenta el límite de separación para encontrar fondos en direcciones fuera del rango actual.</value>
+  </data>
 </root>

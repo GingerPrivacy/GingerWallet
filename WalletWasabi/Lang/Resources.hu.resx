@@ -2215,4 +2215,10 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>A Titokvadászat használatának engedélyezése vagy letiltása ehhez a pénztárcához.</value>
   </data>
+  <data name="ResyncStartingHeightDescription" xml:space="preserve">
+    <value>A keresés ettől a blokkmagasságtól indul. Teljes újraellenőrzéshez használj 0-t; a megadott magasság előtt érkezett összegek kimaradhatnak.</value>
+  </data>
+  <data name="ResyncGapLimitDescription" xml:space="preserve">
+    <value>Növeld a címek közötti megengedett rést, hogy a jelenlegi tartományon túli címekre érkezett összegek is előkerüljenek.</value>
+  </data>
 </root>
