@@ -166,5 +166,6 @@ public class SilentPaymentTransactionTests
 	{
 		public Uri PaymentUrl => new("https://example.com/payjoin");
 		public Task<PSBT> RequestPayjoin(PSBT originalTx, IHDKey accountKey, RootedKeyPath rootedKeyPath, HdPubKey changeHdPubKey, CancellationToken cancellationToken) => throw new InvalidOperationException("Payjoin must not be called.");
+		public Task<PSBT> RequestPayjoin(PSBT originalTx, IHDKey accountKey, RootedKeyPath rootedKeyPath, IHDKey? taprootAccountKey, RootedKeyPath taprootRootedKeyPath, HdPubKey? changeHdPubKey, CancellationToken cancellationToken) => throw new InvalidOperationException("Payjoin must not be called.");
 	}
 }
