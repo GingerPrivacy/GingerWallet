@@ -2111,6 +2111,15 @@ namespace WalletWasabi.Lang {
                 return ResourceManager.GetString("ExcludeCoinjoinDescription", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Stop CoinJoin to change excluded coins.
+        /// </summary>
+        public static string StopCoinjoinToChangeExcludedCoins {
+            get {
+                return ResourceManager.GetString("StopCoinjoinToChangeExcludedCoins", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Display exclude coins.

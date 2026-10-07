@@ -1284,6 +1284,9 @@
   <data name="ExcludeCoinjoinDescription" xml:space="preserve">
     <value>A kiválasztott érmék ki lesznek zárva a coinjoinból. Fontos megjegyezni, hogy ezek anonimitása nem növekszik.</value>
   </data>
+  <data name="StopCoinjoinToChangeExcludedCoins" xml:space="preserve">
+    <value>A kizárt érmék módosításához állítsd le a CoinJoint.</value>
+  </data>
   <data name="Status" xml:space="preserve">
     <value>Állapot</value>
   </data>

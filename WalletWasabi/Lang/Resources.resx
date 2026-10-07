@@ -1289,6 +1289,9 @@
   <data name="ExcludeCoinjoinDescription" xml:space="preserve">
     <value>The chosen coins will be excluded from coinjoin. It's important to note that there will be no increase in the privacy of those coins.</value>
   </data>
+  <data name="StopCoinjoinToChangeExcludedCoins" xml:space="preserve">
+    <value>Stop CoinJoin to change excluded coins.</value>
+  </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
