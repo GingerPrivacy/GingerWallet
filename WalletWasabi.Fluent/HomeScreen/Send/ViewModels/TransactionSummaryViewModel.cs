@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using NBitcoin;
 using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Blockchain.TransactionBuilding;
 using WalletWasabi.Fluent.Common.ViewModels;
@@ -55,9 +56,12 @@ public partial class TransactionSummaryViewModel : ViewModelBase
 
 		ConfirmationTime = _wallet.Transactions.TryEstimateConfirmationTime(info);
 
+		Money RecipientAmount(IDestination destination) => info.IsPayToMany
+			? _transaction.CalculatePaymentAmount(destination)
+			: _transaction.CalculateDestinationAmount(destination);
 		Recipients = info.AllRecipients.Select(x => new RecipientSummaryViewModel(
-			x.Destination.ToString(), x.Label, UiContext.AmountProvider.Create(_transaction.CalculateDestinationAmount(x.Destination)))).ToArray();
-		var destinationAmount = info.AllRecipients.Sum(x => _transaction.CalculateDestinationAmount(x.Destination));
+			x.Destination.ToString() ?? string.Empty, x.Label, UiContext.AmountProvider.Create(RecipientAmount(x.Destination)))).ToArray();
+		Money destinationAmount = info.AllRecipients.Select(x => RecipientAmount(x.Destination)).Sum();
 
 		Amount = UiContext.AmountProvider.Create(destinationAmount);
 		Fee = UiContext.AmountProvider.Create(_transaction.Fee);

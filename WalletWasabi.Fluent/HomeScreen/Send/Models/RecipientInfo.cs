@@ -5,7 +5,7 @@ using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.HomeScreen.Send.Models;
 
-public record RecipientInfo(BitcoinAddress Destination, Money Amount, LabelsArray Label)
+public record RecipientInfo(IDestination Destination, Money Amount, LabelsArray Label)
 {
 	public static bool TryCreate(string addressText, decimal? amountBtc, LabelsArray labels, Network network,
 		out RecipientInfo? recipient, out string? error)

@@ -118,7 +118,11 @@ public partial class BatchSendDialogViewModel : DialogViewModelBase<TransactionI
 			return;
 		}
 		var first = recipients[0];
-		Close(DialogResultKind.Normal, new TransactionInfo(first.Destination, _wallet.Settings.AnonScoreTarget)
+		if (first.Destination is not BitcoinAddress destination)
+		{
+			return;
+		}
+		Close(DialogResultKind.Normal, new TransactionInfo(destination, _wallet.Settings.AnonScoreTarget)
 		{
 			Amount = first.Amount,
 			Recipient = first.Label,

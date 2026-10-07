@@ -10,7 +10,10 @@ namespace WalletWasabi.Fluent.Extensions;
 
 public static class CurrencyExtensions
 {
-	public static Money CalculateDestinationAmount(this BuildTransactionResult result, BitcoinAddress destination)
+	public static Money CalculatePaymentAmount(this BuildTransactionResult result, IDestination destination) =>
+		result.Transaction.Transaction.Outputs.Where(x => x.ScriptPubKey == destination.ScriptPubKey).Sum(x => x.Value);
+
+	public static Money CalculateDestinationAmount(this BuildTransactionResult result, IDestination destination)
 	{
 		var isNormalPayment = result.OuterWalletOutputs.Any();
 
