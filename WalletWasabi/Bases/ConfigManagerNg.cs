@@ -33,7 +33,7 @@ public static class ConfigManagerNg
 
 		return result is not null
 			? result
-			: throw new Newtonsoft.Json.JsonException("Unexpected null value.");
+			: throw new JsonException("Unexpected null value.");
 	}
 
 	public static TResponse LoadFile<TResponse>(string filePath, bool createIfMissing = false, JsonSerializerOptions? options = null)
@@ -62,11 +62,23 @@ public static class ConfigManagerNg
 			}
 			catch (Exception ex)
 			{
-				result = new();
-				ToFile(filePath, result, options);
-
-				Logger.LogInfo($"File has been deleted because it was corrupted. Recreated default version at path: '{filePath}'.");
 				Logger.LogWarning(ex);
+				string defaultFilePath = Path.ChangeExtension(filePath, "Default.json");
+				try
+				{
+					// Never replace either the user's configuration or an existing recovery template.
+					if (!File.Exists(defaultFilePath))
+					{
+						using var stream = File.Open(defaultFilePath, FileMode.CreateNew, FileAccess.Write);
+						JsonSerializer.Serialize(stream, new TResponse(), options);
+					}
+				}
+				catch (Exception templateException)
+				{
+					Logger.LogWarning(templateException);
+				}
+
+				throw new InvalidDataException($"Could not load configuration '{filePath}'. The original file has been preserved. Correct it or rename it to generate a new configuration. A default template is created at '{defaultFilePath}' when possible.", ex);
 			}
 		}
 
