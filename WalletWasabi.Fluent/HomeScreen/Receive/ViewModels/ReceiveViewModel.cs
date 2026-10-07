@@ -26,10 +26,12 @@ public partial class ReceiveViewModel : RoutableViewModel, IDisposable
 {
 	private readonly WalletModel _wallet;
 	private readonly CompositeDisposable _disposables = new();
+	[AutoNotify] private string _defaultReceiveKey;
 
 	public ReceiveViewModel(WalletModel wallet)
 	{
 		_wallet = wallet;
+		_defaultReceiveKey = wallet.Settings.DefaultReceiveScriptType == ScriptPubKeyType.TaprootBIP86 ? "Taproot" : "SegWit";
 		SetupCancel(enableCancel: true, enableCancelOnEscape: true, enableCancelOnPressed: true);
 
 		EnableBack = false;
@@ -42,10 +44,22 @@ public partial class ReceiveViewModel : RoutableViewModel, IDisposable
 				.Merge(SuggestionLabels.WhenAnyValue(x => x.IsCurrentTextValid).ToSignal())
 				.Select(_ => SuggestionLabels.Labels.Count > 0 || SuggestionLabels.IsCurrentTextValid);
 
-		NextCommand = ReactiveCommand.Create(() => OnNext(ScriptPubKeyType.Segwit), nextCommandCanExecute);
+		NextCommand = ReactiveCommand.Create(() => OnNext(wallet.Settings.DefaultReceiveScriptType), nextCommandCanExecute);
+		NextWithSegwitCommand = ReactiveCommand.Create(() => OnNext(ScriptPubKeyType.Segwit), nextCommandCanExecute);
 		NextWithTaprootCommand = ReactiveCommand.Create(() => OnNext(ScriptPubKeyType.TaprootBIP86), nextCommandCanExecute);
 
 		ShowExistingAddressesCommand = ReactiveCommand.Create(OnShowExistingAddresses);
+		SetDefaultReceiveCommand = ReactiveCommand.Create<string>(key =>
+		{
+			if (key is not ("SegWit" or "Taproot") || (key == "Taproot" && !IsTaprootSupported))
+			{
+				return;
+			}
+
+			wallet.Settings.DefaultReceiveScriptType = key == "Taproot" ? ScriptPubKeyType.TaprootBIP86 : ScriptPubKeyType.Segwit;
+			wallet.Settings.Save();
+			DefaultReceiveKey = key;
+		});
 
 		AddressesModel = wallet.Addresses;
 	}
@@ -57,6 +71,10 @@ public partial class ReceiveViewModel : RoutableViewModel, IDisposable
 	public ICommand ShowExistingAddressesCommand { get; }
 
 	public ICommand NextWithTaprootCommand { get; }
+
+	public ICommand NextWithSegwitCommand { get; }
+
+	public ICommand SetDefaultReceiveCommand { get; }
 
 	public IObservable<bool> HasUnusedAddresses => _wallet.Addresses.Unused.ToObservableChangeSet().Count().Select(i => i > 0);
 

@@ -31,6 +31,8 @@ public class SubActionButton : ContentControl
 	public static readonly StyledProperty<UICommandCollection?> SubCommandsProperty = AvaloniaProperty.Register<SubActionButton, UICommandCollection?>(nameof(SubCommands));
 
 	public static readonly StyledProperty<IEnumerable> ItemsProperty = AvaloniaProperty.Register<SubActionButton, IEnumerable>(nameof(Items));
+	public static readonly StyledProperty<string?> LocalDefaultKeyProperty = AvaloniaProperty.Register<SubActionButton, string?>(nameof(LocalDefaultKey));
+	public static readonly StyledProperty<ICommand?> SetLocalDefaultCommandProperty = AvaloniaProperty.Register<SubActionButton, ICommand?>(nameof(SetLocalDefaultCommand));
 
 	private CompositeDisposable? _disposable;
 
@@ -38,6 +40,15 @@ public class SubActionButton : ContentControl
 	{
 		SetDefaultCommand = ReactiveCommand.Create<string>(key =>
 		{
+			if (LocalDefaultKey is not null)
+			{
+				if (SetLocalDefaultCommand?.CanExecute(key) is true)
+				{
+					SetLocalDefaultCommand.Execute(key);
+				}
+				return;
+			}
+
 			var applicationSettings = UiContext.Default.ApplicationSettings;
 
 			if (applicationSettings is null)
@@ -58,6 +69,18 @@ public class SubActionButton : ContentControl
 
 			UpdateDefaultCommand(key);
 		});
+	}
+
+	public string? LocalDefaultKey
+	{
+		get => GetValue(LocalDefaultKeyProperty);
+		set => SetValue(LocalDefaultKeyProperty, value);
+	}
+
+	public ICommand? SetLocalDefaultCommand
+	{
+		get => GetValue(SetLocalDefaultCommandProperty);
+		set => SetValue(SetLocalDefaultCommandProperty, value);
 	}
 
 	public DefaultCommandSource DefaultSource
@@ -98,6 +121,11 @@ public class SubActionButton : ContentControl
 
 	private string? GetDefaultCommandKey()
 	{
+		if (LocalDefaultKey is { } localKey)
+		{
+			return localKey;
+		}
+
 		var defaults = UiContext.Default.ApplicationSettings?.DefaultCommands;
 
 		if (defaults is null)
@@ -117,7 +145,7 @@ public class SubActionButton : ContentControl
 	{
 		base.OnPropertyChanged(change);
 
-		if (change.Property == SubCommandsProperty)
+		if (change.Property == SubCommandsProperty || change.Property == LocalDefaultKeyProperty)
 		{
 			UpdateDefaultCommand(GetDefaultCommandKey());
 		}

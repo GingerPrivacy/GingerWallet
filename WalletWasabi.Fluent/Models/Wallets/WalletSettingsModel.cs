@@ -20,6 +20,7 @@ public partial class WalletSettingsModel : ReactiveObject
 	[AutoNotify] private bool _autoCoinjoin;
 	[AutoNotify] private bool _isCoinjoinProfileSelected;
 	[AutoNotify] private bool _preferPsbtWorkflow;
+	[AutoNotify] private ScriptPubKeyType _defaultReceiveScriptType;
 	[AutoNotify] private Money _plebStopThreshold;
 	[AutoNotify] private int _anonScoreTarget;
 	[AutoNotify] private int _safeMiningFeeRate;
@@ -50,6 +51,9 @@ public partial class WalletSettingsModel : ReactiveObject
 		_autoCoinjoin = _keyManager.AutoCoinJoin;
 		_isCoinjoinProfileSelected = _keyManager.IsCoinjoinProfileSelected;
 		_preferPsbtWorkflow = _keyManager.PreferPsbtWorkflow;
+		_defaultReceiveScriptType = _keyManager.DefaultReceiveScriptType == ScriptPubKeyType.TaprootBIP86 && _keyManager.TaprootExtPubKey is not null
+			? ScriptPubKeyType.TaprootBIP86
+			: ScriptPubKeyType.Segwit;
 		_plebStopThreshold = _keyManager.PlebStopThreshold ?? WalletAttributes.DefaultPlebStopThreshold;
 		_anonScoreTarget = _keyManager.AnonScoreTarget;
 		_redCoinIsolation = _keyManager.RedCoinIsolation;
@@ -88,6 +92,10 @@ public partial class WalletSettingsModel : ReactiveObject
 			.Skip(1)
 			.Do(_ => SetValues())
 			.Subscribe();
+
+		this.WhenAnyValue(x => x.DefaultReceiveScriptType)
+			.Skip(1)
+			.Subscribe(_ => SetValues());
 
 		// This should go to the previous WhenAnyValue, it's just that it's not working for some reason.
 		this.WhenAnyValue(
@@ -139,6 +147,7 @@ public partial class WalletSettingsModel : ReactiveObject
 		_keyManager.AutoCoinJoin = AutoCoinjoin;
 		_keyManager.IsCoinjoinProfileSelected = IsCoinjoinProfileSelected;
 		_keyManager.PreferPsbtWorkflow = PreferPsbtWorkflow;
+		_keyManager.DefaultReceiveScriptType = DefaultReceiveScriptType;
 		_keyManager.PlebStopThreshold = PlebStopThreshold;
 		_keyManager.AnonScoreTarget = AnonScoreTarget;
 		_keyManager.RedCoinIsolation = RedCoinIsolation;

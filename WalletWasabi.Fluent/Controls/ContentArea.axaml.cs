@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Presenters;
 using Avalonia.Media;
+using System.Windows.Input;
 
 namespace WalletWasabi.Fluent.Controls;
 
@@ -56,6 +57,20 @@ public class ContentArea : ContentControl
 		AvaloniaProperty.Register<ContentArea, IBrush>(nameof(HeaderBackground));
 
 	public static readonly StyledProperty<UICommandCollection?> NextSubCommandsProperty = AvaloniaProperty.Register<ContentArea, UICommandCollection?>(nameof(NextSubCommands));
+	public static readonly StyledProperty<string?> LocalDefaultKeyProperty = AvaloniaProperty.Register<ContentArea, string?>(nameof(LocalDefaultKey));
+	public static readonly StyledProperty<ICommand?> SetLocalDefaultCommandProperty = AvaloniaProperty.Register<ContentArea, ICommand?>(nameof(SetLocalDefaultCommand));
+
+	public string? LocalDefaultKey
+	{
+		get => GetValue(LocalDefaultKeyProperty);
+		set => SetValue(LocalDefaultKeyProperty, value);
+	}
+
+	public ICommand? SetLocalDefaultCommand
+	{
+		get => GetValue(SetLocalDefaultCommandProperty);
+		set => SetValue(SetLocalDefaultCommandProperty, value);
+	}
 
 	private ContentPresenter? _titlePresenter;
 	private ContentPresenter? _captionPresenter;

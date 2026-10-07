@@ -181,6 +181,9 @@ public class KeyManager : IJsonOnSerializing, IJsonOnDeserialized
 
 	public bool PreferPsbtWorkflow { get; set; }
 
+	[JsonConverter(typeof(JsonStringEnumConverter<ScriptPubKeyType>))]
+	public ScriptPubKeyType DefaultReceiveScriptType { get; set; } = ScriptPubKeyType.Segwit;
+
 	public bool AutoCoinJoin { get => Attributes.AutoCoinJoin; set => Attributes.AutoCoinJoin = value; }
 
 	[JsonIgnore]
