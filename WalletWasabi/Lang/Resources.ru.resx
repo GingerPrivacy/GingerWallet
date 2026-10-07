@@ -2241,4 +2241,22 @@
   <data name="ReceiveDefaultAddressTypeHint" xml:space="preserve">
     <value>Сохранено для этого кошелька</value>
   </data>
+  <data name="TransactionInputs" xml:space="preserve">
+    <value>Входы</value>
+  </data>
+  <data name="TransactionOutputs" xml:space="preserve">
+    <value>Выходы</value>
+  </data>
+  <data name="TransactionCoinOwn" xml:space="preserve">
+    <value>Свой кошелек</value>
+  </data>
+  <data name="TransactionCoinChange" xml:space="preserve">
+    <value>Сдача</value>
+  </data>
+  <data name="TransactionCoinExternal" xml:space="preserve">
+    <value>Внешний</value>
+  </data>
+  <data name="TransactionCoinOutpoint" xml:space="preserve">
+    <value>Ссылка на выход (outpoint)</value>
+  </data>
 </root>

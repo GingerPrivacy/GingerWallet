@@ -6,6 +6,7 @@ using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Fluent.Models.Wallets;
+using WalletWasabi.Fluent.Models.Transactions;
 using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Lang;
 
@@ -29,6 +30,7 @@ public partial class TransactionDetailsViewModel : RoutableViewModel
 	[AutoNotify] private Amount? _amount;
 	[AutoNotify] private FeeRate? _feeRate;
 	[AutoNotify] private bool _isFeeRateVisible;
+	[AutoNotify] private TransactionCoinsModel? _transactionCoins;
 
 	public TransactionDetailsViewModel(WalletModel wallet, TransactionModel model)
 	{
@@ -59,6 +61,7 @@ public partial class TransactionDetailsViewModel : RoutableViewModel
 
 	private void UpdateValues(TransactionModel model)
 	{
+		TransactionCoins = _wallet.Transactions.GetTransactionCoins(model.Id);
 		DateString = model.DateToolTipString;
 		Labels = model.Labels;
 		BlockHeight = model.BlockHeight;

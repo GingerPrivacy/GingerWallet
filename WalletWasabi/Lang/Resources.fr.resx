@@ -2239,4 +2239,22 @@
   <data name="ReceiveDefaultAddressTypeHint" xml:space="preserve">
     <value>Enregistré pour ce portefeuille</value>
   </data>
+  <data name="TransactionInputs" xml:space="preserve">
+    <value>Entrées</value>
+  </data>
+  <data name="TransactionOutputs" xml:space="preserve">
+    <value>Sorties</value>
+  </data>
+  <data name="TransactionCoinOwn" xml:space="preserve">
+    <value>Portefeuille personnel</value>
+  </data>
+  <data name="TransactionCoinChange" xml:space="preserve">
+    <value>Monnaie rendue</value>
+  </data>
+  <data name="TransactionCoinExternal" xml:space="preserve">
+    <value>Externe</value>
+  </data>
+  <data name="TransactionCoinOutpoint" xml:space="preserve">
+    <value>Référence de sortie (outpoint)</value>
+  </data>
 </root>

@@ -1,0 +1,41 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:lang="using:WalletWasabi.Lang"
+             xmlns:models="clr-namespace:WalletWasabi.Fluent.Models.Transactions"
+             x:DataType="models:TransactionCoinsModel" x:CompileBindings="True"
+             x:Class="WalletWasabi.Fluent.HomeScreen.History.Views.Actions.TransactionCoinsView">
+  <UserControl.Resources>
+    <DataTemplate x:Key="CoinRow" x:DataType="models:TransactionCoinRow">
+      <StackPanel Spacing="5" Margin="0 8">
+        <DockPanel>
+          <TextBlock DockPanel.Dock="Right" Text="{Binding Ownership}" Margin="10 0 0 0" />
+          <TextBlock Text="{Binding AmountText}" FontWeight="SemiBold" />
+        </DockPanel>
+        <PreviewItem Icon="{StaticResource transceive_regular}" Label="{x:Static lang:Resources.Address}" CopyableContent="{Binding Address}">
+          <TextBlock Text="{Binding Address}" Classes="monoSpaced" TextWrapping="Wrap" />
+        </PreviewItem>
+        <PreviewItem Icon="{StaticResource info_regular}" Label="{x:Static lang:Resources.TransactionCoinOutpoint}" CopyableContent="{Binding OutPoint}">
+          <TextBlock Text="{Binding OutPoint}" Classes="monoSpaced" TextWrapping="Wrap" />
+        </PreviewItem>
+        <LabelsItemsPresenter ItemsSource="{Binding Labels}" IsVisible="{Binding !!Labels.Count}" />
+        <Separator />
+      </StackPanel>
+    </DataTemplate>
+  </UserControl.Resources>
+  <StackPanel Spacing="10">
+    <Expander Header="{x:Static lang:Resources.TransactionInputs}" HorizontalAlignment="Stretch">
+      <ScrollViewer MaxHeight="400" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <PrivacyContentControl PrivacyReplacementMode="Text">
+          <ItemsControl ItemsSource="{Binding Inputs}" ItemTemplate="{StaticResource CoinRow}" />
+        </PrivacyContentControl>
+      </ScrollViewer>
+    </Expander>
+    <Expander Header="{x:Static lang:Resources.TransactionOutputs}" HorizontalAlignment="Stretch">
+      <ScrollViewer MaxHeight="400" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <PrivacyContentControl PrivacyReplacementMode="Text">
+          <ItemsControl ItemsSource="{Binding Outputs}" ItemTemplate="{StaticResource CoinRow}" />
+        </PrivacyContentControl>
+      </ScrollViewer>
+    </Expander>
+  </StackPanel>
+</UserControl>

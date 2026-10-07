@@ -15,6 +15,7 @@ using WalletWasabi.Blockchain.Transactions.Summary;
 using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.HomeScreen.Send.Models;
+using WalletWasabi.Fluent.Models.Transactions;
 using WalletWasabi.Wallets;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
@@ -91,6 +92,12 @@ public class WalletTransactionsModel : ReactiveObject, IDisposable
 		var txn = await TransactionHelpers.ParseTransactionAsync(path, _wallet.Network);
 		return txn;
 	}
+
+	public TransactionCoinsModel GetTransactionCoins(SmartTransaction transaction, IEnumerable<Script>? paymentScripts = null) =>
+		new(transaction, _wallet.Network, script => _wallet.KeyManager.TryGetKeyForScriptPubKey(script, out _), paymentScripts);
+
+	public TransactionCoinsModel? GetTransactionCoins(uint256 id) =>
+		_wallet.BitcoinStore.TransactionStore.TryGetTransaction(id, out var transaction) ? GetTransactionCoins(transaction) : null;
 
 	public TimeSpan? TryEstimateConfirmationTime(uint256 id)
 	{

@@ -2241,4 +2241,22 @@
   <data name="ReceiveDefaultAddressTypeHint" xml:space="preserve">
     <value>Saved for this wallet</value>
   </data>
+  <data name="TransactionInputs" xml:space="preserve">
+    <value>Inputs</value>
+  </data>
+  <data name="TransactionOutputs" xml:space="preserve">
+    <value>Outputs</value>
+  </data>
+  <data name="TransactionCoinOwn" xml:space="preserve">
+    <value>Own wallet</value>
+  </data>
+  <data name="TransactionCoinChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="TransactionCoinExternal" xml:space="preserve">
+    <value>External</value>
+  </data>
+  <data name="TransactionCoinOutpoint" xml:space="preserve">
+    <value>Outpoint</value>
+  </data>
 </root>

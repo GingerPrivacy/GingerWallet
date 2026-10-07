@@ -2239,4 +2239,22 @@
   <data name="ReceiveDefaultAddressTypeHint" xml:space="preserve">
     <value>Für diese Wallet gespeichert</value>
   </data>
+  <data name="TransactionInputs" xml:space="preserve">
+    <value>Eingänge</value>
+  </data>
+  <data name="TransactionOutputs" xml:space="preserve">
+    <value>Ausgänge</value>
+  </data>
+  <data name="TransactionCoinOwn" xml:space="preserve">
+    <value>Eigene Wallet</value>
+  </data>
+  <data name="TransactionCoinChange" xml:space="preserve">
+    <value>Wechselgeld</value>
+  </data>
+  <data name="TransactionCoinExternal" xml:space="preserve">
+    <value>Extern</value>
+  </data>
+  <data name="TransactionCoinOutpoint" xml:space="preserve">
+    <value>Ausgabereferenz (Outpoint)</value>
+  </data>
 </root>

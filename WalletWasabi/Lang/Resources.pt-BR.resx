@@ -2239,4 +2239,22 @@
   <data name="ReceiveDefaultAddressTypeHint" xml:space="preserve">
     <value>Salvo para esta carteira</value>
   </data>
+  <data name="TransactionInputs" xml:space="preserve">
+    <value>Entradas</value>
+  </data>
+  <data name="TransactionOutputs" xml:space="preserve">
+    <value>Saídas</value>
+  </data>
+  <data name="TransactionCoinOwn" xml:space="preserve">
+    <value>Carteira própria</value>
+  </data>
+  <data name="TransactionCoinChange" xml:space="preserve">
+    <value>Troco</value>
+  </data>
+  <data name="TransactionCoinExternal" xml:space="preserve">
+    <value>Externo</value>
+  </data>
+  <data name="TransactionCoinOutpoint" xml:space="preserve">
+    <value>Referência da saída (outpoint)</value>
+  </data>
 </root>

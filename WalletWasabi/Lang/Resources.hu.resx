@@ -2239,4 +2239,22 @@
   <data name="ReceiveDefaultAddressTypeHint" xml:space="preserve">
     <value>Ehhez a tárcához mentve</value>
   </data>
+  <data name="TransactionInputs" xml:space="preserve">
+    <value>Bemenetek</value>
+  </data>
+  <data name="TransactionOutputs" xml:space="preserve">
+    <value>Kimenetek</value>
+  </data>
+  <data name="TransactionCoinOwn" xml:space="preserve">
+    <value>Saját tárca</value>
+  </data>
+  <data name="TransactionCoinChange" xml:space="preserve">
+    <value>Visszajáró</value>
+  </data>
+  <data name="TransactionCoinExternal" xml:space="preserve">
+    <value>Külső</value>
+  </data>
+  <data name="TransactionCoinOutpoint" xml:space="preserve">
+    <value>Kimeneti hivatkozás</value>
+  </data>
 </root>

@@ -8,6 +8,7 @@ using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.HomeScreen.Send.Models;
 using WalletWasabi.Fluent.Models.Wallets;
+using WalletWasabi.Fluent.Models.Transactions;
 
 namespace WalletWasabi.Fluent.HomeScreen.Send.ViewModels;
 
@@ -27,6 +28,7 @@ public partial class TransactionSummaryViewModel : ViewModelBase
 	[AutoNotify] private double? _amountDiff;
 	[AutoNotify] private double? _feeDiff;
 	[AutoNotify] private IReadOnlyList<RecipientSummaryViewModel> _recipients = Array.Empty<RecipientSummaryViewModel>();
+	[AutoNotify] private TransactionCoinsModel? _transactionCoins;
 
 	public TransactionSummaryViewModel(TransactionPreviewViewModel parent, WalletModel wallet, TransactionInfo info, bool isPreview = false)
 	{
@@ -53,6 +55,7 @@ public partial class TransactionSummaryViewModel : ViewModelBase
 	public void UpdateTransaction(BuildTransactionResult transactionResult, TransactionInfo info)
 	{
 		_transaction = transactionResult;
+		TransactionCoins = _wallet.Transactions.GetTransactionCoins(transactionResult.Transaction, info.AllRecipients.Select(x => x.Destination.ScriptPubKey));
 
 		ConfirmationTime = _wallet.Transactions.TryEstimateConfirmationTime(info);
 
