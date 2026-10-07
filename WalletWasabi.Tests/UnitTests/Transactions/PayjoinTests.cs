@@ -7,6 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Blockchain.TransactionBuilding;
+using WalletWasabi.Blockchain.TransactionOutputs;
+using WalletWasabi.Blockchain.Transactions;
+using WalletWasabi.Extensions;
 using WalletWasabi.Tests.Helpers;
 using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.Tor.Http;
@@ -449,6 +452,82 @@ public class PayjoinTests
 			.Build();
 		var tx = transactionFactory.BuildTransaction(txParameters, payjoinClient: NewPayjoinClient(mockHttpClient));
 		Assert.Single(tx.Transaction.Transaction.Inputs);
+	}
+
+	[Theory]
+	[InlineData(ScriptPubKeyType.Segwit)]
+	[InlineData(ScriptPubKeyType.TaprootBIP86)]
+	public async Task HonestPayjoinSupportsSenderInputType(ScriptPubKeyType scriptType)
+	{
+		var rnd = TestRandom.Get();
+		var keyManager = ServiceFactory.CreateKeyManager("foo", isTaprootAllowed: true);
+		var key = keyManager.GenerateNewKey("sender", KeyState.Clean, false, scriptType);
+		var coin = BitcoinFactory.CreateSmartCoin(rnd, key, 0.1m);
+		await using var store = new AllTransactionStore(".", Network.Main);
+		var factory = new TransactionFactory(Network.Main, keyManager, new CoinsView([coin]), store, "foo");
+		var destination = BitcoinFactory.CreateScript();
+		var amount = Money.Coins(0.001m);
+		var mock = new MockIHttpClient();
+		mock.OnSendAsync = req => PayjoinServerOkAsync(req, psbt =>
+		{
+			Assert.All(psbt.Outputs, x => Assert.Empty(x.HDTaprootKeyPaths));
+			var tx = psbt.ExtractTransaction();
+			foreach (var input in tx.Inputs)
+			{
+				input.WitScript = WitScript.Empty;
+			}
+			using var serverKey = new Key();
+			var serverCoin = Coin(0.01m, serverKey.PubKey.GetScriptPubKey(scriptType));
+			tx.Inputs.Add(serverCoin.Outpoint);
+			tx.Outputs.Single(x => x.ScriptPubKey == destination).Value += (Money)serverCoin.Amount;
+			var proposal = PSBT.FromTransaction(tx, Network.Main);
+			var added = proposal.Inputs.FindIndexedInput(serverCoin.Outpoint)!;
+			added.UpdateFromCoin(serverCoin);
+			// Taproot signatures commit to all input amounts and scripts.
+			foreach (var input in proposal.Inputs)
+			{
+				var original = psbt.Inputs.FindIndexedInput(input.PrevOut);
+				if (original is not null)
+				{
+					input.WitnessUtxo = original.WitnessUtxo;
+				}
+			}
+			proposal.SignWithKeys(serverKey);
+			added.FinalizeInput();
+			return proposal;
+		});
+		var parameters = CreateBuilder().SetPayment(new PaymentIntent(destination, amount)).Build();
+		var result = factory.BuildTransaction(parameters, payjoinClient: NewPayjoinClient(mock));
+
+		Assert.Equal(2, result.Transaction.Transaction.Inputs.Count);
+		Assert.Equal(amount + Money.Coins(0.01m), result.Transaction.Transaction.Outputs.Single(x => x.ScriptPubKey == destination).Value);
+	}
+
+	[Theory]
+	[InlineData(false)]
+	[InlineData(true)]
+	public void OutputSubstitutionRespectsPjos(bool disabled)
+	{
+		var factory = ServiceFactory.CreateTransactionFactory(TestRandom.Get(), [("sender", 0, 0.1m, true, 1)]);
+		var destination = BitcoinFactory.CreateScript();
+		var replacement = BitcoinFactory.CreateScript();
+		var amount = Money.Coins(0.001m);
+		var mock = new MockIHttpClient();
+		mock.OnSendAsync = req =>
+		{
+			Assert.Contains($"disableoutputsubstitution={disabled.ToString().ToLowerInvariant()}", req.RequestUri!.Query);
+			return PayjoinServerOkAsync(req, psbt =>
+			{
+				var tx = psbt.GetGlobalTransaction();
+				tx.Outputs.Single(x => x.ScriptPubKey == destination).ScriptPubKey = replacement;
+				return PSBT.FromTransaction(tx, Network.Main);
+			});
+		};
+		var parameters = CreateBuilder().SetPayment(new PaymentIntent(destination, amount)).Build();
+		var client = new PayjoinClient(new Uri("http://localhost"), mock, disabled);
+		var result = factory.BuildTransaction(parameters, payjoinClient: client);
+
+		Assert.Contains(result.Transaction.Transaction.Outputs, x => x.ScriptPubKey == (disabled ? destination : replacement) && x.Value == amount);
 	}
 
 	private static TransactionParametersBuilder CreateBuilder()
