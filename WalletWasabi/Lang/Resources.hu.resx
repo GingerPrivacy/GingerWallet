@@ -2215,4 +2215,22 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>A Titokvadászat használatának engedélyezése vagy letiltása ehhez a pénztárcához.</value>
   </data>
+  <data name="BatchPayments" xml:space="preserve">
+    <value>Küldés több címzettnek</value>
+  </data>
+  <data name="BatchPrivacyCaption" xml:space="preserve">
+    <value>Ezek a kifizetések egy tranzakcióban jelennek meg, ezért összekapcsolhatók. Adj meg Bitcoin-címeket; fizetési URI és Payjoin az egycímzettes küldésben használható.</value>
+  </data>
+  <data name="BatchAddPayment" xml:space="preserve">
+    <value>Újabb kifizetés hozzáadása</value>
+  </data>
+  <data name="BatchSubtractFee" xml:space="preserve">
+    <value>A tranzakciós díj levonása az első kifizetésből</value>
+  </data>
+  <data name="BatchDuplicateAddress" xml:space="preserve">
+    <value>Minden kifizetéshez eltérő Bitcoin-cím szükséges.</value>
+  </data>
+  <data name="BatchAmountPrecision" xml:space="preserve">
+    <value>Az összeg legfeljebb nyolc tizedesjegyet tartalmazhat.</value>
+  </data>
 </root>

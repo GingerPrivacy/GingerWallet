@@ -66,6 +66,7 @@
 
     <!-- Address -->
     <PreviewItem Icon="{StaticResource transceive_regular}"
+                 IsVisible="{Binding !IsPayToMany}"
                  x:Name="PreviewItem"
                  Label="{x:Static lang:Resources.Address}"
                  CopyableContent="{Binding AddressText}"
@@ -76,6 +77,7 @@
 
     <!-- Recipient -->
     <PreviewItem Icon="{StaticResource person_regular}"
+                 IsVisible="{Binding !IsPayToMany}"
                  Classes.Dimmed="{Binding IsPreview}"
                  Label="{x:Static lang:Resources.Recipient}"
                  CopyableContent="{Binding Recipient}">
@@ -86,6 +88,24 @@
     <Separator />
 
     <!-- Fee and confirmation time -->
+    <ItemsControl ItemsSource="{Binding Recipients}" IsVisible="{Binding IsPayToMany}">
+      <ItemsControl.ItemTemplate>
+        <DataTemplate x:DataType="viewModels:RecipientSummaryViewModel">
+          <StackPanel Spacing="5" Margin="0 0 0 15">
+            <PreviewItem Icon="{StaticResource transceive_regular}" Label="{x:Static lang:Resources.Address}"
+                         CopyableContent="{Binding Address}">
+              <TextBlock Text="{Binding Address}" Classes="monoSpaced" />
+            </PreviewItem>
+            <PreviewItem Icon="{StaticResource btc_logo}" Label="{x:Static lang:Resources.Amount}">
+              <AmountControl Amount="{Binding Amount}" />
+            </PreviewItem>
+            <LabelsItemsPresenter ItemsSource="{Binding Labels}" />
+            <Separator />
+          </StackPanel>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+
     <DockPanel>
       <Button Classes="plain"
               Command="{Binding Parent.AdjustFeeCommand}"

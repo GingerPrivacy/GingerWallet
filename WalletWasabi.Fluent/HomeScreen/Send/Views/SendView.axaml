@@ -71,6 +71,11 @@
       </PrivacyContentControl>
     </ContentArea.TopContent>
 
+    <ContentArea.BottomContent>
+      <Button Classes="plainHyperlink" HorizontalAlignment="Center"
+              Content="{x:Static lang:Resources.BatchPayments}" Command="{Binding PayToManyCommand}" />
+    </ContentArea.BottomContent>
+
     <Grid ColumnDefinitions="Auto,10,*" RowDefinitions="Auto,20,Auto,20,Auto"
           VerticalAlignment="Top" HorizontalAlignment="Stretch">
       <Grid.Styles>
