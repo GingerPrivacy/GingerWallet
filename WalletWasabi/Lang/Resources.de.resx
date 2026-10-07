@@ -2215,4 +2215,7 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Aktiviere oder deaktiviere die Nutzung dieser Wallet für die Geheimnisjagd.</value>
   </data>
+  <data name="StopCoinjoinToChangeExcludedCoins" xml:space="preserve">
+    <value>Stoppen Sie CoinJoin, um ausgeschlossene Coins zu ändern.</value>
+  </data>
 </root>

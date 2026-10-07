@@ -2215,4 +2215,7 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Activer ou désactiver l’utilisation de ce portefeuille pour la Chasse aux Secrets.</value>
   </data>
+  <data name="StopCoinjoinToChangeExcludedCoins" xml:space="preserve">
+    <value>Arrêtez CoinJoin pour modifier les pièces exclues.</value>
+  </data>
 </root>

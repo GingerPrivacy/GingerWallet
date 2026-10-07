@@ -2215,4 +2215,7 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Ativar ou desativar o uso desta carteira para a Caça aos Segredos.</value>
   </data>
+  <data name="StopCoinjoinToChangeExcludedCoins" xml:space="preserve">
+    <value>Pare o CoinJoin para alterar as moedas excluídas.</value>
+  </data>
 </root>

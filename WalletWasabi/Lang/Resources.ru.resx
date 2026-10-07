@@ -2217,4 +2217,7 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Включить/выключить использование этого кошелька для охоты за секретами.</value>
   </data>
+  <data name="StopCoinjoinToChangeExcludedCoins" xml:space="preserve">
+    <value>Остановите CoinJoin, чтобы изменить исключённые монеты.</value>
+  </data>
 </root>
