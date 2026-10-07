@@ -19,7 +19,10 @@
       </QuestionControl.IconContent>
       <StackPanel Spacing="10">
         <TextBlock TextWrapping="Wrap" TextAlignment="Center" Text="{x:Static lang:Resources.ApplicationRestartRescan}" />
-        <TextBlock TextWrapping="Wrap" TextAlignment="Center" Text="{x:Static lang:Resources.ProceedConfirmation}" />
+        <TextBlock TextWrapping="Wrap" TextAlignment="Center" Text="{x:Static lang:Resources.ResyncStartingHeightDescription}" />
+        <TextBox Text="{Binding StartingHeight}" MaxWidth="125" MaxLength="10" />
+        <TextBlock TextWrapping="Wrap" TextAlignment="Center" Text="{x:Static lang:Resources.ResyncGapLimitDescription}" />
+        <TextBox Text="{Binding MinGapLimit}" MaxWidth="125" MaxLength="5" />
       </StackPanel>
     </QuestionControl>
   </ContentArea>

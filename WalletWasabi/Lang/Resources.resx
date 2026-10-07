@@ -2217,4 +2217,10 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Enable/disable the use of this wallet for Secret Hunt.</value>
   </data>
+  <data name="ResyncStartingHeightDescription" xml:space="preserve">
+    <value>Start scanning from this block height. Use 0 for a full rescan; funds received before the chosen height may be missed.</value>
+  </data>
+  <data name="ResyncGapLimitDescription" xml:space="preserve">
+    <value>Raise the gap limit to find funds on addresses beyond the current range.</value>
+  </data>
 </root>

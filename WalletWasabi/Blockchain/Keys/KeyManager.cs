@@ -231,9 +231,9 @@ public class KeyManager : IJsonOnSerializing, IJsonOnDeserialized
 	public string? EncryptionKey { get; set; }
 
 	private HdPubKeyGenerator SegwitExternalKeyGenerator { get; set; }
-	private HdPubKeyGenerator SegwitInternalKeyGenerator { get; }
+	private HdPubKeyGenerator SegwitInternalKeyGenerator { get; set; }
 	private HdPubKeyGenerator? TaprootExternalKeyGenerator { get; set; }
-	private HdPubKeyGenerator? TaprootInternalKeyGenerator { get; }
+	private HdPubKeyGenerator? TaprootInternalKeyGenerator { get; set; }
 
 	[JsonIgnore]
 	public string WalletName => string.IsNullOrWhiteSpace(FilePath) ? "" : Path.GetFileNameWithoutExtension(FilePath);
@@ -753,6 +753,38 @@ public class KeyManager : IJsonOnSerializing, IJsonOnDeserialized
 		lock (CriticalStateLock)
 		{
 			SetBestHeight(height, false);
+			ToFile();
+		}
+	}
+
+	public void SetResyncParameters(Height startingHeight, int minGapLimit)
+	{
+		lock (CriticalStateLock)
+		{
+			if (startingHeight.Type != HeightType.Chain || startingHeight > BlockchainState.Height)
+			{
+				throw new ArgumentOutOfRangeException(nameof(startingHeight));
+			}
+			if (minGapLimit < MinGapLimit || minGapLimit > MaxGapLimit)
+			{
+				throw new ArgumentOutOfRangeException(nameof(minGapLimit));
+			}
+
+			SegwitExternalKeyGenerator = SegwitExternalKeyGenerator with { MinGapLimit = minGapLimit };
+			SegwitInternalKeyGenerator = SegwitInternalKeyGenerator with { MinGapLimit = minGapLimit };
+			if (TaprootExternalKeyGenerator is { } external)
+			{
+				TaprootExternalKeyGenerator = external with { MinGapLimit = minGapLimit };
+			}
+			if (TaprootInternalKeyGenerator is { } internalGenerator)
+			{
+				TaprootInternalKeyGenerator = internalGenerator with { MinGapLimit = minGapLimit };
+			}
+			MinGapLimit = minGapLimit;
+			AssertCleanKeysIndexed();
+			// Wallet serialization subtracts 101 blocks for reorg/maturity safety.
+			// Persist the block before the requested starting height so it is scanned inclusively.
+			BlockchainState.Height = startingHeight.Value == 0 ? new Height(0) : new Height(checked(startingHeight.Value + 100));
 			ToFile();
 		}
 	}

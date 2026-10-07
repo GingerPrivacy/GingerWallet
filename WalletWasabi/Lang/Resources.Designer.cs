@@ -60,6 +60,10 @@ namespace WalletWasabi.Lang {
             }
         }
         
+        public static string ResyncStartingHeightDescription => ResourceManager.GetString("ResyncStartingHeightDescription", resourceCulture);
+
+        public static string ResyncGapLimitDescription => ResourceManager.GetString("ResyncGapLimitDescription", resourceCulture);
+
         /// <summary>
         ///   Looks up a localized string similar to Insufficient participants, retrying....
         /// </summary>

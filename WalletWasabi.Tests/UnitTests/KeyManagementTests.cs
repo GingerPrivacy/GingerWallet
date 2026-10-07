@@ -167,6 +167,29 @@ public class KeyManagementTests
 	}
 
 	[Fact]
+	public void ResyncParametersPersistAndExtendBothAddressTypes()
+	{
+		var path = Path.Combine(TestDirectory.Get(), "resync-wallet.json");
+		var manager = KeyManager.CreateNew(out _, "", Network.Main, path);
+		manager.SetBestHeight(700_000);
+		var originalSegwit = manager.SegwitExtPubKey;
+		var originalTaproot = manager.TaprootExtPubKey;
+		manager.SetResyncParameters(new Height(600_000), 100);
+
+		var reloaded = KeyManager.FromFile(path);
+		Assert.Equal(new Height(599_999), reloaded.GetBestHeight());
+		Assert.Equal(100, reloaded.MinGapLimit);
+		Assert.Equal(originalSegwit, reloaded.SegwitExtPubKey);
+		Assert.Equal(originalTaproot, reloaded.TaprootExtPubKey);
+		Assert.True(reloaded.GetKeys(KeyState.Clean, false).Count() >= 200);
+		Assert.Throws<ArgumentOutOfRangeException>(() => reloaded.SetResyncParameters(new Height(700_000), 100));
+		Assert.Throws<ArgumentOutOfRangeException>(() => reloaded.SetResyncParameters(new Height(0), 99));
+		Assert.Throws<ArgumentOutOfRangeException>(() => reloaded.SetResyncParameters(new Height(0), KeyManager.MaxGapLimit + 1));
+		reloaded.SetResyncParameters(new Height(0), 100);
+		Assert.Equal(new Height(0), KeyManager.FromFile(path).GetBestHeight());
+	}
+
+	[Fact]
 	public void CanGenerateKeys()
 	{
 		string password = "password";

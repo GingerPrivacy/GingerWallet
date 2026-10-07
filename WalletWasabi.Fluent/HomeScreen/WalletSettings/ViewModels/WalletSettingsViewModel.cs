@@ -58,10 +58,10 @@ public partial class WalletSettingsViewModel : RoutableViewModel
 		RenameCommand = ReactiveCommand.CreateFromTask(OnRenameWalletAsync);
 		ResyncWalletCommand = ReactiveCommand.CreateFromTask(async () =>
 		{
-			var doResync = await UiContext.Navigate().To().ResyncWallet().GetResultAsync();
-			if (doResync)
+			var result = await UiContext.Navigate().To().ResyncWallet(walletModel.Settings.BestHeight, walletModel.Settings.MinGapLimit).GetResultAsync();
+			if (result is not null)
 			{
-				walletModel.Settings.ResetHeight();
+				walletModel.Settings.RescanWallet(result.StartingHeight, result.MinGapLimit);
 				UiContext.Navigate(MetaData.NavigationTarget).Clear();
 				AppLifetimeHelper.Shutdown(withShutdownPrevention: true, restart: true);
 			}

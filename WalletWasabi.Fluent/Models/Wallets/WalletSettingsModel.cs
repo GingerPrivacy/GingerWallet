@@ -156,8 +156,12 @@ public partial class WalletSettingsModel : ReactiveObject
 		_isDirty = true;
 	}
 
-	public void ResetHeight()
+	public int MinGapLimit => _keyManager.MinGapLimit;
+
+	public int BestHeight => _keyManager.GetBestHeight().Value;
+
+	public void RescanWallet(int startingHeight, int minGapLimit)
 	{
-		_keyManager.SetBestHeights(0);
+		_keyManager.SetResyncParameters(new Height(startingHeight), minGapLimit);
 	}
 }
