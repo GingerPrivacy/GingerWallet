@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
@@ -108,7 +109,9 @@ public class FeeRateProvider : BackgroundService, IWalletFeeRateProvider
 			}
 			else if (Provider == FeeRateProviderSource.BlockstreamInfo)
 			{
-				_feeRateProvider = new BlockstreamInfoFeeRateProvider(_httpClientFactory, _network);
+				_feeRateProvider = new FallbackFeeRateProvider(
+					new BlockstreamInfoFeeRateProvider(_httpClientFactory, _network),
+					new MempoolSpaceFeeRateProvider(_httpClientFactory, _network));
 			}
 			else if (Provider == FeeRateProviderSource.FullNode)
 			{
@@ -129,7 +132,9 @@ public class FeeRateProvider : BackgroundService, IWalletFeeRateProvider
 					Logging.Logger.LogWarning($"{nameof(FeeRateProvider)} config is missing or erroneous - falling back to '{FeeRateProviderSource.MempoolSpace}'.");
 					Provider = FeeRateProviderSource.MempoolSpace;
 				}
-				_feeRateProvider = new MempoolSpaceFeeRateProvider(_httpClientFactory, _network);
+				_feeRateProvider = new FallbackFeeRateProvider(
+					new MempoolSpaceFeeRateProvider(_httpClientFactory, _network),
+					new BlockstreamInfoFeeRateProvider(_httpClientFactory, _network));
 			}
 
 			Logger.LogInfo($"{nameof(FeeRateProvider)} initialized to '{Provider}'.");
@@ -244,6 +249,11 @@ public class FeeRateProvider : BackgroundService, IWalletFeeRateProvider
 		using (await _lock.LockAsync(cancellationToken).ConfigureAwait(false))
 		{
 			var result = await _feeRateProvider.GetFeeRatesAsync(cancellationToken).ConfigureAwait(false);
+			cancellationToken.ThrowIfCancellationRequested();
+			if (result.Estimations.Count == 0 || result.Estimations.Values.Any(x => x.SatoshiPerByte <= 0))
+			{
+				throw new InvalidOperationException("The fee provider returned no usable estimates. Keeping the last successful estimates.");
+			}
 
 			// Update cache atomically with simple lock
 			lock (_cacheLock)
