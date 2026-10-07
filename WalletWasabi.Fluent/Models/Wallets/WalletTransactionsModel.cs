@@ -96,6 +96,9 @@ public class WalletTransactionsModel : ReactiveObject, IDisposable
 	public TransactionCoinsModel GetTransactionCoins(SmartTransaction transaction, IEnumerable<Script>? paymentScripts = null) =>
 		new(transaction, _wallet.Network, script => _wallet.KeyManager.TryGetKeyForScriptPubKey(script, out _), paymentScripts);
 
+	public TransactionCoinsModel GetTransactionCoins(BuildTransactionResult result, IEnumerable<Script> paymentScripts) =>
+		new(result, _wallet.Network, script => _wallet.KeyManager.TryGetKeyForScriptPubKey(script, out _), paymentScripts);
+
 	public TransactionCoinsModel? GetTransactionCoins(uint256 id) =>
 		_wallet.BitcoinStore.TransactionStore.TryGetTransaction(id, out var transaction) ? GetTransactionCoins(transaction) : null;
 

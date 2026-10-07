@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NBitcoin;
 using WalletWasabi.Blockchain.Analysis.Clustering;
+using WalletWasabi.Blockchain.TransactionBuilding;
 using WalletWasabi.Blockchain.Transactions;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Lang;
@@ -16,6 +17,11 @@ public record TransactionCoinRow(OutPoint OutPoint, string Address, Money? Amoun
 
 public class TransactionCoinsModel
 {
+	public TransactionCoinsModel(BuildTransactionResult result, Network network, Func<Script, bool> isOwn, IEnumerable<Script> paymentScripts)
+		: this(result.Transaction, network, isOwn, paymentScripts.Concat(result.OuterWalletOutputs.Select(x => x.ScriptPubKey)))
+	{
+	}
+
 	public TransactionCoinsModel(SmartTransaction transaction, Network network, Func<Script, bool> isOwn, IEnumerable<Script>? paymentScripts = null)
 	{
 		var recipients = (paymentScripts ?? Array.Empty<Script>()).ToHashSet();

@@ -55,7 +55,7 @@ public partial class TransactionSummaryViewModel : ViewModelBase
 	public void UpdateTransaction(BuildTransactionResult transactionResult, TransactionInfo info)
 	{
 		_transaction = transactionResult;
-		TransactionCoins = _wallet.Transactions.GetTransactionCoins(transactionResult.Transaction, info.AllRecipients.Select(x => x.Destination.ScriptPubKey));
+		TransactionCoins = _wallet.Transactions.GetTransactionCoins(transactionResult, info.AllRecipients.Select(x => x.Destination.ScriptPubKey));
 
 		ConfirmationTime = _wallet.Transactions.TryEstimateConfirmationTime(info);
 
