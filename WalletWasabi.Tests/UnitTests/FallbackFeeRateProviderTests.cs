@@ -47,7 +47,7 @@ public class FallbackFeeRateProviderTests
 	{
 		var primary = new Mock<IFeeRateProvider>();
 		var fallback = new Mock<IFeeRateProvider>();
-		primary.Setup(x => x.GetFeeRatesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(new AllFeeEstimate(new Dictionary<int, FeeRate> { [target] = new(rate) }));
+		primary.Setup(x => x.GetFeeRatesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(new AllFeeEstimate(new Dictionary<int, FeeRate> { [target] = new((decimal)rate) }));
 		var estimate = ValidEstimate();
 		fallback.Setup(x => x.GetFeeRatesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(estimate);
 
