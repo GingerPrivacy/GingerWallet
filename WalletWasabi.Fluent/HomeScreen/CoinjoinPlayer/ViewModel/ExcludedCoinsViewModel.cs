@@ -21,15 +21,17 @@ public partial class ExcludedCoinsViewModel : DialogViewModelBase<Unit>
 	private readonly WalletModel _wallet;
 
 	[AutoNotify] private bool _hasSelection;
+	[AutoNotify] private bool _isCoinjoining;
 
 	public ExcludedCoinsViewModel(WalletModel wallet)
 	{
 		_wallet = wallet;
 		var initialCoins = wallet.Coins.List.Items.Where(x => x.IsExcludedFromCoinJoin);
-		CoinList = new CoinListViewModel(wallet.Coins, initialCoins.ToList(), allowCoinjoiningCoinSelection: false, ignorePrivacyMode: true);
+		// Keep the stored selection intact when a coin enters a round. Editing is disabled for the whole dialog instead.
+		CoinList = new CoinListViewModel(wallet.Coins, initialCoins.ToList(), allowCoinjoiningCoinSelection: true, ignorePrivacyMode: true);
 		SetupCancel(enableCancel: true, enableCancelOnEscape: true, enableCancelOnPressed: true);
 		NextCommand = ReactiveCommand.Create(() => Close());
-		ToggleSelectionCommand = ReactiveCommand.Create(() => SelectAll(!CoinList.Selection.Any()));
+		ToggleSelectionCommand = ReactiveCommand.Create(() => SelectAll(!CoinList.Selection.Any()), this.WhenAnyValue(x => x.IsCoinjoining, x => !x));
 	}
 
 	public CoinListViewModel CoinList { get; set; }
@@ -38,6 +40,10 @@ public partial class ExcludedCoinsViewModel : DialogViewModelBase<Unit>
 
 	protected override void OnNavigatedTo(bool isInHistory, CompositeDisposable disposables)
 	{
+		_wallet.Coinjoin.WhenAnyValue(x => x.IsCoinjoining)
+			.BindTo(this, x => x.IsCoinjoining)
+			.DisposeWith(disposables);
+
 		CoinList.CoinItems
 			.ToObservableChangeSet()
 			.WhenPropertyChanged(x => x.IsSelected)

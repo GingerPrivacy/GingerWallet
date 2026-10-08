@@ -29,10 +29,22 @@
           </Button.Flyout>
         </Button>
         <ToggleButton Theme="{StaticResource DialogSelectAllButton}"
+                      IsEnabled="{Binding !IsCoinjoining}"
                       Command="{Binding ToggleSelectionCommand}"
                       IsChecked="{Binding HasSelection}" />
       </StackPanel>
     </ContentArea.TopContent>
-    <views:CoinListView DataContext="{Binding CoinList}" />
+    <DockPanel>
+      <InfoMessage DockPanel.Dock="Bottom"
+                   IsVisible="{Binding IsCoinjoining}"
+                   Foreground="{DynamicResource WarningMessageForeground}"
+                   HorizontalAlignment="Center"
+                   Margin="0,16,0,0">
+        <TextBlock Text="{x:Static lang:Resources.StopCoinjoinToChangeExcludedCoins}" />
+      </InfoMessage>
+      <Border IsEnabled="{Binding !IsCoinjoining}">
+        <views:CoinListView DataContext="{Binding CoinList}" />
+      </Border>
+    </DockPanel>
   </ContentArea>
 </UserControl>
