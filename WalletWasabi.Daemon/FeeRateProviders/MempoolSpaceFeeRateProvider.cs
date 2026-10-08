@@ -2,6 +2,7 @@ using NBitcoin;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,6 +32,11 @@ public class MempoolSpaceFeeRateProvider : IFeeRateProvider
 
 	private IHttpClient HttpClient { get; }
 
+	public MempoolSpaceFeeRateProvider(IHttpClient httpClient)
+	{
+		HttpClient = httpClient;
+	}
+
 	public MempoolSpaceFeeRateProvider(WasabiHttpClientFactory httpClientFactory, Network network)
 	{
 		if (network == Network.Main)
@@ -53,7 +59,14 @@ public class MempoolSpaceFeeRateProvider : IFeeRateProvider
 
 	public async Task<AllFeeEstimate> GetFeeRatesAsync(CancellationToken cancellationToken)
 	{
-		using var response = await HttpClient.SendAsync(HttpMethod.Get, "fees/recommended", null, cancellationToken).ConfigureAwait(false);
+		using var response = await HttpClient.SendAsync(HttpMethod.Get, "fees/precise", null, cancellationToken).ConfigureAwait(false);
+		if (response.StatusCode == HttpStatusCode.NotFound)
+		{
+			// Older API deployments can still provide the legacy integer estimates.
+			using var legacyResponse = await HttpClient.SendAsync(HttpMethod.Get, "fees/recommended", null, cancellationToken).ConfigureAwait(false);
+			legacyResponse.EnsureSuccessStatusCode();
+			return ParseFeeEstimates(await legacyResponse.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false));
+		}
 		response.EnsureSuccessStatusCode();
 		var json = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 		return ParseFeeEstimates(json);
