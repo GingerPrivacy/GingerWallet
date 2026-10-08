@@ -291,7 +291,7 @@ public class TransactionFactory
 		return new BuildTransactionResult(smartTransaction, psbt, sign, fee, feePercentage, hdPubKeysWithNewLabels);
 	}
 
-	private PSBT TryNegotiatePayjoin(IPayjoinClient payjoinClient, TransactionBuilder builder, PSBT psbt, HdPubKey changeHdPubKey)
+	private PSBT TryNegotiatePayjoin(IPayjoinClient payjoinClient, TransactionBuilder builder, PSBT psbt, HdPubKey? changeHdPubKey)
 	{
 		try
 		{
@@ -301,6 +301,8 @@ public class TransactionFactory
 				psbt,
 				KeyManager.SegwitExtPubKey,
 				new RootedKeyPath(KeyManager.MasterFingerprint.Value, KeyManager.SegwitAccountKeyPath),
+				KeyManager.TaprootExtPubKey,
+				new RootedKeyPath(KeyManager.MasterFingerprint.Value, KeyManager.TaprootAccountKeyPath),
 				changeHdPubKey,
 				CancellationToken.None).GetAwaiter().GetResult(); // WTF??!
 			builder.SignPSBT(psbt);

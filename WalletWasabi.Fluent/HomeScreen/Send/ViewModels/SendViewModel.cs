@@ -199,13 +199,15 @@ public partial class SendViewModel : RoutableViewModel
 		}
 	}
 
+	private bool _payjoinDisableOutputSubstitution;
+
 	private IPayjoinClient? GetPayjoinClient(string? endPoint)
 	{
 		if (!string.IsNullOrWhiteSpace(endPoint) &&
 			Uri.IsWellFormedUriString(endPoint, UriKind.Absolute))
 		{
 			var payjoinEndPointUri = new Uri(endPoint);
-			if (Services.Config.UseTor != TorMode.Disabled)
+			if (Services.Config.UseTor == TorMode.Disabled)
 			{
 				if (payjoinEndPointUri.DnsSafeHost.EndsWith(".onion", StringComparison.OrdinalIgnoreCase))
 				{
@@ -221,7 +223,7 @@ public partial class SendViewModel : RoutableViewModel
 			}
 
 			IHttpClient httpClient = Services.HttpClientFactory.NewHttpClient(() => payjoinEndPointUri, Mode.DefaultCircuit);
-			return new PayjoinClient(payjoinEndPointUri, httpClient);
+			return new PayjoinClient(payjoinEndPointUri, httpClient, _payjoinDisableOutputSubstitution);
 		}
 
 		return null;
@@ -296,6 +298,7 @@ public partial class SendViewModel : RoutableViewModel
 			return false;
 		}
 
+		_payjoinDisableOutputSubstitution = false;
 		bool result = false;
 
 		if (AddressStringParser.TryParse(text, _walletModel.Network, out Bip21UriParser.Result? parserResult))
@@ -303,6 +306,7 @@ public partial class SendViewModel : RoutableViewModel
 			result = true;
 
 			PayJoinEndPoint = parserResult.UnknownParameters.TryGetValue("pj", out var endPoint) ? endPoint : null;
+			_payjoinDisableOutputSubstitution = parserResult.UnknownParameters.TryGetValue("pjos", out var outputSubstitution) && outputSubstitution == "0";
 
 			if (parserResult.Address is { })
 			{
