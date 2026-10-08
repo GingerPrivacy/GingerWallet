@@ -2233,4 +2233,7 @@
   <data name="BatchAmountPrecision" xml:space="preserve">
     <value>Beträge dürfen höchstens acht Nachkommastellen haben.</value>
   </data>
+  <data name="MinimumFeeRateLimit" xml:space="preserve">
+    <value>Darf nicht weniger als {0} sat/vByte betragen.</value>
+  </data>
 </root>

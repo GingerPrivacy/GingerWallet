@@ -1254,6 +1254,9 @@
   <data name="MinFeeLimit" xml:space="preserve">
     <value>Nem lehet kevesebb, mint 1 sat/vByte.</value>
   </data>
+  <data name="MinimumFeeRateLimit" xml:space="preserve">
+    <value>Nem lehet kevesebb, mint {0} sat/vByte.</value>
+  </data>
   <data name="FeeTooHigh" xml:space="preserve">
     <value>A megadott díj túl magas.</value>
   </data>

@@ -2233,4 +2233,7 @@
   <data name="BatchAmountPrecision" xml:space="preserve">
     <value>Los importes pueden tener como máximo ocho decimales.</value>
   </data>
+  <data name="MinimumFeeRateLimit" xml:space="preserve">
+    <value>No puede ser inferior a {0} sat/vByte.</value>
+  </data>
 </root>

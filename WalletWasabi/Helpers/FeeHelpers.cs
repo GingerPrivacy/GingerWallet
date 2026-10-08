@@ -76,9 +76,9 @@ public static class FeeHelpers
 	/// </returns>
 	private static FeeRate? SeekMaxFeeRate(FeeRate feeRate, Action<FeeRate> buildTransaction)
 	{
-		if (feeRate.SatoshiPerByte < 1m)
+		if (feeRate < Constants.MinRelayFeeRate)
 		{
-			feeRate = new FeeRate(1m);
+			feeRate = Constants.MinRelayFeeRate;
 		}
 
 		var lastWrongFeeRate = new FeeRate(0m);
@@ -96,7 +96,7 @@ public static class FeeHelpers
 			}
 			catch (Exception ex) when (ex is NotEnoughFundsException or TransactionFeeOverpaymentException or InsufficientBalanceException || (ex is InvalidTxException itx && itx.Errors.OfType<FeeTooHighPolicyError>().Any()))
 			{
-				if (feeRate.SatoshiPerByte == 1m)
+				if (feeRate == Constants.MinRelayFeeRate)
 				{
 					break;
 				}
@@ -104,7 +104,7 @@ public static class FeeHelpers
 				lastWrongFeeRate = feeRate;
 				var decreaseBy = (feeRate.SatoshiPerByte - lastCorrectFeeRate.SatoshiPerByte) / 2;
 				var nextSatPerByteCandidate = feeRate.SatoshiPerByte - decreaseBy;
-				var newSatPerByte = nextSatPerByteCandidate < 1m ? 1m : nextSatPerByteCandidate; // make sure to always try 1 sat/vbyte as a last chance.
+				var newSatPerByte = Math.Max(nextSatPerByteCandidate, Constants.MinRelayFeeRate.SatoshiPerByte);
 				feeRate = new FeeRate(newSatPerByte);
 			}
 			catch (Exception ex)

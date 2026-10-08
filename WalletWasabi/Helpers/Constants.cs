@@ -96,7 +96,7 @@ public static class Constants
 	public static readonly Version BitcoinCoreVersion = new("31.0");
 	public static readonly Version GingerLegalDocumentsVersion = new(9, 0);
 
-	public static readonly FeeRate MinRelayFeeRate = new(1m);
+	public static readonly FeeRate MinRelayFeeRate = new(0.1m);
 	public static readonly FeeRate AbsurdlyHighFeeRate = new(10_000m);
 
 	// Defined in hours. Do not modify these values or the order!

@@ -1259,6 +1259,9 @@
   <data name="MinFeeLimit" xml:space="preserve">
     <value>Cannot be less than 1 sat/vByte.</value>
   </data>
+  <data name="MinimumFeeRateLimit" xml:space="preserve">
+    <value>Cannot be less than {0} sat/vByte.</value>
+  </data>
   <data name="FeeTooHigh" xml:space="preserve">
     <value>The entered fee is too high.</value>
   </data>
