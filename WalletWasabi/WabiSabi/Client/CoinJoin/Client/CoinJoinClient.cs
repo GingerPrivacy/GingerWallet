@@ -235,6 +235,8 @@ public class CoinJoinClient
 			throw new CoinJoinClientException(CoinjoinError.NoCoinsEligibleToMix, $"No coin was selected from '{coinCandidates.Count()}' number of coins. Probably it was not economical, total amount of coins were: {Money.Satoshis(coinCandidates.Sum(c => c.Amount))} BTC.");
 		}
 
+		DisruptedCoinJoinResult? previousRound = null;
+
 		// Keep going to blame round until there's none, so CJs won't be DDoS-ed.
 		while (true)
 		{
@@ -246,13 +248,14 @@ public class CoinJoinClient
 				ExtraRoundTimeoutMargin);
 			using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, coinJoinRoundTimeoutCts.Token);
 
-			var result = await StartRoundAsync(coins, currentRoundState, linkedCts.Token).ConfigureAwait(false);
+			var result = await StartRoundAsync(coins, currentRoundState, previousRound, linkedCts.Token).ConfigureAwait(false);
 
 			switch (result)
 			{
 				case DisruptedCoinJoinResult info:
-					// Only use successfully registered coins in the blame round.
+					// Only use coins for which we submitted a signature in the blame round.
 					coins = info.SignedCoins;
+					previousRound = info;
 
 					currentRoundState.LogInfo("Waiting for the blame round.");
 					currentRoundState = await WaitForBlameRoundAsync(currentRoundState.Id, cancellationToken).ConfigureAwait(false);
@@ -272,7 +275,10 @@ public class CoinJoinClient
 		throw new InvalidOperationException("Blame rounds were not successful.");
 	}
 
-	public async Task<CoinJoinResult> StartRoundAsync(IEnumerable<SmartCoin> smartCoins, RoundState roundState, CancellationToken cancellationToken)
+	public Task<CoinJoinResult> StartRoundAsync(IEnumerable<SmartCoin> smartCoins, RoundState roundState, CancellationToken cancellationToken) =>
+		StartRoundAsync(smartCoins, roundState, null, cancellationToken);
+
+	private async Task<CoinJoinResult> StartRoundAsync(IEnumerable<SmartCoin> smartCoins, RoundState roundState, DisruptedCoinJoinResult? previousRound, CancellationToken cancellationToken)
 	{
 		var roundId = roundState.Id;
 
@@ -297,7 +303,7 @@ public class CoinJoinClient
 			try
 			{
 				using CancellationTokenSource cancelOrRoundEndedCts = CancellationTokenSource.CreateLinkedTokenSource(roundEndedCts.Token, cancellationToken);
-				(aliceClientsThatSigned, outputTxOuts, unsignedCoinJoin) = await ProceedWithRoundAsync(roundState, smartCoins, cancelOrRoundEndedCts.Token).ConfigureAwait(false);
+				(aliceClientsThatSigned, outputTxOuts, unsignedCoinJoin) = await ProceedWithRoundAsync(roundState, smartCoins, previousRound, cancelOrRoundEndedCts.Token).ConfigureAwait(false);
 			}
 			catch (OperationCanceledException)
 			{
@@ -354,7 +360,10 @@ public class CoinJoinClient
 					Coins: signedCoins,
 					OutputScripts: outputTxOuts.Select(o => o.ScriptPubKey).ToImmutableList(),
 					UnsignedCoinJoin: unsignedCoinJoin!),
-				EndRoundState.NotAllAlicesSign => new DisruptedCoinJoinResult(signedCoins),
+				EndRoundState.NotAllAlicesSign when !signedCoins.IsEmpty => new DisruptedCoinJoinResult(
+					signedCoins,
+					unsignedCoinJoin!.Inputs.Select(x => x.PrevOut).ToImmutableHashSet(),
+					roundState.CoinjoinState.Parameters.MaxSuggestedAmount),
 				_ => new FailedCoinJoinResult()
 			};
 		}
@@ -380,7 +389,7 @@ public class CoinJoinClient
 		}
 	}
 
-	private async Task<(ImmutableArray<AliceClient> aliceClientsThatSigned, IEnumerable<TxOut> OutputTxOuts, Transaction UnsignedCoinJoin)> ProceedWithRoundAsync(RoundState roundState, IEnumerable<SmartCoin> smartCoins, CancellationToken cancellationToken)
+	private async Task<(ImmutableArray<AliceClient> aliceClientsThatSigned, IEnumerable<TxOut> OutputTxOuts, Transaction UnsignedCoinJoin)> ProceedWithRoundAsync(RoundState roundState, IEnumerable<SmartCoin> smartCoins, DisruptedCoinJoinResult? previousRound, CancellationToken cancellationToken)
 	{
 		ImmutableArray<(AliceClient AliceClient, PersonCircuit PersonCircuit)> registeredAliceClientAndCircuits = ImmutableArray<(AliceClient, PersonCircuit)>.Empty;
 		try
@@ -399,7 +408,7 @@ public class CoinJoinClient
 
 			CoinsInCriticalPhase = registeredAliceClients.Select(alice => alice.SmartCoin).ToImmutableList();
 
-			var outputTxOuts = await ProceedWithOutputRegistrationPhaseAsync(roundId, registeredAliceClients, cancellationToken).ConfigureAwait(false);
+			var outputTxOuts = await ProceedWithOutputRegistrationPhaseAsync(roundId, registeredAliceClients, previousRound, cancellationToken).ConfigureAwait(false);
 
 			var (unsignedCoinJoin, aliceClientsThatSigned) = await ProceedWithSigningStateAsync(roundId, registeredAliceClients, outputTxOuts, cancellationToken).ConfigureAwait(false);
 			LogCoinJoinSummary(registeredAliceClients, outputTxOuts, roundState);
@@ -841,6 +850,10 @@ public class CoinJoinClient
 		roundState.LogDebug(string.Join(Environment.NewLine, summary));
 	}
 
+	internal static bool IsBlameRoundValid(MultipartyTransactionState state, DisruptedCoinJoinResult previousRound) =>
+		state.Parameters.MaxSuggestedAmount == previousRound.MaxSuggestedAmount &&
+		state.Inputs.All(x => previousRound.RoundInputs.Contains(x.Outpoint));
+
 	internal static bool IsRoundEconomic(FeeRate roundFeeRate, Dictionary<TimeSpan, FeeRate> coinJoinFeeRateMedians, int safeMiningFeeRate, TimeSpan feeRateMedianTimeFrame)
 	{
 		if (feeRateMedianTimeFrame == default)
@@ -865,10 +878,15 @@ public class CoinJoinClient
 		throw new InvalidOperationException($"Could not find median fee rate for time frame: {feeRateMedianTimeFrame}.");
 	}
 
-	private async Task<IEnumerable<TxOut>> ProceedWithOutputRegistrationPhaseAsync(uint256 roundId, ImmutableArray<AliceClient> registeredAliceClients, CancellationToken cancellationToken)
+	private async Task<IEnumerable<TxOut>> ProceedWithOutputRegistrationPhaseAsync(uint256 roundId, ImmutableArray<AliceClient> registeredAliceClients, DisruptedCoinJoinResult? previousRound, CancellationToken cancellationToken)
 	{
 		// Waiting for OutputRegistration phase, all the Alices confirmed their connections, so the list of the inputs will be complete.
 		var roundState = await RoundStatusUpdater.CreateRoundAwaiterAsync(roundId, Phase.OutputRegistration, cancellationToken).ConfigureAwait(false);
+		if (previousRound is not null && !IsBlameRoundValid(roundState.CoinjoinState, previousRound))
+		{
+			throw new InvalidOperationException($"Blame round ({roundId}) contains inputs or a suggested amount not allowed by the previous round.");
+		}
+
 		var roundParameters = roundState.CoinjoinState.Parameters;
 		var remainingTime = roundParameters.OutputRegistrationTimeout - RoundStatusUpdater.Period;
 		var now = DateTimeOffset.UtcNow;
