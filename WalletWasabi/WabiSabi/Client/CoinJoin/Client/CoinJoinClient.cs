@@ -966,6 +966,12 @@ public class CoinJoinClient
 		}
 	}
 
+	internal static bool IsSigningStateSafe(SigningState state, int ownInputCount, CoinJoinConfiguration configuration) =>
+		state.Inputs.Count() >= configuration.AbsoluteMinInputCount &&
+		(configuration.AllowSoloCoinjoining || state.Inputs.Count() > ownInputCount) &&
+		// Allow estimation error, but do not let the coordinator divert the agreed mining fee.
+		state.EffectiveFeeRate.FeePerK.Satoshi > state.Parameters.MiningFeeRate.FeePerK.Satoshi * 0.90m;
+
 	private async Task<(Transaction UnsignedCoinJoin, ImmutableArray<AliceClient> AliceClientsThatSigned)> ProceedWithSigningStateAsync(
 		uint256 roundId,
 		ImmutableArray<AliceClient> registeredAliceClients,
@@ -992,10 +998,11 @@ public class CoinJoinClient
 		// now when we identify as satoshi.
 		// In this scenario we should ban the coordinator and stop dealing with it.
 		// see more: https://github.com/zkSNACKs/WalletWasabi/issues/8171
-		bool mustSignAllInputs = SanityCheck(outputTxOuts, unsignedCoinJoin.Transaction.Outputs);
+		bool mustSignAllInputs = IsSigningStateSafe(signingState, registeredAliceClients.Length, CoinJoinConfiguration)
+			&& SanityCheck(outputTxOuts, unsignedCoinJoin.Transaction.Outputs);
 		if (!mustSignAllInputs)
 		{
-			roundState.LogInfo($"There are missing outputs. A subset of inputs will be signed.");
+			roundState.LogInfo($"The transaction failed the input count, solo coinjoin, fee or output checks. A subset of inputs will be signed.");
 		}
 
 		// Send signature.
