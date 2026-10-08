@@ -15,6 +15,7 @@ namespace WalletWasabi.BitcoinP2p;
 public abstract class P2pBehavior : NodeBehavior
 {
 	private const int MaxInvSize = 50000;
+	private volatile FeeRate? _feeFilter;
 
 	protected P2pBehavior(MempoolService mempoolService)
 	{
@@ -23,6 +24,7 @@ public abstract class P2pBehavior : NodeBehavior
 
 	public event EventHandler<Transaction>? OnTransactionArrived;
 	public MempoolService MempoolService { get; }
+	public FeeRate? FeeFilter => _feeFilter;
 
 	protected override void AttachCore()
 	{
@@ -32,6 +34,7 @@ public abstract class P2pBehavior : NodeBehavior
 	protected override void DetachCore()
 	{
 		AttachedNode.MessageReceived -= AttachedNode_MessageReceivedAsync;
+		_feeFilter = null;
 	}
 
 	private async void AttachedNode_MessageReceivedAsync(Node node, IncomingMessage message)
@@ -45,6 +48,10 @@ public abstract class P2pBehavior : NodeBehavior
 			else if (message.Message.Payload is TxPayload txPayload)
 			{
 				ProcessTx(txPayload);
+			}
+			else if (message.Message.Payload is FeeFilterPayload feeFilterPayload)
+			{
+				_feeFilter = feeFilterPayload.FeeRate;
 			}
 			else if (message.Message.Payload is InvPayload invPayload)
 			{
