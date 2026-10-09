@@ -4,6 +4,7 @@ using Moq;
 using NBitcoin;
 using Newtonsoft.Json;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 using WalletWasabi.BitcoinCore.Rpc;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Blockchain.TransactionOutputs;
+using WalletWasabi.Extensions;
 using WalletWasabi.Tests.Helpers;
 using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.Tor.Http;
@@ -30,6 +32,7 @@ using WalletWasabi.WabiSabi.Client.RoundStateAwaiters;
 using WalletWasabi.WabiSabi.Models;
 using WalletWasabi.WabiSabi.Models.MultipartyTransaction;
 using WalletWasabi.WabiSabi.Models.Serialization;
+using WalletWasabi.Wallets;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -303,7 +306,15 @@ public class WabiSabiHttpApiIntegrationTests : IAsyncLifetime
 
 		await roundStateUpdater.StartAsync(CancellationToken.None);
 
-		var coinJoinClient = WabiSabiTestFactory.CreateTestCoinJoinClient(mockHttpClientFactory, keyManager, roundStateUpdater);
+		// Exercise output rejection with one predetermined output per input instead of a random decomposition graph.
+		var outputProvider = new Mock<OutputProvider>(new InternalDestinationProvider(keyManager), null!);
+		outputProvider.Setup(provider => provider.GetOutputs(
+			It.IsAny<uint256>(), It.IsAny<RoundParameters>(), It.IsAny<IEnumerable<Money>>(),
+			It.IsAny<List<Money>>(), It.IsAny<List<double>>(), It.IsAny<int>()))
+			.Returns((uint256 _, RoundParameters parameters, IEnumerable<Money> values, List<Money> denoms, List<double> frequencies, int vsize) =>
+				values.Zip(outputScriptCandidates, (value, script) => new TxOut(value - parameters.MiningFeeRate.GetFee(script.EstimateOutputVsize()), script)));
+		var coinJoinClient = WabiSabiTestFactory.CreateTestCoinJoinClient(
+			mockHttpClientFactory, new KeyChain(keyManager, new Kitchen("")), outputProvider.Object, roundStateUpdater, keyManager.RedCoinIsolation);
 
 		RoundState? endedRound = null;
 		void HandleCoinJoinProgress(object? sender, CoinJoinProgressEventArgs coinJoinProgress)
