@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using WalletWasabi.Blockchain.Analysis.FeesEstimation;
 using WalletWasabi.Tor.Http;
 using WalletWasabi.WebClients.Wasabi;
+using Constants = WalletWasabi.Helpers.Constants;
 
 namespace WalletWasabi.Daemon.FeeRateProviders;
 
@@ -101,9 +102,8 @@ public class MempoolSpaceFeeRateProvider : IFeeRateProvider
 				jsonElement.ValueKind == JsonValueKind.Number && // Ensure it's a number type
 				jsonElement.TryGetDecimal(out decimal feeValue))   // Try to parse it as decimal
 			{
-				// Calculate fee rate in sat/vB (rounding up) and add to the dictionary
-				// using the target block confirmation time as the key.
-				feeEstimates[mapping.TargetBlocks] = new FeeRate(feeValue);
+				// Keep positive estimates within the wallet's supported fee range.
+				feeEstimates[mapping.TargetBlocks] = new FeeRate(feeValue > 0 ? Math.Max(feeValue, Constants.MinRelayFeeRate.SatoshiPerByte) : feeValue);
 			}
 			// If the property doesn't exist or isn't a valid number, it's skipped.
 		}
