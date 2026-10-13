@@ -28,6 +28,11 @@ public class PayjoinClient : IPayjoinClient
 	private IHttpClient HttpClient { get; }
 	private bool DisableOutputSubstitution { get; }
 
+	public static bool IsEndpointSupported(Uri paymentUrl, Network network, bool torEnabled) =>
+		(paymentUrl.Scheme == Uri.UriSchemeHttp || paymentUrl.Scheme == Uri.UriSchemeHttps) &&
+		(paymentUrl.DnsSafeHost.EndsWith(".onion", StringComparison.OrdinalIgnoreCase)
+			? torEnabled : network != Network.Main || paymentUrl.Scheme == Uri.UriSchemeHttps);
+
 	public async Task<PSBT> RequestPayjoin(PSBT originalTx, IHDKey segwitAccountKey, RootedKeyPath segwitRootedKeyPath, IHDKey? taprootAccountKey, RootedKeyPath taprootRootedKeyPath, HdPubKey? changeHdPubKey, CancellationToken cancellationToken)
 	{
 		if (originalTx.IsAllFinalized())
@@ -70,6 +75,7 @@ public class PayjoinClient : IPayjoinClient
 		foreach (var finalized in cloned.Inputs.Where(i => i.IsFinalized()))
 		{
 			finalized.ClearForFinalize();
+			finalized.HDTaprootKeyPaths.Clear();
 		}
 
 		foreach (var output in cloned.Outputs)

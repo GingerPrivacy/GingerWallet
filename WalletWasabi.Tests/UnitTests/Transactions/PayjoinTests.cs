@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Blockchain.TransactionBuilding;
@@ -455,6 +456,23 @@ public class PayjoinTests
 	}
 
 	[Theory]
+	[InlineData("https://example.com/pj", false, true, true)]
+	[InlineData("https://example.com/pj", true, true, true)]
+	[InlineData("http://example.com/pj", false, true, false)]
+	[InlineData("http://example.com/pj", true, true, false)]
+	[InlineData("http://example.onion/pj", false, true, false)]
+	[InlineData("http://example.onion/pj", true, true, true)]
+	[InlineData("https://example.ONION/pj", false, true, false)]
+	[InlineData("https://example.ONION/pj", true, true, true)]
+	[InlineData("http://localhost/pj", false, false, true)]
+	[InlineData("http://localhost/pj", true, false, true)]
+	[InlineData("ftp://example.onion/pj", true, true, false)]
+	public void PayjoinEndpointsRequireSecureTransport(string endpoint, bool torEnabled, bool mainnet, bool expected)
+	{
+		Assert.Equal(expected, PayjoinClient.IsEndpointSupported(new Uri(endpoint), mainnet ? Network.Main : Network.RegTest, torEnabled));
+	}
+
+	[Theory]
 	[InlineData(ScriptPubKeyType.Segwit)]
 	[InlineData(ScriptPubKeyType.TaprootBIP86)]
 	public async Task HonestPayjoinSupportsSenderInputType(ScriptPubKeyType scriptType)
@@ -501,6 +519,33 @@ public class PayjoinTests
 
 		Assert.Equal(2, result.Transaction.Transaction.Inputs.Count);
 		Assert.Equal(amount + Money.Coins(0.01m), result.Transaction.Transaction.Outputs.Single(x => x.ScriptPubKey == destination).Value);
+	}
+
+	[Fact]
+	public async Task PayjoinRequestRemovesTaprootInputKeyOrigins()
+	{
+		var account = new ExtKey();
+		var path = new KeyPath("0/0");
+		using var senderKey = account.Derive(path).PrivateKey;
+		var coin = Coin(0.1m, senderKey.PubKey.GetScriptPubKey(ScriptPubKeyType.TaprootBIP86));
+		var transaction = Transaction.Create(Network.Main);
+		transaction.Inputs.Add(coin.Outpoint);
+		transaction.Outputs.Add((Money)coin.Amount - Money.Satoshis(500), BitcoinFactory.CreateScript());
+		var original = PSBT.FromTransaction(transaction, Network.Main);
+		original.Inputs[0].UpdateFromCoin(coin);
+		var accountPath = new RootedKeyPath(account.Neuter().PubKey.GetHDFingerPrint(), KeyPath.Empty);
+		var keyPath = accountPath.Derive(path);
+		original.AddKeyPath(senderKey.PubKey, keyPath, coin.TxOut.ScriptPubKey);
+		original.Inputs[0].HDTaprootKeyPaths.Add(senderKey.PubKey.TaprootInternalKey.AsTaprootPubKey(), new TaprootKeyPath(keyPath));
+		original.SignWithKeys(senderKey);
+		var mock = new MockIHttpClient();
+		mock.OnSendAsync = req => PayjoinServerOkAsync(req, psbt =>
+		{
+			Assert.All(psbt.Inputs, input => Assert.Empty(input.HDTaprootKeyPaths));
+			return PSBT.FromTransaction(psbt.GetGlobalTransaction(), Network.Main);
+		});
+
+		await NewPayjoinClient(mock).RequestPayjoin(original, account.Neuter(), accountPath, account.Neuter(), accountPath, null, CancellationToken.None);
 	}
 
 	[Theory]
