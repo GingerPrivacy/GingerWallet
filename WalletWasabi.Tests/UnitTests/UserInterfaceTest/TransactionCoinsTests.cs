@@ -52,11 +52,29 @@ public class TransactionCoinsTests
 		Assert.Equal(2, lists.Inputs.Count(x => x.Amount is null));
 		Assert.Equal(Money.Coins(1m), Assert.Single(lists.Inputs, x => x.IsOwn).Amount);
 		Assert.Equal(transaction.Transaction.Outputs.Select(x => x.Value), lists.Outputs.Select(x => x.Amount));
-		Assert.True(Assert.Single(lists.Outputs, x => x.IsOwn).IsChange);
+		Assert.False(Assert.Single(lists.Outputs, x => x.IsOwn).IsChange);
 
 		var selfPayment = new TransactionCoinsModel(transaction, Network.Main,
 			script => keys.TryGetKeyForScriptPubKey(script, out _), new[] { changeKey.P2wpkhScript });
 		Assert.False(Assert.Single(selfPayment.Outputs, x => x.IsOwn).IsChange);
+	}
+
+	[Theory]
+	[InlineData(0)]
+	[InlineData(2)]
+	public void HistoryDoesNotInferChangeFromInternalKeys(int foreignInputs)
+	{
+		var keys = ServiceFactory.CreateKeyManager();
+		var input = BitcoinFactory.CreateHdPubKey(keys);
+		var output = BitcoinFactory.CreateHdPubKey(keys, isInternal: true);
+		var transaction = BitcoinFactory.CreateSmartTransaction(TestRandom.Get(), foreignInputs,
+			Array.Empty<Money>(), new[] { (Money.Coins(1m), 20, input) },
+			new[] { (Money.Coins(0.99m), 20, output) });
+		var lists = new TransactionCoinsModel(transaction, Network.Main,
+			script => keys.TryGetKeyForScriptPubKey(script, out _));
+		var row = Assert.Single(lists.Outputs);
+		Assert.True(row.IsOwn);
+		Assert.False(row.IsChange);
 	}
 
 	[Fact]

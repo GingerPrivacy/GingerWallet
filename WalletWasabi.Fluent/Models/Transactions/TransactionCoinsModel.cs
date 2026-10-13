@@ -42,7 +42,7 @@ public class TransactionCoinsModel
 			var own = isOwn(output.ScriptPubKey);
 			return new TransactionCoinRow(new OutPoint(transaction.GetHash(), (uint)index),
 				output.ScriptPubKey.GetDestinationAddress(network)?.ToString() ?? output.ScriptPubKey.ToHex(),
-				output.Value, own, own && spendsOwnCoins && coin?.HdPubKey.IsInternal is true && !recipients.Contains(output.ScriptPubKey),
+				output.Value, own, paymentScripts is not null && own && spendsOwnCoins && coin?.HdPubKey.IsInternal is true && !recipients.Contains(output.ScriptPubKey),
 				own && coin is { } ? coin.HdPubKey.Labels : LabelsArray.Empty);
 		}).ToArray();
 	}
