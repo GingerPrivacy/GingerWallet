@@ -320,6 +320,7 @@ public class WalletJsonTest
 		  "CoinJoinTransactions": [
 		    "26840cbedaa0698afeb5acae887e487ec658dc810b2ca36cfb358de4d8c36b7d"
 		  ],
+		  "CoinJoinCosts": {},
 		  "ExcludedCoinsFromCoinJoin": [
 		    "4C77F313AE307CA91B188AABBC386C34BA563A10E83908732FC1523BE81E22B21B000000"
 		  ],

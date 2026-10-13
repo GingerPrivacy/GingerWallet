@@ -1,0 +1,23 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:lang="using:WalletWasabi.Lang"
+             xmlns:actions="clr-namespace:WalletWasabi.Fluent.HomeScreen.History.ViewModels.Actions"
+             x:DataType="actions:CoinJoinCostsViewModel" x:CompileBindings="True"
+             x:Class="WalletWasabi.Fluent.HomeScreen.History.Views.Actions.CoinJoinCostsView">
+  <PrivacyContentControl PrivacyReplacementMode="Text">
+    <StackPanel Spacing="10">
+    <PreviewItem Icon="{StaticResource paper_cash_regular}" Label="{x:Static lang:Resources.CoinJoinMiningFee}" CopyableContent="{Binding MiningFee.Btc}">
+      <AmountControl Classes="Fee" Amount="{Binding MiningFee}" />
+    </PreviewItem>
+    <PreviewItem Icon="{StaticResource paper_cash_regular}" Label="{x:Static lang:Resources.CoordinationFee}" CopyableContent="{Binding CoordinationFee.Btc}">
+      <AmountControl Classes="Fee" Amount="{Binding CoordinationFee}" />
+    </PreviewItem>
+    <PreviewItem Icon="{StaticResource paper_cash_regular}" Label="{x:Static lang:Resources.CoinJoinWastedDust}" CopyableContent="{Binding WastedDust.Btc}">
+      <AmountControl Classes="Fee" Amount="{Binding WastedDust}" />
+    </PreviewItem>
+    <PreviewItem Icon="{StaticResource transceive_regular}" Label="{x:Static lang:Resources.CoinJoinPaymentsTotal}" CopyableContent="{Binding PaymentsTotal.Btc}">
+      <AmountControl Amount="{Binding PaymentsTotal}" />
+    </PreviewItem>
+    </StackPanel>
+  </PrivacyContentControl>
+</UserControl>

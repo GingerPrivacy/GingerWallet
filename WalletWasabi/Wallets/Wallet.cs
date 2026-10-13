@@ -584,6 +584,19 @@ public class Wallet : BackgroundService, IWallet
 		KeyManager.ToFile();
 	}
 
+	public void AddCoinJoinCosts(uint256 transactionId, CoinJoinCosts costs)
+	{
+		try
+		{
+			KeyManager.AddCoinJoinCosts(transactionId, costs);
+		}
+		catch (Exception ex)
+		{
+			// Optional accounting metadata must not interrupt successful CoinJoin finalization.
+			Logger.LogWarning(ex);
+		}
+	}
+
 	public void AddCoinJoinTransaction(uint256 txHash)
 	{
 		if (TransactionProcessor.IsAware(txHash))

@@ -21,6 +21,8 @@ public partial class CoinJoinDetailsViewModel : RoutableViewModel
 	[AutoNotify] private bool _isConfirmationTimeVisible;
 	[AutoNotify] private FeeRate? _feeRate;
 	[AutoNotify] private bool _feeRateVisible;
+	[AutoNotify] private CoinJoinCostsViewModel? _costs;
+	[AutoNotify] private string _costLabel = "";
 
 	public CoinJoinDetailsViewModel(WalletModel wallet, TransactionModel transaction)
 	{
@@ -47,7 +49,10 @@ public partial class CoinJoinDetailsViewModel : RoutableViewModel
 		if (_wallet.Transactions.TryGetById(_transaction.Id, _transaction.IsChild, out var transaction))
 		{
 			Date = transaction.DateToolTipString;
-			CoinJoinFeeAmount = _wallet.AmountProvider.Create((Money)Math.Abs(transaction.DisplayAmount));
+			var costs = _wallet.Transactions.GetCoinJoinCosts(transaction.Id);
+			Costs = costs is { } ? new CoinJoinCostsViewModel(costs, _wallet.AmountProvider) : null;
+			CostLabel = costs is { } ? Resources.Fees : Resources.CoinJoinBalanceChange;
+			CoinJoinFeeAmount = _wallet.AmountProvider.Create(costs?.TotalFee ?? transaction.DisplayAmount);
 			Confirmations = transaction.Confirmations;
 			IsConfirmed = Confirmations > 0;
 			TransactionId = transaction.Id;

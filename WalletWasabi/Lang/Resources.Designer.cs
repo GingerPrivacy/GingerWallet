@@ -6351,5 +6351,21 @@ namespace WalletWasabi.Lang {
                 return ResourceManager.GetString("Yesterday", resourceCulture);
             }
         }
+        public static string CoinJoinMiningFee {
+            get { return ResourceManager.GetString("CoinJoinMiningFee", resourceCulture); }
+        }
+
+        public static string CoinJoinWastedDust {
+            get { return ResourceManager.GetString("CoinJoinWastedDust", resourceCulture); }
+        }
+
+        public static string CoinJoinPaymentsTotal {
+            get { return ResourceManager.GetString("CoinJoinPaymentsTotal", resourceCulture); }
+        }
+
+        public static string CoinJoinBalanceChange {
+            get { return ResourceManager.GetString("CoinJoinBalanceChange", resourceCulture); }
+        }
+
     }
 }

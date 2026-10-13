@@ -16,6 +16,7 @@ using WalletWasabi.Fluent.Extensions;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.HomeScreen.Send.Models;
 using WalletWasabi.Wallets;
+using WalletWasabi.WabiSabi.Client;
 
 namespace WalletWasabi.Fluent.Models.Wallets;
 
@@ -91,6 +92,8 @@ public class WalletTransactionsModel : ReactiveObject, IDisposable
 		var txn = await TransactionHelpers.ParseTransactionAsync(path, _wallet.Network);
 		return txn;
 	}
+
+	public CoinJoinCosts? GetCoinJoinCosts(uint256 id) => _wallet.KeyManager.GetCoinJoinCosts(id);
 
 	public TimeSpan? TryEstimateConfirmationTime(uint256 id)
 	{

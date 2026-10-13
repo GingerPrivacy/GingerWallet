@@ -42,4 +42,6 @@ public interface IWallet
 	Task<IEnumerable<SmartTransaction>> GetTransactionsAsync();
 
 	void AddCoinJoinTransaction(uint256 tx);
+
+	void AddCoinJoinCosts(uint256 tx, CoinJoinCosts costs) { }
 }
