@@ -147,19 +147,13 @@ public class TransactionFactory
 		}
 
 		builder.SendEstimatedFees(parameters.FeeRate);
+		if (parameters.FeeRate.SatoshiPerByte < 1m)
+		{
+			// Cover fractional-satoshi truncation before selecting inputs and building the PSBT.
+			builder.SendFees(Money.Satoshis(1));
+		}
 
 		var psbt = builder.BuildPSBT(false);
-		if (parameters.FeeRate.SatoshiPerByte < 1m && psbt.TryGetVirtualSize(out var estimatedVSize))
-		{
-			// NBitcoin truncates fractional satoshis. Pay the rounding remainder so the effective rate covers the target.
-			var roundedFee = Money.Satoshis(Math.Ceiling(parameters.FeeRate.SatoshiPerByte * estimatedVSize));
-			var remainder = roundedFee - parameters.FeeRate.GetFee(estimatedVSize);
-			if (remainder > Money.Zero)
-			{
-				builder.SendFees(remainder);
-				psbt = builder.BuildPSBT(false);
-			}
-		}
 
 		var spentCoins = psbt.Inputs.Select(txin => allowedSmartCoinInputs.First(y => y.Outpoint == txin.PrevOut)).ToArray();
 
