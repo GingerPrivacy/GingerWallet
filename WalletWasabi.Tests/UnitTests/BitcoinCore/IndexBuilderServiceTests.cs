@@ -4,9 +4,7 @@ using NBitcoin.RPC;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.BitcoinCore.Rpc;
 using WalletWasabi.BitcoinCore.Rpc.Models;
 using WalletWasabi.Blockchain.BlockFilters;
@@ -15,61 +13,8 @@ using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests.BitcoinCore;
 
-public class IndexBuilderServiceTests : IAsyncLifetime
+public class IndexBuilderServiceTests
 {
-	private readonly List<IndexBuilderService> _indexers = [];
-	private readonly Dictionary<IndexBuilderService, Task> _started = new();
-
-	public Task InitializeAsync() => Task.CompletedTask;
-
-	public async Task DisposeAsync()
-	{
-		foreach (var indexer in _indexers)
-		{
-			await indexer.StopAsync();
-		}
-	}
-
-	private IndexBuilderService CreateIndexer(IndexType type, MockRpcClient rpc, BlockNotifier notifier)
-	{
-		var started = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
-		var getInfo = rpc.OnGetBlockchainInfoAsync!;
-		rpc.OnGetBlockchainInfoAsync = () =>
-		{
-			var result = getInfo();
-			started.TrySetResult();
-			return result;
-		};
-		var path = Path.Combine(TestDirectory.Get(), Guid.NewGuid().ToString("N"), "filters.txt");
-		Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-		var indexer = new IndexBuilderService(type, rpc, notifier, path);
-		_indexers.Add(indexer);
-		_started[indexer] = started.Task;
-		return indexer;
-	}
-
-	private async Task WaitUntilAsync(IndexBuilderService indexer, Func<bool> condition)
-	{
-		using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(60));
-		await _started[indexer].WaitAsync(timeout.Token);
-		while (!condition())
-		{
-			await Task.Delay(25, timeout.Token);
-		}
-	}
-
-	private static bool HasExpectedTip(IndexBuilderService indexer)
-	{
-		try
-		{
-			return indexer.GetLastFilter().Header.Height == 9;
-		}
-		catch (ArgumentOutOfRangeException)
-		{
-			return false;
-		}
-	}
-
 	[Fact]
 	public async Task SegwitTaprootUnsynchronizedBitcoinNodeAsync()
 	{
@@ -83,11 +28,11 @@ public class IndexBuilderServiceTests : IAsyncLifetime
 			}),
 		};
 		using var blockNotifier = new BlockNotifier(TimeSpan.MaxValue, rpc);
-		var indexer = CreateIndexer(IndexType.SegwitTaproot, rpc, blockNotifier);
+		var indexer = new IndexBuilderService(IndexType.SegwitTaproot, rpc, blockNotifier, "filters.txt");
 
 		indexer.Synchronize();
 
-		await _started[indexer].WaitAsync(TimeSpan.FromSeconds(60));
+		await Task.Delay(TimeSpan.FromSeconds(1));
 		//// Assert.False(indexer.IsRunning);     // <------------ ERROR: it should have stopped but there is a bug for RegTest
 		Assert.Throws<ArgumentOutOfRangeException>(() => indexer.GetLastFilter());  // There are no filters
 	}
@@ -100,7 +45,7 @@ public class IndexBuilderServiceTests : IAsyncLifetime
 		{
 			OnGetBlockchainInfoAsync = () =>
 			{
-				Interlocked.Increment(ref called);
+				called++;
 				return Task.FromResult(new BlockchainInfo
 				{
 					Headers = 10_000,
@@ -110,11 +55,11 @@ public class IndexBuilderServiceTests : IAsyncLifetime
 			}
 		};
 		using var blockNotifier = new BlockNotifier(TimeSpan.MaxValue, rpc);
-		var indexer = CreateIndexer(IndexType.SegwitTaproot, rpc, blockNotifier);
+		var indexer = new IndexBuilderService(IndexType.SegwitTaproot, rpc, blockNotifier, "filters.txt");
 
 		indexer.Synchronize();
 
-		await WaitUntilAsync(indexer, () => Volatile.Read(ref called) > 1);
+		await Task.Delay(TimeSpan.FromSeconds(2));
 		Assert.True(indexer.IsRunning);  // It is still working
 		Assert.Throws<ArgumentOutOfRangeException>(() => indexer.GetLastFilter());  // There are no filters
 		Assert.True(called > 1);
@@ -129,7 +74,7 @@ public class IndexBuilderServiceTests : IAsyncLifetime
 		{
 			OnGetBlockchainInfoAsync = () =>
 			{
-				Interlocked.Increment(ref called);
+				called++;
 				return Task.FromResult(new BlockchainInfo
 				{
 					Headers = (ulong)blockchain.Length,
@@ -141,11 +86,11 @@ public class IndexBuilderServiceTests : IAsyncLifetime
 			OnGetVerboseBlockAsync = (hash) => Task.FromResult(blockchain.Single(x => x.Hash == hash))
 		};
 		using var blockNotifier = new BlockNotifier(TimeSpan.MaxValue, rpc);
-		var indexer = CreateIndexer(IndexType.SegwitTaproot, rpc, blockNotifier);
+		var indexer = new IndexBuilderService(IndexType.SegwitTaproot, rpc, blockNotifier, "filters.txt");
 
 		indexer.Synchronize();
 
-		await WaitUntilAsync(indexer, () => HasExpectedTip(indexer));
+		await Task.Delay(TimeSpan.FromSeconds(10));
 		Assert.True(indexer.IsRunning);  // It is still working
 
 		var lastFilter = indexer.GetLastFilter();
@@ -271,11 +216,11 @@ public class IndexBuilderServiceTests : IAsyncLifetime
 			OnGetVerboseBlockAsync = (hash) => Task.FromResult(blockchain.Single(x => x.Hash == hash))
 		};
 		using var blockNotifier = new BlockNotifier(TimeSpan.MaxValue, rpc);
-		var indexer = CreateIndexer(IndexType.SegwitTaproot, rpc, blockNotifier);
+		var indexer = new IndexBuilderService(IndexType.SegwitTaproot, rpc, blockNotifier, "filters.txt");
 
 		indexer.Synchronize();
 
-		await WaitUntilAsync(indexer, () => HasExpectedTip(indexer) && !indexer.IsRunning);
+		await Task.Delay(TimeSpan.FromSeconds(5));
 		Assert.False(indexer.IsRunning);  // we are done
 
 		var result = indexer.GetFilterLinesExcluding(blockchain[0].Hash, 100, out var found);
@@ -297,11 +242,11 @@ public class IndexBuilderServiceTests : IAsyncLifetime
 			}),
 		};
 		using var blockNotifier = new BlockNotifier(TimeSpan.MaxValue, rpc);
-		var indexer = CreateIndexer(IndexType.Taproot, rpc, blockNotifier);
+		var indexer = new IndexBuilderService(IndexType.Taproot, rpc, blockNotifier, "filters.txt");
 
 		indexer.Synchronize();
 
-		await _started[indexer].WaitAsync(TimeSpan.FromSeconds(60));
+		await Task.Delay(TimeSpan.FromSeconds(1));
 		//// Assert.False(indexer.IsRunning);     // <------------ ERROR: it should have stopped but there is a bug for RegTest
 		Assert.Throws<ArgumentOutOfRangeException>(() => indexer.GetLastFilter());  // There are no filters
 	}
@@ -314,7 +259,7 @@ public class IndexBuilderServiceTests : IAsyncLifetime
 		{
 			OnGetBlockchainInfoAsync = () =>
 			{
-				Interlocked.Increment(ref called);
+				called++;
 				return Task.FromResult(new BlockchainInfo
 				{
 					Headers = 10_000,
@@ -324,11 +269,11 @@ public class IndexBuilderServiceTests : IAsyncLifetime
 			}
 		};
 		using var blockNotifier = new BlockNotifier(TimeSpan.MaxValue, rpc);
-		var indexer = CreateIndexer(IndexType.Taproot, rpc, blockNotifier);
+		var indexer = new IndexBuilderService(IndexType.Taproot, rpc, blockNotifier, "filters.txt");
 
 		indexer.Synchronize();
 
-		await WaitUntilAsync(indexer, () => Volatile.Read(ref called) > 1);
+		await Task.Delay(TimeSpan.FromSeconds(2));
 		Assert.True(indexer.IsRunning);  // It is still working
 		Assert.Throws<ArgumentOutOfRangeException>(() => indexer.GetLastFilter());  // There are no filters
 		Assert.True(called > 1);
@@ -343,7 +288,7 @@ public class IndexBuilderServiceTests : IAsyncLifetime
 		{
 			OnGetBlockchainInfoAsync = () =>
 			{
-				Interlocked.Increment(ref called);
+				called++;
 				return Task.FromResult(new BlockchainInfo
 				{
 					Headers = (ulong)blockchain.Length,
@@ -355,11 +300,11 @@ public class IndexBuilderServiceTests : IAsyncLifetime
 			OnGetVerboseBlockAsync = (hash) => Task.FromResult(blockchain.Single(x => x.Hash == hash))
 		};
 		using var blockNotifier = new BlockNotifier(TimeSpan.MaxValue, rpc);
-		var indexer = CreateIndexer(IndexType.Taproot, rpc, blockNotifier);
+		var indexer = new IndexBuilderService(IndexType.Taproot, rpc, blockNotifier, "filters.txt");
 
 		indexer.Synchronize();
 
-		await WaitUntilAsync(indexer, () => HasExpectedTip(indexer));
+		await Task.Delay(TimeSpan.FromSeconds(10));
 		Assert.True(indexer.IsRunning);  // It is still working
 
 		var lastFilter = indexer.GetLastFilter();
@@ -383,11 +328,11 @@ public class IndexBuilderServiceTests : IAsyncLifetime
 			OnGetVerboseBlockAsync = (hash) => Task.FromResult(blockchain.Single(x => x.Hash == hash))
 		};
 		using var blockNotifier = new BlockNotifier(TimeSpan.MaxValue, rpc);
-		var indexer = CreateIndexer(IndexType.Taproot, rpc, blockNotifier);
+		var indexer = new IndexBuilderService(IndexType.Taproot, rpc, blockNotifier, "filters.txt");
 
 		indexer.Synchronize();
 
-		await WaitUntilAsync(indexer, () => HasExpectedTip(indexer) && !indexer.IsRunning);
+		await Task.Delay(TimeSpan.FromSeconds(5));
 		Assert.False(indexer.IsRunning);  // we are done
 
 		var result = indexer.GetFilterLinesExcluding(blockchain[0].Hash, 100, out var found);

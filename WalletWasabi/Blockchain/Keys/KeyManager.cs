@@ -782,9 +782,8 @@ public class KeyManager : IJsonOnSerializing, IJsonOnDeserialized
 			}
 			MinGapLimit = minGapLimit;
 			AssertCleanKeysIndexed();
-			// Wallet serialization subtracts 101 blocks for reorg/maturity safety.
-			// Persist the block before the requested starting height so it is scanned inclusively.
-			BlockchainState.Height = startingHeight.Value == 0 ? new Height(0) : new Height(checked(startingHeight.Value + 100));
+			// Keep the existing reorg and maturity lookback when persisting the requested height.
+			BlockchainState.Height = startingHeight;
 			ToFile();
 		}
 	}

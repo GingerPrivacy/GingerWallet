@@ -175,9 +175,10 @@ public class KeyManagementTests
 		var originalSegwit = manager.SegwitExtPubKey;
 		var originalTaproot = manager.TaprootExtPubKey;
 		manager.SetResyncParameters(new Height(600_000), 100);
+		Assert.Equal(new Height(600_000), manager.GetBestHeight());
 
 		var reloaded = KeyManager.FromFile(path);
-		Assert.Equal(new Height(599_999), reloaded.GetBestHeight());
+		Assert.Equal(new Height(599_899), reloaded.GetBestHeight());
 		Assert.Equal(100, reloaded.MinGapLimit);
 		Assert.Equal(originalSegwit, reloaded.SegwitExtPubKey);
 		Assert.Equal(originalTaproot, reloaded.TaprootExtPubKey);
