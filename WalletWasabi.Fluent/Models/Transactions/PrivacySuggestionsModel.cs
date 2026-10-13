@@ -137,9 +137,9 @@ public class PrivacySuggestionsModel
 	{
 		var canModifyTransactionAmount = !parameters.TransactionInfo.IsPayJoin && !parameters.TransactionInfo.IsFixedAmount;
 
-		var transactionLabels = parameters.Transaction.SpentCoins.SelectMany(x => x.GetLabels(_wallet.AnonScoreTarget));
+		var transactionLabels = new LabelsArray(parameters.Transaction.SpentCoins.SelectMany(x => x.GetLabels(_wallet.AnonScoreTarget)));
 		var onlyKnownByRecipient =
-			parameters.TransactionInfo.Recipient.Equals(new LabelsArray(transactionLabels), StringComparer.OrdinalIgnoreCase);
+			parameters.TransactionInfo.AllRecipients.All(x => x.Label.Equals(transactionLabels, StringComparer.OrdinalIgnoreCase));
 
 		var foundNonPrivate = !onlyKnownByRecipient &&
 		                      parameters.Transaction.SpentCoins.Any(x => x.GetPrivacyLevel(_wallet.AnonScoreTarget) == PrivacyLevel.NonPrivate);
