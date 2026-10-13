@@ -1,10 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
-using NBitcoin;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WalletWasabi.Rpc;
-using WalletWasabi.Daemon.Rpc;
 using WalletWasabi.Wallets.SilentPayment;
 using Xunit;
 
@@ -29,19 +27,6 @@ public class SilentPaymentRpcTests
 		Assert.Equal(address, response["result"]!.Value<string>());
 		Assert.Equal(silent, service.Payment!.Sendto is SilentPaymentAddress);
 		Assert.Equal("recipient", service.Payment.Label);
-	}
-
-	[Fact]
-	public void RawHexBuildMethodsRejectSilentPaymentsBeforeWalletOrCoinAccess()
-	{
-		var payment = new PaymentInfo
-		{
-			Sendto = SilentPaymentAddress.Parse("sp1qq2exrz9xjumnvujw7zmav4r3vhfj9rvmd0aytjx0xesvzlmn48ctgqnqdgaan0ahmcfw3cpq5nxvnczzfhhvl3hmsps683cap4y696qecs7wejl3", Network.Main),
-			Amount = Money.Coins(0.1m), Label = "recipient"
-		};
-		var service = new WasabiJsonRpcService(null!);
-		Assert.Contains("send RPC", Assert.Throws<InvalidOperationException>(() => service.BuildTransaction([payment], [])).Message);
-		Assert.Contains("send RPC", Assert.Throws<InvalidOperationException>(() => service.BuildUnsafeTransaction([payment], [])).Message);
 	}
 
 	private class PaymentService

@@ -7,14 +7,18 @@ using NBitcoin;
 using NBitcoin.DataEncoders;
 using NBitcoin.Secp256k1;
 using WalletWasabi.Blockchain.Analysis.Clustering;
+using WalletWasabi.Blockchain.Blocks;
 using WalletWasabi.Blockchain.Keys;
 using WalletWasabi.Blockchain.TransactionBuilding;
 using WalletWasabi.Blockchain.TransactionOutputs;
+using WalletWasabi.Blockchain.TransactionProcessing;
 using WalletWasabi.Blockchain.Transactions;
-using WalletWasabi.Tests.Helpers;
-using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.Extensions;
 using WalletWasabi.Fluent.Helpers;
+using WalletWasabi.Models;
+using WalletWasabi.Stores;
+using WalletWasabi.Tests.Helpers;
+using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.Userfacing;
 using WalletWasabi.Wallets.SilentPayment;
 using WalletWasabi.WebClients.PayJoin;
@@ -47,22 +51,20 @@ public class SilentPaymentTransactionTests
 		Assert.NotEqual(address.ScriptPubKey, payment.ScriptPubKey);
 		Assert.DoesNotContain(result.Psbt.Outputs, o => o.ScriptPubKey == address.ScriptPubKey);
 		Assert.Equal(sign, result.Psbt.IsAllFinalized());
-		Assert.True(result.Transaction.IsSilentPayment);
-		Assert.False(result.Transaction.IsRbfable(manager));
+		Assert.True(result.Transaction.IsRbfable(manager));
 		Assert.True(result.Transaction.IsCpfpable(manager));
-		Assert.False(result.Transaction.IsCancellable(manager));
+		Assert.True(result.Transaction.IsCancellable(manager));
 		var exported = PSBT.Load(result.Psbt.ToBytes(), Network.Main);
-		Assert.True(SilentPaymentTransaction.HasSilentPaymentOutputs(exported));
 		if (!sign)
 		{
 			exported.SignWithKeys(manager.GetSecrets("password", coin.ScriptPubKey).Select(s => s.PrivateKey).ToArray());
 			exported.Finalize();
 		}
-		Assert.True(exported.ExtractSmartTransaction().IsSilentPayment);
-		Assert.True(exported.ExtractSmartTransaction(result.Transaction).IsSilentPayment);
+		Assert.Equal(exported.ExtractTransaction().GetHash(), exported.ExtractSmartTransaction().GetHash());
+		Assert.Equal(exported.ExtractTransaction().GetHash(), exported.ExtractSmartTransaction(result.Transaction).GetHash());
 		var path = Path.Combine(TestDirectory.Get(), "silent.psbt");
 		await File.WriteAllBytesAsync(path, exported.ToBytes());
-		Assert.True((await TransactionHelpers.ParseTransactionAsync(path, Network.Main)).IsSilentPayment);
+		Assert.Equal(exported.ExtractTransaction().GetHash(), (await TransactionHelpers.ParseTransactionAsync(path, Network.Main)).GetHash());
 
 		var inputPubKey = inputType == ScriptPubKeyType.TaprootBIP86
 			? ECXOnlyPubKey.Create(PayToTaprootTemplate.Instance.ExtractScriptPubKeyParameters(coin.ScriptPubKey)!.ToBytes()).Q
@@ -74,7 +76,6 @@ public class SilentPaymentTransactionTests
 			.SetPayment(new PaymentIntent(BitcoinAddress.Create("bc1q7zqqsmqx5ymhd7qn73lm96w5yqdkrmx7fdevah", Network.Main), Money.Coins(0.9m)))
 			.SetFeeRate(2m).SetTryToSign(sign).Build();
 		var normal = factory.BuildTransaction(normalParameters).Transaction;
-		Assert.False(normal.IsSilentPayment);
 		Assert.True(normal.IsRbfable(manager));
 		var change = Assert.Single(result.InnerWalletOutputs);
 		var childFactory = new TransactionFactory(Network.Main, manager, new CoinsView([change]), new CoinTransactionStore(change), "password");
@@ -83,8 +84,62 @@ public class SilentPaymentTransactionTests
 			.SetFeeRate(2m).SetTryToSign(sign).SetAllowUnconfirmed(true).Build();
 		var child = childFactory.BuildTransaction(childParameters).Transaction;
 		Assert.Contains(child.Transaction.Inputs, i => i.PrevOut.Hash == result.Transaction.GetHash());
-		Assert.False(child.IsSilentPayment);
 		Assert.True(child.IsRbfable(manager));
+	}
+
+	[Theory]
+	[InlineData(ScriptPubKeyType.Segwit, true, true)]
+	[InlineData(ScriptPubKeyType.Segwit, true, false)]
+	[InlineData(ScriptPubKeyType.Segwit, false, true)]
+	[InlineData(ScriptPubKeyType.Segwit, false, false)]
+	[InlineData(ScriptPubKeyType.TaprootBIP86, true, true)]
+	[InlineData(ScriptPubKeyType.TaprootBIP86, true, false)]
+	[InlineData(ScriptPubKeyType.TaprootBIP86, false, true)]
+	[InlineData(ScriptPubKeyType.TaprootBIP86, false, false)]
+	public async Task ImportedPaymentsKeepRecoverableOutputsAfterFeeBump(ScriptPubKeyType inputType, bool sweep, bool importPsbt)
+	{
+		var manager = KeyManager.CreateNew(out _, "password", Network.Main);
+		var keys = new[] { manager.GetNextReceiveKey(LabelsArray.Empty, inputType), manager.GetNextReceiveKey(LabelsArray.Empty, inputType) };
+		var coins = keys.Select((key, i) => BitcoinFactory.CreateSmartCoin(TestRandom.Get((ulong)i + 20), key,
+			i == 0 ? Money.Coins(1) : sweep ? Money.Satoshis(1000) : Money.Coins(0.1m))).ToArray();
+		using var scan = ECPrivKey.Create(Encoders.Hex.DecodeData("7e3a1d4b5f8e2c9a0f6b4d3e9a1f0c8b7e5d2a3c4f6e8b7a9d0c1f2e3a4b5d61"));
+		using var spend = ECPrivKey.Create(Encoders.Hex.DecodeData("3f9a7d2c6b8e1a4f5d0c2e7b9f3a6d4c1b0e8f7a9d5c2b4e7f6a3c9b0d1f8e22"));
+		var address = new SilentPaymentAddress(0, scan.CreatePubKey(), spend.CreatePubKey());
+		await using var store = new AllTransactionStore(SqliteStorageHelper.InMemoryDatabase, Network.Main);
+		await store.InitializeAsync();
+		foreach (var coin in coins) { store.AddOrUpdate(coin.Transaction); }
+		var factory = new TransactionFactory(Network.Main, manager, new CoinsView(coins), store, "password");
+		var intent = sweep ? new PaymentIntent(address, MoneyRequest.CreateAllRemaining(subtractFee: true)) : new PaymentIntent(address, Money.Coins(1.01m));
+		var original = factory.BuildTransaction(TransactionParametersBuilder.CreateDefault().SetPayment(intent).SetFeeRate(2m).Build());
+		Assert.Equal(2, original.SpentCoins.Count());
+
+		// Rediscover a raw transaction or import a PSBT without any recipient metadata.
+		var imported = importPsbt
+			? PSBT.Load(original.Psbt.ToBytes(), Network.Main).ExtractSmartTransaction()
+			: new SmartTransaction(original.Transaction.Transaction.Clone(), Height.Unknown);
+		imported.SetUnconfirmed();
+		var processor = new TransactionProcessor(store, null, manager, Money.Satoshis(1));
+		foreach (var coin in coins) { processor.Coins.TryAdd(coin); }
+		processor.Process(imported);
+		var extra = BitcoinFactory.CreateSmartCoin(TestRandom.Get(22), keys[0], Money.Coins(1));
+		store.AddOrUpdate(extra.Transaction);
+		processor.Coins.TryAdd(extra);
+		var bitcoinStore = new BitcoinStore(null!, store, null!, new SmartHeaderChain(), null!);
+		using var wallet = new WalletWasabi.Wallets.Wallet(TestDirectory.Get(), Network.Main, manager, bitcoinStore, null!, null!, null!, processor, null!, null!);
+		wallet.Kitchen.Cook("password");
+		var replacement = wallet.SpeedUpTransaction(imported, new FeeRate(30m));
+		var originalInputs = original.Transaction.Transaction.Inputs.Select(input => input.PrevOut).ToHashSet();
+		Assert.True(originalInputs.SetEquals(replacement.Transaction.Transaction.Inputs.Select(input => input.PrevOut)));
+		Assert.True(replacement.Fee > original.Fee);
+		var publicKeys = replacement.SpentCoins.Select(coin => inputType == ScriptPubKeyType.TaprootBIP86
+			? ECXOnlyPubKey.Create(PayToTaprootTemplate.Instance.ExtractScriptPubKeyParameters(coin.ScriptPubKey)!.ToBytes()).Q
+			: ECPubKey.Create(coin.HdPubKey.PubKey.ToBytes()).Q).ToArray();
+		var shared = SilentPayment.ComputeSharedSecretReceiver(replacement.SpentCoins.Select(coin => coin.Outpoint).ToArray(), publicKeys, scan);
+		using var recoveredKey = SilentPayment.ComputePrivKey(spend, shared, 0);
+		Assert.Equal(new TaprootPubKey(recoveredKey.CreateXOnlyPubKey().ToBytes()).ScriptPubKey, Assert.Single(replacement.OuterWalletOutputs).ScriptPubKey);
+		var cancellation = wallet.CancelTransaction(imported);
+		Assert.True(originalInputs.SetEquals(cancellation.Transaction.Transaction.Inputs.Select(input => input.PrevOut)));
+		Assert.Empty(cancellation.OuterWalletOutputs);
 	}
 
 	[Fact]

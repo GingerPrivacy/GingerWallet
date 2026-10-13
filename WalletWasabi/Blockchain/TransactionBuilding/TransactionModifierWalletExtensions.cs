@@ -58,6 +58,7 @@ public static class TransactionModifierWalletExtensions
 		}
 		while (originalFee + minRelayFeeRate.GetFee(cancelTransaction.Transaction.Transaction) >= cancelTransaction.Fee);
 
+		AssertInputsUnchanged(transactionToCancel, cancelTransaction);
 		cancelTransaction.Transaction.SetCancellation();
 
 		if (transactionToCancel.IsSpeedup)
@@ -115,6 +116,17 @@ public static class TransactionModifierWalletExtensions
 		else
 		{
 			throw new InvalidOperationException("Transaction is not speedupable.");
+		}
+	}
+
+	private static void AssertInputsUnchanged(SmartTransaction original, BuildTransactionResult replacement)
+	{
+		// Silent payment outputs remain spendable only when their input-derived keys stay unchanged.
+		// Check every replacement, including imported transactions with no recipient metadata.
+		var inputs = original.Transaction.Inputs.Select(input => input.PrevOut).ToHashSet();
+		if (!inputs.SetEquals(replacement.Transaction.Transaction.Inputs.Select(input => input.PrevOut)))
+		{
+			throw new InvalidOperationException("A replacement transaction must preserve the original inputs.");
 		}
 	}
 
@@ -201,6 +213,7 @@ public static class TransactionModifierWalletExtensions
 			allowDoubleSpend: true,
 			tryToSign: true);
 
+		AssertInputsUnchanged(transactionToSpeedUp, rbf);
 		rbf.Transaction.Labels = LabelsArray.Merge(rbf.Transaction.Labels, transactionToSpeedUp.Labels);
 
 		if (transactionToSpeedUp.IsCancellation)

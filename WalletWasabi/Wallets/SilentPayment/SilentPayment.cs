@@ -20,12 +20,6 @@ public static class SilentPayment
 	public static ECPubKey ComputeSharedSecretReceiver(OutPoint[] prevOuts, GE[] pubKeys, ECPrivKey b) =>
 		ComputeSharedSecret(prevOuts, A: SumPublicKeys(pubKeys), b);
 
-	public static ECPubKey ComputeSharedSecretReceiver(ECPubKey tweakData, ECPrivKey b) =>
-		new(tweakData.GetSharedPubkey(b).Q, null);
-
-	public static ECPubKey TweakData(OutPoint[] inputs, GE[] pubKeys) =>
-		TweakData(inputs, SumPublicKeys(pubKeys));
-
 	public static Dictionary<SilentPaymentAddress, ECXOnlyPubKey[]> GetPubKeys(IEnumerable<SilentPaymentAddress> recipients, Utxo[] utxos) =>
 		(!utxos.Any(x => x.Eligible) ? [] : recipients)
 			.GroupBy(x => x.ScanKey, (scanKey, addresses) => {
@@ -43,43 +37,6 @@ public static class SilentPayment
 			.GroupBy(x => x.Address)
 			.ToDictionary(x => x.Key, x => x.Select(y => y.PubKey).ToArray());
 
-	public static (SilentPaymentAddress Address, ECXOnlyPubKey PubKey)[] GetPubKeys(IEnumerable<SilentPaymentAddress> addresses,
-		ECPubKey sharedSecret, ECXOnlyPubKey[] outputs) =>
-		Enumerable
-			.Range(0, outputs.Length)
-			.Select(n => addresses.Select(address =>
-				(Address: address, PubKey: ComputePubKey(address.SpendKey, sharedSecret, (uint) n))))
-			.SelectMany(x => x)
-			.Where(x => outputs.Select(o => o.Q).Contains(x.PubKey.Q))
-			.ToArray();
-
-	public static Dictionary<SilentPaymentAddress, Script[]> ExtractSilentPaymentScriptPubKeys(SilentPaymentAddress[] addresses, ECPubKey tweakData, Transaction tx, ECPrivKey scanKey)
-	{
-		if (!IsElegible(tx))
-		{
-			return [];
-		}
-
-		var taprootPubKeys = tx.Outputs
-			.Where(x => x.ScriptPubKey.IsScriptType(ScriptType.Taproot))
-			.Select(x => PayToTaprootTemplate.Instance.ExtractScriptPubKeyParameters(x.ScriptPubKey))
-			.Where(x => x is not null)
-			.Select(x => ECXOnlyPubKey.Create(x!.ToBytes()))
-			.ToArray();
-		var sharedSecret = ComputeSharedSecretReceiver(tweakData, scanKey);
-		var silentPaymentOutputs = GetPubKeys(addresses, sharedSecret, taprootPubKeys).GroupBy(x => x.Address);
-		return silentPaymentOutputs.ToDictionary(x => x.Key, x => x.Select(y => new TaprootPubKey(y.PubKey.ToBytes()).ScriptPubKey).ToArray());
-	}
-
-	private static bool IsElegible(Transaction tx) =>
-		tx.Outputs.Any(x => x.ScriptPubKey.IsScriptType(ScriptType.Taproot));
-
-	public static ECPrivKey CreateLabel(ECPrivKey scanKey, uint label) =>
-		ECPrivKey.Create(
-			TaggedHash(
-				"BIP0352/Label",
-				ByteHelpers.Combine(scanKey.sec.ToBytes(), Serialize32(label))));
-
 	// Let ecdh_shared_secret = input_hash·a·Bscan
 	private static ECPubKey ComputeSharedSecret(OutPoint[] outpoints, ECPrivKey a, ECPubKey B) =>
 		DHSharedSecret(InputHash(outpoints, a.CreatePubKey()), B, a);
@@ -90,9 +47,6 @@ public static class SilentPayment
 
 	private static ECPubKey DHSharedSecret(Scalar inputHash, ECPubKey pubKey, ECPrivKey privKey) =>
 		new(TweakData(inputHash, pubKey).GetSharedPubkey(privKey).Q, null);
-
-	private static ECPubKey TweakData(OutPoint[] inputs, ECPubKey A) =>
-		TweakData(InputHash(inputs, A), A);
 
 	private static ECPubKey TweakData(Scalar inputHash, ECPubKey pubKey) =>
 		new ECPubKey((inputHash * pubKey.Q).ToGroupElement(), null);

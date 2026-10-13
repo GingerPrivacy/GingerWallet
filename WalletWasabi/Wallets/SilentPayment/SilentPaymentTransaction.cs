@@ -8,11 +8,6 @@ namespace WalletWasabi.Wallets.SilentPayment;
 
 public static class SilentPaymentTransaction
 {
-	// BIP174 proprietary global key: prefix "ginger", subtype 1. Signers preserve unknown fields.
-	private static readonly byte[] PsbtKey = [0xfc, 6, (byte)'g', (byte)'i', (byte)'n', (byte)'g', (byte)'e', (byte)'r', 1];
-	public static bool HasSilentPaymentOutputs(PSBT psbt) =>
-		psbt.Unknown.TryGetValue(PsbtKey, out var value) && value.Length == 1 && value[0] == 1;
-
 	/// <summary>Resolves every estimation placeholder, also for unsigned previews and PSBT exports.</summary>
 	public static PSBT Resolve(PSBT psbt, SilentPaymentAddress[] addresses, SmartCoin[] inputs, KeyManager keyManager, string password, Network network)
 	{
@@ -56,7 +51,6 @@ public static class SilentPaymentTransaction
 			}
 			var resolved = tx.CreatePSBT(network);
 			foreach (var (target, source) in resolved.Inputs.Zip(psbt.Inputs)) { target.UpdateFrom(source); }
-			resolved.Unknown[PsbtKey] = [1];
 			return resolved;
 		}
 		finally
