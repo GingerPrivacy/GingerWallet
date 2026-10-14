@@ -199,29 +199,22 @@ public partial class SendViewModel : RoutableViewModel
 		}
 	}
 
+	private bool _payjoinDisableOutputSubstitution;
+
 	private IPayjoinClient? GetPayjoinClient(string? endPoint)
 	{
 		if (!string.IsNullOrWhiteSpace(endPoint) &&
 			Uri.IsWellFormedUriString(endPoint, UriKind.Absolute))
 		{
 			var payjoinEndPointUri = new Uri(endPoint);
-			if (Services.Config.UseTor != TorMode.Disabled)
+			if (!PayjoinClient.IsEndpointSupported(payjoinEndPointUri, _walletModel.Network, Services.Config.UseTor != TorMode.Disabled))
 			{
-				if (payjoinEndPointUri.DnsSafeHost.EndsWith(".onion", StringComparison.OrdinalIgnoreCase))
-				{
-					Logger.LogWarning("Payjoin server is an onion service but Tor is disabled. Ignoring...");
-					return null;
-				}
-
-				if (UiContext.ApplicationSettings.Network == Network.Main && payjoinEndPointUri.Scheme != Uri.UriSchemeHttps)
-				{
-					Logger.LogWarning("Payjoin server is not exposed as an onion service nor https. Ignoring...");
-					return null;
-				}
+				Logger.LogWarning("Payjoin server must use HTTPS or an onion service with Tor enabled. Ignoring...");
+				return null;
 			}
 
 			IHttpClient httpClient = Services.HttpClientFactory.NewHttpClient(() => payjoinEndPointUri, Mode.DefaultCircuit);
-			return new PayjoinClient(payjoinEndPointUri, httpClient);
+			return new PayjoinClient(payjoinEndPointUri, httpClient, _payjoinDisableOutputSubstitution);
 		}
 
 		return null;
@@ -296,6 +289,7 @@ public partial class SendViewModel : RoutableViewModel
 			return false;
 		}
 
+		_payjoinDisableOutputSubstitution = false;
 		bool result = false;
 
 		if (AddressStringParser.TryParse(text, _walletModel.Network, out Bip21UriParser.Result? parserResult))
@@ -303,6 +297,7 @@ public partial class SendViewModel : RoutableViewModel
 			result = true;
 
 			PayJoinEndPoint = parserResult.UnknownParameters.TryGetValue("pj", out var endPoint) ? endPoint : null;
+			_payjoinDisableOutputSubstitution = parserResult.UnknownParameters.TryGetValue("pjos", out var outputSubstitution) && outputSubstitution == "0";
 
 			if (parserResult.Address is { })
 			{
