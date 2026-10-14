@@ -107,12 +107,16 @@ public class TransactionViewerTests : IDisposable
 			Dispatcher.UIThread.RunJobs();
 			Assert.Contains(window.FindControl<StackPanel>("SelectionDetails")!.GetVisualDescendants().OfType<TextBlock>(),
 				x => x.Text == "Dávid, Gabika" && x.IsEffectivelyVisible);
+			Assert.Equal("42", window.FindControl<TextBlock>("AnonymityScoreValue")!.Text);
 			var card = window.GetVisualDescendants().OfType<Button>().Single(x => ReferenceEquals(x.DataContext, vm.Inputs[1]));
 			Click(window, card);
 			Assert.Same(vm.Inputs[1], vm.SelectedNode);
+			Assert.Equal("20", window.FindControl<TextBlock>("AnonymityScoreValue")!.Text);
 			var copy = window.GetVisualDescendants().OfType<Button>().Single(x => x.Tag is OutPoint);
 			Click(window, copy);
 			Assert.Equal(vm.Inputs[1].Data.OutPoint.ToString(), await window.Clipboard!.GetTextAsync());
+			Click(window, window.GetVisualDescendants().OfType<Button>().Single(x => ReferenceEquals(x.DataContext, vm.Outputs[0])));
+			Assert.Equal(Resources.Unknown, window.FindControl<TextBlock>("AnonymityScoreValue")!.Text);
 		}
 		finally
 		{
@@ -221,6 +225,7 @@ public class TransactionViewerTests : IDisposable
 		var input = BitcoinFactory.CreateHdPubKey(keys);
 		var output = BitcoinFactory.CreateHdPubKey(keys, isInternal: true);
 		output.SetLabel(new LabelsArray("Dávid", "Gabika"));
+		output.SetAnonymitySet(42.75);
 		var external = foreignInputs > 0 ? Enumerable.Repeat(Money.Coins(0.001m), foreignInputs) : new[] { Money.Coins(0.07m), Money.Coins(0.03m) };
 		var tx = BitcoinFactory.CreateSmartTransaction(TestRandom.Get(), foreignInputs, external,
 			new[] { (Money.Coins(0.05m), 20, input), (Money.Coins(0.04m), 20, input), (Money.Coins(0.03m), 20, input) },

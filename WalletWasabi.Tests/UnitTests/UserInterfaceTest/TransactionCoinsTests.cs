@@ -12,6 +12,32 @@ namespace WalletWasabi.Tests.UnitTests.UserInterfaceTest;
 
 public class TransactionCoinsTests
 {
+	[Theory]
+	[InlineData(1.0, 1)]
+	[InlineData(20.75, 20)]
+	[InlineData(int.MaxValue, null)]
+	public void ShowsKnownOwnScoresAndDoesNotPredictPreviewOutputScores(double score, int? expected)
+	{
+		var keys = ServiceFactory.CreateKeyManager();
+		var input = BitcoinFactory.CreateHdPubKey(keys);
+		var output = BitcoinFactory.CreateHdPubKey(keys, isInternal: true);
+		var transaction = BitcoinFactory.CreateSmartTransaction(TestRandom.Get(), 1,
+			new[] { Money.Coins(0.1m) }, new[] { (Money.Coins(1m), 20, input) },
+			new[] { (Money.Coins(0.89m), 20, output) });
+		input.SetAnonymitySet(score);
+		output.SetAnonymitySet(score);
+		bool IsOwn(Script script) => keys.TryGetKeyForScriptPubKey(script, out _);
+		var history = new TransactionCoinsModel(transaction, Network.Main, IsOwn);
+		Assert.Equal(expected, Assert.Single(history.Inputs, x => x.IsOwn).AnonymityScore);
+		Assert.Equal(expected, Assert.Single(history.Outputs, x => x.IsOwn).AnonymityScore);
+		Assert.All(history.Inputs.Concat(history.Outputs).Where(x => !x.IsOwn), x => Assert.Null(x.AnonymityScore));
+		var result = new BuildTransactionResult(transaction, PSBT.FromTransaction(transaction.Transaction, Network.Main),
+			false, Money.Satoshis(1000), 0, new());
+		var preview = new TransactionCoinsModel(result, Network.Main, IsOwn, new Dictionary<Script, LabelsArray>());
+		Assert.Equal(expected, Assert.Single(preview.Inputs, x => x.IsOwn).AnonymityScore);
+		Assert.All(preview.Outputs, x => Assert.Null(x.AnonymityScore));
+	}
+
 	[Fact]
 	public void PreviewKeepsInternalBatchRecipientsAndResolvedExternalOutputsSeparateFromChange()
 	{
@@ -128,6 +154,7 @@ public class TransactionCoinsTests
 		Assert.DoesNotContain(lists.Outputs, x => x.IsOwn || x.IsChange);
 		Assert.All(lists.Inputs, x => Assert.Empty(x.Labels));
 		Assert.All(lists.Outputs, x => Assert.Empty(x.Labels));
+		Assert.All(lists.Inputs.Concat(lists.Outputs), x => Assert.Null(x.AnonymityScore));
 	}
 
 	[Fact]
