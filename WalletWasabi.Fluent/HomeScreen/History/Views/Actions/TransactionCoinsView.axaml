@@ -2,5 +2,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:lang="using:WalletWasabi.Lang"
              x:Class="WalletWasabi.Fluent.HomeScreen.History.Views.Actions.TransactionCoinsView">
-  <Button Content="{x:Static lang:Resources.TransactionViewerOpen}" Click="Open_OnClick" HorizontalAlignment="Stretch" />
+  <UserControl.Styles>
+    <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter, Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="{DynamicResource SystemAccentColor}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentColor}" />
+    </Style>
+  </UserControl.Styles>
+  <Button Content="{x:Static lang:Resources.TransactionViewerOpen}" Click="Open_OnClick"
+          Theme="{StaticResource FunctionButton}" HorizontalAlignment="Right" Margin="10 0"
+          Background="Transparent" Foreground="{DynamicResource SystemAccentColor}"
+          BorderBrush="{DynamicResource SystemAccentColor}" BorderThickness="1" />
 </UserControl>
