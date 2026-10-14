@@ -2,12 +2,14 @@ using NBitcoin;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using WalletWasabi.Blockchain.Analysis.FeesEstimation;
 using WalletWasabi.Tor.Http;
 using WalletWasabi.WebClients.Wasabi;
+using Constants = WalletWasabi.Helpers.Constants;
 
 namespace WalletWasabi.Daemon.FeeRateProviders;
 
@@ -31,6 +33,11 @@ public class MempoolSpaceFeeRateProvider : IFeeRateProvider
 
 	private IHttpClient HttpClient { get; }
 
+	public MempoolSpaceFeeRateProvider(IHttpClient httpClient)
+	{
+		HttpClient = httpClient;
+	}
+
 	public MempoolSpaceFeeRateProvider(WasabiHttpClientFactory httpClientFactory, Network network)
 	{
 		if (network == Network.Main)
@@ -53,7 +60,14 @@ public class MempoolSpaceFeeRateProvider : IFeeRateProvider
 
 	public async Task<AllFeeEstimate> GetFeeRatesAsync(CancellationToken cancellationToken)
 	{
-		using var response = await HttpClient.SendAsync(HttpMethod.Get, "fees/recommended", null, cancellationToken).ConfigureAwait(false);
+		using var response = await HttpClient.SendAsync(HttpMethod.Get, "fees/precise", null, cancellationToken).ConfigureAwait(false);
+		if (response.StatusCode == HttpStatusCode.NotFound)
+		{
+			// Older API deployments can still provide the legacy integer estimates.
+			using var legacyResponse = await HttpClient.SendAsync(HttpMethod.Get, "fees/recommended", null, cancellationToken).ConfigureAwait(false);
+			legacyResponse.EnsureSuccessStatusCode();
+			return ParseFeeEstimates(await legacyResponse.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false));
+		}
 		response.EnsureSuccessStatusCode();
 		var json = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 		return ParseFeeEstimates(json);
@@ -88,9 +102,8 @@ public class MempoolSpaceFeeRateProvider : IFeeRateProvider
 				jsonElement.ValueKind == JsonValueKind.Number && // Ensure it's a number type
 				jsonElement.TryGetDecimal(out decimal feeValue))   // Try to parse it as decimal
 			{
-				// Calculate fee rate in sat/vB (rounding up) and add to the dictionary
-				// using the target block confirmation time as the key.
-				feeEstimates[mapping.TargetBlocks] = new FeeRate(feeValue);
+				// Keep positive estimates within the wallet's supported fee range.
+				feeEstimates[mapping.TargetBlocks] = new FeeRate(feeValue > 0 ? Math.Max(feeValue, Constants.MinRelayFeeRate.SatoshiPerByte) : feeValue);
 			}
 			// If the property doesn't exist or isn't a valid number, it's skipped.
 		}
