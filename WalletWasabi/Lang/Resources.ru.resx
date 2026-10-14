@@ -2259,4 +2259,16 @@
   <data name="TransactionCoinOutpoint" xml:space="preserve">
     <value>Ссылка на выход (outpoint)</value>
   </data>
+  <data name="TransactionViewerOpen" xml:space="preserve">
+    <value>Показать транзакцию</value>
+  </data>
+  <data name="TransactionViewerSelectedInput" xml:space="preserve">
+    <value>Выбранный вход</value>
+  </data>
+  <data name="TransactionViewerSelectedOutput" xml:space="preserve">
+    <value>Выбранный выход</value>
+  </data>
+  <data name="TransactionViewerCurrentRate" xml:space="preserve">
+    <value>Суммы в фиатной валюте рассчитаны по текущему курсу.</value>
+  </data>
 </root>

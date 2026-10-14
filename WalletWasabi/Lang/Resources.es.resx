@@ -2257,4 +2257,16 @@
   <data name="TransactionCoinOutpoint" xml:space="preserve">
     <value>Referencia de salida (outpoint)</value>
   </data>
+  <data name="TransactionViewerOpen" xml:space="preserve">
+    <value>Ver transacción</value>
+  </data>
+  <data name="TransactionViewerSelectedInput" xml:space="preserve">
+    <value>Entrada seleccionada</value>
+  </data>
+  <data name="TransactionViewerSelectedOutput" xml:space="preserve">
+    <value>Salida seleccionada</value>
+  </data>
+  <data name="TransactionViewerCurrentRate" xml:space="preserve">
+    <value>Los importes fiat usan el tipo de cambio actual.</value>
+  </data>
 </root>

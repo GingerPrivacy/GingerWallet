@@ -2215,4 +2215,16 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Abilita o disabilita l’uso di questo portafoglio per la Caccia ai Segreti.</value>
   </data>
+  <data name="TransactionViewerOpen" xml:space="preserve">
+    <value>Mostra transazione</value>
+  </data>
+  <data name="TransactionViewerSelectedInput" xml:space="preserve">
+    <value>Input selezionato</value>
+  </data>
+  <data name="TransactionViewerSelectedOutput" xml:space="preserve">
+    <value>Output selezionato</value>
+  </data>
+  <data name="TransactionViewerCurrentRate" xml:space="preserve">
+    <value>Gli importi fiat usano il tasso di cambio attuale.</value>
+  </data>
 </root>

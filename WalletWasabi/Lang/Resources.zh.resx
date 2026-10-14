@@ -2215,4 +2215,16 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>启用或禁用此钱包用于秘密狩猎。</value>
   </data>
+  <data name="TransactionViewerOpen" xml:space="preserve">
+    <value>查看交易</value>
+  </data>
+  <data name="TransactionViewerSelectedInput" xml:space="preserve">
+    <value>所选输入</value>
+  </data>
+  <data name="TransactionViewerSelectedOutput" xml:space="preserve">
+    <value>所选输出</value>
+  </data>
+  <data name="TransactionViewerCurrentRate" xml:space="preserve">
+    <value>法币金额按当前汇率计算。</value>
+  </data>
 </root>

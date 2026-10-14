@@ -2257,4 +2257,16 @@
   <data name="TransactionCoinOutpoint" xml:space="preserve">
     <value>Référence de sortie (outpoint)</value>
   </data>
+  <data name="TransactionViewerOpen" xml:space="preserve">
+    <value>Afficher la transaction</value>
+  </data>
+  <data name="TransactionViewerSelectedInput" xml:space="preserve">
+    <value>Entrée sélectionnée</value>
+  </data>
+  <data name="TransactionViewerSelectedOutput" xml:space="preserve">
+    <value>Sortie sélectionnée</value>
+  </data>
+  <data name="TransactionViewerCurrentRate" xml:space="preserve">
+    <value>Les montants en monnaie fiduciaire utilisent le taux de change actuel.</value>
+  </data>
 </root>

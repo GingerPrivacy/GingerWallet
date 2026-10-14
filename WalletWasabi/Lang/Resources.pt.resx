@@ -2215,4 +2215,16 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Ativar ou desativar o uso desta carteira para a Caça aos Segredos.</value>
   </data>
+  <data name="TransactionViewerOpen" xml:space="preserve">
+    <value>Ver transação</value>
+  </data>
+  <data name="TransactionViewerSelectedInput" xml:space="preserve">
+    <value>Entrada selecionada</value>
+  </data>
+  <data name="TransactionViewerSelectedOutput" xml:space="preserve">
+    <value>Saída selecionada</value>
+  </data>
+  <data name="TransactionViewerCurrentRate" xml:space="preserve">
+    <value>Os valores em moeda fiduciária usam a taxa de câmbio atual.</value>
+  </data>
 </root>

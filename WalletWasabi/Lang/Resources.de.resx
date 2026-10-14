@@ -2257,4 +2257,16 @@
   <data name="TransactionCoinOutpoint" xml:space="preserve">
     <value>Ausgabereferenz (Outpoint)</value>
   </data>
+  <data name="TransactionViewerOpen" xml:space="preserve">
+    <value>Transaktion anzeigen</value>
+  </data>
+  <data name="TransactionViewerSelectedInput" xml:space="preserve">
+    <value>Ausgewählter Eingang</value>
+  </data>
+  <data name="TransactionViewerSelectedOutput" xml:space="preserve">
+    <value>Ausgewählter Ausgang</value>
+  </data>
+  <data name="TransactionViewerCurrentRate" xml:space="preserve">
+    <value>Fiatbeträge verwenden den aktuellen Wechselkurs.</value>
+  </data>
 </root>

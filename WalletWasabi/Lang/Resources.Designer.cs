@@ -6417,5 +6417,21 @@ namespace WalletWasabi.Lang {
             get { return ResourceManager.GetString("TransactionCoinOutpoint", resourceCulture); }
         }
 
+        public static string TransactionViewerOpen {
+            get { return ResourceManager.GetString("TransactionViewerOpen", resourceCulture); }
+        }
+
+        public static string TransactionViewerSelectedInput {
+            get { return ResourceManager.GetString("TransactionViewerSelectedInput", resourceCulture); }
+        }
+
+        public static string TransactionViewerSelectedOutput {
+            get { return ResourceManager.GetString("TransactionViewerSelectedOutput", resourceCulture); }
+        }
+
+        public static string TransactionViewerCurrentRate {
+            get { return ResourceManager.GetString("TransactionViewerCurrentRate", resourceCulture); }
+        }
+
     }
 }

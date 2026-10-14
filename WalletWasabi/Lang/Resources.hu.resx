@@ -2257,4 +2257,16 @@
   <data name="TransactionCoinOutpoint" xml:space="preserve">
     <value>Kimeneti hivatkozás</value>
   </data>
+  <data name="TransactionViewerOpen" xml:space="preserve">
+    <value>Tranzakció megjelenítése</value>
+  </data>
+  <data name="TransactionViewerSelectedInput" xml:space="preserve">
+    <value>Kiválasztott bemenet</value>
+  </data>
+  <data name="TransactionViewerSelectedOutput" xml:space="preserve">
+    <value>Kiválasztott kimenet</value>
+  </data>
+  <data name="TransactionViewerCurrentRate" xml:space="preserve">
+    <value>A fiat összegek az aktuális árfolyamon értendők.</value>
+  </data>
 </root>
