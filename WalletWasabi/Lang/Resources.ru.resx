@@ -2238,4 +2238,7 @@
   <data name="MinimumFeeRateLimit" xml:space="preserve">
     <value>Не может быть меньше {0} сат/вБ.</value>
   </data>
+  <data name="ReceiveDefaultAddressTypeHint" xml:space="preserve">
+    <value>Сохранено для этого кошелька</value>
+  </data>
 </root>

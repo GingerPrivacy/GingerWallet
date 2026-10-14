@@ -63,6 +63,61 @@
                        Content="{TemplateBinding Content}"
                        CornerRadius="{TemplateBinding CornerRadius}"
                        Theme="{StaticResource FunctionSplitButton}">
+            <FlyoutBase.AttachedFlyout>
+              <Flyout Placement="Bottom" ShowMode="Standard">
+                <Flyout.FlyoutPresenterTheme>
+                  <ControlTheme TargetType="FlyoutPresenter" BasedOn="{StaticResource {x:Type FlyoutPresenter}}">
+                    <Setter Property="Padding" Value="0" />
+                  </ControlTheme>
+                </Flyout.FlyoutPresenterTheme>
+                <StackPanel MinWidth="320" KeyboardNavigation.TabNavigation="Cycle">
+                  <ItemsControl ItemsSource="{Binding $parent[SubActionButton].SubCommands}">
+                    <ItemsControl.ItemTemplate>
+                      <DataTemplate DataType="IUICommand">
+                        <Border BorderBrush="{DynamicResource MenuFlyoutPresenterBorderBrush}" BorderThickness="0 0 0 1">
+                          <Grid ColumnDefinitions="*,Auto" MinHeight="64" Margin="8 0">
+                            <SubActionMenuButton x:Name="GenerateAddressButton"
+                                                 Classes="invisible" Command="{Binding Command}"
+                                                 HorizontalContentAlignment="Left" Padding="12 12"
+                                                 AutomationProperties.Name="{Binding Name}">
+                              <StackPanel Orientation="Horizontal" Spacing="16">
+                                <ContentControl Content="{Binding Icon}" VerticalAlignment="Center" />
+                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                              </StackPanel>
+                            </SubActionMenuButton>
+                            <Grid Grid.Column="1" MinWidth="126" Margin="8 0" VerticalAlignment="Center">
+                              <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center"
+                                          IsVisible="{Binding IsDefault}">
+                                <PathIcon Data="{StaticResource checkmark_filled}" Width="14" Height="14"
+                                          Foreground="{DynamicResource SystemAccentColor}" />
+                                <TextBlock Text="{x:Static lang:Resources.Default}"
+                                           Foreground="{DynamicResource SystemAccentColor}" />
+                              </StackPanel>
+                              <Button Content="{x:Static lang:Resources.SetAsDefault}"
+                                      IsVisible="{Binding !IsDefault}"
+                                      Command="{Binding $parent[SubActionButton].SetDefaultCommand}"
+                                      CommandParameter="{Binding Key}"
+                                      Background="Transparent" BorderThickness="1" CornerRadius="8"
+                                      BorderBrush="{DynamicResource TextControlForeground}"
+                                      Padding="12 7" HorizontalAlignment="Stretch"
+                                      HorizontalContentAlignment="Center">
+                                <Interaction.Behaviors>
+                                  <EventTriggerBehavior EventName="Click">
+                                    <FocusControlActionCustom TargetControl="GenerateAddressButton" />
+                                  </EventTriggerBehavior>
+                                </Interaction.Behaviors>
+                              </Button>
+                            </Grid>
+                          </Grid>
+                        </Border>
+                      </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                  </ItemsControl>
+                  <TextBlock Text="{x:Static lang:Resources.ReceiveDefaultAddressTypeHint}"
+                             Margin="20 12" FontSize="12" Opacity="0.7" />
+                </StackPanel>
+              </Flyout>
+            </FlyoutBase.AttachedFlyout>
             <SplitButton.ContentTemplate>
               <DataTemplate>
                 <DockPanel>
@@ -140,6 +195,10 @@
         </ControlTemplate>
       </Setter.Value>
     </Setter>
+
+    <Style Selector="^:local-default /template/ SplitButton">
+      <Setter Property="Flyout" Value="{Binding (FlyoutBase.AttachedFlyout), RelativeSource={RelativeSource Self}}" />
+    </Style>
 
   </ControlTheme>
 

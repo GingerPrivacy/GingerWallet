@@ -2236,4 +2236,7 @@
   <data name="MinimumFeeRateLimit" xml:space="preserve">
     <value>Darf nicht weniger als {0} sat/vByte betragen.</value>
   </data>
+  <data name="ReceiveDefaultAddressTypeHint" xml:space="preserve">
+    <value>Für diese Wallet gespeichert</value>
+  </data>
 </root>

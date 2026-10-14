@@ -4,8 +4,10 @@ using System.Reactive.Disposables;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using Avalonia.VisualTree;
 using ReactiveUI;
 using WalletWasabi.Fluent.Models.UI;
 
@@ -145,6 +147,11 @@ public class SubActionButton : ContentControl
 	{
 		base.OnPropertyChanged(change);
 
+		if (change.Property == LocalDefaultKeyProperty)
+		{
+			PseudoClasses.Set(":local-default", LocalDefaultKey is not null);
+		}
+
 		if (change.Property == SubCommandsProperty || change.Property == LocalDefaultKeyProperty)
 		{
 			UpdateDefaultCommand(GetDefaultCommandKey());
@@ -155,6 +162,11 @@ public class SubActionButton : ContentControl
 	{
 		base.OnLoaded(e);
 		UpdateDefaultCommand(GetDefaultCommandKey());
+
+		if (LocalDefaultKey is not null)
+		{
+			return;
+		}
 
 		var applicationSettings = UiContext.Default.ApplicationSettings;
 
@@ -215,5 +227,17 @@ public class SubActionButton : ContentControl
 			item.IsDefault = true;
 			SetValue(CommandProperty, item.Command);
 		}
+	}
+}
+
+internal class SubActionMenuButton : Button
+{
+	protected override Type StyleKeyOverride => typeof(Button);
+
+	protected override void OnClick()
+	{
+		var popup = this.FindAncestorOfType<FlyoutPresenter>()?.Parent as Popup;
+		base.OnClick();
+		popup?.Close();
 	}
 }

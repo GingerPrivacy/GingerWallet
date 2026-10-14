@@ -2236,4 +2236,7 @@
   <data name="MinimumFeeRateLimit" xml:space="preserve">
     <value>No puede ser inferior a {0} sat/vByte.</value>
   </data>
+  <data name="ReceiveDefaultAddressTypeHint" xml:space="preserve">
+    <value>Guardado para este monedero</value>
+  </data>
 </root>

@@ -2236,4 +2236,7 @@
   <data name="BatchAmountPrecision" xml:space="preserve">
     <value>Az összeg legfeljebb nyolc tizedesjegyet tartalmazhat.</value>
   </data>
+  <data name="ReceiveDefaultAddressTypeHint" xml:space="preserve">
+    <value>Ehhez a tárcához mentve</value>
+  </data>
 </root>
