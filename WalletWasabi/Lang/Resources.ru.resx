@@ -2235,4 +2235,7 @@
   <data name="BatchAmountPrecision" xml:space="preserve">
     <value>Суммы могут содержать не более восьми знаков после запятой.</value>
   </data>
+  <data name="MinimumFeeRateLimit" xml:space="preserve">
+    <value>Не может быть меньше {0} сат/вБ.</value>
+  </data>
 </root>

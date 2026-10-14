@@ -2233,4 +2233,7 @@
   <data name="BatchAmountPrecision" xml:space="preserve">
     <value>Os valores podem ter no máximo oito casas decimais.</value>
   </data>
+  <data name="MinimumFeeRateLimit" xml:space="preserve">
+    <value>Não pode ser inferior a {0} sat/vByte.</value>
+  </data>
 </root>

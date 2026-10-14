@@ -100,6 +100,7 @@ public class TransactionFactory
 		}
 
 		TransactionBuilder builder = Network.CreateTransactionBuilder();
+		builder.StandardTransactionPolicy.MinRelayTxFee = Constants.MinRelayFeeRate;
 		builder.SetCoinSelector(new SmartCoinSelector(allowedSmartCoinInputs));
 		builder.AddCoins(allowedSmartCoinInputs.Select(c => c.Coin));
 		builder.SetLockTime(lockTimeSelector());
@@ -146,6 +147,11 @@ public class TransactionFactory
 		}
 
 		builder.SendEstimatedFees(parameters.FeeRate);
+		if (parameters.FeeRate.SatoshiPerByte < 1m)
+		{
+			// Cover fractional-satoshi truncation before selecting inputs and building the PSBT.
+			builder.SendFees(Money.Satoshis(1));
+		}
 
 		var psbt = builder.BuildPSBT(false);
 

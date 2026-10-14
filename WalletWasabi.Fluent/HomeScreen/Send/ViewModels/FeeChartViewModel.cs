@@ -8,6 +8,7 @@ using WalletWasabi.Fluent.Common.ViewModels;
 using WalletWasabi.Fluent.Helpers;
 using WalletWasabi.Fluent.MathNet;
 using WalletWasabi.Lang;
+using WalletWasabi.Helpers;
 
 namespace WalletWasabi.Fluent.HomeScreen.Send.ViewModels;
 
@@ -257,7 +258,7 @@ public partial class FeeChartViewModel : ViewModelBase
 		if (satoshiPerByteValues.Length != 0)
 		{
 			var maxY = satoshiPerByteValues.Max();
-			var minY = 1; // If values are not the same, it will be always rendered starting from 1.
+			var minY = (double)Constants.MinRelayFeeRate.SatoshiPerByte;
 
 			SatoshiPerByteLabels = areAllValuesEqual
 				? new[] { "", "", maxY.ToString("F2", Resources.Culture.NumberFormat) }

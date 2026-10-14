@@ -7,6 +7,7 @@ using WalletWasabi.Fluent.HomeScreen.Send.Models;
 using WalletWasabi.Fluent.Validation;
 using WalletWasabi.Lang;
 using WalletWasabi.Models;
+using WalletWasabi.Helpers;
 
 namespace WalletWasabi.Fluent.HomeScreen.Send.ViewModels;
 
@@ -74,9 +75,9 @@ public partial class CustomFeeRateDialogViewModel : DialogViewModelBase<FeeRate>
 			return;
 		}
 
-		if (value < decimal.One)
+		if (value < Constants.MinRelayFeeRate.SatoshiPerByte)
 		{
-			errors.Add(ErrorSeverity.Error, Resources.MinFeeLimit);
+			errors.Add(ErrorSeverity.Error, string.Format(Resources.Culture, Resources.MinimumFeeRateLimit, Constants.MinRelayFeeRate.SatoshiPerByte));
 			return;
 		}
 

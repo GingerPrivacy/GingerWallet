@@ -3092,6 +3092,15 @@ namespace WalletWasabi.Lang {
                 return ResourceManager.GetString("MinFeeLimit", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot be less than {0} sat/vByte.
+        /// </summary>
+        public static string MinimumFeeRateLimit {
+            get {
+                return ResourceManager.GetString("MinimumFeeRateLimit", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Mining fee rate was too high.

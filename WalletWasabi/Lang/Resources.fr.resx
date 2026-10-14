@@ -2233,4 +2233,7 @@
   <data name="BatchAmountPrecision" xml:space="preserve">
     <value>Les montants peuvent comporter au maximum huit décimales.</value>
   </data>
+  <data name="MinimumFeeRateLimit" xml:space="preserve">
+    <value>Ne peut pas être inférieur à {0} sat/vByte.</value>
+  </data>
 </root>
