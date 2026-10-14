@@ -145,6 +145,29 @@ public class TransactionViewerTests : IDisposable
 			Assert.InRange(list.GetRealizedContainers().Count(), 1, 20);
 			Assert.Equal(scroll.Offset.Y, window.GetVisualDescendants().OfType<TransactionFlowLines>().Single().ScrollOffset);
 			Capture(window, "coinjoin-bottom");
+			var graph = window.FindControl<Grid>("GraphPanel")!;
+			var summary = window.FindControl<ScrollViewer>("SummaryPanel")!;
+			var graphWidth = graph.Bounds.Width;
+			var summaryHeight = summary.Bounds.Height;
+			Drag(window, window.FindControl<GridSplitter>("DetailsSplitter")!, new Vector(-140, 0));
+			Drag(window, window.FindControl<GridSplitter>("SummarySplitter")!, new Vector(0, -80));
+			Assert.True(graph.Bounds.Width < graphWidth - 100);
+			Assert.True(summary.Bounds.Height > summaryHeight + 50);
+			Capture(window, "panels-resized");
+			window.Width = 1040;
+			window.Height = 640;
+			Dispatcher.UIThread.RunJobs();
+			scroll.ScrollToEnd();
+			Dispatcher.UIThread.RunJobs();
+			Assert.True(graph.Bounds.Width >= 580);
+			Assert.True(window.FindControl<Border>("DetailsPanel")!.Bounds.Width >= 260);
+			Assert.True(summary.Bounds.Bottom <= window.FindControl<Grid>("TransactionContent")!.Bounds.Height);
+			Assert.NotNull(list.ContainerFromIndex(vm.Rows.Count - 1));
+			Assert.InRange(list.GetRealizedContainers().Count(), 1, 20);
+			var lines = window.GetVisualDescendants().OfType<TransactionFlowLines>().Single();
+			Assert.Equal(scroll.Offset.Y, lines.ScrollOffset);
+			Assert.InRange(Math.Abs(lines.Bounds.Width - list.Bounds.Width), 0, 20);
+			Capture(window, "panels-resized-small");
 			privacy.OnNext(true);
 			Dispatcher.UIThread.RunJobs();
 			Assert.False(window.FindControl<Grid>("TransactionContent")!.IsVisible);
@@ -216,6 +239,15 @@ public class TransactionViewerTests : IDisposable
 		var point = button.TranslatePoint(new Point(button.Bounds.Width / 2, button.Bounds.Height / 2), window)!.Value;
 		window.MouseDown(point, MouseButton.Left);
 		window.MouseUp(point, MouseButton.Left);
+		Dispatcher.UIThread.RunJobs();
+	}
+
+	private static void Drag(Window window, GridSplitter splitter, Vector delta)
+	{
+		var start = splitter.TranslatePoint(new Point(splitter.Bounds.Width / 2, splitter.Bounds.Height / 2), window)!.Value;
+		window.MouseDown(start, MouseButton.Left);
+		window.MouseMove(start + delta, RawInputModifiers.LeftMouseButton);
+		window.MouseUp(start + delta, MouseButton.Left);
 		Dispatcher.UIThread.RunJobs();
 	}
 }

@@ -9,6 +9,9 @@
         WindowStartupLocation="CenterOwner" Title="{x:Static lang:Resources.Transaction}"
         Icon="/Assets/WasabiLogo.ico" Background="{DynamicResource RegionBrush}" FontFamily="{StaticResource PoppinsFont}">
   <Window.Styles>
+    <Style Selector="GridSplitter:pointerover, GridSplitter:focus-visible">
+      <Setter Property="Background" Value="{DynamicResource SystemAccentColor}" />
+    </Style>
     <Style Selector="ScrollViewer">
       <Setter Property="AllowAutoHide" Value="False" />
     </Style>
@@ -35,7 +38,13 @@
   </Window.Styles>
   <Grid Margin="28" RowDefinitions="*,Auto">
     <Grid Name="TransactionContent" IsVisible="{Binding !PrivacyMode}" IsEnabled="{Binding !PrivacyMode}"
-          RowDefinitions="Auto,Auto,*,Auto">
+          ClipToBounds="True">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" MinHeight="200" />
+        <RowDefinition Height="6" />
+        <RowDefinition Height="0.16*" MinHeight="88" />
+      </Grid.RowDefinitions>
       <Grid ColumnDefinitions="*,Auto" Margin="0 0 0 20">
         <StackPanel Spacing="8">
           <TextBlock Text="{x:Static lang:Resources.Transaction}" FontSize="30" FontWeight="SemiBold" />
@@ -48,33 +57,22 @@
         </StackPanel>
         <TextBlock Grid.Column="1" Text="{Binding Status}" VerticalAlignment="Center" Foreground="{DynamicResource SystemAccentColor}" FontWeight="SemiBold" />
       </Grid>
-      <Border Grid.Row="1" BorderBrush="{DynamicResource BorderColor}" BorderThickness="0 1" Padding="0 14" Margin="0 0 0 16">
-        <Grid ColumnDefinitions="*,*,*,*">
-          <StackPanel Spacing="4">
-            <TextBlock Text="{x:Static lang:Resources.TransactionFee}" Classes="caption" />
-            <TextBlock Text="{Binding FeeText}" />
-            <TextBlock Text="{Binding FeeFiat^}" Classes="caption" />
-          </StackPanel>
-          <StackPanel Grid.Column="1" Spacing="4">
-            <TextBlock Text="{x:Static lang:Resources.FeeRate}" Classes="caption" />
-            <TextBlock Text="{Binding FeeRate}" />
-          </StackPanel>
-          <TextBlock Grid.Column="2" Text="{Binding VirtualSize}" VerticalAlignment="Center" />
-          <StackPanel Grid.Column="3" Spacing="4">
-            <TextBlock Text="{x:Static lang:Resources.DateTime}" Classes="caption" />
-            <TextBlock Text="{Binding Date}" />
-          </StackPanel>
-        </Grid>
-      </Border>
-      <Grid Grid.Row="2" ColumnDefinitions="*,304">
-        <Grid RowDefinitions="Auto,*" Margin="0 0 20 0">
+      <Grid Grid.Row="1">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" MinWidth="600" />
+          <ColumnDefinition Width="6" />
+          <ColumnDefinition Width="0.28*" MinWidth="260" />
+        </Grid.ColumnDefinitions>
+        <Grid Name="GraphPanel" RowDefinitions="Auto,*" Margin="0 0 12 0">
           <Grid ColumnDefinitions="*,*" Margin="0 0 0 12">
             <TextBlock FontSize="18" FontWeight="SemiBold"><Run Text="{x:Static lang:Resources.TransactionInputs}" /><Run Text=" · " /><Run Text="{Binding Inputs.Count}" /></TextBlock>
             <TextBlock Grid.Column="1" FontSize="18" FontWeight="SemiBold" HorizontalAlignment="Right"><Run Text="{x:Static lang:Resources.TransactionOutputs}" /><Run Text=" · " /><Run Text="{Binding Outputs.Count}" /></TextBlock>
           </Grid>
           <views:TransactionFlowView Grid.Row="1" />
         </Grid>
-        <Border Grid.Column="1" BorderBrush="{DynamicResource BorderColor}" BorderThickness="1 0 0 0" Padding="24 0 0 0">
+        <GridSplitter Name="DetailsSplitter" Grid.Column="1" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"
+                      Background="{DynamicResource BorderColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Focusable="True" />
+        <Border Name="DetailsPanel" Grid.Column="2" Padding="20 0 0 0">
           <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
             <StackPanel Name="SelectionDetails" Spacing="14">
               <TextBlock Text="{Binding SelectionTitle}" FontSize="19" FontWeight="SemiBold" TextWrapping="Wrap" />
@@ -112,8 +110,10 @@
           </ScrollViewer>
         </Border>
       </Grid>
-      <Border Grid.Row="3" BorderBrush="{DynamicResource BorderColor}" BorderThickness="0 1 0 0" Padding="0 18 0 0" Margin="0 18 0 0">
-        <Grid ColumnDefinitions="*,*,*,Auto">
+      <GridSplitter Name="SummarySplitter" Grid.Row="2" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext"
+                    Background="{DynamicResource BorderColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Focusable="True" />
+      <ScrollViewer Name="SummaryPanel" Grid.Row="3" Padding="0 12" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <Grid ColumnDefinitions="*,*,*,*,*,Auto">
           <StackPanel Spacing="5">
             <TextBlock Text="{x:Static lang:Resources.TransactionInputs}" Classes="caption" />
             <TextBlock Text="{Binding InputTotal}" FontWeight="SemiBold" />
@@ -129,12 +129,21 @@
             <TextBlock Text="{Binding FeeText}" FontWeight="SemiBold" />
             <TextBlock Text="{Binding FeeFiat^}" Classes="caption" />
           </StackPanel>
-          <StackPanel Grid.Column="3" Spacing="6" VerticalAlignment="Center">
+          <StackPanel Grid.Column="3" Spacing="5">
+            <TextBlock Text="{x:Static lang:Resources.FeeRate}" Classes="caption" />
+            <TextBlock Text="{Binding FeeRate}" FontWeight="SemiBold" />
+            <TextBlock Text="{Binding VirtualSize}" Classes="caption" />
+          </StackPanel>
+          <StackPanel Grid.Column="4" Spacing="5">
+            <TextBlock Text="{x:Static lang:Resources.DateTime}" Classes="caption" />
+            <TextBlock Text="{Binding Date}" TextWrapping="Wrap" />
+          </StackPanel>
+          <StackPanel Grid.Column="5" Spacing="6" VerticalAlignment="Center">
             <TextBlock Text="{x:Static lang:Resources.TransactionCoinOwn}" Foreground="{DynamicResource SystemAccentColor}" FontSize="12" />
             <TextBlock Text="{x:Static lang:Resources.TransactionCoinExternal}" Foreground="SteelBlue" FontSize="12" />
           </StackPanel>
         </Grid>
-      </Border>
+      </ScrollViewer>
     </Grid>
     <TextBlock IsVisible="{Binding PrivacyMode}" Text="{x:Static lang:Resources.DiscreetMode}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
     <Grid Grid.Row="1" ColumnDefinitions="*,Auto" Margin="0 18 0 0">
