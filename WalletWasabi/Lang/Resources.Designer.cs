@@ -6433,5 +6433,13 @@ namespace WalletWasabi.Lang {
             get { return ResourceManager.GetString("TransactionViewerCurrentRate", resourceCulture); }
         }
 
+        public static string TransactionViewerInput {
+            get { return ResourceManager.GetString("TransactionViewerInput", resourceCulture); }
+        }
+
+        public static string TransactionViewerOutput {
+            get { return ResourceManager.GetString("TransactionViewerOutput", resourceCulture); }
+        }
+
     }
 }

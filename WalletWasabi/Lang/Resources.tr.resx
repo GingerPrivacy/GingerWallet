@@ -2227,4 +2227,10 @@
   <data name="TransactionViewerCurrentRate" xml:space="preserve">
     <value>İtibari para tutarları güncel döviz kurunu kullanır.</value>
   </data>
+  <data name="TransactionViewerInput" xml:space="preserve">
+    <value>Girdi</value>
+  </data>
+  <data name="TransactionViewerOutput" xml:space="preserve">
+    <value>Çıktı</value>
+  </data>
 </root>

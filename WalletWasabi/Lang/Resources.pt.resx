@@ -2227,4 +2227,10 @@
   <data name="TransactionViewerCurrentRate" xml:space="preserve">
     <value>Os valores em moeda fiduciária usam a taxa de câmbio atual.</value>
   </data>
+  <data name="TransactionViewerInput" xml:space="preserve">
+    <value>Entrada</value>
+  </data>
+  <data name="TransactionViewerOutput" xml:space="preserve">
+    <value>Saída</value>
+  </data>
 </root>

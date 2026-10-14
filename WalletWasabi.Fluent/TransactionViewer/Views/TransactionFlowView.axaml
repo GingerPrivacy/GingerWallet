@@ -55,12 +55,10 @@
             <TextBlock Text="{Binding Title}" Classes="ownership" TextTrimming="CharacterEllipsis" FontWeight="SemiBold" />
           </DockPanel>
           <DockPanel>
-            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="4" Margin="8 0 0 0"
-                        IsVisible="{Binding !!Data.AnonymityScore}" ToolTip.Tip="{x:Static lang:Resources.AnonymityScore}">
-              <PathIcon Data="{StaticResource anonscore}" Width="12" Height="12" Opacity="0.65" VerticalAlignment="Center" />
-              <TextBlock Text="{Binding Data.AnonymityScore}" FontSize="12" FontWeight="SemiBold" />
-            </StackPanel>
-            <TextBlock Text="{Binding ShortAddress}" FontSize="12" Opacity="0.75" TextTrimming="CharacterEllipsis" />
+            <TextBlock DockPanel.Dock="Right" Text="{Binding Data.AnonymityScore, TargetNullValue=—}"
+                       FontSize="12" FontWeight="SemiBold" Margin="8 0 0 0" />
+            <TextBlock Text="{x:Static lang:Resources.AnonymityScore}" FontSize="12" Opacity="0.65"
+                       TextTrimming="CharacterEllipsis" ToolTip.Tip="{x:Static lang:Resources.AnonymityScore}" />
           </DockPanel>
           <TextBlock Text="{Binding Amount}" FontSize="16" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding Amount}" />
           <TextBlock Text="{Binding Fiat^}" FontSize="12" Opacity="0.65" TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding Fiat^}" />

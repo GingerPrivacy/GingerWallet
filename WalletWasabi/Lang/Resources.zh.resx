@@ -2227,4 +2227,10 @@
   <data name="TransactionViewerCurrentRate" xml:space="preserve">
     <value>法币金额按当前汇率计算。</value>
   </data>
+  <data name="TransactionViewerInput" xml:space="preserve">
+    <value>输入</value>
+  </data>
+  <data name="TransactionViewerOutput" xml:space="preserve">
+    <value>输出</value>
+  </data>
 </root>

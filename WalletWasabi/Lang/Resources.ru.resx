@@ -2271,4 +2271,10 @@
   <data name="TransactionViewerCurrentRate" xml:space="preserve">
     <value>Суммы в фиатной валюте рассчитаны по текущему курсу.</value>
   </data>
+  <data name="TransactionViewerInput" xml:space="preserve">
+    <value>Вход</value>
+  </data>
+  <data name="TransactionViewerOutput" xml:space="preserve">
+    <value>Выход</value>
+  </data>
 </root>

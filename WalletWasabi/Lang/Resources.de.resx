@@ -2269,4 +2269,10 @@
   <data name="TransactionViewerCurrentRate" xml:space="preserve">
     <value>Fiatbeträge verwenden den aktuellen Wechselkurs.</value>
   </data>
+  <data name="TransactionViewerInput" xml:space="preserve">
+    <value>Eingang</value>
+  </data>
+  <data name="TransactionViewerOutput" xml:space="preserve">
+    <value>Ausgang</value>
+  </data>
 </root>

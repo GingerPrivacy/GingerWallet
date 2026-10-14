@@ -2227,4 +2227,10 @@
   <data name="TransactionViewerCurrentRate" xml:space="preserve">
     <value>Gli importi fiat usano il tasso di cambio attuale.</value>
   </data>
+  <data name="TransactionViewerInput" xml:space="preserve">
+    <value>Ingresso</value>
+  </data>
+  <data name="TransactionViewerOutput" xml:space="preserve">
+    <value>Uscita</value>
+  </data>
 </root>

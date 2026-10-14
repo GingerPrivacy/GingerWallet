@@ -24,8 +24,7 @@ public partial class TransactionViewerNode : ReactiveObject
 	public bool IsInput { get; }
 	public bool IsOwn => Data.IsOwn;
 	public string Number => $"#{Index}";
-	public string Title => Data.Labels.Count > 0 ? Data.Labels.ToString() : Data.Ownership;
-	public string ShortAddress => TransactionViewerViewModel.Shorten(Data.Address);
+	public string Title => IsInput ? Resources.TransactionViewerInput : Data.IsChange ? Resources.TransactionCoinChange : Resources.TransactionViewerOutput;
 	public string Amount => Data.AmountText;
 	public string AnonymityScoreText => Data.AnonymityScore?.ToString(Resources.Culture) ?? Resources.Unknown;
 	public IObservable<string> Fiat { get; }

@@ -194,9 +194,10 @@ public class TransactionViewerTests : IDisposable
 	[InlineData(1440, 960, false)]
 	[InlineData(1040, 640, false)]
 	[InlineData(1280, 850, true)]
-	public void ViewerRendersAtMinimumSizeAndInBothThemes(int width, int height, bool light)
+	[InlineData(1440, 960, false, true)]
+	public void ViewerRendersAtMinimumSizeAndInBothThemes(int width, int height, bool light, bool preview = false)
 	{
-		var vm = new TransactionViewerViewModel(CreateModel(), Observable.Return(30_000_000m), Observable.Return(false));
+		var vm = new TransactionViewerViewModel(CreateModel(preview: preview), Observable.Return(30_000_000m), Observable.Return(false));
 		var window = new TransactionViewerWindow
 		{
 			DataContext = vm, Width = width, Height = height,
@@ -207,9 +208,12 @@ public class TransactionViewerTests : IDisposable
 			window.Show();
 			Dispatcher.UIThread.RunJobs();
 			Assert.Equal(3, window.GetVisualDescendants().OfType<ListBox>().Single().Items.Count);
+			Assert.Equal(Resources.TransactionViewerInput, vm.Inputs[0].Title);
+			Assert.Equal(Resources.TransactionViewerOutput, vm.Outputs[0].Title);
+			Assert.Equal(preview ? Resources.TransactionCoinChange : Resources.TransactionViewerOutput, vm.Outputs.Last().Title);
 			Assert.True(window.GetVisualDescendants().OfType<TransactionFlowLines>().Single().Bounds.Width > width - 420);
 			Assert.True(window.FindControl<StackPanel>("SelectionDetails")!.Bounds.Width > 200);
-			Capture(window, $"viewer-{width}-{(light ? "light" : "dark")}");
+			Capture(window, $"{(preview ? "preview" : "viewer")}-{width}-{(light ? "light" : "dark")}");
 			window.KeyPressQwerty(PhysicalKey.Escape, RawInputModifiers.None);
 			Assert.False(window.IsVisible);
 		}
@@ -219,7 +223,7 @@ public class TransactionViewerTests : IDisposable
 		}
 	}
 
-	private static TransactionCoinsModel CreateModel(int foreignInputs = 0)
+	private static TransactionCoinsModel CreateModel(int foreignInputs = 0, bool preview = false)
 	{
 		var keys = ServiceFactory.CreateKeyManager();
 		var input = BitcoinFactory.CreateHdPubKey(keys);
@@ -230,6 +234,11 @@ public class TransactionViewerTests : IDisposable
 		var tx = BitcoinFactory.CreateSmartTransaction(TestRandom.Get(), foreignInputs, external,
 			new[] { (Money.Coins(0.05m), 20, input), (Money.Coins(0.04m), 20, input), (Money.Coins(0.03m), 20, input) },
 			new[] { (Money.Coins(0.01999378m), 20, output) });
+		if (preview)
+		{
+			var result = new BuildTransactionResult(tx, PSBT.FromTransaction(tx.Transaction, Network.Main), false, Money.Satoshis(622), 0, new());
+			return new TransactionCoinsModel(result, Network.Main, script => keys.TryGetKeyForScriptPubKey(script, out _), new Dictionary<Script, LabelsArray>());
+		}
 		return new TransactionCoinsModel(tx, Network.Main, script => keys.TryGetKeyForScriptPubKey(script, out _));
 	}
 
