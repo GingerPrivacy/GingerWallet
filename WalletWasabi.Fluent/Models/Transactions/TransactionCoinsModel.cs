@@ -18,12 +18,19 @@ public record TransactionCoinRow(OutPoint OutPoint, string Address, Money? Amoun
 
 public class TransactionCoinsModel
 {
-	public TransactionCoinsModel(BuildTransactionResult result, Network network, Func<Script, bool> isOwn, IEnumerable<Script> paymentScripts)
-		: this(result.Transaction, network, isOwn, paymentScripts.Concat(result.OuterWalletOutputs.Select(x => x.ScriptPubKey)))
+	public TransactionCoinsModel(BuildTransactionResult result, Network network, Func<Script, bool> isOwn, IReadOnlyDictionary<Script, LabelsArray> paymentLabels)
+		: this(result.Transaction, network, isOwn, paymentLabels.Keys.Concat(result.OuterWalletOutputs.Select(x => x.ScriptPubKey)))
 	{
 		IsPreview = true;
 		VirtualSize = result.Psbt.TryGetVirtualSize(out var size) ? size : VirtualSize;
 		Fee = result.Fee;
+		var pendingLabels = result.Transaction.WalletOutputs.Where(coin => isOwn(coin.ScriptPubKey)).ToDictionary(
+			coin => coin.Index, coin => result.HdPubKeysWithNewLabels.GetValueOrDefault(coin.HdPubKey, coin.HdPubKey.Labels));
+		Outputs = Outputs.Select(row => row with
+		{
+			Labels = paymentLabels.TryGetValue(row.ScriptPubKey!, out var labels)
+				? labels : pendingLabels.GetValueOrDefault(row.OutPoint.N, row.Labels)
+		}).ToArray();
 	}
 
 	public TransactionCoinsModel(SmartTransaction transaction, Network network, Func<Script, bool> isOwn, IEnumerable<Script>? paymentScripts = null)

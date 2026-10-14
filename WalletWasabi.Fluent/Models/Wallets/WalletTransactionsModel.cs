@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using DynamicData;
 using NBitcoin;
 using ReactiveUI;
+using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Blockchain.TransactionBuilding;
 using WalletWasabi.Blockchain.TransactionProcessing;
 using WalletWasabi.Blockchain.Transactions;
@@ -96,8 +97,9 @@ public class WalletTransactionsModel : ReactiveObject, IDisposable
 	public TransactionCoinsModel GetTransactionCoins(SmartTransaction transaction, IEnumerable<Script>? paymentScripts = null) =>
 		new(transaction, _wallet.Network, script => _wallet.KeyManager.TryGetKeyForScriptPubKey(script, out _), paymentScripts);
 
-	public TransactionCoinsModel GetTransactionCoins(BuildTransactionResult result, IEnumerable<Script> paymentScripts) =>
-		new(result, _wallet.Network, script => _wallet.KeyManager.TryGetKeyForScriptPubKey(script, out _), paymentScripts);
+	public TransactionCoinsModel GetTransactionCoins(BuildTransactionResult result, IEnumerable<RecipientInfo> recipients) =>
+		new(result, _wallet.Network, script => _wallet.KeyManager.TryGetKeyForScriptPubKey(script, out _),
+			recipients.GroupBy(x => x.Destination.ScriptPubKey).ToDictionary(x => x.Key, x => LabelsArray.Merge(x.Select(r => r.Label))));
 
 	public TransactionCoinsModel? GetTransactionCoins(uint256 id) =>
 		_wallet.BitcoinStore.TransactionStore.TryGetTransaction(id, out var transaction) ? GetTransactionCoins(transaction) : null;

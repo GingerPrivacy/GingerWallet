@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -18,6 +19,7 @@ using Avalonia.Threading;
 using Avalonia.VisualTree;
 using NBitcoin;
 using WalletWasabi.Blockchain.TransactionBuilding;
+using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Fluent.Models.Transactions;
 using WalletWasabi.Fluent.TransactionViewer.Controls;
 using WalletWasabi.Fluent.TransactionViewer.ViewModels;
@@ -51,7 +53,7 @@ public class TransactionViewerTests : IDisposable
 		var result = new BuildTransactionResult(model.Transaction, PSBT.FromTransaction(model.Transaction.Transaction, Network.Main),
 			false, Money.Satoshis(622), 0, new());
 		Assert.False(result.Psbt.TryGetFee(out _));
-		var preview = new TransactionCoinsModel(result, Network.Main, _ => false, Array.Empty<Script>());
+		var preview = new TransactionCoinsModel(result, Network.Main, _ => false, new Dictionary<Script, LabelsArray>());
 		Assert.True(preview.IsPreview);
 		Assert.Equal(result.Fee, preview.Fee);
 		Assert.True(preview.VirtualSize > 0);
@@ -103,6 +105,8 @@ public class TransactionViewerTests : IDisposable
 		{
 			window.Show();
 			Dispatcher.UIThread.RunJobs();
+			Assert.Contains(window.FindControl<StackPanel>("SelectionDetails")!.GetVisualDescendants().OfType<TextBlock>(),
+				x => x.Text == "Dávid, Gabika" && x.IsEffectivelyVisible);
 			var card = window.GetVisualDescendants().OfType<Button>().Single(x => ReferenceEquals(x.DataContext, vm.Inputs[1]));
 			Click(window, card);
 			Assert.Same(vm.Inputs[1], vm.SelectedNode);
@@ -216,6 +220,7 @@ public class TransactionViewerTests : IDisposable
 		var keys = ServiceFactory.CreateKeyManager();
 		var input = BitcoinFactory.CreateHdPubKey(keys);
 		var output = BitcoinFactory.CreateHdPubKey(keys, isInternal: true);
+		output.SetLabel(new LabelsArray("Dávid", "Gabika"));
 		var external = foreignInputs > 0 ? Enumerable.Repeat(Money.Coins(0.001m), foreignInputs) : new[] { Money.Coins(0.07m), Money.Coins(0.03m) };
 		var tx = BitcoinFactory.CreateSmartTransaction(TestRandom.Get(), foreignInputs, external,
 			new[] { (Money.Coins(0.05m), 20, input), (Money.Coins(0.04m), 20, input), (Money.Coins(0.03m), 20, input) },

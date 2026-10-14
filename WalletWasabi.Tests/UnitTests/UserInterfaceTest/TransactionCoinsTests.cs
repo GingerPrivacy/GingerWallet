@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Linq;
 using NBitcoin;
+using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Blockchain.TransactionBuilding;
 using WalletWasabi.Fluent.Models.Transactions;
 using WalletWasabi.Tests.Helpers;
@@ -25,7 +27,8 @@ public class TransactionCoinsTests
 		var result = new BuildTransactionResult(transaction, PSBT.FromTransaction(transaction.Transaction, Network.Main),
 			false, Money.Coins(0.01m), 0, new());
 		var lists = new TransactionCoinsModel(result, Network.Main,
-			script => keys.TryGetKeyForScriptPubKey(script, out _), new[] { selfPayment.P2wpkhScript, unresolvedScript });
+			script => keys.TryGetKeyForScriptPubKey(script, out _),
+			new[] { selfPayment.P2wpkhScript, unresolvedScript }.ToDictionary(script => script, _ => LabelsArray.Empty));
 		Assert.False(Assert.Single(lists.Outputs, x => x.Address == selfPayment.P2wpkhScript.GetDestinationAddress(Network.Main)!.ToString()).IsChange);
 		Assert.True(Assert.Single(lists.Outputs, x => x.Address == change.P2wpkhScript.GetDestinationAddress(Network.Main)!.ToString()).IsChange);
 		var external = Assert.Single(result.OuterWalletOutputs);
@@ -33,6 +36,45 @@ public class TransactionCoinsTests
 		Assert.False(externalRow.IsOwn || externalRow.IsChange);
 		Assert.Equal(external.Amount, externalRow.Amount);
 		Assert.DoesNotContain(lists.Outputs, x => x.Address == unresolvedScript.GetDestinationAddress(Network.Main)!.ToString());
+	}
+
+	[Fact]
+	public void PreviewShowsAllCurrentRecipientAndPendingChangeLabelsWithoutSavingThem()
+	{
+		var keys = ServiceFactory.CreateKeyManager();
+		var input = BitcoinFactory.CreateHdPubKey(keys);
+		var recipient = BitcoinFactory.CreateHdPubKey(keys, isInternal: true);
+		var change = BitcoinFactory.CreateHdPubKey(keys, isInternal: true);
+		input.SetLabel("Dávid");
+		recipient.SetLabel("Dávid");
+		var transaction = BitcoinFactory.CreateSmartTransaction(TestRandom.Get(), 0,
+			new[] { Money.Coins(0.1m) }, new[] { (Money.Coins(1m), 20, input) },
+			new[] { (Money.Coins(0.2m), 20, recipient), (Money.Coins(0.69m), 20, change) });
+		var recipientLabels = new LabelsArray("Dávid", "Gabika");
+		var externalLabels = new LabelsArray("Alice", "Bob");
+		var changeLabels = LabelsArray.Merge(recipientLabels, externalLabels);
+		var result = new BuildTransactionResult(transaction, PSBT.FromTransaction(transaction.Transaction, Network.Main),
+			false, Money.Coins(0.01m), 0, new() { [recipient] = recipientLabels, [change] = changeLabels });
+		var external = Assert.Single(result.OuterWalletOutputs);
+		var lists = new TransactionCoinsModel(result, Network.Main, script => keys.TryGetKeyForScriptPubKey(script, out _),
+			new Dictionary<Script, LabelsArray> { [recipient.P2wpkhScript] = recipientLabels, [external.ScriptPubKey] = externalLabels });
+		Assert.Equal(recipientLabels, Assert.Single(lists.Outputs, x => x.ScriptPubKey == recipient.P2wpkhScript).Labels);
+		Assert.Equal(externalLabels, Assert.Single(lists.Outputs, x => x.ScriptPubKey == external.ScriptPubKey).Labels);
+		Assert.Equal(changeLabels, Assert.Single(lists.Outputs, x => x.IsChange).Labels);
+		Assert.Equal(new LabelsArray("Dávid"), Assert.Single(lists.Inputs).Labels);
+		Assert.Equal(new LabelsArray("Dávid"), recipient.Labels);
+		Assert.Empty(change.Labels);
+	}
+
+	[Fact]
+	public void PreviewDoesNotExposePendingLabelsFromAnotherWallet()
+	{
+		var transaction = BitcoinFactory.CreateSmartTransaction(TestRandom.Get(), ownInputCount: 1, ownOutputCount: 1);
+		var coin = Assert.Single(transaction.WalletOutputs);
+		var result = new BuildTransactionResult(transaction, PSBT.FromTransaction(transaction.Transaction, Network.Main),
+			false, Money.Satoshis(1000), 0, new() { [coin.HdPubKey] = new LabelsArray("Other wallet") });
+		var lists = new TransactionCoinsModel(result, Network.Main, _ => false, new Dictionary<Script, LabelsArray>());
+		Assert.All(lists.Outputs, x => Assert.Empty(x.Labels));
 	}
 
 	[Fact]
