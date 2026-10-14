@@ -16,6 +16,53 @@ namespace WalletWasabi.Tests.UnitTests.Transactions;
 
 public class TransactionFactoryTests
 {
+	[Theory]
+	[InlineData(10_000, false, true)]
+	[InlineData(9_999, false, false)]
+	[InlineData(10_001, false, false)]
+	[InlineData(0, true, false)]
+	[InlineData(9_900, true, true)]
+	[InlineData(9_899, true, false)]
+	[InlineData(9_950, true, true)]
+	[InlineData(10_001, true, false)]
+	public void PaymentOutputsMustMatchIntent(long actualAmount, bool subtractFee, bool valid)
+	{
+		using Key recipient = new();
+		using Key change = new();
+		var payments = new PaymentIntent(
+			new DestinationRequest(recipient.PubKey, Money.Satoshis(6_000)),
+			new DestinationRequest(recipient.PubKey, Money.Satoshis(4_000), subtractFee));
+		var tx = Transaction.Create(Network.Main);
+		if (actualAmount > 0)
+		{
+			tx.Outputs.Add(Money.Satoshis(actualAmount), recipient.PubKey);
+		}
+		tx.Outputs.Add(Money.Satoshis(1_000), change.PubKey);
+		void Check() => TransactionFactory.AssertPaymentOutputs(payments, tx.Outputs, Money.Satoshis(100), change.PubKey.ScriptPubKey);
+		if (valid)
+		{
+			Check();
+		}
+		else
+		{
+			Assert.Throws<InvalidOperationException>(Check);
+		}
+	}
+
+	[Fact]
+	public void PaymentOutputsRejectUnexpectedDestination()
+	{
+		using Key recipient = new();
+		using Key change = new();
+		using Key unexpected = new();
+		var payments = new PaymentIntent(recipient.PubKey, Money.Satoshis(10_000));
+		var tx = Transaction.Create(Network.Main);
+		tx.Outputs.Add(Money.Satoshis(10_000), recipient.PubKey);
+		tx.Outputs.Add(Money.Satoshis(1_000), unexpected.PubKey);
+		Assert.Throws<InvalidOperationException>(() =>
+			TransactionFactory.AssertPaymentOutputs(payments, tx.Outputs, Money.Satoshis(100), change.PubKey.ScriptPubKey));
+	}
+
 	[Fact]
 	public void InsufficientBalance()
 	{

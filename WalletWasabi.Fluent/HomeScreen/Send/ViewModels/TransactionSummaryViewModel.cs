@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+using NBitcoin;
 using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Blockchain.TransactionBuilding;
 using WalletWasabi.Fluent.Common.ViewModels;
@@ -23,6 +26,7 @@ public partial class TransactionSummaryViewModel : ViewModelBase
 	[AutoNotify] private Amount? _amount;
 	[AutoNotify] private double? _amountDiff;
 	[AutoNotify] private double? _feeDiff;
+	[AutoNotify] private IReadOnlyList<RecipientSummaryViewModel> _recipients = Array.Empty<RecipientSummaryViewModel>();
 
 	public TransactionSummaryViewModel(TransactionPreviewViewModel parent, WalletModel wallet, TransactionInfo info, bool isPreview = false)
 	{
@@ -32,6 +36,7 @@ public partial class TransactionSummaryViewModel : ViewModelBase
 		AddressText = info.Destination.ToString();
 		PayJoinUrl = info.PayJoinClient?.PaymentUrl.AbsoluteUri;
 		IsPayJoin = PayJoinUrl is not null;
+		IsPayToMany = info.IsPayToMany;
 	}
 
 	public TransactionPreviewViewModel Parent { get; }
@@ -43,6 +48,7 @@ public partial class TransactionSummaryViewModel : ViewModelBase
 	public string? PayJoinUrl { get; }
 
 	public bool IsPayJoin { get; }
+	public bool IsPayToMany { get; }
 
 	public void UpdateTransaction(BuildTransactionResult transactionResult, TransactionInfo info)
 	{
@@ -50,7 +56,12 @@ public partial class TransactionSummaryViewModel : ViewModelBase
 
 		ConfirmationTime = _wallet.Transactions.TryEstimateConfirmationTime(info);
 
-		var destinationAmount = _transaction.CalculateDestinationAmount(info.Destination);
+		Money RecipientAmount(IDestination destination) => info.IsPayToMany
+			? _transaction.CalculatePaymentAmount(destination)
+			: _transaction.CalculateDestinationAmount(destination);
+		Recipients = info.AllRecipients.Select(x => new RecipientSummaryViewModel(
+			x.Destination.ToString() ?? string.Empty, x.Label, UiContext.AmountProvider.Create(RecipientAmount(x.Destination)))).ToArray();
+		Money destinationAmount = info.AllRecipients.Select(x => RecipientAmount(x.Destination)).Sum();
 
 		Amount = UiContext.AmountProvider.Create(destinationAmount);
 		Fee = UiContext.AmountProvider.Create(_transaction.Fee);

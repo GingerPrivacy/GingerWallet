@@ -96,7 +96,7 @@ public class PrivacySuggestionsModel
 
 	private IEnumerable<PrivacyItem> VerifyLabels(Parameters parameters)
 	{
-		var warning = GetLabelWarning(parameters.Transaction, parameters.TransactionInfo.Recipient);
+		var warning = GetLabelWarning(parameters.Transaction, parameters.TransactionInfo.AllRecipientLabels);
 
 		if (warning is not null)
 		{
@@ -137,9 +137,9 @@ public class PrivacySuggestionsModel
 	{
 		var canModifyTransactionAmount = !parameters.TransactionInfo.IsPayJoin && !parameters.TransactionInfo.IsFixedAmount;
 
-		var transactionLabels = parameters.Transaction.SpentCoins.SelectMany(x => x.GetLabels(_wallet.AnonScoreTarget));
+		var transactionLabels = new LabelsArray(parameters.Transaction.SpentCoins.SelectMany(x => x.GetLabels(_wallet.AnonScoreTarget)));
 		var onlyKnownByRecipient =
-			parameters.TransactionInfo.Recipient.Equals(new LabelsArray(transactionLabels), StringComparer.OrdinalIgnoreCase);
+			parameters.TransactionInfo.AllRecipients.All(x => x.Label.Equals(transactionLabels, StringComparer.OrdinalIgnoreCase));
 
 		var foundNonPrivate = !onlyKnownByRecipient &&
 		                      parameters.Transaction.SpentCoins.Any(x => x.GetPrivacyLevel(_wallet.AnonScoreTarget) == PrivacyLevel.NonPrivate);
@@ -157,7 +157,7 @@ public class PrivacySuggestionsModel
 			yield return new SemiPrivateFundsWarning();
 		}
 
-		if (!parameters.IncludeSuggestions)
+		if (!parameters.IncludeSuggestions || parameters.TransactionInfo.IsPayToMany)
 		{
 			// Return early, to avoid needless compute.
 			yield break;
@@ -256,13 +256,14 @@ public class PrivacySuggestionsModel
 
 	private async IAsyncEnumerable<PrivacyItem> VerifyChangeAsync(Parameters parameters, CancellationTokenSource linkedCts)
 	{
-		var hasChange = parameters.Transaction.InnerWalletOutputs.Any(x => x.ScriptPubKey != parameters.TransactionInfo.Destination.ScriptPubKey);
+		var destinationScripts = parameters.TransactionInfo.AllRecipients.Select(x => x.Destination.ScriptPubKey).ToHashSet();
+		var hasChange = parameters.Transaction.InnerWalletOutputs.Any(x => !destinationScripts.Contains(x.ScriptPubKey));
 
 		if (hasChange)
 		{
 			yield return new CreatesChangeWarning();
 
-			if (parameters.IncludeSuggestions && !parameters.TransactionInfo.IsFixedAmount && !parameters.TransactionInfo.IsPayJoin)
+			if (parameters.IncludeSuggestions && !parameters.TransactionInfo.IsFixedAmount && !parameters.TransactionInfo.IsPayJoin && !parameters.TransactionInfo.IsPayToMany)
 			{
 				var suggestions = await CreateChangeAvoidanceSuggestionsAsync(parameters.TransactionInfo, parameters.Transaction, linkedCts).ConfigureAwait(false);
 				foreach (var suggestion in suggestions)

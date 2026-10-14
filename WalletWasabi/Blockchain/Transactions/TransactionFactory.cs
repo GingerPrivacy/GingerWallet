@@ -116,10 +116,11 @@ public class TransactionFactory
 		}
 
 		HdPubKey? changeHdPubKey;
+		Script changeScript;
 
 		if (payments.TryGetCustomRequest(out DestinationRequest? customChange))
 		{
-			var changeScript = customChange.Destination.ScriptPubKey;
+			changeScript = customChange.Destination.ScriptPubKey;
 			KeyManager.TryGetKeyForScriptPubKey(changeScript, out HdPubKey? hdPubKey);
 			changeHdPubKey = hdPubKey;
 
@@ -140,8 +141,8 @@ public class TransactionFactory
 		else
 		{
 			changeHdPubKey = KeyManager.GetNextChangeKey();
-
-			builder.SetChange(changeHdPubKey.GetAssumedScriptPubKey());
+			changeScript = changeHdPubKey.GetAssumedScriptPubKey();
+			builder.SetChange(changeScript);
 		}
 
 		builder.SendEstimatedFees(parameters.FeeRate);
@@ -161,6 +162,8 @@ public class TransactionFactory
 		{
 			throw new InvalidOperationException("Impossible to get the fees of the PSBT, this should never happen.");
 		}
+
+		AssertPaymentOutputs(payments, psbt.GetGlobalTransaction().Outputs, fee, changeScript);
 
 		if (!psbt.TryGetVirtualSize(out var vSize))
 		{
@@ -289,6 +292,28 @@ public class TransactionFactory
 
 		Logger.LogDebug($"Built tx: {totalOutgoingAmountNoFee.ToString(fplus: false, trimExcessZero: true)} BTC. Fee: {fee.Satoshi} sats. Vsize: {vSize} vBytes. Fee/Total ratio: {feePercentage:0.#}%. Tx hash: {tx.GetHash()}.");
 		return new BuildTransactionResult(smartTransaction, psbt, sign, fee, feePercentage, hdPubKeysWithNewLabels);
+	}
+
+	internal static void AssertPaymentOutputs(PaymentIntent payments, TxOutList outputs, Money fee, Script changeScript)
+	{
+		foreach (var group in payments.Requests.GroupBy(r => r.Destination.ScriptPubKey)
+			.Where(g => g.Key != changeScript && g.All(r => r.Amount.Type == MoneyRequestType.Value)))
+		{
+			var expected = group.Sum(r => r.Amount.Amount);
+			var actual = outputs.Where(o => o.ScriptPubKey == group.Key).Sum(o => o.Value);
+			var deducted = expected - actual;
+			if (actual <= Money.Zero || deducted != Money.Zero &&
+				(!group.Any(r => r.Amount.SubtractFee) || deducted < Money.Zero || deducted > fee))
+			{
+				throw new InvalidOperationException("Transaction output amount does not match the payment intent.");
+			}
+		}
+
+		var destinations = payments.Requests.Select(r => r.Destination.ScriptPubKey).Append(changeScript).ToHashSet();
+		if (outputs.Any(o => !destinations.Contains(o.ScriptPubKey)))
+		{
+			throw new InvalidOperationException("Transaction output destination does not match the payment intent.");
+		}
 	}
 
 	private PSBT TryNegotiatePayjoin(IPayjoinClient payjoinClient, TransactionBuilder builder, PSBT psbt, HdPubKey? changeHdPubKey)

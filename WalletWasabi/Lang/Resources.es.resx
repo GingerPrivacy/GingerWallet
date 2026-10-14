@@ -2215,4 +2215,22 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Activar o desactivar el uso de este monedero para la Caza de Secretos.</value>
   </data>
+  <data name="BatchPayments" xml:space="preserve">
+    <value>Pagar a varios destinatarios</value>
+  </data>
+  <data name="BatchPrivacyCaption" xml:space="preserve">
+    <value>Estos pagos comparten una transacción y pueden vincularse entre sí. Introduce direcciones de Bitcoin; los URI de pago y Payjoin están disponibles al enviar a un único destinatario.</value>
+  </data>
+  <data name="BatchAddPayment" xml:space="preserve">
+    <value>Añadir otro pago</value>
+  </data>
+  <data name="BatchSubtractFee" xml:space="preserve">
+    <value>Restar la comisión de la transacción del primer pago</value>
+  </data>
+  <data name="BatchDuplicateAddress" xml:space="preserve">
+    <value>Cada pago debe usar una dirección de Bitcoin diferente.</value>
+  </data>
+  <data name="BatchAmountPrecision" xml:space="preserve">
+    <value>Los importes pueden tener como máximo ocho decimales.</value>
+  </data>
 </root>

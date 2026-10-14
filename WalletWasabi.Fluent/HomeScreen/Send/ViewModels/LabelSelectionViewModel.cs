@@ -68,8 +68,8 @@ public partial class LabelSelectionViewModel : ViewModelBase
 		var privateAndSemiPrivateAndUnknownPockets = privateAndSemiPrivatePockets.Union(unknownPockets).ToArray();
 		var privateAndSemiPrivateAndKnownPockets = privateAndSemiPrivatePockets.Union(knownPockets).ToArray();
 
-		var knownByRecipientPockets = knownPockets.Where(pocket => pocket.Labels.Any(label => _info.Recipient.Contains(label, StringComparer.OrdinalIgnoreCase))).ToArray();
-		var onlyKnownByRecipientPockets = knownByRecipientPockets.Where(pocket => pocket.Labels.Equals(_info.Recipient, StringComparer.OrdinalIgnoreCase)).ToArray();
+		var knownByRecipientPockets = knownPockets.Where(pocket => pocket.Labels.Any(label => _info.AllRecipientLabels.Contains(label, StringComparer.OrdinalIgnoreCase))).ToArray();
+		var onlyKnownByRecipientPockets = knownByRecipientPockets.Where(pocket => pocket.Labels.Equals(_info.AllRecipientLabels, StringComparer.OrdinalIgnoreCase)).ToArray();
 
 		if (await IsPocketEnoughAsync(onlyKnownByRecipientPockets))
 		{
@@ -86,7 +86,7 @@ public partial class LabelSelectionViewModel : ViewModelBase
 			return privateAndSemiPrivatePockets;
 		}
 
-		var (result, pockets) = await TryGetBestKnownByRecipientPocketsWithPrivateAndSemiPrivatePocketsAsync(knownByRecipientPockets, privateAndSemiPrivatePockets, _info.Recipient);
+		var (result, pockets) = await TryGetBestKnownByRecipientPocketsWithPrivateAndSemiPrivatePocketsAsync(knownByRecipientPockets, privateAndSemiPrivatePockets, _info.AllRecipientLabels);
 		if (result)
 		{
 			return pockets;
@@ -290,7 +290,7 @@ public partial class LabelSelectionViewModel : ViewModelBase
 		var usedPockets = GetUsedPockets();
 		var usedPocketsLabels = new LabelsArray(usedPockets.SelectMany(p => p.Labels));
 
-		if (usedPocketsLabels != _info.Recipient || !await IsPocketEnoughAsync(usedPockets))
+		if (usedPocketsLabels != _info.AllRecipientLabels || !await IsPocketEnoughAsync(usedPockets))
 		{
 			isPrivateNeeded = true;
 

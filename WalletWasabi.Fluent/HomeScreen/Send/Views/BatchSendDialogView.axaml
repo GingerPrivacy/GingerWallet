@@ -1,0 +1,59 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:lang="using:WalletWasabi.Lang"
+             xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.HomeScreen.Send.ViewModels"
+             x:DataType="viewModels:BatchSendDialogViewModel"
+             x:CompileBindings="True"
+             x:Class="WalletWasabi.Fluent.HomeScreen.Send.Views.BatchSendDialogView">
+  <ContentArea Title="{Binding Title}" Caption="{x:Static lang:Resources.BatchPrivacyCaption}"
+               EnableNext="True" NextContent="{x:Static lang:Resources.Continue}"
+               EnableCancel="{Binding EnableCancel}" EnableBack="{Binding EnableBack}"
+               ScrollViewer.VerticalScrollBarVisibility="Auto">
+    <StackPanel Spacing="15">
+      <ItemsControl ItemsSource="{Binding Recipients}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate x:DataType="viewModels:RecipientRowViewModel">
+            <StackPanel Spacing="10" Margin="0 0 0 20">
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBox Text="{Binding To}" MaxLength="100" Classes="monoSpaced"
+                         Watermark="{x:Static lang:Resources.Address}">
+                  <TextBox.InnerRightContent>
+                    <StackPanel Orientation="Horizontal" Spacing="10" Margin="10 0">
+                      <AnimatedButton Command="{Binding PasteCommand}" NormalIcon="{StaticResource paste_regular}"
+                                      ClickIcon="{StaticResource copy_confirmed}" />
+                      <AnimatedButton Command="{Binding QrCommand}" IsVisible="{Binding IsQrButtonVisible}"
+                                      NormalIcon="{StaticResource qr_code_regular}" ToolTip.Tip="{x:Static lang:Resources.ScanQRCode}" />
+                    </StackPanel>
+                  </TextBox.InnerRightContent>
+                </TextBox>
+                <Button Grid.Column="1" Classes="plainHyperlink" Content="{x:Static lang:Resources.Delete}"
+                        Command="{Binding RemoveCommand}" IsEnabled="{Binding CanRemove}" Margin="10 0 0 0" />
+              </Grid>
+              <Grid ColumnDefinitions="*,Auto">
+                <DualCurrencyEntryBox AmountBtc="{Binding AmountBtc}" ConversionRate="{Binding ExchangeRate}"
+                                      CurrencyCode="BTC" ConversionCurrencyCode="{Binding FiatTicker}"
+                                      ValidatePasteBalance="False" />
+                <Button Grid.Column="1" Classes="plainHyperlink" Content="{x:Static lang:Resources.Max}"
+                        Command="{Binding InsertMaxCommand}" Margin="10 0 0 0" />
+              </Grid>
+              <TagsBox Watermark="{x:Static lang:Resources.LabelsWatermarkText}" TagSeparator=","
+                       SuggestionsAreCaseSensitive="True" RestrictInputToSuggestions="False"
+                       Items="{Binding SuggestionLabels.Labels}" TopItems="{Binding SuggestionLabels.TopSuggestions}"
+                       Suggestions="{Binding SuggestionLabels.Suggestions}" MaxTextLength="{StaticResource MaxLabelLength}"
+                       IsCurrentTextValid="{Binding SuggestionLabels.IsCurrentTextValid, Mode=OneWayToSource}"
+                       ForceAdd="{Binding SuggestionLabels.ForceAdd, Mode=TwoWay}" />
+              <TextBlock Text="{Binding Error}" Foreground="{DynamicResource SystemAccentColor}"
+                         TextWrapping="Wrap" IsVisible="{Binding !!Error}" />
+              <Separator />
+            </StackPanel>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+      <Button Classes="plainHyperlink" Content="{x:Static lang:Resources.BatchAddPayment}"
+              Command="{Binding AddRecipientCommand}" HorizontalAlignment="Center" />
+      <CheckBox IsChecked="{Binding SubtractFee}" Content="{x:Static lang:Resources.BatchSubtractFee}" />
+      <TextBlock Text="{Binding Error}" Foreground="{DynamicResource SystemAccentColor}"
+                 TextWrapping="Wrap" IsVisible="{Binding !!Error}" />
+    </StackPanel>
+  </ContentArea>
+</UserControl>

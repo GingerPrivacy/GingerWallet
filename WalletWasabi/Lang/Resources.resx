@@ -2217,4 +2217,22 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Enable/disable the use of this wallet for Secret Hunt.</value>
   </data>
+  <data name="BatchPayments" xml:space="preserve">
+    <value>Pay to multiple recipients</value>
+  </data>
+  <data name="BatchPrivacyCaption" xml:space="preserve">
+    <value>These payments share one transaction and can be linked to each other. Enter Bitcoin addresses; payment URIs and Payjoin are available in the single-recipient flow.</value>
+  </data>
+  <data name="BatchAddPayment" xml:space="preserve">
+    <value>Add another payment</value>
+  </data>
+  <data name="BatchSubtractFee" xml:space="preserve">
+    <value>Subtract the transaction fee from the first payment</value>
+  </data>
+  <data name="BatchDuplicateAddress" xml:space="preserve">
+    <value>Each payment must use a different Bitcoin address.</value>
+  </data>
+  <data name="BatchAmountPrecision" xml:space="preserve">
+    <value>Amounts may have at most eight decimal places.</value>
+  </data>
 </root>

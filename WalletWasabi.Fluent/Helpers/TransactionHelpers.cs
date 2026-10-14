@@ -21,6 +21,22 @@ public static class TransactionHelpers
 {
 	public static BuildTransactionResult BuildTransaction(Wallet wallet, TransactionInfo transactionInfo, bool isPayJoin = false, bool tryToSign = true)
 	{
+		if (transactionInfo.IsPayToMany)
+		{
+			if (transactionInfo.IsPayJoin || transactionInfo.IsOptimized)
+			{
+				throw new InvalidOperationException("Batch payments cannot use Payjoin or changeless suggestions.");
+			}
+
+			return wallet.BuildTransaction(
+				wallet.Kitchen.SaltSoup(),
+				BuildPaymentIntent(transactionInfo),
+				FeeStrategy.CreateFromFeeRate(transactionInfo.FeeRate),
+				allowUnconfirmed: true,
+				allowedInputs: transactionInfo.Coins.Select(x => x.Outpoint),
+				tryToSign: tryToSign);
+		}
+
 		if (transactionInfo.IsOptimized)
 		{
 			return wallet.BuildChangelessTransaction(
@@ -55,15 +71,11 @@ public static class TransactionHelpers
 		string password,
 		out Money minimumAmount)
 	{
-		minimumAmount = transactionInfo.Amount;
+		minimumAmount = transactionInfo.TotalAmount;
 
 		try
 		{
-			var intent = new PaymentIntent(
-				destination: transactionInfo.Destination,
-				amount: transactionInfo.Amount,
-				subtractFee: transactionInfo.SubtractFee,
-				label: transactionInfo.Recipient);
+			var intent = BuildPaymentIntent(transactionInfo);
 
 			var network = keyManager.GetNetwork();
 			var builder = new TransactionFactory(network, keyManager, allCoins, new EmptyTransactionStore(network), password);
@@ -95,6 +107,12 @@ public static class TransactionHelpers
 
 		return false;
 	}
+
+	public static PaymentIntent BuildPaymentIntent(TransactionInfo info) => new(
+		info.AllRecipients.Select((recipient, index) => new DestinationRequest(
+			recipient.Destination,
+			MoneyRequest.Create(recipient.Amount, subtractFee: index == 0 && info.SubtractFee),
+			recipient.Label)));
 
 	public static async Task<SmartTransaction> ParseTransactionAsync(string path, Network network)
 	{

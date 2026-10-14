@@ -55,6 +55,17 @@ public partial class TransactionInfo
 
 	public bool IsFixedAmount { get; init; }
 
+	public IReadOnlyList<RecipientInfo> AdditionalRecipients { get; init; } = Array.Empty<RecipientInfo>();
+
+	public bool IsPayToMany => AdditionalRecipients.Count > 0;
+
+	public IEnumerable<RecipientInfo> AllRecipients =>
+		new[] { new RecipientInfo(Destination, Amount, Recipient) }.Concat(AdditionalRecipients);
+
+	public Money TotalAmount => AllRecipients.Sum(x => x.Amount);
+
+	public LabelsArray AllRecipientLabels => new(AllRecipients.SelectMany(x => x.Label));
+
 	private void OnFeeChanged()
 	{
 		ChangelessCoins = Enumerable.Empty<SmartCoin>();
@@ -83,7 +94,8 @@ public partial class TransactionInfo
 			SubtractFee = SubtractFee,
 			IsOtherPocketSelectionPossible = IsOtherPocketSelectionPossible,
 			IsSelectedCoinModificationEnabled = IsSelectedCoinModificationEnabled,
-			IsFixedAmount = IsFixedAmount
+			IsFixedAmount = IsFixedAmount,
+			AdditionalRecipients = AdditionalRecipients
 		};
 	}
 }

@@ -50,6 +50,19 @@ public static class FeeHelpers
 		return maxFeeRate is not null;
 	}
 
+	public static bool TryGetMaxFeeRate(
+		Wallet wallet,
+		PaymentIntent payments,
+		FeeRate startingFeeRate,
+		IEnumerable<SmartCoin> coins,
+		[NotNullWhen(true)] out FeeRate? maxFeeRate)
+	{
+		maxFeeRate = SeekMaxFeeRate(startingFeeRate, feeRate => wallet.BuildTransaction(
+			wallet.Kitchen.SaltSoup(), payments, FeeStrategy.CreateFromFeeRate(feeRate),
+			allowUnconfirmed: true, allowedInputs: coins.Select(x => x.Outpoint), tryToSign: false));
+		return maxFeeRate is not null;
+	}
+
 	/// <summary>
 	/// SeekMaxFeeRate iteratively searches for the highest feasible fee rate
 	/// that allows the provided 'buildTransaction' action to succeed.
