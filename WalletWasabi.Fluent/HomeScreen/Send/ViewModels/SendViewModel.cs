@@ -104,7 +104,7 @@ public partial class SendViewModel : RoutableViewModel
 		AutoPasteCommand = ReactiveCommand.CreateFromTask(OnAutoPasteAsync);
 		InsertMaxCommand = ReactiveCommand.Create(() => AmountBtc = parameters.AvailableCoins.TotalAmount().ToDecimal(MoneyUnit.BTC));
 		QrCommand = ReactiveCommand.Create(ShowQrCameraAsync);
-		PayToManyCommand = ReactiveCommand.CreateFromTask(OnPayToManyAsync,
+		PayToManyCommand = ReactiveCommand.Create(OnPayToMany,
 			this.WhenAnyValue(x => x.IsPayJoin, x => x.IsFixedAmount)
 				.Select(x => !x.Item1 && !x.Item2 && !_continueWithFixedAmount));
 
@@ -152,14 +152,14 @@ public partial class SendViewModel : RoutableViewModel
 
 	public ICommand PayToManyCommand { get; }
 
-	private async Task OnPayToManyAsync()
+	private void OnPayToMany()
 	{
-		var transactionInfo = await UiContext.Navigate().To().BatchSendDialog(
-			_walletModel, _parameters.AvailableAmount, To, AmountBtc, new LabelsArray(SuggestionLabels.Labels.ToArray())).GetResultAsync();
-		if (transactionInfo is null)
-		{
-			return;
-		}
+		UiContext.Navigate().To().BatchSendDialog(_walletModel, _parameters.AvailableAmount, To, AmountBtc,
+			new LabelsArray(SuggestionLabels.Labels.ToArray()), OnBatchSendNextAsync);
+	}
+
+	private async Task OnBatchSendNextAsync(TransactionInfo transactionInfo)
+	{
 		if (_coinJoinManager is { } coinJoinManager)
 		{
 			await coinJoinManager.WalletEnteredSendingAsync(_wallet);

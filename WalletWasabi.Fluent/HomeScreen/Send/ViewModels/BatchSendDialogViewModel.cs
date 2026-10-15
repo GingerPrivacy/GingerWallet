@@ -3,35 +3,39 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using NBitcoin;
 using ReactiveUI;
 using WalletWasabi.Blockchain.Analysis.Clustering;
-using WalletWasabi.Fluent.Common.ViewModels.DialogBase;
 using WalletWasabi.Fluent.HomeScreen.Send.Models;
 using WalletWasabi.Fluent.Models.Wallets;
+using WalletWasabi.Fluent.Navigation.ViewModels;
 using WalletWasabi.Lang;
 
 namespace WalletWasabi.Fluent.HomeScreen.Send.ViewModels;
 
 [NavigationMetaData(NavigationTarget = NavigationTarget.DialogScreen)]
-public partial class BatchSendDialogViewModel : DialogViewModelBase<TransactionInfo?>
+public partial class BatchSendDialogViewModel : RoutableViewModel
 {
 	private readonly WalletModel _wallet;
 	private readonly Money _availableAmount;
+	private readonly Func<TransactionInfo, Task> _onNext;
 	[AutoNotify] private bool _canContinue;
 	[AutoNotify] private bool _subtractFee;
 	[AutoNotify] private string? _error;
 
-	public BatchSendDialogViewModel(WalletModel wallet, Money availableAmount, string address, decimal? amount, LabelsArray labels)
+	public BatchSendDialogViewModel(WalletModel wallet, Money availableAmount, string address, decimal? amount, LabelsArray labels,
+		Func<TransactionInfo, Task> onNext)
 	{
 		_wallet = wallet;
 		_availableAmount = availableAmount;
+		_onNext = onNext;
 		Title = Resources.BatchPayments;
 		SetupCancel(true, true, true);
 		EnableBack = true;
 		AddRecipientCommand = ReactiveCommand.Create(AddRecipient);
-		NextCommand = ReactiveCommand.Create(OnNext, this.WhenAnyValue(x => x.CanContinue));
+		NextCommand = ReactiveCommand.CreateFromTask(OnNextAsync, this.WhenAnyValue(x => x.CanContinue));
 		var first = AddRecipient();
 		first.To = address;
 		first.AmountBtc = amount;
@@ -110,7 +114,7 @@ public partial class BatchSendDialogViewModel : DialogViewModelBase<TransactionI
 		CanContinue = recipients is { Count: >= 2 } && Error is null;
 	}
 
-	private void OnNext()
+	private async Task OnNextAsync()
 	{
 		ValidateRecipients();
 		if (!CanContinue || GetRecipients() is not { } recipients)
@@ -122,7 +126,7 @@ public partial class BatchSendDialogViewModel : DialogViewModelBase<TransactionI
 		{
 			return;
 		}
-		Close(DialogResultKind.Normal, new TransactionInfo(destination, _wallet.Settings.AnonScoreTarget)
+		await _onNext(new TransactionInfo(destination, _wallet.Settings.AnonScoreTarget)
 		{
 			Amount = first.Amount,
 			Recipient = first.Label,
