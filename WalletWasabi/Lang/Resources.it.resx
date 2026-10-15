@@ -1495,7 +1495,7 @@
     <value>Tempo di Conferma Stimato: {0}</value>
   </data>
   <data name="FeeRateFormatted" xml:space="preserve">
-    <value>Tariffa: {0:0} sat/vByte</value>
+    <value>Tariffa: {0:0.##} sat/vByte</value>
   </data>
   <data name="Fastest" xml:space="preserve">
     <value>più veloce</value>
