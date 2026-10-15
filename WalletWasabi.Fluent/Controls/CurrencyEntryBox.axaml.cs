@@ -411,7 +411,7 @@ public class CurrencyEntryBox : TextBox
 		}
 		else if (change.Property == WatermarkProperty)
 		{
-			PseudoClasses.Set(":approxwatermark", change.GetNewValue<string>().StartsWith('≈'));
+			PseudoClasses.Set(":approxwatermark", change.GetNewValue<string?>()?.StartsWith('≈') == true);
 		}
 	}
 }

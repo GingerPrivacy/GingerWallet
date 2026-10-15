@@ -265,6 +265,53 @@ public class BatchSendNavigationTests : IDisposable
 			return Task.CompletedTask;
 		});
 
+	[AvaloniaTheory]
+	[InlineData(false)]
+	[InlineData(true)]
+	public Task FixedAmountPaymentUriKeepsSendViewStableWhenEnteredAndCleared(bool payjoin) =>
+		WithEditorAsync($"fixed-uri-view-{payjoin}", (editor, _, address) =>
+		{
+			var destination = address();
+			var view = new SendView { DataContext = editor };
+			var window = new Window { Content = view, Width = 1200, Height = 1000 };
+			try
+			{
+				window.Show();
+				Dispatcher.UIThread.RunJobs();
+				var toField = view.FindControl<TextBox>("toTb")!;
+				var amountField = view.FindControl<DualCurrencyEntryBox>("amountTb")!;
+				toField.Text = $"bitcoin:{destination}?amount=0.00001{(payjoin ? "&pj=https://payjoin.invalid/pj" : "")}";
+				Dispatcher.UIThread.RunJobs();
+				Assert.Equal(destination, editor.To);
+				Assert.Equal(0.00001m, editor.AmountBtc);
+				Assert.True(editor.IsFixedAmount);
+				Assert.True(amountField.IsReadOnly);
+				Assert.Equal(payjoin, editor.IsPayJoin);
+				Assert.Equal(payjoin ? "https://payjoin.invalid/pj" : null, editor.PayJoinEndPoint);
+				Assert.False(editor.PayToManyCommand.CanExecute(null));
+				Capture(window, payjoin ? "single-payjoin-uri" : "single-fixed-amount-uri");
+				toField.Text = "";
+				Dispatcher.UIThread.RunJobs();
+				Assert.Empty(editor.To);
+				Assert.Equal(0.00001m, editor.AmountBtc);
+				Assert.False(editor.IsFixedAmount);
+				Assert.False(amountField.IsReadOnly);
+				Assert.False(editor.IsPayJoin);
+				Assert.Null(editor.PayJoinEndPoint);
+				Assert.True(editor.PayToManyCommand.CanExecute(null));
+				editor.PayToManyCommand.Execute(null);
+				Dispatcher.UIThread.RunJobs();
+				Assert.True(editor.IsPayToMany);
+				Assert.Equal(2, editor.Recipients.Count);
+				Assert.Equal(0.00001m, editor.Recipients[0].AmountBtc);
+			}
+			finally
+			{
+				window.Close();
+			}
+			return Task.CompletedTask;
+		});
+
 	[AvaloniaFact]
 	public Task SinglePaymentUriStillParsesFixedAmountAndPreventsAddingRecipients() =>
 		WithEditorAsync("payment-uri", async (editor, _, address) =>

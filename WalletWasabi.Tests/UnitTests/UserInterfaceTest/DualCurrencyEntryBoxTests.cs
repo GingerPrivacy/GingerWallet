@@ -24,6 +24,22 @@ public class DualCurrencyEntryBoxTests : IDisposable
 
 	public void Dispose() => Resources.Culture = _previousCulture;
 
+	[AvaloniaFact]
+	public void ClearingWatermarkRemovesApproximateState()
+	{
+		var entry = new CurrencyEntryBox { Watermark = "≈ 0 HUF" };
+		Assert.Contains(":approxwatermark", entry.Classes);
+
+		entry.Watermark = null;
+
+		Assert.Null(entry.Watermark);
+		Assert.DoesNotContain(":approxwatermark", entry.Classes);
+		entry.Watermark = "0 BTC";
+		Assert.DoesNotContain(":approxwatermark", entry.Classes);
+		entry.Watermark = "≈ 0 HUF";
+		Assert.Contains(":approxwatermark", entry.Classes);
+	}
+
 	[AvaloniaTheory]
 	[InlineData("1000", 26455000, 3780)]
 	[InlineData("1", 3, 33333333)]
