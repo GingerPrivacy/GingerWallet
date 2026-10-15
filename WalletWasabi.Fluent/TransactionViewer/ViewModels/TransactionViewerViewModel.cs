@@ -39,7 +39,6 @@ public partial class TransactionViewerViewModel : ReactiveObject, IDisposable
 	}
 
 	public string TransactionId { get; }
-	public string ShortTransactionId => Shorten(TransactionId);
 	public string Date { get; }
 	public string Status { get; }
 	public string VirtualSize { get; }
@@ -81,7 +80,6 @@ public partial class TransactionViewerViewModel : ReactiveObject, IDisposable
 
 	internal static Money? Total(IReadOnlyList<TransactionCoinRow> rows) => rows.All(r => r.Amount is not null) ? rows.Sum(r => r.Amount) : null;
 	private static string FormatTotal(IReadOnlyList<TransactionCoinRow> rows) => Total(rows)?.ToFormattedString(addTicker: true) ?? Resources.Unknown;
-	internal static string Shorten(string value) => value.Length > 24 ? $"{value[..12]}…{value[^8..]}" : value;
 
 	internal static IObservable<string> FormatFiat(Money? amount, IObservable<decimal> exchangeRate) => exchangeRate
 		.Select(rate => amount is { } money && rate > 0

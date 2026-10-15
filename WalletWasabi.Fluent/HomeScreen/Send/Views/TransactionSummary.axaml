@@ -26,7 +26,7 @@
     </Style>
   </UserControl.Styles>
 
-  <StackPanel Spacing="15">
+  <StackPanel Spacing="10">
 
     <!-- Amount -->
     <DockPanel>
@@ -91,7 +91,7 @@
     <ItemsControl ItemsSource="{Binding Recipients}" IsVisible="{Binding IsPayToMany}">
       <ItemsControl.ItemTemplate>
         <DataTemplate x:DataType="viewModels:RecipientSummaryViewModel">
-          <StackPanel Spacing="5" Margin="0 0 0 15">
+          <StackPanel Spacing="5">
             <PreviewItem Icon="{StaticResource transceive_regular}"
                          CopyableContent="{Binding Address}">
               <PreviewItem.Label>
@@ -127,7 +127,7 @@
         </Viewbox>
       </Button>
 
-      <StackPanel Spacing="10">
+      <StackPanel Spacing="8">
         <PreviewItem Icon="{StaticResource timer_regular}"
                      Label="{x:Static lang:Resources.ExpectedConfirmationTime}"
                      IsVisible="{Binding !IsCustomFeeUsed}"

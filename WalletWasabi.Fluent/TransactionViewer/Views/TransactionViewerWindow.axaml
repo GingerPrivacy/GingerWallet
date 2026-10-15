@@ -49,7 +49,7 @@
         <StackPanel Spacing="8">
           <TextBlock Text="{x:Static lang:Resources.Transaction}" FontSize="30" FontWeight="SemiBold" />
           <StackPanel Orientation="Horizontal" Spacing="10">
-            <TextBlock Text="{Binding ShortTransactionId}" VerticalAlignment="Center" FontSize="16" />
+            <TextBlock Text="{Binding TransactionId}" VerticalAlignment="Center" FontSize="16" />
             <Button Classes="copy" Click="Copy_OnClick" Tag="{Binding TransactionId}">
               <PathIcon Data="{StaticResource copy_regular}" Width="16" Height="16" />
             </Button>
