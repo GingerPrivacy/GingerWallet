@@ -2,7 +2,7 @@
 # extracts the required Tor runtime files, and replaces the bundled Tor binaries.
 #
 # Examples:
-# 1] .\UpgradeTorBinaries.ps1 -version "15.0.17"
+# 1] .\UpgradeTorBinaries.ps1 -version "15.0.17" -linuxArm64Version "16.0a7"
 # 2] .\UpgradeTorBinaries.ps1 -version "15.0.17" -skipDownloading
 #
 # Requirements:
@@ -13,6 +13,7 @@
 [CmdletBinding()]
 param(
   [Parameter(Mandatory=$true)] [string] $version,
+  [Parameter(Mandatory=$false)] [string] $linuxArm64Version = "16.0a7",
   [Parameter(Mandatory=$false)] [Switch] $skipDownloading,
   [Parameter(Mandatory=$false)] [Alias("skipExtractingBrowserArchives", "skipExtractingTorBinaries")] [Switch] $skipExtractingArchives,
   [Parameter(Mandatory=$false)] [Switch] $skipReplacingTorBinaries,
@@ -21,7 +22,8 @@ param(
 Set-StrictMode -Version 3
 $ErrorActionPreference = "Stop"
 
-$distUri = "https://dist.torproject.org/torbrowser/${version}"
+$distUri = "https://archive.torproject.org/tor-package-archive/torbrowser/${version}"
+$linuxArm64DistUri = "https://archive.torproject.org/tor-package-archive/torbrowser/${linuxArm64Version}"
 $checksumFileName = "sha256sums-signed-build.txt"
 $checksumSignatureFileName = "${checksumFileName}.asc"
 $signingKeyFingerprint = "EF6E286DDA85EA2A4BA7DE684E2C6E8793298290"
@@ -38,6 +40,16 @@ $platforms = @(
     Name = "linux-x64"
     Package = "tor-expert-bundle-linux-x86_64-${version}.tar.gz"
     RuntimeFiles = @("libcrypto.so.3", "libevent-2.1.so.7", "libssl.so.3", "tor")
+  },
+  @{
+    Name = "linux-arm64"
+    Package = "tor-browser-linux-aarch64-${linuxArm64Version}.tar.xz"
+    PackageUri = "${linuxArm64DistUri}/tor-browser-linux-aarch64-${linuxArm64Version}.tar.xz"
+    Signature = "tor-browser-linux-aarch64-${linuxArm64Version}.tar.xz.asc"
+    SourceTorPath = "tor-browser/Browser/TorBrowser/Tor"
+    LicensePlatform = "linux-x64"
+    LicensePath = "docs/tor.txt"
+    RuntimeFiles = @("libcrypto.so.3", "libevent-2.1.so.7", "libssl.so.3", "libstdc++", "tor")
   },
   @{
     Name = "osx-x64"
@@ -121,6 +133,15 @@ function Assert-ChecksumSignature {
   Invoke-CheckedCommand "gpg" @("--batch", "--homedir", $gnupgHome, "--verify", $checksumSignatureFileName, $checksumFileName)
 }
 
+function Assert-DetachedSignature {
+  param(
+    [Parameter(Mandatory=$true)] [string] $signatureFilePath,
+    [Parameter(Mandatory=$true)] [string] $filePath)
+
+  $gnupgHome = Join-Path (Get-Location) "gnupg"
+  Invoke-CheckedCommand "gpg" @("--batch", "--homedir", $gnupgHome, "--verify", $signatureFilePath, $filePath)
+}
+
 function Get-ExpectedHashes {
   $hashes = @{}
 
@@ -156,7 +177,8 @@ function Copy-RuntimeFiles {
   param([Parameter(Mandatory=$true)] [hashtable] $platform)
 
   $platformName = $platform.Name
-  $sourceTorDirectory = Join-Path "Extracted" $platformName "tor"
+  $sourceTorPath = if ($platform.ContainsKey("SourceTorPath")) { $platform.SourceTorPath } else { "tor" }
+  $sourceTorDirectory = Join-Path (Join-Path "Extracted" $platformName) $sourceTorPath
   $destinationDirectory = Join-Path "Tor" $platformName
   New-Item -Path $destinationDirectory -ItemType Directory -Force | Out-Null
 
@@ -166,10 +188,12 @@ function Copy-RuntimeFiles {
       throw "Extracted runtime file missing: ${sourcePath}"
     }
 
-    Copy-Item -LiteralPath $sourcePath -Destination $destinationDirectory -Force
+    Copy-Item -LiteralPath $sourcePath -Destination $destinationDirectory -Force -Recurse
   }
 
-  $licensePath = Join-Path "Extracted" $platformName "docs" "tor.txt"
+  $licensePlatform = if ($platform.ContainsKey("LicensePlatform")) { $platform.LicensePlatform } else { $platformName }
+  $relativeLicensePath = if ($platform.ContainsKey("LicensePath")) { $platform.LicensePath } else { "docs/tor.txt" }
+  $licensePath = Join-Path (Join-Path "Extracted" $licensePlatform) $relativeLicensePath
   if (!(Test-Path -LiteralPath $licensePath)) {
     throw "Extracted Tor license missing: ${licensePath}"
   }
@@ -219,7 +243,12 @@ try {
     Invoke-DownloadUri $signingKeyUri $signingKeyFileName
 
     foreach ($platform in $platforms) {
-      Invoke-DownloadFile $platform.Package
+      if ($platform.ContainsKey("PackageUri")) {
+        Invoke-DownloadUri $platform.PackageUri $platform.Package
+        Invoke-DownloadUri "$($platform.PackageUri).asc" $platform.Signature
+      } else {
+        Invoke-DownloadFile $platform.Package
+      }
     }
   } else {
     if (!(Test-Path -LiteralPath $tempDirectory)) {
@@ -234,7 +263,11 @@ try {
   $expectedHashes = Get-ExpectedHashes
 
   foreach ($platform in $platforms) {
-    Assert-FileHash $expectedHashes $platform.Package
+    if ($platform.ContainsKey("Signature")) {
+      Assert-DetachedSignature $platform.Signature $platform.Package
+    } else {
+      Assert-FileHash $expectedHashes $platform.Package
+    }
   }
 
   if ($skipExtractingArchives) {
@@ -245,7 +278,7 @@ try {
     foreach ($platform in $platforms) {
       $extractDirectory = Join-Path "Extracted" $platform.Name
       New-Item -Path $extractDirectory -ItemType Directory -Force | Out-Null
-      Invoke-CheckedCommand "tar" @("-xzf", $platform.Package, "-C", $extractDirectory)
+      Invoke-CheckedCommand "tar" @("-xf", $platform.Package, "-C", $extractDirectory)
       Copy-RuntimeFiles $platform
     }
   }
