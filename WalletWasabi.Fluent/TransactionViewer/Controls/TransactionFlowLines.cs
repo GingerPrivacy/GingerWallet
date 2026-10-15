@@ -8,7 +8,7 @@ namespace WalletWasabi.Fluent.TransactionViewer.Controls;
 
 public class TransactionFlowLines : Control
 {
-	public const double RowHeight = 144;
+	public const double RowHeight = 176;
 	public const double MiddleWidth = 240;
 	public static readonly StyledProperty<IReadOnlyList<TransactionViewerRow>?> RowsProperty =
 		AvaloniaProperty.Register<TransactionFlowLines, IReadOnlyList<TransactionViewerRow>?>(nameof(Rows));

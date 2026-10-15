@@ -3,7 +3,7 @@ using Avalonia.Markup.Xaml;
 
 namespace WalletWasabi.Fluent.HomeScreen.Send.Views;
 
-public class BatchSendDialogView : UserControl
+public class RecipientListView : UserControl
 {
-	public BatchSendDialogView() => AvaloniaXamlLoader.Load(this);
+	public RecipientListView() => AvaloniaXamlLoader.Load(this);
 }

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
@@ -10,7 +12,6 @@ using ReactiveUI;
 using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Extensions;
 using WalletWasabi.Fluent.Helpers;
-using WalletWasabi.Fluent.HomeScreen.Labels.Models;
 using WalletWasabi.Fluent.HomeScreen.Labels.ViewModels;
 using WalletWasabi.Fluent.HomeScreen.Send.Models;
 using WalletWasabi.Fluent.Infrastructure;
@@ -53,21 +54,17 @@ public partial class SendViewModel : RoutableViewModel
 
 	private bool _parsingTo;
 
-	[AutoNotify] private string _to;
-	[AutoNotify] private decimal? _amountBtc;
 	[AutoNotify] private decimal _exchangeRate;
 	[AutoNotify] private bool _isFixedAmount;
 	[AutoNotify] private bool _isPayJoin;
 	[AutoNotify] private string? _payJoinEndPoint;
 	[AutoNotify] private bool _conversionReversed;
-
-	[AutoNotify(SetterModifier = AccessModifier.Private)]
-	private SuggestionLabelsViewModel _suggestionLabels;
+	[AutoNotify] private bool _subtractFee;
+	[AutoNotify] private bool _batchCanContinue;
+	[AutoNotify] private string? _batchError;
 
 	public SendViewModel(WalletModel walletModel, SendFlowModel parameters, LabelsArray? preLabel = null, bool continueWithFixedAmount = false)
 	{
-		_to = "";
-
 		_wallet = parameters.Wallet;
 		_walletModel = walletModel;
 		_parameters = parameters;
@@ -84,7 +81,7 @@ public partial class SendViewModel : RoutableViewModel
 				? Observable.Return(_walletModel.AmountProvider.Create(_parameters.AvailableAmount))
 				: _walletModel.Balances;
 
-		_suggestionLabels = new SuggestionLabelsViewModel(_walletModel, Intent.Send, 3, preLabel);
+		Recipients.Add(CreateRecipient(preLabel));
 
 		SetupCancel(enableCancel: true, enableCancelOnEscape: true, enableCancelOnPressed: true);
 
@@ -95,6 +92,7 @@ public partial class SendViewModel : RoutableViewModel
 
 		this.WhenAnyValue(x => x.To)
 			.Skip(1)
+			.Where(_ => !IsPayToMany)
 			.Subscribe(ParseToField);
 
 		this.WhenAnyValue(x => x.PayJoinEndPoint)
@@ -102,9 +100,9 @@ public partial class SendViewModel : RoutableViewModel
 
 		PasteCommand = ReactiveCommand.CreateFromTask(async () => await OnPasteAsync());
 		AutoPasteCommand = ReactiveCommand.CreateFromTask(OnAutoPasteAsync);
-		InsertMaxCommand = ReactiveCommand.Create(() => AmountBtc = parameters.AvailableCoins.TotalAmount().ToDecimal(MoneyUnit.BTC));
+		InsertMaxCommand = ReactiveCommand.Create(() => AmountBtc = _parameters.AvailableAmountBtc);
 		QrCommand = ReactiveCommand.Create(ShowQrCameraAsync);
-		PayToManyCommand = ReactiveCommand.CreateFromTask(OnPayToManyAsync,
+		PayToManyCommand = ReactiveCommand.Create(AddRecipient,
 			this.WhenAnyValue(x => x.IsPayJoin, x => x.IsFixedAmount)
 				.Select(x => !x.Item1 && !x.Item2 && !_continueWithFixedAmount));
 
@@ -113,14 +111,16 @@ public partial class SendViewModel : RoutableViewModel
 					x => x.AmountBtc,
 					x => x.To,
 					x => x.SuggestionLabels.Labels.Count,
-					x => x.SuggestionLabels.IsCurrentTextValid)
+					x => x.SuggestionLabels.IsCurrentTextValid,
+					x => x.IsPayToMany,
+					x => x.BatchCanContinue)
 				.Select(tup =>
 				{
-					var (amountBtc, to, labelsCount, isCurrentTextValid) = tup;
+					var (amountBtc, to, labelsCount, isCurrentTextValid, isPayToMany, batchCanContinue) = tup;
 					var allFilled = !string.IsNullOrEmpty(to) && amountBtc > 0;
 					var hasError = Validations.Any;
 
-					return allFilled && !hasError && (labelsCount > 0 || isCurrentTextValid);
+					return isPayToMany ? batchCanContinue : allFilled && !hasError && (labelsCount > 0 || isCurrentTextValid);
 				});
 
 		NextCommand = ReactiveCommand.CreateFromTask(OnNextAsync, nextCommandCanExecute);
@@ -133,6 +133,21 @@ public partial class SendViewModel : RoutableViewModel
 	}
 
 	public IObservable<Amount> Balance { get; }
+
+	public ObservableCollection<RecipientRowViewModel> Recipients { get; } = new();
+	public bool IsPayToMany => Recipients.Count > 1;
+	public string EditorTitle => IsPayToMany ? Resources.BatchPayments : Resources.WalletSend;
+	public string To
+	{
+		get => Recipients[0].To;
+		set => Recipients[0].To = value;
+	}
+	public decimal? AmountBtc
+	{
+		get => Recipients[0].AmountBtc;
+		set => Recipients[0].AmountBtc = value;
+	}
+	public SuggestionLabelsViewModel SuggestionLabels => Recipients[0].SuggestionLabels;
 
 	public string FiatTicker { get; }
 
@@ -152,14 +167,88 @@ public partial class SendViewModel : RoutableViewModel
 
 	public ICommand PayToManyCommand { get; }
 
-	private async Task OnPayToManyAsync()
+	private RecipientRowViewModel CreateRecipient(LabelsArray? labels = null) =>
+		new(_walletModel, OnRecipientChanged, RemoveRecipient, InsertMax, labels);
+
+	private void AddRecipient()
 	{
-		var transactionInfo = await UiContext.Navigate().To().BatchSendDialog(
-			_walletModel, _parameters.AvailableAmount, To, AmountBtc, new LabelsArray(SuggestionLabels.Labels.ToArray())).GetResultAsync();
-		if (transactionInfo is null)
+		SubtractFee |= AmountBtc == _parameters.AvailableAmountBtc;
+		Recipients.Add(CreateRecipient());
+		UpdateRecipientCount();
+	}
+
+	private void RemoveRecipient(RecipientRowViewModel row)
+	{
+		if (Recipients.Count > 1 && Recipients.Remove(row))
+		{
+			row.Dispose();
+			this.RaisePropertyChanged(nameof(To));
+			this.RaisePropertyChanged(nameof(AmountBtc));
+			this.RaisePropertyChanged(nameof(SuggestionLabels));
+			UpdateRecipientCount();
+		}
+	}
+
+	private void UpdateRecipientCount()
+	{
+		this.RaisePropertyChanged(nameof(IsPayToMany));
+		this.RaisePropertyChanged(nameof(EditorTitle));
+		ValidateRecipients();
+	}
+
+	private void OnRecipientChanged(RecipientRowViewModel row, string? propertyName)
+	{
+		if (Recipients.Count == 0)
 		{
 			return;
 		}
+		if (row == Recipients[0] && propertyName is { })
+		{
+			this.RaisePropertyChanged(propertyName);
+		}
+		ValidateRecipients();
+	}
+
+	private void InsertMax(RecipientRowViewModel row)
+	{
+		var otherAmounts = Recipients.Where(x => x != row).Sum(x => x.AmountBtc ?? 0);
+		row.AmountBtc = Math.Max(0, _parameters.AvailableAmountBtc - otherAmounts);
+		SubtractFee = true;
+	}
+
+	private IReadOnlyList<RecipientInfo>? GetRecipients()
+	{
+		var recipients = new List<RecipientInfo>();
+		foreach (var row in Recipients)
+		{
+			if (row.TryGetRecipient(out var recipient) && recipient is { })
+			{
+				recipients.Add(recipient);
+			}
+		}
+		return recipients.Count == Recipients.Count ? recipients : null;
+	}
+
+	private void ValidateRecipients()
+	{
+		BatchError = null;
+		var recipients = IsPayToMany ? GetRecipients() : null;
+		if (recipients is { })
+		{
+			if (recipients.Select(x => x.Destination.ScriptPubKey).Distinct().Count() != recipients.Count)
+			{
+				BatchError = Resources.BatchDuplicateAddress;
+			}
+			else if (recipients.Sum(x => x.Amount) > _parameters.AvailableAmount)
+			{
+				BatchError = Resources.InsufficientFunds;
+			}
+		}
+		BatchCanContinue = recipients is { Count: > 1 } && BatchError is null;
+	}
+
+	protected virtual async Task OnPreviewAsync(TransactionInfo transactionInfo)
+	{
 		if (_coinJoinManager is { } coinJoinManager)
 		{
 			await coinJoinManager.WalletEnteredSendingAsync(_wallet);
@@ -169,6 +258,23 @@ public partial class SendViewModel : RoutableViewModel
 
 	private async Task OnNextAsync()
 	{
+		if (IsPayToMany)
+		{
+			ValidateRecipients();
+			if (BatchCanContinue && GetRecipients() is { } recipients && recipients[0].Destination is BitcoinAddress destination)
+			{
+				await OnPreviewAsync(new TransactionInfo(destination, _walletModel.Settings.AnonScoreTarget)
+				{
+					Amount = recipients[0].Amount,
+					Recipient = recipients[0].Label,
+					AdditionalRecipients = recipients.Skip(1).ToArray(),
+					SubtractFee = SubtractFee,
+					IsFixedAmount = true
+				});
+			}
+			return;
+		}
+
 		var label = new LabelsArray(SuggestionLabels.Labels.ToArray());
 
 		if (AmountBtc is not { } amountBtc)
@@ -186,21 +292,14 @@ public partial class SendViewModel : RoutableViewModel
 			SubtractFee = amount == _parameters.AvailableCoins.TotalAmount() && !(IsFixedAmount || IsPayJoin)
 		};
 
-		if (_coinJoinManager is { } coinJoinManager)
-		{
-			await coinJoinManager.WalletEnteredSendingAsync(_wallet);
-		}
-
-		var sendParameters = _parameters with { TransactionInfo = transactionInfo };
-
-		UiContext.Navigate().To().TransactionPreview(_walletModel, sendParameters);
+		await OnPreviewAsync(transactionInfo);
 	}
 
 	private async Task OnAutoPasteAsync()
 	{
 		var isAutoPasteEnabled = UiContext.ApplicationSettings.AutoPaste;
 
-		if (string.IsNullOrEmpty(To) && isAutoPasteEnabled)
+		if (!IsPayToMany && string.IsNullOrEmpty(To) && isAutoPasteEnabled)
 		{
 			await OnPasteAsync(pasteIfInvalid: false);
 		}
@@ -292,7 +391,7 @@ public partial class SendViewModel : RoutableViewModel
 
 	private bool TryParseUrl(string? text)
 	{
-		if (_parsingTo)
+		if (_parsingTo || IsPayToMany)
 		{
 			return false;
 		}
@@ -336,11 +435,8 @@ public partial class SendViewModel : RoutableViewModel
 
 			if (parserResult.Label is { } parsedLabel)
 			{
-				SuggestionLabels = new SuggestionLabelsViewModel(
-					_walletModel,
-					Intent.Send,
-					3,
-					[parsedLabel]);
+				SuggestionLabels.Labels.Clear();
+				SuggestionLabels.Labels.Add(parsedLabel);
 			}
 		}
 		else
@@ -368,8 +464,6 @@ public partial class SendViewModel : RoutableViewModel
 			}
 		}
 
-		_suggestionLabels.Activate(disposables);
-
 		_walletModel.AmountProvider.ExchangeRateObservable
 			.BindTo(this, x => x.ExchangeRate)
 			.DisposeWith(disposables);
@@ -385,9 +479,13 @@ public partial class SendViewModel : RoutableViewModel
 	{
 		base.OnNavigatedFrom(isInHistory);
 
-		if (!isInHistory && _coinJoinManager is { } coinJoinManager)
+		if (!isInHistory)
 		{
-			coinJoinManager.WalletLeftSendWorkflow(_wallet);
+			foreach (var recipient in Recipients)
+			{
+				recipient.Dispose();
+			}
+			_coinJoinManager?.WalletLeftSendWorkflow(_wallet);
 			_wallet.FeeProvider.IsFastRefresh = false;
 		}
 	}

@@ -5,7 +5,6 @@
              xmlns:converters="clr-namespace:WalletWasabi.Fluent.Converters"
              xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.HomeScreen.Send.ViewModels"
-             xmlns:history="clr-namespace:WalletWasabi.Fluent.HomeScreen.History.Views.Actions"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:CompileBindings="True"
              x:DataType="viewModels:TransactionSummaryViewModel"
@@ -27,7 +26,7 @@
     </Style>
   </UserControl.Styles>
 
-  <StackPanel Spacing="15">
+  <StackPanel Spacing="10">
 
     <!-- Amount -->
     <DockPanel>
@@ -74,7 +73,7 @@
                  Classes.Dimmed="{Binding IsPreview}">
       <TextBlock Classes="monoSpaced" Text="{Binding AddressText, FallbackValue=btc029382398fkj34f98df239823}" />
     </PreviewItem>
-    <Separator />
+    <Separator IsVisible="{Binding !IsPayToMany}" />
 
     <!-- Recipient -->
     <PreviewItem Icon="{StaticResource person_regular}"
@@ -86,21 +85,30 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center" />
     </PreviewItem>
-    <Separator />
+    <Separator IsVisible="{Binding !IsPayToMany}" />
 
     <!-- Fee and confirmation time -->
     <ItemsControl ItemsSource="{Binding Recipients}" IsVisible="{Binding IsPayToMany}">
       <ItemsControl.ItemTemplate>
         <DataTemplate x:DataType="viewModels:RecipientSummaryViewModel">
-          <StackPanel Spacing="5" Margin="0 0 0 15">
-            <PreviewItem Icon="{StaticResource transceive_regular}" Label="{x:Static lang:Resources.Address}"
+          <StackPanel Spacing="5">
+            <PreviewItem Icon="{StaticResource transceive_regular}"
                          CopyableContent="{Binding Address}">
+              <PreviewItem.Label>
+                <MultiBinding StringFormat="#{0} {1}">
+                  <Binding Path="Number" />
+                  <Binding Source="{x:Static lang:Resources.Address}" />
+                </MultiBinding>
+              </PreviewItem.Label>
               <TextBlock Text="{Binding Address}" Classes="monoSpaced" />
             </PreviewItem>
             <PreviewItem Icon="{StaticResource btc_logo}" Label="{x:Static lang:Resources.Amount}">
               <AmountControl Amount="{Binding Amount}" />
             </PreviewItem>
-            <LabelsItemsPresenter ItemsSource="{Binding Labels}" />
+            <PreviewItem Icon="{StaticResource person_regular}" Label="{x:Static lang:Resources.Recipient}"
+                         CopyableContent="{Binding Labels}">
+              <LabelsItemsPresenter ItemsSource="{Binding Labels}" />
+            </PreviewItem>
             <Separator />
           </StackPanel>
         </DataTemplate>
@@ -119,7 +127,7 @@
         </Viewbox>
       </Button>
 
-      <StackPanel Spacing="10">
+      <StackPanel Spacing="8">
         <PreviewItem Icon="{StaticResource timer_regular}"
                      Label="{x:Static lang:Resources.ExpectedConfirmationTime}"
                      IsVisible="{Binding !IsCustomFeeUsed}"
@@ -148,6 +156,5 @@
         </PreviewItem>
       </StackPanel>
     </DockPanel>
-    <Border IsVisible="{Binding !!TransactionCoins}"><history:TransactionCoinsView DataContext="{Binding TransactionCoins}" /></Border>
   </StackPanel>
 </UserControl>

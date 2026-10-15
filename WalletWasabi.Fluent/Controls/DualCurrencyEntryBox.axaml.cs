@@ -334,7 +334,7 @@ public class DualCurrencyEntryBox : TemplatedControl
 
 	private decimal FiatToBitcoin(decimal fiatValue)
 	{
-		return fiatValue / ConversionRate;
+		return Money.Coins(fiatValue / ConversionRate).ToDecimal(MoneyUnit.BTC);
 	}
 
 	private decimal? BitcoinToFiat(decimal? btcValue)

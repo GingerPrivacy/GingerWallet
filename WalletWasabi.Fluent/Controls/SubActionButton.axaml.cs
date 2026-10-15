@@ -51,7 +51,7 @@ public class SubActionButton : ContentControl
 				return;
 			}
 
-			var applicationSettings = UiContext.Default.ApplicationSettings;
+			var applicationSettings = UiContext.Default?.ApplicationSettings;
 
 			if (applicationSettings is null)
 			{
@@ -128,7 +128,7 @@ public class SubActionButton : ContentControl
 			return localKey;
 		}
 
-		var defaults = UiContext.Default.ApplicationSettings?.DefaultCommands;
+		var defaults = UiContext.Default?.ApplicationSettings?.DefaultCommands;
 
 		if (defaults is null)
 		{
@@ -168,7 +168,7 @@ public class SubActionButton : ContentControl
 			return;
 		}
 
-		var applicationSettings = UiContext.Default.ApplicationSettings;
+		var applicationSettings = UiContext.Default?.ApplicationSettings;
 
 		if (applicationSettings is null)
 		{

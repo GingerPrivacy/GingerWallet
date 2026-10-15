@@ -62,8 +62,8 @@ public partial class TransactionSummaryViewModel : ViewModelBase
 		Money RecipientAmount(IDestination destination) => info.IsPayToMany
 			? _transaction.CalculatePaymentAmount(destination)
 			: _transaction.CalculateDestinationAmount(destination);
-		Recipients = info.AllRecipients.Select(x => new RecipientSummaryViewModel(
-			x.Destination.ToString() ?? string.Empty, x.Label, UiContext.AmountProvider.Create(RecipientAmount(x.Destination)))).ToArray();
+		Recipients = info.AllRecipients.Select((x, index) => new RecipientSummaryViewModel(
+			index + 1, x.Destination.ToString() ?? string.Empty, x.Label, UiContext.AmountProvider.Create(RecipientAmount(x.Destination)))).ToArray();
 		Money destinationAmount = info.AllRecipients.Select(x => RecipientAmount(x.Destination)).Sum();
 
 		Amount = UiContext.AmountProvider.Create(destinationAmount);

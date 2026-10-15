@@ -23,16 +23,16 @@ public partial class RecipientRowViewModel : ViewModelBase, IDisposable
 	[AutoNotify] private string _to = "";
 	[AutoNotify] private decimal? _amountBtc;
 	[AutoNotify] private string? _error;
-	[AutoNotify] private bool _canRemove;
 
-	public RecipientRowViewModel(WalletModel wallet, Action changed, Action<RecipientRowViewModel> remove, Action<RecipientRowViewModel> insertMax)
+	public RecipientRowViewModel(WalletModel wallet, Action<RecipientRowViewModel, string?> changed,
+		Action<RecipientRowViewModel> remove, Action<RecipientRowViewModel> insertMax, LabelsArray? labels = null)
 	{
 		_network = wallet.Network;
 		_exchangeRate = wallet.AmountProvider.ExchangeRate;
 		wallet.AmountProvider.ExchangeRateObservable.ObserveOn(RxApp.MainThreadScheduler)
 			.BindTo(this, x => x.ExchangeRate).DisposeWith(_disposables);
 		FiatTicker = Resources.Culture.GetFiatTicker();
-		SuggestionLabels = new SuggestionLabelsViewModel(wallet, Intent.Send, 3);
+		SuggestionLabels = new SuggestionLabelsViewModel(wallet, Intent.Send, 3, labels);
 		SuggestionLabels.Activate(_disposables);
 		RemoveCommand = ReactiveCommand.Create(() => remove(this));
 		InsertMaxCommand = ReactiveCommand.Create(() => insertMax(this));
@@ -45,8 +45,10 @@ public partial class RecipientRowViewModel : ViewModelBase, IDisposable
 				To = address;
 			}
 		});
-		this.WhenAnyValue(x => x.To, x => x.AmountBtc, x => x.SuggestionLabels.IsCurrentTextValid)
-			.Subscribe(_ => changed()).DisposeWith(_disposables);
+		this.Changed.Where(x => x.PropertyName is nameof(To) or nameof(AmountBtc))
+			.Subscribe(x => changed(this, x.PropertyName)).DisposeWith(_disposables);
+		SuggestionLabels.WhenAnyValue(x => x.IsCurrentTextValid)
+			.Subscribe(_ => changed(this, null)).DisposeWith(_disposables);
 	}
 
 	[AutoNotify] private decimal _exchangeRate;
