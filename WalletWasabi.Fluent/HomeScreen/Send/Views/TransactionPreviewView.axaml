@@ -5,6 +5,7 @@
              xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.HomeScreen.Send.ViewModels"
              xmlns:views="clr-namespace:WalletWasabi.Fluent.HomeScreen.Send.Views"
+             xmlns:history="clr-namespace:WalletWasabi.Fluent.HomeScreen.History.Views.Actions"
              mc:Ignorable="d"
              x:DataType="viewModels:TransactionPreviewViewModel"
              x:CompileBindings="True"
@@ -35,6 +36,11 @@
             <PathIcon Data="{StaticResource undo_icon_regular}" Foreground="{DynamicResource SystemAccentColor}" />
           </Viewbox>
         </Button>
+
+        <Border IsVisible="{Binding !!DisplayedTransactionSummary.TransactionCoins}" Padding="0 0 0 10">
+          <history:TransactionCoinsView Classes="compact"
+                                        DataContext="{Binding DisplayedTransactionSummary.TransactionCoins}" />
+        </Border>
 
         <Border Padding="10 0 10 10">
           <Border.Styles>

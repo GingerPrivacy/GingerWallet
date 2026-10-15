@@ -1,8 +1,25 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:lang="using:WalletWasabi.Lang"
+             xmlns:views="using:WalletWasabi.Fluent.HomeScreen.History.Views.Actions"
              x:Class="WalletWasabi.Fluent.HomeScreen.History.Views.Actions.TransactionCoinsView">
   <UserControl.Styles>
+    <Style Selector="Button">
+      <Setter Property="Theme" Value="{StaticResource FunctionButton}" />
+      <Setter Property="Margin" Value="10 0" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="{DynamicResource SystemAccentColor}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentColor}" />
+      <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="views|TransactionCoinsView.compact Button">
+      <Setter Property="Theme" Value="{StaticResource TransparentFunction}" />
+      <Setter Property="Margin" Value="0" />
+      <Setter Property="Padding" Value="6 2" />
+      <Setter Property="FontSize" Value="12" />
+      <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
+      <Setter Property="BorderThickness" Value="0" />
+    </Style>
     <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter, Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
       <Setter Property="Background" Value="Transparent" />
       <Setter Property="Foreground" Value="{DynamicResource SystemAccentColor}" />
@@ -10,7 +27,5 @@
     </Style>
   </UserControl.Styles>
   <Button Content="{x:Static lang:Resources.TransactionViewerOpen}" Click="Open_OnClick"
-          Theme="{StaticResource FunctionButton}" HorizontalAlignment="Right" Margin="10 0"
-          Background="Transparent" Foreground="{DynamicResource SystemAccentColor}"
-          BorderBrush="{DynamicResource SystemAccentColor}" BorderThickness="1" />
+          HorizontalAlignment="Right" />
 </UserControl>

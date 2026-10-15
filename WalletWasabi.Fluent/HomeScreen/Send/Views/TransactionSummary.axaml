@@ -5,7 +5,6 @@
              xmlns:converters="clr-namespace:WalletWasabi.Fluent.Converters"
              xmlns:lang="clr-namespace:WalletWasabi.Lang;assembly=WalletWasabi"
              xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.HomeScreen.Send.ViewModels"
-             xmlns:history="clr-namespace:WalletWasabi.Fluent.HomeScreen.History.Views.Actions"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:CompileBindings="True"
              x:DataType="viewModels:TransactionSummaryViewModel"
@@ -74,7 +73,7 @@
                  Classes.Dimmed="{Binding IsPreview}">
       <TextBlock Classes="monoSpaced" Text="{Binding AddressText, FallbackValue=btc029382398fkj34f98df239823}" />
     </PreviewItem>
-    <Separator />
+    <Separator IsVisible="{Binding !IsPayToMany}" />
 
     <!-- Recipient -->
     <PreviewItem Icon="{StaticResource person_regular}"
@@ -86,7 +85,7 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center" />
     </PreviewItem>
-    <Separator />
+    <Separator IsVisible="{Binding !IsPayToMany}" />
 
     <!-- Fee and confirmation time -->
     <ItemsControl ItemsSource="{Binding Recipients}" IsVisible="{Binding IsPayToMany}">
@@ -148,6 +147,5 @@
         </PreviewItem>
       </StackPanel>
     </DockPanel>
-    <Border IsVisible="{Binding !!TransactionCoins}"><history:TransactionCoinsView DataContext="{Binding TransactionCoins}" /></Border>
   </StackPanel>
 </UserControl>
