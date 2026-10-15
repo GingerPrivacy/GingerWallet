@@ -1,16 +1,40 @@
 using System.Collections.Generic;
 using System.Linq;
 using NBitcoin;
+using WalletWasabi.Extensions;
 using WalletWasabi.Tests.Helpers;
 using WalletWasabi.WabiSabi.Client;
 using WalletWasabi.WabiSabi.Client.CoinJoin.Client;
 using WalletWasabi.WabiSabi.Client.CoinJoin.Client.Decomposer;
+using WalletWasabi.WabiSabi.Models.MultipartyTransaction;
 using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests.WabiSabi.Client;
 
 public class CoinJoinClientTests
 {
+	[Theory]
+	[InlineData(6, 2, false, 1.00, true)]
+	[InlineData(5, 2, false, 1.00, false)]
+	[InlineData(6, 6, false, 1.00, false)]
+	[InlineData(6, 6, true, 1.00, true)]
+	[InlineData(6, 2, false, 0.89, false)]
+	[InlineData(6, 2, false, 0.90, false)]
+	[InlineData(6, 2, false, 0.91, true)]
+	public void SigningChecksActualInputsAndMiningFee(int inputCount, int ownInputCount, bool allowSolo, decimal feeRatio, bool expected)
+	{
+		var parameters = WabiSabiTestFactory.CreateRoundParameters(WabiSabiTestFactory.CreateDefaultWabiSabiConfig());
+		var inputs = Enumerable.Range(0, inputCount).Select(_ => WabiSabiTestFactory.CreateCoin()).ToArray();
+		var output = new TxOut(Money.Zero, BitcoinFactory.CreateScript());
+		var vsize = inputs.Sum(x => x.ScriptPubKey.EstimateInputVsize()) + output.ScriptPubKey.EstimateOutputVsize();
+		output.Value = inputs.Sum(x => x.Amount) - Money.Satoshis((long)(parameters.MiningFeeRate.GetFee(vsize).Satoshi * feeRatio));
+		var state = new SigningState(parameters, new IEvent[] { new RoundCreated(parameters), new OutputAdded(output) }
+			.Concat(inputs.Select(x => new InputAdded(x, null!))));
+		var configuration = new CoinJoinConfiguration("test", 0.3m, 150m, 6, allowSolo);
+
+		Assert.Equal(expected, CoinJoinClient.IsSigningStateSafe(state, ownInputCount, configuration));
+	}
+
 	[Fact]
 	public void SanityCheckTest()
 	{
