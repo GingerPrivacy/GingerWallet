@@ -85,6 +85,7 @@ public class WalletJsonTest
 		    "Height": "0"
 		  },
 		  "PreferPsbtWorkflow": false,
+		  "DefaultReceiveScriptType": "Segwit",
 		  "AutoCoinJoin": false,
 		  "PlebStopThreshold": "0.003",
 		  "Icon": null,

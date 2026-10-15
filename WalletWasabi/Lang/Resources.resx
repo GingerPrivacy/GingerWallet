@@ -2238,4 +2238,7 @@
   <data name="BatchAmountPrecision" xml:space="preserve">
     <value>Amounts may have at most eight decimal places.</value>
   </data>
+  <data name="ReceiveDefaultAddressTypeHint" xml:space="preserve">
+    <value>Saved for this wallet</value>
+  </data>
 </root>

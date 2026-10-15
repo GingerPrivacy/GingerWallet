@@ -2236,4 +2236,7 @@
   <data name="MinimumFeeRateLimit" xml:space="preserve">
     <value>Não pode ser inferior a {0} sat/vByte.</value>
   </data>
+  <data name="ReceiveDefaultAddressTypeHint" xml:space="preserve">
+    <value>Salvo para esta carteira</value>
+  </data>
 </root>

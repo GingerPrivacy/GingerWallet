@@ -1789,6 +1789,15 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Saved for this wallet.
+        /// </summary>
+        public static string ReceiveDefaultAddressTypeHint {
+            get {
+                return ResourceManager.GetString("ReceiveDefaultAddressTypeHint", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Default.
         /// </summary>
         public static string Default {

@@ -81,6 +81,8 @@
 
                 <SubActionButton Name="PART_NextSubButton"
                                  DefaultSource="{TemplateBinding DefaultSubCommandKey}"
+                                 LocalDefaultKey="{TemplateBinding LocalDefaultKey}"
+                                 SetLocalDefaultCommand="{TemplateBinding SetLocalDefaultCommand}"
                                  Content="{TemplateBinding NextContent}"
                                  SubCommands="{TemplateBinding NextSubCommands}"
                                  CornerRadius="20 20 20 20">

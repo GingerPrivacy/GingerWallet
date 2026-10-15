@@ -4,8 +4,10 @@ using System.Reactive.Disposables;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using Avalonia.VisualTree;
 using ReactiveUI;
 using WalletWasabi.Fluent.Models.UI;
 
@@ -31,6 +33,8 @@ public class SubActionButton : ContentControl
 	public static readonly StyledProperty<UICommandCollection?> SubCommandsProperty = AvaloniaProperty.Register<SubActionButton, UICommandCollection?>(nameof(SubCommands));
 
 	public static readonly StyledProperty<IEnumerable> ItemsProperty = AvaloniaProperty.Register<SubActionButton, IEnumerable>(nameof(Items));
+	public static readonly StyledProperty<string?> LocalDefaultKeyProperty = AvaloniaProperty.Register<SubActionButton, string?>(nameof(LocalDefaultKey));
+	public static readonly StyledProperty<ICommand?> SetLocalDefaultCommandProperty = AvaloniaProperty.Register<SubActionButton, ICommand?>(nameof(SetLocalDefaultCommand));
 
 	private CompositeDisposable? _disposable;
 
@@ -38,6 +42,15 @@ public class SubActionButton : ContentControl
 	{
 		SetDefaultCommand = ReactiveCommand.Create<string>(key =>
 		{
+			if (LocalDefaultKey is not null)
+			{
+				if (SetLocalDefaultCommand?.CanExecute(key) is true)
+				{
+					SetLocalDefaultCommand.Execute(key);
+				}
+				return;
+			}
+
 			var applicationSettings = UiContext.Default.ApplicationSettings;
 
 			if (applicationSettings is null)
@@ -58,6 +71,18 @@ public class SubActionButton : ContentControl
 
 			UpdateDefaultCommand(key);
 		});
+	}
+
+	public string? LocalDefaultKey
+	{
+		get => GetValue(LocalDefaultKeyProperty);
+		set => SetValue(LocalDefaultKeyProperty, value);
+	}
+
+	public ICommand? SetLocalDefaultCommand
+	{
+		get => GetValue(SetLocalDefaultCommandProperty);
+		set => SetValue(SetLocalDefaultCommandProperty, value);
 	}
 
 	public DefaultCommandSource DefaultSource
@@ -98,6 +123,11 @@ public class SubActionButton : ContentControl
 
 	private string? GetDefaultCommandKey()
 	{
+		if (LocalDefaultKey is { } localKey)
+		{
+			return localKey;
+		}
+
 		var defaults = UiContext.Default.ApplicationSettings?.DefaultCommands;
 
 		if (defaults is null)
@@ -117,7 +147,12 @@ public class SubActionButton : ContentControl
 	{
 		base.OnPropertyChanged(change);
 
-		if (change.Property == SubCommandsProperty)
+		if (change.Property == LocalDefaultKeyProperty)
+		{
+			PseudoClasses.Set(":local-default", LocalDefaultKey is not null);
+		}
+
+		if (change.Property == SubCommandsProperty || change.Property == LocalDefaultKeyProperty)
 		{
 			UpdateDefaultCommand(GetDefaultCommandKey());
 		}
@@ -127,6 +162,11 @@ public class SubActionButton : ContentControl
 	{
 		base.OnLoaded(e);
 		UpdateDefaultCommand(GetDefaultCommandKey());
+
+		if (LocalDefaultKey is not null)
+		{
+			return;
+		}
 
 		var applicationSettings = UiContext.Default.ApplicationSettings;
 
@@ -187,5 +227,17 @@ public class SubActionButton : ContentControl
 			item.IsDefault = true;
 			SetValue(CommandProperty, item.Command);
 		}
+	}
+}
+
+internal class SubActionMenuButton : Button
+{
+	protected override Type StyleKeyOverride => typeof(Button);
+
+	protected override void OnClick()
+	{
+		var popup = this.FindAncestorOfType<FlyoutPresenter>()?.Parent as Popup;
+		base.OnClick();
+		popup?.Close();
 	}
 }

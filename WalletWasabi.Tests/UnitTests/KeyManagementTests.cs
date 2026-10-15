@@ -167,6 +167,27 @@ public class KeyManagementTests
 	}
 
 	[Fact]
+	public void ReceiveScriptPreferenceIsWalletSpecificAndBackwardCompatible()
+	{
+		var filePath = Path.Combine(TestDirectory.Get(), "receive-script.json");
+		var manager = KeyManager.CreateNew(out _, "password", Network.Main, filePath);
+		Assert.Equal(ScriptPubKeyType.Segwit, manager.DefaultReceiveScriptType);
+		manager.DefaultReceiveScriptType = ScriptPubKeyType.TaprootBIP86;
+		manager.ToFile();
+		Assert.Equal(ScriptPubKeyType.TaprootBIP86, KeyManager.FromFile(filePath).DefaultReceiveScriptType);
+		Assert.Equal(ScriptPubKeyType.Segwit, KeyManager.CreateNew(out _, "", Network.Main).DefaultReceiveScriptType);
+
+		// Existing wallet files have no receive preference.
+		var json = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(filePath))!.AsObject();
+		json.Remove(nameof(KeyManager.DefaultReceiveScriptType));
+		File.WriteAllText(filePath, json.ToJsonString());
+		var legacy = KeyManager.FromFile(filePath);
+		Assert.Equal(ScriptPubKeyType.Segwit, legacy.DefaultReceiveScriptType);
+		Assert.Equal(manager.SegwitExtPubKey, legacy.SegwitExtPubKey);
+		Assert.Equal(manager.TaprootExtPubKey, legacy.TaprootExtPubKey);
+	}
+
+	[Fact]
 	public void CanGenerateKeys()
 	{
 		string password = "password";
