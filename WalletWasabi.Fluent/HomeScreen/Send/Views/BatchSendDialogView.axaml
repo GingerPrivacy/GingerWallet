@@ -5,10 +5,17 @@
              x:DataType="viewModels:BatchSendDialogViewModel"
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.HomeScreen.Send.Views.BatchSendDialogView">
-  <ContentArea Title="{Binding Title}" Caption="{x:Static lang:Resources.BatchPrivacyCaption}"
+  <ContentArea Title="{Binding Title}"
                EnableNext="True" NextContent="{x:Static lang:Resources.Continue}"
                EnableCancel="{Binding EnableCancel}" EnableBack="{Binding EnableBack}"
                ScrollViewer.VerticalScrollBarVisibility="Auto">
+    <ContentArea.Caption>
+      <StackPanel Spacing="8">
+        <TextBlock Text="{x:Static lang:Resources.BatchPrivacyCaption}" TextWrapping="Wrap" />
+        <TextBlock Text="{Binding Error}" Foreground="{DynamicResource SystemAccentColor}"
+                   TextWrapping="Wrap" IsVisible="{Binding !!Error}" />
+      </StackPanel>
+    </ContentArea.Caption>
     <StackPanel Spacing="15">
       <ItemsControl ItemsSource="{Binding Recipients}">
         <ItemsControl.ItemTemplate>
@@ -52,8 +59,6 @@
       <Button Classes="plainHyperlink" Content="{x:Static lang:Resources.BatchAddPayment}"
               Command="{Binding AddRecipientCommand}" HorizontalAlignment="Center" />
       <CheckBox IsChecked="{Binding SubtractFee}" Content="{x:Static lang:Resources.BatchSubtractFee}" />
-      <TextBlock Text="{Binding Error}" Foreground="{DynamicResource SystemAccentColor}"
-                 TextWrapping="Wrap" IsVisible="{Binding !!Error}" />
     </StackPanel>
   </ContentArea>
 </UserControl>

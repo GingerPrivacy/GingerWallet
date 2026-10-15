@@ -92,14 +92,23 @@
       <ItemsControl.ItemTemplate>
         <DataTemplate x:DataType="viewModels:RecipientSummaryViewModel">
           <StackPanel Spacing="5" Margin="0 0 0 15">
-            <PreviewItem Icon="{StaticResource transceive_regular}" Label="{x:Static lang:Resources.Address}"
+            <PreviewItem Icon="{StaticResource transceive_regular}"
                          CopyableContent="{Binding Address}">
+              <PreviewItem.Label>
+                <MultiBinding StringFormat="#{0} {1}">
+                  <Binding Path="Number" />
+                  <Binding Source="{x:Static lang:Resources.Address}" />
+                </MultiBinding>
+              </PreviewItem.Label>
               <TextBlock Text="{Binding Address}" Classes="monoSpaced" />
             </PreviewItem>
             <PreviewItem Icon="{StaticResource btc_logo}" Label="{x:Static lang:Resources.Amount}">
               <AmountControl Amount="{Binding Amount}" />
             </PreviewItem>
-            <LabelsItemsPresenter ItemsSource="{Binding Labels}" />
+            <PreviewItem Icon="{StaticResource person_regular}" Label="{x:Static lang:Resources.Recipient}"
+                         CopyableContent="{Binding Labels}">
+              <LabelsItemsPresenter ItemsSource="{Binding Labels}" />
+            </PreviewItem>
             <Separator />
           </StackPanel>
         </DataTemplate>
