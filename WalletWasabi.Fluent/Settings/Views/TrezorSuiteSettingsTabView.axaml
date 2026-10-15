@@ -1,0 +1,122 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:WalletWasabi.Fluent.Settings.ViewModels"
+             mc:Ignorable="d"
+             d:DesignWidth="650"
+             x:DataType="viewModels:TrezorSuiteSettingsTabViewModel"
+             x:Class="WalletWasabi.Fluent.Settings.Views.TrezorSuiteSettingsTabView"
+             x:CompileBindings="True">
+
+  <StackPanel Classes="settingsLayout">
+    <Border Padding="16"
+            CornerRadius="8"
+            Background="{DynamicResource Layer1BackgroundBrush}">
+      <StackPanel Spacing="8">
+        <TextBlock Text="Experimental Trezor Suite CoinJoin integration"
+                   FontWeight="SemiBold" />
+        <TextBlock Text="Ginger briefly starts Trezor Suite in local configuration mode, backs up its existing debug settings, applies the Ginger coordinator override, verifies it, and then opens Suite normally. Ginger does not monitor Suite or handle your Trezor secrets."
+                   TextWrapping="Wrap" />
+        <TextBlock Text="Close Trezor Suite before configuring. Start with an empty or low-value test account until a complete hardware signing round has been verified."
+                   TextWrapping="Wrap"
+                   Opacity="0.72" />
+      </StackPanel>
+    </Border>
+
+    <DockPanel>
+      <TextBlock Text="Trezor Suite" />
+      <Label Content="{Binding SuiteStatus}" />
+    </DockPanel>
+
+    <DockPanel>
+      <TextBlock Text="Ginger CoinJoin backend" />
+      <Label Content="{Binding BackendStatus}" />
+    </DockPanel>
+
+    <DockPanel>
+      <TextBlock Text="Trezor Suite version" />
+      <Label Content="{Binding SuiteVersion}" />
+    </DockPanel>
+
+    <DockPanel>
+      <TextBlock Text="Configuration" />
+      <Label Content="{Binding ConfigurationStatus}" />
+    </DockPanel>
+
+    <DockPanel>
+      <TextBlock Text="Last verified" />
+      <Label Content="{Binding LastVerified}" />
+    </DockPanel>
+
+    <DockPanel>
+      <TextBlock Text="Trezor Suite executable" />
+      <DockPanel>
+        <Button Content="Choose…"
+                Command="{Binding ChooseExecutableCommand}"
+                Margin="8 0 0 0"
+                DockPanel.Dock="Right" />
+        <TextBox Text="{Binding SuiteExecutablePath}"
+                 IsReadOnly="True"
+                 HorizontalContentAlignment="Left" />
+      </DockPanel>
+    </DockPanel>
+
+    <Border Padding="16" CornerRadius="8" Background="{DynamicResource Layer1BackgroundBrush}">
+      <StackPanel Spacing="8">
+        <DockPanel>
+          <TextBlock Text="Suite anonymity target" />
+          <TextBox Text="{Binding TargetAnonymity, Mode=TwoWay}"
+                   Width="100" HorizontalAlignment="Right" MaxLength="3"
+                   IsEnabled="{Binding !IsBusy}" />
+        </DockPanel>
+        <TextBlock Text="Default: 3. Enter a whole number from 2 to 100. Saved and applied when you choose Configure / Repair, not Open. Applies to all remembered Bitcoin CoinJoin accounts in Custom mode; create new accounts in Suite first, then configure again."
+                   TextWrapping="Wrap" />
+        <TextBlock Text="Targets below 5 provide very low privacy. Lowering the target changes which coins Suite labels Private; it does not improve their anonymity. Existing mining fee limits and round-skipping settings are preserved."
+                   TextWrapping="Wrap" Opacity="0.72" />
+      </StackPanel>
+    </Border>
+
+    <DockPanel>
+      <TextBlock Text="Trezor Suite diagnostic logs" />
+      <DockPanel>
+        <Button Content="Open folder"
+                Command="{Binding OpenLogsCommand}"
+                Margin="8 0 0 0"
+                DockPanel.Dock="Right" />
+        <TextBox Text="{Binding LogDirectoryPath}"
+                 IsReadOnly="True"
+                 HorizontalContentAlignment="Left" />
+      </DockPanel>
+    </DockPanel>
+
+    <TextBlock Text="Suite is launched with debug file logging for this experiment. Logs may contain wallet metadata; review and redact them before sharing."
+               TextWrapping="Wrap"
+               Opacity="0.72" />
+
+    <InfoMessage>
+      <TextBlock Text="{Binding StatusMessage}" TextWrapping="Wrap" />
+    </InfoMessage>
+
+    <ProgressBar IsIndeterminate="True"
+                 IsVisible="{Binding IsBusy}"
+                 Height="4" />
+
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+      <Button Content="Refresh"
+              Command="{Binding RefreshCommand}" />
+      <Button Content="Restore original configuration"
+              Command="{Binding RestoreCommand}"
+              IsVisible="{Binding CanRestore}" />
+    </StackPanel>
+
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+      <Button Content="Open Trezor Suite"
+              Command="{Binding LaunchCommand}"
+              IsVisible="{Binding IsConfigured}" />
+      <Button Content="{Binding ConfigureButtonText}"
+              Theme="{StaticResource AccentButton}"
+              Command="{Binding ConfigureAndLaunchCommand}" />
+    </StackPanel>
+  </StackPanel>
+</UserControl>
