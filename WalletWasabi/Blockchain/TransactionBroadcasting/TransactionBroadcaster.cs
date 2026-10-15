@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using WabiSabi.Crypto.Randomness;
 using WalletWasabi.BitcoinCore.Rpc;
+using WalletWasabi.BitcoinP2p;
 using WalletWasabi.Blockchain.Transactions;
 using WalletWasabi.Extensions;
 using WalletWasabi.Logging;
@@ -158,17 +159,19 @@ public class TransactionBroadcaster
 				throw new InvalidOperationException($"Nodes are not yet initialized.");
 			}
 
-			Node? node = Nodes.ConnectedNodes.RandomElement(Random);
-			while (node is null || !node.IsConnected || Nodes.ConnectedNodes.Count < 5)
+			if (Nodes.ConnectedNodes.Count < 5)
 			{
-				// As long as we are connected to at least 4 nodes, we can always try again.
-				// 3 should be enough, but make it 5 so 2 nodes could disconnect in the meantime.
-				if (Nodes.ConnectedNodes.Count < 5)
-				{
-					throw new InvalidOperationException("We are not connected to enough nodes.");
-				}
-				await Task.Delay(100).ConfigureAwait(false);
-				node = Nodes.ConnectedNodes.RandomElement(Random);
+				throw new InvalidOperationException("We are not connected to enough nodes.");
+			}
+
+			transaction.TryGetFeeRate(out var feeRate);
+			var relayNodes = Nodes.ConnectedNodes.Where(x => CanRelayTransaction(
+				x.State, x.PeerVersion?.Relay == true,
+				x.Behaviors.OfType<P2pBehavior>().FirstOrDefault()?.FeeFilter, feeRate)).ToArray();
+			// The serving peer disconnects; two other eligible peers must remain to confirm propagation.
+			if (relayNodes.Length < 3 || relayNodes.RandomElement(Random) is not { } node)
+			{
+				throw new InvalidOperationException("We are not connected to enough nodes willing to relay this transaction's fee rate.");
 			}
 			await BroadcastTransactionToNetworkNodeAsync(transaction, node).ConfigureAwait(false);
 		}
@@ -197,6 +200,9 @@ public class TransactionBroadcaster
 			}
 		}
 	}
+
+	internal static bool CanRelayTransaction(NodeState state, bool relay, FeeRate? peerFeeFilter, FeeRate? feeRate) =>
+		state == NodeState.HandShaked && relay && (feeRate is null || feeRate >= (peerFeeFilter ?? new FeeRate(1m)));
 
 	private async Task BroadcastTransactionWithRpcAsync(SmartTransaction transaction)
 	{
