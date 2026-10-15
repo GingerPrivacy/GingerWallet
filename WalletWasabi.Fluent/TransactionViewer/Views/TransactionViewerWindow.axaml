@@ -80,10 +80,13 @@
               <TextBlock Text="{Binding SelectedNode.Amount}" FontSize="22" FontWeight="SemiBold" TextWrapping="Wrap" />
               <TextBlock Text="{Binding SelectedNode.Fiat^}" Opacity="0.65" />
               <TextBlock Text="{Binding SelectedNode.Data.Ownership}" Classes="ownership" Classes.own="{Binding SelectedNode.IsOwn}" />
-              <Grid ColumnDefinitions="*,Auto">
+              <DockPanel HorizontalAlignment="Left">
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="2" Margin="6 0 0 0">
+                  <PathIcon Data="{StaticResource anonscore}" Height="15" VerticalAlignment="Center" Opacity="0.6" />
+                  <TextBlock Name="AnonymityScoreValue" Text="{Binding SelectedNode.AnonymityScoreText}" FontWeight="SemiBold" VerticalAlignment="Center" />
+                </StackPanel>
                 <TextBlock Text="{x:Static lang:Resources.AnonymityScore}" Classes="caption" VerticalAlignment="Center" />
-                <TextBlock Name="AnonymityScoreValue" Grid.Column="1" Text="{Binding SelectedNode.AnonymityScoreText}" FontWeight="SemiBold" />
-              </Grid>
+              </DockPanel>
               <Separator />
               <TextBlock Text="{x:Static lang:Resources.Address}" Classes="caption" />
               <Grid ColumnDefinitions="*,Auto">

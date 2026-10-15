@@ -54,11 +54,14 @@
             <TextBlock DockPanel.Dock="Left" Text="{Binding Number}" Margin="0 0 10 0" Opacity="0.65" />
             <TextBlock Text="{Binding Title}" Classes="ownership" TextTrimming="CharacterEllipsis" FontWeight="SemiBold" />
           </DockPanel>
-          <DockPanel>
-            <TextBlock DockPanel.Dock="Right" Text="{Binding Data.AnonymityScore, TargetNullValue=—}"
-                       FontSize="12" FontWeight="SemiBold" Margin="8 0 0 0" />
+          <DockPanel HorizontalAlignment="Left">
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="2" Margin="6 0 0 0">
+              <PathIcon Data="{StaticResource anonscore}" Height="12" VerticalAlignment="Center" Opacity="0.6" />
+              <TextBlock Text="{Binding Data.AnonymityScore, TargetNullValue=—}"
+                         FontSize="12" FontWeight="SemiBold" VerticalAlignment="Center" />
+            </StackPanel>
             <TextBlock Text="{x:Static lang:Resources.AnonymityScore}" FontSize="12" Opacity="0.65"
-                       TextTrimming="CharacterEllipsis" ToolTip.Tip="{x:Static lang:Resources.AnonymityScore}" />
+                       VerticalAlignment="Center" TextTrimming="CharacterEllipsis" ToolTip.Tip="{x:Static lang:Resources.AnonymityScore}" />
           </DockPanel>
           <TextBlock Text="{Binding Amount}" FontSize="16" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding Amount}" />
           <TextBlock Text="{Binding Fiat^}" FontSize="12" Opacity="0.65" TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding Fiat^}" />
