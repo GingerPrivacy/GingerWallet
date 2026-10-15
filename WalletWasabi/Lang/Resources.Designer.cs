@@ -2320,7 +2320,7 @@ namespace WalletWasabi.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fee Rate: {0:0} sat/vByte.
+        ///   Looks up a localized string similar to Fee Rate: {0:0.##} sat/vByte.
         /// </summary>
         public static string FeeRateFormatted {
             get {

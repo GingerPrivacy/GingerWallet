@@ -1500,7 +1500,7 @@
     <value>Estimated Confirmation Time: {0}</value>
   </data>
   <data name="FeeRateFormatted" xml:space="preserve">
-    <value>Fee Rate: {0:0} sat/vByte</value>
+    <value>Fee Rate: {0:0.##} sat/vByte</value>
   </data>
   <data name="Fastest" xml:space="preserve">
     <value>fastest</value>

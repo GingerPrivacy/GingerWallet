@@ -835,7 +835,7 @@
         <value>Gebührensatz</value>
     </data>
     <data name="FeeRateFormatted" xml:space="preserve">
-        <value>Gebührensatz: {0:0} sat/vByte</value>
+        <value>Gebührensatz: {0:0.##} sat/vByte</value>
     </data>
     <data name="FeeRateSatPerVByte" xml:space="preserve">
         <value>Gebührensatz (sat/vByte)</value>

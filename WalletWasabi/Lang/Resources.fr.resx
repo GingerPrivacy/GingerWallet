@@ -1492,7 +1492,7 @@
     <value>Temps estimé de confirmation : {0}</value>
   </data>
   <data name="FeeRateFormatted" xml:space="preserve">
-    <value>Taux de frais : {0:0} sat/vByte</value>
+    <value>Taux de frais : {0:0.##} sat/vByte</value>
   </data>
   <data name="Fastest" xml:space="preserve">
     <value>le plus rapide</value>

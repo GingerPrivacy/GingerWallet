@@ -835,7 +835,7 @@
         <value>Ücret Oranı</value>
     </data>
     <data name="FeeRateFormatted" xml:space="preserve">
-        <value>Ücret Oranı: {0:0} sat/vByte</value>
+        <value>Ücret Oranı: {0:0.##} sat/vByte</value>
     </data>
     <data name="FeeRateSatPerVByte" xml:space="preserve">
         <value>Ücret Oranı (sat/vByte)</value>

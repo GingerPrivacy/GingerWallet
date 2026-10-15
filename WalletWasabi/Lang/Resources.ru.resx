@@ -1497,7 +1497,7 @@
     <value>Оценка времени подтверждения: {0}</value>
   </data>
   <data name="FeeRateFormatted" xml:space="preserve">
-    <value>Ставка комиссии: {0:0} sat/vByte</value>
+    <value>Ставка комиссии: {0:0.##} sat/vByte</value>
   </data>
   <data name="Fastest" xml:space="preserve">
     <value>самое быстрое</value>

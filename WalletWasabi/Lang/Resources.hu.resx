@@ -1495,7 +1495,7 @@
     <value>Becsült visszaigazolási idő: {0}</value>
   </data>
   <data name="FeeRateFormatted" xml:space="preserve">
-    <value>Díjráta: {0:0} sat/vByte</value>
+    <value>Díjráta: {0:0.##} sat/vByte</value>
   </data>
   <data name="Fastest" xml:space="preserve">
     <value>leggyorsabb</value>
