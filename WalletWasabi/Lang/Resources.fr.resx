@@ -2239,4 +2239,40 @@
   <data name="ReceiveDefaultAddressTypeHint" xml:space="preserve">
     <value>Enregistré pour ce portefeuille</value>
   </data>
+  <data name="TransactionInputs" xml:space="preserve">
+    <value>Entrées</value>
+  </data>
+  <data name="TransactionOutputs" xml:space="preserve">
+    <value>Sorties</value>
+  </data>
+  <data name="TransactionCoinOwn" xml:space="preserve">
+    <value>Portefeuille personnel</value>
+  </data>
+  <data name="TransactionCoinChange" xml:space="preserve">
+    <value>Monnaie rendue</value>
+  </data>
+  <data name="TransactionCoinExternal" xml:space="preserve">
+    <value>Externe</value>
+  </data>
+  <data name="TransactionCoinOutpoint" xml:space="preserve">
+    <value>Référence de sortie (outpoint)</value>
+  </data>
+  <data name="TransactionViewerOpen" xml:space="preserve">
+    <value>Afficher la transaction</value>
+  </data>
+  <data name="TransactionViewerSelectedInput" xml:space="preserve">
+    <value>Entrée sélectionnée</value>
+  </data>
+  <data name="TransactionViewerSelectedOutput" xml:space="preserve">
+    <value>Sortie sélectionnée</value>
+  </data>
+  <data name="TransactionViewerCurrentRate" xml:space="preserve">
+    <value>Les montants en monnaie fiduciaire utilisent le taux de change actuel.</value>
+  </data>
+  <data name="TransactionViewerInput" xml:space="preserve">
+    <value>Entrée</value>
+  </data>
+  <data name="TransactionViewerOutput" xml:space="preserve">
+    <value>Sortie</value>
+  </data>
 </root>

@@ -1,0 +1,162 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:lang="using:WalletWasabi.Lang"
+        xmlns:vm="using:WalletWasabi.Fluent.TransactionViewer.ViewModels"
+        xmlns:views="using:WalletWasabi.Fluent.TransactionViewer.Views"
+        x:Class="WalletWasabi.Fluent.TransactionViewer.Views.TransactionViewerWindow"
+        x:DataType="vm:TransactionViewerViewModel" x:CompileBindings="True"
+        Width="1440" Height="960" MinWidth="1040" MinHeight="640" CanResize="True"
+        WindowStartupLocation="CenterOwner" Title="{x:Static lang:Resources.Transaction}"
+        Icon="/Assets/WasabiLogo.ico" Background="{DynamicResource RegionBrush}" FontFamily="{StaticResource PoppinsFont}">
+  <Window.Styles>
+    <Style Selector="GridSplitter:pointerover, GridSplitter:focus-visible">
+      <Setter Property="Background" Value="{DynamicResource SystemAccentColor}" />
+    </Style>
+    <Style Selector="ScrollViewer">
+      <Setter Property="AllowAutoHide" Value="False" />
+    </Style>
+    <Style Selector="ScrollViewer ScrollBar">
+      <Setter Property="Opacity" Value="1" />
+      <Setter Property="AllowAutoHide" Value="False" />
+    </Style>
+    <Style Selector="TextBlock.ownership">
+      <Setter Property="Foreground" Value="SteelBlue" />
+    </Style>
+    <Style Selector="TextBlock.ownership.own">
+      <Setter Property="Foreground" Value="{DynamicResource SystemAccentColor}" />
+    </Style>
+    <Style Selector="TextBlock.caption">
+      <Setter Property="FontSize" Value="12" />
+      <Setter Property="Opacity" Value="0.65" />
+    </Style>
+    <Style Selector="Button.copy">
+      <Setter Property="Padding" Value="8" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="ToolTip.Tip" Value="{x:Static lang:Resources.Copy}" />
+      <Setter Property="AutomationProperties.Name" Value="{x:Static lang:Resources.Copy}" />
+    </Style>
+  </Window.Styles>
+  <Grid Margin="28" RowDefinitions="*,Auto">
+    <Grid Name="TransactionContent" IsVisible="{Binding !PrivacyMode}" IsEnabled="{Binding !PrivacyMode}"
+          ClipToBounds="True">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" MinHeight="200" />
+        <RowDefinition Height="6" />
+        <RowDefinition Height="0.16*" MinHeight="88" />
+      </Grid.RowDefinitions>
+      <Grid ColumnDefinitions="*,Auto" Margin="0 0 0 20">
+        <StackPanel Spacing="8">
+          <TextBlock Text="{x:Static lang:Resources.Transaction}" FontSize="30" FontWeight="SemiBold" />
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <TextBlock Text="{Binding ShortTransactionId}" VerticalAlignment="Center" FontSize="16" />
+            <Button Classes="copy" Click="Copy_OnClick" Tag="{Binding TransactionId}">
+              <PathIcon Data="{StaticResource copy_regular}" Width="16" Height="16" />
+            </Button>
+          </StackPanel>
+        </StackPanel>
+        <TextBlock Grid.Column="1" Text="{Binding Status}" VerticalAlignment="Center" Foreground="{DynamicResource SystemAccentColor}" FontWeight="SemiBold" />
+      </Grid>
+      <Grid Grid.Row="1">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" MinWidth="600" />
+          <ColumnDefinition Width="6" />
+          <ColumnDefinition Width="0.28*" MinWidth="260" />
+        </Grid.ColumnDefinitions>
+        <Grid Name="GraphPanel" RowDefinitions="Auto,*" Margin="0 0 12 0">
+          <Grid ColumnDefinitions="*,*" Margin="0 0 0 12">
+            <TextBlock FontSize="18" FontWeight="SemiBold"><Run Text="{x:Static lang:Resources.TransactionInputs}" /><Run Text=" · " /><Run Text="{Binding Inputs.Count}" /></TextBlock>
+            <TextBlock Grid.Column="1" FontSize="18" FontWeight="SemiBold" HorizontalAlignment="Right"><Run Text="{x:Static lang:Resources.TransactionOutputs}" /><Run Text=" · " /><Run Text="{Binding Outputs.Count}" /></TextBlock>
+          </Grid>
+          <views:TransactionFlowView Grid.Row="1" />
+        </Grid>
+        <GridSplitter Name="DetailsSplitter" Grid.Column="1" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"
+                      Background="{DynamicResource BorderColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Focusable="True" />
+        <Border Name="DetailsPanel" Grid.Column="2" Padding="20 0 0 0">
+          <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <StackPanel Name="SelectionDetails" Spacing="14">
+              <TextBlock Text="{Binding SelectionTitle}" FontSize="19" FontWeight="SemiBold" TextWrapping="Wrap" />
+              <TextBlock Text="{Binding SelectedNode.Number}" Classes="caption" />
+              <TextBlock Text="{Binding SelectedNode.Amount}" FontSize="22" FontWeight="SemiBold" TextWrapping="Wrap" />
+              <TextBlock Text="{Binding SelectedNode.Fiat^}" Opacity="0.65" />
+              <TextBlock Text="{Binding SelectedNode.Data.Ownership}" Classes="ownership" Classes.own="{Binding SelectedNode.IsOwn}" />
+              <DockPanel HorizontalAlignment="Left">
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="2" Margin="6 0 0 0">
+                  <PathIcon Data="{StaticResource anonscore}" Height="15" VerticalAlignment="Center" Opacity="0.6" />
+                  <TextBlock Name="AnonymityScoreValue" Text="{Binding SelectedNode.AnonymityScoreText}" FontWeight="SemiBold" VerticalAlignment="Center" />
+                </StackPanel>
+                <TextBlock Text="{x:Static lang:Resources.AnonymityScore}" Classes="caption" VerticalAlignment="Center" />
+              </DockPanel>
+              <Separator />
+              <TextBlock Text="{x:Static lang:Resources.Address}" Classes="caption" />
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Text="{Binding SelectedNode.Data.Address}" TextWrapping="Wrap" FontSize="13" />
+                <Button Grid.Column="1" Classes="copy" Click="Copy_OnClick" Tag="{Binding SelectedNode.Data.Address}" VerticalAlignment="Top">
+                  <PathIcon Data="{StaticResource copy_regular}" Width="16" Height="16" />
+                </Button>
+              </Grid>
+              <Separator />
+              <TextBlock Text="{x:Static lang:Resources.TransactionCoinOutpoint}" Classes="caption" />
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Text="{Binding SelectedNode.Data.OutPoint}" TextWrapping="Wrap" FontSize="13" />
+                <Button Grid.Column="1" Classes="copy" Click="Copy_OnClick" Tag="{Binding SelectedNode.Data.OutPoint}" VerticalAlignment="Top">
+                  <PathIcon Data="{StaticResource copy_regular}" Width="16" Height="16" />
+                </Button>
+              </Grid>
+              <Separator />
+              <StackPanel Spacing="14" IsVisible="{Binding !!SelectedNode.Data.Labels.Count}">
+                <TextBlock Text="{x:Static lang:Resources.Label}" Classes="caption" />
+                <TextBlock Text="{Binding SelectedNode.Data.Labels}" TextWrapping="Wrap" />
+                <Separator />
+              </StackPanel>
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Text="{x:Static lang:Resources.Type}" Classes="caption" />
+                <TextBlock Grid.Column="1" Text="{Binding SelectedNode.ScriptType}" />
+              </Grid>
+            </StackPanel>
+          </ScrollViewer>
+        </Border>
+      </Grid>
+      <GridSplitter Name="SummarySplitter" Grid.Row="2" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext"
+                    Background="{DynamicResource BorderColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Focusable="True" />
+      <ScrollViewer Name="SummaryPanel" Grid.Row="3" Padding="0 12" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <Grid ColumnDefinitions="*,*,*,*,*,Auto">
+          <StackPanel Spacing="5">
+            <TextBlock Text="{x:Static lang:Resources.TransactionInputs}" Classes="caption" />
+            <TextBlock Text="{Binding InputTotal}" FontWeight="SemiBold" />
+            <TextBlock Text="{Binding InputFiat^}" Classes="caption" />
+          </StackPanel>
+          <StackPanel Grid.Column="1" Spacing="5">
+            <TextBlock Text="{x:Static lang:Resources.TransactionOutputs}" Classes="caption" />
+            <TextBlock Text="{Binding OutputTotal}" FontWeight="SemiBold" />
+            <TextBlock Text="{Binding OutputFiat^}" Classes="caption" />
+          </StackPanel>
+          <StackPanel Grid.Column="2" Spacing="5">
+            <TextBlock Text="{x:Static lang:Resources.TransactionFee}" Classes="caption" />
+            <TextBlock Text="{Binding FeeText}" FontWeight="SemiBold" />
+            <TextBlock Text="{Binding FeeFiat^}" Classes="caption" />
+          </StackPanel>
+          <StackPanel Grid.Column="3" Spacing="5">
+            <TextBlock Text="{x:Static lang:Resources.FeeRate}" Classes="caption" />
+            <TextBlock Text="{Binding FeeRate}" FontWeight="SemiBold" />
+            <TextBlock Text="{Binding VirtualSize}" Classes="caption" />
+          </StackPanel>
+          <StackPanel Grid.Column="4" Spacing="5">
+            <TextBlock Text="{x:Static lang:Resources.DateTime}" Classes="caption" />
+            <TextBlock Text="{Binding Date}" TextWrapping="Wrap" />
+          </StackPanel>
+          <StackPanel Grid.Column="5" Spacing="6" VerticalAlignment="Center">
+            <TextBlock Text="{x:Static lang:Resources.TransactionCoinOwn}" Foreground="{DynamicResource SystemAccentColor}" FontSize="12" />
+            <TextBlock Text="{x:Static lang:Resources.TransactionCoinExternal}" Foreground="SteelBlue" FontSize="12" />
+          </StackPanel>
+        </Grid>
+      </ScrollViewer>
+    </Grid>
+    <TextBlock IsVisible="{Binding PrivacyMode}" Text="{x:Static lang:Resources.DiscreetMode}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
+    <Grid Grid.Row="1" ColumnDefinitions="*,Auto" Margin="0 18 0 0">
+      <TextBlock Text="{x:Static lang:Resources.TransactionViewerCurrentRate}" Classes="caption" VerticalAlignment="Center" IsVisible="{Binding !PrivacyMode}" />
+      <Button Grid.Column="1" Content="{x:Static lang:Resources.Done}" Click="Close_OnClick" MinWidth="150"
+              Background="{DynamicResource ActionButtonBackgroundColor}" Foreground="{DynamicResource ActionButtonForegroundColor}" />
+    </Grid>
+  </Grid>
+</Window>

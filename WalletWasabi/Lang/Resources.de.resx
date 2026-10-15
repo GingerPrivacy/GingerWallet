@@ -2239,4 +2239,40 @@
   <data name="ReceiveDefaultAddressTypeHint" xml:space="preserve">
     <value>Für diese Wallet gespeichert</value>
   </data>
+  <data name="TransactionInputs" xml:space="preserve">
+    <value>Eingänge</value>
+  </data>
+  <data name="TransactionOutputs" xml:space="preserve">
+    <value>Ausgänge</value>
+  </data>
+  <data name="TransactionCoinOwn" xml:space="preserve">
+    <value>Eigene Wallet</value>
+  </data>
+  <data name="TransactionCoinChange" xml:space="preserve">
+    <value>Wechselgeld</value>
+  </data>
+  <data name="TransactionCoinExternal" xml:space="preserve">
+    <value>Extern</value>
+  </data>
+  <data name="TransactionCoinOutpoint" xml:space="preserve">
+    <value>Ausgabereferenz (Outpoint)</value>
+  </data>
+  <data name="TransactionViewerOpen" xml:space="preserve">
+    <value>Transaktion anzeigen</value>
+  </data>
+  <data name="TransactionViewerSelectedInput" xml:space="preserve">
+    <value>Ausgewählter Eingang</value>
+  </data>
+  <data name="TransactionViewerSelectedOutput" xml:space="preserve">
+    <value>Ausgewählter Ausgang</value>
+  </data>
+  <data name="TransactionViewerCurrentRate" xml:space="preserve">
+    <value>Fiatbeträge verwenden den aktuellen Wechselkurs.</value>
+  </data>
+  <data name="TransactionViewerInput" xml:space="preserve">
+    <value>Eingang</value>
+  </data>
+  <data name="TransactionViewerOutput" xml:space="preserve">
+    <value>Ausgang</value>
+  </data>
 </root>

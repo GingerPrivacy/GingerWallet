@@ -8,6 +8,7 @@
              x:CompileBindings="True"
              x:Class="WalletWasabi.Fluent.HomeScreen.History.Views.Actions.CoinJoinDetailsView"
              xmlns:lang="using:WalletWasabi.Lang"
+             xmlns:history="clr-namespace:WalletWasabi.Fluent.HomeScreen.History.Views.Actions"
              xmlns:actions="clr-namespace:WalletWasabi.Fluent.HomeScreen.History.ViewModels.Actions"
              Name="CoinJoinDetails">
   <ContentArea Title="{Binding Title}"
@@ -82,6 +83,7 @@
       </PreviewItem>
 
       <Separator IsVisible="{Binding IsConfirmationTimeVisible}" />
+      <Border IsVisible="{Binding !!TransactionCoins}"><history:TransactionCoinsView DataContext="{Binding TransactionCoins}" /></Border>
     </StackPanel>
   </ContentArea>
 </UserControl>

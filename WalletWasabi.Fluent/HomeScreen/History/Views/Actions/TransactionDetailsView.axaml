@@ -7,6 +7,7 @@
              x:DataType="actions:TransactionDetailsViewModel"
              x:CompileBindings="True"
              xmlns:lang="using:WalletWasabi.Lang"
+             xmlns:history="clr-namespace:WalletWasabi.Fluent.HomeScreen.History.Views.Actions"
              xmlns:actions="clr-namespace:WalletWasabi.Fluent.HomeScreen.History.ViewModels.Actions"
              x:Class="WalletWasabi.Fluent.HomeScreen.History.Views.Actions.TransactionDetailsView">
   <ContentArea Title="{Binding Title}"
@@ -148,6 +149,7 @@
           <LabelsItemsPresenter ItemsSource="{Binding Labels}" />
         </PrivacyContentControl>
       </PreviewItem>
+      <Border IsVisible="{Binding !!TransactionCoins}"><history:TransactionCoinsView DataContext="{Binding TransactionCoins}" /></Border>
     </StackPanel>
   </ContentArea>
 </UserControl>

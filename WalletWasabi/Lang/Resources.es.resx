@@ -2239,4 +2239,40 @@
   <data name="ReceiveDefaultAddressTypeHint" xml:space="preserve">
     <value>Guardado para este monedero</value>
   </data>
+  <data name="TransactionInputs" xml:space="preserve">
+    <value>Entradas</value>
+  </data>
+  <data name="TransactionOutputs" xml:space="preserve">
+    <value>Salidas</value>
+  </data>
+  <data name="TransactionCoinOwn" xml:space="preserve">
+    <value>Monedero propio</value>
+  </data>
+  <data name="TransactionCoinChange" xml:space="preserve">
+    <value>Cambio</value>
+  </data>
+  <data name="TransactionCoinExternal" xml:space="preserve">
+    <value>Externo</value>
+  </data>
+  <data name="TransactionCoinOutpoint" xml:space="preserve">
+    <value>Referencia de salida (outpoint)</value>
+  </data>
+  <data name="TransactionViewerOpen" xml:space="preserve">
+    <value>Ver transacción</value>
+  </data>
+  <data name="TransactionViewerSelectedInput" xml:space="preserve">
+    <value>Entrada seleccionada</value>
+  </data>
+  <data name="TransactionViewerSelectedOutput" xml:space="preserve">
+    <value>Salida seleccionada</value>
+  </data>
+  <data name="TransactionViewerCurrentRate" xml:space="preserve">
+    <value>Los importes fiat usan el tipo de cambio actual.</value>
+  </data>
+  <data name="TransactionViewerInput" xml:space="preserve">
+    <value>Entrada</value>
+  </data>
+  <data name="TransactionViewerOutput" xml:space="preserve">
+    <value>Salida</value>
+  </data>
 </root>

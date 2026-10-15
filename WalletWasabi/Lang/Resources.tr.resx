@@ -2215,4 +2215,22 @@
   <data name="SecretHuntSettingsEnable" xml:space="preserve">
     <value>Bu cüzdanın Gizli Avı için kullanımını etkinleştir veya devre dışı bırak.</value>
   </data>
+  <data name="TransactionViewerOpen" xml:space="preserve">
+    <value>İşlemi görüntüle</value>
+  </data>
+  <data name="TransactionViewerSelectedInput" xml:space="preserve">
+    <value>Seçilen girdi</value>
+  </data>
+  <data name="TransactionViewerSelectedOutput" xml:space="preserve">
+    <value>Seçilen çıktı</value>
+  </data>
+  <data name="TransactionViewerCurrentRate" xml:space="preserve">
+    <value>İtibari para tutarları güncel döviz kurunu kullanır.</value>
+  </data>
+  <data name="TransactionViewerInput" xml:space="preserve">
+    <value>Girdi</value>
+  </data>
+  <data name="TransactionViewerOutput" xml:space="preserve">
+    <value>Çıktı</value>
+  </data>
 </root>
