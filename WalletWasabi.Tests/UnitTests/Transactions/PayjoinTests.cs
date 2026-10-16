@@ -1,4 +1,5 @@
 using NBitcoin;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -519,6 +520,66 @@ public class PayjoinTests
 
 		Assert.Equal(2, result.Transaction.Transaction.Inputs.Count);
 		Assert.Equal(amount + Money.Coins(0.01m), result.Transaction.Transaction.Outputs.Single(x => x.ScriptPubKey == destination).Value);
+	}
+
+	[Theory]
+	[InlineData(ScriptPubKeyType.Segwit, false)]
+	[InlineData(ScriptPubKeyType.Segwit, true)]
+	[InlineData(ScriptPubKeyType.TaprootBIP86, false)]
+	[InlineData(ScriptPubKeyType.TaprootBIP86, true)]
+	public async Task PayjoinEnforcesAdvertisedFeeContribution(ScriptPubKeyType scriptType, bool exceedMaximum)
+	{
+		var keyManager = ServiceFactory.CreateKeyManager("foo", isTaprootAllowed: true);
+		var key = keyManager.GenerateNewKey("sender", KeyState.Clean, false, scriptType);
+		var coin = BitcoinFactory.CreateSmartCoin(TestRandom.Get(), key, 0.1m);
+		await using var store = new AllTransactionStore(".", Network.Main);
+		var factory = new TransactionFactory(Network.Main, keyManager, new CoinsView([coin]), store, "foo");
+		var destination = BitcoinFactory.CreateScript();
+		var amount = Money.Satoshis(100_000);
+		Money? originalFee = null;
+		Money? contribution = null;
+		var mock = new MockIHttpClient();
+		mock.OnSendAsync = request => PayjoinServerOkAsync(request, original =>
+		{
+			originalFee = original.GetFee();
+			var maximum = request.RequestUri!.Query.TrimStart('?').Split('&')
+				.Single(x => x.StartsWith("maxadditionalfeecontribution=", StringComparison.Ordinal));
+			contribution = Money.Satoshis(long.Parse(maximum.Split('=')[1], CultureInfo.InvariantCulture) + (exceedMaximum ? 1 : 0));
+			var tx = original.GetGlobalTransaction();
+			tx.Outputs.Single(x => x.ScriptPubKey != destination).Value -= contribution;
+			using var receiverKey = new Key();
+			var receiverCoin = Coin(0.01m, receiverKey.PubKey.GetScriptPubKey(scriptType));
+			tx.Inputs.Add(receiverCoin.Outpoint);
+			tx.Outputs.Single(x => x.ScriptPubKey == destination).Value += (Money)receiverCoin.Amount - Money.Satoshis(20_000);
+			// Extra outputs make the old transaction-size-based limit larger than the advertised maximum.
+			tx.Outputs.Add(Money.Satoshis(10_000), BitcoinFactory.CreateScript());
+			tx.Outputs.Add(Money.Satoshis(10_000), BitcoinFactory.CreateScript());
+			var proposal = PSBT.FromTransaction(tx, Network.Main);
+			foreach (var input in proposal.Inputs)
+			{
+				if (original.Inputs.FindIndexedInput(input.PrevOut) is { } senderInput)
+				{
+					input.WitnessUtxo = senderInput.WitnessUtxo;
+				}
+			}
+			var added = proposal.Inputs.FindIndexedInput(receiverCoin.Outpoint)!;
+			added.UpdateFromCoin(receiverCoin);
+			proposal.SignWithKeys(receiverKey);
+			added.FinalizeInput();
+			return proposal;
+		});
+		var parameters = CreateBuilder().SetPayment(new PaymentIntent(destination, amount)).Build();
+		var result = factory.BuildTransaction(parameters,
+			payjoinClient: new PayjoinClient(new Uri("http://localhost"), mock, disableOutputSubstitution: true));
+
+		Assert.NotNull(originalFee);
+		Assert.NotNull(contribution);
+		Assert.Equal(exceedMaximum ? 1 : 2, result.Transaction.Transaction.Inputs.Count);
+		Assert.True(result.Psbt.IsAllFinalized());
+		Assert.Equal(originalFee + (exceedMaximum ? Money.Zero : contribution), result.Psbt.GetFee());
+		Assert.Equal(result.Psbt.GetFee(), result.Fee);
+		Assert.Equal(100 * ((decimal)result.Fee.Satoshi / amount.Satoshi), result.FeePercentOfSent);
+		Assert.Equal(amount + result.Fee, coin.Amount - result.InnerWalletOutputs.Sum(x => x.Amount));
 	}
 
 	[Fact]
