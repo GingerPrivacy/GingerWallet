@@ -1,13 +1,27 @@
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
+using Moq;
 using NBitcoin;
+using WabiSabi.Crypto.ZeroKnowledge;
 using WalletWasabi.Extensions;
 using WalletWasabi.Tests.Helpers;
+using WalletWasabi.Tests.TestCommon;
+using WalletWasabi.Tests.UnitTests.WabiSabi.Integration;
+using WalletWasabi.WabiSabi.Backend.PostRequests;
+using WalletWasabi.WabiSabi.Backend.Rounds;
 using WalletWasabi.WabiSabi.Client;
 using WalletWasabi.WabiSabi.Client.CoinJoin.Client;
 using WalletWasabi.WabiSabi.Client.CoinJoin.Client.Decomposer;
+using WalletWasabi.WabiSabi.Client.RoundStateAwaiters;
+using WalletWasabi.WabiSabi.Client.StatusChangedEvents;
+using WalletWasabi.WabiSabi.Models;
 using WalletWasabi.WabiSabi.Models.MultipartyTransaction;
+using WalletWasabi.Wallets;
 using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests.WabiSabi.Client;
@@ -96,6 +110,88 @@ public class CoinJoinClientTests
 		var state = new SigningState(parameters, [new RoundCreated(parameters), new InputAdded(input, null!)]);
 
 		Assert.Equal(expected, CoinJoinClient.IsBlameRoundValid(state, previous));
+	}
+
+	[Theory]
+	[InlineData("valid")]
+	[InlineData("missing")]
+	[InlineData("duplicated")]
+	public async Task SigningRequiresEveryRegisteredInputExactlyOnceAsync(string inputSet)
+	{
+		var km = ServiceFactory.CreateKeyManager("");
+		var keyChain = new KeyChain(km, new Kitchen(""));
+		var rnd = TestRandom.Get();
+		var ownCoins = Enumerable.Range(0, 3).Select(_ => BitcoinFactory.CreateSmartCoin(rnd, BitcoinFactory.CreateHdPubKey(km), Money.Coins(1m))).ToArray();
+		var ownInputs = inputSet switch
+		{
+			"missing" => ownCoins.Skip(1).Select(x => x.Coin),
+			"duplicated" => ownCoins.Select(x => x.Coin).Append(ownCoins[0].Coin),
+			_ => ownCoins.Select(x => x.Coin)
+		};
+		var inputs = ownInputs.Concat(Enumerable.Range(0, 4).Select(_ => WabiSabiTestFactory.CreateCoin())).ToArray();
+		var parameters = WabiSabiTestFactory.CreateRoundParameters(WabiSabiTestFactory.CreateDefaultWabiSabiConfig())
+			with { TransactionSigningTimeout = TimeSpan.FromMilliseconds(250) };
+
+		// The tampered rounds also drop our output, so only the withheld signature could stop the transaction.
+		var expectedOutput = new TxOut(Money.Coins(2.99m), BitcoinFactory.CreateScript());
+		TxOut[] ownOutputs = inputSet == "valid" ? [expectedOutput] : [];
+		var otherOutput = new TxOut(Money.Zero, BitcoinFactory.CreateScript());
+		var outputs = ownOutputs.Append(otherOutput).ToArray();
+		var vsize = inputs.Sum(x => x.ScriptPubKey.EstimateInputVsize()) + outputs.Sum(x => x.ScriptPubKey.EstimateOutputVsize());
+		otherOutput.Value = inputs.Sum(x => x.Amount) - ownOutputs.Sum(x => x.Value) - parameters.MiningFeeRate.GetFee(vsize);
+		var state = new SigningState(parameters, new IEvent[] { new RoundCreated(parameters) }
+			.Concat(inputs.Select(x => new InputAdded(x, null!)))
+			.Concat(outputs.Select(x => new OutputAdded(x))));
+		var roundState = RoundState.FromRound(WabiSabiTestFactory.CreateRound(parameters)) with { CoinjoinState = state, Phase = Phase.TransactionSigning };
+
+		var signatures = new ConcurrentQueue<TransactionSignaturesRequest>();
+		var api = new Mock<IWabiSabiApiRequestHandler>(MockBehavior.Strict);
+		api.Setup(x => x.GetStatusAsync(It.IsAny<RoundStateRequest>(), It.IsAny<CancellationToken>()))
+			.ReturnsAsync(new RoundStateResponse([roundState], []));
+		api.Setup(x => x.SignTransactionAsync(It.IsAny<TransactionSignaturesRequest>(), It.IsAny<CancellationToken>()))
+			.Callback<TransactionSignaturesRequest, CancellationToken>((request, _) => signatures.Enqueue(request))
+			.Returns(Task.CompletedTask);
+
+		var configuration = new CoinJoinConfiguration("test", 0.3m, 150m, 6, AllowSoloCoinjoining: false);
+		var arenaClient = new ArenaClient(null!, null!, configuration.CoordinatorIdentifier, api.Object);
+		var aliceConstructor = typeof(AliceClient).GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic).Single();
+		var aliceClients = ownCoins.Select(coin => (AliceClient)aliceConstructor.Invoke(
+			[Guid.NewGuid(), roundState, arenaClient, coin, Array.Empty<Credential>(), Array.Empty<Credential>(), true])).ToImmutableArray();
+
+		using var roundStateUpdater = new RoundStateUpdater(TimeSpan.FromMilliseconds(10), [], api.Object, verifyRoundState: false);
+		var coinJoinClient = new CoinJoinClient(
+			new MockWasabiHttpClientFactory(), keyChain, new OutputProvider(null!), roundStateUpdater,
+			new CoinJoinCoinSelector(true, int.MaxValue, 0), configuration, new LiquidityClueProvider());
+		var proceedWithSigning = typeof(CoinJoinClient).GetMethod("ProceedWithSigningStateAsync", BindingFlags.Instance | BindingFlags.NonPublic)!;
+
+		using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+		var signingTask = (Task<(Transaction UnsignedCoinJoin, ImmutableArray<AliceClient> AliceClientsThatSigned)>)proceedWithSigning.Invoke(
+			coinJoinClient, [roundState.Id, aliceClients, new[] { expectedOutput }, cts.Token])!;
+		await roundStateUpdater.StartAsync(cts.Token);
+		try
+		{
+			var exception = await Record.ExceptionAsync(() => signingTask.WaitAsync(cts.Token));
+
+			if (inputSet == "valid")
+			{
+				Assert.Null(exception);
+				var (transaction, aliceClientsThatSigned) = await signingTask;
+				Assert.Equal(ownCoins.Length, aliceClientsThatSigned.Length);
+				Assert.Equal(
+					ownCoins.Select(x => x.Outpoint.ToString()).Order(),
+					signatures.Select(x => transaction.Inputs[(int)x.InputIndex].PrevOut.ToString()).Order());
+			}
+			else
+			{
+				Assert.Empty(signatures);
+				var coinJoinClientException = Assert.IsType<CoinJoinClientException>(exception);
+				Assert.Equal(CoinjoinError.TamperedRoundState, coinJoinClientException.CoinjoinError);
+			}
+		}
+		finally
+		{
+			await roundStateUpdater.StopAsync(CancellationToken.None);
+		}
 	}
 
 	[Fact]

@@ -1009,6 +1009,13 @@ public class CoinJoinClient
 		roundState.LogDebug($"Transaction signing phase started - it will end in: {signingStateEndTime - DateTimeOffset.UtcNow:hh\\:mm\\:ss}.");
 
 		var signingState = roundState.Assert<SigningState>();
+
+		// Withholding a signature below only blocks the transaction if it really spends every one of our inputs.
+		if (registeredAliceClients.Any(alice => signingState.Inputs.Count(coin => coin.Outpoint == alice.SmartCoin.Outpoint) != 1))
+		{
+			throw new CoinJoinClientException(CoinjoinError.TamperedRoundState, "The coinjoin transaction must contain every registered wallet input exactly once.");
+		}
+
 		var unsignedCoinJoin = signingState.CreateUnsignedTransactionWithPrecomputedData();
 
 		// If everything is okay, then sign all the inputs. Otherwise, in case there are missing outputs, the server is
