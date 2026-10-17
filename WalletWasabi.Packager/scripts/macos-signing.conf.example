@@ -1,0 +1,6 @@
+# Copy to ~/.config/ginger-notarization/config.sh and fill in your Team ID.
+# This file is sourced by bash. Keep private keys and passwords out of it.
+export GINGER_SIGNING_TEAM_ID="<TEAM_ID>"
+export GINGER_NOTARY_KEYCHAIN_PROFILE="WasabiNotarizeAPI"
+# Optional location for private per-run logs:
+# export GINGER_SIGNING_LOG_DIR="$HOME/Library/Logs/GingerWallet"
