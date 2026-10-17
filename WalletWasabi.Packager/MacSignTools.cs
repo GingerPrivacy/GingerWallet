@@ -29,12 +29,10 @@ public static class MacSignTools
 			throw new InvalidDataException($"{srcZipFileNamePattern} file missing or there are more! There must be exactly two!");
 		}
 
-		var (appleId, teamId) = argsProcessor.GetAppleAndTeamId();
-
-		while (string.IsNullOrWhiteSpace(appleId))
+		var (_, teamId) = argsProcessor.GetAppleAndTeamId();
+		if (string.IsNullOrWhiteSpace(teamId))
 		{
-			Console.WriteLine("Enter appleId (email):");
-			appleId = Console.ReadLine();
+			teamId = Environment.GetEnvironmentVariable("GINGER_SIGNING_TEAM_ID") ?? "";
 		}
 
 		while (string.IsNullOrWhiteSpace(teamId))
@@ -66,8 +64,6 @@ public static class MacSignTools
 			var entitlementsPath = Path.Combine(contentsPath, "entitlements.plist");
 			var dmgContentsDir = Path.Combine(contentsPath, "Dmg");
 			var desktopDmgFilePath = Path.Combine(desktopPath, dmgFileName);
-
-			// Save the app specific pw by using this command: xcrun notarytool store-credentials WasabiNotarize
 
 			var signArguments = $"--sign \"{teamId}\" --verbose --force --options runtime --timestamp";
 
@@ -354,11 +350,16 @@ public static class MacSignTools
 	private static void Notarize(string filePath)
 	{
 		Console.WriteLine("Start notarizing, uploading file.");
+		var keychainProfile = Environment.GetEnvironmentVariable("GINGER_NOTARY_KEYCHAIN_PROFILE");
+		if (string.IsNullOrWhiteSpace(keychainProfile))
+		{
+			keychainProfile = "WasabiNotarize";
+		}
 
 		using var process = Process.Start(new ProcessStartInfo
 		{
 			FileName = "xcrun",
-			Arguments = $"notarytool submit --wait --keychain-profile \"WasabiNotarize\" \"{filePath}\" ",
+			ArgumentList = { "notarytool", "submit", "--wait", "--keychain-profile", keychainProfile, filePath },
 			RedirectStandardOutput = true,
 			RedirectStandardError = true,
 		});

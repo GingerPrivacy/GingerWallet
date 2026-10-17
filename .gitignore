@@ -195,6 +195,9 @@ ClientBin/
 *.dbproj.schemaview
 *.jfm
 *.pfx
+*.p8
+*.p12
+/WalletWasabi.Packager/scripts/macos-signing.conf
 *.publishsettings
 node_modules/
 orleans.codegen.cs

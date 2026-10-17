@@ -32,7 +32,7 @@ Make sure to run a virus detection scan on one of the Release candidate's .msi i
 - MAKE SURE YOU ARE ON THE RIGHT BRANCH AND UP TO DATE in GitHub Desktop on the release machine!
 - Discard packages.lock changes if there are. Inserted USB drive name must contain the string USB! 
 - Run the [script file](https://github.com/zkSNACKs/WalletWasabi/blob/master/WalletWasabi.Packager/scripts/Wasabi_release.ps1) on the **Windows Release Laptop** and follow the instructions.
-- At some point you will need to run [this script](https://github.com/zkSNACKs/WalletWasabi/blob/master/WalletWasabi.Packager/scripts/WasabiNoratize.scpt) file on Mac. Don't forget to open the script file on Mac and insert your Apple dev username and password. Guide how to setup it: [macOS release environment](https://github.com/zkSNACKs/WalletWasabi/blob/master/WalletWasabi.Documentation/Guides/MacOsSigning.md).
+- On the Mac, run `bash WalletWasabi.Packager/scripts/sign-macos.sh` or the Desktop launcher generated from its versioned AppleScript template. Follow the [macOS signing and recovery guide](../Guides/MacOsSigning.md) to install the Developer ID identity and API-key Keychain profile. Do not put Apple passwords or private keys in the launcher.
 - Finish the script on Windows. Now a folder should pop up with all the files that need to be uploaded to GitHub.
 - Verify the Windows Authenticode signatures before uploading:
   - `signtool.exe verify /pa /v Ginger-<version>.msi`
