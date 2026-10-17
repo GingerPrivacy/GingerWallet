@@ -255,6 +255,11 @@ public class PayjoinClient : IPayjoinClient
 		if (sentAfter > sentBefore)
 		{
 			var overPaying = sentAfter - sentBefore;
+			if (overPaying > optionalParameters.MaxAdditionalFeeContribution)
+			{
+				throw new PayjoinSenderException("The payjoin receiver exceeded our maximum additional fee contribution");
+			}
+
 			if (!newPSBT.TryGetEstimatedFeeRate(out var newFeeRate) || !newPSBT.TryGetVirtualSize(out var newVirtualSize))
 			{
 				throw new PayjoinSenderException("The payjoin receiver did not include UTXO information to calculate fee correctly");

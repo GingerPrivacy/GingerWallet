@@ -196,21 +196,21 @@ public class TransactionFactory
 		decimal totalOutgoingAmountNoFeeDecimal = totalOutgoingAmountNoFee.ToDecimal(MoneyUnit.BTC);
 		decimal feeDecimal = fee.ToDecimal(MoneyUnit.BTC);
 
-		decimal feePercentage;
+		decimal feePercentageDivisor;
 		if (payments.ChangeStrategy == ChangeStrategy.AllRemainingCustom)
 		{
 			// In this scenario since the amount changes as the fee changes, we need to compare against the total sum / 2,
 			// as with this, we will make sure the fee cannot be higher than the amount.
 			decimal inputSumDecimal = spentCoins.Sum(x => x.Amount.ToDecimal(MoneyUnit.BTC));
-			feePercentage = 100 * (feeDecimal / (inputSumDecimal / 2));
+			feePercentageDivisor = inputSumDecimal / 2;
 		}
 		else
 		{
 			// In this scenario the amount is fixed, so we can compare against it.
 			// Cannot divide by zero, so use the closest number we have to zero.
-			decimal totalOutgoingAmountNoFeeDecimalDivisor = totalOutgoingAmountNoFeeDecimal == 0 ? decimal.MinValue : totalOutgoingAmountNoFeeDecimal;
-			feePercentage = 100 * (feeDecimal / totalOutgoingAmountNoFeeDecimalDivisor);
+			feePercentageDivisor = totalOutgoingAmountNoFeeDecimal == 0 ? decimal.MinValue : totalOutgoingAmountNoFeeDecimal;
 		}
+		decimal feePercentage = 100 * (feeDecimal / feePercentageDivisor);
 		if (feePercentage > 100 && !parameters.OverrideFeeOverpaymentProtection)
 		{
 			throw new TransactionFeeOverpaymentException(feePercentage);
@@ -246,6 +246,9 @@ public class TransactionFactory
 
 			if (payjoinClient is not null)
 			{
+				fee = psbt.GetFee();
+				feePercentage = 100 * (fee.ToDecimal(MoneyUnit.BTC) / feePercentageDivisor);
+				vSize = tx.GetVirtualSize();
 				builder.CoinFinder = (outpoint) => psbt.Inputs.Select(x => x.GetCoin()).Single(x => x?.Outpoint == outpoint)!;
 			}
 
