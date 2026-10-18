@@ -113,28 +113,36 @@ public class CoinJoinClientTests
 	}
 
 	[Theory]
-	[InlineData("valid")]
-	[InlineData("missing")]
-	[InlineData("duplicated")]
-	public async Task SigningRequiresEveryRegisteredInputExactlyOnceAsync(string inputSet)
+	[InlineData(3, true, false, 3)]
+	[InlineData(3, false, false, 2)]
+	[InlineData(2, true, false, 1)]
+	[InlineData(2, false, false, 1)]
+	[InlineData(1, true, false, 0)]
+	[InlineData(1, false, false, 0)]
+	[InlineData(0, true, false, 0)]
+	[InlineData(0, false, false, 0)]
+	[InlineData(3, true, true, 0)]
+	[InlineData(3, false, true, 0)]
+	[InlineData(2, true, true, 0)]
+	[InlineData(2, false, true, 0)]
+	public async Task SigningOnlySignsPresentInputsAndWithholdsOneForUnsafeRoundsAsync(int presentInputCount, bool includeOwnOutput, bool duplicateOwnInput, int expectedSignatureCount)
 	{
 		var km = ServiceFactory.CreateKeyManager("");
 		var keyChain = new KeyChain(km, new Kitchen(""));
 		var rnd = TestRandom.Get();
 		var ownCoins = Enumerable.Range(0, 3).Select(_ => BitcoinFactory.CreateSmartCoin(rnd, BitcoinFactory.CreateHdPubKey(km), Money.Coins(1m))).ToArray();
-		var ownInputs = inputSet switch
+		var presentOwnCoins = ownCoins.Take(presentInputCount).ToArray();
+		var ownInputs = presentOwnCoins.Select(x => x.Coin);
+		if (duplicateOwnInput)
 		{
-			"missing" => ownCoins.Skip(1).Select(x => x.Coin),
-			"duplicated" => ownCoins.Select(x => x.Coin).Append(ownCoins[0].Coin),
-			_ => ownCoins.Select(x => x.Coin)
-		};
+			ownInputs = ownInputs.Append(presentOwnCoins[0].Coin);
+		}
 		var inputs = ownInputs.Concat(Enumerable.Range(0, 4).Select(_ => WabiSabiTestFactory.CreateCoin())).ToArray();
 		var parameters = WabiSabiTestFactory.CreateRoundParameters(WabiSabiTestFactory.CreateDefaultWabiSabiConfig())
 			with { TransactionSigningTimeout = TimeSpan.FromMilliseconds(250) };
 
-		// The tampered rounds also drop our output, so only the withheld signature could stop the transaction.
 		var expectedOutput = new TxOut(Money.Coins(2.99m), BitcoinFactory.CreateScript());
-		TxOut[] ownOutputs = inputSet == "valid" ? [expectedOutput] : [];
+		TxOut[] ownOutputs = includeOwnOutput ? [expectedOutput] : [];
 		var otherOutput = new TxOut(Money.Zero, BitcoinFactory.CreateScript());
 		var outputs = ownOutputs.Append(otherOutput).ToArray();
 		var vsize = inputs.Sum(x => x.ScriptPubKey.EstimateInputVsize()) + outputs.Sum(x => x.ScriptPubKey.EstimateOutputVsize());
@@ -172,20 +180,28 @@ public class CoinJoinClientTests
 		{
 			var exception = await Record.ExceptionAsync(() => signingTask.WaitAsync(cts.Token));
 
-			if (inputSet == "valid")
-			{
-				Assert.Null(exception);
-				var (transaction, aliceClientsThatSigned) = await signingTask;
-				Assert.Equal(ownCoins.Length, aliceClientsThatSigned.Length);
-				Assert.Equal(
-					ownCoins.Select(x => x.Outpoint.ToString()).Order(),
-					signatures.Select(x => transaction.Inputs[(int)x.InputIndex].PrevOut.ToString()).Order());
-			}
-			else
+			if (duplicateOwnInput)
 			{
 				Assert.Empty(signatures);
 				var coinJoinClientException = Assert.IsType<CoinJoinClientException>(exception);
 				Assert.Equal(CoinjoinError.TamperedRoundState, coinJoinClientException.CoinjoinError);
+			}
+			else
+			{
+				Assert.Null(exception);
+				var (transaction, aliceClientsThatSigned) = await signingTask;
+				Assert.Equal(expectedSignatureCount, aliceClientsThatSigned.Length);
+				Assert.Equal(expectedSignatureCount, signatures.Count);
+				var signedOutpoints = aliceClientsThatSigned.Select(x => x.SmartCoin.Outpoint).ToArray();
+				Assert.Distinct(signedOutpoints);
+				Assert.All(signedOutpoints, outpoint => Assert.Contains(outpoint, presentOwnCoins.Select(x => x.Outpoint)));
+				Assert.Equal(
+					signedOutpoints.Select(x => x.ToString()).Order(),
+					signatures.Select(x => transaction.Inputs[(int)x.InputIndex].PrevOut.ToString()).Order());
+				foreach (var signature in signatures)
+				{
+					state = state.AddWitness((int)signature.InputIndex, signature.Witness);
+				}
 			}
 		}
 		finally
