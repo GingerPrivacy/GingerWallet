@@ -66,6 +66,12 @@
                                            IsEnabled="{Binding !IsReadOnly}" />
           </ScrollViewer>
         </TabItem>
+
+        <TabItem Header="Trezor">
+          <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <views:TrezorSuiteSettingsTabView DataContext="{Binding TrezorSuiteSettingsTab}" />
+          </ScrollViewer>
+        </TabItem>
       </TabControl>
     </DockPanel>
   </ContentArea>
