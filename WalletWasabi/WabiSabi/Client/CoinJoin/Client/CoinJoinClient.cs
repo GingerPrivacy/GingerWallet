@@ -1010,12 +1010,17 @@ public class CoinJoinClient
 
 		var signingState = roundState.Assert<SigningState>();
 
-		// Withholding a signature below only blocks the transaction if it really spends every one of our inputs.
-		if (registeredAliceClients.Any(alice => signingState.Inputs.Count(coin => coin.Outpoint == alice.SmartCoin.Outpoint) != 1))
+		if (registeredAliceClients.Any(alice => signingState.Inputs.Count(coin => coin.Outpoint == alice.SmartCoin.Outpoint) > 1))
 		{
-			throw new CoinJoinClientException(CoinjoinError.TamperedRoundState, "The coinjoin transaction must contain every registered wallet input exactly once.");
+			throw new CoinJoinClientException(CoinjoinError.TamperedRoundState, "The coinjoin transaction must not contain duplicate registered wallet inputs.");
 		}
 
+		// An omitted input cannot stop the transaction when we withhold its signature.
+		// Only consider registered inputs that are actually present in the proposed transaction.
+		var inputOutpoints = signingState.Inputs.Select(input => input.Outpoint).ToHashSet();
+		var alicesInTransaction = registeredAliceClients
+			.Where(alice => inputOutpoints.Contains(alice.SmartCoin.Outpoint))
+			.ToImmutableArray();
 		var unsignedCoinJoin = signingState.CreateUnsignedTransactionWithPrecomputedData();
 
 		// If everything is okay, then sign all the inputs. Otherwise, in case there are missing outputs, the server is
@@ -1023,18 +1028,23 @@ public class CoinJoinClient
 		// now when we identify as satoshi.
 		// In this scenario we should ban the coordinator and stop dealing with it.
 		// see more: https://github.com/zkSNACKs/WalletWasabi/issues/8171
-		bool mustSignAllInputs = IsSigningStateSafe(signingState, registeredAliceClients.Length, CoinJoinConfiguration)
+		var allMyInputsArePresent = alicesInTransaction.Length == registeredAliceClients.Length;
+		bool mustSignAllInputs = allMyInputsArePresent
+			&& IsSigningStateSafe(signingState, registeredAliceClients.Length, CoinJoinConfiguration)
 			&& SanityCheck(outputTxOuts, unsignedCoinJoin.Transaction.Outputs);
 		if (!mustSignAllInputs)
 		{
-			roundState.LogInfo($"The transaction failed the input count, solo coinjoin, fee or output checks. A subset of inputs will be signed.");
+			roundState.LogInfo($"The transaction failed the input membership, input count, solo coinjoin, fee or output checks. A subset of inputs will be signed.");
 		}
 
 		// Send signature.
 		var combinedToken = linkedCts.Token;
-		var alicesToSign = mustSignAllInputs
-			? registeredAliceClients
-			: registeredAliceClients.RemoveAt(SecureRandom.GetInt(0, registeredAliceClients.Length));
+		var alicesToSign = alicesInTransaction;
+		if (!mustSignAllInputs && !alicesToSign.IsEmpty)
+		{
+			// Leave one input of this transaction unsigned so the coordinator cannot complete it.
+			alicesToSign = alicesToSign.RemoveAt(SecureRandom.GetInt(0, alicesToSign.Length));
+		}
 
 		var delayBeforeSigning = TimeSpan.FromSeconds(roundState.CoinjoinState.Parameters.DelayTransactionSigning ? 50 : 0);
 		var signingStateStartTime = DateTimeOffset.UtcNow + delayBeforeSigning;
