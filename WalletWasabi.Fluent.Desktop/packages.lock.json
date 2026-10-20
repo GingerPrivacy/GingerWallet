@@ -599,6 +599,7 @@
       "walletwasabi": {
         "type": "Project",
         "dependencies": {
+          "CoinSelection": "[0.1.0, )",
           "GingerCommon": "[1.0.0, )",
           "Microsoft.AspNetCore.WebUtilities": "[10.0.13, )",
           "Microsoft.Data.Sqlite": "[10.0.13, )",
@@ -717,6 +718,12 @@
           "Avalonia.Xaml.Interactions.Responsive": "11.0.5",
           "Avalonia.Xaml.Interactivity": "11.0.5"
         }
+      },
+      "CoinSelection": {
+        "type": "CentralTransitive",
+        "requested": "[0.1.0, )",
+        "resolved": "0.1.0",
+        "contentHash": "w3BWts+HklcAfRriE+crVkIKuOM7spkM3kOwgcHc3QJjM8vkWxctZ4mEgCEB3rlYuJKwzBxe2tjr6arev25VmA=="
       },
       "DynamicData": {
         "type": "CentralTransitive",

@@ -1,3 +1,4 @@
+using CoinSelection;
 using NBitcoin;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -83,46 +84,40 @@ public static class ChangelessTransactionCoinSelector
 	{
 		selectedCoins = null;
 
-		BranchAndBound branchAndBound = new();
-
-		bool foundExactMatch = false;
-		List<long>? solution = null;
-
-		try
+		if (strategy.Parameters.MaxInputCount <= 0)
 		{
-			foundExactMatch = branchAndBound.TryGetMatch(strategy, out solution, cancellationToken);
+			return false;
 		}
-		catch (OperationCanceledException)
+
+		// Keep the wallet's fee estimates, inclusive payment bounds and script-group input limit.
+		SelectionOptions options = new()
+		{
+			Mode = strategy is MoreSelectionStrategy ? SelectionMode.AtLeastTarget : SelectionMode.AtMostTarget,
+			MaximumDifference = strategy switch
+			{
+				MoreSelectionStrategy more => more.MaximumTarget - strategy.Target,
+				LessSelectionStrategy less => strategy.Target - less.MinimumTarget,
+				_ => throw new ArgumentException("Unsupported changeless selection strategy.", nameof(strategy))
+			},
+			MaximumInputCount = strategy.Parameters.MaxInputCount,
+			// The caller's cancellation token already limits the search time.
+			MaximumSearchNodes = long.MaxValue
+		};
+
+		var candidates = inputEffectiveValues
+			.Select((group, i) => new SelectionCandidate<SmartCoin[]>(group.Key, group.Value, strategy.InputCosts[i]))
+			.Where(candidate => candidate.Value > 0)
+			.ToArray();
+
+		var selection = CoinSelector.Select(candidates, strategy.Target, options, cancellationToken);
+		if (selection.Status == SelectionStatus.Cancelled)
 		{
 			Logger.LogInfo("Computing privacy suggestions was cancelled or timed out.");
 		}
 
-		// If we've not found an optimal solution then we will use the best.
-		if (!foundExactMatch && strategy.GetBestSelectionFound() is long[] bestSolution)
+		if (selection.HasSelection)
 		{
-			solution = bestSolution.ToList();
-		}
-
-		if (solution is not null)
-		{
-			List<SmartCoin> resultCoins = new();
-			int i = 0;
-
-			foreach ((SmartCoin[] smartCoinGroup, long effectiveSatoshis) in inputEffectiveValues)
-			{
-				// Both arrays are in decreasing order so the first match will be the coin we are looking for.
-				if (effectiveSatoshis == solution[i])
-				{
-					i++;
-					resultCoins.AddRange(smartCoinGroup);
-					if (i == solution.Count)
-					{
-						break;
-					}
-				}
-			}
-
-			selectedCoins = resultCoins;
+			selectedCoins = selection.SelectedCandidates.SelectMany(candidate => candidate.Item).ToArray();
 			return true;
 		}
 
