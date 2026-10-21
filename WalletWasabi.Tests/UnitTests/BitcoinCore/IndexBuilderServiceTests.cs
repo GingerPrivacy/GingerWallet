@@ -4,6 +4,7 @@ using NBitcoin.RPC;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using WalletWasabi.BitcoinCore.Rpc;
 using WalletWasabi.BitcoinCore.Rpc.Models;
@@ -41,11 +42,15 @@ public class IndexBuilderServiceTests
 	public async Task SegwitTaprootStalledBitcoinNodeAsync()
 	{
 		var called = 0;
+		TaskCompletionSource secondRpcCall = new(TaskCreationOptions.RunContinuationsAsynchronously);
 		var rpc = new MockRpcClient
 		{
 			OnGetBlockchainInfoAsync = () =>
 			{
-				called++;
+				if (Interlocked.Increment(ref called) == 2)
+				{
+					secondRpcCall.TrySetResult();
+				}
 				return Task.FromResult(new BlockchainInfo
 				{
 					Headers = 10_000,
@@ -59,10 +64,17 @@ public class IndexBuilderServiceTests
 
 		indexer.Synchronize();
 
-		await Task.Delay(TimeSpan.FromSeconds(2));
-		Assert.True(indexer.IsRunning);  // It is still working
-		Assert.Throws<ArgumentOutOfRangeException>(() => indexer.GetLastFilter());  // There are no filters
-		Assert.True(called > 1);
+		try
+		{
+			await secondRpcCall.Task.WaitAsync(TimeSpan.FromSeconds(21));
+			Assert.True(indexer.IsRunning);  // It is still working
+			Assert.Throws<ArgumentOutOfRangeException>(() => indexer.GetLastFilter());  // There are no filters
+			Assert.True(called > 1);
+		}
+		finally
+		{
+			await indexer.StopAsync().WaitAsync(TimeSpan.FromSeconds(21));
+		}
 	}
 
 	[Fact]
@@ -255,11 +267,15 @@ public class IndexBuilderServiceTests
 	public async Task TaprootStalledBitcoinNodeAsync()
 	{
 		var called = 0;
+		TaskCompletionSource secondRpcCall = new(TaskCreationOptions.RunContinuationsAsynchronously);
 		var rpc = new MockRpcClient
 		{
 			OnGetBlockchainInfoAsync = () =>
 			{
-				called++;
+				if (Interlocked.Increment(ref called) == 2)
+				{
+					secondRpcCall.TrySetResult();
+				}
 				return Task.FromResult(new BlockchainInfo
 				{
 					Headers = 10_000,
@@ -273,10 +289,17 @@ public class IndexBuilderServiceTests
 
 		indexer.Synchronize();
 
-		await Task.Delay(TimeSpan.FromSeconds(2));
-		Assert.True(indexer.IsRunning);  // It is still working
-		Assert.Throws<ArgumentOutOfRangeException>(() => indexer.GetLastFilter());  // There are no filters
-		Assert.True(called > 1);
+		try
+		{
+			await secondRpcCall.Task.WaitAsync(TimeSpan.FromSeconds(21));
+			Assert.True(indexer.IsRunning);  // It is still working
+			Assert.Throws<ArgumentOutOfRangeException>(() => indexer.GetLastFilter());  // There are no filters
+			Assert.True(called > 1);
+		}
+		finally
+		{
+			await indexer.StopAsync().WaitAsync(TimeSpan.FromSeconds(21));
+		}
 	}
 
 	[Fact]
