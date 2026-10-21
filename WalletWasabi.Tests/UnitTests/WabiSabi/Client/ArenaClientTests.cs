@@ -97,7 +97,8 @@ public class ArenaClientTests
 		Alice alice2 = WabiSabiTestFactory.CreateAlice(coins[1].Coin, coins[1].OwnershipProof, round: round);
 		round.Alices.Add(alice2);
 
-		using Arena arena = await ArenaTestFactory.From(config).CreateAndStartAsync(rnd, round);
+		// This test drives the signing state directly.
+		using Arena arena = ArenaTestFactory.From(config).Create(rnd, round);
 
 		using var memoryCache = new MemoryCache(new MemoryCacheOptions());
 		var idempotencyRequestCache = new IdempotencyRequestCache(memoryCache);

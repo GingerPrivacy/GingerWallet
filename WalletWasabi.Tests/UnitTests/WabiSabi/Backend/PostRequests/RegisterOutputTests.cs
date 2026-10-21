@@ -127,10 +127,9 @@ public class RegisterOutputTests
 		{ MaxVsizeAllocationPerAlice = Constants.P2wpkhInputVirtualSize + outputScript.EstimateOutputVsize() };
 		var round = WabiSabiTestFactory.CreateRound(parameters);
 
-		using Arena arena = await ArenaTestFactory.From(cfg).CreateAndStartAsync(rnd, round);
-
 		round.SetPhase(Phase.OutputRegistration);
 		round.Alices.Add(WabiSabiTestFactory.CreateAlice(rnd, Money.Coins(1), round));
+		using Arena arena = await ArenaTestFactory.From(cfg).CreateAndStartAsync(rnd, round);
 
 		var req = WabiSabiTestFactory.CreateOutputRegistrationRequest(rnd, round, outputScript);
 		var ex = await Assert.ThrowsAsync<WabiSabiProtocolException>(async () => await arena.RegisterOutputAsync(req, CancellationToken.None));
@@ -149,10 +148,10 @@ public class RegisterOutputTests
 			with
 		{ MaxVsizeAllocationPerAlice = Constants.P2wpkhInputVirtualSize + sha256Bounty.EstimateOutputVsize() };
 		var round = WabiSabiTestFactory.CreateRound(parameters);
-		using Arena arena = await ArenaTestFactory.From(cfg).CreateAndStartAsync(rnd, round);
 
 		round.SetPhase(Phase.OutputRegistration);
 		round.Alices.Add(WabiSabiTestFactory.CreateAlice(rnd, Money.Coins(1), round));
+		using Arena arena = await ArenaTestFactory.From(cfg).CreateAndStartAsync(rnd, round);
 
 		var req = WabiSabiTestFactory.CreateOutputRegistrationRequest(rnd, round, sha256Bounty);
 		var ex = await Assert.ThrowsAsync<WabiSabiProtocolException>(async () => await arena.RegisterOutputAsync(req, CancellationToken.None));
