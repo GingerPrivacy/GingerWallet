@@ -42,22 +42,16 @@ public static class ChangelessTransactionCoinSelector
 
 		SelectionOptions options = new()
 		{
-			MaximumInputCount = maxInputCount,
+			MaximumCandidateCount = maxInputCount,
+			MaximumExcess = (long)(target * 1.25) - target,
+			MaximumShortfall = target - (long)(target * 0.75),
 			// The caller's cancellation token already limits the search time.
 			MaximumSearchNodes = long.MaxValue
 		};
-		SelectionOptions[] strategies =
-		[
-			options with { Mode = SelectionMode.AtLeastTarget, MaximumExcess = (long)(target * 1.25) - target },
-			options with { Mode = SelectionMode.AtMostTarget, MaximumShortfall = target - (long)(target * 0.75) }
-		];
-		var tasks = strategies
-			.Select(strategy => Task.Run(() => CoinSelector.Select(candidates, target, strategy, cancellationToken), cancellationToken))
-			.ToArray();
+		var selections = await Task.Run(() => CoinSelector.SelectBoth(candidates, target, options, cancellationToken), cancellationToken).ConfigureAwait(false);
 
-		foreach (var task in tasks)
+		foreach (var selection in new[] { selections.AtLeastTarget, selections.AtMostTarget })
 		{
-			var selection = await task.ConfigureAwait(false);
 			if (selection.Status == SelectionStatus.Cancelled)
 			{
 				Logger.LogInfo("Computing privacy suggestions was cancelled or timed out.");

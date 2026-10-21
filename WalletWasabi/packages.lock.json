@@ -4,9 +4,9 @@
     "net10.0": {
       "CoinSelection": {
         "type": "Direct",
-        "requested": "[0.1.0, )",
-        "resolved": "0.1.0",
-        "contentHash": "w3BWts+HklcAfRriE+crVkIKuOM7spkM3kOwgcHc3QJjM8vkWxctZ4mEgCEB3rlYuJKwzBxe2tjr6arev25VmA=="
+        "requested": "[0.2.0, )",
+        "resolved": "0.2.0",
+        "contentHash": "eMOsq9I8MCLfQNuVakOAhGyU+6iQDDnReYJiGRUw3FnptYpxrDvczDjLxDCx+/A7CXxlvGAu423iYIk4bxbuTg=="
       },
       "Microsoft.AspNetCore.WebUtilities": {
         "type": "Direct",

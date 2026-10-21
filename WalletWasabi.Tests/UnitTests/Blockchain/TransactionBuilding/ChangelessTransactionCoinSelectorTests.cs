@@ -87,6 +87,22 @@ public class ChangelessTransactionCoinSelectorTests
 	}
 
 	[Theory]
+	[InlineData(9_999, 11_200)]
+	[InlineData(8_800, 10_001)]
+	public async Task KeepsBothSuggestionsWhenTheirTargetDistancesDifferAsync(long below, long above)
+	{
+		FeeRate feeRate = new(1.2m);
+		SmartCoin less = Coin(0, below + InputFee(Keys[0].P2wpkhScript, feeRate));
+		SmartCoin more = Coin(1, above + InputFee(Keys[1].P2wpkhScript, feeRate));
+
+		var suggestions = await GetSuggestionsAsync(new[] { less, more }, feeRate, OutputWithTarget(10_000, feeRate), 1);
+
+		Assert.Equal(2, suggestions.Length);
+		Assert.Same(more, Assert.Single(suggestions[0]));
+		Assert.Same(less, Assert.Single(suggestions[1]));
+	}
+
+	[Theory]
 	[InlineData(74, 0)]
 	[InlineData(75, 1)]
 	[InlineData(101, 2)]
