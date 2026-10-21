@@ -60,13 +60,10 @@ public class Warden : BackgroundService
 	{
 		try
 		{
-			while (!cancel.IsCancellationRequested)
+			await foreach (var inmate in OffendersToSaveChannel.Reader.ReadAllAsync(cancel).ConfigureAwait(false))
 			{
-				await foreach (var inmate in OffendersToSaveChannel.Reader.ReadAllAsync(cancel).ConfigureAwait(false))
-				{
-					var lines = Enumerable.Repeat(inmate.ToStringLine(), 1);
-					await File.AppendAllLinesAsync(PrisonFilePath, lines, CancellationToken.None).ConfigureAwait(false);
-				}
+				var lines = Enumerable.Repeat(inmate.ToStringLine(), 1);
+				await File.AppendAllLinesAsync(PrisonFilePath, lines, CancellationToken.None).ConfigureAwait(false);
 			}
 		}
 		catch (OperationCanceledException)
@@ -80,9 +77,22 @@ public class Warden : BackgroundService
 		}
 	}
 
-	public override Task StopAsync(CancellationToken cancellationToken)
+	public override async Task StopAsync(CancellationToken cancellationToken)
 	{
-		OffendersToSaveChannel.Writer.Complete();
-		return base.StopAsync(cancellationToken);
+		OffendersToSaveChannel.Writer.TryComplete();
+		try
+		{
+			if (ExecuteTask is { } executeTask)
+			{
+				await executeTask.WaitAsync(cancellationToken).ConfigureAwait(false);
+			}
+		}
+		catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested || ExecuteTask is { IsCanceled: true })
+		{
+		}
+		finally
+		{
+			await base.StopAsync(cancellationToken).ConfigureAwait(false);
+		}
 	}
 }

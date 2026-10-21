@@ -1,5 +1,6 @@
 using Moq;
 using NBitcoin;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,8 +16,10 @@ namespace WalletWasabi.Tests.UnitTests.WabiSabi.Backend;
 
 public class UtxoPrisonWardenTests
 {
-	[Fact]
-	public async Task CanStartAndStopAsync()
+	[Theory]
+	[InlineData(false)]
+	[InlineData(true)]
+	public async Task CanStartAndStopAsync(bool cancelStartup)
 	{
 		var workDir = TestDirectory.Get();
 		CoordinatorParameters coordinatorParameters = new(workDir);
@@ -24,8 +27,38 @@ public class UtxoPrisonWardenTests
 			coordinatorParameters.PrisonFilePath,
 			WabiSabiTestFactory.CreateCoinJoinIdStore(),
 			coordinatorParameters.RuntimeCoordinatorConfig);
-		await w.StartAsync(CancellationToken.None);
+		using CancellationTokenSource startupCts = new();
+		if (cancelStartup)
+		{
+			startupCts.Cancel();
+		}
+		await w.StartAsync(startupCts.Token);
 		await w.StopAsync(CancellationToken.None);
+	}
+
+	[Fact]
+	public async Task StopDrainsPrisonBeforeWorkerStartsAsync()
+	{
+		CoordinatorParameters parameters = new(TestDirectory.Get());
+		using var warden = new DelayedWarden(parameters);
+		await warden.StartAsync(CancellationToken.None);
+		var outPoint = BitcoinFactory.CreateOutPoint(TestRandom.Get());
+		warden.Prison.CheatingDetected(outPoint, uint256.One);
+
+		using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(10));
+		var stopTask = warden.StopAsync(timeout.Token);
+		try
+		{
+			Assert.False(stopTask.IsCompleted);
+		}
+		finally
+		{
+			warden.AllowExecution.TrySetResult();
+			await stopTask;
+		}
+
+		var line = Assert.Single(File.ReadAllLines(parameters.PrisonFilePath));
+		Assert.Equal(outPoint, Offender.FromStringLine(line).OutPoint);
 	}
 
 	[Fact]
@@ -82,6 +115,18 @@ public class UtxoPrisonWardenTests
 			Assert.Equal([InputBannedReasonEnum.Inherited, InputBannedReasonEnum.RoundDisruptionMethodDidNotSignalReadyToSign], w2.Prison.GetBan(i6, dosConfig).Reasons.OrderBy(x => x));
 
 			await w2.StopAsync(CancellationToken.None);
+		}
+	}
+
+	private sealed class DelayedWarden(CoordinatorParameters parameters)
+		: Warden(parameters.PrisonFilePath, WabiSabiTestFactory.CreateCoinJoinIdStore(), parameters.RuntimeCoordinatorConfig)
+	{
+		public TaskCompletionSource AllowExecution { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+		protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+		{
+			await AllowExecution.Task.WaitAsync(stoppingToken);
+			await base.ExecuteAsync(stoppingToken);
 		}
 	}
 }

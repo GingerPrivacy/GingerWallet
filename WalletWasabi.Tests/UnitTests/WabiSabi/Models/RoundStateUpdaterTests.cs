@@ -201,7 +201,9 @@ public class RoundStateUpdaterTests
 		using RoundStateUpdater roundStatusUpdater = new(TimeSpan.FromSeconds(100), [], apiClient, false);
 		try
 		{
+			var initialRoundTask = roundStatusUpdater.CreateRoundAwaiterAsync(roundState.Id, Phase.InputRegistration, CancellationToken.None);
 			await roundStatusUpdater.StartAsync(CancellationToken.None);
+			await initialRoundTask.WaitAsync(TestTimeOut);
 			using var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(1));
 
 			await Assert.ThrowsAsync<TaskCanceledException>(async () =>

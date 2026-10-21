@@ -4,12 +4,14 @@ This document lists all the officially supported software and devices by Wasabi 
 
 # Officially Supported Operating Systems
 
-- Windows 10 1607+
-- Windows 11 22000+
-- macOS 12.0+
+- Windows 10 LTSC releases supported by Microsoft
+- Windows 11 releases supported by Microsoft
+- macOS 15.0+
 - Ubuntu 22.04+
-- Fedora 37+
-- Debian 11+
+- Fedora 43+
+- Debian 13+
+
+The OS release must also remain supported by its publisher and appear in the [.NET 10 supported OS list](https://github.com/dotnet/core/blob/main/release-notes/10.0/supported-os.md).
 
 # Officially Supported Hardware Wallets
 
@@ -39,9 +41,9 @@ This document lists all the officially supported software and devices by Wasabi 
 ## What are the bottlenecks of officially supporting Operating Systems?
 
 Wasabi dependencies are:
-- .NET 8.0 [reqs](https://github.com/dotnet/core/blob/main/release-notes/8.0/supported-os.md).
+- .NET 10.0 [reqs](https://github.com/dotnet/core/blob/main/release-notes/10.0/supported-os.md).
 - Avalonia [reqs](https://github.com/AvaloniaUI/Avalonia/wiki/Runtime-Requirements).
-- NBitcoin dependencies and requirements are the same as .NET 8.0.
+- NBitcoin dependencies and requirements are the same as .NET 10.0.
 - Bitcoin Knots (same requirements as Bitcoin Core) [reqs](https://bitcoin.org/en/bitcoin-core/features/requirements#system-requirements).
 
 ## What are the bottlenecks of officially supporting Hardware Wallets?

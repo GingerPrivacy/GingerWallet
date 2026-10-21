@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NBitcoin;
 using System.Collections.Generic;
@@ -15,11 +16,12 @@ using WalletWasabi.Logging;
 using WalletWasabi.Tests.Helpers;
 using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.Tor.Http;
+using Xunit;
 using Constants = WalletWasabi.Helpers.Constants;
 
 namespace WalletWasabi.Tests.XunitConfiguration;
 
-public class RegTestFixture : IDisposable
+public class RegTestFixture : IDisposable, IAsyncLifetime
 {
 	private volatile bool _disposedValue = false; // To detect redundant calls
 
@@ -75,15 +77,34 @@ public class RegTestFixture : IDisposable
 		}
 
 		Global = global;
-		var hostInitializationTask = BackendHost.RunWithTasksAsync();
-		Logger.LogInfo($"Started Backend webhost: {BackendEndPoint}");
 
 		HttpClient = new HttpClient();
 		BackendHttpClient = new ClearnetHttpClient(HttpClient, () => BackendEndPointUri);
+	}
 
-		// Wait for server to initialize
-		var delayTask = Task.Delay(3000);
-		Task.WaitAny(delayTask, hostInitializationTask);
+	public async Task InitializeAsync()
+	{
+		TaskCompletionSource applicationStarted = new(TaskCreationOptions.RunContinuationsAsynchronously);
+		var lifetime = BackendHost.Services.GetRequiredService<IHostApplicationLifetime>();
+		using var startedRegistration = lifetime.ApplicationStarted.Register(() => applicationStarted.TrySetResult());
+		var hostInitializationTask = BackendHost.RunWithTasksAsync();
+
+		// Backend initialization mines blocks before the HTTP host starts listening.
+		var completedTask = await Task.WhenAny(applicationStarted.Task, hostInitializationTask)
+			.WaitAsync(TimeSpan.FromMinutes(1));
+		await completedTask;
+		if (!applicationStarted.Task.IsCompletedSuccessfully)
+		{
+			throw new InvalidOperationException("The regression test backend stopped before it started listening.");
+		}
+
+		Logger.LogInfo($"Started Backend webhost: {BackendEndPoint}");
+	}
+
+	public Task DisposeAsync()
+	{
+		Dispose();
+		return Task.CompletedTask;
 	}
 
 	/// <summary>String representation of backend URI: <c>http://localhost:RANDOM_PORT</c>.</summary>

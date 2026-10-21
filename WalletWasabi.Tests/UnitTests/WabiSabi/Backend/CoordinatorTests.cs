@@ -25,6 +25,10 @@ public class CoordinatorTests
 		CoordinatorParameters coordinatorParameters = new(workDir);
 		using WabiSabiCoordinator coordinator = CreateWabiSabiCoordinator(coordinatorParameters);
 		await coordinator.StartAsync(CancellationToken.None);
+		Assert.NotNull(coordinator.ConfigWatcher.ExecuteTask);
+		Assert.NotNull(coordinator.Warden.ExecuteTask);
+		Assert.NotNull(coordinator.Arena.ExecuteTask);
+		Assert.NotNull(coordinator.CoinJoinFeeRateStatStore.ExecuteTask);
 		await coordinator.StopAsync(CancellationToken.None);
 	}
 

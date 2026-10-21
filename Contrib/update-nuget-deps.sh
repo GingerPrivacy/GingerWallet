@@ -32,19 +32,8 @@ update_deps() {
     exit 2
   fi
 
-  local out gen_path
-  out="$("$helper" 2>&1 || true)"
-  gen_path="$(printf '%s\n' "$out" | sed -nE 's/^Succesfully wrote lockfile to (.*)$/\1/p' | tail -n 1)"
-
-  if [[ -z "$gen_path" ]]; then
-    echo "ERROR: Could not find generated lockfile path in fetch-deps output." >&2
-    echo "---- fetch-deps output (last 120 lines) ----" >&2
-    printf '%s\n' "$out" | tail -n 120 >&2
-    exit 3
-  fi
-
-  cp -f "$gen_path" "$target"
-  echo "    Wrote $target (from $gen_path)"
+  "$helper" "$target"
+  echo "    Wrote $target"
 }
 
 main() {
@@ -54,7 +43,9 @@ main() {
 
   update_deps ".#packages.x86_64-linux.default" "deps.nix"
 
-  echo "==> Done. Commit deps.nix"
+  update_deps ".#packages.x86_64-linux.all" "deps-all.nix"
+
+  echo "==> Done. Commit deps.nix and deps-all.nix"
 }
 
 main "$@"
