@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WalletWasabi.Backend.Models;
 using WalletWasabi.Blockchain.BlockFilters;
 using WalletWasabi.Blockchain.Blocks;
+using WalletWasabi.Extensions;
 
 namespace WalletWasabi.Tests.UnitTests.Wallet;
 

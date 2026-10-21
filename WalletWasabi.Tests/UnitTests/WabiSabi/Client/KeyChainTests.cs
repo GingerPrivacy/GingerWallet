@@ -22,10 +22,15 @@ public class KeyChainTests
 		var coinDestination = destinationProvider.GetNextDestinations(1, false).First();
 		var coin = new Coin(BitcoinFactory.CreateOutPoint(TestRandom.Get()), new TxOut(Money.Coins(1.0m), coinDestination));
 
-		var transaction = Transaction.Create(Network.Main); // the transaction doesn't contain the input that we request to be signed.
+		var transaction = Transaction.Create(Network.Main);
 
+		Assert.Throws<ArgumentException>("transaction", () => keyChain.Sign(transaction, coin, transaction.PrecomputeTransactionData()));
+
+		// A nonempty transaction must contain the input that we request to be signed.
+		transaction.Inputs.Add(new OutPoint(coin.Outpoint.Hash, coin.Outpoint.N ^ 1U));
 		Assert.Throws<InvalidOperationException>(() => keyChain.Sign(transaction, coin, transaction.PrecomputeTransactionData()));
 
+		transaction.Inputs.Clear();
 		transaction.Inputs.Add(coin.Outpoint);
 		var signedTx = keyChain.Sign(transaction, coin, transaction.PrecomputeTransactionData(new[] { coin }));
 		Assert.True(signedTx.HasWitness);

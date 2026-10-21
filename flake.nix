@@ -26,7 +26,7 @@
           version = "2.0.0-${builtins.substring 0 8 (self.lastModifiedDate or self.lastModified or "19700101")}-${gitRev}";
           nugetDeps = ./deps.nix; # nix build .#packages.x86_64-linux.default.passthru.fetch-deps
           dotnetFlags = [ "-p:CommitHash=${gitRev}" ];
-          runtimeDeps = [ pkgs.openssl pkgs.zlib ];
+          runtimeDeps = [ pkgs.openssl pkgs.zlib pkgs.icu ];
           dotnet-sdk = dotnet.sdk_10_0;
           selfContainedBuild = true;
 
@@ -44,7 +44,7 @@
           nugetDeps = ./deps-all.nix; # nix build .#packages.x86_64-linux.default.passthru.fetch-deps
           runtimeDeps = with pkgs; [
              # for backend
-             openssl zlib
+             openssl zlib icu
              # for client
              tor bitcoind
              xorg.libX11 xorg.libXrandr xorg.libX11.dev xorg.libICE xorg.libSM fontconfig.lib ];
@@ -58,7 +58,7 @@
           testProjectFile = "WalletWasabi.Tests/WalletWasabi.Tests.csproj";
           executables = [ "WalletWasabi.Backend" "WalletWasabi.Fluent.Desktop" ];
           doCheck = true;
-          dotnetTestFlags = ["--filter \"UnitTests\"" "--logger \"console;verbosity=detailed\""];
+          dotnetTestFlags = [ "--filter" "UnitTests" "--logger" "console;verbosity=detailed" ];
 
           # wrap manually, because we want not so ugly executable names
           dontDotnetFixup = true;

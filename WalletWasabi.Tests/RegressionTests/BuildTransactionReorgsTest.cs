@@ -110,6 +110,7 @@ public class BuildTransactionReorgsTest : IClassFixture<RegTestFixture>
 			// Wait until the filter our previous transaction is present.
 			var blockCount = await rpc.GetBlockCountAsync();
 			await setup.WaitForFiltersToBeProcessedAsync(TimeSpan.FromSeconds(120), blockCount);
+			await wallet.PerformSynchronizationAsync(testDeadlineCts.Token);
 
 			var coin = Assert.Single(wallet.Coins);
 			Assert.True(coin.Confirmed);

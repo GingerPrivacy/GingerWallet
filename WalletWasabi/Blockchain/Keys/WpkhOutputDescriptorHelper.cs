@@ -1,4 +1,4 @@
-using NBitcoin.Scripting;
+using NBitcoin.WalletPolicies;
 using NBitcoin;
 
 namespace WalletWasabi.Blockchain.Keys;
@@ -15,16 +15,14 @@ public class WpkhOutputDescriptorHelper
 
 		// Optional part is followed by the actual private key: "tprv8ghYQhz7XQhoqDZG8SzbkqGCDTwAzyVVmUN3cUerPhUgK91Xvc4FaMJpYwrjuQ48WD7KdQ7Y6znKnaY9PXP8SiDLv1srjjs8NVYGuM7Hrrk"
 		string privateDescriptor = $"{optionalPart}{accountKey.ToString(network)}";
-
-		FlatSigningRepository internalRepo = new();
-		FlatSigningRepository externalRepo = new();
+		string publicDescriptor = $"{optionalPart}{accountKey.Neuter().ToString(network)}";
 
 		// Descriptor for all unhardened children (`/*`)
-		OutputDescriptor internalPublicDescriptor = OutputDescriptor.Parse($"wpkh({privateDescriptor}/1/*)", network, requireCheckSum: false, internalRepo);
-		OutputDescriptor externalPublicDescriptor = OutputDescriptor.Parse($"wpkh({privateDescriptor}/0/*)", network, requireCheckSum: false, externalRepo);
+		string internalPublicDescriptor = Miniscript.AddChecksum($"wpkh({publicDescriptor}/1/*)");
+		string externalPublicDescriptor = Miniscript.AddChecksum($"wpkh({publicDescriptor}/0/*)");
 
-		externalPublicDescriptor.TryGetPrivateString(externalRepo, out string? privateExternalDescriptor);
-		internalPublicDescriptor.TryGetPrivateString(internalRepo, out string? privateInternalDescriptor);
+		string privateExternalDescriptor = Miniscript.AddChecksum($"wpkh({privateDescriptor}/0/*)");
+		string privateInternalDescriptor = Miniscript.AddChecksum($"wpkh({privateDescriptor}/1/*)");
 
 		return new(internalPublicDescriptor, externalPublicDescriptor, privateInternalDescriptor, privateExternalDescriptor);
 	}
@@ -36,5 +34,5 @@ public class WpkhOutputDescriptorHelper
 	/// <param name="PublicExternal">Descriptor describing something like:   <c>wpkh([2fc4a4f3/84'/0'/0']tpubDDPaZ82MfnPUigb426fCAEvJnVT7AJgQLmxptzh9oyH59dGJYzsqkqvgj6SyY9eBHhFmG286cfj66Dzv1kYAnC3o7LRxohvo7mwWPr26uje/0/*)#lxryf78g</c>.</param>
 	/// <param name="PrivateInternal">A string similar to the following one: <c>wpkh([2fc4a4f3/84'/0'/0']tprv8ghYQhz7XQhoqDZG8SzbkqGCDTwAzyVVmUN3cUerPhUgK91Xvc4FaMJpYwrjuQ48WD7KdQ7Y6znKnaY9PXP8SiDLv1srjjs8NVYGuM7Hrrk/1/*)#6ny2206k</c>.</param>
 	/// <param name="PrivateExternal">A string similar to the following one: <c>wpkh([2fc4a4f3/84'/0'/0']tprv8ghYQhz7XQhoqDZG8SzbkqGCDTwAzyVVmUN3cUerPhUgK91Xvc4FaMJpYwrjuQ48WD7KdQ7Y6znKnaY9PXP8SiDLv1srjjs8NVYGuM7Hrrk/0/*)#t8pth62w</c>.</param>
-	public record WpkhDescriptors(OutputDescriptor PublicInternal, OutputDescriptor PublicExternal, string? PrivateInternal, string? PrivateExternal);
+	public record WpkhDescriptors(string PublicInternal, string PublicExternal, string? PrivateInternal, string? PrivateExternal);
 }

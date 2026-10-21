@@ -10,6 +10,7 @@ using WalletWasabi.BitcoinCore.Rpc;
 using WalletWasabi.BitcoinCore.Rpc.Models;
 using WalletWasabi.Blockchain.BlockFilters;
 using WalletWasabi.Blockchain.Blocks;
+using WalletWasabi.Extensions;
 using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests.BitcoinCore;
