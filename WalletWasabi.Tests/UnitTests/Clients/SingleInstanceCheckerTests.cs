@@ -54,6 +54,70 @@ public class SingleInstanceCheckerTests
 	}
 
 	[Fact]
+	public async Task InitialInstanceCheckCompletesBeforeWorkerStartsAsync()
+	{
+		await using DelayedSingleInstanceChecker checker = new(PortFinder.GetRandomPorts(1)[0]);
+		try
+		{
+			var startupTask = checker.CheckSingleInstanceAsync();
+			Assert.True(startupTask.IsCompletedSuccessfully);
+			Assert.Equal(WasabiInstanceStatus.NoOtherInstanceIsRunning, await startupTask);
+			await checker.StopCheckingAsync().WaitAsync(TimeSpan.FromSeconds(10));
+
+			using TcpListener replacementListener = new(IPAddress.Loopback, checker.Port)
+			{
+				ExclusiveAddressUse = true
+			};
+			replacementListener.Start();
+			Assert.Equal(checker.Port, ((IPEndPoint)replacementListener.LocalEndpoint).Port);
+		}
+		finally
+		{
+			checker.AllowListenerStart.TrySetResult();
+		}
+	}
+
+	[Fact]
+	public async Task StopCheckingDoesNotWaitForStartupContinuationAsync()
+	{
+		using ManualResetEventSlim releaseStartupContinuation = new(false);
+		await using DelayedSingleInstanceChecker checker = new(PortFinder.GetRandomPorts(1)[0]);
+		TaskCompletionSource startupContinuationEntered = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+		var startupTask = checker.CheckSingleInstanceAsync();
+
+		// If readiness is asynchronous, subscribe before allowing the worker to
+		// publish it. Synchronous readiness can run the blocking caller separately.
+		var startupContinuation = startupTask.IsCompleted
+			? Task.Run(BlockAfterStartupAsync)
+			: BlockAfterStartupAsync();
+		try
+		{
+			checker.AllowListenerStart.TrySetResult();
+			await startupContinuationEntered.Task.WaitAsync(TimeSpan.FromSeconds(10));
+			Assert.False(startupContinuation.IsCompleted);
+
+			// The caller may run a blocking GUI loop after startup. Stopping the
+			// listener must finish without waiting for that caller to return.
+			await checker.StopCheckingAsync().WaitAsync(TimeSpan.FromSeconds(10));
+		}
+		finally
+		{
+			releaseStartupContinuation.Set();
+			checker.AllowListenerStart.TrySetResult();
+			await startupContinuation.WaitAsync(TimeSpan.FromSeconds(10));
+		}
+
+		async Task BlockAfterStartupAsync()
+		{
+			var status = await startupTask.ConfigureAwait(false);
+			Assert.Equal(WasabiInstanceStatus.NoOtherInstanceIsRunning, status);
+			startupContinuationEntered.TrySetResult();
+			releaseStartupContinuation.Wait();
+		}
+	}
+
+	[Fact]
 	public async Task SingleInstanceTestsAsync()
 	{
 		var ports = PortFinder.GetRandomPorts(3);
@@ -188,6 +252,17 @@ public class SingleInstanceCheckerTests
 		void SetCalled(object? sender, EventArgs args)
 		{
 			Interlocked.Increment(ref eventCalled);
+		}
+	}
+
+	private sealed class DelayedSingleInstanceChecker(int port) : SingleInstanceChecker(port, TimeoutMultiplier)
+	{
+		public TaskCompletionSource AllowListenerStart { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+		protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+		{
+			await AllowListenerStart.Task.WaitAsync(stoppingToken).ConfigureAwait(false);
+			await base.ExecuteAsync(stoppingToken).ConfigureAwait(false);
 		}
 	}
 }
