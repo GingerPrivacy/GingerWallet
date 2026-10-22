@@ -15,12 +15,12 @@
     <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="10.0.13" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
     <!-- Nostr-->
-    <PackageVersion Include="NNostr.Client" Version="0.0.54" />
+    <PackageVersion Include="NNostr.Client" Version="0.0.55" />
     <!-- JSON. -->
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="10.0.13" />
     <!-- SQLite. -->
     <PackageVersion Include="Microsoft.Data.Sqlite" Version="10.0.13" />
-    <PackageVersion Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.3" />
+    <PackageVersion Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.5" />
     <PackageVersion Include="Microsoft.Win32.SystemEvents" Version="10.0.13" />
     <!-- C# analysis. -->
     <PackageVersion Include="Microsoft.CodeAnalysis.Common" Version="4.8.0" />
@@ -29,7 +29,7 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" />
     <!-- Core libraries. -->
     <PackageVersion Include="WabiSabi" Version="1.0.1.2" />
-    <PackageVersion Include="NBitcoin" Version="9.0.0" />
+    <PackageVersion Include="NBitcoin" Version="10.0.17" />
     <!-- Backend. -->
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.9.0" />
     <!-- UI. -->
@@ -54,9 +54,9 @@
     <PackageVersion Include="Avalonia.Headless.XUnit" Version="$(AvaloniaVersion)" />
     <!-- Testing. -->
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.13" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.7.0" />
-    <PackageVersion Include="Moq" Version="4.20.72" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
+    <PackageVersion Include="Moq" Version="4.21.0" />
     <PackageVersion Include="xunit" Version="2.9.3" />
-    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.1" />
   </ItemGroup>
 </Project>

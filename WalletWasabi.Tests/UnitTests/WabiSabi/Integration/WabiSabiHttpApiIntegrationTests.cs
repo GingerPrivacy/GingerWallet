@@ -267,7 +267,7 @@ public class WabiSabiHttpApiIntegrationTests : IAsyncLifetime
 		// Create the coinjoin client
 		using PersonCircuit personCircuit = new();
 		var rejectedOutputRounds = new ConcurrentQueue<uint256>();
-		var recordingHttpClient = new Mock<ClearnetHttpClient>(httpClient);
+		var recordingHttpClient = new Mock<ClearnetHttpClient>(httpClient) { CallBase = true };
 		recordingHttpClient.Setup(client => client.SendAsync(It.IsAny<HttpRequestMessage>(), It.IsAny<CancellationToken>()))
 			.Returns(async (HttpRequestMessage request, CancellationToken cancellationToken) =>
 			{
