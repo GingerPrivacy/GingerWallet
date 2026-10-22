@@ -44,6 +44,9 @@ public class WalletFilterProcessor : BackgroundService
 	/// <remarks>Guards <see cref="SynchronizationRequests"/> and <see cref="_lastProcessedFilter"/>.</remarks>
 	private object Lock { get; } = new();
 
+	/// <remarks>Guarded by <see cref="Lock"/>.</remarks>
+	private bool RequestsStopped { get; set; }
+
 	private SemaphoreSlim SynchronizationRequestsSemaphore { get; } = new(initialCount: 0);
 
 	private KeyManager KeyManager { get; }
@@ -77,13 +80,20 @@ public class WalletFilterProcessor : BackgroundService
 
 	public async Task ProcessAsync(CancellationToken cancellationToken)
 	{
-		SyncRequest request = new(new TaskCompletionSource());
+		SyncRequest request = new(new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously));
 		Priority priority = new();
 
 		lock (Lock)
 		{
-			SynchronizationRequests.Enqueue(request, priority);
-			SynchronizationRequestsSemaphore.Release(releaseCount: 1);
+			if (RequestsStopped)
+			{
+				request.Tcs.TrySetCanceled(CancellationToken.None);
+			}
+			else
+			{
+				SynchronizationRequests.Enqueue(request, priority);
+				SynchronizationRequestsSemaphore.Release(releaseCount: 1);
+			}
 		}
 
 		await request.Tcs.Task.WaitAsync(cancellationToken).ConfigureAwait(false);
@@ -124,7 +134,7 @@ public class WalletFilterProcessor : BackgroundService
 								{
 									request.Tcs.TrySetResult();
 								}
-								SynchronizationRequests.Dequeue();
+								SynchronizationRequests.TryDequeue(out _, out _);
 							}
 							continue;
 						}
@@ -147,7 +157,7 @@ public class WalletFilterProcessor : BackgroundService
 							{
 								request.Tcs.TrySetResult();
 							}
-							SynchronizationRequests.Dequeue();
+							SynchronizationRequests.TryDequeue(out _, out _);
 						}
 					}
 					else
@@ -184,12 +194,18 @@ public class WalletFilterProcessor : BackgroundService
 		}
 		finally
 		{
-			lock (Lock)
+			CancelPendingRequests(stopAcceptingRequests: false);
+		}
+	}
+
+	private void CancelPendingRequests(bool stopAcceptingRequests)
+	{
+		lock (Lock)
+		{
+			RequestsStopped |= stopAcceptingRequests;
+			while (SynchronizationRequests.TryDequeue(out var request, out _))
 			{
-				while (SynchronizationRequests.TryDequeue(out var request, out _))
-				{
-					request.Tcs.TrySetCanceled(cancellationToken);
-				}
+				request.Tcs.TrySetCanceled();
 			}
 		}
 	}
@@ -294,6 +310,10 @@ public class WalletFilterProcessor : BackgroundService
 
 	public override async Task StartAsync(CancellationToken cancellationToken)
 	{
+		lock (Lock)
+		{
+			RequestsStopped = false;
+		}
 		BitcoinStore.IndexStore.Reorged += ReorgedAsync;
 		await BlockDownloadService.StartAsync(cancellationToken).ConfigureAwait(false);
 		await base.StartAsync(cancellationToken).ConfigureAwait(false);
@@ -302,14 +322,36 @@ public class WalletFilterProcessor : BackgroundService
 	public override async Task StopAsync(CancellationToken cancellationToken)
 	{
 		BitcoinStore.IndexStore.Reorged -= ReorgedAsync;
-		await base.StopAsync(cancellationToken).ConfigureAwait(false);
-		await BlockDownloadService.StopAsync(cancellationToken).ConfigureAwait(false);
+		try
+		{
+			await base.StopAsync(cancellationToken).ConfigureAwait(false);
+			await BlockDownloadService.StopAsync(cancellationToken).ConfigureAwait(false);
+		}
+		finally
+		{
+			// ExecuteAsync may never have started when startup was cancelled.
+			CancelPendingRequests(stopAcceptingRequests: true);
+		}
 	}
 
 	public override void Dispose()
 	{
-		SynchronizationRequestsSemaphore.Dispose();
+		BitcoinStore.IndexStore.Reorged -= ReorgedAsync;
 		base.Dispose();
+		CancelPendingRequests(stopAcceptingRequests: true);
+		if (ExecuteTask is { IsCompleted: false } executeTask)
+		{
+			// The worker may still be using the semaphore while cancellation unwinds.
+			_ = executeTask.ContinueWith(
+				_ => SynchronizationRequestsSemaphore.Dispose(),
+				CancellationToken.None,
+				TaskContinuationOptions.ExecuteSynchronously,
+				TaskScheduler.Default);
+		}
+		else
+		{
+			SynchronizationRequestsSemaphore.Dispose();
+		}
 	}
 
 	public record SyncRequest(TaskCompletionSource Tcs);

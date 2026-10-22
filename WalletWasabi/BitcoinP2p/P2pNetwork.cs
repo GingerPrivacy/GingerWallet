@@ -119,11 +119,11 @@ public class P2pNetwork : BackgroundService
 		{
 			try
 			{
-				Node node = await Node.ConnectAsync(Network.RegTest, FullNodeP2PEndPoint).ConfigureAwait(false);
+				Node node = await Node.ConnectAsync(Network.RegTest, FullNodeP2PEndPoint, new NodeConnectionParameters { ConnectCancellation = stoppingToken }).ConfigureAwait(false);
 
 				Nodes.ConnectedNodes.Add(node);
 
-				RegTestMempoolServingNode = await Node.ConnectAsync(Network.RegTest, FullNodeP2PEndPoint).ConfigureAwait(false);
+				RegTestMempoolServingNode = await Node.ConnectAsync(Network.RegTest, FullNodeP2PEndPoint, new NodeConnectionParameters { ConnectCancellation = stoppingToken }).ConfigureAwait(false);
 
 				RegTestMempoolServingNode.Behaviors.Add(BitcoinStore.CreateUntrustedP2pBehavior());
 			}
@@ -154,6 +154,9 @@ public class P2pNetwork : BackgroundService
 
 	public override async Task StopAsync(CancellationToken cancellationToken)
 	{
+		// Finish startup before disconnecting so a delayed worker cannot reconnect afterwards.
+		await base.StopAsync(cancellationToken).ConfigureAwait(false);
+
 		IoHelpers.EnsureContainingDirectoryExists(AddressManagerFilePath);
 
 		AddressManager.SavePeerFile(AddressManagerFilePath, Network);
@@ -174,8 +177,6 @@ public class P2pNetwork : BackgroundService
 			regTestMempoolServingNode.Disconnect();
 			Logger.LogInfo($"{nameof(RegTestMempoolServingNode)} is disposed.");
 		}
-
-		await base.StopAsync(cancellationToken).ConfigureAwait(false);
 	}
 
 	public override void Dispose()

@@ -57,6 +57,9 @@ public class BlockDownloadService : BackgroundService
 	/// <remarks>Guards <see cref="BlocksToDownloadRequests"/>.</remarks>
 	private object Lock { get; } = new();
 
+	/// <remarks>Guarded by <see cref="Lock"/>.</remarks>
+	private bool RequestsStopped { get; set; }
+
 	/// <summary>
 	/// Attempts to get given block from the given source. It can take a long time to get the result because priority of block download is taken into account.
 	/// </summary>
@@ -71,7 +74,7 @@ public class BlockDownloadService : BackgroundService
 	/// <remarks>The method does not throw exceptions.</remarks>
 	public async Task<IResult> TryGetBlockAsync(ISourceRequest sourceRequest, uint256 blockHash, Priority priority, CancellationToken cancellationToken)
 	{
-		Request request = new(sourceRequest, blockHash, priority, new TaskCompletionSource<IResult>());
+		Request request = new(sourceRequest, blockHash, priority, new TaskCompletionSource<IResult>(TaskCreationOptions.RunContinuationsAsynchronously));
 		Enqueue(request);
 
 		try
@@ -91,6 +94,12 @@ public class BlockDownloadService : BackgroundService
 	{
 		lock (Lock)
 		{
+			if (RequestsStopped)
+			{
+				request.Tcs.TrySetResult(CanceledResult.Instance);
+				return;
+			}
+
 			int count = BlocksToDownloadRequests.Count;
 			BlocksToDownloadRequests.Enqueue(request, request.Priority);
 
@@ -209,12 +218,46 @@ public class BlockDownloadService : BackgroundService
 		finally
 		{
 			// Mark everything as cancelled because the service is shutting down (either gracefully or forcibly).
-			lock (Lock)
+			CancelPendingRequests(stopAcceptingRequests: false);
+		}
+	}
+
+	public override Task StartAsync(CancellationToken cancellationToken)
+	{
+		lock (Lock)
+		{
+			RequestsStopped = false;
+		}
+		return base.StartAsync(cancellationToken);
+	}
+
+	public override async Task StopAsync(CancellationToken cancellationToken)
+	{
+		try
+		{
+			await base.StopAsync(cancellationToken).ConfigureAwait(false);
+		}
+		finally
+		{
+			// ExecuteAsync may never have started when startup was cancelled.
+			CancelPendingRequests(stopAcceptingRequests: true);
+		}
+	}
+
+	public override void Dispose()
+	{
+		base.Dispose();
+		CancelPendingRequests(stopAcceptingRequests: true);
+	}
+
+	private void CancelPendingRequests(bool stopAcceptingRequests)
+	{
+		lock (Lock)
+		{
+			RequestsStopped |= stopAcceptingRequests;
+			while (BlocksToDownloadRequests.TryDequeue(out Request? request, out _))
 			{
-				while (BlocksToDownloadRequests.TryDequeue(out Request? request, out _))
-				{
-					request.Tcs.TrySetResult(CanceledResult.Instance);
-				}
+				request.Tcs.TrySetResult(CanceledResult.Instance);
 			}
 		}
 	}
