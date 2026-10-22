@@ -72,12 +72,12 @@ public class CoinVerifierLogger : IAsyncDisposable
 
 	public async Task SaveAuditsAsync()
 	{
+		using var fileLock = await FileAsyncLock.LockAsync(CancellationToken.None).ConfigureAwait(false);
 		AuditEvent[] auditLines;
 
 		lock (LogLinesLock)
 		{
 			auditLines = LogLines.ToArray();
-			LogLines.Clear();
 		}
 
 		if (auditLines.Length == 0)
@@ -94,9 +94,10 @@ public class CoinVerifierLogger : IAsyncDisposable
 		var firstDate = auditLines.Select(x => x.DateTimeOffset).First();
 		string filePath = Path.Combine(DirectoryPath, $"VerifierAudits.{firstDate:yyyy.MM}.txt");
 
-		using (await FileAsyncLock.LockAsync(CancellationToken.None))
+		await File.AppendAllLinesAsync(filePath, lines, CancellationToken.None).ConfigureAwait(false);
+		lock (LogLinesLock)
 		{
-			await File.AppendAllLinesAsync(filePath, lines, CancellationToken.None).ConfigureAwait(false);
+			LogLines.RemoveRange(0, auditLines.Length);
 		}
 	}
 

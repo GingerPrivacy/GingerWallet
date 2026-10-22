@@ -61,6 +61,10 @@ public class CoinVerifier : IAsyncDisposable
 
 	private CoinVerifierApiClient CoinVerifierApiClient { get; }
 	private ConcurrentDictionary<Coin, CoinVerifyItem> CoinVerifyItems { get; } = new(CoinEqualityComparer.Default);
+	private object LifecycleLock { get; } = new();
+	private CancellationTokenSource ShutdownCts { get; } = new();
+	private List<Task> VerificationTasks { get; } = new();
+	private bool IsStopping { get; set; }
 
 	public async Task<IEnumerable<CoinVerifyResult>> VerifyCoinsAsync(IEnumerable<Coin> coinsToCheck, CancellationToken cancellationToken)
 	{
@@ -159,6 +163,14 @@ public class CoinVerifier : IAsyncDisposable
 
 	public bool TryScheduleVerification(Coin coin, TimeSpan delayedStart, int confirmations, bool oneHop, int currentBlockHeight, CancellationToken verificationCancellationToken)
 	{
+		lock (LifecycleLock)
+		{
+			return !IsStopping && TryScheduleVerificationCore(coin, delayedStart, confirmations, oneHop, currentBlockHeight, verificationCancellationToken);
+		}
+	}
+
+	private bool TryScheduleVerificationCore(Coin coin, TimeSpan delayedStart, int confirmations, bool oneHop, int currentBlockHeight, CancellationToken verificationCancellationToken)
+	{
 		if (CoinVerifyItems.TryGetValue(coin, out _))
 		{
 			// Coin was already scheduled. It's OK.
@@ -177,24 +189,24 @@ public class CoinVerifier : IAsyncDisposable
 		if (oneHop)
 		{
 			var result = new CoinVerifyResult(coin, ShouldBan: false, ShouldRemove: false);
-			item.SetResult(result);
 			VerifierAuditArchiver.LogVerificationResult(result, AuditResultType.OneHop);
+			item.SetResult(result);
 			return true;
 		}
 
 		if (Whitelist.TryGet(coin.Outpoint, out _))
 		{
 			var result = new CoinVerifyResult(coin, ShouldBan: false, ShouldRemove: false);
-			item.SetResult(result);
 			VerifierAuditArchiver.LogVerificationResult(result, AuditResultType.Whitelisted);
+			item.SetResult(result);
 			return true;
 		}
 
 		if (CoinJoinIdStore.Contains(coin.Outpoint.Hash))
 		{
 			var result = new CoinVerifyResult(coin, ShouldBan: false, ShouldRemove: false);
-			item.SetResult(result);
 			VerifierAuditArchiver.LogVerificationResult(result, AuditResultType.Remix);
+			item.SetResult(result);
 			return true;
 		}
 
@@ -203,13 +215,13 @@ public class CoinVerifier : IAsyncDisposable
 			if (confirmations < WabiSabiConfig.CoinVerifierRequiredConfirmations)
 			{
 				var result = new CoinVerifyResult(coin, ShouldBan: false, ShouldRemove: true);
-				item.SetResult(result);
 				VerifierAuditArchiver.LogVerificationResult(result, AuditResultType.Immature);
+				item.SetResult(result);
 				return true;
 			}
 		}
 
-		Task.Run(
+		Task verificationTask = Task.Run(
 			async () =>
 			{
 				try
@@ -226,7 +238,7 @@ public class CoinVerifier : IAsyncDisposable
 					if (delay > TimeSpan.Zero)
 					{
 						// We only abort and throw from the delay. If the API request already started, we will go with it.
-						using CancellationTokenSource delayCts = CancellationTokenSource.CreateLinkedTokenSource(verificationCancellationToken, item.Token);
+						using CancellationTokenSource delayCts = CancellationTokenSource.CreateLinkedTokenSource(verificationCancellationToken, item.Token, ShutdownCts.Token);
 						await Task.Delay(delay, delayCts.Token).ConfigureAwait(false);
 					}
 
@@ -234,7 +246,7 @@ public class CoinVerifier : IAsyncDisposable
 					item.ThrowIfCancellationRequested();
 
 					using CancellationTokenSource requestTimeoutCts = new(TotalApiRequestTimeout);
-					using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(verificationCancellationToken, item.Token, requestTimeoutCts.Token);
+					using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(verificationCancellationToken, item.Token, requestTimeoutCts.Token, ShutdownCts.Token);
 
 					// This calculates in which block the coin got into the blockchain.
 					// So we can compare it to the latest block height that the API provider has already processed.
@@ -253,21 +265,22 @@ public class CoinVerifier : IAsyncDisposable
 					}
 
 					var result = new CoinVerifyResult(coin, ShouldBan: apiResponseItem.ShouldBan, ShouldRemove: apiResponseItem.ShouldRemove || apiResponseItem.ShouldBan);
-					item.SetResult(result);
 					VerifierAuditArchiver.LogVerificationResult(result, AuditResultType.RemoteApiChecked, apiResponseItem);
+					item.SetResult(result);
 				}
 				catch (Exception ex)
 				{
 					var result = new CoinVerifyResult(coin, ShouldBan: false, ShouldRemove: true);
-					item.SetResult(result);
 					VerifierAuditArchiver.LogVerificationResult(result, AuditResultType.Exception, apiResponse: null, exception: ex);
+					item.SetResult(result);
 
 					Logger.LogWarning($"Coin verification has failed for coin '{coin.Outpoint}' with '{ex}'.");
 
 					// Do not throw an exception here - unobserved exception prevention.
 				}
-			},
-			verificationCancellationToken);
+			});
+		VerificationTasks.RemoveAll(task => task.IsCompletedSuccessfully);
+		VerificationTasks.Add(verificationTask);
 
 		return true;
 	}
@@ -280,8 +293,47 @@ public class CoinVerifier : IAsyncDisposable
 		}
 	}
 
-	public ValueTask DisposeAsync()
+	public async ValueTask DisposeAsync()
 	{
-		return VerifierAuditArchiver.DisposeAsync();
+		Task[] workers;
+		lock (LifecycleLock)
+		{
+			if (IsStopping)
+			{
+				return;
+			}
+			IsStopping = true;
+			workers = VerificationTasks.ToArray();
+		}
+		try
+		{
+			try
+			{
+				await ShutdownCts.CancelAsync().ConfigureAwait(false);
+			}
+			finally
+			{
+				await Task.WhenAll(workers).ConfigureAwait(false);
+			}
+			foreach (var coin in CoinVerifyItems.Keys)
+			{
+				if (CoinVerifyItems.TryRemove(coin, out var item))
+				{
+					item.Dispose();
+				}
+			}
+			await Whitelist.WriteToFileIfChangedAsync().ConfigureAwait(false);
+		}
+		finally
+		{
+			try
+			{
+				await VerifierAuditArchiver.DisposeAsync().ConfigureAwait(false);
+			}
+			finally
+			{
+				ShutdownCts.Dispose();
+			}
+		}
 	}
 }

@@ -396,6 +396,7 @@ public class BuySellManager : PeriodicRunner
 
 	public override void Dispose()
 	{
+		base.Dispose();
 		_modelCancelTokenSource.Cancel();
 		_modelCancelTokenSource.Dispose();
 	}

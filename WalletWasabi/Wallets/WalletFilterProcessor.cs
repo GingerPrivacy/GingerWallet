@@ -315,7 +315,6 @@ public class WalletFilterProcessor : BackgroundService
 			RequestsStopped = false;
 		}
 		BitcoinStore.IndexStore.Reorged += ReorgedAsync;
-		await BlockDownloadService.StartAsync(cancellationToken).ConfigureAwait(false);
 		await base.StartAsync(cancellationToken).ConfigureAwait(false);
 	}
 
@@ -325,7 +324,6 @@ public class WalletFilterProcessor : BackgroundService
 		try
 		{
 			await base.StopAsync(cancellationToken).ConfigureAwait(false);
-			await BlockDownloadService.StopAsync(cancellationToken).ConfigureAwait(false);
 		}
 		finally
 		{

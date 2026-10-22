@@ -94,6 +94,7 @@ public class SpendUnconfirmedTxTests : IClassFixture<RegTestFixture>
 			nodes.Connect(); // Start connection service.
 			node.VersionHandshake(); // Start mempool service.
 			await synchronizer.StartAsync(CancellationToken.None); // Start wasabi synchronizer service.
+			await blockDownloadService.StartAsync(CancellationToken.None);
 
 			// Start wallet and filter processing service
 			using var wallet = await walletManager.AddAndStartWalletAsync(keyManager);
@@ -223,6 +224,7 @@ public class SpendUnconfirmedTxTests : IClassFixture<RegTestFixture>
 		{
 			bitcoinStore.IndexStore.NewFilters -= setup.Wallet_NewFiltersProcessed;
 			await walletManager.RemoveAndStopAllAsync(CancellationToken.None);
+			await blockDownloadService.StopAsync(CancellationToken.None);
 			await synchronizer.StopAsync(CancellationToken.None);
 			nodes?.Dispose();
 			node?.Disconnect();

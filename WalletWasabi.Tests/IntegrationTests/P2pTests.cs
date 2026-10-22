@@ -174,6 +174,7 @@ public class P2pTests
 			{
 				await wallet.StopAsync(CancellationToken.None);
 			}
+			await blockDownloadService.StopAsync(CancellationToken.None);
 
 			if (Directory.Exists(blocks.BlocksFolderPath))
 			{

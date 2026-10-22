@@ -1,5 +1,6 @@
 using Moq;
 using NBitcoin;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,6 +19,60 @@ namespace WalletWasabi.Tests.UnitTests.Wallet.FilterProcessor;
 [Collection("Serial unit tests collection")]
 public class BlockDownloadServiceTests
 {
+	[Fact]
+	public async Task StopWaitsForActiveDownloadsAsync()
+	{
+		TaskCompletionSource downloadStarted = new(TaskCreationOptions.RunContinuationsAsynchronously);
+		TaskCompletionSource cancellationObserved = new(TaskCreationOptions.RunContinuationsAsynchronously);
+		TaskCompletionSource releaseDownload = new(TaskCreationOptions.RunContinuationsAsynchronously);
+		Mock<IFileSystemBlockRepository> repository = new(MockBehavior.Strict);
+		repository.Setup(x => x.TryGetAsync(It.IsAny<uint256>(), It.IsAny<CancellationToken>()))
+			.Returns(async (uint256 _, CancellationToken cancellationToken) =>
+			{
+				using var registration = cancellationToken.Register(() => cancellationObserved.TrySetResult());
+				downloadStarted.TrySetResult();
+				await releaseDownload.Task;
+				cancellationToken.ThrowIfCancellationRequested();
+				return null;
+			});
+
+		using BlockDownloadService service = new(repository.Object, [], p2pBlockProvider: null, maximumParallelTasks: 2);
+		await service.StartAsync(CancellationToken.None);
+		var request = service.TryGetBlockAsync(TrustedFullNodeSourceRequest.Instance, uint256.One, new Priority(1), CancellationToken.None);
+		await downloadStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
+		var stopTask = service.StopAsync(CancellationToken.None);
+		try
+		{
+			await cancellationObserved.Task.WaitAsync(TimeSpan.FromSeconds(5));
+			await Assert.ThrowsAsync<TimeoutException>(() => stopTask.WaitAsync(TimeSpan.FromSeconds(1)));
+		}
+		finally
+		{
+			releaseDownload.TrySetResult();
+			await stopTask.WaitAsync(TimeSpan.FromSeconds(5));
+			Assert.IsType<CanceledResult>(await request.WaitAsync(TimeSpan.FromSeconds(5)));
+		}
+	}
+
+	[Fact]
+	public async Task UnexpectedDownloadFailureCompletesRequestAsync()
+	{
+		Mock<IFileSystemBlockRepository> repository = new(MockBehavior.Strict);
+		repository.Setup(x => x.TryGetAsync(It.IsAny<uint256>(), It.IsAny<CancellationToken>()))
+			.ThrowsAsync(new InvalidOperationException("Block repository failed."));
+		using BlockDownloadService service = new(repository.Object, [], p2pBlockProvider: null, maximumParallelTasks: 1);
+		await service.StartAsync(CancellationToken.None);
+		try
+		{
+			var request = service.TryGetBlockAsync(TrustedFullNodeSourceRequest.Instance, uint256.One, new Priority(1), CancellationToken.None);
+			await Assert.ThrowsAsync<UnreachableException>(() => request.WaitAsync(TimeSpan.FromSeconds(5)));
+		}
+		finally
+		{
+			await service.StopAsync(CancellationToken.None).WaitAsync(TimeSpan.FromSeconds(5));
+		}
+	}
+
 	[Theory]
 	[InlineData(false)]
 	[InlineData(true)]

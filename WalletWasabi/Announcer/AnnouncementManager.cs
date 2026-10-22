@@ -127,22 +127,32 @@ public class AnnouncementManager : PeriodicRunner
 		}
 	}
 
-	public override Task StopAsync(CancellationToken cancellationToken)
+	protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 	{
-		if (_nostrClient is not null)
+		try
 		{
-			try
-			{
-				_nostrClient.Disconnect();
-			}
-			catch (Exception)
-			{
-			}
-
-			_nostrClient.Dispose();
-			_nostrClient = null;
+			await base.ExecuteAsync(stoppingToken).ConfigureAwait(false);
 		}
-		return base.StopAsync(cancellationToken);
+		finally
+		{
+			if (_nostrClient is { } client)
+			{
+				_nostrClient = null;
+				_nostrSubscriptionID = "";
+				client.EventsReceived -= OnNostrEventsReceived;
+				try
+				{
+					await client.Disconnect().ConfigureAwait(false);
+				}
+				catch (Exception)
+				{
+				}
+				finally
+				{
+					client.Dispose();
+				}
+			}
+		}
 	}
 
 	public List<Announcement> GetAnnouncement()
@@ -268,16 +278,19 @@ public class AnnouncementManager : PeriodicRunner
 		}
 	}
 
+	protected virtual INostrClient CreateNostrClient()
+	{
+		Uri[] relays = [new("wss://relay.primal.net"), new("wss://nos.lol"), new("wss://relay.damus.io")];
+		return NostrExtensions.Create(relays, _httpClientFactory.IsTorEnabled ? _httpClientFactory.TorEndpoint : null);
+	}
+
 	private async Task CheckNostrConnectionAsync(CancellationToken cancellationToken)
 	{
-		string[] relayUrl = ["wss://relay.primal.net", "wss://nos.lol", "wss://relay.damus.io"];
-
 		if (_nostrClient is null)
 		{
 			try
 			{
-				Uri[] uris = relayUrl.Select(x => new Uri(x)).ToArray();
-				_nostrClient = NostrExtensions.Create(uris, _httpClientFactory.IsTorEnabled ? _httpClientFactory.TorEndpoint : null);
+				_nostrClient = CreateNostrClient();
 				_nostrClient.EventsReceived += OnNostrEventsReceived;
 
 				await _nostrClient.ConnectAndWaitUntilConnected(cancellationToken).ConfigureAwait(false);

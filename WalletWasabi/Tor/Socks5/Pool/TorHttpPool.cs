@@ -1,4 +1,3 @@
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -345,6 +344,10 @@ public class TorHttpPool : IAsyncDisposable
 
 			lock (ConnectionsLock)
 			{
+				if (LoopCts.IsCancellationRequested)
+				{
+					throw new OperationCanceledException(token);
+				}
 				canBeAdded = GetPoolConnectionNoLock(host, circuit, out connection);
 
 				if (connection is not null)
@@ -418,6 +421,7 @@ public class TorHttpPool : IAsyncDisposable
 		}
 
 		TorTcpConnection? connection = null;
+		bool poolStopping = false;
 
 		try
 		{
@@ -448,6 +452,7 @@ public class TorHttpPool : IAsyncDisposable
 		{
 			lock (ConnectionsLock)
 			{
+				poolStopping = LoopCts.IsCancellationRequested;
 				if (TorControlAvailable)
 				{
 					if (TorStreamsBeingBuilt.Remove(circuit.Name, out TorStreamInfo? streamInfo))
@@ -459,19 +464,22 @@ public class TorHttpPool : IAsyncDisposable
 					}
 				}
 
-				if (connection is not null)
+				if (connection is not null && !poolStopping)
 				{
 					string host = GetRequestHost(requestUri);
-
 					if (!ConnectionPerHost.TryGetValue(host, out List<TorTcpConnection>? value))
 					{
 						value = new List<TorTcpConnection>();
 						ConnectionPerHost.Add(host, value);
 					}
-
 					value.Add(connection);
 				}
 			}
+		}
+		if (poolStopping)
+		{
+			connection?.Dispose();
+			throw new OperationCanceledException(cancellationToken);
 		}
 
 		Logger.LogTrace($"< connection='{connection}'");
@@ -634,23 +642,21 @@ public class TorHttpPool : IAsyncDisposable
 	/// <seealso href="https://github.com/torproject/torspec/blob/833d6b27a4427b5bbb2189218c10fd568fc3e415/control-spec.txt#L1284"/>
 	private async Task PreBuildingLoopAsync()
 	{
-		ConcurrentDictionary<long, ICircuit> prebuildingTasks = new();
+		List<Task> prebuildingTasks = new();
 
 		try
 		{
 			long counter = 0;
 			CancellationToken cancellationToken = LoopCts.Token;
 
-			while (!cancellationToken.IsCancellationRequested)
+			await foreach (TorPrebuildCircuitRequest request in PreBuildingRequestChannel.Reader.ReadAllAsync(cancellationToken).ConfigureAwait(false))
 			{
-				TorPrebuildCircuitRequest request = await PreBuildingRequestChannel.Reader.ReadAsync(cancellationToken).ConfigureAwait(false);
 				long i = ++counter;
 
 				Task task = Task.Run(
 					async () =>
 					{
 						OneOffCircuit circuit = new();
-						prebuildingTasks.TryAdd(i, circuit);
 
 						try
 						{
@@ -674,12 +680,10 @@ public class TorHttpPool : IAsyncDisposable
 						{
 							Logger.LogError(e);
 						}
-						finally
-						{
-							prebuildingTasks.TryRemove(i, out _);
-						}
 					},
 				cancellationToken);
+				prebuildingTasks.RemoveAll(t => t.IsCompletedSuccessfully || t.IsCanceled);
+				prebuildingTasks.Add(task);
 			}
 
 			Logger.LogDebug("Circuit pre-building loop gracefully terminated.");
@@ -693,6 +697,12 @@ public class TorHttpPool : IAsyncDisposable
 			// This is an unrecoverable issue.
 			Logger.LogError($"Exception occurred in the pre-building loop: {e}.");
 			throw;
+		}
+		finally
+		{
+			// The dispatcher owns these tasks. Its completion also means no child
+			// can add a connection after shutdown has disposed the pool's snapshot.
+			await Task.WhenAll(prebuildingTasks).ConfigureAwait(ConfigureAwaitOptions.SuppressThrowing);
 		}
 	}
 
@@ -723,21 +733,10 @@ public class TorHttpPool : IAsyncDisposable
 
 	public async ValueTask DisposeAsync()
 	{
-		foreach (List<TorTcpConnection> list in ConnectionPerHost.Values)
-		{
-			foreach (TorTcpConnection connection in list)
-			{
-				Logger.LogTrace($"Dispose connection: '{connection}'");
-				connection.Dispose();
-			}
-		}
-
-		// Stop the loop.
 		LoopCts.Cancel();
-
+		PreBuildingRequestChannel.Writer.TryComplete();
 		try
 		{
-			// Wait until the loop stops.
 			await PreBuildingLoopTask.ConfigureAwait(false);
 		}
 		catch (Exception e)
@@ -745,6 +744,18 @@ public class TorHttpPool : IAsyncDisposable
 			Logger.LogDebug("Unexpected issue in stopping the pre-building loop.", e);
 		}
 
+		TorTcpConnection[] connections;
+		lock (ConnectionsLock)
+		{
+			connections = ConnectionPerHost.Values.SelectMany(list => list).Distinct().ToArray();
+			ConnectionPerHost.Clear();
+			TorStreamsBeingBuilt.Clear();
+		}
+		foreach (TorTcpConnection connection in connections)
+		{
+			Logger.LogTrace($"Dispose connection: '{connection}'");
+			connection.Dispose();
+		}
 		LoopCts.Dispose();
 	}
 }
