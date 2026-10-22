@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Security;
+using WalletWasabi.Extensions;
 using WalletWasabi.Helpers;
 using Xunit;
 using WalletWasabi.Logging;

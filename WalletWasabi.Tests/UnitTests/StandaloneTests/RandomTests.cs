@@ -1,6 +1,8 @@
 using GingerCommon.Crypto.Random;
+using WalletWasabi.Extensions;
 using GingerRandomBridge = WalletWasabi.Crypto.Randomness.GingerRandomBridge;
 using Xunit;
+using WasabiRandom = WabiSabi.Crypto.Randomness.WasabiRandom;
 
 namespace WalletWasabi.Tests.UnitTests.StandaloneTests;
 
@@ -24,11 +26,15 @@ public class RandomTests
 		Assert.Equal(0, CheckInt(new DeterministicRandom(0x0900be81f6df6068), 895, 1990, [1001, 1301, 1514, 1848, 1920], 10000, 0.05));
 	}
 
-	[Fact]
-	public void RandomBridgeTests()
+	[Theory]
+	[InlineData(true)]
+	[InlineData(false)]
+	public void RandomBridgeTests(bool useBridge)
 	{
 		var ginger = new DeterministicRandom(27);
-		var wasabi = new GingerRandomBridge(new DeterministicRandom(27));
+		WasabiRandom wasabi = useBridge
+			? new GingerRandomBridge(new DeterministicRandom(27))
+			: new ByteOnlyRandom(new DeterministicRandom(27));
 
 		var gingerArray = new byte[97];
 		var wasabiArray = new byte[97];
@@ -38,6 +44,17 @@ public class RandomTests
 
 		Assert.Equal(ginger.GetInt(1222, 1780), wasabi.GetInt(1222, 1780));
 		Assert.Equal(ginger.GetInt(12221222, 17801780), wasabi.GetInt(12221222, 17801780));
+		Assert.Equal(ginger.GetInt(int.MinValue, int.MaxValue), wasabi.GetInt(int.MinValue, int.MaxValue));
+		Assert.Equal(ginger.GetString(21, "abcdef012345"), wasabi.GetString(21, "abcdef012345"));
+		Assert.Throws<ArgumentOutOfRangeException>(() => wasabi.GetString(0, "abc"));
+		Assert.Throws<ArgumentException>(() => wasabi.GetString(1, ""));
+	}
+
+	private sealed class ByteOnlyRandom(GingerRandom random) : WasabiRandom
+	{
+		public override void GetBytes(byte[] output) => random.GetBytes(output);
+
+		public override void GetBytes(Span<byte> output) => random.GetBytes(output);
 	}
 
 	private (int, int) CheckArray(GingerRandom random, int arrayCount, double bitThreshold, double byteThreshold)

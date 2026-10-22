@@ -56,5 +56,5 @@
   (fetchNuGet { pname = "Swashbuckle.AspNetCore.SwaggerUI"; version = "6.9.0"; hash = "sha256-V+3bEEpxSXPi9Sy1hHZEjY9qxuIpRWV5dKzaqYMSu40="; })
   (fetchNuGet { pname = "System.Interactive.Async"; version = "6.0.1"; hash = "sha256-4yzkdop+BMlpQ+qz/H7D7LkH1Ekh9n51t9yteHpv/58="; })
   (fetchNuGet { pname = "System.Linq.Async"; version = "6.0.1"; hash = "sha256-uH5fZhcyQVtnsFc6GTUaRRrAQm05v5euJyWCXSFSOYI="; })
-  (fetchNuGet { pname = "WabiSabi"; version = "1.0.1.2"; hash = "sha256-Gx+tuXraMABak8s0SeofbXpNLVfTnxz4At4+HejnQeU="; })
+  (fetchNuGet { pname = "WabiSabi"; version = "1.4.3"; hash = "sha256-kTp7O4fYDPxb1r8jjDjytnykzx5bb6b3z789zI3CqY4="; })
 ]

@@ -1,6 +1,7 @@
 using NBitcoin;
 using System.Collections.Generic;
 using WabiSabi.Crypto.Randomness;
+using WalletWasabi.Extensions;
 
 namespace WalletWasabi.Models;
 

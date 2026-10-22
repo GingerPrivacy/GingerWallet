@@ -11,6 +11,7 @@ using WabiSabi.Crypto.Randomness;
 using WalletWasabi.Bases;
 using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Blockchain.Transactions;
+using WalletWasabi.Extensions;
 using WalletWasabi.Helpers;
 using WalletWasabi.Tor.Http;
 using WalletWasabi.WabiSabi.Client;
