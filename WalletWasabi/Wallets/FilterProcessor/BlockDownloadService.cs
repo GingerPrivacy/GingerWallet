@@ -71,7 +71,7 @@ public class BlockDownloadService : BackgroundService
 	/// <item><see cref="FailureResult"/> when the block download failed for some reason.</item>
 	/// </list>
 	/// </returns>
-	/// <remarks>The method does not throw exceptions.</remarks>
+	/// <remarks>Download failures are returned as results. Unexpected internal errors fault the returned task.</remarks>
 	public async Task<IResult> TryGetBlockAsync(ISourceRequest sourceRequest, uint256 blockHash, Priority priority, CancellationToken cancellationToken)
 	{
 		Request request = new(sourceRequest, blockHash, priority, new TaskCompletionSource<IResult>(TaskCreationOptions.RunContinuationsAsynchronously));
@@ -156,10 +156,9 @@ public class BlockDownloadService : BackgroundService
 	/// </summary>
 	protected override async Task ExecuteAsync(CancellationToken cancellationToken)
 	{
+		List<Task> activeTasks = new(capacity: MaximumParallelTasks);
 		try
 		{
-			List<Task> activeTasks = new(capacity: MaximumParallelTasks);
-
 			while (!cancellationToken.IsCancellationRequested)
 			{
 				bool wait;
@@ -219,6 +218,7 @@ public class BlockDownloadService : BackgroundService
 		{
 			// Mark everything as cancelled because the service is shutting down (either gracefully or forcibly).
 			CancelPendingRequests(stopAcceptingRequests: false);
+			await Task.WhenAll(activeTasks).ConfigureAwait(false);
 		}
 	}
 
@@ -264,22 +264,31 @@ public class BlockDownloadService : BackgroundService
 
 	private async Task HandleSingleBlockTaskAsync(Request request, CancellationToken cancellationToken)
 	{
-		RequestResponse response = await DownloadSingleBlockAsync(request, cancellationToken).ConfigureAwait(false);
-
-		if (response.Result is SuccessResult)
+		try
 		{
-			request.Tcs.TrySetResult(response.Result);
-		}
-		else
-		{
-			Logger.LogDebug($"Attempt to download block {request.BlockHash} (height: {request.Priority.BlockHeight}) failed.");
+			RequestResponse response = await DownloadSingleBlockAsync(request, cancellationToken).ConfigureAwait(false);
+			IResult result = cancellationToken.IsCancellationRequested ? CanceledResult.Instance : response.Result;
 
-			// The block might have been removed concurrently if a reorg occurred.
-			if (!request.Tcs.TrySetResult(response.Result))
+			if (result is SuccessResult)
 			{
-				IResult opResult = await request.Tcs.Task.ConfigureAwait(false);
-				Logger.LogDebug($"Failed to set result for block '{request.BlockHash}' (height: {request.Priority.BlockHeight}). Result is already: {opResult}");
+				request.Tcs.TrySetResult(result);
 			}
+			else
+			{
+				Logger.LogDebug($"Attempt to download block {request.BlockHash} (height: {request.Priority.BlockHeight}) failed.");
+
+				// The block might have been removed concurrently if a reorg occurred.
+				if (!request.Tcs.TrySetResult(result))
+				{
+					IResult opResult = await request.Tcs.Task.ConfigureAwait(false);
+					Logger.LogDebug($"Failed to set result for block '{request.BlockHash}' (height: {request.Priority.BlockHeight}). Result is already: {opResult}");
+				}
+			}
+		}
+		catch (Exception ex)
+		{
+			// DownloadSingleBlockAsync already logged the error. Always release the caller.
+			request.Tcs.TrySetException(ex);
 		}
 	}
 

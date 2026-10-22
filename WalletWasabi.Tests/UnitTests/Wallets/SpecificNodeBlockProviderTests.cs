@@ -15,6 +15,48 @@ namespace WalletWasabi.Tests.UnitTests.Wallets;
 /// </summary>
 public class SpecificNodeBlockProviderTests
 {
+	[Fact]
+	public async Task CallerCancellationStopsBlockDownloadAsync()
+	{
+		using CancellationTokenSource callerCts = new();
+		using CancellationTokenSource nodeDisconnectedCts = new();
+		TaskCompletionSource connected = new(TaskCreationOptions.RunContinuationsAsynchronously);
+		TaskCompletionSource downloadStarted = new(TaskCreationOptions.RunContinuationsAsynchronously);
+		TaskCompletionSource<Block> releaseDownload = new(TaskCreationOptions.RunContinuationsAsynchronously);
+		CancellationToken downloadToken = default;
+		Mock<ConnectedNode> node = new(MockBehavior.Strict, nodeDisconnectedCts) { CallBase = true };
+		node.Setup(x => x.WaitUntilDisconnectedAsync(It.IsAny<CancellationToken>()))
+			.Callback(() => connected.TrySetResult())
+			.CallBase();
+		node.Setup(x => x.ToString()).CallBase();
+		node.Setup(x => x.DownloadBlockAsync(It.IsAny<uint256>(), It.IsAny<CancellationToken>()))
+			.Returns((uint256 _, CancellationToken cancellationToken) =>
+			{
+				downloadToken = cancellationToken;
+				downloadStarted.TrySetResult();
+				return releaseDownload.Task.WaitAsync(cancellationToken);
+			});
+		ServiceConfiguration configuration = new(new IPEndPoint(IPAddress.Loopback, 44444), Money.Satoshis(1000));
+		Mock<SpecificNodeBlockProvider> providerMock = new(MockBehavior.Strict, Network.RegTest, configuration, null!) { CallBase = true };
+		providerMock.Setup(x => x.ConnectAsync(It.IsAny<CancellationToken>())).ReturnsAsync(node.Object);
+		await using SpecificNodeBlockProvider provider = providerMock.Object;
+		await connected.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+		var request = provider.TryGetBlockAsync(uint256.One, callerCts.Token);
+		try
+		{
+			await downloadStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
+			callerCts.Cancel();
+			Assert.True(downloadToken.IsCancellationRequested);
+			Assert.Null(await request.WaitAsync(TimeSpan.FromSeconds(5)));
+		}
+		finally
+		{
+			releaseDownload.TrySetResult(Network.RegTest.GetGenesis());
+			await request.WaitAsync(TimeSpan.FromSeconds(5));
+		}
+	}
+
 	/// <summary>
 	/// No Bitcoin Core node to connect to. No block should be provided by <see cref="SpecificNodeBlockProvider.TryGetBlockAsync(uint256, CancellationToken)"/>.
 	/// </summary>

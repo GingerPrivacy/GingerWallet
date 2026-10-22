@@ -1,4 +1,8 @@
+using Nito.AsyncEx;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 using WalletWasabi.Tests.Helpers;
 using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.WabiSabi.Backend.Banning;
@@ -8,6 +12,56 @@ namespace WalletWasabi.Tests.UnitTests.WabiSabi.Backend;
 
 public class WhitelistTests
 {
+	[Fact]
+	public async Task FinalSaveWaitsForAnInFlightWriteAsync()
+	{
+		string path = Path.Combine(TestDirectory.Get(), "Whitelist.txt");
+		Whitelist whitelist = new([], path, WabiSabiTestFactory.CreateDefaultWabiSabiConfig());
+		var outpoint = BitcoinFactory.CreateOutPoint(TestRandom.Get());
+		whitelist.Add(outpoint);
+		var fileLock = Assert.IsType<AsyncLock>(typeof(Whitelist)
+			.GetField("<FileLock>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)!
+			.GetValue(whitelist));
+		IDisposable gate = await fileLock.LockAsync();
+		Task<bool>? firstSave = null;
+		Task<bool>? finalSave = null;
+		try
+		{
+			firstSave = whitelist.WriteToFileIfChangedAsync();
+			Assert.False(firstSave.IsCompleted);
+			finalSave = whitelist.WriteToFileIfChangedAsync();
+			Assert.False(finalSave.IsCompleted);
+		}
+		finally
+		{
+			gate.Dispose();
+			if (firstSave is not null)
+			{
+				await firstSave.WaitAsync(TimeSpan.FromSeconds(5));
+			}
+			if (finalSave is not null)
+			{
+				await finalSave.WaitAsync(TimeSpan.FromSeconds(5));
+			}
+		}
+		Assert.Contains(await File.ReadAllLinesAsync(path), line => Innocent.TryReadFromString(line, out var innocent) && innocent.Outpoint == outpoint);
+	}
+
+	[Fact]
+	public async Task FailedWriteCanBeRetriedAsync()
+	{
+		string path = Path.Combine(TestDirectory.Get(), "Whitelist.txt");
+		Whitelist whitelist = new([], path, WabiSabiTestFactory.CreateDefaultWabiSabiConfig());
+		var outpoint = BitcoinFactory.CreateOutPoint(TestRandom.Get());
+		whitelist.Add(outpoint);
+		using (FileStream lockedFile = new(path, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
+		{
+			await Assert.ThrowsAsync<IOException>(() => whitelist.WriteToFileIfChangedAsync());
+		}
+		Assert.True(await whitelist.WriteToFileIfChangedAsync());
+		Assert.Contains(await File.ReadAllLinesAsync(path), line => Innocent.TryReadFromString(line, out var innocent) && innocent.Outpoint == outpoint);
+	}
+
 	[Fact]
 	public void WhitelistChangeTrafficAsync()
 	{

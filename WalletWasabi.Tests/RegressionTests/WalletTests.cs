@@ -93,6 +93,7 @@ public class WalletTests : IClassFixture<RegTestFixture>
 			nodes.Connect(); // Start connection service.
 			node.VersionHandshake(); // Start mempool service.
 			await synchronizer.StartAsync(CancellationToken.None); // Start wasabi synchronizer service.
+			await blockDownloadService.StartAsync(CancellationToken.None);
 
 			using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30)))
 			{
@@ -225,6 +226,7 @@ public class WalletTests : IClassFixture<RegTestFixture>
 		{
 			wallet.NewFiltersProcessed -= setup.Wallet_NewFiltersProcessed;
 			await wallet.StopAsync(testDeadlineCts.Token);
+			await blockDownloadService.StopAsync(CancellationToken.None);
 			await synchronizer.StopAsync(testDeadlineCts.Token);
 			nodes?.Dispose();
 			node?.Disconnect();

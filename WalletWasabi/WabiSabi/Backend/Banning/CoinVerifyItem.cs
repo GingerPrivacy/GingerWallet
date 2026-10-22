@@ -9,31 +9,41 @@ public class CoinVerifyItem : IDisposable
 
 	public CoinVerifyItem()
 	{
+		Token = AbortCts.Token;
 	}
 
 	public DateTimeOffset ScheduleTime { get; } = DateTimeOffset.UtcNow;
-	private TaskCompletionSource<CoinVerifyResult> TaskCompletionSource { get; } = new();
+	private TaskCompletionSource<CoinVerifyResult> TaskCompletionSource { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
 	private CancellationTokenSource AbortCts { get; } = new();
+	private object StateLock { get; } = new();
 	public Task<CoinVerifyResult> Task => TaskCompletionSource.Task;
-	public bool IsCancellationRequested => AbortCts.IsCancellationRequested;
-	public CancellationToken Token => AbortCts.Token;
+	public bool IsCancellationRequested => Token.IsCancellationRequested;
+	public CancellationToken Token { get; }
 
 	public void Cancel()
 	{
-		AbortCts.Cancel();
+		lock (StateLock)
+		{
+			if (!_disposedValue)
+			{
+				AbortCts.Cancel();
+			}
+		}
 	}
 
 	protected virtual void Dispose(bool disposing)
 	{
-		if (!_disposedValue)
+		lock (StateLock)
 		{
-			if (disposing)
+			if (!_disposedValue)
 			{
-				AbortCts.Cancel();
-				AbortCts.Dispose();
+				_disposedValue = true;
+				if (disposing)
+				{
+					AbortCts.Cancel();
+					AbortCts.Dispose();
+				}
 			}
-
-			_disposedValue = true;
 		}
 	}
 
@@ -50,6 +60,6 @@ public class CoinVerifyItem : IDisposable
 
 	public void ThrowIfCancellationRequested()
 	{
-		AbortCts.Token.ThrowIfCancellationRequested();
+		Token.ThrowIfCancellationRequested();
 	}
 }

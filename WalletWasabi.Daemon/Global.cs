@@ -481,6 +481,8 @@ public class Global
 
 				if (BlockDownloadService is { } blockDownloadService)
 				{
+					using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(21));
+					await blockDownloadService.StopAsync(cts.Token).ConfigureAwait(false);
 					blockDownloadService.Dispose();
 					Logger.LogInfo($"{nameof(BlockDownloadService)} is disposed.");
 				}

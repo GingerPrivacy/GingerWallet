@@ -1,11 +1,13 @@
 using NBitcoin;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using WalletWasabi.Tests.Helpers;
+using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.WabiSabi.Backend;
 using WalletWasabi.WabiSabi.Backend.Banning;
 using WalletWasabi.WabiSabi.Backend.Rounds.CoinJoinStorage;
@@ -23,6 +25,93 @@ public class CoinVerifierTests
 
 	private static string GoodResponse = """{"ban":false}""";
 	private static string BanResponse = """{"ban":true}""";
+
+	[Fact]
+	public async Task DisposeWaitsForVerificationAndFlushesItsAuditAsync()
+	{
+		string auditDirectory = TestDirectory.Get();
+		using MockHttpClient httpClient = new();
+		using GatedCoinVerifierProvider provider = new(httpClient, _verifierConfig);
+		await using CoinVerifierApiClient apiClient = new(httpClient, provider);
+		await using CoinVerifierLogger audit = new(auditDirectory);
+		await using CoinVerifier verifier = new(new CoinJoinIdStore(), apiClient, _wabisabiTestConfig, auditArchiver: audit);
+		using CancellationTokenSource cancellation = new();
+		Coin coin = GenerateCoins(1).Single();
+		try
+		{
+			Assert.True(verifier.TryScheduleVerification(coin, TimeSpan.Zero, _wabisabiTestConfig.CoinVerifierRequiredConfirmations, false, _mockBlockchainHeight, cancellation.Token));
+			await provider.Started.Task.WaitAsync(TimeSpan.FromSeconds(5));
+			Task disposal = verifier.DisposeAsync().AsTask();
+			Assert.False(disposal.IsCompleted);
+			await provider.CancellationObserved.Task.WaitAsync(TimeSpan.FromSeconds(5));
+			Assert.Same(disposal, verifier.DisposeAsync().AsTask());
+			Assert.False(verifier.TryScheduleVerification(GenerateCoins(1).Single(), TimeSpan.Zero, 1, true, _mockBlockchainHeight, CancellationToken.None));
+			provider.AllowCompletion.TrySetResult();
+			await disposal.WaitAsync(TimeSpan.FromSeconds(5));
+
+			string auditFile = Assert.Single(Directory.GetFiles(auditDirectory, "VerifierAudits.*.txt"));
+			Assert.Contains(coin.Outpoint.ToString(), await File.ReadAllTextAsync(auditFile));
+		}
+		finally
+		{
+			cancellation.Cancel();
+			provider.AllowCompletion.TrySetResult();
+			await provider.Finished.Task.WaitAsync(TimeSpan.FromSeconds(5));
+			await verifier.DisposeAsync();
+		}
+	}
+
+	[Fact]
+	public async Task DoesNotAcceptVerificationsAfterDisposalAsync()
+	{
+		using MockHttpClient httpClient = new();
+		using MockCoinVerifierProvider provider = new(httpClient, _verifierConfig);
+		await using CoinVerifierApiClient apiClient = new(httpClient, provider);
+		await using CoinVerifierLogger audit = new(TestDirectory.Get());
+		await using CoinVerifier verifier = new(new CoinJoinIdStore(), apiClient, _wabisabiTestConfig, auditArchiver: audit);
+		await verifier.DisposeAsync();
+		Assert.False(verifier.TryScheduleVerification(GenerateCoins(1).Single(), TimeSpan.Zero, 1, true, _mockBlockchainHeight, CancellationToken.None));
+	}
+
+	[Fact]
+	public async Task CanceledVerificationCompletesWhenDisposedAsync()
+	{
+		using MockHttpClient httpClient = new();
+		using MockCoinVerifierProvider provider = new(httpClient, _verifierConfig);
+		await using CoinVerifierApiClient apiClient = new(httpClient, provider);
+		await using CoinVerifierLogger audit = new(TestDirectory.Get());
+		await using CoinVerifier verifier = new(new CoinJoinIdStore(), apiClient, _wabisabiTestConfig, auditArchiver: audit);
+		Coin coin = GenerateCoins(1).Single();
+		Assert.True(verifier.TryScheduleVerification(coin, TimeSpan.FromHours(1), _wabisabiTestConfig.CoinVerifierRequiredConfirmations, false, _mockBlockchainHeight, new CancellationToken(canceled: true)));
+		var results = verifier.VerifyCoinsAsync([coin], CancellationToken.None);
+		await verifier.DisposeAsync();
+		Assert.True(Assert.Single(await results.WaitAsync(TimeSpan.FromSeconds(5))).ShouldRemove);
+	}
+
+	private sealed class GatedCoinVerifierProvider(HttpClient httpClient, CoinVerifierConfig config)
+		: MockCoinVerifierProvider(httpClient, config)
+	{
+		public TaskCompletionSource Started { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
+		public TaskCompletionSource CancellationObserved { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
+		public TaskCompletionSource AllowCompletion { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
+		public TaskCompletionSource Finished { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+		public override async Task<ApiResponse> SendRequestAsync(Coin coin, int coinBlockHeight, int currentBlockHeight, CancellationToken cancellationToken)
+		{
+			Started.TrySetResult();
+			try
+			{
+				await Task.Delay(Timeout.InfiniteTimeSpan, cancellationToken).ConfigureAwait(false);
+				throw new InvalidOperationException("The request should be cancelled.");
+			}
+			finally
+			{
+				CancellationObserved.TrySetResult();
+				await AllowCompletion.Task.ConfigureAwait(false);
+				Finished.TrySetResult();
+			}
+		}
+	}
 
 	public class MockCoinVerifierProvider : CoinVerifierProvider
 	{

@@ -1,5 +1,7 @@
 using NBitcoin;
 using NBitcoin.RPC;
+using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using WalletWasabi.BitcoinCore.Rpc;
@@ -7,6 +9,7 @@ using WalletWasabi.Tests.Helpers;
 using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.WabiSabi;
 using WalletWasabi.WabiSabi.Backend;
+using WalletWasabi.WabiSabi.Backend.Banning;
 using WalletWasabi.WabiSabi.Backend.DoSPrevention;
 using WalletWasabi.WabiSabi.Backend.Models;
 using WalletWasabi.WabiSabi.Backend.Rounds;
@@ -18,6 +21,27 @@ namespace WalletWasabi.Tests.UnitTests.WabiSabi.Backend;
 
 public class CoordinatorTests
 {
+	[Fact]
+	public async Task DisposeReleasesOwnedArenaWithoutDisposingBorrowedVerifierAsync()
+	{
+		string directory = TestDirectory.Get();
+		CoordinatorParameters parameters = new(directory);
+		using MockHttpClient httpClient = new();
+		using CoinVerifierTests.MockCoinVerifierProvider provider = new(httpClient, new CoinVerifierConfig("test", "https://example.com/", "key", "secret", "11"));
+		await using CoinVerifierApiClient apiClient = new(httpClient, provider);
+		await using CoinVerifierLogger audit = new(directory);
+		await using CoinVerifier verifier = new(new CoinJoinIdStore(), apiClient, parameters.RuntimeCoordinatorConfig, auditArchiver: audit);
+		using WabiSabiCoordinator coordinator = WabiSabiBackendFactory.Instance.CreateCoordinator(parameters, NewMockRpcClient(), new CoinJoinIdStore(), new CoinJoinScriptStore(), new MockHttpClientFactory(), null, verifier, null);
+		var subscriptions = typeof(CoinVerifier).GetField(nameof(CoinVerifier.CoinBlacklisted), BindingFlags.Instance | BindingFlags.NonPublic)!;
+		Assert.Contains(((Delegate)subscriptions.GetValue(verifier)!).GetInvocationList(), subscription => ReferenceEquals(subscription.Target, coordinator.Arena));
+
+		coordinator.Dispose();
+
+		Assert.DoesNotContain(((Delegate?)subscriptions.GetValue(verifier))?.GetInvocationList() ?? [], subscription => ReferenceEquals(subscription.Target, coordinator.Arena));
+		using Key key = new();
+		Assert.True(verifier.TryScheduleVerification(WabiSabiTestFactory.CreateCoin(key), TimeSpan.Zero, 1, true, 100, CancellationToken.None));
+	}
+
 	[Fact]
 	public async Task CanLiveAsync()
 	{

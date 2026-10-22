@@ -10,6 +10,7 @@ using WalletWasabi.Blockchain.Blocks;
 using WalletWasabi.Stores;
 using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.Wallets;
+using WalletWasabi.Wallets.BlockProvider;
 using WalletWasabi.Wallets.FilterProcessor;
 using Xunit;
 
@@ -21,6 +22,62 @@ namespace WalletWasabi.Tests.UnitTests.Wallet;
 public class WalletFilterProcessorTests
 {
 	private readonly Channel<NewFiltersEventTask> _eventChannel = Channel.CreateUnbounded<NewFiltersEventTask>();
+
+	[Fact]
+	public async Task WalletProcessorDoesNotRestartSharedDownloaderAsync()
+	{
+		using CancellationTokenSource ownerCts = new();
+		SmartHeaderChain headerChain = new();
+		await using IndexStore indexStore = new(TestDirectory.Get(), Network.RegTest, headerChain);
+		BitcoinStore bitcoinStore = new(indexStore, null!, null!, headerChain, null!);
+		using StartedBlockDownloadService downloader = new(Mock.Of<IFileSystemBlockRepository>());
+		using WalletFilterProcessor processor = new(null!, bitcoinStore, null!, downloader);
+		await downloader.StartAsync(ownerCts.Token);
+		await downloader.Started.Task.WaitAsync(TimeSpan.FromSeconds(5));
+		var ownerTask = downloader.ExecuteTask!;
+		try
+		{
+			await processor.StartAsync(ownerCts.Token);
+			Assert.Same(ownerTask, downloader.ExecuteTask);
+		}
+		finally
+		{
+			ownerCts.Cancel();
+			await processor.StopAsync(CancellationToken.None).WaitAsync(TimeSpan.FromSeconds(5));
+			await ownerTask.WaitAsync(TimeSpan.FromSeconds(5));
+		}
+	}
+
+	[Fact]
+	public async Task WalletProcessorDoesNotStopSharedDownloaderAsync()
+	{
+		using CancellationTokenSource ownerCts = new();
+		SmartHeaderChain headerChain = new();
+		await using IndexStore indexStore = new(TestDirectory.Get(), Network.RegTest, headerChain);
+		BitcoinStore bitcoinStore = new(indexStore, null!, null!, headerChain, null!);
+		Block block = Network.RegTest.GetGenesis();
+		Mock<IFileSystemBlockRepository> repository = new(MockBehavior.Strict);
+		repository.Setup(x => x.TryGetAsync(block.GetHash(), It.IsAny<CancellationToken>())).ReturnsAsync(block);
+		using StartedBlockDownloadService downloader = new(repository.Object);
+		using WalletFilterProcessor processor = new(null!, bitcoinStore, null!, downloader);
+		await downloader.StartAsync(ownerCts.Token);
+		await downloader.Started.Task.WaitAsync(TimeSpan.FromSeconds(5));
+		var ownerTask = downloader.ExecuteTask!;
+		try
+		{
+			await processor.StartAsync(ownerCts.Token);
+			await processor.StopAsync(CancellationToken.None).WaitAsync(TimeSpan.FromSeconds(5));
+			var result = await downloader.TryGetBlockAsync(TrustedFullNodeSourceRequest.Instance, block.GetHash(), new Priority(1), CancellationToken.None)
+				.WaitAsync(TimeSpan.FromSeconds(5));
+			Assert.Same(block, Assert.IsType<BlockDownloadService.SuccessResult>(result).Block);
+		}
+		finally
+		{
+			ownerCts.Cancel();
+			await processor.StopAsync(CancellationToken.None).WaitAsync(TimeSpan.FromSeconds(5));
+			await ownerTask.WaitAsync(TimeSpan.FromSeconds(5));
+		}
+	}
 
 	[Theory]
 	[InlineData(false)]
@@ -138,4 +195,15 @@ public class WalletFilterProcessorTests
 	}
 
 	private record NewFiltersEventTask(Task Task);
+
+	private sealed class StartedBlockDownloadService(IFileSystemBlockRepository repository) : BlockDownloadService(repository, [], p2pBlockProvider: null)
+	{
+		public TaskCompletionSource Started { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+		protected override Task ExecuteAsync(CancellationToken stoppingToken)
+		{
+			Started.TrySetResult();
+			return base.ExecuteAsync(stoppingToken);
+		}
+	}
 }

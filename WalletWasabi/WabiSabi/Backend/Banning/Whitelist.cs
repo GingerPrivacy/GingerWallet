@@ -136,13 +136,14 @@ public class Whitelist
 
 	public async Task<bool> WriteToFileIfChangedAsync()
 	{
-		if (ChangeId != LastSavedChangeId && !string.IsNullOrEmpty(WhitelistFilePath))
+		using (await FileLock.LockAsync().ConfigureAwait(false))
 		{
-			LastSavedChangeId = ChangeId;
-			var toFile = Innocents.Values.Select(innocent => innocent.ToString());
-			using (await FileLock.LockAsync().ConfigureAwait(false))
+			Guid changeId = ChangeId;
+			if (changeId != LastSavedChangeId && !string.IsNullOrEmpty(WhitelistFilePath))
 			{
+				var toFile = Innocents.Values.Select(innocent => innocent.ToString());
 				await File.WriteAllLinesAsync(WhitelistFilePath, toFile).ConfigureAwait(false);
+				LastSavedChangeId = changeId;
 				return true;
 			}
 		}

@@ -280,6 +280,8 @@ public class WabiSabiCoordinator : BackgroundService
 	{
 		CoinJoinFeeRateStatStore.NewStat -= FeeRateStatStore_NewStat;
 		Arena.CoinJoinBroadcast -= Arena_CoinJoinBroadcast;
+		Arena.Dispose();
+		CoinJoinFeeRateStatStore.Dispose();
 		ConfigWatcher.Dispose();
 		Warden.Dispose();
 		base.Dispose();

@@ -55,7 +55,8 @@ public class SpecificNodeBlockProvider : IBlockProvider, IAsyncDisposable
 				// Should timeout faster. Not sure if it should ever fail though. Maybe let's keep like this later for remote node connection.
 				using (CancellationTokenSource cts = new(TimeSpan.FromSeconds(64)))
 				{
-					block = await node.DownloadBlockAsync(hash, cts.Token).ConfigureAwait(false);
+					using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cts.Token, cancellationToken);
+					block = await node.DownloadBlockAsync(hash, linkedCts.Token).ConfigureAwait(false);
 				}
 
 				// Validate retrieved block.

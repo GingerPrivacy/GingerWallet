@@ -21,6 +21,117 @@ namespace WalletWasabi.Tests.UnitTests.Tor.Socks5.Pool;
 [Collection("Serial unit tests collection")]
 public class TorHttpPoolTests
 {
+	[Fact]
+	public async Task DisposeWaitsForPrebuildBeforeClosingConnectionsAsync()
+	{
+		using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(10));
+		TaskCompletionSource connectStarted = new(TaskCreationOptions.RunContinuationsAsynchronously);
+		TaskCompletionSource cancellationRequested = new(TaskCreationOptions.RunContinuationsAsynchronously);
+		TaskCompletionSource allowConnect = new(TaskCreationOptions.RunContinuationsAsynchronously);
+		using TrackingConnection existingConnection = new(DefaultCircuit.Instance);
+		TrackingConnection? lateConnection = null;
+		Mock<TorTcpConnectionFactory> factory = new(MockBehavior.Strict, new IPEndPoint(IPAddress.Loopback, 7777));
+		factory.Setup(x => x.ConnectAsync(It.IsAny<Uri>(), It.IsAny<INamedCircuit>(), It.IsAny<CancellationToken>()))
+			.Returns(async (Uri _, INamedCircuit circuit, CancellationToken token) =>
+			{
+				if (circuit == DefaultCircuit.Instance)
+				{
+					return existingConnection;
+				}
+				using var registration = token.Register(() => cancellationRequested.TrySetResult());
+				connectStarted.TrySetResult();
+				// A connection can finish concurrently with cancellation, so deliberately
+				// return it even after the pool has requested shutdown.
+				await allowConnect.Task.WaitAsync(timeout.Token);
+				return lateConnection = new TrackingConnection(circuit);
+			});
+		Mock<TorHttpPool> mockPool = new(MockBehavior.Loose, factory.Object, false) { CallBase = true };
+		mockPool.Setup(x => x.SendCoreAsync(It.IsAny<TorTcpConnection>(), It.IsAny<HttpRequestMessage>(), It.IsAny<Uri>(), It.IsAny<CancellationToken>()))
+			.ReturnsAsync(() => new HttpResponseMessage(HttpStatusCode.OK));
+		TorHttpPool pool = mockPool.Object;
+		using HttpRequestMessage request = new(HttpMethod.Get, "http://existing.example");
+		using HttpResponseMessage response = await pool.SendAsync(request, DefaultCircuit.Instance, timeout.Token);
+		pool.PrebuildCircuitsUpfront(new Uri("http://prebuild.example"), 1, TimeSpan.FromMilliseconds(1));
+		await connectStarted.Task.WaitAsync(timeout.Token);
+
+		Task disposeTask = pool.DisposeAsync().AsTask();
+		try
+		{
+			await cancellationRequested.Task.WaitAsync(timeout.Token);
+			Assert.False(existingConnection.IsDisposed);
+			Assert.False(disposeTask.IsCompleted);
+		}
+		finally
+		{
+			allowConnect.TrySetResult();
+			await disposeTask.WaitAsync(timeout.Token);
+		}
+		Assert.NotNull(lateConnection);
+		Assert.True(lateConnection.IsDisposed);
+	}
+
+	[Fact]
+	public async Task DisposeClosesConnectionReturnedByAnInFlightRequestAsync()
+	{
+		using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(10));
+		TaskCompletionSource connectStarted = new(TaskCreationOptions.RunContinuationsAsynchronously);
+		TaskCompletionSource allowConnect = new(TaskCreationOptions.RunContinuationsAsynchronously);
+		using TrackingConnection connection = new(DefaultCircuit.Instance);
+		CancellationToken connectToken = default;
+		Mock<TorTcpConnectionFactory> factory = new(MockBehavior.Strict, new IPEndPoint(IPAddress.Loopback, 7777));
+		factory.Setup(x => x.ConnectAsync(It.IsAny<Uri>(), It.IsAny<INamedCircuit>(), It.IsAny<CancellationToken>()))
+			.Returns(async (Uri _, INamedCircuit _, CancellationToken token) =>
+			{
+				connectToken = token;
+				connectStarted.TrySetResult();
+				await allowConnect.Task.WaitAsync(timeout.Token);
+				return connection;
+			});
+		Mock<TorHttpPool> mockPool = new(MockBehavior.Loose, factory.Object, false) { CallBase = true };
+		mockPool.Setup(x => x.SendCoreAsync(It.IsAny<TorTcpConnection>(), It.IsAny<HttpRequestMessage>(), It.IsAny<Uri>(), It.IsAny<CancellationToken>()))
+			.ReturnsAsync(() => new HttpResponseMessage(HttpStatusCode.OK));
+		TorHttpPool pool = mockPool.Object;
+		using HttpRequestMessage request = new(HttpMethod.Get, "http://late.example");
+		Task<HttpResponseMessage> sendTask = pool.SendAsync(request, DefaultCircuit.Instance, CancellationToken.None);
+		await connectStarted.Task.WaitAsync(timeout.Token);
+		try
+		{
+			// The caller owns this request, so disposing the pool need not await it.
+			await pool.DisposeAsync().AsTask().WaitAsync(timeout.Token);
+			Assert.True(connectToken.IsCancellationRequested);
+		}
+		finally
+		{
+			allowConnect.TrySetResult();
+		}
+		await Assert.ThrowsAnyAsync<OperationCanceledException>(() => sendTask.WaitAsync(timeout.Token));
+		Assert.True(connection.IsDisposed);
+		mockPool.Verify(x => x.SendCoreAsync(It.IsAny<TorTcpConnection>(), It.IsAny<HttpRequestMessage>(), It.IsAny<Uri>(), It.IsAny<CancellationToken>()), Times.Never);
+	}
+
+	[Fact]
+	public async Task DisposedPoolRejectsNewRequestsAsync()
+	{
+		Mock<TorTcpConnectionFactory> factory = new(MockBehavior.Strict, new IPEndPoint(IPAddress.Loopback, 7777));
+		TorHttpPool pool = new(factory.Object, torControlAvailable: false);
+		await pool.DisposeAsync();
+		using HttpRequestMessage request = new(HttpMethod.Get, "http://late.example");
+		await Assert.ThrowsAsync<ObjectDisposedException>(() => pool.SendAsync(request, DefaultCircuit.Instance, CancellationToken.None));
+		factory.Verify(x => x.ConnectAsync(It.IsAny<Uri>(), It.IsAny<INamedCircuit>(), It.IsAny<CancellationToken>()), Times.Never);
+	}
+
+	private sealed class TrackingConnection(INamedCircuit circuit) : TorTcpConnection(null!, new MemoryStream(), circuit, true)
+	{
+		private int _disposed;
+		public bool IsDisposed => Volatile.Read(ref _disposed) != 0;
+
+		protected override void Dispose(bool disposing)
+		{
+			Interlocked.Exchange(ref _disposed, 1);
+			base.Dispose(disposing);
+		}
+	}
+
 	/// <summary>
 	/// Tests that <see cref="TorHttpPool.SendAsync(HttpRequestMessage, ICircuit, CancellationToken)"/> method respects provided Tor circuit.
 	/// </summary>

@@ -14,6 +14,7 @@ public class BuySellManager : PeriodicRunner
 {
 	private CancellationTokenSource _modelCancelTokenSource = new();
 	private readonly ReaderWriterLockSlim _buySellWalletDataLock = new();
+	private int _disposed;
 
 	public event EventHandler<Wallet>? OrdersUpdated;
 
@@ -396,7 +397,19 @@ public class BuySellManager : PeriodicRunner
 
 	public override void Dispose()
 	{
-		_modelCancelTokenSource.Cancel();
-		_modelCancelTokenSource.Dispose();
+		if (Interlocked.Exchange(ref _disposed, 1) != 0)
+		{
+			return;
+		}
+
+		base.Dispose();
+		try
+		{
+			_modelCancelTokenSource.Cancel();
+		}
+		finally
+		{
+			_modelCancelTokenSource.Dispose();
+		}
 	}
 }
