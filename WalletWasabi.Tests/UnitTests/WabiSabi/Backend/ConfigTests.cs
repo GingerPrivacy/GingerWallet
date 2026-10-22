@@ -109,14 +109,25 @@ public class ConfigTests
 		var workDir = TestDirectory.Get();
 		await IoHelpers.TryDeleteDirectoryAsync(workDir);
 
-		CoordinatorParameters coordinatorParameters = new(workDir);
+		CoordinatorParameters coordinatorParameters = new(workDir) { ConfigChangeMonitoringPeriod = Timeout.InfiniteTimeSpan };
 		using WabiSabiCoordinator coordinator = CreateWabiSabiCoordinator(coordinatorParameters);
-		await coordinator.StartAsync(CancellationToken.None);
 
 		var configPath = Path.Combine(workDir, "WabiSabiConfig.json");
 		WabiSabiConfig configChanger = CreateConfig(configPath);
 		configChanger.LoadFile(createIfMissing: true);
 		var configWatcher = coordinator.ConfigWatcher;
+		TaskCompletionSource initialRound = new(TaskCreationOptions.RunContinuationsAsynchronously);
+		void OnInitialTick(object? sender, TimeSpan elapsed) => initialRound.TrySetResult();
+		configWatcher.Tick += OnInitialTick;
+		try
+		{
+			await coordinator.StartAsync(CancellationToken.None);
+			await initialRound.Task.WaitAsync(TimeSpan.FromSeconds(7));
+		}
+		finally
+		{
+			configWatcher.Tick -= OnInitialTick;
+		}
 
 		async Task ChangeConfirmationTargetAsync(uint newTarget)
 		{
