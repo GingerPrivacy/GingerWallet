@@ -3,8 +3,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using Moq;
+using NBitcoin;
 using WalletWasabi.Backend.Models;
+using WalletWasabi.Blockchain.Blocks;
+using WalletWasabi.Stores;
+using WalletWasabi.Tests.TestCommon;
 using WalletWasabi.Wallets;
+using WalletWasabi.Wallets.FilterProcessor;
 using Xunit;
 
 namespace WalletWasabi.Tests.UnitTests.Wallet;
@@ -15,6 +21,37 @@ namespace WalletWasabi.Tests.UnitTests.Wallet;
 public class WalletFilterProcessorTests
 {
 	private readonly Channel<NewFiltersEventTask> _eventChannel = Channel.CreateUnbounded<NewFiltersEventTask>();
+
+	[Theory]
+	[InlineData(false)]
+	[InlineData(true)]
+	public async Task CanceledStartupCompletesPendingRequestsAsync(bool dispose)
+	{
+		SmartHeaderChain headerChain = new();
+		await using IndexStore indexStore = new(TestDirectory.Get(), Network.RegTest, headerChain);
+		BitcoinStore bitcoinStore = new(indexStore, null!, null!, headerChain, null!);
+		using BlockDownloadService blockDownloadService = new(Mock.Of<IFileSystemBlockRepository>(), [], p2pBlockProvider: null);
+		using WalletFilterProcessor processor = new(null!, bitcoinStore, null!, blockDownloadService);
+		var request = processor.ProcessAsync(CancellationToken.None);
+
+		await processor.StartAsync(new CancellationToken(canceled: true));
+		var concurrentRequests = Enumerable.Range(0, 32)
+			.Select(_ => Task.Run(() => processor.ProcessAsync(CancellationToken.None)))
+			.ToArray();
+		if (dispose)
+		{
+			processor.Dispose();
+		}
+		else
+		{
+			await processor.StopAsync(CancellationToken.None);
+		}
+
+		await Assert.ThrowsAnyAsync<OperationCanceledException>(() => request.WaitAsync(TimeSpan.FromSeconds(5)));
+		await Assert.ThrowsAnyAsync<OperationCanceledException>(() => Task.WhenAll(concurrentRequests).WaitAsync(TimeSpan.FromSeconds(5)));
+		Assert.All(concurrentRequests, task => Assert.True(task.IsCanceled));
+		await Assert.ThrowsAnyAsync<OperationCanceledException>(() => processor.ProcessAsync(CancellationToken.None).WaitAsync(TimeSpan.FromSeconds(5)));
+	}
 
 	[Fact]
 	public async Task TestFilterProcessingAsync()

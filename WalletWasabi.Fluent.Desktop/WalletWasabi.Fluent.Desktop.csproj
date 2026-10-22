@@ -45,7 +45,6 @@
 	<ItemGroup>
 		<PackageReference Include="Avalonia.Desktop" />
 		<PackageReference Include="Avalonia.ReactiveUI" />
-		<PackageReference Include="System.Text.Json" />
 		<PackageReference Include="Tmds.DBus.Protocol" />
 	</ItemGroup>
 	<ItemGroup>

@@ -63,7 +63,7 @@ You can always build the latest version directly from the `master` branch.
 ## Build from source (master)
 
 ### Requirements
-- .NET SDK (as defined in the repository)
+- .NET 10 SDK (the version pinned in `global.json`)
 - Git
 
 ### Quick start

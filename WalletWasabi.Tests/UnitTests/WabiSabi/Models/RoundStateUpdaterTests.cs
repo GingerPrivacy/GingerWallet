@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NBitcoin;
 using WalletWasabi.Tests.Helpers;
+using WalletWasabi.Helpers;
 using WalletWasabi.WabiSabi.Backend.Rounds;
 using WalletWasabi.WabiSabi.Client.RoundStateAwaiters;
 using WalletWasabi.WabiSabi.Models;
@@ -47,8 +48,13 @@ public class RoundStateUpdaterTests
 		var round1TSTask = roundStatusUpdater.CreateRoundAwaiterAsync(roundState1.Id, Phase.TransactionSigning, round1TSCts.Token);
 		var round1TBTask = roundStatusUpdater.CreateRoundAwaiterAsync(roundState1.Id, Phase.Ended, cancellationToken);
 
-		// Start
+		EventAwaiter<TimeSpan> initialPoll = new(
+			h => roundStatusUpdater.Tick += h,
+			h => roundStatusUpdater.Tick -= h);
+
+		// Wait for the initial poll before advancing the scripted responses.
 		await roundStatusUpdater.StartAsync(cancellationTokenSource.Token);
+		await initialPoll.WaitAsync(TestTimeOut);
 
 		// Wait for round1 in input registration.
 		var round1 = await round1IRTask;
@@ -201,7 +207,9 @@ public class RoundStateUpdaterTests
 		using RoundStateUpdater roundStatusUpdater = new(TimeSpan.FromSeconds(100), [], apiClient, false);
 		try
 		{
+			var initialRoundTask = roundStatusUpdater.CreateRoundAwaiterAsync(roundState.Id, Phase.InputRegistration, CancellationToken.None);
 			await roundStatusUpdater.StartAsync(CancellationToken.None);
+			await initialRoundTask.WaitAsync(TestTimeOut);
 			using var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(1));
 
 			await Assert.ThrowsAsync<TaskCanceledException>(async () =>

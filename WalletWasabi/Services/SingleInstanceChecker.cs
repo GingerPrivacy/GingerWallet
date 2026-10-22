@@ -54,16 +54,42 @@ public class SingleInstanceChecker : BackgroundService, IAsyncDisposable
 	public async Task StopCheckingAsync()
 	{
 		DisposeCts.Cancel();
-		if (ExecuteTask is not null)
+		try
 		{
-			await ExecuteTask.ConfigureAwait(false);
+			await StopAsync(CancellationToken.None).ConfigureAwait(false);
+		}
+		finally
+		{
+			Listener?.Stop();
 		}
 	}
 
 	internal int Port { get; }
 
 	private CancellationTokenSource DisposeCts { get; } = new();
-	private TaskCompletionSource? TaskStartTcpListener { get; set; }
+	private TcpListener? Listener { get; set; }
+
+	public override Task StartAsync(CancellationToken cancellationToken)
+	{
+		TcpListener listener = new(IPAddress.Loopback, Port)
+		{
+			ExclusiveAddressUse = true
+		};
+		try
+		{
+			// Complete the first-instance check before the caller starts the GUI,
+			// which must stay on the main thread on macOS.
+			listener.Start(0);
+			Listener = listener;
+			Logger.LogInfo($"{nameof(SingleInstanceChecker)} is listening on {IPAddress.Loopback}:{Port}.");
+			return base.StartAsync(cancellationToken);
+		}
+		catch
+		{
+			listener.Stop();
+			throw;
+		}
+	}
 
 	public async Task<WasabiInstanceStatus> CheckSingleInstanceAsync()
 	{
@@ -94,13 +120,8 @@ public class SingleInstanceChecker : BackgroundService, IAsyncDisposable
 
 		try
 		{
-			TaskStartTcpListener = new TaskCompletionSource();
-
-			// Start ExecuteAsync.
+			// Start the listener synchronously, then run its accept loop in the background.
 			await StartAsync(DisposeCts.Token).ConfigureAwait(false);
-
-			// Wait for the result of TcpListener.Start().
-			await TaskStartTcpListener.Task.WaitAsync(DisposeCts.Token).ConfigureAwait(false);
 
 			// This is the first instance, nothing else to do.
 			return true;
@@ -178,23 +199,11 @@ public class SingleInstanceChecker : BackgroundService, IAsyncDisposable
 
 	protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 	{
-		var task = TaskStartTcpListener
+		using var listener = Listener
 			?? throw new InvalidOperationException("This should never happen!");
 
 		try
 		{
-			using TcpListener listener = new(IPAddress.Loopback, Port)
-			{
-				ExclusiveAddressUse = true
-			};
-
-			// This can throw an exception if the port is already open.
-			listener.Start(0);
-
-			// Indicate that the Listener is created successfully.
-			task.TrySetResult();
-			Logger.LogInfo($"{nameof(SingleInstanceChecker)} is listening on {IPAddress.Loopback}:{Port}.");
-
 			while (!stoppingToken.IsCancellationRequested)
 			{
 				// In case of cancellation, listener.Stop will cause AcceptTcpClientAsync to throw, thus cancelling it.
@@ -230,25 +239,30 @@ public class SingleInstanceChecker : BackgroundService, IAsyncDisposable
 		}
 		catch (Exception ex)
 		{
-			// Indicate that there was an error.
-			task.TrySetException(ex);
-			return;
+			if (!stoppingToken.IsCancellationRequested)
+			{
+				Logger.LogError(ex);
+			}
 		}
 	}
 
 	public async ValueTask DisposeAsync()
 	{
-		DisposeCts.Cancel();
-
-		await StopAsync(CancellationToken.None).ConfigureAwait(false);
-
-		DisposeCts.Dispose();
+		try
+		{
+			await StopCheckingAsync().ConfigureAwait(false);
+		}
+		finally
+		{
+			DisposeCts.Dispose();
+		}
 	}
 
 	public override void Dispose()
 	{
 		base.Dispose();
 		DisposeCts.Cancel();
+		Listener?.Stop();
 
 		// Stopping the execution task and wait until it finishes.
 		using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(_timeoutMultiplier * 20));

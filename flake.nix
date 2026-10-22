@@ -5,6 +5,20 @@
   outputs = { self, nixpkgs }:
     let
         pkgs = import nixpkgs { system = "x86_64-linux"; };
+        dotnet = pkgs.dotnetCorePackages.buildDotnetSdk ./Contrib/Nix/dotnet10.nix;
+        bundled-hwi = pkgs.stdenvNoCC.mkDerivation {
+          pname = "ginger-hwi";
+          version = "3.2.0";
+          src = ./WalletWasabi/Microservices/Binaries/linux-x64/hwi;
+          dontUnpack = true;
+          nativeBuildInputs = [ pkgs.autoPatchelfHook pkgs.makeWrapper ];
+          buildInputs = [ pkgs.zlib ];
+          installPhase = ''
+            install -Dm755 $src $out/libexec/hwi
+            makeWrapper $out/libexec/hwi $out/bin/hwi \
+              --prefix LD_LIBRARY_PATH : ${pkgs.lib.makeLibraryPath [ pkgs.libusb1 pkgs.udev pkgs.hidapi pkgs.stdenv.cc.cc.lib ]}
+          '';
+        };
         deployScript = pkgs.writeScriptBin "deploy" (builtins.readFile ./Contrib/deploy.sh);
         gitRev = if (builtins.hasAttr "rev" self) then self.rev else "dirty";
         backend-build = pkgs.buildDotnetModule rec {
@@ -13,7 +27,7 @@
           nugetDeps = ./deps.nix; # nix build .#packages.x86_64-linux.default.passthru.fetch-deps
           dotnetFlags = [ "-p:CommitHash=${gitRev}" ];
           runtimeDeps = [ pkgs.openssl pkgs.zlib ];
-          dotnet-sdk = pkgs.dotnetCorePackages.sdk_8_0;
+          dotnet-sdk = dotnet.sdk_10_0;
           selfContainedBuild = true;
 
           src = ./.;
@@ -32,9 +46,9 @@
              # for backend
              openssl zlib
              # for client
-             tor hwi bitcoind
+             tor bitcoind
              xorg.libX11 xorg.libXrandr xorg.libX11.dev xorg.libICE xorg.libSM fontconfig.lib ];
-          dotnet-sdk = pkgs.dotnetCorePackages.sdk_8_0;
+          dotnet-sdk = dotnet.sdk_10_0;
           selfContainedBuild = true;
 
 
@@ -57,11 +71,11 @@
           microservices = "./WalletWasabi/Microservices/Binaries/linux-x64/";
           preBuild = ''
             cp -r ${pkgs.tor}/bin/tor ${microservices}/Tor/tor
-            cp ${pkgs.hwi}/bin/hwi ${microservices}/hwi
+            cp ${bundled-hwi}/bin/hwi ${microservices}/hwi
             cp ${pkgs.bitcoind}/bin/bitcoind ${microservices}/bitcoind
           '';
 
-          skiaSharp = toString ./. + "WalletWasabi.Fluent.Desktop/bin/Debug/net8.0/runtimes/linux-x64/native";
+          skiaSharp = toString ./. + "WalletWasabi.Fluent.Desktop/bin/Debug/net10.0/runtimes/linux-x64/native";
           LD_LIBRARY_PATH = "${skiaSharp}";
 
           #meta = with lib; {
@@ -77,7 +91,7 @@
           nugetName = "dotnet-trace";
           version = "8.0.510501";
           nugetSha256 = "sha256-Kt5x8n5Q0T+BaTVufhsyjXbi/BlGKidb97DWSbI6Iq8=";
-          dotnet-sdk = pkgs.dotnetCorePackages.sdk_8_0;
+          dotnet-sdk = dotnet.sdk_10_0;
         };
         # dotnet dump
         dotnet-dump = pkgs.buildDotnetGlobalTool {
@@ -85,7 +99,7 @@
           nugetName = "dotnet-dump";
           version = "8.0.510501";
           nugetSha256 = "sha256-H7Z4EA/9G3DvVuXbnQJF7IJMEB2SkzRjTAL3eZMqCpI=";
-          dotnet-sdk = pkgs.dotnetCorePackages.sdk_8_0;
+          dotnet-sdk = dotnet.sdk_10_0;
         };
         # dotnet counters
         dotnet-counters = pkgs.buildDotnetGlobalTool {
@@ -93,12 +107,12 @@
           nugetName = "dotnet-counters";
           version = "8.0.510501";
           nugetSha256 = "sha256-gAexbRzKP/8VPhFy2OqnUCp6ze3CkcWLYR1nUqG71PI=";
-          dotnet-sdk = pkgs.dotnetCorePackages.sdk_8_0;
+          dotnet-sdk = dotnet.sdk_10_0;
         };
         wasabi-shell = pkgs.mkShell {
            name = "wasabi-shell";
            packages = [
-             pkgs.dotnetCorePackages.sdk_8_0
+             dotnet.sdk_10_0
              dotnet-trace
              dotnet-dump
              dotnet-counters
@@ -107,7 +121,7 @@
            shellHook = ''
              export DOTNET_CLI_TELEMETRY_OPTOUT=1
              export DOTNET_NOLOGO=1
-             export DOTNET_ROOT=${pkgs.dotnetCorePackages.sdk_8_0}
+             export DOTNET_ROOT=${dotnet.sdk_10_0}/share/dotnet
              export PS1='\n\[\033[1;34m\][Wasabi:\w]\$\[\033[0m\] '
            '';
         };

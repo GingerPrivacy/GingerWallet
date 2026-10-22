@@ -18,6 +18,57 @@ namespace WalletWasabi.Tests.UnitTests.Wallet.FilterProcessor;
 [Collection("Serial unit tests collection")]
 public class BlockDownloadServiceTests
 {
+	[Theory]
+	[InlineData(false)]
+	[InlineData(true)]
+	public async Task CanceledStartupCompletesPendingRequestsAsync(bool dispose)
+	{
+		using BlockDownloadService service = new(Mock.Of<IFileSystemBlockRepository>(), [], p2pBlockProvider: null);
+		var request = service.TryGetBlockAsync(TrustedFullNodeSourceRequest.Instance, uint256.One, new Priority(1), CancellationToken.None);
+
+		await service.StartAsync(new CancellationToken(canceled: true));
+		var concurrentRequests = Enumerable.Range(0, 32)
+			.Select(_ => Task.Run(() => service.TryGetBlockAsync(TrustedFullNodeSourceRequest.Instance, uint256.One, new Priority(1), CancellationToken.None)))
+			.ToArray();
+		if (dispose)
+		{
+			service.Dispose();
+		}
+		else
+		{
+			await service.StopAsync(CancellationToken.None);
+		}
+
+		Assert.IsType<CanceledResult>(await request.WaitAsync(TimeSpan.FromSeconds(5)));
+		Assert.All(await Task.WhenAll(concurrentRequests).WaitAsync(TimeSpan.FromSeconds(5)), result => Assert.IsType<CanceledResult>(result));
+
+		var lateRequest = service.TryGetBlockAsync(TrustedFullNodeSourceRequest.Instance, uint256.One, new Priority(1), CancellationToken.None);
+		Assert.IsType<CanceledResult>(await lateRequest.WaitAsync(TimeSpan.FromSeconds(5)));
+	}
+
+	[Fact]
+	public async Task CanRestartAfterCanceledStartupAsync()
+	{
+		Block block = Network.RegTest.GetGenesis();
+		Mock<IFileSystemBlockRepository> repository = new(MockBehavior.Strict);
+		repository.Setup(x => x.TryGetAsync(block.GetHash(), It.IsAny<CancellationToken>())).ReturnsAsync(block);
+		using BlockDownloadService service = new(repository.Object, [], p2pBlockProvider: null);
+
+		await service.StartAsync(new CancellationToken(canceled: true));
+		await service.StopAsync(CancellationToken.None);
+		await service.StartAsync(CancellationToken.None);
+		try
+		{
+			var result = await service.TryGetBlockAsync(TrustedFullNodeSourceRequest.Instance, block.GetHash(), new Priority(1), CancellationToken.None)
+				.WaitAsync(TimeSpan.FromSeconds(5));
+			Assert.Same(block, Assert.IsType<SuccessResult>(result).Block);
+		}
+		finally
+		{
+			await service.StopAsync(CancellationToken.None);
+		}
+	}
+
 	/// <summary>
 	/// Tests <see cref="BlockDownloadService.TryGetBlockAsync(Source, uint256, Priority, uint, CancellationToken)"/> method.
 	/// Blocks should be downloaded in parallel. Especially, if we get one block request and then immediately another one, BDS is supposed

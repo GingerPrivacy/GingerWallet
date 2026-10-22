@@ -109,28 +109,55 @@ public class ConfigTests
 		var workDir = TestDirectory.Get();
 		await IoHelpers.TryDeleteDirectoryAsync(workDir);
 
-		CoordinatorParameters coordinatorParameters = new(workDir);
+		CoordinatorParameters coordinatorParameters = new(workDir) { ConfigChangeMonitoringPeriod = Timeout.InfiniteTimeSpan };
 		using WabiSabiCoordinator coordinator = CreateWabiSabiCoordinator(coordinatorParameters);
-		await coordinator.StartAsync(CancellationToken.None);
 
 		var configPath = Path.Combine(workDir, "WabiSabiConfig.json");
 		WabiSabiConfig configChanger = CreateConfig(configPath);
 		configChanger.LoadFile(createIfMissing: true);
-		var newTarget = 729u;
-		configChanger.ConfirmationTarget = newTarget;
-		Assert.NotEqual(newTarget, coordinator.Config.ConfirmationTarget);
-		configChanger.ToFile();
 		var configWatcher = coordinator.ConfigWatcher;
-		await configWatcher.TriggerAndWaitRoundAsync(TimeSpan.FromSeconds(7));
-		Assert.Equal(newTarget, coordinator.Config.ConfirmationTarget);
+		TaskCompletionSource initialRound = new(TaskCreationOptions.RunContinuationsAsynchronously);
+		void OnInitialTick(object? sender, TimeSpan elapsed) => initialRound.TrySetResult();
+		configWatcher.Tick += OnInitialTick;
+		try
+		{
+			await coordinator.StartAsync(CancellationToken.None);
+			await initialRound.Task.WaitAsync(TimeSpan.FromSeconds(7));
+		}
+		finally
+		{
+			configWatcher.Tick -= OnInitialTick;
+		}
 
-		// Do it one more time.
-		newTarget = 372;
-		configChanger.ConfirmationTarget = newTarget;
-		Assert.NotEqual(newTarget, coordinator.Config.ConfirmationTarget);
-		configChanger.ToFile();
-		await configWatcher.TriggerAndWaitRoundAsync(TimeSpan.FromSeconds(7));
-		Assert.Equal(newTarget, coordinator.Config.ConfirmationTarget);
+		async Task ChangeConfirmationTargetAsync(uint newTarget)
+		{
+			TaskCompletionSource configReloaded = new(TaskCreationOptions.RunContinuationsAsynchronously);
+			void OnTick(object? sender, TimeSpan elapsed)
+			{
+				if (coordinator.Config.ConfirmationTarget == newTarget)
+				{
+					configReloaded.TrySetResult();
+				}
+			}
+
+			configWatcher.Tick += OnTick;
+			try
+			{
+				Assert.NotEqual(newTarget, coordinator.Config.ConfirmationTarget);
+				configChanger.ConfirmationTarget = newTarget;
+				configChanger.ToFile();
+				configWatcher.TriggerRound();
+				await configReloaded.Task.WaitAsync(TimeSpan.FromSeconds(7));
+				Assert.Equal(newTarget, coordinator.Config.ConfirmationTarget);
+			}
+			finally
+			{
+				configWatcher.Tick -= OnTick;
+			}
+		}
+
+		await ChangeConfirmationTargetAsync(729);
+		await ChangeConfirmationTargetAsync(372);
 
 		await coordinator.StopAsync(CancellationToken.None);
 	}

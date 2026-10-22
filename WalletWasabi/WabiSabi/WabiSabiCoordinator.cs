@@ -252,14 +252,18 @@ public class WabiSabiCoordinator : BackgroundService
 		return true;
 	}
 
-	protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+	public override async Task StartAsync(CancellationToken cancellationToken)
 	{
-		await ConfigWatcher.StartAsync(stoppingToken).ConfigureAwait(false);
-		await Warden.StartAsync(stoppingToken).ConfigureAwait(false);
-		await Arena.StartAsync(stoppingToken).ConfigureAwait(false);
+		Config.LoadFile(createIfMissing: true);
+		await ConfigWatcher.StartAsync(cancellationToken).ConfigureAwait(false);
+		await Warden.StartAsync(cancellationToken).ConfigureAwait(false);
+		await Arena.StartAsync(cancellationToken).ConfigureAwait(false);
 
-		await CoinJoinFeeRateStatStore.StartAsync(stoppingToken).ConfigureAwait(false);
+		await CoinJoinFeeRateStatStore.StartAsync(cancellationToken).ConfigureAwait(false);
+		await base.StartAsync(cancellationToken).ConfigureAwait(false);
 	}
+
+	protected override Task ExecuteAsync(CancellationToken stoppingToken) => Task.CompletedTask;
 
 	public override async Task StopAsync(CancellationToken cancellationToken)
 	{

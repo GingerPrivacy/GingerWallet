@@ -19,6 +19,8 @@ WalletScrutiny's [published Windows verification](https://walletscrutiny.com/des
 
 The [Ginger product definition](https://github.com/WalletScrutiny/WalletScrutinyCom/blob/master/_desktop/gingerwallet.md) currently lists `Ginger-*.msi` for Windows, which conflicts with the published script's accepted inputs. The verification report records a local build-server metadata override to select `Ginger-*-win-x64.zip`. That metadata needs to select the ZIP when using this script; removing executable signatures from an MSI would not make its unsupported format work. Section 4 is a separate MSI payload check, not a claim that WalletScrutiny's script supports MSI verification. [Artifact-level verdicts](https://github.com/WalletScrutiny/WalletScrutinyCom/blob/master/docs/verifications.md#artifact-level-verdicts) must stay tied to the actual download tested.
 
+Current development builds require the .NET 10 SDK pinned in `global.json`. Rebuilding an older release requires that release's recorded SDK and runtime; the v2.0.26 example below intentionally uses .NET 8.
+
 ## 1. Download the reference payload and match its toolchain
 
 The following commands use **Windows PowerShell 5.1 (`powershell.exe`) on Windows 10 or later**, with [Git](https://git-scm.com/) installed. Run the snippets in the same session. Ginger's release packager builds all four portable targets on Windows; use that host OS even when comparing its Linux or macOS output. Publishing on another OS can change platform-dependent files, and running the packager on macOS enters its signing workflow.
