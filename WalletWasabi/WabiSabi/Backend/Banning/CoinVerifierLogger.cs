@@ -26,8 +26,6 @@ public class CoinVerifierLogger : IAsyncDisposable
 	private object LogLinesLock { get; } = new();
 
 	private List<AuditEvent> LogLines { get; } = new();
-	private bool IsDisposed { get; set; }
-	private Task? DisposalTask { get; set; }
 
 	public void LogException(uint256 roundId, string exceptionLevel, Exception exception)
 	{
@@ -110,19 +108,13 @@ public class CoinVerifierLogger : IAsyncDisposable
 
 		lock (LogLinesLock)
 		{
-			ObjectDisposedException.ThrowIf(IsDisposed, this);
 			LogLines.Add(new AuditEvent(dateTime, csvLine));
 		}
 	}
 
-	public ValueTask DisposeAsync()
+	public async ValueTask DisposeAsync()
 	{
-		lock (LogLinesLock)
-		{
-			IsDisposed = true;
-			DisposalTask ??= SaveAuditsAsync();
-			return new ValueTask(DisposalTask);
-		}
+		await SaveAuditsAsync().ConfigureAwait(false);
 	}
 
 	public record AuditEvent(DateTimeOffset DateTimeOffset, string LogMessage);

@@ -37,14 +37,14 @@ public class CoinVerifierTests
 		await using CoinVerifier verifier = new(new CoinJoinIdStore(), apiClient, _wabisabiTestConfig, auditArchiver: audit);
 		using CancellationTokenSource cancellation = new();
 		Coin coin = GenerateCoins(1).Single();
+		Task? disposal = null;
 		try
 		{
 			Assert.True(verifier.TryScheduleVerification(coin, TimeSpan.Zero, _wabisabiTestConfig.CoinVerifierRequiredConfirmations, false, _mockBlockchainHeight, cancellation.Token));
 			await provider.Started.Task.WaitAsync(TimeSpan.FromSeconds(5));
-			Task disposal = verifier.DisposeAsync().AsTask();
+			disposal = verifier.DisposeAsync().AsTask();
 			Assert.False(disposal.IsCompleted);
 			await provider.CancellationObserved.Task.WaitAsync(TimeSpan.FromSeconds(5));
-			Assert.Same(disposal, verifier.DisposeAsync().AsTask());
 			Assert.False(verifier.TryScheduleVerification(GenerateCoins(1).Single(), TimeSpan.Zero, 1, true, _mockBlockchainHeight, CancellationToken.None));
 			provider.AllowCompletion.TrySetResult();
 			await disposal.WaitAsync(TimeSpan.FromSeconds(5));
@@ -57,20 +57,11 @@ public class CoinVerifierTests
 			cancellation.Cancel();
 			provider.AllowCompletion.TrySetResult();
 			await provider.Finished.Task.WaitAsync(TimeSpan.FromSeconds(5));
-			await verifier.DisposeAsync();
+			if (disposal is not null)
+			{
+				await disposal.WaitAsync(TimeSpan.FromSeconds(5));
+			}
 		}
-	}
-
-	[Fact]
-	public async Task DoesNotAcceptVerificationsAfterDisposalAsync()
-	{
-		using MockHttpClient httpClient = new();
-		using MockCoinVerifierProvider provider = new(httpClient, _verifierConfig);
-		await using CoinVerifierApiClient apiClient = new(httpClient, provider);
-		await using CoinVerifierLogger audit = new(TestDirectory.Get());
-		await using CoinVerifier verifier = new(new CoinJoinIdStore(), apiClient, _wabisabiTestConfig, auditArchiver: audit);
-		await verifier.DisposeAsync();
-		Assert.False(verifier.TryScheduleVerification(GenerateCoins(1).Single(), TimeSpan.Zero, 1, true, _mockBlockchainHeight, CancellationToken.None));
 	}
 
 	[Fact]

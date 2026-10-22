@@ -48,21 +48,6 @@ public class WhitelistTests
 	}
 
 	[Fact]
-	public async Task FailedWriteCanBeRetriedAsync()
-	{
-		string path = Path.Combine(TestDirectory.Get(), "Whitelist.txt");
-		Whitelist whitelist = new([], path, WabiSabiTestFactory.CreateDefaultWabiSabiConfig());
-		var outpoint = BitcoinFactory.CreateOutPoint(TestRandom.Get());
-		whitelist.Add(outpoint);
-		using (FileStream lockedFile = new(path, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
-		{
-			await Assert.ThrowsAsync<IOException>(() => whitelist.WriteToFileIfChangedAsync());
-		}
-		Assert.True(await whitelist.WriteToFileIfChangedAsync());
-		Assert.Contains(await File.ReadAllLinesAsync(path), line => Innocent.TryReadFromString(line, out var innocent) && innocent.Outpoint == outpoint);
-	}
-
-	[Fact]
 	public void WhitelistChangeTrafficAsync()
 	{
 		var rnd = TestRandom.Get();

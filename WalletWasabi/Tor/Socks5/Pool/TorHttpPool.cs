@@ -1,4 +1,3 @@
-using Nito.AsyncEx;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -58,8 +57,6 @@ public class TorHttpPool : IAsyncDisposable
 
 	private Task PreBuildingLoopTask { get; }
 	private CancellationTokenSource LoopCts { get; } = new();
-	private AsyncLock DisposeLock { get; } = new();
-	private bool _disposeStarted;
 
 	/// <summary>Channel with pre-building requests.</summary>
 	private Channel<TorPrebuildCircuitRequest> PreBuildingRequestChannel { get; }
@@ -126,9 +123,6 @@ public class TorHttpPool : IAsyncDisposable
 	/// <exception cref="OperationCanceledException">When the operation was canceled.</exception>
 	public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, ICircuit circuit, int maximumRedirects, CancellationToken cancellationToken)
 	{
-		using CancellationTokenSource requestCts = CreateRequestCancellationSource(cancellationToken);
-		cancellationToken = requestCts.Token;
-		cancellationToken.ThrowIfCancellationRequested();
 		int i = 0;
 		int attemptsNo = 3;
 		TorTcpConnection? connection = null;
@@ -350,7 +344,7 @@ public class TorHttpPool : IAsyncDisposable
 
 			lock (ConnectionsLock)
 			{
-				if (_disposeStarted)
+				if (LoopCts.IsCancellationRequested)
 				{
 					throw new OperationCanceledException(token);
 				}
@@ -416,31 +410,18 @@ public class TorHttpPool : IAsyncDisposable
 		while (true);
 	}
 
-	private CancellationTokenSource CreateRequestCancellationSource(CancellationToken cancellationToken)
-	{
-		lock (ConnectionsLock)
-		{
-			ObjectDisposedException.ThrowIf(_disposeStarted, this);
-			return CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, LoopCts.Token);
-		}
-	}
-
 	private async Task<TorTcpConnection?> CreateNewConnectionAsync(Uri requestUri, INamedCircuit circuit, CancellationToken cancellationToken)
 	{
-		lock (ConnectionsLock)
+		if (TorControlAvailable)
 		{
-			if (_disposeStarted)
-			{
-				throw new OperationCanceledException(cancellationToken);
-			}
-			if (TorControlAvailable)
+			lock (ConnectionsLock)
 			{
 				TorStreamsBeingBuilt[circuit.Name] = null;
 			}
 		}
 
 		TorTcpConnection? connection = null;
-		bool disposeConnection = false;
+		bool poolStopping = false;
 
 		try
 		{
@@ -471,6 +452,7 @@ public class TorHttpPool : IAsyncDisposable
 		{
 			lock (ConnectionsLock)
 			{
+				poolStopping = LoopCts.IsCancellationRequested;
 				if (TorControlAvailable)
 				{
 					if (TorStreamsBeingBuilt.Remove(circuit.Name, out TorStreamInfo? streamInfo))
@@ -482,28 +464,21 @@ public class TorHttpPool : IAsyncDisposable
 					}
 				}
 
-				if (connection is not null)
+				if (connection is not null && !poolStopping)
 				{
-					if (_disposeStarted)
+					string host = GetRequestHost(requestUri);
+					if (!ConnectionPerHost.TryGetValue(host, out List<TorTcpConnection>? value))
 					{
-						disposeConnection = true;
+						value = new List<TorTcpConnection>();
+						ConnectionPerHost.Add(host, value);
 					}
-					else
-					{
-						string host = GetRequestHost(requestUri);
-						if (!ConnectionPerHost.TryGetValue(host, out List<TorTcpConnection>? value))
-						{
-							value = new List<TorTcpConnection>();
-							ConnectionPerHost.Add(host, value);
-						}
-						value.Add(connection);
-					}
+					value.Add(connection);
 				}
 			}
 		}
-		if (disposeConnection)
+		if (poolStopping)
 		{
-			connection!.Dispose();
+			connection?.Dispose();
 			throw new OperationCanceledException(cancellationToken);
 		}
 
@@ -746,14 +721,10 @@ public class TorHttpPool : IAsyncDisposable
 			TimeSpan randomDelay = TimeSpan.FromMilliseconds(SecureRandom.Instance.GetInt(0, (int)deadline.TotalMilliseconds));
 
 			TorPrebuildCircuitRequest request = new(baseUri, randomDelay);
-			lock (ConnectionsLock)
+			if (!PreBuildingRequestChannel.Writer.TryWrite(request))
 			{
-				ObjectDisposedException.ThrowIf(_disposeStarted, this);
-				if (!PreBuildingRequestChannel.Writer.TryWrite(request))
-				{
-					Logger.LogDebug($"Failed to register all pre-building requests. Failed request: '{request}'.");
-					break;
-				}
+				Logger.LogDebug($"Failed to register all pre-building requests. Failed request: '{request}'.");
+				break;
 			}
 		}
 
@@ -762,40 +733,29 @@ public class TorHttpPool : IAsyncDisposable
 
 	public async ValueTask DisposeAsync()
 	{
-		using (await DisposeLock.LockAsync().ConfigureAwait(false))
+		LoopCts.Cancel();
+		PreBuildingRequestChannel.Writer.TryComplete();
+		try
 		{
-			lock (ConnectionsLock)
-			{
-				if (_disposeStarted)
-				{
-					return;
-				}
-				_disposeStarted = true;
-				PreBuildingRequestChannel.Writer.TryComplete();
-			}
-			LoopCts.Cancel();
-			try
-			{
-				await PreBuildingLoopTask.ConfigureAwait(false);
-			}
-			catch (Exception e)
-			{
-				Logger.LogDebug("Unexpected issue in stopping the pre-building loop.", e);
-			}
-
-			TorTcpConnection[] connections;
-			lock (ConnectionsLock)
-			{
-				connections = ConnectionPerHost.Values.SelectMany(list => list).Distinct().ToArray();
-				ConnectionPerHost.Clear();
-				TorStreamsBeingBuilt.Clear();
-			}
-			foreach (TorTcpConnection connection in connections)
-			{
-				Logger.LogTrace($"Dispose connection: '{connection}'");
-				connection.Dispose();
-			}
-			LoopCts.Dispose();
+			await PreBuildingLoopTask.ConfigureAwait(false);
 		}
+		catch (Exception e)
+		{
+			Logger.LogDebug("Unexpected issue in stopping the pre-building loop.", e);
+		}
+
+		TorTcpConnection[] connections;
+		lock (ConnectionsLock)
+		{
+			connections = ConnectionPerHost.Values.SelectMany(list => list).Distinct().ToArray();
+			ConnectionPerHost.Clear();
+			TorStreamsBeingBuilt.Clear();
+		}
+		foreach (TorTcpConnection connection in connections)
+		{
+			Logger.LogTrace($"Dispose connection: '{connection}'");
+			connection.Dispose();
+		}
+		LoopCts.Dispose();
 	}
 }

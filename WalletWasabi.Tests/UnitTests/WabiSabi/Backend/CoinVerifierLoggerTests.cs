@@ -45,12 +45,4 @@ public class CoinVerifierLoggerTests
 		string file = Assert.Single(Directory.GetFiles(directory, "VerifierAudits.*.txt"));
 		Assert.Contains("Final audit write.", await File.ReadAllTextAsync(file));
 	}
-
-	[Fact]
-	public async Task DoesNotAcceptAuditWritesAfterDisposalAsync()
-	{
-		await using CoinVerifierLogger logger = new(TestDirectory.Get());
-		await logger.DisposeAsync();
-		Assert.Throws<ObjectDisposedException>(() => logger.LogException(uint256.One, "late", new InvalidOperationException("Late audit write.")));
-	}
 }

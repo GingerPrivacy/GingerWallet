@@ -63,8 +63,7 @@ public class CoinVerifier : IAsyncDisposable
 	private ConcurrentDictionary<Coin, CoinVerifyItem> CoinVerifyItems { get; } = new(CoinEqualityComparer.Default);
 	private object LifecycleLock { get; } = new();
 	private CancellationTokenSource ShutdownCts { get; } = new();
-	private HashSet<Task> VerificationTasks { get; } = new();
-	private Task? DisposalTask { get; set; }
+	private List<Task> VerificationTasks { get; } = new();
 	private bool IsStopping { get; set; }
 
 	public async Task<IEnumerable<CoinVerifyResult>> VerifyCoinsAsync(IEnumerable<Coin> coinsToCheck, CancellationToken cancellationToken)
@@ -280,16 +279,8 @@ public class CoinVerifier : IAsyncDisposable
 					// Do not throw an exception here - unobserved exception prevention.
 				}
 			});
+		VerificationTasks.RemoveAll(task => task.IsCompletedSuccessfully);
 		VerificationTasks.Add(verificationTask);
-		_ = verificationTask.ContinueWith(completedTask =>
-		{
-			// Observe unexpected failures as well as tracking the complete worker, not just its result task.
-			_ = completedTask.Exception;
-			lock (LifecycleLock)
-			{
-				VerificationTasks.Remove(completedTask);
-			}
-		}, CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
 
 		return true;
 	}
@@ -302,49 +293,27 @@ public class CoinVerifier : IAsyncDisposable
 		}
 	}
 
-	public ValueTask DisposeAsync()
+	public async ValueTask DisposeAsync()
 	{
-		TaskCompletionSource? completion = null;
-		Task[]? workers = null;
-		Task disposal;
+		Task[] workers;
 		lock (LifecycleLock)
 		{
-			if (DisposalTask is null)
+			if (IsStopping)
 			{
-				IsStopping = true;
-				workers = VerificationTasks.ToArray();
-				completion = new(TaskCreationOptions.RunContinuationsAsynchronously);
-				DisposalTask = completion.Task;
+				return;
 			}
-			disposal = DisposalTask;
+			IsStopping = true;
+			workers = VerificationTasks.ToArray();
 		}
-		if (completion is not null)
-		{
-			_ = DisposeCoreAsync(workers!, completion);
-		}
-		return new ValueTask(disposal);
-	}
-
-	private async Task DisposeCoreAsync(Task[] workers, TaskCompletionSource completion)
-	{
-		List<Exception> errors = new();
 		try
 		{
 			try
 			{
 				await ShutdownCts.CancelAsync().ConfigureAwait(false);
 			}
-			catch (Exception ex)
-			{
-				errors.Add(ex);
-			}
-			try
+			finally
 			{
 				await Task.WhenAll(workers).ConfigureAwait(false);
-			}
-			catch (Exception ex)
-			{
-				errors.Add(ex);
 			}
 			foreach (var coin in CoinVerifyItems.Keys)
 			{
@@ -353,18 +322,7 @@ public class CoinVerifier : IAsyncDisposable
 					item.Dispose();
 				}
 			}
-			try
-			{
-				await Whitelist.WriteToFileIfChangedAsync().ConfigureAwait(false);
-			}
-			catch (Exception ex)
-			{
-				errors.Add(ex);
-			}
-		}
-		catch (Exception ex)
-		{
-			errors.Add(ex);
+			await Whitelist.WriteToFileIfChangedAsync().ConfigureAwait(false);
 		}
 		finally
 		{
@@ -372,19 +330,10 @@ public class CoinVerifier : IAsyncDisposable
 			{
 				await VerifierAuditArchiver.DisposeAsync().ConfigureAwait(false);
 			}
-			catch (Exception ex)
+			finally
 			{
-				errors.Add(ex);
+				ShutdownCts.Dispose();
 			}
-			ShutdownCts.Dispose();
-		}
-		if (errors.Count == 0)
-		{
-			completion.TrySetResult();
-		}
-		else
-		{
-			completion.TrySetException(errors);
 		}
 	}
 }

@@ -15,48 +15,6 @@ namespace WalletWasabi.Tests.UnitTests.Wallets;
 /// </summary>
 public class SpecificNodeBlockProviderTests
 {
-	[Fact]
-	public async Task CallerCancellationStopsBlockDownloadAsync()
-	{
-		using CancellationTokenSource callerCts = new();
-		using CancellationTokenSource nodeDisconnectedCts = new();
-		TaskCompletionSource connected = new(TaskCreationOptions.RunContinuationsAsynchronously);
-		TaskCompletionSource downloadStarted = new(TaskCreationOptions.RunContinuationsAsynchronously);
-		TaskCompletionSource<Block> releaseDownload = new(TaskCreationOptions.RunContinuationsAsynchronously);
-		CancellationToken downloadToken = default;
-		Mock<ConnectedNode> node = new(MockBehavior.Strict, nodeDisconnectedCts) { CallBase = true };
-		node.Setup(x => x.WaitUntilDisconnectedAsync(It.IsAny<CancellationToken>()))
-			.Callback(() => connected.TrySetResult())
-			.CallBase();
-		node.Setup(x => x.ToString()).CallBase();
-		node.Setup(x => x.DownloadBlockAsync(It.IsAny<uint256>(), It.IsAny<CancellationToken>()))
-			.Returns((uint256 _, CancellationToken cancellationToken) =>
-			{
-				downloadToken = cancellationToken;
-				downloadStarted.TrySetResult();
-				return releaseDownload.Task.WaitAsync(cancellationToken);
-			});
-		ServiceConfiguration configuration = new(new IPEndPoint(IPAddress.Loopback, 44444), Money.Satoshis(1000));
-		Mock<SpecificNodeBlockProvider> providerMock = new(MockBehavior.Strict, Network.RegTest, configuration, null!) { CallBase = true };
-		providerMock.Setup(x => x.ConnectAsync(It.IsAny<CancellationToken>())).ReturnsAsync(node.Object);
-		await using SpecificNodeBlockProvider provider = providerMock.Object;
-		await connected.Task.WaitAsync(TimeSpan.FromSeconds(5));
-
-		var request = provider.TryGetBlockAsync(uint256.One, callerCts.Token);
-		try
-		{
-			await downloadStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
-			callerCts.Cancel();
-			Assert.True(downloadToken.IsCancellationRequested);
-			Assert.Null(await request.WaitAsync(TimeSpan.FromSeconds(5)));
-		}
-		finally
-		{
-			releaseDownload.TrySetResult(Network.RegTest.GetGenesis());
-			await request.WaitAsync(TimeSpan.FromSeconds(5));
-		}
-	}
-
 	/// <summary>
 	/// No Bitcoin Core node to connect to. No block should be provided by <see cref="SpecificNodeBlockProvider.TryGetBlockAsync(uint256, CancellationToken)"/>.
 	/// </summary>
@@ -76,7 +34,7 @@ public class SpecificNodeBlockProviderTests
 	}
 
 	/// <summary>
-	/// Simulates successful connection to a block providing node, obtaining a block and then simulating that the node got disconnected.
+	/// Simulates a successful block download and cancellation of the next download.
 	/// </summary>
 	[Fact]
 	public async Task GetValidBlockAsync()
@@ -100,9 +58,15 @@ public class SpecificNodeBlockProviderTests
 		mockNode.Setup(c => c.ToString())
 			.CallBase();
 
-		mockNode.SetupSequence(c => c.DownloadBlockAsync(It.IsAny<uint256>(), It.IsAny<CancellationToken>()))
-			.ReturnsAsync(validBlock)
-			.Throws(new OperationCanceledException("Got disconnected"));
+		int downloads = 0;
+		CancellationToken downloadToken = default;
+		TaskCompletionSource<Block> releaseDownload = new(TaskCreationOptions.RunContinuationsAsynchronously);
+		mockNode.Setup(c => c.DownloadBlockAsync(It.IsAny<uint256>(), It.IsAny<CancellationToken>()))
+			.Returns((uint256 _, CancellationToken cancellationToken) =>
+			{
+				downloadToken = cancellationToken;
+				return ++downloads == 1 ? Task.FromResult(validBlock) : releaseDownload.Task.WaitAsync(cancellationToken);
+			});
 
 		// Mock the provider.
 		Mock<SpecificNodeBlockProvider> mockProvider = new(MockBehavior.Strict, network, serviceConfiguration, /* torEndPoint */ null!) { CallBase = true };
@@ -120,9 +84,19 @@ public class SpecificNodeBlockProviderTests
 		Assert.NotNull(actualBlock);
 		Assert.Same(validBlock, actualBlock);
 
-		// Now the peer should be disconnected but even as such the return value should be null.
-		actualBlock = await provider.TryGetBlockAsync(uint256.One, testDeadlineCts.Token);
-		Assert.Null(actualBlock);
+		// Caller cancellation must reach an already running node download.
+		var request = provider.TryGetBlockAsync(uint256.One, testDeadlineCts.Token);
+		testDeadlineCts.Cancel();
+		try
+		{
+			Assert.True(downloadToken.IsCancellationRequested);
+			Assert.Null(await request.WaitAsync(TimeSpan.FromSeconds(5)));
+		}
+		finally
+		{
+			releaseDownload.TrySetResult(validBlock);
+			await request.WaitAsync(TimeSpan.FromSeconds(5));
+		}
 	}
 
 	private static string GetRawBlock()

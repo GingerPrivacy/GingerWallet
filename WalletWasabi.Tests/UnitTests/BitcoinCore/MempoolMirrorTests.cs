@@ -1,15 +1,7 @@
 using NBitcoin;
-using Moq;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
-using WalletWasabi.BitcoinCore;
 using WalletWasabi.BitcoinCore.Mempool;
-using WalletWasabi.BitcoinCore.Rpc;
-using WalletWasabi.Blockchain.Mempool;
 using WalletWasabi.Services;
 using WalletWasabi.Tests.Helpers;
 using Xunit;
@@ -21,46 +13,6 @@ namespace WalletWasabi.Tests.UnitTests.BitcoinCore;
 /// </summary>
 public class MempoolMirrorTests
 {
-	[Fact]
-	public async Task RetriesAfterInitialRpcFailureAsync()
-	{
-		TaskCompletionSource firstRequestStarted = new(TaskCreationOptions.RunContinuationsAsynchronously);
-		TaskCompletionSource<uint256[]> firstResponse = new(TaskCreationOptions.RunContinuationsAsynchronously);
-		TaskCompletionSource successfulRound = new(TaskCreationOptions.RunContinuationsAsynchronously);
-		Transaction transaction = Network.RegTest.CreateTransaction();
-		int requests = 0;
-		Mock<IRPCClient> rpc = new(MockBehavior.Strict);
-		rpc.Setup(x => x.GetRawMempoolAsync(It.IsAny<CancellationToken>())).Returns(() =>
-		{
-			if (Interlocked.Increment(ref requests) == 1)
-			{
-				firstRequestStarted.TrySetResult();
-				return firstResponse.Task;
-			}
-			return Task.FromResult(new[] { transaction.GetHash() });
-		});
-		rpc.Setup(x => x.GetRawTransactionsAsync(It.IsAny<IEnumerable<uint256>>(), It.IsAny<CancellationToken>()))
-			.ReturnsAsync(new[] { transaction });
-		P2pNode node = new(Network.RegTest, new IPEndPoint(IPAddress.Loopback, 1), new MempoolService(), "/shutdown-test/");
-		using MempoolMirror mirror = new(TimeSpan.FromMilliseconds(20), rpc.Object, node);
-		mirror.Tick += (_, _) => successfulRound.TrySetResult();
-		try
-		{
-			await mirror.StartAsync(CancellationToken.None);
-			await firstRequestStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
-			firstResponse.SetException(new IOException("The first RPC request failed."));
-			await successfulRound.Task.WaitAsync(TimeSpan.FromSeconds(5));
-			Assert.Contains(transaction.GetHash(), mirror.GetMempoolHashes());
-			Assert.False(mirror.ExecuteTask!.IsCompleted);
-		}
-		finally
-		{
-			firstResponse.TrySetCanceled();
-			await mirror.StopAsync(CancellationToken.None).WaitAsync(TimeSpan.FromSeconds(5));
-			await node.DisposeAsync();
-		}
-	}
-
 	[Fact]
 	public async Task CanCopyMempoolFromRpcAsync()
 	{

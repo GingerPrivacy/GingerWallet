@@ -24,24 +24,25 @@ public class MempoolMirror : PeriodicRunner
 	private P2pNode Node { get; }
 	private Mempool Mempool { get; set; } = new();
 	private object MempoolLock { get; } = new();
-	private bool InitialSnapshotCopied { get; set; }
 
 	public override Task StartAsync(CancellationToken cancellationToken)
 	{
-		InitialSnapshotCopied = false;
 		Node.MempoolService.TransactionReceived += MempoolService_TransactionReceived;
 		return base.StartAsync(cancellationToken);
 	}
 
-	protected override async Task ActionAsync(CancellationToken cancel)
+	protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 	{
 		var sw = Stopwatch.StartNew();
-		int added = await MirrorMempoolAsync(cancel).ConfigureAwait(false);
-		if (!InitialSnapshotCopied)
-		{
-			InitialSnapshotCopied = true;
-			Logger.LogInfo($"{added} transactions were copied from the full node to the in-memory mempool within {sw.Elapsed.TotalSeconds} seconds.");
-		}
+		int added = await MirrorMempoolAsync(stoppingToken).ConfigureAwait(false);
+		Logger.LogInfo($"{added} transactions were copied from the full node to the in-memory mempool within {sw.Elapsed.TotalSeconds} seconds.");
+
+		await base.ExecuteAsync(stoppingToken).ConfigureAwait(false);
+	}
+
+	protected override async Task ActionAsync(CancellationToken cancel)
+	{
+		await MirrorMempoolAsync(cancel).ConfigureAwait(false);
 	}
 
 	public override Task StopAsync(CancellationToken cancellationToken)

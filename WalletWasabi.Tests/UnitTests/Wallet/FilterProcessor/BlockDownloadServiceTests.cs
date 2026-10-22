@@ -26,27 +26,17 @@ public class BlockDownloadServiceTests
 		TaskCompletionSource cancellationObserved = new(TaskCreationOptions.RunContinuationsAsynchronously);
 		TaskCompletionSource releaseDownload = new(TaskCreationOptions.RunContinuationsAsynchronously);
 		Mock<IFileSystemBlockRepository> repository = new(MockBehavior.Strict);
-		repository.Setup(x => x.TryGetAsync(It.IsAny<uint256>(), It.IsAny<CancellationToken>())).ReturnsAsync((Block?)null);
-		Mock<IBlockProvider> provider = new(MockBehavior.Strict);
-		provider.Setup(x => x.TryGetBlockAsync(It.IsAny<uint256>(), It.IsAny<CancellationToken>()))
+		repository.Setup(x => x.TryGetAsync(It.IsAny<uint256>(), It.IsAny<CancellationToken>()))
 			.Returns(async (uint256 _, CancellationToken cancellationToken) =>
 			{
+				using var registration = cancellationToken.Register(() => cancellationObserved.TrySetResult());
 				downloadStarted.TrySetResult();
-				try
-				{
-					await Task.Delay(Timeout.Infinite, cancellationToken);
-					return null;
-				}
-				catch (OperationCanceledException)
-				{
-					cancellationObserved.TrySetResult();
-					// Cancellation can require asynchronous provider cleanup.
-					await releaseDownload.Task;
-					throw;
-				}
+				await releaseDownload.Task;
+				cancellationToken.ThrowIfCancellationRequested();
+				return null;
 			});
 
-		using BlockDownloadService service = new(repository.Object, [provider.Object], p2pBlockProvider: null, maximumParallelTasks: 2);
+		using BlockDownloadService service = new(repository.Object, [], p2pBlockProvider: null, maximumParallelTasks: 2);
 		await service.StartAsync(CancellationToken.None);
 		var request = service.TryGetBlockAsync(TrustedFullNodeSourceRequest.Instance, uint256.One, new Priority(1), CancellationToken.None);
 		await downloadStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));

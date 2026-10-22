@@ -32,33 +32,24 @@ public class P2pReconnector : PeriodicRunner
 
 	public async Task StartAndAwaitReconnectionAsync(CancellationToken cancel)
 	{
-		using (await ReconnectionLock.LockAsync(cancel).ConfigureAwait(false))
+		using var reconnection = await ReconnectionLock.LockAsync(cancel).ConfigureAwait(false);
+		Success = new(TaskCreationOptions.RunContinuationsAsynchronously);
+		try
 		{
-			Success = new(TaskCreationOptions.RunContinuationsAsynchronously);
+			await StartAsync(cancel).ConfigureAwait(false);
+			await Success.Task.WaitAsync(cancel).ConfigureAwait(false);
+		}
+		finally
+		{
 			try
 			{
-				await StartAsync(cancel).ConfigureAwait(false);
-				await Success.Task.WaitAsync(cancel).ConfigureAwait(false);
+				using var cts = new CancellationTokenSource(Period * 2);
+				await StopAsync(cts.Token).ConfigureAwait(false);
 			}
-			finally
+			catch (Exception ex)
 			{
-				try
-				{
-					using var cts = new CancellationTokenSource(Period * 2);
-					await StopAsync(cts.Token).ConfigureAwait(false);
-				}
-				catch (Exception ex)
-				{
-					Logger.LogError(ex);
-				}
+				Logger.LogError(ex);
 			}
 		}
-	}
-
-	public override async Task StopAsync(CancellationToken cancellationToken)
-	{
-		Task stop = base.StopAsync(cancellationToken);
-		Success.TrySetCanceled(CancellationToken.None);
-		await stop.ConfigureAwait(false);
 	}
 }

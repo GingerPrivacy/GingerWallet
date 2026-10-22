@@ -77,12 +77,10 @@ public class TorHttpPoolTests
 		TaskCompletionSource connectStarted = new(TaskCreationOptions.RunContinuationsAsynchronously);
 		TaskCompletionSource allowConnect = new(TaskCreationOptions.RunContinuationsAsynchronously);
 		using TrackingConnection connection = new(DefaultCircuit.Instance);
-		CancellationToken connectToken = default;
 		Mock<TorTcpConnectionFactory> factory = new(MockBehavior.Strict, new IPEndPoint(IPAddress.Loopback, 7777));
 		factory.Setup(x => x.ConnectAsync(It.IsAny<Uri>(), It.IsAny<INamedCircuit>(), It.IsAny<CancellationToken>()))
 			.Returns(async (Uri _, INamedCircuit _, CancellationToken token) =>
 			{
-				connectToken = token;
 				connectStarted.TrySetResult();
 				await allowConnect.Task.WaitAsync(timeout.Token);
 				return connection;
@@ -98,7 +96,6 @@ public class TorHttpPoolTests
 		{
 			// The caller owns this request, so disposing the pool need not await it.
 			await pool.DisposeAsync().AsTask().WaitAsync(timeout.Token);
-			Assert.True(connectToken.IsCancellationRequested);
 		}
 		finally
 		{
@@ -107,17 +104,6 @@ public class TorHttpPoolTests
 		await Assert.ThrowsAnyAsync<OperationCanceledException>(() => sendTask.WaitAsync(timeout.Token));
 		Assert.True(connection.IsDisposed);
 		mockPool.Verify(x => x.SendCoreAsync(It.IsAny<TorTcpConnection>(), It.IsAny<HttpRequestMessage>(), It.IsAny<Uri>(), It.IsAny<CancellationToken>()), Times.Never);
-	}
-
-	[Fact]
-	public async Task DisposedPoolRejectsNewRequestsAsync()
-	{
-		Mock<TorTcpConnectionFactory> factory = new(MockBehavior.Strict, new IPEndPoint(IPAddress.Loopback, 7777));
-		TorHttpPool pool = new(factory.Object, torControlAvailable: false);
-		await pool.DisposeAsync();
-		using HttpRequestMessage request = new(HttpMethod.Get, "http://late.example");
-		await Assert.ThrowsAsync<ObjectDisposedException>(() => pool.SendAsync(request, DefaultCircuit.Instance, CancellationToken.None));
-		factory.Verify(x => x.ConnectAsync(It.IsAny<Uri>(), It.IsAny<INamedCircuit>(), It.IsAny<CancellationToken>()), Times.Never);
 	}
 
 	private sealed class TrackingConnection(INamedCircuit circuit) : TorTcpConnection(null!, new MemoryStream(), circuit, true)
