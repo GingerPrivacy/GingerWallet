@@ -2,6 +2,7 @@ using NBitcoin;
 using WabiSabi.Crypto;
 using WabiSabi.Crypto.Randomness;
 using WalletWasabi.WabiSabi.Backend.Rounds;
+using WalletWasabi.WabiSabi.Client;
 using WalletWasabi.WabiSabi.Models.MultipartyTransaction;
 using CredentialIssuerParameters = WabiSabi.Crypto.CredentialIssuerParameters;
 
@@ -53,9 +54,9 @@ public record RoundState(uint256 Id,
 			_ => throw new InvalidOperationException($"{typeof(TState).Name} state was expected but {CoinjoinState.GetType().Name} state was received.")
 		};
 
-	public WabiSabiClient CreateAmountCredentialClient(WasabiRandom random) =>
+	public CredentialClient CreateAmountCredentialClient(WasabiRandom random) =>
 		new(AmountCredentialIssuerParameters, random, ProtocolConstants.MaxAmountCredentialValue);
 
-	public WabiSabiClient CreateVsizeCredentialClient(WasabiRandom random) =>
+	public CredentialClient CreateVsizeCredentialClient(WasabiRandom random) =>
 		new(VsizeCredentialIssuerParameters, random, CoinjoinState.Parameters.MaxVsizeCredentialValue);
 }

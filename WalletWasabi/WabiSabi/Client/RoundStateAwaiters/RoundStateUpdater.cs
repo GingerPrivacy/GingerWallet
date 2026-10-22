@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WabiSabi.Crypto.Randomness;
 using WalletWasabi.Bases;
+using WalletWasabi.Extensions;
 using WalletWasabi.WabiSabi.Backend.PostRequests;
 using WalletWasabi.WabiSabi.Backend.Rounds;
 using WalletWasabi.WabiSabi.Client.CoinJoin.Client;

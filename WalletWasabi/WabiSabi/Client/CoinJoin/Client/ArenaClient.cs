@@ -16,8 +16,8 @@ namespace WalletWasabi.WabiSabi.Client.CoinJoin.Client;
 public class ArenaClient
 {
 	public ArenaClient(
-		WabiSabiClient amountCredentialClient,
-		WabiSabiClient vsizeCredentialClient,
+		CredentialClient amountCredentialClient,
+		CredentialClient vsizeCredentialClient,
 		string coordinatorIdentifier,
 		IWabiSabiApiRequestHandler requestHandler)
 	{
@@ -27,8 +27,8 @@ public class ArenaClient
 		RequestHandler = requestHandler;
 	}
 
-	public WabiSabiClient AmountCredentialClient { get; }
-	public WabiSabiClient VsizeCredentialClient { get; }
+	public CredentialClient AmountCredentialClient { get; }
+	public CredentialClient VsizeCredentialClient { get; }
 	public string CoordinatorIdentifier { get; }
 	public IWabiSabiApiRequestHandler RequestHandler { get; }
 
@@ -38,6 +38,7 @@ public class ArenaClient
 		OwnershipProof ownershipProof,
 		CancellationToken cancellationToken)
 	{
+		cancellationToken.ThrowIfCancellationRequested();
 		var zeroAmountCredentialRequestData = AmountCredentialClient.CreateRequestForZeroAmount();
 		var zeroVsizeCredentialRequestData = VsizeCredentialClient.CreateRequestForZeroAmount();
 
@@ -68,6 +69,7 @@ public class ArenaClient
 		IEnumerable<Credential> vsizeCredentialsToPresent,
 		CancellationToken cancellationToken)
 	{
+		cancellationToken.ThrowIfCancellationRequested();
 		Guard.InRange(nameof(amountCredentialsToPresent), amountCredentialsToPresent, 0, AmountCredentialClient.NumberOfCredentials);
 		Guard.InRange(nameof(vsizeCredentialsToPresent), vsizeCredentialsToPresent, 0, VsizeCredentialClient.NumberOfCredentials);
 
@@ -98,6 +100,7 @@ public class ArenaClient
 		IEnumerable<Credential> vsizeCredentialsToPresent,
 		CancellationToken cancellationToken)
 	{
+		cancellationToken.ThrowIfCancellationRequested();
 		Guard.InRange(nameof(amountCredentialsToPresent), amountCredentialsToPresent, 0, AmountCredentialClient.NumberOfCredentials);
 
 		var presentedAmount = amountCredentialsToPresent.Sum(x => x.Value);
@@ -151,6 +154,7 @@ public class ArenaClient
 		IEnumerable<Credential> vsizeCredentialsToPresent,
 		CancellationToken cancellationToken)
 	{
+		cancellationToken.ThrowIfCancellationRequested();
 		Guard.InRange(nameof(amountsToRequest), amountsToRequest, 1, ProtocolConstants.CredentialNumber);
 		Guard.InRange(nameof(amountCredentialsToPresent), amountCredentialsToPresent, 0, ProtocolConstants.CredentialNumber);
 		Guard.InRange(nameof(vsizeCredentialsToPresent), vsizeCredentialsToPresent, 0, ProtocolConstants.CredentialNumber);

@@ -1,5 +1,6 @@
 using System.Threading;
 using WalletWasabi.Crypto.Randomness;
+using WalletWasabi.Extensions;
 using WalletWasabi.Helpers;
 
 namespace WalletWasabi.Tor.Socks5.Pool.Circuits;

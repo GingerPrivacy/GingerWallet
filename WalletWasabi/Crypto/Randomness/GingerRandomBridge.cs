@@ -22,7 +22,7 @@ public class GingerRandomBridge : WasabiRandom
 		_random.GetBytes(output);
 	}
 
-	public override int GetInt(int fromInclusive, int toExclusive)
+	public int GetInt(int fromInclusive, int toExclusive)
 	{
 		return _random.GetInt(fromInclusive, toExclusive);
 	}

@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using WalletWasabi.Crypto;
 using WalletWasabi.Crypto.Randomness;
+using WalletWasabi.Extensions;
 using WalletWasabi.Helpers;
 
 namespace WalletWasabi.Wallets;

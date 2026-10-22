@@ -34,6 +34,18 @@ public class ArenaClientTests
 	public MempoolMirror DummyMempoolMirror { get; } = new(TimeSpan.Zero, null!, null!);
 
 	[Fact]
+	public async Task CanceledRequestsSkipCredentialGenerationAsync()
+	{
+		var client = new ArenaClient(null!, null!, "coordinator", null!);
+		var cancellationToken = new CancellationToken(canceled: true);
+
+		await Assert.ThrowsAnyAsync<OperationCanceledException>(() => client.RegisterInputAsync(uint256.Zero, null!, null!, cancellationToken));
+		await Assert.ThrowsAnyAsync<OperationCanceledException>(() => client.ConfirmConnectionAsync(uint256.Zero, Guid.Empty, [], [], [], [], cancellationToken));
+		await Assert.ThrowsAnyAsync<OperationCanceledException>(() => client.ReissueCredentialAsync(uint256.Zero, [], [], [], [], cancellationToken));
+		await Assert.ThrowsAnyAsync<OperationCanceledException>(() => client.RegisterOutputAsync(uint256.Zero, null!, [], [], cancellationToken));
+	}
+
+	[Fact]
 	public async Task FullP2wpkhCoinjoinTestAsync()
 	{
 		await TestFullCoinjoinAsync(ScriptPubKeyType.Segwit, Constants.P2wpkhInputVirtualSize);
@@ -107,8 +119,8 @@ public class ArenaClientTests
 		using CoinJoinMempoolManager coinJoinMempoolManager = new(new CoinJoinIdStore(), DummyMempoolMirror);
 		var wabiSabiApi = new WabiSabiController(idempotencyRequestCache, arena, coinJoinFeeRateStatStore, coinJoinMempoolManager);
 
-		var amountClient = new WabiSabiClient(round.AmountCredentialIssuerParameters, TestRandom.Wasabi(1), ProtocolConstants.MaxAmountCredentialValue);
-		var vsizeClient = new WabiSabiClient(round.VsizeCredentialIssuerParameters, TestRandom.Wasabi(2), 2000L);
+		var amountClient = new CredentialClient(round.AmountCredentialIssuerParameters, TestRandom.Wasabi(1), ProtocolConstants.MaxAmountCredentialValue);
+		var vsizeClient = new CredentialClient(round.VsizeCredentialIssuerParameters, TestRandom.Wasabi(2), 2000L);
 		var apiClient = new ArenaClient(amountClient, vsizeClient, config.CoordinatorIdentifier, wabiSabiApi);
 
 		round.SetPhase(Phase.TransactionSigning);

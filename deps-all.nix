@@ -157,7 +157,7 @@
   (fetchNuGet { pname = "System.Text.Encoding.CodePages"; version = "7.0.0"; hash = "sha256-eCKTVwumD051ZEcoJcDVRGnIGAsEvKpfH3ydKluHxmo="; })
   (fetchNuGet { pname = "System.Threading.Tasks.Extensions"; version = "4.5.4"; hash = "sha256-owSpY8wHlsUXn5xrfYAiu847L6fAKethlvYx97Ri1ng="; })
   (fetchNuGet { pname = "Tmds.DBus.Protocol"; version = "0.21.3"; hash = "sha256-HVEIHSeSe29ergHxsNvWYu3o7Ai8VZKo09yFn+miTnI="; })
-  (fetchNuGet { pname = "WabiSabi"; version = "1.0.1.2"; hash = "sha256-Gx+tuXraMABak8s0SeofbXpNLVfTnxz4At4+HejnQeU="; })
+  (fetchNuGet { pname = "WabiSabi"; version = "1.4.3"; hash = "sha256-kTp7O4fYDPxb1r8jjDjytnykzx5bb6b3z789zI3CqY4="; })
   (fetchNuGet { pname = "xunit"; version = "2.9.3"; hash = "sha256-BPrpSbjlIB7PoH+ocCusqMDrMZgRQZSzeTeJzHK/I9c="; })
   (fetchNuGet { pname = "xunit.abstractions"; version = "2.0.3"; hash = "sha256-0D1y/C34iARI96gb3bAOG8tcGPMjx+fMabTPpydGlAM="; })
   (fetchNuGet { pname = "xunit.analyzers"; version = "1.18.0"; hash = "sha256-DOgamLnfi9Ua5IDm3JVm9MaOFbSSbmq5l8j2NPO3qd0="; })
