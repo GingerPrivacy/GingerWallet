@@ -2,6 +2,7 @@
 # Package identities and hashes from the Nix fetch-deps helper.
 
 { fetchNuGet }: [
+  (fetchNuGet { pname = "CoinSelection"; version = "0.2.0"; hash = "sha256-AuRkctN/evl9ZBrlZO/YqaHMCTIMBj6okkz8kM3MHaI="; })
   (fetchNuGet { pname = "LibChaCha20"; version = "1.0.1"; hash = "sha256-5kuzrI/kpMfj7TO+wo1CkMiBzE8UPNKQb+cZSZzX7Y4="; })
   (fetchNuGet { pname = "LinqKit.Core"; version = "1.2.5"; hash = "sha256-0z4RpAt+WvydeCN0GJu4vsMfCxzxmoi+LTE6fQ51NZY="; })
   (fetchNuGet { pname = "Microsoft.AspNetCore.JsonPatch"; version = "10.0.13"; hash = "sha256-8NGCu/6bEQ6FTzdy1Fim4vfdAsIe/DTOStaVEDyrR/M="; })

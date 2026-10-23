@@ -224,6 +224,7 @@
       "walletwasabi": {
         "type": "Project",
         "dependencies": {
+          "CoinSelection": "[0.2.0, )",
           "GingerCommon": "[1.0.0, )",
           "Microsoft.AspNetCore.WebUtilities": "[10.0.13, )",
           "Microsoft.Data.Sqlite": "[10.0.13, )",
@@ -236,6 +237,12 @@
           "SQLitePCLRaw.bundle_e_sqlite3": "[3.0.5, )",
           "WabiSabi": "[1.4.3, )"
         }
+      },
+      "CoinSelection": {
+        "type": "CentralTransitive",
+        "requested": "[0.2.0, )",
+        "resolved": "0.2.0",
+        "contentHash": "eMOsq9I8MCLfQNuVakOAhGyU+6iQDDnReYJiGRUw3FnptYpxrDvczDjLxDCx+/A7CXxlvGAu423iYIk4bxbuTg=="
       },
       "Microsoft.AspNetCore.WebUtilities": {
         "type": "CentralTransitive",

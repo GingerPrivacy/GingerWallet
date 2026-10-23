@@ -34,6 +34,7 @@
   (fetchNuGet { pname = "Avalonia.Xaml.Interactions.Responsive"; version = "11.0.5"; hash = "sha256-TfcYEdLMxYffBcBzcyoKWESrQltozigJKx+CLNCMz08="; })
   (fetchNuGet { pname = "Avalonia.Xaml.Interactivity"; version = "11.0.5"; hash = "sha256-nNoI2rxJBFuYs1lg3O3rXeigJWoGjzGWdU8jsWGz7+4="; })
   (fetchNuGet { pname = "Castle.Core"; version = "5.2.1"; hash = "sha256-uNe//PCnYGLhxxQpLDyTQuoIH5u7dGDlyjc2wqAQ4D4="; })
+  (fetchNuGet { pname = "CoinSelection"; version = "0.2.0"; hash = "sha256-AuRkctN/evl9ZBrlZO/YqaHMCTIMBj6okkz8kM3MHaI="; })
   (fetchNuGet { pname = "ColorDocument.Avalonia"; version = "11.0.3"; hash = "sha256-UwpiqZliSImUmmXhyyMvEw/wyFy3tRjfa++QEeKROC0="; })
   (fetchNuGet { pname = "ColorTextBlock.Avalonia"; version = "11.0.3"; hash = "sha256-UTCnQOf3y22H2aZeot0k+1VNyJIoxoUI3CYAkdVw2LU="; })
   (fetchNuGet { pname = "DynamicData"; version = "8.4.1"; hash = "sha256-r+haH5VlmZFJTEJ3UedsYybw+oddn/CSvfm6x7PrrQ4="; })
