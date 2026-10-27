@@ -103,6 +103,20 @@ public class TransactionProcessor
 		}
 
 		uint256 txId = tx.GetHash();
+		IReadOnlyList<SmartCoin> myInputs = Coins.GetMyInputs(tx);
+
+		// Unconfirmed transactions received through the mempool are not authenticated by their
+		// source. Before they can replace a transaction in our wallet history, verify the
+		// signatures spending our coins. Otherwise a peer can replace an outgoing transaction
+		// with one that has different outputs but retains the original, invalid signatures.
+		var isKnownBroadcast = MempoolService?.TryGetFromBroadcastStore(txId, out _) is true;
+		if (!tx.Confirmed && MempoolService is not null && !isKnownBroadcast && myInputs.Count != 0 && !HasValidWalletInputSignatures(tx, myInputs))
+		{
+			// A different witness can have the same txid. Allow it to be received later.
+			Aware.Remove(txId);
+			MempoolService.Forget(txId);
+			return result;
+		}
 
 		// If we already have the transaction, then let's work on that.
 		if (MempoolService?.TryGetFromBroadcastStore(txId, out var foundEntry) is true)
@@ -199,7 +213,6 @@ public class TransactionProcessor
 			}
 		}
 
-		IReadOnlyList<SmartCoin> myInputs = Coins.GetMyInputs(tx);
 		List<(uint Index, TxOut Output, HdPubKey PubKey)> myOutputs = new();
 		for (var i = 0U; i < tx.Transaction.Outputs.Count; i++)
 		{
@@ -309,6 +322,37 @@ public class TransactionProcessor
 		BlockchainAnalyzer.Analyze(result.Transaction);
 
 		return result;
+	}
+
+	private static bool HasValidWalletInputSignatures(SmartTransaction transaction, IReadOnlyList<SmartCoin> walletInputs)
+	{
+		if (walletInputs.Any(x => x.ScriptType == ScriptType.Taproot))
+		{
+			var coinsByOutPoint = walletInputs.ToDictionary(x => x.Outpoint, x => x.Coin);
+			if (transaction.Transaction.Inputs.Any(x => !coinsByOutPoint.ContainsKey(x.PrevOut)))
+			{
+				// Taproot signatures commit to every previous output. The transaction cannot
+				// be verified safely unless all of them are known.
+				return false;
+			}
+
+			var coins = transaction.Transaction.Inputs.Select(x => coinsByOutPoint[x.PrevOut]).ToArray();
+			var precomputedTransactionData = transaction.Transaction.PrecomputeTransactionData(coins);
+			return transaction.Transaction.Inputs.AsIndexedInputs()
+				.Select((input, index) => input.VerifyScript(coins[index], ScriptVerify.Standard, precomputedTransactionData, out _))
+				.All(x => x);
+		}
+
+		foreach (var indexedInput in transaction.Transaction.Inputs.AsIndexedInputs())
+		{
+			var walletInput = walletInputs.FirstOrDefault(x => x.Outpoint == indexedInput.PrevOut);
+			if (walletInput is not null && !indexedInput.VerifyScript(walletInput.Coin, ScriptVerify.Standard, out _))
+			{
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private bool CanBeConsideredDustAttack(TxOut output, HdPubKey hdPubKey, bool weAreAmongTheSender) =>
