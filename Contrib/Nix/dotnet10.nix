@@ -52,4 +52,3 @@ in rec {
     aspnetcore = aspnetcore_10_0;
   };
 }
-
