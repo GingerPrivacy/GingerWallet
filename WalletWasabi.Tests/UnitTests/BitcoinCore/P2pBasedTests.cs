@@ -26,8 +26,6 @@ public class P2pBasedTests
 	{
 		CoreNode coreNode = await TestNodeBuilder.CreateAsync();
 
-		using var node = await coreNode.CreateNewP2pNodeAsync();
-
 		try
 		{
 			string dir = coreNode.DataDir;
@@ -49,6 +47,7 @@ public class P2pBasedTests
 
 			await rpc.GenerateAsync(blockCount: 101);
 
+			using var node = await coreNode.CreateNewP2pNodeAsync();
 			node.Behaviors.Add(bitcoinStore.CreateUntrustedP2pBehavior());
 			node.VersionHandshake();
 
@@ -85,7 +84,6 @@ public class P2pBasedTests
 		}
 		finally
 		{
-			node.Disconnect();
 			await coreNode.TryStopAsync(true, 2);
 		}
 	}
