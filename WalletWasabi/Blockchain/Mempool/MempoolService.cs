@@ -25,6 +25,7 @@ public class MempoolService
 
 	/// <remarks>Guarded by <see cref="ProcessedLock"/>.</remarks>
 	private HashSet<uint256> ProcessedTransactionHashes { get; } = new();
+	private Dictionary<uint256, Queue<Transaction>> TransactionsInFlight { get; } = new();
 
 	/// <summary>Guards <see cref="ProcessedTransactionHashes"/>.</summary>
 	private object ProcessedLock { get; } = new();
@@ -143,30 +144,70 @@ public class MempoolService
 	{
 		lock (ProcessedLock)
 		{
-			return ProcessedTransactionHashes.Contains(txid);
+			return ProcessedTransactionHashes.Contains(txid) && !TransactionsInFlight.ContainsKey(txid);
+		}
+	}
+
+	internal void Forget(uint256 txid)
+	{
+		lock (ProcessedLock)
+		{
+			ProcessedTransactionHashes.Remove(txid);
 		}
 	}
 
 	public void Process(Transaction tx)
 	{
-		SmartTransaction? txAdded = null;
+		var txid = tx.GetHash();
+		var inFlight = new Queue<Transaction>();
 
 		lock (ProcessedLock)
 		{
-			if (ProcessedTransactionHashes.Add(tx.GetHash()))
+			if (TransactionsInFlight.TryGetValue(txid, out var waiting))
 			{
-				txAdded = new SmartTransaction(tx, Height.Mempool, labels: TryGetLabel(tx.GetHash()));
+				// Keep distinct witness variants arriving while the first one is being checked.
+				if (waiting.Count < 16 && !waiting.Any(x => x.GetWitHash() == tx.GetWitHash()))
+				{
+					waiting.Enqueue(tx);
+				}
+				return;
 			}
-			else
+			if (!ProcessedTransactionHashes.Add(txid))
 			{
 				Interlocked.Increment(ref _duplicatedReceives);
+				Interlocked.Increment(ref _totalReceives);
+				return;
 			}
+			TransactionsInFlight.Add(txid, inFlight);
 			Interlocked.Increment(ref _totalReceives);
 		}
 
-		if (txAdded is { })
+		try
 		{
-			TransactionReceived?.Invoke(this, txAdded);
+			while (true)
+			{
+				TransactionReceived?.Invoke(this, new SmartTransaction(tx, Height.Mempool, labels: TryGetLabel(txid)));
+				lock (ProcessedLock)
+				{
+					var waiting = TransactionsInFlight[txid];
+					if (ProcessedTransactionHashes.Contains(txid) || !waiting.TryDequeue(out tx!))
+					{
+						TransactionsInFlight.Remove(txid);
+						return;
+					}
+					ProcessedTransactionHashes.Add(txid);
+				}
+			}
+		}
+		finally
+		{
+			lock (ProcessedLock)
+			{
+				if (TransactionsInFlight.TryGetValue(txid, out var current) && ReferenceEquals(current, inFlight))
+				{
+					TransactionsInFlight.Remove(txid);
+				}
+			}
 		}
 	}
 

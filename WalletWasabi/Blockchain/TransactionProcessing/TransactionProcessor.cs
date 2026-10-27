@@ -29,12 +29,52 @@ public class TransactionProcessor
 	}
 
 	public event EventHandler<ProcessedResult>? WalletRelevantTransactionProcessed;
+	public event EventHandler<ProcessedResult>? PreviousTransactionsRequired;
 
 	/// <remarks>Intentionally, <c>static</c> to avoid modifying smart transactions from multiple threads.</remarks>
 	public static object Lock { get; } = new();
 
 	public AllTransactionStore TransactionStore { get; }
 	private HashSet<uint256> Aware { get; } = new();
+	private Dictionary<uint256, uint256> Deferred { get; } = new();
+	private Dictionary<uint256, List<SmartTransaction>> DeferredChildren { get; } = new();
+
+	public bool HasDeferredTransactions { get { lock (Lock) { return Deferred.Count != 0; } } }
+
+	internal IReadOnlyList<SmartTransaction> CompleteDeferred(uint256 witnessHash, bool accepted)
+	{
+		lock (Lock)
+		{
+			if (!Deferred.Remove(witnessHash, out var txid))
+			{
+				return Array.Empty<SmartTransaction>();
+			}
+			if (!accepted && Deferred.Values.Contains(txid))
+			{
+				return Array.Empty<SmartTransaction>();
+			}
+			if (accepted)
+			{
+				foreach (var duplicate in Deferred.Where(x => x.Value == txid).Select(x => x.Key).ToArray())
+				{
+					Deferred.Remove(duplicate);
+				}
+			}
+			if (!DeferredChildren.Remove(txid, out var children))
+			{
+				return Array.Empty<SmartTransaction>();
+			}
+			if (!accepted)
+			{
+				foreach (var child in children)
+				{
+					CompleteDeferred(child.Transaction.GetWitHash(), false);
+				}
+				return Array.Empty<SmartTransaction>();
+			}
+			return children;
+		}
+	}
 
 	public KeyManager KeyManager { get; }
 
@@ -46,18 +86,30 @@ public class TransactionProcessor
 	public IEnumerable<ProcessedResult> Process(IEnumerable<SmartTransaction> txs)
 	{
 		var rets = new List<ProcessedResult>();
+		var transactions = txs.ToArray();
 
 		lock (Lock)
 		{
-			foreach (var tx in txs)
+			for (var i = 0; i < transactions.Length; i++)
 			{
-				rets.Add(ProcessNoLock(tx));
+				var result = ProcessNoLock(transactions[i]);
+				rets.Add(result);
+				if (result.MissingPreviousTransactions.Count != 0)
+				{
+					// Replay must remain in dependency order until this transaction is verified.
+					result.DeferredTransactions = transactions.Skip(i + 1).ToArray();
+					break;
+				}
 			}
 		}
 
 		foreach (var ret in rets.Where(x => x.IsNews))
 		{
 			WalletRelevantTransactionProcessed?.Invoke(this, ret);
+		}
+		foreach (var ret in rets.Where(x => x.MissingPreviousTransactions.Count != 0))
+		{
+			PreviousTransactionsRequired?.Invoke(this, ret);
 		}
 
 		return rets;
@@ -77,22 +129,47 @@ public class TransactionProcessor
 		}
 	}
 
-	public ProcessedResult Process(SmartTransaction tx)
+	internal bool IsProcessedForWallet(SmartTransaction tx)
+	{
+		lock (Lock)
+		{
+			var txid = tx.GetHash();
+			return Coins.IsKnown(txid) || Coins.GetMyInputs(tx).Any(x => x.SpenderTransaction?.GetHash() == txid);
+		}
+	}
+
+	public ProcessedResult Process(SmartTransaction tx) => Process(tx, (IReadOnlyDictionary<uint256, Transaction>?)null);
+
+	public ProcessedResult Process(SmartTransaction tx, IReadOnlyDictionary<uint256, Transaction>? previousTransactions)
+		=> Process(tx, previousTransactions, null);
+
+	public ProcessedResult Retry(ProcessedResult deferred, IReadOnlyDictionary<uint256, Transaction> previousTransactions)
+		=> Process(deferred.Transaction, previousTransactions, deferred.ConflictState);
+
+	private ProcessedResult Process(SmartTransaction tx, IReadOnlyDictionary<uint256, Transaction>? previousTransactions, IReadOnlyList<string>? expectedConflictState)
 	{
 		ProcessedResult ret;
 		lock (Lock)
 		{
+			if (expectedConflictState is not null && !expectedConflictState.SequenceEqual(GetConflictState(tx)))
+			{
+				return new ProcessedResult(tx);
+			}
 			Aware.Add(tx.GetHash());
-			ret = ProcessNoLock(tx);
+			ret = ProcessNoLock(tx, previousTransactions);
 		}
 		if (ret.IsNews)
 		{
 			WalletRelevantTransactionProcessed?.Invoke(this, ret);
 		}
+		if (ret.MissingPreviousTransactions.Count != 0)
+		{
+			PreviousTransactionsRequired?.Invoke(this, ret);
+		}
 		return ret;
 	}
 
-	private ProcessedResult ProcessNoLock(SmartTransaction tx)
+	private ProcessedResult ProcessNoLock(SmartTransaction tx, IReadOnlyDictionary<uint256, Transaction>? previousTransactions = null)
 	{
 		var result = new ProcessedResult(tx);
 
@@ -103,6 +180,45 @@ public class TransactionProcessor
 		}
 
 		uint256 txId = tx.GetHash();
+		if (!tx.Confirmed && tx.Transaction.Inputs.FirstOrDefault(input => Deferred.Values.Contains(input.PrevOut.Hash)) is { } blockedInput)
+		{
+			if (!DeferredChildren.TryGetValue(blockedInput.PrevOut.Hash, out var children))
+			{
+				children = new List<SmartTransaction>();
+				DeferredChildren.Add(blockedInput.PrevOut.Hash, children);
+			}
+			if (children.Count < 2500 && !children.Any(child => child.Transaction.GetWitHash() == tx.Transaction.GetWitHash()))
+			{
+				children.Add(tx);
+				Deferred[tx.Transaction.GetWitHash()] = txId;
+			}
+			Aware.Remove(txId);
+			MempoolService?.Forget(txId);
+			result.WaitingForDeferredParent = true;
+			return result;
+		}
+		IReadOnlyList<SmartCoin> myInputs = Coins.GetMyInputs(tx);
+		bool foreignConflict = myInputs.Count == 0 && tx.Transaction.Inputs.Any(input =>
+			Coins.TryGetCoinsByInputPrevOut(input.PrevOut, out var outputs) && outputs.Any(coin => coin.TransactionId != txId));
+
+		// Unconfirmed transactions received through the mempool are not authenticated by their
+		// source. Before they can replace a transaction in our wallet history, verify the
+		// signatures spending our coins. Otherwise a peer can replace an outgoing transaction
+		// with one that has different outputs but retains the original, invalid signatures.
+		var isKnownBroadcast = MempoolService?.TryGetFromBroadcastStore(txId, out _) is true;
+		if (!tx.Confirmed && MempoolService is not null && !isKnownBroadcast && (myInputs.Count != 0 || foreignConflict) && !HasValidWalletInputSignatures(tx, myInputs, foreignConflict, previousTransactions, out var missing))
+		{
+			// A different witness can have the same txid. Allow it to be received later.
+			Aware.Remove(txId);
+			MempoolService.Forget(txId);
+			result.MissingPreviousTransactions = missing;
+			if (missing.Count != 0)
+			{
+				result.ConflictState = GetConflictState(tx);
+				Deferred[tx.Transaction.GetWitHash()] = txId;
+			}
+			return result;
+		}
 
 		// If we already have the transaction, then let's work on that.
 		if (MempoolService?.TryGetFromBroadcastStore(txId, out var foundEntry) is true)
@@ -199,7 +315,9 @@ public class TransactionProcessor
 			}
 		}
 
-		IReadOnlyList<SmartCoin> myInputs = Coins.GetMyInputs(tx);
+		// Conflict processing can remove descendant coins; refresh the wallet inputs
+		// before updating the coin registry.
+		myInputs = Coins.GetMyInputs(tx);
 		List<(uint Index, TxOut Output, HdPubKey PubKey)> myOutputs = new();
 		for (var i = 0U; i < tx.Transaction.Outputs.Count; i++)
 		{
@@ -303,12 +421,93 @@ public class TransactionProcessor
 		if (coinJoin)
 		{
 			KeyManager.Attributes.CoinJoinTransactions.Remove(txId);
-			KeyManager.UpdateFromCoins(Coins);
+			if (Deferred.Count == 0)
+			{
+				KeyManager.UpdateFromCoins(Coins);
+			}
 		}
 
 		BlockchainAnalyzer.Analyze(result.Transaction);
 
 		return result;
+	}
+
+	private string[] GetConflictState(SmartTransaction tx)
+	{
+		var state = new List<string>();
+		foreach (var input in tx.Transaction.Inputs)
+		{
+			if (Coins.TryGetByOutPoint(input.PrevOut, out var coin) && coin.SpenderTransaction is { } spender)
+			{
+				state.Add($"{input.PrevOut}:{spender.GetHash()}:{spender.Height}");
+			}
+			if (Coins.TryGetCoinsByInputPrevOut(input.PrevOut, out var outputs))
+			{
+				state.AddRange(outputs.Select(x => $"{input.PrevOut}:{x.TransactionId}:{x.Height}"));
+			}
+		}
+		state.Sort(StringComparer.Ordinal);
+		return state.ToArray();
+	}
+
+	private bool HasValidWalletInputSignatures(SmartTransaction transaction, IReadOnlyList<SmartCoin> walletInputs, bool verifyAllInputs, IReadOnlyDictionary<uint256, Transaction>? previousTransactions, out IReadOnlyList<uint256> missing)
+	{
+		missing = Array.Empty<uint256>();
+		if (transaction.Transaction.Inputs.Select(x => x.PrevOut).Distinct().Count() != transaction.Transaction.Inputs.Count)
+		{
+			return false;
+		}
+		if (verifyAllInputs || walletInputs.Any(x => x.ScriptType == ScriptType.Taproot))
+		{
+			var coinsByOutPoint = walletInputs.ToDictionary(x => x.Outpoint, x => x.Coin);
+			var missingHashes = new HashSet<uint256>();
+			foreach (var input in transaction.Transaction.Inputs.Where(x => !coinsByOutPoint.ContainsKey(x.PrevOut)))
+			{
+				Transaction? parent = null;
+				if (TransactionStore.TryGetTransaction(input.PrevOut.Hash, out var stored))
+				{
+					parent = stored.Transaction;
+				}
+				else if (previousTransactions is not null)
+				{
+					previousTransactions.TryGetValue(input.PrevOut.Hash, out parent);
+				}
+				if (parent is null)
+				{
+					missingHashes.Add(input.PrevOut.Hash);
+					continue;
+				}
+				// Reparse to avoid trusting a cached hash on a mutable Transaction object.
+				parent = Transaction.Parse(parent.ToHex(), KeyManager.GetNetwork());
+				if (parent.GetHash() != input.PrevOut.Hash || input.PrevOut.N >= parent.Outputs.Count)
+				{
+					return false;
+				}
+				coinsByOutPoint.Add(input.PrevOut, new Coin(input.PrevOut, parent.Outputs[input.PrevOut.N]));
+			}
+			if (missingHashes.Count != 0)
+			{
+				missing = missingHashes.ToArray();
+				return false;
+			}
+
+			var coins = transaction.Transaction.Inputs.Select(x => coinsByOutPoint[x.PrevOut]).ToArray();
+			var precomputedTransactionData = transaction.Transaction.PrecomputeTransactionData(coins);
+			return transaction.Transaction.Inputs.AsIndexedInputs()
+				.Where(input => verifyAllInputs || walletInputs.Any(coin => coin.Outpoint == input.PrevOut))
+				.All(input => input.VerifyScript(coinsByOutPoint[input.PrevOut], ScriptVerify.Standard, precomputedTransactionData, out _));
+		}
+
+		foreach (var indexedInput in transaction.Transaction.Inputs.AsIndexedInputs())
+		{
+			var walletInput = walletInputs.FirstOrDefault(x => x.Outpoint == indexedInput.PrevOut);
+			if (walletInput is not null && !indexedInput.VerifyScript(walletInput.Coin, ScriptVerify.Standard, out _))
+			{
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private bool CanBeConsideredDustAttack(TxOut output, HdPubKey hdPubKey, bool weAreAmongTheSender) =>

@@ -16,6 +16,12 @@ public class ProcessedResult
 		_isOwnCoinJoin = new Lazy<bool>(() => Transaction.IsOwnCoinjoin(), true);
 	}
 
+	/// <summary>Previous transactions required to verify this transaction before processing it.</summary>
+	public IReadOnlyList<uint256> MissingPreviousTransactions { get; internal set; } = Array.Empty<uint256>();
+	internal IReadOnlyList<string> ConflictState { get; set; } = Array.Empty<string>();
+	internal IReadOnlyList<SmartTransaction> DeferredTransactions { get; set; } = Array.Empty<SmartTransaction>();
+	internal bool WaitingForDeferredParent { get; set; }
+
 	public SmartTransaction Transaction { get; }
 
 	public bool IsNews =>

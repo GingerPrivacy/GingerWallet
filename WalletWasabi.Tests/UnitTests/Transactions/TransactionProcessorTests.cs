@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using WalletWasabi.Blockchain.Analysis.Clustering;
 using WalletWasabi.Blockchain.Keys;
+using WalletWasabi.Blockchain.Mempool;
 using WalletWasabi.Blockchain.TransactionOutputs;
 using WalletWasabi.Blockchain.TransactionProcessing;
 using WalletWasabi.Blockchain.Transactions;
@@ -23,6 +25,253 @@ namespace WalletWasabi.Tests.UnitTests.Transactions;
 /// </summary>
 public class TransactionProcessorTests
 {
+	[Theory]
+	[InlineData(false)]
+	[InlineData(true)]
+	public async Task RejectsConflictingTransactionWithInvalidWalletSignatureAsync(bool markedCoinJoin)
+	{
+		await using var txStore = await CreateTransactionStoreAsync();
+		var processor = CreateTransactionProcessor(txStore, new MempoolService());
+		var key = processor.KeyManager.GetNextReceiveKey("funding");
+		var funding = CreateCreditingTransaction(key.P2wpkhScript, Money.Coins(1m), height: 54321);
+		processor.Process(funding);
+		var coin = Assert.Single(processor.Coins).Coin;
+		using var recipient = new Key();
+		using var attacker = new Key();
+		var change = processor.NewKey("change").P2wpkhScript;
+		var payment = CreateSpendingTransaction(new[] { coin }, recipient.PubKey.WitHash.ScriptPubKey, change, replaceable: true);
+		var secret = processor.KeyManager.GetSecrets("password", coin.ScriptPubKey).Single().PrivateKey.GetBitcoinSecret(Network.Main);
+		payment.Transaction.Sign(secret, coin);
+		Assert.True(processor.Process(payment).IsNews);
+
+		var forged = payment.Transaction.Clone();
+		forged.Outputs[0].ScriptPubKey = attacker.PubKey.WitHash.ScriptPubKey;
+		var fake = new SmartTransaction(forged, Height.Mempool);
+		if (markedCoinJoin)
+		{
+			processor.KeyManager.AddCoinJoinTransaction(fake.GetHash());
+		}
+		Assert.False(processor.Process(fake).IsNews);
+		Assert.True(txStore.MempoolStore.TryGetTransaction(payment.GetHash(), out _));
+		Assert.False(txStore.MempoolStore.TryGetTransaction(fake.GetHash(), out _));
+	}
+
+	[Fact]
+	public async Task RejectsConflictingTaprootTransactionWithInvalidWalletSignatureAsync()
+	{
+		await using var txStore = await CreateTransactionStoreAsync();
+		var processor = CreateTransactionProcessor(txStore, new MempoolService());
+		var key = processor.KeyManager.GetNextReceiveKey("funding", ScriptPubKeyType.TaprootBIP86);
+		var funding = CreateCreditingTransaction(key.P2Taproot, Money.Coins(1m), height: 54321);
+		processor.Process(funding);
+		var coin = Assert.Single(processor.Coins).Coin;
+		using var recipient = new Key();
+		using var attacker = new Key();
+		var payment = CreateSpendingTransaction(new[] { coin }, recipient.PubKey.WitHash.ScriptPubKey, processor.NewKey("change").P2wpkhScript, replaceable: true);
+		var secret = processor.KeyManager.GetSecrets("password", coin.ScriptPubKey).Single().GetBitcoinSecret(Network.Main, coin.ScriptPubKey);
+		var precomputedTransactionData = payment.Transaction.PrecomputeTransactionData([coin]);
+		var builder = Network.Main.CreateTransactionBuilder();
+		builder.AddKeys(secret);
+		builder.AddCoins(coin);
+		builder.SetSigningOptions(new SigningOptions(TaprootSigHash.All, precomputedTransactionData));
+		builder.SignTransactionInPlace(payment.Transaction);
+		Assert.True(processor.Process(payment).IsNews);
+
+		var forged = payment.Transaction.Clone();
+		forged.Outputs[0].ScriptPubKey = attacker.PubKey.WitHash.ScriptPubKey;
+		Assert.False(processor.Process(new SmartTransaction(forged, Height.Mempool)).IsNews);
+		Assert.True(txStore.MempoolStore.TryGetTransaction(payment.GetHash(), out _));
+	}
+
+	[Theory]
+	[InlineData(false)]
+	[InlineData(true)]
+	public async Task InvalidWitnessDoesNotSuppressValidTransactionAsync(bool concurrent)
+	{
+		await using var txStore = await CreateTransactionStoreAsync();
+		var mempool = new MempoolService();
+		var processor = CreateTransactionProcessor(txStore, mempool);
+		using var started = new ManualResetEventSlim();
+		using var resume = new ManualResetEventSlim();
+		mempool.TransactionReceived += (_, transaction) =>
+		{
+			if (concurrent && transaction.Transaction.Inputs[0].WitScript == WitScript.Empty)
+			{
+				started.Set();
+				resume.Wait(TimeSpan.FromSeconds(10));
+			}
+			if (!processor.IsAware(transaction.GetHash()))
+			{
+				processor.Process(transaction);
+			}
+		};
+		var key = processor.KeyManager.GetNextReceiveKey("funding");
+		processor.Process(CreateCreditingTransaction(key.P2wpkhScript, Money.Coins(1m), height: 54321));
+		var coin = Assert.Single(processor.Coins).Coin;
+		using var recipient = new Key();
+		var payment = CreateSpendingTransaction(new[] { coin }, recipient.PubKey.WitHash.ScriptPubKey, processor.NewKey("change").P2wpkhScript);
+		var secret = processor.KeyManager.GetSecrets("password", coin.ScriptPubKey).Single().PrivateKey.GetBitcoinSecret(Network.Main);
+		payment.Transaction.Sign(secret, coin);
+
+		var invalid = payment.Transaction.Clone();
+		invalid.Inputs[0].WitScript = WitScript.Empty;
+		Assert.Equal(payment.GetHash(), invalid.GetHash());
+		if (concurrent)
+		{
+			var first = Task.Run(() => mempool.Process(invalid));
+			try
+			{
+				Assert.True(started.Wait(TimeSpan.FromSeconds(10)));
+				Assert.False(mempool.IsProcessed(payment.GetHash()));
+				mempool.Process(payment.Transaction);
+			}
+			finally
+			{
+				resume.Set();
+			}
+			await first;
+		}
+		else
+		{
+			mempool.Process(invalid);
+			Assert.False(processor.IsAware(payment.GetHash()));
+			Assert.False(mempool.IsProcessed(payment.GetHash()));
+			mempool.Process(payment.Transaction);
+		}
+		Assert.True(txStore.MempoolStore.TryGetTransaction(payment.GetHash(), out _));
+	}
+
+	[Fact]
+	public async Task RejectsForgedReplacementOfIncomingTransactionAsync()
+	{
+		await using var txStore = await CreateTransactionStoreAsync();
+		var processor = CreateTransactionProcessor(txStore, new MempoolService());
+		using var sender = new Key();
+		var parent = CreateCreditingTransaction(sender.PubKey.WitHash.ScriptPubKey, Money.Coins(1m), height: 54321);
+		var coin = parent.Transaction.Outputs.AsCoins().First();
+		var incoming = CreateSpendingTransaction(coin, processor.NewKey("incoming").P2wpkhScript);
+		incoming.Transaction.Sign(sender.GetBitcoinSecret(Network.RegTest), coin);
+		Assert.True(processor.Process(incoming).IsNews);
+
+		using var attacker = new Key();
+		var fake = incoming.Transaction.Clone();
+		fake.Outputs[0].ScriptPubKey = attacker.PubKey.WitHash.ScriptPubKey;
+		var forged = new SmartTransaction(fake, Height.Mempool);
+		var deferred = processor.Process(forged);
+		Assert.Contains(coin.Outpoint.Hash, deferred.MissingPreviousTransactions);
+		Assert.False(processor.Retry(deferred, new Dictionary<uint256, Transaction> { [coin.Outpoint.Hash] = parent.Transaction }).IsNews);
+		Assert.True(txStore.MempoolStore.TryGetTransaction(incoming.GetHash(), out _));
+		Assert.Single(processor.Coins);
+
+		var validReplacement = incoming.Transaction.Clone();
+		validReplacement.Outputs[0].Value -= Money.Satoshis(1000);
+		validReplacement.Inputs[0].WitScript = WitScript.Empty;
+		validReplacement.Sign(sender.GetBitcoinSecret(Network.RegTest), coin);
+		var replacement = new SmartTransaction(validReplacement, Height.Mempool);
+		var waiting = processor.Process(replacement);
+		Assert.Contains(coin.Outpoint.Hash, waiting.MissingPreviousTransactions);
+		Assert.True(processor.Retry(waiting, new Dictionary<uint256, Transaction> { [coin.Outpoint.Hash] = parent.Transaction }).IsNews);
+		Assert.True(txStore.MempoolStore.TryGetTransaction(replacement.GetHash(), out _));
+	}
+
+	[Theory]
+	[InlineData(0)]
+	[InlineData(1)]
+	[InlineData(2)]
+	[InlineData(3)]
+	[InlineData(4)]
+	[InlineData(5)]
+	public async Task AcceptsSignedMixedInputTaprootTransactionAsync(int arrivalOrder)
+	{
+		await using var txStore = await CreateTransactionStoreAsync();
+		var processor = CreateTransactionProcessor(txStore, new MempoolService());
+		var key = processor.KeyManager.GetNextReceiveKey("funding", ScriptPubKeyType.TaprootBIP86);
+		processor.Process(CreateCreditingTransaction(key.P2Taproot, Money.Coins(1m), height: 54321));
+		var walletCoin = Assert.Single(processor.Coins).Coin;
+		using var otherKey = new Key();
+		var otherFunding = CreateCreditingTransaction(otherKey.PubKey.WitHash.ScriptPubKey, Money.Coins(1m), height: 54321);
+		var otherCoin = otherFunding.Transaction.Outputs.AsCoins().First();
+		var transaction = CreateSpendingTransaction(new[] { walletCoin, otherCoin }, processor.NewKey("recipient").P2wpkhScript, processor.NewKey("change").P2wpkhScript);
+		var walletSecret = processor.KeyManager.GetSecrets("password", walletCoin.ScriptPubKey).Single().GetBitcoinSecret(Network.Main, walletCoin.ScriptPubKey);
+		var builder = Network.Main.CreateTransactionBuilder();
+		builder.AddKeys(walletSecret, otherKey.GetBitcoinSecret(Network.Main));
+		builder.AddCoins(walletCoin, otherCoin);
+		builder.SetSigningOptions(new SigningOptions(TaprootSigHash.All, transaction.Transaction.PrecomputeTransactionData([walletCoin, otherCoin])));
+		builder.SignTransactionInPlace(transaction.Transaction);
+		var precomputed = transaction.Transaction.PrecomputeTransactionData([walletCoin, otherCoin]);
+		Assert.True(transaction.Transaction.Inputs.AsIndexedInputs().First().VerifyScript(walletCoin, ScriptVerify.Standard, precomputed, out _));
+		Assert.True(transaction.Transaction.Inputs.AsIndexedInputs().Skip(1).First().VerifyScript(otherCoin, ScriptVerify.Standard, precomputed, out _));
+		var childCoin = transaction.Transaction.Outputs.AsCoins().First();
+		var child = CreateSpendingTransaction(childCoin, processor.NewKey("child").P2wpkhScript);
+		var childSecret = processor.KeyManager.GetSecrets("password", childCoin.ScriptPubKey).Single().PrivateKey.GetBitcoinSecret(Network.Main);
+		child.Transaction.Sign(childSecret, childCoin);
+		var grandchildCoin = child.Transaction.Outputs.AsCoins().First();
+		var grandchild = CreateSpendingTransaction(grandchildCoin, processor.NewKey("grandchild").P2wpkhScript);
+		var grandchildSecret = processor.KeyManager.GetSecrets("password", grandchildCoin.ScriptPubKey).Single().PrivateKey.GetBitcoinSecret(Network.Main);
+		grandchild.Transaction.Sign(grandchildSecret, grandchildCoin);
+
+		var completed = new TaskCompletionSource<ProcessedResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+		processor.WalletRelevantTransactionProcessed += (_, result) =>
+		{
+			if (result.Transaction.GetHash() == (arrivalOrder is 4 or 5 ? grandchild.GetHash() : child.GetHash()))
+			{
+				completed.TrySetResult(result);
+			}
+		};
+		var fetch = new TaskCompletionSource<IEnumerable<Transaction>>(TaskCreationOptions.RunContinuationsAsynchronously);
+		await using var resolver = new DeferredTransactionProcessor(processor, Network.Main, (_, cancel) => fetch.Task.WaitAsync(cancel));
+		var resolutionFinished = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+		resolver.TransactionResolved += (_, _) => resolutionFinished.TrySetResult();
+		var deferred = arrivalOrder == 0 ? Assert.Single(processor.Process(new[] { transaction, child })) : processor.Process(transaction);
+		Assert.False(deferred.IsNews);
+		if (arrivalOrder is 1 or 4)
+		{
+			Assert.False(processor.Process(child).IsNews);
+			if (arrivalOrder == 4)
+			{
+				Assert.False(processor.Process(grandchild).IsNews);
+			}
+		}
+		else if (arrivalOrder == 2)
+		{
+			Assert.Single(processor.Process(new[] { transaction, child }));
+		}
+		else if (arrivalOrder == 5)
+		{
+			Assert.False(processor.Process(grandchild).IsNews);
+			Assert.False(processor.Process(child).IsNews);
+		}
+		Assert.False(txStore.MempoolStore.TryGetTransaction(child.GetHash(), out _));
+		Assert.Contains(otherCoin.Outpoint.Hash, deferred.MissingPreviousTransactions);
+		Assert.False(processor.Process(transaction, new Dictionary<uint256, Transaction> { [otherCoin.Outpoint.Hash] = transaction.Transaction }).IsNews);
+		SmartTransaction? replacement = null;
+		if (arrivalOrder == 3)
+		{
+			replacement = CreateSpendingTransaction(walletCoin, processor.NewKey("replacement").P2wpkhScript);
+			var replacementBuilder = Network.Main.CreateTransactionBuilder();
+			replacementBuilder.AddKeys(walletSecret);
+			replacementBuilder.AddCoins(walletCoin);
+			replacementBuilder.SetSigningOptions(new SigningOptions(TaprootSigHash.All, replacement.Transaction.PrecomputeTransactionData([walletCoin])));
+			replacementBuilder.SignTransactionInPlace(replacement.Transaction);
+			Assert.True(processor.Process(replacement).IsNews);
+		}
+		fetch.SetResult([otherFunding.Transaction]);
+		if (replacement is not null)
+		{
+			await resolutionFinished.Task.WaitAsync(TimeSpan.FromSeconds(10));
+			Assert.False(txStore.MempoolStore.TryGetTransaction(transaction.GetHash(), out _));
+			Assert.True(txStore.MempoolStore.TryGetTransaction(replacement.GetHash(), out _));
+			return;
+		}
+		Assert.True((await completed.Task.WaitAsync(TimeSpan.FromSeconds(10))).IsNews);
+		Assert.True(txStore.MempoolStore.TryGetTransaction(transaction.GetHash(), out _));
+		Assert.True(txStore.MempoolStore.TryGetTransaction(child.GetHash(), out _));
+		if (arrivalOrder is 4 or 5)
+		{
+			Assert.True(txStore.MempoolStore.TryGetTransaction(grandchild.GetHash(), out _));
+		}
+	}
+
 	[Fact]
 	public async Task TransactionDoesNotContainCoinsForTheWalletAsync()
 	{
@@ -1509,13 +1758,13 @@ public class TransactionProcessorTests
 		return txStore;
 	}
 
-	private TransactionProcessor CreateTransactionProcessor(AllTransactionStore transactionStore)
+	private TransactionProcessor CreateTransactionProcessor(AllTransactionStore transactionStore, MempoolService? mempoolService = null)
 	{
 		var keyManager = KeyManager.CreateNew(out _, "password", Network.Main);
 
 		return new TransactionProcessor(
 			transactionStore,
-			null,
+			mempoolService,
 			keyManager,
 			Money.Coins(0.0001m));
 	}
