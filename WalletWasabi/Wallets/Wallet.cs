@@ -32,6 +32,7 @@ namespace WalletWasabi.Wallets;
 public class Wallet : BackgroundService, IWallet
 {
 	private volatile WalletState _state;
+	private DeferredTransactionProcessor? _deferredTransactionProcessor;
 
 	public Wallet(
 		string dataDir,
@@ -283,6 +284,9 @@ public class Wallet : BackgroundService, IWallet
 			EnsureHeightsAreAtLeastSegWitActivation();
 
 			TransactionProcessor.WalletRelevantTransactionProcessed += TransactionProcessor_WalletRelevantTransactionProcessed;
+			_deferredTransactionProcessor = new DeferredTransactionProcessor(TransactionProcessor, Network,
+				(hashes, cancellationToken) => Synchronizer.HttpClientFactory.SharedWasabiClient.GetTransactionsAsync(Network, hashes, cancellationToken));
+			_deferredTransactionProcessor.TransactionResolved += DeferredTransactionResolved;
 			BitcoinStore.MempoolService.TransactionReceived += Mempool_TransactionReceived;
 
 			State = WalletState.Initialized;
@@ -351,10 +355,16 @@ public class Wallet : BackgroundService, IWallet
 				isUpdateRequired = true;
 			}
 		}
-		if (isUpdateRequired)
+		if (isUpdateRequired && !TransactionProcessor.HasDeferredTransactions)
 		{
 			KeyManager.UpdateFromCoins(Coins);
 		}
+	}
+
+	private void DeferredTransactionResolved(object? sender, EventArgs e)
+	{
+		// A replay may have recovered coins after the initial property load.
+		LoadCoinProperties();
 	}
 
 	/// <inheritdoc />
@@ -380,6 +390,12 @@ public class Wallet : BackgroundService, IWallet
 
 			if (prevState < WalletState.Stopping)
 			{
+				if (_deferredTransactionProcessor is { } deferred)
+				{
+					deferred.TransactionResolved -= DeferredTransactionResolved;
+					await deferred.DisposeAsync().ConfigureAwait(false);
+					_deferredTransactionProcessor = null;
+				}
 				await base.StopAsync(cancel).ConfigureAwait(false);
 
 				if (prevState >= WalletState.Initialized)
